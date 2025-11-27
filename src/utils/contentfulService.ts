@@ -628,7 +628,7 @@ export async function getHomepageContent(): Promise<HomepageContent> {
 
     const response = await contentfulBreaker.execute(
       () => withEnhancedTimeout(client.getEntries({
-        content_type: 'homepage',
+        content_type: 'homePage',
         limit: 1,
       }), { 
         timeoutMs: 5000,

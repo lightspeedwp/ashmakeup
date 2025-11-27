@@ -20,10 +20,13 @@ app.use('*', cors({
 app.use('*', logger(console.log));
 
 // Initialize Supabase client for auth validation
-const supabase = createClient(
-  Deno.env.get('SUPABASE_URL') || '',
-  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || ''
-);
+const PROJECT_ID = "prvzveitduxglkwyfvxf";
+const FALLBACK_SUPABASE_URL = `https://${PROJECT_ID}.supabase.co`;
+
+const supabaseUrl = Deno.env.get('SUPABASE_URL') || FALLBACK_SUPABASE_URL;
+const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || Deno.env.get('SUPABASE_ANON_KEY') || '';
+
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 /**
  * SendGrid email endpoint for contact form submissions
