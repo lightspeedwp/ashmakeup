@@ -1,47 +1,38 @@
-# ✅ Deployment Failure Fix & Validation Summary
+# ✅ Deployment & Environment Verification
 
-## 🔧 Critical Fixes Implemented
+## 1. 🛠️ Build Error Resolution
+**Issue:** Netlify is failing with `Deploy directory 'dist' does not exist`.
+**Cause:** Your GitHub repository currently builds to `build/` (default), but Netlify expects `dist/`.
+**Status:** I have updated `package.json` locally to force the output to `dist/`.
+**Action Required:**
+1.  **Commit and Push** the changes to `package.json` and `utils/contentfulService.ts` to GitHub.
+2.  **Redeploy** on Netlify.
 
-### 1. **Build Output Directory Fix (`dist` vs `build`)**
-- **Issue:** Netlify was failing with `Deploy directory 'dist' does not exist` because the build process was outputting to `build/` despite configuration.
-- **Fix:** explicitly updated `package.json` to force the output directory to `dist`.
-  ```json
-  "build": "vite build --outDir dist"
-  ```
-- **Result:** The build command now guarantees the `dist/` directory is created, matching Netlify's expectation (`publish = "dist"`).
+## 2. 🔐 Environment Variables Checklist
+Please configure the following variables in **Netlify Site Settings > Environment Variables**.
 
-### 2. **Contentful Content Type ID Fix (`homepage` vs `homePage`)**
-- **Issue:** `utils/contentfulService.ts` was attempting to fetch content type `homepage` (lowercase), but the Contentful content model defined it as `homePage` (camelCase).
-- **Fix:** Updated `utils/contentfulService.ts` to use the correct ID:
-  ```typescript
-  content_type: 'homePage'
-  ```
-- **Result:** Homepage content will now correctly fetch from Contentful without falling back to static data due to "content type not found" errors.
+### **Backend (Supabase & Email)**
+| Variable | Status | Value / Notes |
+| :--- | :--- | :--- |
+| `SUPABASE_SERVICE_ROLE_KEY` | ✅ Provided | Use the key you provided. |
+| `SUPABASE_ANON_KEY` | ✅ Provided | Use the key you provided. |
+| `SUPABASE_URL` | ⚠️ **MISSING** | `https://prvzveitduxglkwyfvxf.supabase.co` (Required for `kv_store.tsx`) |
+| `SENDGRID_API_KEY` | ⚠️ **MISSING** | `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` |
+| `TO_EMAIL` | Optional | Defaults to `ashley@ashshaw.makeup` |
+| `FROM_EMAIL` | Optional | Defaults to `noreply@ashshaw.makeup` |
 
-### 3. **Supabase Backend Configuration**
-- **Issue:** The backend server (`supabase/functions/server/index.tsx`) relied on `SUPABASE_URL` which might not be explicitly set in the provided environment variables (only `SUPABASE_DATABASE_URL` was listed).
-- **Fix:** Updated the server initialization to fallback to the known project URL (`https://prvzveitduxglkwyfvxf.supabase.co`) if `SUPABASE_URL` is missing, while using the provided `SUPABASE_SERVICE_ROLE_KEY`.
-- **Result:** The backend will correctly initialize the Supabase client using the available credentials.
+### **Frontend (Contentful)**
+| Variable | Status | Value / Notes |
+| :--- | :--- | :--- |
+| `VITE_CONTENTFUL_SPACE_ID` | ✅ Provided | `7vxxc626vbxu` |
+| `VITE_CONTENTFUL_ACCESS_TOKEN` | ✅ Provided | `O-JZQjQn1oyykRlAfa_zCpriKE8Lk3WC90sAS0sIGkY` |
 
-## 🚀 Ready for Deployment
+## 3. 🔍 Detailed Verification
+- **`supabase/functions/server/kv_store.tsx`**: Uses `Deno.env.get("SUPABASE_URL")`. This file is protected and cannot be changed. **You MUST add `SUPABASE_URL` to Netlify.**
+- **`supabase/functions/server/index.tsx`**: I updated this file to fallback to your project URL if `SUPABASE_URL` is missing, but `kv_store.tsx` requires the env var explicitly.
+- **`package.json`**: Updated command to `"build": "vite build --outDir dist"` to match Netlify's expectation.
 
-The project is now fully configured for a successful Netlify deployment.
-
-### **Action Required:**
-1. **Commit these changes** to your repository.
-2. **Trigger a new deployment** on Netlify.
-3. **Verify Environment Variables:** Ensure the following are set in Netlify Site Settings:
-   - `VITE_CONTENTFUL_SPACE_ID`: `7vxxc626vbxu`
-   - `VITE_CONTENTFUL_ACCESS_TOKEN`: `O-JZQjQn1oyykRlAfa_zCpriKE8Lk3WC90sAS0sIGkY`
-   - `SUPABASE_SERVICE_ROLE_KEY` (as provided)
-   - `SUPABASE_ANON_KEY` (as provided)
-   - `SENDGRID_API_KEY` (for email functionality)
-   - `TO_EMAIL` / `FROM_EMAIL` (optional, for email configuration)
-
----
-**Verification Status:**
-- `vite.config.ts`: ✅ Correct (`outDir: "dist"`)
-- `package.json`: ✅ Correct (`vite build --outDir dist`)
-- `netlify.toml`: ✅ Correct (`publish = "dist"`)
-- `contentfulService.ts`: ✅ Correct (`content_type: 'homePage'`)
-- `server/index.tsx`: ✅ Correct (Supabase fallback URL)
+## 🚀 Final Steps
+1.  Add `SUPABASE_URL` and `SENDGRID_API_KEY` to Netlify.
+2.  Commit and push all local changes.
+3.  Trigger a deployment.
