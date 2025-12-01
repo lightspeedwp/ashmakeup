@@ -17,8 +17,8 @@
 
 # Production environment variables
 [build.environment]
-  NODE_VERSION = "18"
-  NPM_VERSION = "9"
+  NODE_VERSION = "24"
+  NPM_VERSION = "10"
   # Contentful environment (default is master)
   VITE_CONTENTFUL_ENVIRONMENT = "master"
 
@@ -123,15 +123,6 @@
   command = "npm run build"
   [context.production.environment]
     VITE_CONTENTFUL_USE_PREVIEW = "false"
-
-# =============================================================================
-# PLUGINS
-# =============================================================================
-
-# Enable build plugin for better cache handling
-[[plugins]]
-  package = "@netlify/plugin-caching-gatsby"
-  # Note: This works for Vite too despite the name
 
 # =============================================================================
 # DEV SERVER (for netlify dev command)
