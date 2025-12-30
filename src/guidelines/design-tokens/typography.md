@@ -186,9 +186,140 @@ The typography system is inspired by WordPress 6.6+ fluid typography:
 
 ## Fluid Typography Scale
 
-### Guidelines-Specific Typography Classes
+### Complete Scale Hierarchy
 
-These are the primary typography classes defined in the brand guidelines:
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│              FLUID TYPOGRAPHY SCALE VISUALIZATION                    │
+└─────────────────────────────────────────────────────────────────────┘
+
+DESKTOP (1920px)                    MOBILE (375px)
+─────────────────────────────────────────────────────────────────────
+
+120px │ text-hero-h1          │ 36px
+      │ ███████████████       │ ███
+      │ HERO TITLE            │ HERO
+      │                       │
+96px  │ text-hero-h2          │ 32px  
+      │ ████████████          │ ██
+      │ SECONDARY HERO        │ HERO
+      │                       │
+48px  │ text-section-h2       │ 24px
+      │ ██████                │ █
+      │ Section Heading       │ Section
+      │                       │
+36px  │ text-section-h3       │ 20px
+      │ ████                  │ █
+      │ Subsection            │ Sub
+      │                       │
+24px  │ text-section-h4       │ 18px
+      │ ███                   │ ▓
+      │ Minor Heading         │ Minor
+      │                       │
+20px  │ text-body-guideline   │ 16px
+      │ ██                    │ ▓
+      │ Body text readable    │ Body
+      │                       │
+18px  │ text-body-fluid       │ 14px
+      │ ██                    │ ▓
+      │ Smaller body text     │ Small
+      │                       │
+14px  │ text-caption-fluid    │ 12px
+      │ █                     │ ▓
+      │ Captions & metadata   │ Meta
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                    FLUID SCALING BEHAVIOR                            │
+└─────────────────────────────────────────────────────────────────────┘
+
+Screen Width →
+
+375px          768px          1024px         1920px+
+Mobile         Tablet         Laptop         Desktop
+│              │              │              │
+│              │              │              │
+36px ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 120px  text-hero-h1
+│   Smooth scaling with clamp()              │
+│                                             │
+24px ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48px   text-section-h2
+│                                             │
+16px ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20px   text-body-guideline
+│                                             │
+
+NO BREAKPOINTS NEEDED! clamp() handles all screen sizes smoothly.
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                    clamp() FUNCTION ANATOMY                          │
+└─────────────────────────────────────────────────────────────────────┘
+
+font-size: clamp(MIN, PREFERRED, MAX);
+              ↓      ↓         ↓
+              │      │         │
+              │      │         └─ Maximum size (desktop)
+              │      │
+              │      └─ Viewport-based preferred size
+              │         (scales smoothly between min and max)
+              │
+              └─ Minimum size (mobile)
+
+EXAMPLE: text-hero-h1
+font-size: clamp(2.25rem, 6vw, 7.5rem);
+                 ↓       ↓      ↓
+              36px    6% of    120px
+                   viewport
+                    width
+
+At 375px width:  375 × 0.06 = 22.5px → clamped to 36px (MIN)
+At 768px width:  768 × 0.06 = 46px   → 46px (between MIN and MAX)
+At 1920px width: 1920 × 0.06 = 115px → clamped to 120px (MAX)
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                    FONT WEIGHT HIERARCHY                             │
+└─────────────────────────────────────────────────────────────────────┘
+
+100  Thin         │ Rarely used
+200  Extra Light  │ 
+300  Light        │ ← font-light (body text accents)
+400  Regular      │ ← font-normal (default body)
+450  Book         │ ← font-book (custom weight for readability)
+500  Medium       │ ← font-medium (emphasized text)
+600  Semibold     │ ← font-semibold (subheadings)
+650  Demibold     │ ← font-demibold (custom weight)
+700  Bold         │ ← font-bold (main headings)
+800  Extra Bold   │
+900  Black        │ ← font-black (hero titles)
+
+CUSTOM WEIGHTS (Variable Fonts):
+- Book (450): Enhanced readability for body text
+- Demibold (650): Between semibold and bold
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                    SEMANTIC HTML MAPPING                             │
+└─────────────────────────────────────────────────────────────────────┘
+
+HTML Element     Default Style              Usage
+─────────────────────────────────────────────────────────────────────
+<h1>          → text-hero-h1              Main page title (only one per page)
+<h2>          → text-section-h2           Major sections
+<h3>          → text-section-h3           Subsections  
+<h4>          → text-section-h4           Minor headings
+<h5>          → text-body-guideline       Smallest headings
+<h6>          → text-body-guideline       Rare usage
+
+<p>           → text-body-guideline       Standard paragraphs
+<span>        → Inherits                  Inline text
+<small>       → text-caption-fluid        Legal text, captions
+<strong>      → font-semibold             Emphasized text
+<em>          → italic                    Emphasized text
+<a>           → Underline on hover        Links
+
+<blockquote>  → text-fluid-xl + italic    Pull quotes
+<figcaption>  → text-caption-fluid        Image captions
+<label>       → text-body-fluid           Form labels
+<button>      → text-button-fluid         Button text
+```
+
+### Typography Classes Reference
 
 ```css
 /* Hero Title - Largest display text */
@@ -198,6 +329,13 @@ These are the primary typography classes defined in the brand guidelines:
   letter-spacing: -0.02em;
 }
 
+/* Secondary Hero Title - Large display text */
+.text-hero-h2 {
+  font-size: clamp(2rem, 5vw, 6rem);  /* 32px → 96px */
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
 /* Section Headings - Page section titles */
 .text-section-h2 {
   font-size: clamp(1.5rem, 4vw, 3rem);  /* 24px → 48px */
@@ -205,10 +343,38 @@ These are the primary typography classes defined in the brand guidelines:
   letter-spacing: -0.01em;
 }
 
+/* Subsection Headings - Smaller section titles */
+.text-section-h3 {
+  font-size: clamp(1.25rem, 3vw, 2.5rem);  /* 20px → 36px */
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+/* Minor Headings - Smallest section titles */
+.text-section-h4 {
+  font-size: clamp(1rem, 2.5vw, 2rem);  /* 18px → 24px */
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
 /* Body Text - Standard content */
 .text-body-guideline {
   font-size: clamp(1rem, 1.5vw, 1.25rem);  /* 16px → 20px */
   line-height: 1.6;
+  letter-spacing: 0;
+}
+
+/* Smaller Body Text - For additional content */
+.text-body-fluid {
+  font-size: clamp(0.875rem, 1.25vw, 1.125rem);  /* 14px → 18px */
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+/* Caption Text - For metadata and small text */
+.text-caption-fluid {
+  font-size: clamp(0.75rem, 1vw, 0.875rem);  /* 12px → 14px */
+  line-height: 1.5;
   letter-spacing: 0;
 }
 
@@ -224,78 +390,6 @@ These are the primary typography classes defined in the brand guidelines:
   font-size: clamp(1.25rem, 2vw, 2rem);  /* 20px → 32px */
   line-height: 1;
   letter-spacing: 0;
-}
-```
-
-### Extended Fluid Typography Scale
-
-Complete responsive scale for flexible usage:
-
-```css
-/* Extra Small */
-.text-fluid-xs {
-  font-size: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);  /* 12px → 14px */
-  line-height: 1.5;
-}
-
-/* Small */
-.text-fluid-sm {
-  font-size: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);  /* 14px → 16px */
-  line-height: 1.5;
-}
-
-/* Base */
-.text-fluid-base {
-  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);  /* 16px → 18px */
-  line-height: 1.6;
-}
-
-/* Large */
-.text-fluid-lg {
-  font-size: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);  /* 18px → 20px */
-  line-height: 1.5;
-}
-
-/* Extra Large */
-.text-fluid-xl {
-  font-size: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);  /* 20px → 24px */
-  line-height: 1.4;
-}
-
-/* 2XL */
-.text-fluid-2xl {
-  font-size: clamp(1.5rem, 1.3rem + 1vw, 2rem);  /* 24px → 32px */
-  line-height: 1.3;
-}
-
-/* 3XL */
-.text-fluid-3xl {
-  font-size: clamp(1.875rem, 1.6rem + 1.375vw, 2.5rem);  /* 30px → 40px */
-  line-height: 1.2;
-}
-
-/* 4XL */
-.text-fluid-4xl {
-  font-size: clamp(2.25rem, 2rem + 1.25vw, 3rem);  /* 36px → 48px */
-  line-height: 1.1;
-}
-
-/* 5XL */
-.text-fluid-5xl {
-  font-size: clamp(2.5rem, 2.2rem + 1.5vw, 3.5rem);  /* 40px → 56px */
-  line-height: 1.1;
-}
-
-/* 6XL */
-.text-fluid-6xl {
-  font-size: clamp(3rem, 2.5rem + 2.5vw, 4.5rem);  /* 48px → 72px */
-  line-height: 1;
-}
-
-/* 7XL */
-.text-fluid-7xl {
-  font-size: clamp(3.5rem, 3rem + 2.5vw, 5rem);  /* 56px → 80px */
-  line-height: 1;
 }
 ```
 

@@ -1,10 +1,7 @@
-# FeaturedSection Guidelines
+# FeaturedSection
 
-Showcase section displaying latest festival makeup artistry with portfolio cards.
-
-**File:** `/components/sections/FeaturedSection.tsx`  
-**WordPress Equivalent:** `core/query` or `core/group` with post grid  
-**Used In:** HomePage
+**Version:** 4.0.0  
+**Last Updated:** January 2025
 
 ---
 
@@ -477,4 +474,4 @@ mt-fluid-xl                        // Button margin
 ---
 
 **Last Updated:** January 2025  
-**Version:** 3.2.0
+**Version:** 4.0.0

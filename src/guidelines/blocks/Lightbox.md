@@ -1,10 +1,7 @@
-# Lightbox Guidelines
+# Lightbox (EnhancedLightbox) Component
 
-Full-screen image viewer with navigation and swipe support.
-
-**File:** `/components/ui/EnhancedLightbox.tsx`  
-**WordPress Equivalent:** Lightbox plugin or custom modal  
-**Used In:** HeroSection, PortfolioCard, Portfolio pages
+**Version:** 4.0.0  
+**Last Updated:** January 2025
 
 ---
 
@@ -659,4 +656,4 @@ onTouchEnd={onTouchEnd}
 ---
 
 **Last Updated:** January 2025  
-**Version:** 3.2.0
+**Version:** 4.0.0

@@ -1,10 +1,7 @@
-# BlogCard Block Guidelines
+# BlogCard Component
 
-Blog post preview card with featured image and metadata.
-
-**File:** `/components/ui/BlogCard.tsx` or inline in BlogPreviewSection  
-**WordPress Equivalent:** Post card in `core/latest-posts` or `core/post-template`  
-**Used In:** BlogPreviewSection, BlogPage
+**Version:** 4.0.0  
+**Last Updated:** January 2025
 
 ---
 
@@ -232,4 +229,4 @@ className="
 ---
 
 **Last Updated:** January 2025  
-**Version:** 3.2.0
+**Version:** 4.0.0

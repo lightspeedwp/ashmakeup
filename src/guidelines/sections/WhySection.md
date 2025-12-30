@@ -1,10 +1,7 @@
-# WhySection Guidelines
+# WhySection Component
 
-Mission and philosophy section displaying core values with custom icons.
-
-**File:** `/components/sections/WhySection.tsx`  
-**WordPress Equivalent:** `core/group` or `core/columns` with content  
-**Used In:** HomePage, AboutPage
+**Version:** 4.0.0  
+**Last Updated:** January 2025
 
 ---
 
@@ -26,7 +23,7 @@ The WhySection is a **philosophy content area** that communicates core brand val
   title="Why I Do Makeup"
   subtitle="Description text"
   backgroundGradient="from-purple-50 via-pink-50 to-orange-50"
-  decorativeElements={<>/* Gradient blur orbs */}</>}
+  decorativeElements={<>/* Gradient blur orbs */</>}
 >
   {reasons.map(reason => (
     <Card key={reason.title}>
@@ -495,4 +492,4 @@ className="w-full sm:w-auto"
 ---
 
 **Last Updated:** January 2025  
-**Version:** 3.2.0
+**Version:** 4.0.0

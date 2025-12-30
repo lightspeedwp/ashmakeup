@@ -42,30 +42,184 @@ The Contentful CMS integration provides dynamic content management for the Ash S
 
 ### System Design
 
+#### ASCII Diagram (Text-Based)
+
 ```
-Contentful CMS (Source of Truth)
-        ↓
-   React Hooks (useContentful)
-        ↓
-  contentfulService.ts (API Layer)
-        ↓
-   Validation Layer
-        ↓
-  Component (with Mock Fallback)
+┌─────────────────────────────────────────────────────────────────────┐
+│                     CONTENTFUL CMS ARCHITECTURE                      │
+└─────────────────────────────────────────────────────────────────────┘
+
+                    ┌──────────────────────┐
+                    │   Contentful CMS     │
+                    │  (Cloud Headless)    │
+                    │                      │
+                    │  • Portfolio Entries │
+                    │  • Blog Posts        │
+                    │  • Page Content      │
+                    │  • Media Assets      │
+                    └──────────┬───────────┘
+                               │
+                    ┌──────────▼───────────┐
+                    │  Contentful API      │
+                    │  (GraphQL/REST)      │
+                    │                      │
+                    │  • Content Delivery  │
+                    │  • Asset Delivery    │
+                    │  • Preview API       │
+                    └──────────┬───────────┘
+                               │
+         ┌─────────────────────┼─────────────────────┐
+         │                     │                     │
+         ▼                     ▼                     ▼
+┌────────────────┐  ┌────────────────┐  ┌────────────────┐
+│ contentful     │  │  React Hooks   │  │  Type System   │
+│ Service.ts     │  │                │  │                │
+│                │  │ • usePortfolio │  │ • Portfolio    │
+│ • fetchContent │  │ • useBlogPosts │  │ • BlogPost     │
+│ • transform    │  │ • usePageData  │  │ • PageContent  │
+│ • validate     │  │                │  │                │
+│ • cache        │  │ (with timeout) │  │ (TypeScript)   │
+└────────┬───────┘  └────────┬───────┘  └────────────────┘
+         │                   │
+         │                   │
+         └───────────┬───────┘
+                     │
+            ┌────────▼─────────┐
+            │  FALLBACK LOGIC  │
+            │                  │
+            │  IF ERROR OR     │
+            │  TIMEOUT (3s):   │
+            │  Use Mock Data   │
+            └────────┬─────────┘
+                     │
+         ┌───────────┼───────────┐
+         │           │           │
+         ▼           ▼           ▼
+┌────────────┐ ┌──────────┐ ┌──────────┐
+│ Portfolio  │ │   Blog   │ │  Pages   │
+│ Components │ │Components│ │Components│
+│            │ │          │ │          │
+│ • Gallery  │ │ • Posts  │ │ • Home   │
+│ • Cards    │ │ • Search │ │ • About  │
+│ • Lightbox │ │ • Filter │ │ • Hero   │
+└────────────┘ └──────────┘ └──────────┘
 ```
 
-### Data Flow
+#### Mermaid Diagram (Interactive)
 
-```typescript
-// 1. Component requests content
-const { data, loading, error } = useAboutPageContent();
-
-// 2. Hook fetches from Contentful
-// 3. Service validates response
-// 4. Component receives validated data OR uses mock fallback
-
-const content = data || mockData; // Seamless fallback
+```mermaid
+graph TD
+    A[Contentful CMS<br/>Cloud Headless] -->|GraphQL/REST| B[Contentful API]
+    
+    B -->|Content Delivery| C[contentfulService.ts]
+    B -->|Asset Delivery| C
+    B -->|Preview API| C
+    
+    C -->|Transform & Validate| D[React Hooks]
+    C -->|Cache| E[Type System]
+    
+    D -->|usePortfolio| F{Fetch Success?}
+    D -->|useBlogPosts| F
+    D -->|usePageData| F
+    
+    F -->|Yes| G[Render CMS Content]
+    F -->|No/Timeout 3s| H[Fallback Logic]
+    
+    H -->|Use Mock Data| I[Mock Data System]
+    
+    I --> J[Portfolio Components]
+    I --> K[Blog Components]
+    I --> L[Page Components]
+    
+    G --> J
+    G --> K
+    G --> L
+    
+    style A fill:#e1f5ff,stroke:#01c3cc,stroke-width:3px
+    style B fill:#fff7ed,stroke:#f59e0b,stroke-width:2px
+    style C fill:#f0fdf4,stroke:#22c55e,stroke-width:2px
+    style F fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style H fill:#fecaca,stroke:#ef4444,stroke-width:2px
+    style I fill:#ddd6fe,stroke:#8b5cf6,stroke-width:2px
 ```
+
+#### Mermaid Sequence Diagram (Data Fetch Flow)
+
+```mermaid
+sequenceDiagram
+    participant C as Component
+    participant H as React Hook
+    participant S as contentfulService
+    participant API as Contentful API
+    participant M as Mock Data
+    
+    C->>H: useContentful() called
+    H->>S: fetchContent()
+    
+    Note over S: Set 3s timeout
+    
+    S->>API: GET /entries
+    
+    alt API Success (< 3s)
+        API-->>S: Content data
+        S->>S: Transform data
+        S->>S: Validate schema
+        S-->>H: Return CMS content
+        H-->>C: Render CMS data
+    else API Error or Timeout
+        API--xS: Error/Timeout
+        Note over S: Fallback triggered
+        S->>M: Get mock data
+        M-->>S: Mock content
+        S-->>H: Return mock data
+        H-->>C: Render mock data
+    end
+    
+    Note over C: User sees content<br/>(CMS or mock)
+```
+
+#### Mermaid State Diagram (Content Loading States)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Idle
+    
+    Idle --> Loading: Component mounts
+    
+    Loading --> Fetching: API call initiated
+    
+    Fetching --> Validating: Response received (< 3s)
+    Fetching --> FallbackTriggered: Timeout or Error
+    
+    Validating --> Success: Data valid
+    Validating --> FallbackTriggered: Validation failed
+    
+    FallbackTriggered --> LoadingMock: Load mock data
+    LoadingMock --> Success: Mock data loaded
+    
+    Success --> Rendering: Data ready
+    Rendering --> [*]: Content displayed
+    
+    note right of Fetching
+        3 second timeout
+        Network request
+    end note
+    
+    note right of FallbackTriggered
+        Graceful degradation
+        User sees mock data
+    end note
+```
+
+### System Components
+
+- **Contentful CMS (Cloud Headless):** Manages content, including portfolio entries, blog posts, page content, and media assets.
+- **Contentful API (GraphQL/REST):** Provides access to content and assets through API requests.
+- **contentfulService.ts:** Handles API requests, data transformation, validation, and caching.
+- **React Hooks:** Abstracts API calls and provides a simple interface for components to fetch and use content.
+- **Type System (TypeScript):** Ensures type safety and consistency between CMS data and mock data.
+- **Fallback Logic:** Automatically switches to mock data if the CMS is unavailable or if a request times out.
+- **Portfolio, Blog, and Pages Components:** Use the fetched data to render content dynamically.
 
 ---
 

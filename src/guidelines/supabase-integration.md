@@ -47,32 +47,317 @@ Supabase provides the backend infrastructure for the Ash Shaw Portfolio, primari
 
 ### System Design
 
-```
-Frontend (React)
-        ↓
-   Email Service (emailService.ts)
-        ↓
- Supabase Edge Function (/functions/server)
-        ↓
-   SendGrid API
-        ↓
-   Email Delivery
-```
-
-### Component Breakdown
+#### ASCII Diagram (Text-Based)
 
 ```
-/supabase/
-└── functions/
-    └── server/
-        ├── index.tsx          # Main Hono server with routes
-        └── kv_store.tsx       # Key-value storage utilities
+┌─────────────────────────────────────────────────────────────────────┐
+│                  SUPABASE + SENDGRID ARCHITECTURE                    │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────┐
+│                          USER INTERACTION                           │
+└────────────────────────────────────────────────────────────────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │   Contact Form      │
+                    │   (React Component) │
+                    │                     │
+                    │  • Name Input       │
+                    │  • Email Input      │
+                    │  • Message Input    │
+                    │  • Honeypot Field   │
+                    │  • Submit Button    │
+                    └──────────┬──────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │   Form Validation   │
+                    │                     │
+                    │  • Required fields  │
+                    │  • Email format     │
+                    │  • Honeypot check   │
+                    │  • Length limits    │
+                    └──────────┬──────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │  emailService.ts    │
+                    │  (Frontend Service) │
+                    │                     │
+                    │  • Build payload    │
+                    │  • POST request     │
+                    │  • Handle response  │
+                    └──────────┬──────────┘
+                               │
+            ┌──────────────────┼──────────────────┐
+            │                  │                  │
+            ▼                  ▼                  ▼
+    ┌───────────────┐  ┌───────────────┐  ┌───────────────┐
+    │   DEMO MODE   │  │  PRODUCTION   │  │     ERROR     │
+    │               │  │     MODE      │  │   HANDLING    │
+    │ No Supabase   │  │ Supabase URL  │  │               │
+    │ Simulates OK  │  │ configured    │  │ Retry logic   │
+    │ Returns 200   │  │ Calls Edge    │  │ User feedback │
+    └───────────────┘  └───────┬───────┘  └───────────────┘
+                               │
+                ┌──────────────▼──────────────┐
+                │  Supabase Edge Function     │
+                │  (/functions/server)        │
+                │                             │
+                │  • Receive POST request     │
+                │  • Validate payload         │
+                │  • Check environment vars   │
+                │  • Honeypot verification    │
+                │  • Rate limiting (future)   │
+                └──────────────┬──────────────┘
+                               │
+                ┌──────────────▼──────────────┐
+                │   SendGrid Integration      │
+                │                             │
+                │  • Two email templates:     │
+                │    1. Notification email    │
+                │       (to Ash Shaw)         │
+                │    2. Auto-reply email      │
+                │       (to sender)           │
+                │                             │
+                │  • Professional branding    │
+                │  • HTML formatting          │
+                └──────────────┬──────────────┘
+                               │
+                    ┌──────────┼──────────┐
+                    │          │          │
+                    ▼          ▼          ▼
+        ┌─────────────┐  ┌─────────┐  ┌─────────┐
+        │  SendGrid   │  │ Success │  │  Error  │
+        │  API Call   │  │Response │  │Response │
+        │             │  │         │  │         │
+        │ POST /mail  │  │ 200 OK  │  │ 4xx/5xx │
+        │ /send       │  │ Both    │  │ Logs &  │
+        │             │  │ emails  │  │ Throws  │
+        │ API Key     │  │ sent    │  │         │
+        │ Auth        │  │         │  │         │
+        └──────┬──────┘  └────┬────┘  └────┬────┘
+               │              │            │
+               └──────────────┼────────────┘
+                              │
+                    ┌─────────▼─────────┐
+                    │  Email Delivery   │
+                    └─────────┬─────────┘
+                              │
+              ┌───────────────┼───────────────┐
+              │               │               │
+              ▼               ▼               ▼
+    ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+    │ Notification │  │  Auto-Reply  │  │    Logs      │
+    │ Email to Ash │  │ Email to     │  │              │
+    │              │  │ Sender       │  │ • Timestamp  │
+    │ Subject:     │  │              │  │ • Status     │
+    │ "New Contact"│  │ Subject:     │  │ • Metadata   │
+    │              │  │ "Thank you"  │  │              │
+    │ Contains:    │  │              │  │ Supabase     │
+    │ • Name       │  │ Contains:    │  │ Dashboard    │
+    │ • Email      │  │ • Greeting   │  │              │
+    │ • Message    │  │ • Branding   │  │              │
+    │ • Timestamp  │  │ • Next steps │  │              │
+    └──────────────┘  └──────────────┘  └──────────────┘
+```
+
+#### Mermaid Flowchart (Interactive)
+
+```mermaid
+flowchart TD
+    A[User Fills Contact Form] --> B{Validation Passes?}
+    
+    B -->|No| C[Show Error Messages]
+    C --> A
+    
+    B -->|Yes| D{Honeypot Empty?}
+    
+    D -->|No - Bot Detected| E[Silent Rejection]
+    
+    D -->|Yes - Human| F[emailService.ts]
+    
+    F --> G{Supabase URL<br/>Configured?}
+    
+    G -->|No| H[Demo Mode]
+    H --> I[Simulate Success<br/>Return 200 OK]
+    I --> J[Show Success Message]
+    
+    G -->|Yes| K[POST to Supabase<br/>Edge Function]
+    
+    K --> L[Edge Function<br/>/functions/v1/server]
+    
+    L --> M{Validate Payload<br/>& Check Env Vars}
+    
+    M -->|Invalid| N[Return 400 Error]
+    N --> O[Show Error to User]
+    
+    M -->|Valid| P[Build Email #1<br/>Notification to Ash]
+    
+    P --> Q[SendGrid API Call #1]
+    
+    Q --> R{Email Sent?}
+    
+    R -->|No| S[Log Error & Throw]
+    S --> O
+    
+    R -->|Yes| T[Build Email #2<br/>Auto-Reply to User]
+    
+    T --> U[SendGrid API Call #2]
+    
+    U --> V{Email Sent?}
+    
+    V -->|No| S
+    
+    V -->|Yes| W[Return 200 OK]
+    
+    W --> J
+    
+    J --> X[Clear Form<br/>Show Confetti 🎉]
+    
+    style A fill:#e1f5ff,stroke:#01c3cc,stroke-width:2px
+    style B fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style D fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style E fill:#fecaca,stroke:#ef4444,stroke-width:2px
+    style G fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style H fill:#ddd6fe,stroke:#8b5cf6,stroke-width:2px
+    style J fill:#dcfce7,stroke:#22c55e,stroke-width:3px
+    style L fill:#fff7ed,stroke:#f59e0b,stroke-width:2px
+    style M fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style O fill:#fecaca,stroke:#ef4444,stroke-width:2px
+    style Q fill:#fef9c3,stroke:#eab308,stroke-width:2px
+    style U fill:#fef9c3,stroke:#eab308,stroke-width:2px
+    style X fill:#dcfce7,stroke:#22c55e,stroke-width:3px
+```
+
+#### Mermaid Sequence Diagram (Email Flow)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant F as Contact Form
+    participant E as emailService.ts
+    participant S as Supabase Edge
+    participant SG as SendGrid API
+    participant A as Ash (Recipient)
+    
+    U->>F: Fill form & submit
+    
+    Note over F: Client validation
+    F->>F: Check required fields
+    F->>F: Validate email format
+    F->>F: Check honeypot
+    
+    F->>E: sendContactFormEmail(data)
+    
+    alt Demo Mode (No Supabase)
+        E->>E: Simulate 1s delay
+        E-->>F: Return { success: true }
+        F->>U: Show success message
+    else Production Mode
+        E->>S: POST /functions/v1/server
         
-/utils/
-├── emailService.ts            # Frontend email service
-└── supabase/
-    └── info.ts                # Supabase project configuration
+        Note over S: Server-side validation
+        S->>S: Validate payload
+        S->>S: Check SENDGRID_API_KEY
+        S->>S: Check TO_EMAIL
+        S->>S: Check FROM_EMAIL
+        
+        alt Missing Env Vars
+            S-->>E: 500 Error
+            E->>F: Error: "Server config issue"
+            F->>U: Show error + retry button
+        else Config OK
+            Note over S,SG: Email #1 - Notification
+            S->>SG: POST /v3/mail/send
+            Note over SG: To: ashley@ashshaw.makeup<br/>Subject: New Contact<br/>Body: Name, Email, Message
+            
+            SG-->>S: 202 Accepted
+            
+            Note over S,SG: Email #2 - Auto-Reply
+            S->>SG: POST /v3/mail/send
+            Note over SG: To: {user email}<br/>Subject: Thank you<br/>Body: Acknowledgment
+            
+            SG-->>S: 202 Accepted
+            
+            S-->>E: 200 OK
+            E-->>F: { success: true }
+            
+            F->>U: Success! ✓
+            F->>F: Clear form
+            F->>F: Show confetti 🎉
+            
+            Note over SG,A: Email delivery
+            SG->>A: Notification email
+            SG->>U: Auto-reply email
+        end
+    end
 ```
+
+#### Mermaid State Diagram (Form States)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Idle: Form rendered
+    
+    Idle --> Typing: User types
+    
+    Typing --> Idle: Field loses focus
+    Typing --> Validating: Submit clicked
+    
+    Validating --> ShowingErrors: Validation failed
+    ShowingErrors --> Typing: User fixes errors
+    
+    Validating --> CheckingHoneypot: Validation passed
+    
+    CheckingHoneypot --> BotDetected: Honeypot filled
+    BotDetected --> [*]: Silent rejection
+    
+    CheckingHoneypot --> Submitting: Human detected
+    
+    Submitting --> Success: Server returns 200
+    Submitting --> Error: Server returns error
+    
+    Success --> ShowingSuccess: Display message
+    ShowingSuccess --> Cleared: Form cleared
+    Cleared --> [*]: User continues
+    
+    Error --> ShowingError: Display error
+    ShowingError --> Idle: User retries
+    
+    note right of Validating
+        Client-side checks:
+        - Required fields
+        - Email format
+        - Field lengths
+    end note
+    
+    note right of Submitting
+        POST to Supabase
+        Edge Function
+        Then SendGrid
+    end note
+    
+    note right of Success
+        Confetti animation
+        Success toast
+        Form cleared
+    end note
+```
+
+### System Components
+
+**Frontend:**
+- **ContactForm Component** - User interface for contact form
+- **emailService.ts** - Frontend service for API calls
+- **Validation** - Client-side validation and honeypot protection
+
+**Backend:**
+- **Supabase Edge Functions** - Serverless functions running on global edge network
+- **SendGrid Integration** - Professional email delivery service
+- **Environment Variables** - Secure configuration for API keys
+
+**Email Templates:**
+- **Notification Email** - Sent to Ash Shaw with contact details
+- **Auto-Reply Email** - Sent to user confirming message receipt
 
 ---
 

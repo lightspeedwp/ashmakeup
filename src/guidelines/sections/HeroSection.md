@@ -1,10 +1,7 @@
-# HeroSection Guidelines
+# HeroSection Component
 
-Main landing area with artistic image mosaic and brand messaging.
-
-**File:** `/components/sections/HeroSection.tsx`  
-**WordPress Equivalent:** `core/cover` or `core/group` with hero styling  
-**Used In:** HomePage
+**Version:** 4.0.0  
+**Last Updated:** January 2025
 
 ---
 
@@ -504,4 +501,4 @@ const [lightbox, setLightbox] = useState({ isOpen: false, ... });
 ---
 
 **Last Updated:** January 2025  
-**Version:** 3.2.0
+**Version:** 4.0.0

@@ -1,4 +1,7 @@
-# ThreeColumnPortfolioSection Guidelines
+# ThreeColumnPortfolioSection
+
+**Version:** 4.0.0  
+**Last Updated:** January 2025
 
 Portfolio gallery grid with three-column responsive layout.
 
@@ -87,10 +90,10 @@ Each portfolio entry displays as a card:
 ## Related Documentation
 
 - **[overview-sections.md](../overview-sections.md)** - Section system
-- **[PortfolioCard.md](../components/PortfolioCard.md)** - Card component
+- **[PortfolioCard.md](../blocks/PortfolioCard.md)** - Card component
 - **[design-tokens/spacing.md](../design-tokens/spacing.md)** - Spacing tokens
 
 ---
 
 **Last Updated:** January 2025  
-**Version:** 3.2.0
+**Version:** 4.0.0

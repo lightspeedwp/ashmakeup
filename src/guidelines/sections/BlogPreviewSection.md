@@ -1,10 +1,7 @@
-# BlogPreviewSection Guidelines
+# BlogPreviewSection
 
-Latest blog posts preview section for the homepage.
-
-**File:** `/components/sections/BlogPreviewSection.tsx`  
-**WordPress Equivalent:** `core/latest-posts` or `core/query` with recent posts  
-**Used In:** HomePage
+**Version:** 4.0.0  
+**Last Updated:** January 2025
 
 ---
 
@@ -580,4 +577,4 @@ p-fluid-md                         // Card padding
 ---
 
 **Last Updated:** January 2025  
-**Version:** 3.2.0
+**Version:** 4.0.0

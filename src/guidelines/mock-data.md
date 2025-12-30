@@ -52,38 +52,188 @@ The mock data system is a centralized, type-safe data management layer that prov
 ### System Design
 
 ```
-Application Components
-        ↓
-   React Hooks (useContentful)
-        ↓
-   contentfulService.ts
-        ↓
-   ┌─────────────┬──────────────┐
-   ▼             ▼              ▼
-Contentful   Timeout?      Mock Data
-   API         Error?       (Fallback)
-   │             │              │
-   └─────────────┴──────────────┘
-                ↓
-         Validated Data
-                ↓
-          Components
+┌─────────────────────────────────────────────────────────────────────┐
+│                     MOCK DATA SYSTEM ARCHITECTURE                    │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────┐
+│                         DATA ORGANIZATION                           │
+└────────────────────────────────────────────────────────────────────┘
+
+/data/
+├── mock/                           ← CENTRALIZED MOCK DATA
+│   ├── images/                     ← Hero images (9 images)
+│   │   ├── home.ts                 → homepageHeroImages
+│   │   ├── about.ts                → aboutHeroImages
+│   │   └── portfolio.ts            → portfolioHeroImages
+│   │
+│   ├── pages/                      ← Page content
+│   │   ├── home.ts                 → homepageHero, featuredWork
+│   │   ├── about.ts                → aboutHero, aboutContent
+│   │   └── portfolio.ts            → portfolioHero
+│   │
+│   ├── portfolio/                  ← Portfolio entries (43 entries)
+│   │   ├── index.ts                → PORTFOLIO_SECTIONS, getters
+│   │   ├── thailand.ts             → thailandWork (7 entries)
+│   │   ├── melbourne.ts            → melbourneWork (11 entries)
+│   │   ├── gold-coast.ts           → goldCoastWork (8 entries)
+│   │   ├── adelaide.ts             → adelaideWork (5 entries)
+│   │   ├── bridal.ts               → bridalWork (3 entries)
+│   │   ├── editorial.ts            → editorialWork (4 entries)
+│   │   └── special-events.ts       → specialEventsWork (5 entries)
+│   │
+│   ├── blog/                       ← Blog data
+│   │   ├── posts.ts                → blogPosts (5 posts)
+│   │   ├── categories.ts           → blogCategories (6 categories)
+│   │   └── tags.ts                 → blogTags (50+ tags)
+│   │
+│   └── ui/                         ← UI elements
+│       └── social-links.ts         → socialLinks (5 platforms)
+│
+├── types/                          ← TypeScript definitions
+│   ├── blog.ts                     → BlogPost, BlogCategory, BlogTag
+│   ├── page.ts                     → HeroContent, PageContent
+│   └── portfolio.ts                → PortfolioEntry, PortfolioImage
+│
+└── index.ts                        ← Main barrel export
+
+┌────────────────────────────────────────────────────────────────────┐
+│                    DATA FLOW WITH CMS FALLBACK                      │
+└────────────────────────────────────────────────────────────────────┘
+
+                    ┌──────────────────┐
+                    │ Component Mounts │
+                    └────────┬─────────┘
+                             │
+                    ┌────────▼─────────┐
+                    │ useContentful()  │
+                    │ Hook Called      │
+                    └────────┬─────────┘
+                             │
+                  ┌──────────▼──────────┐
+                  │ Try Fetch CMS Data  │
+                  │ (3s timeout)        │
+                  └──────────┬──────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              │              │              │
+              ▼              ▼              ▼
+    ┌───────────────┐ ┌──────────┐ ┌───────────────┐
+    │  CMS Success  │ │ Timeout  │ │  CMS Error    │
+    │               │ │          │ │               │
+    │ Return CMS    │ │ 3s limit │ │ Network fail  │
+    │ data          │ │ exceeded │ │ Invalid data  │
+    └───────┬───────┘ └────┬─────┘ └───────┬───────┘
+            │              │              │
+            │              ▼              │
+            │     ┌────────────────┐     │
+            │     │  USE MOCK DATA │     │
+            │     │  (Fallback)    │     │
+            │     └────────┬───────┘     │
+            │              │              │
+            └──────────────┼──────────────┘
+                           │
+                    ┌──────▼──────┐
+                    │  Component  │
+                    │  Receives   │
+                    │  Data       │
+                    └──────┬──────┘
+                           │
+                    ┌──────▼──────┐
+                    │   Render    │
+                    │   Content   │
+                    └─────────────┘
+
+┌────────────────────────────────────────────────────────────────────┐
+│                      IMPORT & USAGE PATTERNS                        │
+└────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ PATTERN 1: Direct Import (Immediate Access)                     │
+└─────────────────────────────────────────────────────────────────┘
+
+import { homepageHero, blogPosts } from '@/data/mock';
+
+export function HomePage() {
+  return <h1>{homepageHero.title}</h1>;
+}
+
+┌─────────────────────────────────────────────────────────────────┐
+│ PATTERN 2: CMS with Mock Fallback (Production Pattern)         │
+└─────────────────────────────────────────────────────────────────┘
+
+import { aboutHero } from '@/data/mock';
+import { useAboutPageContent } from '@/hooks/useContentful';
+
+export function AboutPage() {
+  const { data: cmsData } = useAboutPageContent();
+  
+  // CMS data if available, fallback to mock
+  const hero = cmsData?.hero || aboutHero;
+  
+  return <Hero {...hero} />;
+}
+
+┌─────────────────────────────────────────────────────────────────┐
+│ PATTERN 3: Category Import (Organized Access)                  │
+└─────────────────────────────────────────────────────────────────┘
+
+import { homepageHero } from '@/data/mock/pages/home';
+import { blogPosts } from '@/data/mock/blog';
+import { getFeaturedWork } from '@/data/mock/portfolio';
+
+┌─────────────────────────────────────────────────────────────────┐
+│ PATTERN 4: Utility Functions (Helper Methods)                  │
+└─────────────────────────────────────────────────────────────────┘
+
+import { 
+  getFeaturedWork,
+  getWorkByCategory,
+  searchPosts,
+  getPostsByCategory 
+} from '@/data/mock';
+
+const featured = getFeaturedWork(3);
+const festivalWork = getWorkByCategory('Festival Makeup');
+
+┌────────────────────────────────────────────────────────────────────┐
+│                    TYPE SAFETY FLOW                                 │
+└────────────────────────────────────────────────────────────────────┘
+
+/data/types/blog.ts
+    ↓
+export interface BlogPost {
+  id: string;
+  title: string;
+  content: string;
+  // ...
+}
+    ↓
+/data/mock/blog/posts.ts
+    ↓
+export const blogPosts: BlogPost[] = [
+  {
+    id: 'festival-makeup',
+    title: 'Festival Makeup Guide',
+    // TypeScript enforces structure
+  }
+];
+    ↓
+Component imports with full type checking
+    ↓
+const post: BlogPost = blogPosts[0];
+      ↓
+Full IntelliSense + Compile-time safety
 ```
 
-**Flow:**
-1. Component requests data via hook
-2. Hook calls Contentful service
-3. Service tries CMS first (with timeout)
-4. On failure/timeout → Falls back to mock data
-5. Data is validated before return
-6. Component receives type-safe data
+### Architecture Benefits
 
-**This ensures:**
-- App works without CMS configuration
-- App works during CMS downtime
-- App works offline
-- Consistent data structure
-- Type safety throughout
+✅ **Centralized** - Single source of truth for all content  
+✅ **Type-Safe** - Full TypeScript validation  
+✅ **Fallback-Ready** - Seamless CMS integration  
+✅ **Import-Friendly** - Barrel exports for easy access  
+✅ **Real Assets** - Actual Figma images included  
+✅ **CMS-Aligned** - Structure matches Contentful exactly
 
 ---
 
@@ -163,32 +313,32 @@ export function BlogPage() {
 │   ├── index.ts                   # Main barrel export
 │   │
 │   ├── images/                    # Hero images
-│   │   ├── hero-images.ts         # All hero image data
-│   │   └── index.ts               # Image exports
+│   │   ├── home.ts                # homepageHeroImages
+│   │   ├── about.ts               # aboutHeroImages
+│   │   └── portfolio.ts           # portfolioHeroImages
 │   │
 │   ├── pages/                     # Page content
-│   │   ├── home.ts                # Homepage content
-│   │   ├── about.ts               # About page content
-│   │   ├── portfolio.ts           # Portfolio page content
-│   │   └── index.ts               # Page exports
+│   │   ├── home.ts                # homepageHero, featuredWork
+│   │   ├── about.ts               # aboutHero, aboutContent
+│   │   └── portfolio.ts           # portfolioHero
 │   │
 │   ├── portfolio/                 # Portfolio entries
-│   │   ├── featured.ts            # Featured work (19 real Figma assets)
-│   │   ├── thailand.ts            # Thailand adventures (7 entries)
-│   │   ├── festivals.ts           # Festival makeup (4 entries)
-│   │   ├── swiss-festivals.ts     # Swiss festivals (6 entries)
-│   │   ├── uv-makeup.ts           # UV/blacklight (3 entries)
-│   │   ├── nail-art.ts            # Nail art (4 entries)
-│   │   └── index.ts               # Portfolio exports
+│   │   ├── index.ts               # PORTFOLIO_SECTIONS, getters
+│   │   ├── thailand.ts            # thailandWork (7 entries)
+│   │   ├── melbourne.ts           # melbourneWork (11 entries)
+│   │   ├── gold-coast.ts          # goldCoastWork (8 entries)
+│   │   ├── adelaide.ts            # adelaideWork (5 entries)
+│   │   ├── bridal.ts              # bridalWork (3 entries)
+│   │   ├── editorial.ts           # editorialWork (4 entries)
+│   │   └── special-events.ts      # specialEventsWork (5 entries)
 │   │
 │   ├── blog/                      # Blog data
-│   │   ├── posts.ts               # Blog posts (5 comprehensive posts)
-│   │   ├── categories.ts          # Categories and tags
-│   │   └── index.ts               # Blog exports
+│   │   ├── posts.ts               # blogPosts (5 posts)
+│   │   ├── categories.ts          # blogCategories (6 categories)
+│   │   └── tags.ts                # blogTags (50+ tags)
 │   │
 │   └── ui/                        # UI elements
-│       ├── social-links.ts        # Social media links
-│       └── index.ts               # UI exports
+│       └── social-links.ts        # socialLinks (5 platforms)
 │
 └── types/                         # TypeScript definitions
     ├── index.ts                   # Main type exports
@@ -225,7 +375,7 @@ import { BlogPost, PortfolioEntry, HeroImage } from '@/data/types';
 **Hero Images for all pages:**
 
 ```typescript
-// hero-images.ts
+// home.ts
 export const homepageHeroImages: HeroImage[] = [
   {
     src: 'figma:asset/f4a28f747d49fc9d37311b17f513b62e2b95a73e.png',
@@ -268,21 +418,37 @@ export const homepageHero = {
   description: 'Bringing colour, energy, and connection...'
 };
 
-export const whyReasons: WhyReason[] = [
+export const featuredWork: PortfolioEntry[] = [
   {
-    id: 'festival-specialist',
-    title: 'Festival Specialist',
-    icon: '🎪',
-    description: 'Expertise in bold, long-lasting looks...',
+    id: 'lost-paradise',
+    slug: 'lost-paradise-thailand',
+    title: 'Lost Paradise',
+    category: 'Festival Makeup',
+    subcategory: 'Thailand Adventures',
+    images: [
+      {
+        src: 'figma:asset/e7ee10c85c112ab4acfc9e54087974a5faae5966.png',
+        alt: 'Lost Paradise - makeup artistry in Thailand',
+        caption: 'Lost Paradise',
+        description: 'Tropical festival makeup celebrating friendship',
+        position: 'center',
+        aspectRatio: '4:3'
+      }
+    ],
+    location: 'Thailand',
+    event: 'Lost Paradise',
+    description: 'My dear friend Gabi & sista from another mista!',
+    tags: ['Thailand', 'Festival', 'Friendship'],
+    featured: false,
     order: 1
   }
-  // ... more reasons
+  // ... more entries
 ];
 ```
 
 **Available Content:**
 - `homepageHero` - Hero section content
-- `whyReasons` - Why work with Ash (4 reasons)
+- `featuredWork` - Featured portfolio entries
 
 ---
 
@@ -296,31 +462,83 @@ export const aboutHero = {
   description: 'From festivals to fine art...'
 };
 
-export const journeySection: AboutSection = {
-  id: 'journey-section',
-  title: 'My Creative Journey',
-  content: [
-    {
-      type: 'paragraph',
-      text: 'My makeup journey began at festivals...'
-    }
-  ],
-  order: 1
-};
-
-export const philosophySection: AboutSection = {...};
-export const skillsSection: AboutSection = {...};
-export const experienceHighlights = [...];
-export const aboutCTA = {...};
+export const aboutContent: AboutSection[] = [
+  {
+    id: 'journey-section',
+    title: 'My Creative Journey',
+    content: [
+      {
+        type: 'paragraph',
+        text: 'My makeup journey began at festivals...'
+      }
+    ],
+    order: 1
+  },
+  {
+    id: 'philosophy-section',
+    title: 'Philosophy and Beliefs',
+    content: [
+      {
+        type: 'paragraph',
+        text: 'I believe in the power of makeup to...'
+      }
+    ],
+    order: 2
+  },
+  {
+    id: 'skills-section',
+    title: 'Skills and Specialties',
+    content: [
+      {
+        type: 'list',
+        items: [
+          'Festival Makeup',
+          'UV/Blacklight Makeup',
+          'Nail Art',
+          'Editorial Makeup',
+          'Bridal Makeup',
+          'Special Events',
+          'Thailand Adventures',
+          'Gold Coast Adventures'
+        ]
+      }
+    ],
+    order: 3
+  },
+  {
+    id: 'experience-highlights',
+    title: 'Festival Experiences',
+    content: [
+      {
+        type: 'list',
+        items: [
+          'Lost Paradise (Thailand)',
+          'Reiserfieber (Switzerland)',
+          'Shankra (Switzerland)',
+          'UV Makeup Workshop'
+        ]
+      }
+    ],
+    order: 4
+  },
+  {
+    id: 'about-cta',
+    title: 'Call-to-Action',
+    content: [
+      {
+        type: 'button',
+        text: 'Contact Me',
+        url: '/contact'
+      }
+    ],
+    order: 5
+  }
+];
 ```
 
 **Available Content:**
 - `aboutHero` - Hero content
-- `journeySection` - Journey story
-- `philosophySection` - Philosophy and beliefs
-- `skillsSection` - Skills and specialties (8 skills)
-- `experienceHighlights` - Festival experiences (4 events)
-- `aboutCTA` - Call-to-action
+- `aboutContent` - Sections detailing journey, philosophy, skills, experiences, and CTA
 
 ---
 
@@ -564,13 +782,13 @@ export const socialLinks: SocialLink[] = [
 
 ```typescript
 // Import what you need
-import { homepageHero, whyReasons } from '@/data/mock';
+import { homepageHero, featuredWork } from '@/data/mock';
 
 export function HomePage() {
   return (
     <div>
       <Hero {...homepageHero} />
-      <WhySection reasons={whyReasons} />
+      <FeaturedSection entries={featuredWork} />
     </div>
   );
 }
@@ -688,7 +906,7 @@ export interface PortfolioImage {
 ```typescript
 // Import data with types
 import { blogPosts } from '@/data/mock/blog';
-import type { BlogPost } from '@/data/types';
+import type { BlogPost, PortfolioEntry } from '@/data/types';
 
 // TypeScript knows the exact structure
 const post: BlogPost = blogPosts[0];

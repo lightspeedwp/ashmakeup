@@ -41,19 +41,232 @@ For complete setup and configuration:
 ### Backend Architecture
 
 ```
-ContactForm Component
-    ↓
-Client-side validation
-    ↓
-/utils/emailService.ts (sendContactFormEmail)
-    ↓
-Supabase Edge Function: /functions/v1/server
-    ↓
-SendGrid API (dual email delivery)
-    ↓
-Success/Error response
-    ↓
-User feedback (toast notification)
+┌─────────────────────────────────────────────────────────────────────┐
+│                  CONTACT FORM SUBMISSION FLOW                        │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────┐
+│                         USER INTERACTION                            │
+└────────────────────────────────────────────────────────────────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │  User Fills Form    │
+                    │                     │
+                    │  • Name field       │
+                    │  • Email field      │
+                    │  • Message field    │
+                    │  • Honeypot (hidden)│
+                    └──────────┬──────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │  User Clicks Submit │
+                    └──────────┬──────────┘
+                               │
+┌─────────────────────────────┼─────────────────────────────┐
+│             CLIENT-SIDE VALIDATION                         │
+└─────────────────────────────┼─────────────────────────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │  Required Fields?   │
+                    └──────────┬──────────┘
+                               │
+                  ┌────────────┼────────────┐
+                  │ Missing                │ All OK
+                  ▼                        ▼
+         ┌────────────────┐       ┌───────────────┐
+         │ Show Errors    │       │ Email Format? │
+         │ Under Fields   │       └───────┬───────┘
+         │                │               │
+         │ • "Required"   │    ┌──────────┼──────────┐
+         │ • Red borders  │    │ Invalid            │ Valid
+         │ • Stay on form │    ▼                    ▼
+         └────────────────┘  ┌──────────┐   ┌───────────────┐
+                             │Show Error│   │ Honeypot Check│
+                             │"Invalid  │   └───────┬───────┘
+                             │ email"   │           │
+                             └──────────┘    ┌──────┼──────┐
+                                             │Filled      │Empty
+                                             ▼            ▼
+                                    ┌───────────┐  ┌──────────┐
+                                    │  BOT!     │  │ HUMAN OK │
+                                    │ Reject    │  │          │
+                                    │ silently  │  │ Continue │
+                                    └───────────┘  └────┬─────┘
+                                                        │
+┌───────────────────────────────────────────────────────┼──────┐
+│                 SUBMIT TO BACKEND                            │
+└───────────────────────────────────────────────────────┼──────┘
+                                                        │
+                                             ┌──────────▼──────────┐
+                                             │ emailService.ts     │
+                                             │                     │
+                                             │ Build payload:      │
+                                             │ {                   │
+                                             │   name: string,     │
+                                             │   email: string,    │
+                                             │   message: string   │
+                                             │ }                   │
+                                             └──────────┬──────────┘
+                                                        │
+                                             ┌──────────▼──────────┐
+                                             │ Check Supabase URL  │
+                                             └──────────┬──────────┘
+                                                        │
+                                          ┌─────────────┼─────────────┐
+                                          │                           │
+                                          ▼                           ▼
+                                  ┌───────────────┐       ┌──────────────────┐
+                                  │  DEMO MODE    │       │ PRODUCTION MODE  │
+                                  │               │       │                  │
+                                  │ No Supabase   │       │ Supabase URL set │
+                                  │ URL set       │       │                  │
+                                  │               │       │ POST to:         │
+                                  │ Simulate:     │       │ /functions/v1/   │
+                                  │ • Wait 1s     │       │ server           │
+                                  │ • Return 200  │       └────────┬─────────┘
+                                  │ • Success msg │                │
+                                  └───────┬───────┘                │
+                                          │                        │
+┌─────────────────────────────────────────┼────────────────────────┼────┐
+│                  SUPABASE EDGE FUNCTION (Server-side)                 │
+└─────────────────────────────────────────┼────────────────────────┼────┘
+                                          │                        │
+                                          │         ┌──────────────▼──────────┐
+                                          │         │ Edge Function Receives  │
+                                          │         │ POST request            │
+                                          │         └──────────────┬──────────┘
+                                          │                        │
+                                          │             ┌──────────▼──────────┐
+                                          │             │ Validate Payload    │
+                                          │             │ • Check fields      │
+                                          │             │ • Sanitize input    │
+                                          │             └──────────┬──────────┘
+                                          │                        │
+                                          │             ┌──────────▼──────────┐
+                                          │             │ Check Environment   │
+                                          │             │ • SENDGRID_API_KEY  │
+                                          │             │ • TO_EMAIL          │
+                                          │             │ • FROM_EMAIL        │
+                                          │             └──────────┬──────────┘
+                                          │                        │
+┌─────────────────────────────────────────┼────────────────────────┼────┐
+│                     SENDGRID INTEGRATION                              │
+└─────────────────────────────────────────┼────────────────────────┼────┘
+                                          │                        │
+                                          │         ┌──────────────▼──────────┐
+                                          │         │ Build Email #1          │
+                                          │         │ (Notification to Ash)   │
+                                          │         │                         │
+                                          │         │ To: ashley@ashshaw.com  │
+                                          │         │ From: noreply@...       │
+                                          │         │ Subject: "New Contact"  │
+                                          │         │                         │
+                                          │         │ Body (HTML):            │
+                                          │         │ • Name: {name}          │
+                                          │         │ • Email: {email}        │
+                                          │         │ • Message: {message}    │
+                                          │         │ • Timestamp             │
+                                          │         │ • Branding              │
+                                          │         └──────────┬──────────────┘
+                                          │                    │
+                                          │         ┌──────────▼──────────┐
+                                          │         │ POST to SendGrid    │
+                                          │         │ /v3/mail/send       │
+                                          │         └──────────┬──────────┘
+                                          │                    │
+                                          │         ┌──────────▼──────────┐
+                                          │         │ Build Email #2      │
+                                          │         │ (Auto-Reply to User)│
+                                          │         │                     │
+                                          │         │ To: {user email}    │
+                                          │         │ From: noreply@...   │
+                                          │         │ Subject: "Thank you"│
+                                          │         │                     │
+                                          │         │ Body (HTML):        │
+                                          │         │ • Greeting          │
+                                          │         │ • Acknowledgment    │
+                                          │         │ • Next steps        │
+                                          │         │ • Branding/Social   │
+                                          │         └──────────┬──────────┘
+                                          │                    │
+                                          │         ┌──────────▼──────────┐
+                                          │         │ POST to SendGrid    │
+                                          │         │ /v3/mail/send       │
+                                          │         └──────────┬──────────┘
+                                          │                    │
+                                          │         ┌──────────▼──────────┐
+                                          │         │ Both Emails Sent?   │
+                                          │         └──────────┬──────────┘
+                                          │                    │
+                                          │         ┌──────────┼────────┐
+                                          │         │ YES              NO│
+                                          │         ▼                    ▼
+                                          │  ┌──────────┐      ┌──────────┐
+                                          │  │ Return   │      │ Throw    │
+                                          │  │ 200 OK   │      │ Error    │
+                                          │  └────┬─────┘      └────┬─────┘
+                                          │       │                 │
+┌─────────────────────────────────────────┼───────┼─────────────────┼────┐
+│                   FRONTEND RESPONSE HANDLING                            │
+└─────────────────────────────────────────┼───────┼─────────────────┼────┘
+                                          │       │                 │
+                                          └───────┼─────────────────┘
+                                                  │
+                                       ┌──────────▼──────────┐
+                                       │ emailService.ts     │
+                                       │ Receives Response   │
+                                       └──────────┬──────────┘
+                                                  │
+                                       ┌──────────┼──────────┐
+                                       │ 200                │ Error
+                                       ▼                    ▼
+                             ┌──────────────┐     ┌──────────────┐
+                             │  SUCCESS!    │     │ ERROR        │
+                             │              │     │              │
+                             │ ContactForm  │     │ ContactForm  │
+                             │ Component:   │     │ Component:   │
+                             │              │     │              │
+                             │ • Clear form │     │ • Keep form  │
+                             │ • Show toast │     │ • Show error │
+                             │ • Confetti 🎉│     │ • Log error  │
+                             │ • "Thank you"│     │ • Retry btn  │
+                             └──────────────┘     └──────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                      STATE MANAGEMENT FLOW                           │
+└─────────────────────────────────────────────────────────────────────┘
+
+Component State:
+┌──────────────────────────────────────────┐
+│ formData: {                              │
+│   name: string,                          │
+│   email: string,                         │
+│   message: string,                       │
+│   honeypot: string (bot detection)       │
+│ }                                        │
+│                                          │
+│ errors: {                                │
+│   name?: string,                         │
+│   email?: string,                        │
+│   message?: string                       │
+│ }                                        │
+│                                          │
+│ isSubmitting: boolean                    │
+│ submitStatus: 'idle' | 'success' | 'error'│
+└──────────────────────────────────────────┘
+
+State Transitions:
+┌─────────────┐   Submit   ┌──────────────┐   Success  ┌──────────┐
+│    idle     │ ────────→  │ isSubmitting │ ─────────→ │ success  │
+│             │            │   = true     │            │          │
+└─────────────┘            └──────┬───────┘            └──────────┘
+                                  │
+                                  │ Error
+                                  ▼
+                           ┌──────────┐   Retry    ┌─────────────┐
+                           │  error   │ ────────→  │ isSubmitting│
+                           │          │            │   = true    │
+                           └──────────┘            └─────────────┘
 ```
 
 ### File Locations

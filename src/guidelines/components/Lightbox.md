@@ -20,6 +20,446 @@ Provide immersive image viewing with:
 
 ---
 
+## 🖼️ Lightbox Interaction Flow
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    LIGHTBOX INTERACTION FLOW                         │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────┐
+│                      OPENING LIGHTBOX                               │
+└────────────────────────────────────────────────────────────────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │  User Clicks Image  │
+                    │  Thumbnail          │
+                    └──────────┬──────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │  onClick Handler    │
+                    │  Triggers           │
+                    │                     │
+                    │  • setIsOpen(true)  │
+                    │  • setIndex(3)      │
+                    └──────────┬──────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │  Lightbox Component │
+                    │  Mounts             │
+                    │                     │
+                    │  • Render backdrop  │
+                    │  • Render image     │
+                    │  • Render controls  │
+                    │  • Attach listeners │
+                    │  • Lock body scroll │
+                    └──────────┬──────────┘
+                               │
+┌────────────────────────────────────────────────────────────────────┐
+│                      LIGHTBOX LAYOUT                                │
+└────────────────────────────────────────────────────────────────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │                     │
+                    │  ┌───────────────┐  │
+                    │  │  Close Button │  │ ← Top Right
+                    │  │  (X icon)     │  │
+                    │  └───────────────┘  │
+                    │                     │
+                    │  ┌─────────────┐    │
+     Prev Arrow →   │  │             │    │  ← Next Arrow
+     (Left side)    │  │    IMAGE    │    │  (Right side)
+                    │  │  (Centered) │    │
+                    │  │             │    │
+                    │  └─────────────┘    │
+                    │                     │
+                    │  Caption & Metadata │ ← Bottom
+                    │                     │
+                    │  Thumbnail Strip    │ ← Bottom (Optional)
+                    │  [▪][▪][■][▪][▪]    │
+                    │                     │
+                    └─────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────┐
+│                      NAVIGATION CONTROLS                            │
+└────────────────────────────────────────────────────────────────────┘
+
+Method 1: KEYBOARD
+──────────────────
+┌────────┬────────────────────────────┐
+│  Key   │  Action                    │
+├────────┼────────────────────────────┤
+│ ESC    │ Close lightbox             │
+│ ←      │ Previous image             │
+│ →      │ Next image                 │
+│ SPACE  │ Next image                 │
+│ HOME   │ First image                │
+│ END    │ Last image                 │
+└────────┴────────────────────────────┘
+
+Method 2: MOUSE
+───────────────
+┌────────────────┬───────────────────┐
+│  Action        │  Result           │
+├────────────────┼───────────────────┤
+│ Click X button │ Close lightbox    │
+│ Click backdrop │ Close lightbox    │
+│ Click < arrow  │ Previous image    │
+│ Click > arrow  │ Next image        │
+│ Click thumbnail│ Go to that image  │
+└────────────────┴───────────────────┘
+
+Method 3: TOUCH (Mobile)
+────────────────────────
+┌────────────────┬───────────────────┐
+│  Gesture       │  Result           │
+├────────────────┼───────────────────┤
+│ Swipe left     │ Next image        │
+│ Swipe right    │ Previous image    │
+│ Tap backdrop   │ Close lightbox    │
+│ Pinch zoom     │ Zoom in/out       │
+└────────────────┴───────────────────┘
+
+┌────────────────────────────────────────────────────────────────────┐
+│                      IMAGE NAVIGATION LOGIC                         │
+└────────────────────────────────────────────────────────────────────┘
+
+Current State:
+─────────────
+images = [img1, img2, img3, img4, img5]  (5 images)
+currentIndex = 2                          (viewing img3)
+
+┌──────────────────────────────────────────────┐
+│  Navigation Actions:                         │
+├──────────────────────────────────────────────┤
+│                                              │
+│  PREVIOUS:                                   │
+│  newIndex = (currentIndex - 1 + length) % 5  │
+│  newIndex = (2 - 1 + 5) % 5 = 6 % 5 = 1      │
+│  → Show img2                                 │
+│                                              │
+│  NEXT:                                       │
+│  newIndex = (currentIndex + 1) % 5           │
+│  newIndex = (2 + 1) % 5 = 3 % 5 = 3          │
+│  → Show img4                                 │
+│                                              │
+│  WRAP-AROUND:                                │
+│  At last image (index 4):                    │
+│    Next → (4 + 1) % 5 = 0 → img1 (first)     │
+│                                              │
+│  At first image (index 0):                   │
+│    Prev → (0 - 1 + 5) % 5 = 4 → img5 (last)  │
+│                                              │
+└──────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────┐
+│                      STATE MANAGEMENT                               │
+└────────────────────────────────────────────────────────────────────┘
+
+Component State:
+┌──────────────────────────────────────────┐
+│ isOpen: boolean                          │
+│ currentIndex: number                     │
+│ images: Image[]                          │
+│ isZoomed: boolean                        │
+│ zoomLevel: number (1.0, 1.5, 2.0)        │
+└──────────────────────────────────────────┘
+
+State Flow:
+┌─────────────┐   Click Image   ┌──────────────┐
+│   CLOSED    │ ──────────────→ │     OPEN     │
+│             │                 │              │
+│ isOpen=false│                 │ isOpen=true  │
+│             │                 │ index=clicked│
+└─────────────┘                 └──────┬───────┘
+      ▲                                │
+      │                                │
+      │ ESC / Click X                  │ Navigate
+      │                                │
+      │                         ┌──────▼───────┐
+      │                         │  NAVIGATING  │
+      │                         │              │
+      │                         │ index changes│
+      │                         │ image updates│
+      │                         └──────────────┘
+      │
+      └────────────────────────
+
+┌────────────────────────────────────────────────────────────────────┐
+│                      IMAGE LOADING SEQUENCE                         │
+└────────────────────────────────────────────────────────────────────┘
+
+Step 1: User clicks image
+      │
+      ▼
+Step 2: Lightbox opens with loading state
+      │
+      ┌──────────────────────┐
+      │  ┌────────────────┐  │
+      │  │                │  │
+      │  │   [SPINNER]    │  │ ← Loading indicator
+      │  │                │  │
+      │  └────────────────┘  │
+      └──────────────────────┘
+      │
+      ▼
+Step 3: Image loads in background
+      │
+      ┌──────────────────────┐
+      │  ┌────────────────┐  │
+      │  │                │  │
+      │  │ [Loading... 50%]   │ ← Progress bar (optional)
+      │  │                │  │
+      │  └────────────────┘  │
+      └──────────────────────┘
+      │
+      ▼
+Step 4: Image loaded and displayed
+      │
+      ┌──────────────────────┐
+      │  ┌────────────────┐  │
+      │  │                │  │
+      │  │  [FULL IMAGE]  │  │ ← Image rendered
+      │  │                │  │
+      │  └────────────────┘  │
+      │  Caption & Info      │
+      └──────────────────────┘
+
+Error Handling:
+───────────────
+      ┌──────────────────────┐
+      │  ┌────────────────┐  │
+      │  │  ⚠ Failed to   │  │
+      │  │  load image    │  │ ← Error state
+      │  │                │  │
+      │  │  [Retry]       │  │ ← Retry button
+      │  └────────────────┘  │
+      └──────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────┐
+│                      ACCESSIBILITY FLOW                             │
+└────────────────────────────────────────────────────────────────────┘
+
+On Open:
+────────
+1. Trap focus within lightbox
+2. Move focus to close button
+3. Lock body scroll (prevent background scrolling)
+4. Announce to screen readers: "Viewing image 3 of 5"
+
+During Navigation:
+──────────────────
+1. Update aria-live region: "Image 4 of 5"
+2. Maintain focus on navigation controls
+3. Update document title (optional)
+
+On Close:
+─────────
+1. Restore focus to trigger element (thumbnail clicked)
+2. Unlock body scroll
+3. Remove lightbox from DOM
+4. Announce: "Lightbox closed"
+
+Focus Trap:
+───────────
+┌─────────────────────────────────────────┐
+│  Focusable Elements in Order:           │
+│                                         │
+│  1. Close button (X)                    │
+│  2. Previous arrow (<)                  │
+│  3. Next arrow (>)                      │
+│  4. Zoom controls (if enabled)          │
+│  5. Thumbnail 1                         │
+│  6. Thumbnail 2                         │
+│  7. ...                                 │
+│                                         │
+│  TAB from last → wraps to first         │
+│  SHIFT+TAB from first → wraps to last   │
+└─────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────┐
+│                      PERFORMANCE OPTIMIZATION                       │
+└────────────────────────────────────────────────────────────────────┘
+
+Strategy: Preload Adjacent Images
+──────────────────────────────────
+
+Current: Image 3
+─────────────────
+      [img1]  [img2]  [IMG3]  [img4]  [img5]
+                       ↑
+                   Currently
+                   displayed
+                       
+Preload Strategy:
+─────────────────
+┌──────────────────────────────────────┐
+│  Preload Priority:                   │
+│                                      │
+│  1. Current image (3) → Load NOW     │
+│  2. Next image (4) → Preload HIGH    │
+│  3. Previous image (2) → Preload MED │
+│  4. Other images → Load on demand    │
+└──────────────────────────────────────┘
+
+Implementation:
+───────────────
+useEffect(() => {
+  // Preload next image
+  const nextIndex = (currentIndex + 1) % images.length;
+  const nextImg = new Image();
+  nextImg.src = images[nextIndex].url;
+  
+  // Preload previous image
+  const prevIndex = (currentIndex - 1 + images.length) % images.length;
+  const prevImg = new Image();
+  prevImg.src = images[prevIndex].url;
+}, [currentIndex]);
+
+Benefits:
+─────────
+✅ Instant navigation to adjacent images
+✅ Smooth user experience
+✅ Reduced perceived loading time
+✅ Better engagement metrics
+```
+
+---
+
+## 🎨 Interactive Mermaid Diagrams
+
+### Mermaid State Diagram (Lightbox States)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Closed: Page loads
+    
+    Closed --> Opening: User clicks thumbnail
+    
+    Opening --> Loading: Lightbox renders
+    
+    Loading --> ImageLoading: Fetch image
+    
+    ImageLoading --> Displayed: Image loaded
+    ImageLoading --> Error: Load failed
+    
+    Error --> Displayed: Retry succeeded
+    Error --> Closed: User closes
+    
+    Displayed --> Navigating: Arrow key pressed
+    Displayed --> Zooming: Pinch gesture
+    Displayed --> Closing: ESC or click backdrop
+    
+    Navigating --> ImageLoading: Load new image
+    
+    Zooming --> Displayed: Zoom complete
+    
+    Closing --> Closed: Animation complete
+    Closed --> [*]
+    
+    note right of Opening
+        Trap focus
+        Lock body scroll
+        Mount lightbox
+    end note
+    
+    note right of Displayed
+        Main viewing state
+        All controls active
+        Preload adjacent
+    end note
+    
+    note right of Closing
+        Release focus
+        Unlock scroll
+        Unmount lightbox
+    end note
+```
+
+### Mermaid Flowchart (Navigation Logic)
+
+```mermaid
+flowchart TD
+    A[User Action] --> B{What Action?}
+    
+    B -->|Click Next Arrow| C[Next Image]
+    B -->|Click Prev Arrow| D[Previous Image]
+    B -->|Press → Key| C
+    B -->|Press ← Key| D
+    B -->|Press ESC| E[Close Lightbox]
+    B -->|Click Backdrop| E
+    B -->|Press SPACE| C
+    B -->|Swipe Left| C
+    B -->|Swipe Right| D
+    
+    C --> F{At Last Image?}
+    F -->|Yes| G[Wrap to First]
+    F -->|No| H[currentIndex + 1]
+    
+    D --> I{At First Image?}
+    I -->|Yes| J[Wrap to Last]
+    I -->|No| K[currentIndex - 1]
+    
+    G --> L[Update State]
+    H --> L
+    J --> L
+    K --> L
+    
+    L --> M[Preload Adjacent]
+    M --> N[Render New Image]
+    
+    E --> O[Release Focus]
+    O --> P[Unlock Body Scroll]
+    P --> Q[Return to Gallery]
+    
+    style C fill:#e1f5ff,stroke:#01c3cc
+    style D fill:#e1f5ff,stroke:#01c3cc
+    style E fill:#fecaca,stroke:#ef4444
+    style L fill:#dcfce7,stroke:#22c55e
+    style M fill:#fef3c7,stroke:#f59e0b
+```
+
+### Mermaid Sequence Diagram (User Interaction)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant G as Gallery
+    participant L as Lightbox
+    participant I as Image
+    participant K as Keyboard
+    
+    U->>G: Click thumbnail #3
+    G->>L: openLightbox(index: 3)
+    
+    Note over L: Mount component<br/>Trap focus<br/>Lock scroll
+    
+    L->>I: Load image #3
+    I-->>L: Image loaded
+    L->>U: Display image
+    
+    Note over L: Preload #2 and #4
+    
+    U->>K: Press → arrow
+    K->>L: Navigate next
+    L->>L: currentIndex = 4
+    L->>I: Load image #4
+    I-->>L: Image loaded (preloaded)
+    L->>U: Display instantly ⚡
+    
+    Note over L: Preload #3 and #5
+    
+    U->>K: Press ESC
+    K->>L: Close lightbox
+    
+    Note over L: Release focus<br/>Unlock scroll<br/>Unmount
+    
+    L->>G: Return focus to thumbnail
+    L->>U: Back to gallery
+```
+
+---
+
 ## Usage
 
 ### Basic Usage

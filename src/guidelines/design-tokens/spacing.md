@@ -56,70 +56,205 @@ This generates a harmonious scale:
 
 ## Fluid Spacing Scale
 
-### Base Spacing Tokens
+### Visual Spacing Scale
 
-```css
-/* Extra Small - Tight spacing */
-.space-xs, .p-fluid-xs, .py-fluid-xs, .px-fluid-xs
-  padding: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);  /* 4px → 8px */
-
-/* Small - Compact spacing */
-.space-sm, .p-fluid-sm, .py-fluid-sm, .px-fluid-sm
-  padding: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);  /* 8px → 16px */
-
-/* Medium - Standard spacing */
-.space-md, .p-fluid-md, .py-fluid-md, .px-fluid-md
-  padding: clamp(1rem, 0.8rem + 1vw, 2rem);  /* 16px → 32px */
-
-/* Large - Generous spacing */
-.space-lg, .p-fluid-lg, .py-fluid-lg, .px-fluid-lg
-  padding: clamp(1.5rem, 1.2rem + 1.5vw, 3rem);  /* 24px → 48px */
-
-/* Extra Large - Section spacing */
-.space-xl, .p-fluid-xl, .py-fluid-xl, .px-fluid-xl
-  padding: clamp(2rem, 1.5rem + 2.5vw, 4rem);  /* 32px → 64px */
-
-/* 2XL - Major section spacing */
-.space-2xl, .p-fluid-2xl, .py-fluid-2xl, .px-fluid-2xl
-  padding: clamp(3rem, 2rem + 5vw, 6rem);  /* 48px → 96px */
-
-/* 3XL - Hero section spacing */
-.space-3xl, .p-fluid-3xl, .py-fluid-3xl, .px-fluid-3xl
-  padding: clamp(4rem, 3rem + 5vw, 8rem);  /* 64px → 128px */
-
-/* 4XL - Page section spacing */
-.space-4xl, .p-fluid-4xl, .py-fluid-4xl, .px-fluid-4xl
-  padding: clamp(5rem, 4rem + 5vw, 10rem);  /* 80px → 160px */
-
-/* 5XL - Major visual break spacing */
-.space-5xl, .p-fluid-5xl, .py-fluid-5xl, .px-fluid-5xl
-  padding: clamp(6rem, 5rem + 5vw, 12rem);  /* 96px → 192px */
-
-/* 6XL - Hero section spacing */
-.space-6xl, .p-fluid-6xl, .py-fluid-6xl, .px-fluid-6xl
-  padding: clamp(7rem, 6rem + 5vw, 14rem);  /* 112px → 224px */
 ```
+┌─────────────────────────────────────────────────────────────────────┐
+│                   FLUID SPACING SCALE VISUALIZATION                  │
+└─────────────────────────────────────────────────────────────────────┘
 
-### Margin Utilities
+MOBILE (375px) ────────────────────────────────→ DESKTOP (1920px)
 
-```css
-/* Margin Bottom */
-.mb-fluid-xs    /* clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem) */
-.mb-fluid-sm    /* clamp(0.5rem, 0.4rem + 0.5vw, 1rem) */
-.mb-fluid-md    /* clamp(1rem, 0.8rem + 1vw, 2rem) */
-.mb-fluid-lg    /* clamp(1.5rem, 1.2rem + 1.5vw, 3rem) */
-.mb-fluid-xl    /* clamp(2rem, 1.5rem + 2.5vw, 4rem) */
-.mb-fluid-2xl   /* clamp(3rem, 2rem + 5vw, 6rem) */
-.mb-fluid-3xl   /* clamp(4rem, 3rem + 5vw, 8rem) */
-.mb-fluid-4xl   /* clamp(5rem, 4rem + 5vw, 10rem) */
-.mb-fluid-5xl   /* clamp(6rem, 5rem + 5vw, 12rem) */
-.mb-fluid-6xl   /* clamp(7rem, 6rem + 5vw, 14rem) */
+.p-fluid-xs
+▓                                                ▓▓
+0.5rem (8px)                                     0.75rem (12px)
 
-/* Margin Top */
-.mt-fluid-xs through .mt-fluid-6xl  /* Same values as mb */
+.p-fluid-sm
+▓▓                                               ▓▓▓
+0.75rem (12px)                                   1rem (16px)
 
-/* Gap (for Grid/Flexbox) */
-.gap-fluid-xs through .gap-fluid-6xl  /* Same values for consistent spacing */
+.p-fluid-md
+▓▓▓                                              ▓▓▓▓
+1rem (16px)                                      1.5rem (24px)
+
+.p-fluid-lg
+▓▓▓▓▓                                            ▓▓▓▓▓▓▓▓
+1.5rem (24px)                                    2.25rem (36px)
+
+.p-fluid-xl
+▓▓▓▓▓▓▓                                          ▓▓▓▓▓▓▓▓▓▓▓▓
+2rem (32px)                                      3rem (48px)
+
+.p-fluid-2xl
+▓▓▓▓▓▓▓▓▓▓                                       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+2.5rem (40px)                                    4rem (64px)
+
+.p-fluid-3xl
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓                                   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+3rem (48px)                                      6rem (96px)
+
+.p-fluid-4xl
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓                               ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+4rem (64px)                                      8rem (128px)
+
+.p-fluid-5xl
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓                           ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+5rem (80px)                                      10rem (160px)
+
+.p-fluid-6xl
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓                     ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+6rem (96px)                                      12rem (192px)
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                   SPACING SCALE RELATIONSHIPS                        │
+└─────────────────────────────────────────────────────────────────────┘
+
+Scale Progression (1.5x multiplicative):
+────────────────────────────────────────
+
+fluid-xs   0.5rem →  0.75rem   (1.5x)
+  ↓
+fluid-sm   0.75rem → 1rem      (1.33x)
+  ↓
+fluid-md   1rem →    1.5rem    (1.5x)
+  ↓
+fluid-lg   1.5rem →  2.25rem   (1.5x)
+  ↓
+fluid-xl   2rem →    3rem      (1.5x)
+  ↓
+fluid-2xl  2.5rem →  4rem      (1.6x)
+  ↓
+fluid-3xl  3rem →    6rem      (2x)
+  ↓
+fluid-4xl  4rem →    8rem      (2x)
+  ↓
+fluid-5xl  5rem →    10rem     (2x)
+  ↓
+fluid-6xl  6rem →    12rem     (2x)
+
+Usage Frequency Chart:
+─────────────────────
+
+fluid-xs  ████                10% - Micro spacing
+fluid-sm  ██████              15% - Small gaps
+fluid-md  ████████████        30% - Standard spacing
+fluid-lg  ██████████          25% - Section margins
+fluid-xl  ████                10% - Large spacing
+2xl-6xl   ██                   10% - Hero/special
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                   COMPONENT SPACING HIERARCHY                        │
+└─────────────────────────────────────────────────────────────────────┘
+
+Micro Level (Within elements)
+──────────────────────────────
+px-2, py-1                    Icons, badges, small tags
+gap-2                         Inline icon + text spacing
+
+Component Level (Within components)
+────────────────────────────────────
+.p-fluid-sm                   Card padding (mobile)
+.p-fluid-md                   Card padding (desktop)
+.gap-fluid-md                 Grid gaps, flex gaps
+.mb-fluid-md                  Element margins
+
+Section Level (Between sections)
+─────────────────────────────────
+.py-section                   Section vertical padding
+.mb-fluid-xl                  Section bottom margin
+.gap-fluid-lg                 Section element spacing
+
+Page Level (Overall page structure)
+────────────────────────────────────
+.py-fluid-3xl                 Hero padding
+.mb-fluid-2xl                 Major section separation
+.p-fluid-6xl                  Maximum spacing (rare)
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                   RESPONSIVE SPACING BEHAVIOR                        │
+└─────────────────────────────────────────────────────────────────────┘
+
+Example: Card Padding with .p-fluid-md
+───────────────────────────────────────
+
+375px (Mobile)          768px (Tablet)          1920px (Desktop)
+┌────────────────┐      ┌──────────────────┐    ┌───────────────────────┐
+│ [16px]         │      │ [20px]           │    │ [24px]                │
+│                │      │                  │    │                       │
+│  Card Content  │  →   │   Card Content   │ →  │     Card Content      │
+│                │      │                  │    │                       │
+│         [16px] │      │           [20px] │    │                [24px] │
+└────────────────┘      └──────────────────┘    └───────────────────────┘
+
+Smooth interpolation: clamp(1rem, 2vw, 1.5rem)
+No breakpoints needed!
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                   SPACING STACK PATTERNS                             │
+└─────────────────────────────────────────────────────────────────────┘
+
+Pattern 1: Vertical Stack (Common)
+───────────────────────────────────
+
+<section className="py-section">        ← Section padding
+  <h2 className="mb-fluid-md">          ← Heading margin
+    Section Title
+  </h2>
+  <p className="mb-fluid-sm">           ← Paragraph margin
+    Description text
+  </p>
+  <div className="grid gap-fluid-md">   ← Grid gap
+    {items.map(...)}
+  </div>
+</section>
+
+Visual Stack:
+─────────────
+[py-section top]
+    Title
+[mb-fluid-md]
+    Description
+[mb-fluid-sm]
+    Grid Item 1
+[gap-fluid-md]
+    Grid Item 2
+[gap-fluid-md]
+    Grid Item 3
+[py-section bottom]
+
+Pattern 2: Horizontal Flex
+───────────────────────────
+
+<div className="flex items-center gap-fluid-sm">
+  <Icon />
+  <span>Text</span>
+  <Badge />
+</div>
+
+Visual:
+Icon [gap-fluid-sm] Text [gap-fluid-sm] Badge
+
+Pattern 3: Card Layout
+──────────────────────
+
+<div className="p-card-responsive">     ← Fluid card padding
+  <img className="mb-fluid-md" />       ← Image margin
+  <h3 className="mb-fluid-sm">...</h3>  ← Title margin
+  <p className="mb-fluid-md">...</p>    ← Text margin
+  <button>...</button>
+</div>
+
+Visual Stack:
+─────────────
+[padding top]
+    Image
+[mb-fluid-md]
+    Title
+[mb-fluid-sm]
+    Description
+[mb-fluid-md]
+    Button
+[padding bottom]
 ```
 
 ---

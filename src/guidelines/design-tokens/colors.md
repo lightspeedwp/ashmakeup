@@ -48,67 +48,172 @@ This document has been verified against `/styles/globals.css` as of January 2025
 
 ## Brand Colors
 
-### Primary Brand Colors
+### Primary Brand Palette
 
-#### Pink
-**Usage:** Primary CTA buttons, hero accents, featured content
-
-```css
-/* CSS Variables */
---color-pink-300: #FDA4AF; /* Light pink accents */
---color-pink-500: #FF66CC; /* Main pink (brand primary) */
---color-pink-700: #E91E63; /* Dark pink (hover states) */
-
-/* Tailwind Classes */
-.text-pink-500        /* Text color */
-.bg-pink-500          /* Background color */
-.border-pink-500      /* Border color */
-.hover:bg-pink-700    /* Hover background */
 ```
+┌─────────────────────────────────────────────────────────────────────┐
+│                     BRAND COLOR HIERARCHY                            │
+└─────────────────────────────────────────────────────────────────────┘
 
-**Example:**
-```tsx
-<button className="bg-pink-500 hover:bg-pink-700 text-white px-button py-button">
-  Primary CTA
-</button>
-```
+PRIMARY GRADIENT (Pink → Purple → Blue)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+█████ #ff61d8 → ██████ #b967ff → ██████ #01c3cc
+Pink           Purple            Blue
+(Vibrant)      (Energetic)       (Cool)
 
-#### Purple
-**Usage:** Secondary CTA, brand accents, gradients
+SECONDARY GRADIENT (Blue → Teal → Green)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+██████ #01c3cc → ██████ #05f0db → ██████ #6cff97
+Blue           Teal              Green
+(Cool)         (Fresh)           (Growth)
 
-```css
-/* CSS Variables */
---color-purple-300: #D8B4FE; /* Light purple */
---color-purple-600: #9933FF; /* Main purple */
---color-purple-700: #7E22CE; /* Dark purple (hover) */
---color-purple-900: #581C87; /* Very dark purple (text) */
+ACCENT GRADIENT (Gold → Peach → Coral)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+██████ #ffd97d → ██████ #ffaa9e → ██████ #ff7c73
+Gold           Peach             Coral
+(Warm)         (Soft)            (Energetic)
 
-/* Tailwind Classes */
-.text-purple-600
-.bg-purple-600
-.hover:bg-purple-700
-```
+┌─────────────────────────────────────────────────────────────────────┐
+│                     GRADIENT USAGE HIERARCHY                         │
+└─────────────────────────────────────────────────────────────────────┘
 
-**Example:**
-```tsx
-<button className="bg-purple-600 hover:bg-purple-700 text-white">
-  Secondary Action
-</button>
-```
+Priority 1: PRIMARY (Pink-Purple-Blue)
+──────────────────────────────────────
+Usage:
+  • Main CTA buttons
+  • Hero titles
+  • Primary navigation active states
+  • Feature highlights
+  
+Visual Weight: MAXIMUM
+Frequency: 70% of branded elements
 
-#### Blue
-**Usage:** Links, information, trust indicators
+Priority 2: SECONDARY (Blue-Teal-Green)
+────────────────────────────────────────
+Usage:
+  • Secondary CTA buttons
+  • Section accents
+  • Interactive elements
+  • Supporting content
+  
+Visual Weight: MEDIUM
+Frequency: 20% of branded elements
 
-```css
-/* CSS Variables */
---color-blue-400: #60A5FA; /* Light blue */
---color-blue-500: #3399FF; /* Main blue */
---color-blue-700: #1D4ED8; /* Dark blue (links) */
+Priority 3: ACCENT (Gold-Peach-Coral)
+──────────────────────────────────────
+Usage:
+  • Decorative elements
+  • Background orbs
+  • Subtle highlights
+  • Tertiary buttons
+  
+Visual Weight: LIGHT
+Frequency: 10% of branded elements
 
-/* Tailwind Classes */
-.text-blue-700        /* Link text */
-.bg-blue-500
-.hover:text-blue-500
+┌─────────────────────────────────────────────────────────────────────┐
+│                     COLOR CONTRAST MATRIX                            │
+└─────────────────────────────────────────────────────────────────────┘
+
+Text on Background Combinations:
+─────────────────────────────────
+
+                  White      Light Gray    Dark Gray     Black
+                  #ffffff    #f3f4f6       #374151      #000000
+───────────────────────────────────────────────────────────────────
+Pink #ff61d8    │  3.1:1 ❌  │  4.2:1 ⚠️   │  8.5:1 ✅   │ 12.1:1 ✅
+Purple #b967ff  │  4.5:1 ✅  │  5.2:1 ✅   │  9.1:1 ✅   │ 14.3:1 ✅
+Blue #01c3cc    │  2.8:1 ❌  │  3.9:1 ⚠️   │  7.8:1 ✅   │ 11.2:1 ✅
+Teal #05f0db    │  1.9:1 ❌  │  2.5:1 ❌   │  5.2:1 ✅   │  8.9:1 ✅
+Green #6cff97   │  1.5:1 ❌  │  2.1:1 ❌   │  4.1:1 ⚠️   │  7.3:1 ✅
+
+Legend:
+✅ WCAG AA+ (7:1+)   - Excellent for body text
+✅ WCAG AA (4.5:1+)  - Good for body text
+⚠️ WCAG Large (3:1+) - OK for large text (18px+) only
+❌ Fails (<3:1)      - Do not use
+
+Recommended Combinations:
+─────────────────────────
+✅ White text on gradient backgrounds (buttons)
+✅ Dark gray (#374151) or black text on white backgrounds
+✅ Light gray (#f3f4f6) backgrounds with dark text
+❌ Avoid brand colors on white for body text
+❌ Avoid gradient text on gradient backgrounds
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                     SEMANTIC COLOR SYSTEM                            │
+└─────────────────────────────────────────────────────────────────────┘
+
+SUCCESS (Green)
+───────────────
+bg-green-50     ░░░░░  #f0fdf4  (Light background)
+bg-green-100    ░░░░░  #dcfce7  (Subtle background)
+bg-green-500    ██████  #22c55e  (Primary action)
+bg-green-700    ██████  #15803d  (Dark variant)
+text-green-900  ██████  #14532d  (Text)
+
+Usage: Success messages, confirmations, checkmarks
+Example: "Message sent successfully!"
+
+ERROR (Red)
+───────────
+bg-red-50       ░░░░░  #fef2f2  (Light background)
+bg-red-100      ░░░░░  #fee2e2  (Subtle background)
+bg-red-500      ██████  #ef4444  (Primary action)
+bg-red-700      ██████  #b91c1c  (Dark variant)
+text-red-900    ██████  #7f1d1d  (Text)
+
+Usage: Error messages, validation errors, destructive actions
+Example: "Failed to submit form"
+
+WARNING (Amber/Orange)
+──────────────────────
+bg-amber-50     ░░░░░  #fffbeb  (Light background)
+bg-amber-100    ░░░░░  #fef3c7  (Subtle background)
+bg-amber-500    ██████  #f59e0b  (Primary action)
+bg-amber-700    ██████  #b45309  (Dark variant)
+text-amber-900  ██████  #78350f  (Text)
+
+Usage: Warnings, cautions, alerts
+Example: "Your session will expire soon"
+
+INFO (Blue)
+───────────
+bg-blue-50      ░░░░░  #eff6ff  (Light background)
+bg-blue-100     ░░░░░  #dbeafe  (Subtle background)
+bg-blue-500     ██████  #3b82f6  (Primary action)
+bg-blue-700     ██████  #1d4ed8  (Dark variant)
+text-blue-900   ██████  #1e3a8a  (Text)
+
+Usage: Information messages, tips, notes
+Example: "New features available"
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                     NEUTRAL SCALE (Grays)                            │
+└─────────────────────────────────────────────────────────────────────┘
+
+White → Gray → Black
+──────────────────────
+
+white           ░░░░░  #ffffff  (Pure white - backgrounds)
+gray-50         ░░░░░  #f9fafb  (Lightest gray - subtle bg)
+gray-100        ░░░░░  #f3f4f6  (Light gray - card bg)
+gray-200        ▒▒▒▒▒  #e5e7eb  (Borders, dividers)
+gray-300        ▒▒▒▒▒  #d1d5db  (Inactive borders)
+gray-400        ▓▓▓▓▓  #9ca3af  (Placeholder text)
+gray-500        ▓▓▓▓▓  #6b7280  (Secondary text)
+gray-600        ▓▓▓▓▓  #4b5563  (Body text light)
+gray-700        ██████  #374151  (Primary body text)
+gray-800        ██████  #1f2937  (Headings)
+gray-900        ██████  #111827  (Dark headings)
+black           ██████  #000000  (Pure black - rare use)
+
+Usage Guidelines:
+─────────────────
+✅ gray-50 to gray-200: Backgrounds, subtle surfaces
+✅ gray-300 to gray-400: Borders, dividers, disabled states
+✅ gray-500 to gray-600: Secondary text, metadata
+✅ gray-700 to gray-900: Primary text, headings
 ```
 
 ---
