@@ -3,13 +3,11 @@
  * Features the new brand logo image with colorful paintbrush design
  *
  * @author Ash Shaw Portfolio Team
- * @version 2.2.0
+ * @version 2.1.0
  */
 
 import React from "react";
-
-// Logo image path - self-hosted in public folder
-const logoImage = '/logo.png';
+import logoImage from 'figma:asset/428cc40e40184633483ae65f75ced5f46af6821d.png';
 
 /**
  * Logo component props interface for flexible sizing and styling
@@ -82,7 +80,7 @@ export function Logo({
     },
     '2xl': {
       container: "flex items-center gap-6",
-      logo: "h-30", // 3x medium+ (120px)
+      logo: "h-30", // 3x medium+ (120px) 
       name: "text-5xl",
       tagline: "text-xl",
     },

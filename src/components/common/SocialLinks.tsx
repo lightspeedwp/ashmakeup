@@ -1,15 +1,16 @@
 /**
- * @fileoverview Social media links component with platform-specific styling
- * Provides consistent social media icon presentation across the portfolio site
- * with authentic brand gradients and accessibility features.
+ * @fileoverview Social media links component with custom SVG icons
+ * Displays clickable social media icons with proper accessibility attributes
+ * and visual styling that integrates with the overall brand aesthetic
  *
+ * @component SocialLinks
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
+ * @version 3.0.0 - Using centralized mock data
  */
 
 import React from "react";
 import svgPaths from "../../imports/svg-p751zd8tl6";
-import { SOCIAL_LINKS } from "./Constants";
+import { socialLinks } from "../../data/mock/ui/social-links";
 
 /**
  * Props interface for SocialLinks component
@@ -68,7 +69,7 @@ export function SocialLinks({
 }: SocialLinksProps) {
   return (
     <div className={`flex gap-fluid-md ${className}`}>
-      {SOCIAL_LINKS.map((social, index) => (
+      {socialLinks.map((social, index) => (
         <a
           key={index}
           href={social.url}

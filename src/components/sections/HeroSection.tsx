@@ -3,48 +3,17 @@
  * Features overlapping images, floating gradient orbs, and responsive design
  *
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
+ * @version 2.0.0 - Using centralized mock data
+ * @deprecated This component is legacy. Use HeroLayout instead.
  */
 
 import React, { useState } from "react";
-import imgHeroImage1 from "figma:asset/7aeb80239b9fc61876f42ca779badabf1651bb2c.png";
-import imgHeroImage2 from "figma:asset/b013338a3126efe5c475db2f25c54b560aaf020f.png";
-import imgHeroImage3 from "figma:asset/97bc32da10ca77968fe99531c50669a75c3be78e.png";
+import { homepageHeroImages } from "../../data/mock/images/hero-images";
 import { EnhancedLightbox } from "../ui/EnhancedLightbox";
 
-/**
- * Hero section component with artistic image mosaic and brand messaging
- *
- * Visual Features:
- * - Three overlapping images with artistic rotation and shadow effects
- * - Floating gradient orbs with pulse animations (pink/purple, blue/teal, yellow/pink)
- * - Responsive image sizing from mobile (160×192px) to desktop (320×384px)
- * - Four decorative gradient dots positioned around images with staggered animations
- * - Brand tagline with individual word gradients for visual storytelling
- *
- * Interactive Elements:
- * - Clickable images opening in lightbox modal
- * - Hover effects with scale transforms on images
- * - Gradient text effects on key messaging words
- *
- * Layout Strategy:
- * - Flexbox layout switching from column (mobile) to row (desktop)
- * - Responsive spacing using fluid utility classes
- * - Z-index layering for proper image overlap and decorative elements
- *
- * @component
- * @returns {JSX.Element} Hero section with image mosaic and messaging
- *
- * @accessibility
- * - Proper image alt text describing makeup styles and events
- * - Keyboard accessible image interactions
- * - Semantic HTML structure with proper heading hierarchy
- *
- * @performance
- * - Optimized image loading with responsive breakpoints
- * - CSS transforms for smooth hover animations
- * - Efficient state management for lightbox modal
- */
+// Import the actual images from hero-images data
+const heroImages = homepageHeroImages.slice(0, 3);
+
 export function HeroSection() {
   const [lightbox, setLightbox] = useState<{
     isOpen: boolean;
@@ -129,11 +98,11 @@ export function HeroSection() {
                 <div
                   className="absolute top-6 left-4 sm:top-12 sm:left-8 w-48 h-56 sm:w-72 sm:h-80 md:w-80 md:h-96 rounded-2xl bg-cover bg-center shadow-2xl transform rotate-3 z-20 border-4 border-white ring-4 ring-gradient-to-r ring-pink-200/50 cursor-pointer transition-transform hover:scale-105"
                   style={{
-                    backgroundImage: `url('${imgHeroImage2}')`,
+                    backgroundImage: `url('${heroImages[1].src}')`,
                   }}
                   onClick={() =>
                     openLightbox(
-                      imgHeroImage2,
+                      heroImages[1].src,
                       "Thailand Festival Makeup",
                       "Eden Paradise",
                     )
@@ -144,11 +113,11 @@ export function HeroSection() {
                 <div
                   className="absolute top-0 right-0 w-40 h-48 sm:w-64 sm:h-72 md:w-72 md:h-80 rounded-2xl bg-cover bg-center shadow-xl transform -rotate-6 z-10 border-4 border-white ring-4 ring-purple-200/50 cursor-pointer transition-transform hover:scale-105"
                   style={{
-                    backgroundImage: `url('${imgHeroImage1}')`,
+                    backgroundImage: `url('${heroImages[0].src}')`,
                   }}
                   onClick={() =>
                     openLightbox(
-                      imgHeroImage1,
+                      heroImages[0].src,
                       "Thailand Festival Makeup",
                       "Lost Paradise",
                     )
@@ -159,11 +128,11 @@ export function HeroSection() {
                 <div
                   className="absolute bottom-0 left-0 w-36 h-40 sm:w-60 sm:h-64 md:w-68 md:h-72 rounded-2xl bg-cover bg-center shadow-xl transform rotate-12 z-10 border-4 border-white ring-4 ring-blue-200/50 cursor-pointer transition-transform hover:scale-105"
                   style={{
-                    backgroundImage: `url('${imgHeroImage3}')`,
+                    backgroundImage: `url('${heroImages[2].src}')`,
                   }}
                   onClick={() =>
                     openLightbox(
-                      imgHeroImage3,
+                      heroImages[2].src,
                       "Thailand Festival Makeup",
                       "Eden Paradise",
                     )

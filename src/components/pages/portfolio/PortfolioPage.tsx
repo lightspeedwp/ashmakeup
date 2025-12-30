@@ -3,17 +3,22 @@
  * Features Contentful CMS integration, multi-image portfolio entries with advanced lightbox functionality and responsive design
  *
  * @author Ash Shaw Portfolio Team
- * @version 3.0.0 - Contentful CMS Integration
+ * @version 4.0.0 - Using centralized mock data
  */
 
 import React, { useMemo } from "react";
 import { HeroLayout } from "../../sections/HeroLayout";
 import { ThreeColumnPortfolioSection } from "../../sections/ThreeColumnPortfolioSection";
 import { Footer } from "../../common/Footer";
+import { PORTFOLIO_SECTIONS } from "../../common/Constants";
+import { portfolioHeroImages } from "../../../data/mock/images/hero-images";
 import {
-  PORTFOLIO_SECTIONS,
-  PORTFOLIO_HERO_IMAGES,
-} from "../../common/Constants";
+  portfolioHero,
+  portfolioIntro,
+  portfolioCategories,
+  portfolioStats,
+  portfolioCTA
+} from "../../../data/mock/pages/portfolio";
 import { usePortfolioSections } from "../../../hooks/useContentful";
 import { PortfolioEntry } from "../../../utils/contentfulService";
 import { ScrollToTop } from "../../ui/ScrollToTop";
@@ -173,7 +178,7 @@ export function PortfolioPage({
           to: "purple-500",
         }}
         scrollArrowTarget="featured-work"
-        heroImages={PORTFOLIO_HERO_IMAGES}
+        heroImages={portfolioHeroImages}
         lightboxTitle="Portfolio Gallery"
         enableLightbox={true}
         decorativeElements={

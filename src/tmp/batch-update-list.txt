@@ -1,0 +1,20 @@
+Files to update (batch):
+
+9. Lightbox.md
+10. LoadingSpinner.md
+11. Logo.md
+12. Modal.md
+13. Pagination.md
+14. ReadMoreButton.md
+15. ScrollBackToTop.md
+16. ScrollDownArrow.md
+17. SearchBar.md
+18. SectionCard.md
+19. ShareComponent.md
+20. SliderCard.md
+21. Tag.md
+22. TestimonialCard.md
+
+Pattern for each:
+1. Version header: v4.0.0, January 2025
+2. Related Documentation: add FILE_STRUCTURE.md, overview-components.md cross-refs

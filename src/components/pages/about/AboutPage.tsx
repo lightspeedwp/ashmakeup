@@ -4,7 +4,7 @@
  * Contentful CMS integration, and accessibility-compliant structure with creative visual elements.
  *
  * @author Ash Shaw Portfolio Team
- * @version 2.0.0 - Contentful CMS Integration
+ * @version 3.0.0 - Using centralized mock data
  */
 
 import React from "react";
@@ -13,10 +13,16 @@ import { Footer } from "../../common/Footer";
 import { ScrollToTop } from "../../ui/ScrollToTop";
 
 import { SectionCard } from "../../ui/SectionCard";
+import { ABOUT_SECTION_THEMES } from "../../common/Constants";
+import { aboutHeroImages } from "../../../data/mock/images/hero-images";
 import {
-  ABOUT_SECTION_THEMES,
-  ABOUT_HERO_IMAGES,
-} from "../../common/Constants";
+  aboutHero,
+  journeySection,
+  philosophySection,
+  skillsSection,
+  experienceHighlights,
+  aboutCTA
+} from "../../../data/mock/pages/about";
 import { useAboutPageContent } from "../../../hooks/useContentful";
 
 /**
@@ -250,7 +256,7 @@ export function AboutPage({
         titleGradient={{ from: "pink-500", to: "purple-600" }}
         showScrollArrow={true}
         scrollArrowTarget="journey-section"
-        heroImages={heroImage ? [heroImage] : ABOUT_HERO_IMAGES}
+        heroImages={heroImage ? [heroImage] : aboutHeroImages}
         lightboxTitle="Ash Shaw's Creative Journey"
         enableLightbox={true}
         decorativeElements={

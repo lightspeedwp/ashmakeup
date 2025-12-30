@@ -3,7 +3,7 @@
  * Combines all homepage sections with Contentful CMS integration and proper semantic structure
  *
  * @author Ash Shaw Portfolio Team
- * @version 2.0.0 - Contentful CMS Integration
+ * @version 3.0.0 - Using centralized mock data with CMS fallbacks
  */
 
 import React, { useState } from "react";
@@ -14,9 +14,12 @@ import { FeaturedSection } from "../../sections/FeaturedSection";
 import { BlogPreviewSection } from "../../sections/BlogPreviewSection";
 import { FusionNailsSection } from "../../sections/FusionNailsSection";
 import { Footer } from "../../common/Footer";
-import { HOMEPAGE_HERO_IMAGES } from "../../common/Constants";
 import { useHomepageContent } from "../../../hooks/useContentful";
 import { ScrollToTop } from "../../ui/ScrollToTop";
+
+// Import mock data for fallbacks
+import { homepageHero } from "../../../data/mock/pages/home";
+import { homepageHeroImages } from "../../../data/mock/images/hero-images";
 
 /**
  * Props interface for HomePage component
@@ -30,7 +33,13 @@ interface HomePageProps {
 /**
  * HomePage component rendering the main landing page content with Contentful CMS integration
  *
- * New Features (v2.0):
+ * New Features (v3.0):
+ * - Centralized mock data system for easy content updates
+ * - Clean separation of content and presentation
+ * - Type-safe data imports
+ * - Improved maintainability
+ *
+ * Features (v2.0):
  * - Dynamic content loading from Contentful CMS
  * - Fallback to static content when Contentful unavailable
  * - Real-time content updates without deployment
@@ -124,17 +133,19 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
     return <ErrorState />;
   }
 
-  // Extract content with fallbacks to static content
-  const heroTitle = homepageContent?.hero.title || "Hi, I'm Ash Shaw";
-  const heroDescription = homepageContent?.hero.description || "Makeup is my art, my joy, and my way of bringing people together. From festivals to the dance floor, I use colour and light to create looks that make people feel radiant, confident, and alive. ✨ This portfolio is a growing collection of that journey.";
-  const ctaText = homepageContent?.hero.ctaText || "Explore My Portfolio";
-  const heroBackgroundImages = homepageContent?.hero.backgroundImages?.length > 0 
-    ? homepageContent.hero.backgroundImages.map(img => ({
-        src: img.url,
-        alt: img.alt,
-        title: img.title
-      }))
-    : HOMEPAGE_HERO_IMAGES;
+  // Extract content with fallbacks to mock data
+  const heroContent = {
+    title: homepageContent?.hero.title || homepageHero.title,
+    description: homepageContent?.hero.description || homepageHero.description,
+    ctaText: homepageContent?.hero.ctaText || homepageHero.ctaText,
+    images: homepageContent?.hero.backgroundImages?.length > 0 
+      ? homepageContent.hero.backgroundImages.map(img => ({
+          src: img.url,
+          alt: img.alt,
+          title: img.title
+        }))
+      : homepageHeroImages
+  };
 
   return (
     <main id="main-content" role="main">
@@ -150,9 +161,9 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
         </div>
       )}
 
-      {/* Dynamic Hero Section with Contentful content */}
+      {/* Dynamic Hero Section with mock data fallbacks */}
       <HeroLayout
-        title={heroTitle}
+        title={heroContent.title}
         subtitle={
           <>
             Makeup that shines with{" "}
@@ -170,7 +181,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
             .
           </>
         }
-        description={heroDescription}
+        description={heroContent.description}
         size="xl"
         layout="split"
         backgroundGradient={{
@@ -180,7 +191,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
         }}
         titleGradient={{ from: "pink-500", to: "purple-600" }}
         scrollArrowTarget="why-section"
-        heroImages={heroBackgroundImages}
+        heroImages={heroContent.images}
         lightboxTitle="Ash Shaw Makeup Artistry"
         enableLightbox={true}
         actions={
@@ -190,7 +201,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
             style={{ fontFamily: 'var(--font-body)' }}
             aria-label="Navigate to portfolio page to view makeup artistry work"
           >
-            {ctaText}
+            {heroContent.ctaText}
           </button>
         }
         decorativeElements={
@@ -211,7 +222,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
         }
       />
 
-      {/* Static sections - these can be enhanced with Contentful later */}
+      {/* Why Section - now uses centralized mock data */}
       <WhySection setCurrentPage={setCurrentPage} />
       
       {/* Featured Section - will use Contentful portfolio data */}

@@ -3,7 +3,7 @@
  * Displays the philosophical reasons for pursuing makeup artistry with interactive cards
  *
  * @author Ash Shaw Portfolio Team
- * @version 2.0.0
+ * @version 3.0.0 - Using centralized mock data
  */
 
 import React from "react";
@@ -13,12 +13,20 @@ import {
   JoyIcon,
   GrowthIcon,
 } from "../common/ColorfulIcons";
+import { whyReasons } from "../../data/mock/pages/home";
+
+// Map icon string IDs to icon components
+const iconMap = {
+  shine: ShineIcon,
+  joy: JoyIcon,
+  growth: GrowthIcon,
+} as const;
 
 /**
  * Why I Do Makeup section featuring three core messaging pillars with custom icons
  *
  * Content Strategy:
- * - Three philosophical reasons for pursuing makeup artistry
+ * - Three philosophical reasons for pursuing makeup artistry (from mock data)
  * - Each card represents a core value: service to others, personal joy, continuous growth
  * - Custom animated icons reinforce messaging through visual metaphors
  *
@@ -48,27 +56,6 @@ export function WhySection({
 }: {
   setCurrentPage: (page: string) => void;
 }) {
-  const reasons = [
-    {
-      icon: ShineIcon,
-      title: "Spread Joy",
-      description:
-        "When I do makeup for others, it lights them up. They feel special, happy, and confident — and seeing that sparkle in their eyes inspires me to keep creating.",
-    },
-    {
-      icon: JoyIcon,
-      title: "Brings Me Joy",
-      description:
-        "Makeup is my creative playground. Whether it's festival glitter, glowing UV paints, or bold eyeshadow blends, I love the process of experimenting and expressing.",
-    },
-    {
-      icon: GrowthIcon,
-      title: "To Keep Growing",
-      description:
-        "Every face, every colour, every night out is a chance to evolve. Makeup is a journey — and I treat each session as an opportunity to learn and expand my artistry.",
-    },
-  ];
-
   const decorativeElements = (
     <>
       <div className="absolute top-1/4 left-1/4 w-32 h-32 sm:w-64 sm:h-64 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full blur-3xl opacity-5" />
@@ -114,8 +101,8 @@ export function WhySection({
       header={headerContent}
       footer={footerContent}
     >
-      {reasons.map((reason, index) => {
-        const IconComponent = reason.icon;
+      {whyReasons.map((reason, index) => {
+        const IconComponent = iconMap[reason.icon];
         return (
           <div
             key={index}

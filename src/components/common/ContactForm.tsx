@@ -18,7 +18,7 @@
  * Dependencies:
  * - React 18+ for state management and form handling
  * - SendGrid for professional email delivery service
- * - Constants.ts for social media links and contact information
+ * - Centralized social links data from /data/mock/ui/social-links
  * - emailService.ts for email sending and validation utilities
  * 
  * Accessibility:
@@ -35,16 +35,17 @@
  * - Lazy loading of email service with graceful error handling
  * 
  * @author Ash Shaw Portfolio Team
- * @version 2.2.0
+ * @version 3.0.0 - Using centralized mock data
  * @since 1.0.0 - Initial contact form implementation
  * @since 2.0.0 - EmailJS integration with dual email system
  * @since 2.1.0 - Enhanced validation and error handling
  * @since 2.2.0 - Comprehensive JSDoc documentation and accessibility improvements
+ * @since 3.0.0 - Migrated to centralized data structure
  * @lastModified 2025-01-17
  */
 
 import React, { useState, useEffect } from "react";
-import { SOCIAL_LINKS } from "./Constants";
+import { socialLinks } from "../../data/mock/ui/social-links";
 import { sendContactForm, sendContactFormDemo, validateEmailService, initializeEmailJS, type ContactFormData } from "../../utils/emailService";
 
 /**

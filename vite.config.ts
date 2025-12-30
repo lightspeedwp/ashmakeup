@@ -21,11 +21,8 @@
         'figma:asset/e82a7d901c5a28bf9313c7535228e647eaf06b75.png': path.resolve(__dirname, './src/assets/e82a7d901c5a28bf9313c7535228e647eaf06b75.png'),
         'figma:asset/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png': path.resolve(__dirname, './src/assets/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png'),
         'figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png': path.resolve(__dirname, './src/assets/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png'),
-        'figma:asset/b013338a3126efe5c475db2f25c54b560aaf020f.png': path.resolve(__dirname, './src/assets/b013338a3126efe5c475db2f25c54b560aaf020f.png'),
         'figma:asset/a7af693fc872d71d588da4e937939b615aa77796.png': path.resolve(__dirname, './src/assets/a7af693fc872d71d588da4e937939b615aa77796.png'),
-        'figma:asset/97bc32da10ca77968fe99531c50669a75c3be78e.png': path.resolve(__dirname, './src/assets/97bc32da10ca77968fe99531c50669a75c3be78e.png'),
         'figma:asset/7afa71c7ec4457a1c1983db257703a6c92a9cce7.png': path.resolve(__dirname, './src/assets/7afa71c7ec4457a1c1983db257703a6c92a9cce7.png'),
-        'figma:asset/7aeb80239b9fc61876f42ca779badabf1651bb2c.png': path.resolve(__dirname, './src/assets/7aeb80239b9fc61876f42ca779badabf1651bb2c.png'),
         'figma:asset/74b708f3be9c02b929444ed900d4217477ac45ad.png': path.resolve(__dirname, './src/assets/74b708f3be9c02b929444ed900d4217477ac45ad.png'),
         'figma:asset/67d17491919b3e8d50187f4923b8bbbdc1f03c5e.png': path.resolve(__dirname, './src/assets/67d17491919b3e8d50187f4923b8bbbdc1f03c5e.png'),
         'figma:asset/428cc40e40184633483ae65f75ced5f46af6821d.png': path.resolve(__dirname, './src/assets/428cc40e40184633483ae65f75ced5f46af6821d.png'),
@@ -68,7 +65,7 @@
     },
     build: {
       target: 'esnext',
-      outDir: 'dist',
+      outDir: 'build',
     },
     server: {
       port: 3000,

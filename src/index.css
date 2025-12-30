@@ -110,7 +110,6 @@
     --color-green-500: oklch(.723 .219 149.579);
     --color-green-600: oklch(.627 .194 149.214);
     --color-green-700: oklch(.527 .154 150.069);
-    --color-green-800: oklch(.448 .119 151.328);
     --color-emerald-50: oklch(.979 .021 166.113);
     --color-emerald-100: oklch(.95 .052 163.051);
     --color-emerald-200: oklch(.905 .093 164.15);
@@ -1055,10 +1054,6 @@
     margin-top: calc(var(--spacing) * 6);
   }
 
-  .mt-8 {
-    margin-top: calc(var(--spacing) * 8);
-  }
-
   .mr-1 {
     margin-right: calc(var(--spacing) * 1);
   }
@@ -1301,10 +1296,6 @@
 
   .w-2 {
     width: calc(var(--spacing) * 2);
-  }
-
-  .w-2\/3 {
-    width: 66.6667%;
   }
 
   .w-3 {
@@ -2022,14 +2013,6 @@
 
   .bg-gray-700 {
     background-color: var(--color-gray-700);
-  }
-
-  .bg-green-50 {
-    background-color: var(--color-green-50);
-  }
-
-  .bg-green-500 {
-    background-color: var(--color-green-500);
   }
 
   .bg-purple-100 {
@@ -3082,10 +3065,6 @@
     letter-spacing: var(--tracking-tight);
   }
 
-  .break-all {
-    word-break: break-all;
-  }
-
   .whitespace-nowrap {
     white-space: nowrap;
   }
@@ -3140,10 +3119,6 @@
 
   .text-green-600 {
     color: var(--color-green-600);
-  }
-
-  .text-green-800 {
-    color: var(--color-green-800);
   }
 
   .text-indigo-900 {
