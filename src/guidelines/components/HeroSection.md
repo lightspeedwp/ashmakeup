@@ -584,5 +584,143 @@ import Particles from 'react-particles';
 
 ---
 
+## 🎨 Interactive Mermaid Diagrams
+
+### Mermaid State Diagram (Hero Animation States)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Loading: Component mounts
+    
+    Loading --> ImagePreloading: Load hero images
+    
+    ImagePreloading --> Animating: Images ready
+    
+    Animating --> FadeIn: Fade in title
+    FadeIn --> SlideUp: Slide up content
+    SlideUp --> ScaleIn: Scale in buttons
+    
+    ScaleIn --> Interactive: All animations complete
+    
+    Interactive --> ButtonHover: User hovers CTA
+    Interactive --> ScrollDown: User scrolls
+    Interactive --> CTAClick: User clicks button
+    
+    ButtonHover --> Interactive: Mouse out
+    
+    CTAClick --> Navigating: Navigate to section
+    
+    ScrollDown --> Scrolling: Parallax effect
+    Scrolling --> Interactive: Scroll stops
+    
+    note right of Loading
+        Initial mount
+        No content visible
+    end note
+    
+    note right of Interactive
+        Fully loaded
+        All interactions active
+        CTAs responsive
+    end note
+    
+    note right of Scrolling
+        Parallax on images
+        Fade opacity on scroll
+    end note
+```
+
+### Mermaid Flowchart (Hero CTA Logic)
+
+```mermaid
+flowchart TD
+    A[Hero Renders] --> B{Has Primary CTA?}
+    
+    B -->|No| C[Show Title Only]
+    B -->|Yes| D[Render Primary Button]
+    
+    D --> E{Has Secondary CTA?}
+    
+    E -->|No| F[Single Button Layout]
+    E -->|Yes| G[Two Button Layout]
+    
+    F --> H[Center button]
+    G --> I[Flex row sm:flex-col]
+    
+    H --> J{User Action?}
+    I --> J
+    
+    J -->|Hover Primary| K[Scale 1.05 + Shadow XL]
+    J -->|Hover Secondary| L[Border pink-500]
+    J -->|Click Primary| M[Execute primaryCTA.onClick]
+    J -->|Click Secondary| N[Execute secondaryCTA.onClick]
+    
+    K --> O[Transition 300ms]
+    L --> O
+    
+    M --> P{Navigate or Action?}
+    N --> P
+    
+    P -->|Navigate| Q[Scroll to section]
+    P -->|External| R[Open modal/link]
+    
+    Q --> S[Smooth scroll behavior]
+    R --> T[New window or overlay]
+    
+    style A fill:#e1f5ff,stroke:#01c3cc,stroke-width:2px
+    style D fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style G fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style M fill:#e1f5ff,stroke:#01c3cc,stroke-width:2px
+    style N fill:#e1f5ff,stroke:#01c3cc,stroke-width:2px
+```
+
+### Mermaid Sequence Diagram (Hero Load Sequence)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant P as Page
+    participant H as Hero Component
+    participant I as Images
+    participant A as Animations
+    
+    U->>P: Navigate to page
+    P->>H: Mount Hero
+    
+    Note over H: Initial state: hidden
+    
+    H->>I: Preload hero images
+    
+    Note over I: Load 3 images<br/>(mobile, tablet, desktop)
+    
+    I-->>H: Images loaded
+    
+    H->>A: Start animation sequence
+    
+    Note over A: Step 1: Fade in
+    A->>A: opacity 0 → 1 (500ms)
+    
+    Note over A: Step 2: Slide up
+    A->>A: translateY(20px) → 0 (600ms)
+    
+    Note over A: Step 3: Scale buttons
+    A->>A: scale(0.95) → 1 (400ms)
+    
+    A-->>H: Animations complete
+    
+    H->>U: Hero fully visible
+    
+    Note over H: All content displayed<br/>CTAs interactive
+    
+    U->>H: Scroll down
+    H->>A: Apply parallax
+    
+    Note over A: opacity: 1 → 0.5<br/>translateY: 0 → 50px
+    
+    A->>U: Smooth scroll effect
+```
+
+---
+
 **Last Updated:** January 2025  
 **Version:** 4.0.0

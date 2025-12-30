@@ -665,6 +665,171 @@ function GalleryWithLoading({ images, isLoading }: Props) {
 
 ---
 
+## 🎨 Interactive Mermaid Diagrams
+
+### Mermaid State Diagram (Gallery States)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Loading: Component mounts
+    
+    Loading --> LoadingImages: Fetch images
+    
+    LoadingImages --> Rendering: Images ready
+    
+    Rendering --> Displayed: Gallery rendered
+    
+    Displayed --> Filtering: User applies filter
+    Displayed --> LayoutSwitch: User toggles layout
+    Displayed --> ImageHover: Mouse over image
+    Displayed --> ImageClick: User clicks image
+    
+    Filtering --> ApplyingFilter: Filter by category
+    ApplyingFilter --> Displayed: Show filtered images
+    
+    LayoutSwitch --> TogglingLayout: Grid ↔ Masonry
+    TogglingLayout --> Displayed: Layout changed
+    
+    ImageHover --> ShowingOverlay: Overlay visible
+    ShowingOverlay --> Displayed: Mouse out
+    
+    ImageClick --> OpeningLightbox: Open full view
+    OpeningLightbox --> LightboxOpen: Lightbox active
+    
+    LightboxOpen --> Navigating: Arrow keys / clicks
+    LightboxOpen --> Closing: ESC pressed
+    
+    Navigating --> LightboxOpen: New image displayed
+    Closing --> Displayed: Return to gallery
+    
+    note right of Displayed
+        All images visible
+        Hover effects active
+        Filters applied
+    end note
+    
+    note right of LightboxOpen
+        Full-screen mode
+        Navigation active
+        Focus trapped
+    end note
+```
+
+### Mermaid Flowchart (Image Loading & Display)
+
+```mermaid
+flowchart TD
+    A[Gallery Component Mounts] --> B[Load Portfolio Data]
+    
+    B --> C{Data Source?}
+    
+    C -->|Contentful CMS| D[Fetch from API]
+    C -->|Mock Data| E[Load from /data/mock]
+    
+    D --> F{API Success?}
+    F -->|Yes| G[Transform CMS Data]
+    F -->|No/Timeout| E
+    
+    E --> H[Use Mock Data]
+    
+    G --> I[Merge Data]
+    H --> I
+    
+    I --> J{Has Filter Active?}
+    
+    J -->|Yes| K[Filter by Category]
+    J -->|No| L[Show All Images]
+    
+    K --> M[Filtered Image Set]
+    L --> N[All Images]
+    
+    M --> O{Layout Type?}
+    N --> O
+    
+    O -->|Grid| P[CSS Grid Layout]
+    O -->|Masonry| Q[Masonry Layout]
+    O -->|List| R[List Layout]
+    
+    P --> S[Render Images]
+    Q --> S
+    R --> S
+    
+    S --> T{User Action?}
+    
+    T -->|Hover| U[Show Overlay]
+    T -->|Click| V[Open Lightbox]
+    T -->|Filter| K
+    T -->|Layout Toggle| O
+    
+    U --> T
+    V --> W[Navigate Images]
+    W --> X{Close Lightbox?}
+    X -->|Yes| T
+    X -->|No| W
+    
+    style B fill:#e1f5ff,stroke:#01c3cc,stroke-width:2px
+    style D fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style E fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style S fill:#ddd6fe,stroke:#8b5cf6,stroke-width:2px
+    style V fill:#fecaca,stroke:#ef4444,stroke-width:2px
+```
+
+### Mermaid Sequence Diagram (Image Click → Lightbox)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant G as Gallery
+    participant I as Image
+    participant L as Lightbox
+    participant K as Keyboard
+    participant B as Body
+    
+    Note over G: Gallery displayed<br/>All images loaded
+    
+    U->>I: Click image #3
+    I->>G: onClick(index: 3)
+    
+    G->>L: openLightbox(images, index: 3)
+    
+    Note over L: Mount lightbox component
+    
+    L->>B: Lock body scroll
+    Note over B: overflow: hidden
+    
+    L->>L: Trap focus
+    L->>L: Load image #3
+    
+    Note over L: Preload images #2 and #4
+    
+    L->>U: Display image #3 full-screen
+    
+    Note over L: Lightbox fully open
+    
+    U->>K: Press → arrow
+    K->>L: Navigate next
+    
+    L->>L: currentIndex = 4
+    L->>L: Load image #4 (preloaded)
+    L->>U: Show image #4 instantly ⚡
+    
+    Note over L: Preload images #3 and #5
+    
+    U->>K: Press ESC
+    K->>L: Close lightbox
+    
+    L->>L: Release focus trap
+    L->>B: Unlock body scroll
+    Note over B: overflow: auto
+    
+    L->>G: Return to gallery
+    L->>L: Unmount lightbox
+    
+    Note over G: Back to gallery<br/>Focus on image #4
+```
+
+---
+
 ## Related Components
 
 - **[Lightbox](./Lightbox.md)** - Full-screen viewer

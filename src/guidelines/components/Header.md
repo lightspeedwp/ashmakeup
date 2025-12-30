@@ -410,6 +410,159 @@ useEffect(() => {
 
 ---
 
+## 🎨 Interactive Mermaid Diagrams
+
+### Mermaid State Diagram (Header States)
+
+```mermaid
+stateDiagram-v2
+    [*] --> DesktopClosed: Page loads
+    
+    DesktopClosed --> DesktopScrolled: User scrolls down
+    DesktopScrolled --> DesktopClosed: Scroll to top
+    
+    DesktopClosed --> MobileMenuOpening: Click hamburger (mobile)
+    DesktopScrolled --> MobileMenuOpening: Click hamburger (mobile)
+    
+    MobileMenuOpening --> MobileMenuOpen: Animation complete
+    
+    MobileMenuOpen --> MobileMenuClosing: Click X button
+    MobileMenuOpen --> MobileMenuClosing: Press ESC
+    MobileMenuOpen --> MobileMenuClosing: Click nav item
+    MobileMenuOpen --> MobileMenuClosing: Click backdrop
+    
+    MobileMenuClosing --> DesktopClosed: Animation complete
+    
+    DesktopClosed --> NavigatingPage: Click nav item
+    DesktopScrolled --> NavigatingPage: Click nav item
+    
+    NavigatingPage --> DesktopClosed: Page changed
+    
+    note right of DesktopClosed
+        Header visible
+        bg-white/90
+        No shadow
+    end note
+    
+    note right of DesktopScrolled
+        Header visible
+        bg-white/95
+        Shadow visible
+        Backdrop blur
+    end note
+    
+    note right of MobileMenuOpen
+        Full screen overlay
+        Focus trapped
+        Body scroll locked
+    end note
+```
+
+### Mermaid Flowchart (Navigation Logic)
+
+```mermaid
+flowchart TD
+    A[User Interaction] --> B{Device Type?}
+    
+    B -->|Desktop| C[Desktop Navigation]
+    B -->|Mobile| D[Mobile Navigation]
+    
+    C --> E{Action?}
+    E -->|Click Logo| F[Navigate to Home]
+    E -->|Click Nav Item| G[Navigate to Page]
+    E -->|Scroll| H{Scrolled > 50px?}
+    
+    H -->|Yes| I[Add shadow + backdrop blur]
+    H -->|No| J[Remove shadow]
+    
+    I --> K[Update header styles]
+    J --> K
+    
+    F --> L[Update currentPage]
+    G --> L
+    
+    L --> M[Re-render with active state]
+    
+    D --> N{Action?}
+    N -->|Click Hamburger| O[Open Mobile Menu]
+    N -->|Menu Open + Click X| P[Close Mobile Menu]
+    N -->|Menu Open + Press ESC| P
+    N -->|Menu Open + Click Item| Q[Navigate + Close Menu]
+    
+    O --> R[setState isMobileMenuOpen: true]
+    R --> S[Lock body scroll]
+    S --> T[Trap focus in menu]
+    T --> U[Animate menu in]
+    
+    P --> V[setState isMobileMenuOpen: false]
+    V --> W[Unlock body scroll]
+    W --> X[Release focus]
+    X --> Y[Animate menu out]
+    
+    Q --> L
+    Q --> V
+    
+    style F fill:#e1f5ff,stroke:#01c3cc,stroke-width:2px
+    style G fill:#e1f5ff,stroke:#01c3cc,stroke-width:2px
+    style I fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style O fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style P fill:#fecaca,stroke:#ef4444,stroke-width:2px
+    style Q fill:#e1f5ff,stroke:#01c3cc,stroke-width:2px
+```
+
+### Mermaid Sequence Diagram (Mobile Menu Interaction)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant H as Header
+    participant B as Body
+    participant M as Mobile Menu
+    participant F as Focus Manager
+    
+    Note over H: Initial state: Menu closed
+    
+    U->>H: Click hamburger icon
+    H->>H: setState(isMobileMenuOpen: true)
+    
+    H->>B: Lock scroll
+    Note over B: overflow: hidden
+    
+    H->>M: Mount menu component
+    M->>M: Animate slide in
+    
+    M->>F: Trap focus
+    Note over F: Focus on first nav item
+    
+    F->>U: Focus visible on "Home"
+    
+    Note over M: Menu fully open
+    
+    U->>M: Press Tab
+    M->>F: Move focus to next item
+    F->>U: Focus visible on "About"
+    
+    U->>M: Click "Portfolio"
+    
+    M->>H: onNavigate("portfolio")
+    H->>H: setCurrentPage("portfolio")
+    H->>H: setState(isMobileMenuOpen: false)
+    
+    M->>M: Animate slide out
+    
+    H->>F: Release focus trap
+    F->>H: Return focus to hamburger
+    
+    H->>B: Unlock scroll
+    Note over B: overflow: auto
+    
+    M->>M: Unmount menu
+    
+    Note over H: Menu closed<br/>Portfolio page active
+```
+
+---
+
 ## Common Mistakes
 
 ### ❌ Mistake 1: No Active State

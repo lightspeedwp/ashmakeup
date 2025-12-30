@@ -744,6 +744,133 @@ import { ShareComponent } from './ShareComponent';
 
 ---
 
+## 🎨 Interactive Mermaid Diagrams
+
+### Mermaid State Diagram (Card Interaction States)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Idle: Card renders
+    
+    Idle --> Hovering: Mouse enters
+    Idle --> Focused: Tab key pressed
+    
+    Hovering --> Animating: Trigger hover effects
+    Focused --> Animating: Focus ring visible
+    
+    Animating --> Scaled: scale(1.02)
+    Animating --> Shadowed: shadow-2xl
+    Animating --> CategoryHighlight: Category badge glow
+    
+    Scaled --> Interactive: Animation complete
+    Shadowed --> Interactive
+    CategoryHighlight --> Interactive
+    
+    Interactive --> Clicking: User clicks card
+    Interactive --> TagClick: User clicks tag
+    Interactive --> Idle: Mouse leaves
+    
+    Clicking --> Navigating: Navigate to post
+    TagClick --> FilterByTag: Apply tag filter
+    
+    Navigating --> [*]: Post page loads
+    FilterByTag --> Idle: Results updated
+    
+    note right of Idle
+        Default state
+        shadow-lg
+        No hover effects
+    end note
+    
+    note right of Interactive
+        All hover effects active
+        Card elevated
+        Cursor: pointer
+    end note
+```
+
+### Mermaid Flowchart (Card Click Logic)
+
+```mermaid
+flowchart TD
+    A[User Clicks Card] --> B{Click Target?}
+    
+    B -->|Card Body| C[Navigate to Post]
+    B -->|Category Badge| D[Filter by Category]
+    B -->|Tag Chip| E[Filter by Tag]
+    B -->|Read More Button| C
+    
+    C --> F[Update URL]
+    F --> G[/blog/:slug]
+    G --> H[Load BlogPostPage]
+    H --> I[Render Full Post]
+    
+    D --> J[Update Filter State]
+    J --> K[setActiveCategory]
+    K --> L[Apply Filter]
+    L --> M[Re-render Card List]
+    
+    E --> N[Update Tag State]
+    N --> O[toggleSelectedTag]
+    O --> P[Apply Tag Filter]
+    P --> M
+    
+    M --> Q[Show Filtered Results]
+    
+    style C fill:#e1f5ff,stroke:#01c3cc,stroke-width:2px
+    style D fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style E fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style I fill:#ddd6fe,stroke:#8b5cf6,stroke-width:2px
+    style Q fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+```
+
+### Mermaid Sequence Diagram (Card Hover Interaction)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant C as BlogCard
+    participant I as Image
+    participant T as Text
+    participant B as Badge
+    
+    Note over C: Initial state: Idle
+    
+    U->>C: Mouse enters card
+    
+    C->>C: onMouseEnter triggered
+    
+    Note over C: Apply hover classes
+    
+    C->>I: Scale image to 1.05
+    Note over I: transition 300ms
+    
+    C->>T: Fade opacity to 0.9
+    Note over T: transition 200ms
+    
+    C->>B: Glow category badge
+    Note over B: ring-2 ring-pink-300
+    
+    C->>C: Elevate card shadow-2xl
+    C->>C: Scale card 1.02
+    
+    Note over C: Hover state complete
+    
+    U->>C: Mouse leaves card
+    
+    C->>C: onMouseLeave triggered
+    
+    C->>I: Scale image to 1
+    C->>T: Opacity to 1
+    C->>B: Remove glow
+    C->>C: Shadow back to shadow-lg
+    C->>C: Scale to 1
+    
+    Note over C: Back to idle state
+```
+
+---
+
 ## Related Components
 
 - **[PortfolioCard](./PortfolioCard.md)** - Portfolio items (similar pattern)

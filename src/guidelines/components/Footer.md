@@ -508,6 +508,147 @@ export function Footer({
 
 ---
 
+## 🎨 Interactive Mermaid Diagrams
+
+### Mermaid Flowchart (Footer Component Structure)
+
+```mermaid
+flowchart TD
+    A[Footer Component] --> B[Contact Section]
+    A --> C[Quick Links Section]
+    A --> D[Copyright Bar]
+    
+    B --> E[ContactForm]
+    B --> F[Section Title]
+    B --> G[Section Description]
+    
+    E --> H{Form Submission}
+    H -->|Success| I[Show Success Toast]
+    H -->|Error| J[Show Error Message]
+    
+    I --> K[Clear Form]
+    I --> L[Confetti Animation]
+    
+    C --> M[Navigation Links]
+    C --> N[Services List]
+    C --> O[Contact Info]
+    C --> P[Social Links]
+    
+    M --> Q[Home, About, Portfolio, Blog]
+    N --> R[Festival, Editorial, Events, Nails]
+    O --> S[Location + Email]
+    P --> T[Instagram, Facebook, TikTok, LinkedIn]
+    
+    D --> U[Copyright Text]
+    D --> V[Legal Links]
+    D --> W[Social Icons]
+    
+    V --> X[Privacy Policy, Terms of Service]
+    
+    style A fill:#e1f5ff,stroke:#01c3cc,stroke-width:3px
+    style E fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style H fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style I fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style J fill:#fecaca,stroke:#ef4444,stroke-width:2px
+```
+
+### Mermaid Sequence Diagram (Contact Form in Footer)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant F as Footer
+    participant CF as ContactForm
+    participant E as emailService
+    participant S as Supabase
+    participant SG as SendGrid
+    
+    U->>F: Scroll to footer
+    Note over F: Footer visible<br/>Contact form loaded
+    
+    U->>CF: Fill form fields
+    U->>CF: Click Submit
+    
+    CF->>CF: Validate inputs
+    
+    alt Validation Failed
+        CF->>U: Show field errors
+    else Validation Passed
+        CF->>E: sendContactFormEmail()
+        
+        E->>S: POST to Edge Function
+        S->>SG: Send notification email
+        S->>SG: Send auto-reply email
+        
+        alt Email Success
+            SG-->>S: 202 Accepted
+            S-->>E: 200 OK
+            E-->>CF: { success: true }
+            
+            CF->>F: Trigger success state
+            F->>F: Show confetti 🎉
+            F->>U: Success toast
+            CF->>CF: Clear form
+        else Email Error
+            SG--xS: Error
+            S-->>E: 500 Error
+            E-->>CF: { success: false }
+            
+            CF->>U: Show error message
+            CF->>U: Retry button
+        end
+    end
+```
+
+### Mermaid State Diagram (Footer Interaction States)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Idle: Page loads
+    
+    Idle --> Visible: User scrolls to footer
+    
+    Visible --> FormInteraction: User clicks form field
+    Visible --> LinkHover: User hovers link
+    Visible --> SocialClick: User clicks social icon
+    
+    FormInteraction --> FormFilling: User types
+    FormFilling --> FormSubmitting: Submit clicked
+    
+    FormSubmitting --> FormSuccess: Email sent
+    FormSubmitting --> FormError: Email failed
+    
+    FormSuccess --> ShowingConfetti: Display animation
+    ShowingConfetti --> Visible: Animation complete
+    
+    FormError --> FormFilling: User retries
+    
+    LinkHover --> Visible: Mouse out
+    
+    SocialClick --> ExternalSite: Opens in new tab
+    ExternalSite --> Visible: User returns
+    
+    note right of Visible
+        Footer fully rendered
+        All sections displayed
+        Contact form ready
+    end note
+    
+    note right of FormSuccess
+        Confetti animation
+        Success toast
+        Form cleared
+    end note
+    
+    note right of SocialClick
+        Opens social media
+        target=\"_blank\"
+        rel=\"noopener\"
+    end note
+```
+
+---
+
 ## Related Components
 
 - **[ContactForm](./ContactForm.md)** - Contact form with SendGrid
