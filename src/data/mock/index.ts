@@ -31,5 +31,8 @@ export * from './portfolio';
 // Blog Data
 export * from './blog';
 
+// Testimonials Data
+export * from './testimonials';
+
 // Re-export types for convenience
 export * from '../types';

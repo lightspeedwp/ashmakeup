@@ -18,6 +18,180 @@ Display image collections with:
 
 ---
 
+## Component Architecture
+
+### Image Gallery Layout Flow (Mermaid)
+
+```mermaid
+flowchart TD
+    A[ImageGallery Component] --> B[Receive Images Array]
+    
+    B --> C{Layout Type?}
+    
+    C -->|grid| D[Grid Layout]
+    C -->|masonry| E[Masonry Layout]
+    C -->|justified| F[Justified Layout]
+    
+    D --> D1[CSS Grid<br/>grid-cols-1 md:grid-cols-2 lg:grid-cols-3]
+    D --> D2[Equal height rows]
+    D --> D3[Fixed aspect ratios]
+    
+    E --> E1[react-responsive-masonry]
+    E --> E2[Variable height items]
+    E --> E3[Pinterest-style layout]
+    
+    F --> F1[Flickr-style justified rows]
+    F --> F2[Consistent row heights]
+    F --> F3[Variable widths]
+    
+    D1 --> G[Render Images]
+    D2 --> G
+    D3 --> G
+    E1 --> G
+    E2 --> G
+    E3 --> G
+    F1 --> G
+    F2 --> G
+    F3 --> G
+    
+    G --> H[For Each Image]
+    
+    H --> I[Apply Lazy Loading]
+    I --> J[Add Hover Effects]
+    J --> K[Add Click Handler]
+    K --> L[Render Image Card]
+    
+    L --> M{User Clicks?}
+    
+    M -->|Yes| N[onImageClick index]
+    M -->|No| O[Display Only]
+    
+    N --> P[Open Lightbox]
+    
+    style D fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
+    style E fill:#fce7f3,stroke:#ec4899,stroke-width:2px
+    style F fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+```
+
+### Responsive Column Breakpoints (Mermaid)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Mobile: Screen < 768px
+    [*] --> Tablet: Screen 768-1023px
+    [*] --> Desktop: Screen >= 1024px
+    
+    Mobile --> Grid1Col: 1 column grid
+    Mobile --> Masonry1Col: 1 column masonry
+    
+    Grid1Col --> GridLayout: grid-cols-1
+    Masonry1Col --> MasonryLayout: columnsCount={1}
+    
+    Tablet --> Grid2Col: 2 columns grid
+    Tablet --> Masonry2Col: 2 columns masonry
+    
+    Grid2Col --> GridLayout: grid-cols-2
+    Masonry2Col --> MasonryLayout: columnsCount={2}
+    
+    Desktop --> Grid3Col: 3 columns grid
+    Desktop --> Masonry3Col: 3 columns masonry
+    
+    Grid3Col --> GridLayout: grid-cols-3
+    Masonry3Col --> MasonryLayout: columnsCount={3}
+    
+    GridLayout --> RenderImages: Apply layout
+    MasonryLayout --> RenderImages
+    
+    note right of Mobile
+        Mobile (< 768px):
+        - 1 column
+        - Full width images
+        - Touch-optimized
+    end note
+    
+    note right of Desktop
+        Desktop (>= 1024px):
+        - 3 columns
+        - Optimal viewing
+        - Hover effects
+    end note
+```
+
+### Image Click to Lightbox Flow (Mermaid)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant G as ImageGallery
+    participant I as Image Card
+    participant P as Parent Component
+    participant L as Lightbox
+    
+    Note over G: Render gallery with 20 images
+    G-->>U: Display grid layout
+    
+    U->>I: Click image #5
+    I->>I: Extract index (4, 0-based)
+    I->>G: Handle click event
+    G->>P: onImageClick(4)
+    
+    P->>P: setCurrentIndex(4)
+    P->>P: setLightboxOpen(true)
+    
+    P->>L: Render Lightbox
+    L->>L: Mount with currentIndex=4
+    L->>L: Load image at index 4
+    L-->>U: Display full-screen image ✅
+    
+    U->>L: Click next button
+    L->>L: currentIndex + 1 = 5
+    L->>L: Load image at index 5
+    L-->>U: Display next image ✅
+    
+    U->>L: Press Escape
+    L->>P: onClose()
+    P->>P: setLightboxOpen(false)
+    P->>L: Unmount Lightbox
+    L-->>U: Return to gallery view ✅
+```
+
+### Lazy Loading Implementation (Mermaid)
+
+```mermaid
+flowchart TD
+    A[Image in Gallery] --> B{Is Visible?}
+    
+    B -->|No| C[IntersectionObserver]
+    B -->|Yes| D[Load Image]
+    
+    C --> E[Monitor scroll position]
+    E --> F{Image enters viewport?}
+    
+    F -->|No| E
+    F -->|Yes| G[Trigger load]
+    
+    G --> D
+    
+    D --> H[Fetch image from src]
+    H --> I{Load Success?}
+    
+    I -->|Yes| J[Display image]
+    I -->|No| K[Show fallback]
+    
+    J --> L[Fade in animation]
+    K --> M[Display placeholder/error]
+    
+    L --> N[Mark as loaded]
+    
+    N --> O[Remove observer]
+    
+    style C fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
+    style J fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style K fill:#fecaca,stroke:#ef4444,stroke-width:2px
+```
+
+---
+
 ## Usage
 
 ### Basic Usage

@@ -22,9 +22,14 @@ Read ALL overview files in this directory:
 
 ### Step 2: Read Design Tokens (REQUIRED)
 Read ALL files in the `design-tokens/` folder. Do NOT skip this step:
-- **[colors.md](./design-tokens/colors.md)** - Color system with semantic tokens
+- **[colors.md](./design-tokens/colors.md)** - Color system with semantic tokens and light/dark mode palettes
 - **[typography.md](./design-tokens/typography.md)** - Typography scale and hierarchy
 - **[spacing.md](./design-tokens/spacing.md)** - Spacing system and responsive patterns
+
+### Step 2.5: Understand Light/Dark Mode System (REQUIRED)
+Read the light/dark mode documentation for complete theme implementation:
+- **[dark-mode-implementation.md](./dark-mode-implementation.md)** - Complete dark mode implementation guide
+- **[component-dark-mode.md](./component-dark-mode.md)** - Component-specific dark/light mode patterns
 
 ### Step 3: Understand Mock Data System (REQUIRED)
 Read the mock data guidelines to understand centralized data management:
@@ -61,6 +66,31 @@ Before using ANY icon, check **[overview-icons.md](./overview-icons.md)** for th
 ```
 
 **Every component must use guidelines-compliant classes. Never rely on component defaults.**
+
+### 🚫 NO INLINE STYLES - CRITICAL RULE
+
+**NEVER USE INLINE STYLES.** All styling must be done through CSS classes defined in `/styles/globals.css` or Tailwind utility classes.
+
+```tsx
+// ❌ WRONG - Inline styles are forbidden
+<h2 style={{ background: 'linear-gradient(...)', color: '#fff' }}>
+  Title
+</h2>
+
+// ✅ CORRECT - Use CSS classes from globals.css
+<h2 className="text-gradient-pink-purple-blue-dark">
+  Title
+</h2>
+```
+
+**Why this rule exists:**
+- **Maintainability**: Centralized styling is easier to update
+- **Consistency**: Design tokens ensure brand consistency
+- **Performance**: CSS classes are more performant than inline styles
+- **Dark Mode**: Theme switching requires CSS classes, not inline styles
+- **Guidelines Compliance**: All styling must follow design token system
+
+**Exception:** Only use inline styles for dynamic values that cannot be pre-defined (e.g., user-generated content positions, API-driven colors). Even then, prefer CSS variables when possible.
 
 ---
 
@@ -401,7 +431,7 @@ The project uses a comprehensive centralized mock data system that serves as:
 ├── mock/                          # Centralized mock data
 │   ├── images/                    # Hero images (9 images)
 │   ├── pages/                     # Page content (home, about, portfolio)
-│   ├��─ portfolio/                 # Portfolio entries (43 entries, 19 Figma assets)
+│   ├─ portfolio/                 # Portfolio entries (43 entries, 19 Figma assets)
 │   ├── blog/                      # Blog posts (5 posts, 6 categories)
 │   └── ui/                        # UI elements (social links, etc.)
 │

@@ -314,7 +314,7 @@ export function PortfolioCard({
 
   return (
     <article
-      className="group portfolio-card cursor-pointer bg-white/80 backdrop-blur-sm rounded-xl border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden relative"
+      className="group portfolio-card cursor-pointer bg-white/80 dark:bg-purple-900/50 backdrop-blur-sm rounded-xl border border-white/50 dark:border-purple-700/50 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden relative"
       onClick={() => onImageClick(currentImageIndex)}
       onKeyDown={handleKeyDown}
       tabIndex={0}
@@ -323,13 +323,9 @@ export function PortfolioCard({
     >
       {/* Image Container */}
       <div 
-        className="relative w-full aspect-square bg-cover bg-center transition-transform duration-500 group-hover:scale-105 overflow-hidden touch-manipulation select-none"
+        className="relative w-full aspect-square bg-cover bg-center transition-transform duration-500 group-hover:scale-105 overflow-hidden touch-pan-y"
         style={{
           backgroundImage: `url('${resolvedImageUrl}')`,
-          touchAction: 'pan-y', // Allow vertical scrolling but handle horizontal swipes
-          userSelect: 'none', // Prevent text selection during swipe
-          WebkitUserSelect: 'none',
-          msUserSelect: 'none',
         }}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
@@ -385,16 +381,11 @@ export function PortfolioCard({
                   <button
                     key={index}
                     onClick={(e) => goToImage(index, e)}
-                    className={`transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black/20 touch-manipulation ${
+                    className={`transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black/20 touch-manipulation min-dot-target-lg ${
                       index === currentImageIndex
                         ? 'w-4 h-4 sm:w-3 sm:h-3 bg-white scale-110 shadow-lg rounded-full'
                         : 'w-3 h-3 sm:w-2.5 sm:h-2.5 bg-white/60 hover:bg-white/80 rounded-full'
                     }`}
-                    style={{ 
-                      minWidth: '16px', 
-                      minHeight: '16px',
-                      touchAction: 'manipulation'
-                    }}
                     aria-label={`Go to image ${index + 1} of ${allImages.length}`}
                     tabIndex={-1}
                   />
@@ -411,24 +402,24 @@ export function PortfolioCard({
 
       {/* Entry Information */}
       <div className="p-fluid-md">
-        <h3 className="text-body-guideline font-heading font-semibold text-gray-800 mb-fluid-sm group-hover:text-gradient-pink-purple-blue transition-colors duration-300 line-clamp-2">
+        <h3 className="text-body-guideline font-heading font-semibold text-[#1f2937] dark:text-white mb-fluid-sm group-hover:text-gradient-pink-purple-blue transition-colors duration-300 line-clamp-2">
           {entry.title}
         </h3>
         {entry.subtitle && (
-          <p className="text-body-guideline font-body font-medium text-gradient-blue-teal-green mb-fluid-sm">
+          <p className="text-body-guideline font-body font-medium text-[#0f172a] dark:text-cyan-300 mb-fluid-sm">
             {entry.subtitle}
           </p>
         )}
-        <p className="text-body-guideline font-body font-normal text-gray-700 leading-relaxed line-clamp-3">
+        <p className="text-body-guideline font-body font-normal text-[#374151] dark:text-gray-300 leading-relaxed line-clamp-3">
           {entry.description}
         </p>
         
         {/* Action Links */}
-        <div className="mt-fluid-sm pt-fluid-sm border-t border-gray-100">
+        <div className="mt-fluid-sm pt-fluid-sm border-t border-[#f3f4f6] dark:border-purple-700">
           <div className="flex items-center justify-between">
             {/* Gallery Info */}
             {hasMultipleImages && (
-              <p className="text-body-guideline font-body font-medium text-gray-500 flex items-center gap-fluid-sm">
+              <p className="text-body-guideline font-body font-medium text-[#6a7282] dark:text-gray-400 flex items-center gap-fluid-sm">
                 <span className="w-2 h-2 bg-gradient-pink-purple-blue rounded-full"></span>
                 {allImages.length} images • Click to view gallery
               </p>

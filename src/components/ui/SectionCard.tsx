@@ -33,6 +33,7 @@ interface SectionCardProps {
   quote?: React.ReactNode;
   actions?: React.ReactNode;
   className?: string;
+  backgroundClassName?: string; // NEW: Custom background class (e.g., bg-journey-section)
   id?: string;
 }
 
@@ -69,47 +70,36 @@ export function SectionCard({
   quote,
   actions,
   className = "",
+  backgroundClassName,
   id
 }: SectionCardProps) {
-  const backgroundGradientClass = theme.backgroundGradient.via
-    ? `from-${theme.backgroundGradient.from} via-${theme.backgroundGradient.via} to-${theme.backgroundGradient.to}`
-    : `from-${theme.backgroundGradient.from} to-${theme.backgroundGradient.to}`;
-
-  const cardBorderClass = `from-${theme.cardBorder.from} to-${theme.cardBorder.to}`;
-  const accentGradientClass = `from-${theme.accentGradient.from} to-${theme.accentGradient.to}`;
+  // Use the theme name to determine the semantic CSS class
+  const themeClass = `section-card-${theme.name}`;
 
   return (
     <section 
       id={id}
-      className={`relative py-fluid-3xl px-fluid-xl overflow-hidden bg-gradient-to-br ${backgroundGradientClass} ${className}`}
+      className={`${themeClass} ${className}`}
     >
       {/* Animated Decorative Element */}
       <div 
-        className={`absolute top-1/3 left-1/4 w-16 h-16 sm:w-32 sm:h-32 bg-gradient-to-br ${theme.decorativeColor} rounded-full opacity-25 animate-pulse delay-2000`}
+        className="section-decorative"
         aria-hidden="true"
       />
       
-      <div className="max-w-6xl mx-auto">
-        <div className={`bg-white/80 backdrop-blur-sm rounded-xl p-fluid-md shadow-lg border-2 border-gray-200 relative`}>
+      <div className="section-card-content">
+        <div className="section-card-inner">
           {/* Optional Decorative Border Accent */}
           <div 
-            className={`absolute inset-0 bg-gradient-to-r ${cardBorderClass} opacity-30 rounded-xl -m-px`}
+            className="section-border-accent"
             aria-hidden="true"
           />
           
           {/* Content Container */}
           <div className="relative z-10">
-            {/* Section Title - WCAG AAA Compliant */}
-            <h2 
-              id={id}
-              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-bold ${theme.titleColor} mb-fluid-lg`}
-            >
+            {/* Section Title */}
+            <h2 className="section-title text-section-h2 font-heading font-bold mb-fluid-lg">
               {title}
-              {/* Decorative Accent Bar */}
-              <div 
-                className={`w-16 h-1 bg-gradient-to-r ${accentGradientClass} mt-fluid-sm rounded-full`}
-                aria-hidden="true"
-              />
             </h2>
             
             {/* Content */}
@@ -119,15 +109,15 @@ export function SectionCard({
             
             {/* Pull Quote - WCAG AA Compliant */}
             {quote && (
-              <blockquote className={`text-fluid-2xl sm:text-fluid-3xl font-heading font-medium ${theme.quoteColor} italic text-center py-fluid-xl relative`}>
+              <blockquote className="section-quote text-fluid-2xl sm:text-fluid-3xl font-heading font-medium italic text-center py-fluid-xl relative">
                 {/* Decorative Quote Marks */}
                 <div 
-                  className={`absolute top-4 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gradient-to-r ${accentGradientClass} rounded-full`}
+                  className="section-quote-accent absolute top-4 left-1/2 transform -translate-x-1/2 w-8 h-1 rounded-full"
                   aria-hidden="true"
                 />
                 {quote}
                 <div 
-                  className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gradient-to-r ${accentGradientClass} rounded-full`}
+                  className="section-quote-accent absolute bottom-4 left-1/2 transform -translate-x-1/2 w-8 h-1 rounded-full"
                   aria-hidden="true"
                 />
               </blockquote>

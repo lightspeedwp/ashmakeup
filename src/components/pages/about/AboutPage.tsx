@@ -122,24 +122,24 @@ export function AboutPage({
 
   // Loading state component
   const LoadingState = () => (
-    <div className="bg-gradient-to-br from-white via-pink-50 to-purple-50 min-h-screen">
+    <div className="bg-white dark:bg-purple-900 min-h-screen transition-colors duration-300">
       <div className="container mx-auto px-4 py-16">
         <div className="text-center">
           <div className="animate-pulse">
-            <div className="h-16 bg-gray-200 rounded-lg w-80 mx-auto mb-6"></div>
-            <div className="h-8 bg-gray-200 rounded w-96 mx-auto mb-4"></div>
-            <div className="h-6 bg-gray-200 rounded w-64 mx-auto mb-8"></div>
+            <div className="h-16 bg-gray-200 dark:bg-purple-800/50 rounded-lg w-80 mx-auto mb-6"></div>
+            <div className="h-8 bg-gray-200 dark:bg-purple-800/50 rounded w-96 mx-auto mb-4"></div>
+            <div className="h-6 bg-gray-200 dark:bg-purple-800/50 rounded w-64 mx-auto mb-8"></div>
             <div className="space-y-8">
               {[...Array(4)].map((_, i) => (
                 <div
                   key={i}
-                  className="bg-white rounded-xl p-8 shadow-sm"
+                  className="bg-white dark:bg-purple-900/30 rounded-xl p-8 shadow-sm"
                 >
-                  <div className="h-6 bg-gray-200 rounded w-48 mb-4"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-purple-800/50 rounded w-48 mb-4"></div>
                   <div className="space-y-3">
-                    <div className="h-4 bg-gray-200 rounded w-full"></div>
-                    <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-                    <div className="h-4 bg-gray-200 rounded w-4/6"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-purple-800/50 rounded w-full"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-purple-800/50 rounded w-5/6"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-purple-800/50 rounded w-4/6"></div>
                   </div>
                 </div>
               ))}
@@ -152,16 +152,16 @@ export function AboutPage({
 
   // Error state component with retry functionality
   const ErrorState = () => (
-    <div className="bg-gradient-to-br from-white via-pink-50 to-purple-50 min-h-screen flex items-center justify-center">
+    <div className="bg-gradient-to-br from-white via-pink-50 to-purple-50 dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 min-h-screen flex items-center justify-center transition-colors duration-300">
       <div className="text-center p-8">
         <div className="mb-6">
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-red-500 text-2xl">⚠️</span>
+          <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-red-500 dark:text-red-400 text-2xl">⚠️</span>
           </div>
-          <h1 className="text-3xl font-semibold text-gray-800 mb-2">
+          <h1 className="text-3xl font-semibold text-gray-800 dark:text-purple-100 mb-2">
             About Content Unavailable
           </h1>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 dark:text-purple-300 mb-6">
             {contentError ||
               "There was an issue loading the about page content. Please try again."}
           </p>
@@ -169,13 +169,13 @@ export function AboutPage({
         <div className="space-x-4">
           <button
             onClick={refreshContent}
-            className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+            className="px-6 py-3 bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-600 text-white rounded-lg transition-colors"
           >
             Try Again
           </button>
           <button
             onClick={() => window.location.reload()}
-            className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+            className="px-6 py-3 bg-gray-600 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-colors"
           >
             Refresh Page
           </button>
@@ -212,7 +212,7 @@ export function AboutPage({
     : null;
 
   return (
-    <div className="bg-gradient-to-br from-white via-pink-50 to-purple-50 min-h-screen">
+    <div className="bg-white dark:bg-gradient-to-br dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 min-h-screen transition-colors duration-300">
       {/* Content loading indicator */}
       {contentLoading && aboutContent && (
         <div className="fixed top-4 right-4 z-50">
@@ -248,11 +248,7 @@ export function AboutPage({
         size="xl"
         layout="split"
         fullscreen={true}
-        backgroundGradient={{
-          from: "pink-50",
-          via: "purple-50",
-          to: "blue-50",
-        }}
+        className="bg-hero-section"
         titleGradient={{ from: "pink-500", to: "purple-600" }}
         showScrollArrow={true}
         scrollArrowTarget="journey-section"
@@ -262,15 +258,15 @@ export function AboutPage({
         decorativeElements={
           <>
             <div
-              className="absolute top-10 left-4 sm:left-10 w-16 h-16 sm:w-32 sm:h-32 bg-gradient-to-br from-pink-300 to-purple-400 rounded-full opacity-20 animate-pulse"
+              className="absolute top-10 left-4 sm:left-10 w-16 h-16 sm:w-32 sm:h-32 bg-gradient-to-br from-pink-300 to-purple-400 rounded-full opacity-20 animate-pulse dark:opacity-10"
               aria-hidden="true"
             ></div>
             <div
-              className="absolute top-20 right-8 sm:right-20 w-12 h-12 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-300 to-teal-400 rounded-full opacity-25 animate-pulse delay-1000"
+              className="absolute top-20 right-8 sm:right-20 w-12 h-12 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-300 to-teal-400 rounded-full opacity-25 animate-pulse delay-1000 dark:opacity-10"
               aria-hidden="true"
             ></div>
             <div
-              className="absolute bottom-32 left-1/4 w-20 h-20 sm:w-40 sm:h-40 bg-gradient-to-br from-yellow-300 to-pink-400 rounded-full opacity-15 animate-pulse delay-2000"
+              className="absolute bottom-32 left-1/4 w-20 h-20 sm:w-40 sm:h-40 bg-gradient-to-br from-yellow-300 to-pink-400 rounded-full opacity-15 animate-pulse delay-2000 dark:opacity-10"
               aria-hidden="true"
             ></div>
           </>
@@ -284,15 +280,8 @@ export function AboutPage({
         theme={ABOUT_SECTION_THEMES.journey}
         quote="Every brush stroke tells a story."
       >
-        <p className="text-fluid-lg font-body font-normal text-gray-700 leading-relaxed">
-          In 2019, I discovered something magical about makeup
-          that went beyond just applying products. It was about
-          transformation, expression, and the incredible moment
-          when someone sees themselves in a completely new
-          light. What started as curiosity became obsession,
-          then passion, then purpose. Each face became a canvas,
-          each event a new adventure, each technique a step
-          forward in my artistic evolution.
+        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed">
+          In 2019, I discovered something magical about makeup that went beyond just applying products. It was about transformation, expression, and the incredible moment when someone sees themselves in a completely new light. What started as curiosity became obsession, then passion, then purpose. Each face became a canvas, each event a new adventure, each technique a step forward in my artistic evolution.
         </p>
       </SectionCard>
 
@@ -301,36 +290,12 @@ export function AboutPage({
         title="Festival Magic"
         theme={ABOUT_SECTION_THEMES.festival}
       >
-        <p className="text-fluid-lg font-body font-normal text-gray-700 leading-relaxed">
-          Festivals became my laboratory. There's something
-          about the outdoor energy, the music, the freedom that
-          brings out the most creative sides of people. Festival
-          makeup isn't just about looking good – it's about
-          embodying the spirit of celebration. From intimate
-          gatherings to massive multi-day events, I learned to
-          read the crowd, adapt to the environment, and create
-          looks that would photograph beautifully under any
-          lighting condition while staying vibrant through hours
-          of dancing.
+        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed">
+          Festivals became my laboratory. There's something about the outdoor energy, the music, the freedom that brings out the most creative sides of people. Festival makeup isn't just about looking good – it's about embodying the spirit of celebration.
         </p>
-        <div className="grid sm:grid-cols-2 gap-fluid-lg mt-fluid-xl">
-          <div className="text-center">
-            <h3 className="text-fluid-xl font-heading font-semibold text-gray-800 mb-fluid-sm">
-              Outdoor Durability
-            </h3>
-            <p className="text-fluid-base font-body font-normal text-gray-600">
-              Weather-resistant techniques that last all day
-            </p>
-          </div>
-          <div className="text-center">
-            <h3 className="text-fluid-xl font-heading font-semibold text-gray-800 mb-fluid-sm">
-              Bold Expression
-            </h3>
-            <p className="text-fluid-base font-body font-normal text-gray-600">
-              Vibrant looks that match the festival energy
-            </p>
-          </div>
-        </div>
+        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed mt-fluid-md">
+          From intimate gatherings to massive multi-day events, I learned to read the crowd, adapt to the environment, and create looks that would photograph beautifully under any lighting condition while staying vibrant through hours of dancing.
+        </p>
       </SectionCard>
 
       {/* Berlin Nights Section */}
@@ -339,16 +304,11 @@ export function AboutPage({
         theme={ABOUT_SECTION_THEMES.berlin}
         quote="In Berlin, makeup becomes pure art."
       >
-        <p className="text-fluid-lg font-body font-normal text-gray-700 leading-relaxed">
-          Berlin's underground scene opened my eyes to a
-          completely different side of makeup artistry. Here,
-          creativity knows no bounds, and self-expression is not
-          just encouraged – it's expected. Working in Berlin's
-          clubs taught me about dramatic lighting, bold
-          contrasts, and the art of creating looks that
-          transform completely under different lighting
-          conditions. The city's creative energy pushed my
-          boundaries and expanded my artistic vocabulary.
+        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed">
+          Berlin's underground scene opened my eyes to a completely different side of makeup artistry. Here, creativity knows no bounds, and self-expression is not just encouraged – it's expected.
+        </p>
+        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed mt-fluid-md">
+          Working in Berlin's clubs taught me about dramatic lighting, bold contrasts, and the art of creating looks that transform completely under different lighting conditions. The city's creative energy pushed my boundaries and expanded my artistic vocabulary.
         </p>
       </SectionCard>
 
@@ -357,28 +317,19 @@ export function AboutPage({
         title="UV Explorations"
         theme={ABOUT_SECTION_THEMES.uv}
       >
-        <p className="text-fluid-lg font-body font-normal text-gray-700 leading-relaxed">
-          UV reactive makeup opened up an entirely new dimension
-          to my work. The science behind fluorescent pigments,
-          the way colors behave under blacklight, the magical
-          transformation that happens when the lights change –
-          it's like discovering a secret world. This work
-          requires precision in both application and color
-          theory. Understanding how different pigments react,
-          layering techniques, and creating designs that look
-          stunning in both natural and UV light became a
-          specialty that sets my work apart in the festival
-          circuit.
+        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed">
+          UV reactive makeup opened up an entirely new dimension to my work. The science behind fluorescent pigments, the way colors behave under blacklight, the magical transformation that happens when the lights change – it's like discovering a secret world.
         </p>
-        <div className="bg-gradient-to-r from-cyan-50 to-indigo-50 rounded-xl p-fluid-md mt-fluid-xl">
-          <h3 className="text-fluid-xl font-heading font-semibold text-gray-800 mb-fluid-sm">
+        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed mt-fluid-md">
+          This work requires precision in both application and color theory. Understanding how different pigments react, layering techniques, and creating designs that look stunning in both natural and UV light became a specialty that sets my work apart in the festival circuit.
+        </p>
+        <div className="bg-white/50 dark:bg-purple-900/30 rounded-xl p-fluid-md mt-fluid-xl border border-gray-200 dark:border-purple-700">
+          <h3 className="text-fluid-xl font-heading font-semibold text-gray-800 dark:text-purple-100 mb-fluid-sm">
             Technical Mastery
           </h3>
           <div className="w-16 h-1 bg-gradient-blue-teal-green rounded-full mb-fluid-sm"></div>
-          <p className="text-fluid-base font-body font-normal text-gray-600">
-            Specialized knowledge of UV-reactive pigments,
-            application techniques, and dual-lighting design
-            principles.
+          <p className="text-fluid-base font-body font-normal text-gray-600 dark:text-purple-200">
+            Specialized knowledge of UV-reactive pigments, application techniques, and dual-lighting design principles.
           </p>
         </div>
       </SectionCard>
@@ -388,33 +339,28 @@ export function AboutPage({
         title="Professional Mousse Eyeshadows"
         theme={ABOUT_SECTION_THEMES.mousse}
       >
-        <p className="text-fluid-lg font-body font-normal text-gray-700 leading-relaxed">
-          Working with professional mousse eyeshadows taught me
-          the importance of texture in makeup artistry. The
-          creamy, blendable consistency allows for seamless
-          color transitions and the ability to build intensity
-          gradually. This medium became perfect for creating
-          those Instagram-worthy gradient looks that photograph
-          beautifully and provide the color payoff that festival
-          environments demand. The techniques I developed here
-          became fundamental to my signature style.
+        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed">
+          Working with professional mousse eyeshadows taught me the importance of texture in makeup artistry. The creamy, blendable consistency allows for seamless color transitions and the ability to build intensity gradually.
+        </p>
+        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed mt-fluid-md">
+          This medium became perfect for creating those Instagram-worthy gradient looks that photograph beautifully and provide the color payoff that festival environments demand. The techniques I developed here became fundamental to my signature style.
         </p>
         <div className="grid sm:grid-cols-3 gap-fluid-md mt-fluid-xl">
           <div className="text-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-rose-400 to-red-500 rounded-full mx-auto mb-fluid-sm"></div>
-            <h4 className="text-fluid-base font-heading font-medium text-gray-800">
+            <div className="w-14 h-14 bg-gradient-to-br from-rose-400 to-red-500 rounded-full mx-auto mb-fluid-sm shadow-lg"></div>
+            <h4 className="text-fluid-base font-heading font-medium text-gray-800 dark:text-purple-100">
               Color Theory
             </h4>
           </div>
           <div className="text-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-pink-400 to-rose-500 rounded-full mx-auto mb-fluid-sm"></div>
-            <h4 className="text-fluid-base font-heading font-medium text-gray-800">
+            <div className="w-14 h-14 bg-gradient-to-br from-pink-400 to-rose-500 rounded-full mx-auto mb-fluid-sm shadow-lg"></div>
+            <h4 className="text-fluid-base font-heading font-medium text-gray-800 dark:text-purple-100">
               Blending Mastery
             </h4>
           </div>
           <div className="text-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-red-400 to-rose-500 rounded-full mx-auto mb-fluid-sm"></div>
-            <h4 className="text-fluid-base font-heading font-medium text-gray-800">
+            <div className="w-14 h-14 bg-gradient-to-br from-red-400 to-rose-500 rounded-full mx-auto mb-fluid-sm shadow-lg"></div>
+            <h4 className="text-fluid-base font-heading font-medium text-gray-800 dark:text-purple-100">
               Texture Work
             </h4>
           </div>
@@ -430,7 +376,7 @@ export function AboutPage({
             <div className="text-center">
               <button
                 onClick={handleFusionNailsClick}
-                className="w-full sm:w-auto inline-flex items-center justify-center text-center px-button py-button bg-gradient-blue-teal-green hover:from-teal-600 hover:to-green-700 text-white font-body font-medium rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg focus:outline-none focus:ring-4 focus:ring-teal-200 focus:ring-opacity-50"
+                className="inline-flex items-center justify-center px-button py-button bg-gradient-to-r from-cyan-500 via-teal-500 to-green-500 hover:from-cyan-600 hover:via-teal-600 hover:to-green-600 text-white font-body font-medium text-fluid-base rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg focus:outline-none focus:ring-4 focus:ring-teal-200 dark:focus:ring-teal-500/50"
                 aria-label="Navigate to Portfolio page Fusion Nails section"
               >
                 View Fusion Nails Gallery
@@ -439,16 +385,11 @@ export function AboutPage({
           )
         }
       >
-        <p className="text-fluid-lg font-body font-normal text-gray-700 leading-relaxed">
-          Expanding into nail art was a natural progression that
-          allowed me to explore color and design on an entirely
-          different canvas. Fusion Nails became an opportunity
-          to push creative boundaries while mastering precision
-          techniques. The detailed work required for nail
-          artistry improved my precision in all areas of my
-          makeup work. Working on such a small scale taught me
-          patience, steady-hand techniques, and the importance
-          of planning complex designs before execution.
+        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed">
+          Expanding into nail art was a natural progression that allowed me to explore color and design on an entirely different canvas. Fusion Nails became an opportunity to push creative boundaries while mastering precision techniques.
+        </p>
+        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed mt-fluid-md">
+          The detailed work required for nail artistry improved my precision in all areas of my makeup work. Working on such a small scale taught me patience, steady-hand techniques, and the importance of planning complex designs before execution.
         </p>
       </SectionCard>
 
@@ -458,17 +399,11 @@ export function AboutPage({
         theme={ABOUT_SECTION_THEMES.creative}
         quote="True artistry lies in making others shine."
       >
-        <p className="text-fluid-lg font-body font-normal text-gray-700 leading-relaxed">
-          My creative process always begins with connection.
-          Whether it's understanding a client's vision, feeling
-          the energy of an event, or exploring a new technique,
-          everything starts with that moment of inspiration and
-          understanding. I believe in collaborative creativity –
-          working with each person to enhance their natural
-          beauty while expressing their unique personality. It's
-          not about imposing a style, but about finding the
-          perfect intersection of artistry and individual
-          expression.
+        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed">
+          My creative process always begins with connection. Whether it's understanding a client's vision, feeling the energy of an event, or exploring a new technique, everything starts with that moment of inspiration and understanding.
+        </p>
+        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed mt-fluid-md">
+          I believe in collaborative creativity – working with each person to enhance their natural beauty while expressing their unique personality. It's not about imposing a style, but about finding the perfect intersection of artistry and individual expression.
         </p>
       </SectionCard>
 
@@ -481,7 +416,7 @@ export function AboutPage({
             <div className="text-center">
               <button
                 onClick={handlePortfolioClick}
-                className="w-full sm:w-auto inline-flex items-center justify-center text-center px-button py-button bg-gradient-pink-purple-blue hover:from-violet-600 hover:to-pink-700 text-white font-body font-medium rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50"
+                className="inline-flex items-center justify-center px-button py-button bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 text-white font-body font-medium text-fluid-base rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-pink-500/50"
                 aria-label="Navigate to Portfolio page to explore full makeup artistry collection"
               >
                 Explore Full Portfolio
@@ -490,15 +425,11 @@ export function AboutPage({
           )
         }
       >
-        <p className="text-fluid-lg font-body font-normal text-gray-700 leading-relaxed">
-          The makeup industry continues to evolve, and I'm
-          excited to grow with it. New techniques, sustainable
-          products, innovative applications – there's always
-          something new to explore and master. My goal is to
-          continue pushing creative boundaries while staying
-          true to what drew me to this art form in the first
-          place: the joy of helping people express their most
-          confident, creative selves.
+        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed">
+          The makeup industry continues to evolve, and I'm excited to grow with it. New techniques, sustainable products, innovative applications – there's always something new to explore and master.
+        </p>
+        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed mt-fluid-md">
+          My goal is to continue pushing creative boundaries while staying true to what drew me to this art form in the first place: the joy of helping people express their most confident, creative selves.
         </p>
       </SectionCard>
 

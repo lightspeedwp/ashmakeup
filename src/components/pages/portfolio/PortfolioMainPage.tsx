@@ -380,8 +380,8 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
 
   return (
     <main id="main-content" role="main" tabIndex={-1}>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 py-fluid-2xl">
+      {/* Portfolio page header */}
+      <section className="portfolio-page-header">
         <div className="max-w-7xl mx-auto px-fluid-md text-center">
           <h1 className="text-hero-h1 font-heading font-bold text-gradient-pink-purple-blue mb-fluid-lg leading-tight tracking-tight">
             Portfolio
@@ -393,10 +393,10 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
       </section>
 
       {/* Category Filters */}
-      <section className="py-fluid-lg bg-white">
+      <section className="py-fluid-lg bg-category-filters-section transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-fluid-md">
           <div className="flex flex-col sm:flex-row sm:items-center gap-fluid-md justify-center">
-            <label className="text-fluid-lg font-body font-semibold text-gray-800 whitespace-nowrap">
+            <label className="text-fluid-lg font-body font-semibold text-category-label whitespace-nowrap">
               Categories:
             </label>
             <div className="flex flex-wrap gap-fluid-sm justify-center">
@@ -404,16 +404,16 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
                 const isActive = (portfolioState.category === category.id) || 
                                (portfolioState.category === undefined && category.id === 'all');
                 
-                // Create hover gradient class based on category gradient
-                const getHoverClass = (gradientClass: string) => {
+                // Map gradient class to hover variant
+                const getGradientVariant = (gradientClass: string) => {
                   if (gradientClass === 'bg-gradient-pink-purple-blue') {
-                    return 'hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-500 hover:text-white';
+                    return 'gradient-pink-purple';
                   } else if (gradientClass === 'bg-gradient-blue-teal-green') {
-                    return 'hover:bg-gradient-to-r hover:from-blue-500 hover:to-teal-500 hover:text-white';
+                    return 'gradient-blue-teal';
                   } else if (gradientClass === 'bg-gradient-gold-peach-coral') {
-                    return 'hover:bg-gradient-to-r hover:from-yellow-500 hover:to-orange-500 hover:text-white';
+                    return 'gradient-gold-peach';
                   }
-                  return 'hover:bg-white/90';
+                  return '';
                 };
 
                 return (
@@ -422,8 +422,8 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
                     onClick={() => handleCategoryChange(category.id)}
                     className={`px-fluid-sm py-fluid-xs rounded-full border backdrop-blur-sm transition-all duration-300 font-body font-medium text-fluid-xs transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-opacity-50 ${
                       isActive
-                        ? `${category.gradient} text-white shadow-lg border-white/30 focus:ring-white`
-                        : `bg-gray-100 text-gray-700 border-gray-200 shadow-sm hover:shadow-md focus:ring-gray-200 ${getHoverClass(category.gradient)}`
+                        ? `${category.gradient} category-btn-active focus:ring-white`
+                        : `category-btn-inactive ${getGradientVariant(category.gradient)} shadow-sm hover:shadow-md focus:ring-gray-200 dark:focus:ring-purple-500/50`
                     }`}
                     aria-label={`Filter portfolio by ${category.name}`}
                   >
@@ -436,17 +436,17 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
 
           {/* Active filters summary */}
           {portfolioState.category && (
-            <div className="mt-fluid-md p-fluid-sm bg-blue-50 rounded-lg">
+            <div className="mt-fluid-md p-fluid-sm bg-active-filters rounded-lg transition-colors duration-300">
               <div className="flex flex-wrap items-center gap-fluid-sm text-fluid-sm">
-                <span className="font-body font-medium text-blue-800">Active filters:</span>
+                <span className="font-body font-medium text-active-filters-label">Active filters:</span>
                 {portfolioState.category && (
-                  <span className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                  <span className="inline-flex items-center px-2 py-1 bg-active-filter-badge rounded transition-colors duration-300">
                     Category: {PORTFOLIO_CATEGORIES.find(cat => cat.id === portfolioState.category)?.name || portfolioState.category}
                   </span>
                 )}
                 <button
                   onClick={() => handleCategoryChange('all')}
-                  className="text-blue-600 hover:text-blue-800 font-medium"
+                  className="text-clear-filters font-medium transition-colors duration-300"
                 >
                   Clear all
                 </button>
@@ -457,9 +457,8 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
       </section>
 
       {/* Portfolio Content */}
-      <section className="pt-fluid-md pb-fluid-2xl">
-        <div className="max-w-7xl mx-auto px-fluid-md pb-fluid-2xl">
-
+      <section className="pt-fluid-md pb-fluid-2xl bg-portfolio-section transition-colors duration-300">
+        <div className="portfolio-page-content">
 
           {/* Loading State */}
           {entriesLoading && (

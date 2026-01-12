@@ -3,7 +3,7 @@
  * Universal card component for all portfolio sections with advanced slider functionality
  *
  * @author Ash Shaw Portfolio Team
- * @version 3.0.0
+ * @version 3.1.0
  */
 
 import React, { useState } from "react";
@@ -40,11 +40,9 @@ interface CardData {
 interface SliderCardProps {
   data: CardData;
   onImageClick: (imageIndex: number) => void;
-  gradientConfig?: {
-    background?: string;
-    subtitleGradient?: string;
-  };
   className?: string;
+  /** Optional variant for themed subtitle styling */
+  variant?: 'default' | 'fusion';
 }
 
 /**
@@ -58,11 +56,11 @@ interface SliderCardProps {
  * - Progressive image loading
  * - Mobile-optimized controls
  * - Screen reader support
+ * - Semantic CSS classes for light/dark mode
  *
  * @param {SliderCardProps} props - Component properties
  * @param {CardData} props.data - Card content with image(s) and metadata
  * @param {Function} props.onImageClick - Callback when image is clicked for lightbox
- * @param {Object} props.gradientConfig - Optional gradient styling configuration
  * @param {string} props.className - Additional CSS classes
  *
  * @returns {JSX.Element} Enhanced card with slider functionality
@@ -83,8 +81,8 @@ interface SliderCardProps {
 export function SliderCard({
   data,
   onImageClick,
-  gradientConfig,
   className = "",
+  variant = 'default',
 }: SliderCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(
@@ -232,13 +230,10 @@ export function SliderCard({
   };
 
   const subtitleText = data.subtitle || data.location;
-  const defaultGradient = "from-pink-700 to-purple-600";
-  const subtitleGradient =
-    gradientConfig?.subtitleGradient || defaultGradient;
 
   return (
     <div
-      className={`group cursor-pointer bg-white/80 backdrop-blur-sm rounded-xl p-fluid-md shadow-lg hover:shadow-xl transition-all duration-300 border border-white/50 ${className}`}
+      className={`group cursor-pointer bg-card backdrop-blur-sm rounded-xl p-fluid-md shadow-lg hover:shadow-xl transition-all duration-300 border border-white/50 dark:border-purple-700/50 ${className}`}
       onClick={() => onImageClick(currentImageIndex)}
       onKeyDown={handleKeyDown}
       tabIndex={0}
@@ -247,13 +242,9 @@ export function SliderCard({
     >
       {/* Image Container with Slider */}
       <div
-        className="relative w-full aspect-square bg-cover bg-center rounded-lg shadow-lg transition-transform duration-500 group-hover:scale-105 mb-fluid-md ring-4 ring-white/50 overflow-hidden touch-manipulation select-none"
+        className="slider-image-container relative w-full aspect-square rounded-lg shadow-lg transition-transform duration-500 group-hover:scale-105 mb-fluid-md ring-4 ring-white/50 overflow-hidden touch-manipulation select-none"
         style={{
           backgroundImage: `url('${resolvedImageUrl}')`,
-          touchAction: 'pan-y', // Allow vertical scrolling but handle horizontal swipes
-          userSelect: 'none', // Prevent text selection during swipe
-          WebkitUserSelect: 'none',
-          msUserSelect: 'none',
         }}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
@@ -315,16 +306,11 @@ export function SliderCard({
                 <button
                   key={index}
                   onClick={(e) => goToImage(index, e)}
-                  className={`transition-all duration-300 focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-1 focus:ring-offset-black/20 touch-manipulation rounded-full ${
+                  className={`slider-pagination-dot transition-all duration-300 focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-1 focus:ring-offset-black/20 touch-manipulation rounded-full ${
                     index === currentImageIndex
                       ? "w-2 h-2 bg-white/80 shadow-sm"
                       : "w-2 h-2 bg-white/40 hover:bg-white/60"
                   }`}
-                  style={{ 
-                    minWidth: '12px', 
-                    minHeight: '12px',
-                    touchAction: 'manipulation'
-                  }}
                   aria-label={`Go to image ${index + 1} of ${images.length}`}
                   tabIndex={-1}
                 />
@@ -341,19 +327,17 @@ export function SliderCard({
 
       {/* Card Content */}
       <div className="space-y-fluid-xs">
-        <h3 className="text-fluid-xl font-heading font-semibold text-gray-800">
+        <h3 className="text-fluid-xl font-heading font-semibold text-card-title">
           {data.title}
         </h3>
 
         {subtitleText && (
-          <p
-            className={`text-fluid-lg font-body font-medium bg-gradient-to-r ${subtitleGradient} bg-clip-text text-transparent`}
-          >
+          <p className={`text-fluid-lg font-body font-medium ${variant === 'fusion' ? 'text-card-subtitle-fusion' : 'text-card-subtitle'}`}>
             {subtitleText}
           </p>
         )}
 
-        <p className="text-body-guideline font-body font-normal text-gray-500 leading-relaxed">
+        <p className="text-body-guideline font-body font-normal text-card-description leading-relaxed">
           {data.description}
         </p>
       </div>

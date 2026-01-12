@@ -17,6 +17,159 @@ Provide social media navigation with:
 
 ---
 
+## Component Architecture
+
+### Social Link Click Flow (Mermaid)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant S as SocialLinks
+    participant D as Mock Data
+    participant B as Browser
+    participant E as External Platform
+    
+    Note over S: Component Mounts
+    S->>D: Import socialLinks
+    D-->>S: Return 5 platforms<br/>(Instagram, Facebook, TikTok,<br/>LinkedIn, Email)
+    
+    S-->>U: Render social icons with gradients
+    
+    U->>S: Hover over Instagram icon
+    S->>S: Apply hover styles<br/>(scale-110, shadow-xl)
+    S-->>U: Visual feedback ✨
+    
+    U->>S: Click Instagram link
+    S->>S: Check target attribute
+    
+    alt External Link (_blank)
+        S->>B: Open in new tab
+        B->>E: Navigate to Instagram
+        E-->>U: Show Ash Shaw profile ✅
+    else Email Link (_self)
+        S->>B: Open default mail app
+        B-->>U: Compose email to ashley@ashshaw.makeup ✅
+    end
+```
+
+### Platform-Specific Gradient Logic (Mermaid)
+
+```mermaid
+flowchart TD
+    A[Render SocialLinks] --> B[Load socialLinks data]
+    
+    B --> C[Map over platforms]
+    
+    C --> D{Which Platform?}
+    
+    D -->|Instagram| E[Instagram Gradient<br/>#e1306c → #fd1d1d → #fcaf45]
+    D -->|Facebook| F[Facebook Gradient<br/>#1877f2 → #42a5f5]
+    D -->|TikTok| G[TikTok Gradient<br/>#000000 → #69C9D0]
+    D -->|LinkedIn| H[LinkedIn Gradient<br/>#0077b5 → #00a0dc]
+    D -->|Email| I[Email Gradient<br/>#10b981 → #059669]
+    
+    E --> J[Apply gradient + white icon]
+    F --> J
+    G --> J
+    H --> J
+    I --> J
+    
+    J --> K[Render Icon Button]
+    
+    K --> L{User Interaction?}
+    
+    L -->|Hover| M[Scale to 110%<br/>Increase shadow]
+    L -->|Click| N[Navigate to platform]
+    L -->|Focus| O[Show focus ring]
+    
+    M --> P[Visual Feedback]
+    N --> Q[Open link]
+    O --> P
+    
+    style E fill:#fed7aa,stroke:#f97316,stroke-width:2px
+    style F fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
+    style H fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px
+    style I fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+```
+
+### External Link Safety (Mermaid)
+
+```mermaid
+flowchart TD
+    A[User Clicks Social Link] --> B{Is Email?}
+    
+    B -->|Yes| C[Email Link]
+    B -->|No| D[External Link]
+    
+    C --> E[Set target='_self']
+    C --> F[No rel attribute]
+    C --> G[Opens mail app]
+    G --> H[User composes email ✅]
+    
+    D --> I[Set target='_blank']
+    D --> J[Add rel='noopener noreferrer']
+    
+    J --> K[Prevents Security Issues]
+    
+    K --> L[noopener:<br/>Prevents window.opener access]
+    K --> M[noreferrer:<br/>No referrer info sent]
+    
+    I --> N[Opens in new tab]
+    N --> O[Navigate to platform]
+    
+    L --> P[Secure Navigation ✅]
+    M --> P
+    
+    style E fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style I fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style K fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
+    style P fill:#dcfce7,stroke:#22c55e,stroke-width:3px
+```
+
+### Responsive Layout States (Mermaid)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Desktop: Screen > 1024px
+    [*] --> Tablet: Screen 768-1023px
+    [*] --> Mobile: Screen < 768px
+    
+    Desktop --> FooterRow: Footer context
+    Desktop --> HeaderRow: Header context
+    Desktop --> AboutGrid: About page
+    
+    FooterRow --> HorizontalLayout: gap-fluid-md (16px)
+    HeaderRow --> HorizontalLayout
+    AboutGrid --> FlexWrap: gap-fluid-lg (24px)
+    
+    HorizontalLayout --> IconSize48: w-12 h-12 (48px)
+    FlexWrap --> IconSize48
+    
+    Tablet --> FooterRow
+    Tablet --> AboutGrid
+    
+    Mobile --> FooterRow: Stack vertically
+    Mobile --> MobileCentered: Center aligned
+    
+    MobileCentered --> IconSize40: w-10 h-10 (40px)
+    
+    note right of IconSize48
+        Desktop & Tablet:
+        - 48×48px icons
+        - Full gradient visibility
+        - Hover effects
+    end note
+    
+    note right of IconSize40
+        Mobile:
+        - 40×40px icons
+        - Touch-friendly (44px min)
+        - Tap feedback
+    end note
+```
+
+---
+
 ## 📦 Data Source
 
 Social links are managed in the **centralized mock data system**.

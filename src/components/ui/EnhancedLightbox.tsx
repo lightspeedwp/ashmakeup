@@ -206,9 +206,8 @@ export function EnhancedLightbox({
       aria-labelledby="lightbox-title"
     >
       <div 
-        className="relative w-full h-full flex flex-col items-center justify-start overflow-y-auto scrollbar-hide py-4 px-4"
+        className="relative w-full h-full flex flex-col items-center justify-start overflow-y-auto scrollbar-hide py-4 px-4 scroll-smooth"
         onClick={(e) => e.stopPropagation()}
-        style={{ scrollBehavior: 'smooth' }}
       >
         {/* Close Button */}
         <button

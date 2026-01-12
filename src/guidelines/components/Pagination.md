@@ -19,6 +19,150 @@ Provide multi-page navigation with:
 
 ---
 
+## Component Architecture
+
+### Pagination Interaction Flow (Mermaid)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant P as Pagination
+    participant BP as BlogPage
+    participant D as Data
+    participant W as Window
+    
+    Note over BP: Initial: Page 1
+    BP->>P: Render pagination (currentPage=1, totalPages=5)
+    P-->>U: Display [1] 2 3 4 5 →
+    
+    U->>P: Click "3"
+    P->>P: Validate page number
+    P->>BP: onPageChange(3)
+    BP->>BP: setCurrentPage(3)
+    BP->>D: Calculate offset (2 * itemsPerPage)
+    D->>D: Slice items for page 3
+    D-->>BP: Return items 25-36
+    BP->>W: Scroll to top
+    W->>W: window.scrollTo({ top: 0 })
+    BP->>P: Re-render with currentPage=3
+    P-->>U: Display ← 1 2 [3] 4 5 → ✅
+```
+
+### Page Navigation Logic (Mermaid)
+
+```mermaid
+flowchart TD
+    A[User Clicks Navigation] --> B{Which Button?}
+    
+    B -->|Previous| C[currentPage - 1]
+    B -->|Next| D[currentPage + 1]
+    B -->|Page Number| E[clicked page number]
+    B -->|First| F[Page 1]
+    B -->|Last| G[totalPages]
+    
+    C --> H{currentPage > 1?}
+    H -->|Yes| I[Navigate to previous]
+    H -->|No| J[Stay on page 1 - disabled]
+    
+    D --> K{currentPage < totalPages?}
+    K -->|Yes| L[Navigate to next]
+    K -->|No| M[Stay on last page - disabled]
+    
+    E --> N[Navigate to clicked page]
+    F --> O[Navigate to first page]
+    G --> P[Navigate to last page]
+    
+    I --> Q[Update State]
+    L --> Q
+    N --> Q
+    O --> Q
+    P --> Q
+    
+    Q --> R[Trigger onPageChange]
+    R --> S[Fetch New Data]
+    S --> T[Scroll to Top]
+    T --> U[Re-render Pagination]
+    
+    style I fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style L fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style N fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
+    style J fill:#fecaca,stroke:#ef4444,stroke-width:2px
+    style M fill:#fecaca,stroke:#ef4444,stroke-width:2px
+```
+
+### Ellipsis Display Logic (Mermaid)
+
+```mermaid
+flowchart TD
+    A[Render Pagination] --> B[Calculate Visible Pages]
+    
+    B --> C{totalPages <= maxVisible?}
+    
+    C -->|Yes| D[Show All Pages<br/>1 2 3 4 5]
+    
+    C -->|No| E{currentPage Position?}
+    
+    E -->|Near Start| F["Show: 1 2 3 4 ... 10"]
+    E -->|Middle| G["Show: 1 ... 4 5 6 ... 10"]
+    E -->|Near End| H["Show: 1 ... 7 8 9 10"]
+    
+    D --> I[Render Page Buttons]
+    F --> I
+    G --> I
+    H --> I
+    
+    I --> J[For Each Page]
+    J --> K{Is Current Page?}
+    
+    K -->|Yes| L[Apply Active Style<br/>bg-gradient-pink-purple-blue<br/>text-white<br/>shadow-lg]
+    
+    K -->|No| M[Apply Inactive Style<br/>bg-white/80<br/>text-gray-700<br/>hover:bg-gray-100]
+    
+    L --> N[Render Button]
+    M --> N
+    
+    style L fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style M fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
+    style G fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+```
+
+### Keyboard Navigation (Mermaid)
+
+```mermaid
+stateDiagram-v2
+    [*] --> FocusedOnPagination: Tab to pagination
+    
+    FocusedOnPagination --> PreviousButton: Shift+Tab
+    FocusedOnPagination --> NextButton: Tab
+    FocusedOnPagination --> PageButton: Arrow Keys
+    
+    PreviousButton --> Activated: Enter/Space
+    NextButton --> Activated: Enter/Space
+    PageButton --> Activated: Enter/Space
+    
+    Activated --> PageChanged: Valid navigation
+    Activated --> Disabled: At boundary
+    
+    PageChanged --> DataFetch: Trigger onPageChange
+    DataFetch --> ScrollTop: Load new items
+    ScrollTop --> UpdateUI: Smooth scroll
+    UpdateUI --> FocusedOnPagination: Re-focus pagination
+    
+    Disabled --> FocusedOnPagination: Stay on current page
+    
+    note right of PreviousButton
+        Disabled when
+        currentPage === 1
+    end note
+    
+    note right of NextButton
+        Disabled when
+        currentPage === totalPages
+    end note
+```
+
+---
+
 ## Usage
 
 ### Basic Usage

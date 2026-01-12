@@ -96,28 +96,38 @@ export function PortfolioLightbox({
   // Modal context for managing global modal state
   const { registerModal, updateModal, unregisterModal } = useModal();
 
-  // Define helper variables early to prevent initialization errors
+  // Define helper variables with safe defaults
   const hasMultipleImages = images.length > 1;
-  const currentImage = images[currentIndex];
+  
+  // Ensure currentIndex is within bounds
+  const safeCurrentIndex = Math.max(0, Math.min(currentIndex, images.length - 1));
+  const currentImage = images[safeCurrentIndex];
 
   // Register modal with context on mount
   useEffect(() => {
+    if (!isOpen || images.length === 0) return;
+    
     registerModal('portfolio-lightbox', 'lightbox', { title, images });
     
     return () => {
       unregisterModal('portfolio-lightbox');
     };
-  }, [registerModal, unregisterModal, title, images]);
+  }, [registerModal, unregisterModal, title, images, isOpen]);
 
   // Update modal state when isOpen changes
   useEffect(() => {
-    updateModal('portfolio-lightbox', isOpen, { title, images, currentIndex });
-  }, [updateModal, isOpen, title, images, currentIndex]);
+    if (!isOpen || images.length === 0) return;
+    
+    updateModal('portfolio-lightbox', isOpen, { title, images, currentIndex: safeCurrentIndex });
+  }, [updateModal, isOpen, title, images, safeCurrentIndex]);
 
-  // Update current index when prop changes
+  // Update current index when prop changes and ensure it's within bounds
   useEffect(() => {
-    setCurrentIndex(initialIndex);
-  }, [initialIndex]);
+    if (images.length === 0) return;
+    
+    const validIndex = Math.max(0, Math.min(initialIndex, images.length - 1));
+    setCurrentIndex(validIndex);
+  }, [initialIndex, images.length]);
 
   /**
    * Effect to manage cleanup when lightbox closes (but allow body scroll)
@@ -267,7 +277,10 @@ export function PortfolioLightbox({
     };
   }, [isOpen, hasMultipleImages, goToPrevious, goToNext]);
 
-  if (!isOpen || images.length === 0) return null;
+  // Early return if not open or no images
+  if (!isOpen || images.length === 0 || !currentImage) {
+    return null;
+  }
 
   return (
     <div 
@@ -287,8 +300,7 @@ export function PortfolioLightbox({
             {/* Zoom Toggle - Mobile Optimized */}
             <button
               onClick={toggleZoom}
-              className="w-12 h-12 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/70 border border-white/20 touch-manipulation"
-              style={{ minWidth: '48px', minHeight: '48px' }}
+              className="w-12 h-12 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/70 border border-white/20 touch-manipulation min-touch-target-lg"
               aria-label={isZoomed ? 'Zoom out' : 'Zoom in'}
             >
               {isZoomed ? (
@@ -314,8 +326,7 @@ export function PortfolioLightbox({
             {hasMultipleImages && (
               <button
                 onClick={() => setShowThumbnails(!showThumbnails)}
-                className="sm:hidden w-12 h-12 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/70 border border-white/20 touch-manipulation"
-                style={{ minWidth: '48px', minHeight: '48px' }}
+                className="sm:hidden w-12 h-12 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/70 border border-white/20 touch-manipulation min-touch-target-lg"
                 aria-label={showThumbnails ? 'Hide gallery' : 'Show gallery'}
               >
                 <Grid className="w-5 h-5" />
@@ -325,8 +336,7 @@ export function PortfolioLightbox({
             {/* Close Button - Enhanced */}
             <button
               onClick={onClose}
-              className="w-12 h-12 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/70 border border-white/20 touch-manipulation"
-              style={{ minWidth: '48px', minHeight: '48px' }}
+              className="w-12 h-12 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/70 border border-white/20 touch-manipulation min-touch-target-lg"
               aria-label="Close lightbox"
             >
               <X className="w-6 h-6" />
@@ -341,8 +351,7 @@ export function PortfolioLightbox({
             <>
               <button
                 onClick={goToPrevious}
-                className="hidden sm:flex absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 bg-white/30 hover:bg-white/40 backdrop-blur-sm rounded-full items-center justify-center text-white transition-all duration-200 z-20 focus:outline-none focus:ring-4 focus:ring-white/50 shadow-xl border border-white/20"
-                style={{ minWidth: '56px', minHeight: '56px' }}
+                className="hidden sm:flex absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 bg-white/30 hover:bg-white/40 backdrop-blur-sm rounded-full items-center justify-center text-white transition-all duration-200 z-20 focus:outline-none focus:ring-4 focus:ring-white/50 shadow-xl border border-white/20 min-touch-target-xl"
                 aria-label="Previous image"
               >
                 <ChevronLeft className="w-8 h-8 sm:w-10 sm:h-10" strokeWidth={2.5} />
@@ -350,8 +359,7 @@ export function PortfolioLightbox({
               
               <button
                 onClick={goToNext}
-                className="hidden sm:flex absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 bg-white/30 hover:bg-white/40 backdrop-blur-sm rounded-full items-center justify-center text-white transition-all duration-200 z-20 focus:outline-none focus:ring-4 focus:ring-white/50 shadow-xl border border-white/20"
-                style={{ minWidth: '56px', minHeight: '56px' }}
+                className="hidden sm:flex absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 bg-white/30 hover:bg-white/40 backdrop-blur-sm rounded-full items-center justify-center text-white transition-all duration-200 z-20 focus:outline-none focus:ring-4 focus:ring-white/50 shadow-xl border border-white/20 min-touch-target-xl"
                 aria-label="Next image"
               >
                 <ChevronRight className="w-8 h-8 sm:w-10 sm:h-10" strokeWidth={2.5} />
@@ -380,16 +388,11 @@ export function PortfolioLightbox({
                   <button
                     key={index}
                     onClick={() => goToImage(index)}
-                    className={`transition-all duration-300 focus:outline-none rounded-full touch-manipulation ${
+                    className={`transition-all duration-300 focus:outline-none rounded-full touch-manipulation min-dot-target ${
                       index === currentIndex
                         ? 'w-2 h-2 bg-white opacity-100'
                         : 'w-2 h-2 bg-white opacity-50 hover:opacity-75'
                     }`}
-                    style={{ 
-                      minWidth: '8px', 
-                      minHeight: '8px',
-                      touchAction: 'manipulation'
-                    }}
                     aria-label={`Go to image ${index + 1} of ${images.length}`}
                   />
                 ))}
@@ -408,11 +411,7 @@ export function PortfolioLightbox({
                     index === currentIndex
                       ? 'w-2 h-2 bg-white opacity-100'
                       : 'w-2 h-2 bg-white opacity-40 hover:opacity-70'
-                  }`}
-                  style={{ 
-                    minWidth: '8px', 
-                    minHeight: '8px'
-                  }}
+                  } min-dot-target`}
                   aria-label={`Go to image ${index + 1} of ${images.length}`}
                 />
               ))}
@@ -444,16 +443,11 @@ export function PortfolioLightbox({
                 <button
                   key={index}
                   onClick={() => goToImage(index)}
-                  className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black snap-center touch-manipulation ${
+                  className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black snap-center touch-manipulation min-thumbnail-target ${
                     index === currentIndex
                       ? 'ring-3 ring-white scale-110 shadow-xl'
                       : 'opacity-70 hover:opacity-90 hover:scale-105'
                   }`}
-                  style={{ 
-                    minWidth: '64px', 
-                    minHeight: '64px',
-                    touchAction: 'manipulation'
-                  }}
                   aria-label={`Go to image ${index + 1}: ${image.caption || image.alt}`}
                 >
                   <PortfolioImage

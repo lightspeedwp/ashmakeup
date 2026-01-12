@@ -431,10 +431,7 @@ export function ShareComponent({
         <div className="flex items-center gap-fluid-sm">
           <button
             onClick={shareToX}
-            className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50"
-            style={{
-              background: 'linear-gradient(135deg, #000000, #333333)'
-            }}
+            className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-x-twitter transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50"
             aria-label={`Share ${title} on X`}
           >
             <XIcon className="w-5 h-5 text-white" />
@@ -442,10 +439,7 @@ export function ShareComponent({
           
           <button
             onClick={shareToFacebook}
-            className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-opacity-50"
-            style={{
-              background: 'linear-gradient(135deg, #1877f2, #42a5f5)'
-            }}
+            className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-facebook transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-opacity-50"
             aria-label={`Share ${title} on Facebook`}
           >
             <Facebook className="w-5 h-5 text-white" />
@@ -453,10 +447,7 @@ export function ShareComponent({
           
           <button
             onClick={shareToInstagram}
-            className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-200 focus:ring-opacity-50"
-            style={{
-              background: 'linear-gradient(135deg, #e1306c, #fd1d1d, #fcaf45)'
-            }}
+            className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-instagram transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-200 focus:ring-opacity-50"
             aria-label={`Share ${title} on Instagram`}
           >
             <Instagram className="w-5 h-5 text-white" />
@@ -464,10 +455,7 @@ export function ShareComponent({
           
           <button
             onClick={shareToWhatsApp}
-            className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-opacity-50"
-            style={{
-              background: 'linear-gradient(135deg, #25d366, #1ebe57)'
-            }}
+            className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-whatsapp transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-opacity-50"
             aria-label={`Share ${title} on WhatsApp`}
           >
             <MessageCircle className="w-5 h-5 text-white" />
@@ -475,10 +463,7 @@ export function ShareComponent({
           
           <button
             onClick={shareViaEmail}
-            className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-opacity-50"
-            style={{
-              background: 'linear-gradient(135deg, #10b981, #059669)'
-            }}
+            className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-email transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-opacity-50"
             aria-label={`Share ${title} via email`}
           >
             <Mail className="w-5 h-5 text-white" />
@@ -486,12 +471,9 @@ export function ShareComponent({
           
           <button
             onClick={copyToClipboard}
-            className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-200 focus:ring-opacity-50"
-            style={{
-              background: copySuccess 
-                ? 'linear-gradient(135deg, #10b981, #059669)' 
-                : 'linear-gradient(135deg, #8b5cf6, #7c3aed)'
-            }}
+            className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-200 focus:ring-opacity-50 ${
+              copySuccess ? 'bg-gradient-copy-success' : 'bg-gradient-copy'
+            }`}
             aria-label={`Copy ${title} link to clipboard`}
           >
             {copySuccess ? <Check className="w-5 h-5 text-white" /> : <Copy className="w-5 h-5 text-white" />}

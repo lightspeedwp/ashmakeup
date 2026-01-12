@@ -206,11 +206,6 @@ export function ThreeColumnPortfolioSection({
                 onImageClick={(imageIndex) =>
                   openLightbox(entry, imageIndex)
                 }
-                gradientConfig={{
-                  subtitleGradient:
-                    section.subtitleGradient ||
-                    "from-pink-700 to-purple-600",
-                }}
                 className="w-full"
               />
             ))}

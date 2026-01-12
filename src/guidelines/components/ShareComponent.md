@@ -17,6 +17,129 @@ Provide easy content sharing with:
 
 ---
 
+## Component Architecture
+
+### Share Flow Sequence (Mermaid)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant S as ShareComponent
+    participant P as Platform API
+    participant C as Clipboard
+    participant N as Notification
+    
+    Note over U: Views blog post
+    U->>S: Click "Share" button
+    S-->>U: Display share options<br/>(Twitter, Facebook, Email, Copy)
+    
+    alt Share to Social Platform
+        U->>S: Click Twitter icon
+        S->>S: Build share URL with params
+        S->>P: Open Twitter share dialog
+        P-->>U: Twitter compose window ✅
+    else Copy Link
+        U->>S: Click "Copy Link"
+        S->>C: navigator.clipboard.writeText()
+        C-->>S: Success
+        S->>N: Show success toast
+        N-->>U: "Link copied!" message ✅
+    else Share via Email
+        U->>S: Click Email icon
+        S->>S: Build mailto: link
+        S->>P: Open mail client
+        P-->>U: Email compose window ✅
+    end
+```
+
+### Platform Share URL Building (Mermaid)
+
+```mermaid
+flowchart TD
+    A[User Clicks Share Platform] --> B{Which Platform?}
+    
+    B -->|Twitter| C[Build Twitter URL]
+    B -->|Facebook| D[Build Facebook URL]
+    B -->|LinkedIn| E[Build LinkedIn URL]
+    B -->|WhatsApp| F[Build WhatsApp URL]
+    B -->|Email| G[Build mailto URL]
+    B -->|Copy Link| H[Copy to Clipboard]
+    
+    C --> C1["https://twitter.com/intent/tweet?<br/>text={title}<br/>&url={url}<br/>&hashtags={tags}"]
+    
+    D --> D1["https://www.facebook.com/sharer/sharer.php?<br/>u={url}"]
+    
+    E --> E1["https://www.linkedin.com/sharing/share-offsite/?<br/>url={url}"]
+    
+    F --> F1["https://wa.me/?<br/>text={title}%20{url}"]
+    
+    G --> G1["mailto:?<br/>subject={title}<br/>&body={description}%0A%0A{url}"]
+    
+    H --> H1[navigator.clipboard.writeText url]
+    
+    C1 --> I[Open in New Window]
+    D1 --> I
+    E1 --> I
+    F1 --> I
+    G1 --> J[Open in Default Mail App]
+    H1 --> K[Show Success Toast]
+    
+    I --> L[Platform Share Dialog Opens]
+    J --> M[Email Client Opens]
+    K --> N[User Notified]
+    
+    style C fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
+    style D fill:#dbeafe,stroke:#1877f2,stroke-width:2px
+    style F fill:#dcfce7,stroke:#25D366,stroke-width:2px
+    style H fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+```
+
+### Copy Link State Management (Mermaid)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Idle: Component loads
+    
+    Idle --> Copying: User clicks "Copy Link"
+    
+    Copying --> CheckingAPI: Check clipboard API support
+    
+    CheckingAPI --> Supported: API available
+    CheckingAPI --> Fallback: API not available
+    
+    Supported --> Writing: navigator.clipboard.writeText()
+    Fallback --> LegacyMethod: document.execCommand('copy')
+    
+    Writing --> Success: Write successful
+    Writing --> Error: Write failed
+    
+    LegacyMethod --> Success: Copy successful
+    LegacyMethod --> Error: Copy failed
+    
+    Success --> ShowToast: Display success message
+    ShowToast --> CopiedState: Update button state
+    
+    CopiedState --> ResetTimer: Start 2s timer
+    ResetTimer --> Idle: Reset to default state
+    
+    Error --> ShowError: Display error message
+    ShowError --> Idle: Return to default
+    
+    note right of Success
+        - Change icon to checkmark
+        - Update text to "Copied!"
+        - Show success color
+    end note
+    
+    note right of CopiedState
+        - Temporary state (2s)
+        - Visual feedback
+        - Then auto-reset
+    end note
+```
+
+---
+
 ## Usage
 
 ### Basic Usage

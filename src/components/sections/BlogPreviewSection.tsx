@@ -28,11 +28,11 @@
 
 import React, { useCallback } from 'react';
 import { useBlogPosts } from '../../hooks/useContentful';
-import { type BlogPost } from '../../utils/contentfulService';
+import { Calendar, Clock, Tag, ArrowRight } from 'lucide-react';
+import { BlurredCircles } from '../ui/BlurredCircles';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { ReadMoreButton } from '../ui/ReadMoreButton';
-import { ShareComponent } from '../ui/ShareComponent';
-import { Calendar, Clock, Tag, ArrowRight } from 'lucide-react';
+import type { BlogPost } from '../../data/types/blog';
 
 /**
  * Blog preview section props interface
@@ -138,15 +138,18 @@ export function BlogPreviewSection({ setCurrentPage }: BlogPreviewSectionProps) 
   }
 
   return (
-    <section className="py-fluid-3xl bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-      <div className="max-w-7xl mx-auto px-fluid-md">
+    <section className="relative py-fluid-3xl bg-blog-preview-section transition-colors duration-300">
+      {/* Decorative Blurred Circles */}
+      <BlurredCircles variant="blog" />
+      
+      <div className="max-w-7xl mx-auto px-fluid-md relative z-10">
         {/* Section header */}
         <div className="text-center mb-fluid-2xl">
-          <h2 className="text-section-h2 font-heading font-semibold text-gray-800 mb-fluid-md">
+          <h2 className="text-section-h2 font-heading font-semibold text-blog-preview-heading mb-fluid-md">
             Latest from the{' '}
             <span className="text-gradient-pink-purple-blue">Blog</span>
           </h2>
-          <p className="text-body-guideline font-body font-normal text-gray-700 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-body-guideline font-body font-normal leading-relaxed max-w-2xl mx-auto text-blog-preview-description">
             Discover tutorials, behind-the-scenes insights, and creative inspiration from the world of festival and UV makeup artistry.
           </p>
         </div>
@@ -156,13 +159,13 @@ export function BlogPreviewSection({ setCurrentPage }: BlogPreviewSectionProps) 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-fluid-lg mb-fluid-xl">
             {[...Array(2)].map((_, i) => (
               <div key={i} className="animate-pulse">
-                <div className="bg-white/80 rounded-xl overflow-hidden">
-                  <div className="aspect-w-16 aspect-h-9 bg-gray-200"></div>
+                <div className="bg-blog-preview-loading-card rounded-xl overflow-hidden transition-colors duration-300">
+                  <div className="aspect-w-16 aspect-h-9 bg-blog-preview-loading-skeleton"></div>
                   <div className="p-fluid-lg">
-                    <div className="h-4 bg-gray-200 rounded mb-fluid-sm w-1/4"></div>
-                    <div className="h-6 bg-gray-200 rounded mb-fluid-sm"></div>
-                    <div className="h-4 bg-gray-200 rounded mb-fluid-sm w-5/6"></div>
-                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                    <div className="h-4 bg-blog-preview-loading-skeleton rounded mb-fluid-sm w-1/4"></div>
+                    <div className="h-6 bg-blog-preview-loading-skeleton rounded mb-fluid-sm"></div>
+                    <div className="h-4 bg-blog-preview-loading-skeleton rounded mb-fluid-sm w-5/6"></div>
+                    <div className="h-4 bg-blog-preview-loading-skeleton rounded w-3/4"></div>
                   </div>
                 </div>
               </div>
@@ -173,12 +176,12 @@ export function BlogPreviewSection({ setCurrentPage }: BlogPreviewSectionProps) 
         {/* Error state */}
         {error && !loading && (
           <div className="text-center py-fluid-xl">
-            <p className="text-fluid-base font-body text-gray-600 mb-fluid-md">
+            <p className="text-fluid-base font-body text-blog-preview-error mb-fluid-md">
               Unable to load blog posts at the moment.
             </p>
             <button
               onClick={goToBlog}
-              className="bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50"
+              className="bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus-ring-primary"
             >
               Visit Blog Page
             </button>
@@ -203,7 +206,7 @@ export function BlogPreviewSection({ setCurrentPage }: BlogPreviewSectionProps) 
             <div className="text-center">
               <button
                 onClick={goToBlog}
-                className="inline-flex items-center gap-fluid-sm bg-gradient-blue-teal-green hover:from-blue-700 hover:to-teal-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-teal-200 focus:ring-opacity-50"
+                className="inline-flex items-center gap-fluid-sm bg-gradient-blue-teal-green hover:from-blue-700 hover:to-teal-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus-ring-secondary"
                 aria-label="View all blog posts"
               >
                 <span>View All Blog Posts</span>
@@ -237,7 +240,7 @@ interface BlogPostCardProps {
  */
 function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
   return (
-    <article className="bg-white/80 backdrop-blur-sm rounded-xl border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer overflow-hidden relative">
+    <article className="bg-white/80 dark:bg-purple-900/40 backdrop-blur-sm rounded-xl border border-white/50 dark:border-purple-700/50 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer overflow-hidden relative">
       {/* Featured image */}
       {post.featuredImage && (
         <div 
@@ -256,14 +259,13 @@ function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
           <ImageWithFallback
             src={post.featuredImage.url}
             alt={post.featuredImage.alt}
-            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 rounded-t-xl"
-            style={{ aspectRatio: '16/9' }}
+            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 rounded-t-xl aspect-video"
           />
         </div>
       )}
 
       {/* Content */}
-      <div className="p-fluid-md">
+      <div className="p-fluid-md bg-blog-card transition-colors duration-300">
         {/* Category */}
         <div className="mb-fluid-sm">
           <span className="absolute top-2 right-2 z-10 inline-flex items-center px-fluid-sm py-fluid-xs bg-gradient-blue-teal-green text-white text-fluid-xs font-body font-medium rounded-full shadow-lg">
@@ -273,14 +275,14 @@ function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
 
         {/* Title */}
         <h3 
-          className="text-fluid-xl font-heading font-semibold text-gray-800 mb-fluid-sm group-hover:text-gradient-pink-purple-blue transition-colors duration-300 line-clamp-2 cursor-pointer"
+          className="text-fluid-xl font-heading font-semibold blog-card-title mb-fluid-sm group-hover:text-gradient-pink-purple-blue transition-colors duration-300 line-clamp-2 cursor-pointer"
           onClick={() => onViewPost(post.slug)}
         >
           {post.title}
         </h3>
 
         {/* Reading time and date */}
-        <div className="flex items-center justify-between gap-fluid-sm text-gray-500 mb-fluid-sm">
+        <div className="flex items-center justify-between gap-fluid-sm blog-card-meta mb-fluid-sm">
           {post.readingTime && (
             <div className="flex items-center gap-fluid-xs">
               <Clock className="w-4 h-4" />
@@ -301,12 +303,12 @@ function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
         </div>
 
         {/* Excerpt */}
-        <p className="text-body-guideline font-body font-normal text-gray-700 leading-relaxed mb-fluid-md line-clamp-3">
+        <p className="text-body-guideline font-body font-normal blog-card-excerpt leading-relaxed mb-fluid-md line-clamp-3">
           {post.excerpt}
         </p>
 
         {/* Footer with Read more */}
-        <div className="flex items-center justify-end pt-fluid-md border-t border-gray-100">
+        <div className="flex items-center justify-end pt-fluid-md border-t border-gray-100 dark:border-purple-700">
           <ReadMoreButton 
             postTitle={post.title}
             postSlug={post.slug}

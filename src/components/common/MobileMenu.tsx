@@ -203,7 +203,7 @@ export function MobileMenu({
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-gradient-to-br from-pink-500/20 via-purple-500/20 to-blue-500/20 backdrop-blur-sm"
+        className="absolute inset-0 mobile-menu-backdrop backdrop-blur-sm transition-colors duration-300"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -211,7 +211,7 @@ export function MobileMenu({
       {/* Menu Content */}
       <div
         ref={mobileMenuRef}
-        className="relative w-full h-full bg-gradient-to-br from-white via-pink-50 to-purple-50 flex flex-col"
+        className="relative w-full h-full mobile-menu-content flex flex-col transition-colors duration-300"
       >
         {/* Hidden title for screen readers */}
         <h2 id="mobile-menu-title" className="sr-only">
@@ -223,20 +223,20 @@ export function MobileMenu({
           {/* Close Button positioned absolutely in top-right corner */}
           <button
             ref={firstFocusableRef}
-            className="absolute top-6 right-6 flex flex-col justify-center items-center w-10 h-10 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-md p-1"
+            className="absolute top-6 right-6 mobile-menu-close-btn focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-md p-1"
             onClick={onClose}
             aria-label="Close mobile menu"
           >
             <span
-              className="block w-3 h-0.5 bg-gray-700 rotate-45 translate-y-1.5"
+              className="mobile-menu-close-line rotate-45 translate-y-[0.375rem]"
               aria-hidden="true"
             />
             <span
-              className="block w-3 h-0.5 bg-gray-700 opacity-0"
+              className="mobile-menu-close-line opacity-0"
               aria-hidden="true"
             />
             <span
-              className="block w-3 h-0.5 bg-gray-700 -rotate-45 -translate-y-1.5"
+              className="mobile-menu-close-line -rotate-45 -translate-y-[0.375rem]"
               aria-hidden="true"
             />
           </button>
@@ -245,7 +245,7 @@ export function MobileMenu({
           <div className="flex justify-center pt-8">
             <button
               onClick={() => onNavigation("home")}
-              className="focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-md p-2"
+              className="focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-md p-2"
               aria-label="Go to home page"
             >
               <Logo size="mobile-sm" />
@@ -262,10 +262,10 @@ export function MobileMenu({
           >
             <button
               onClick={() => onNavigation("about")}
-              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-4 rounded-md px-4 py-2 ${
+              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-4 dark:focus:ring-offset-purple-900 rounded-md px-4 py-2 ${
                 currentPage === "about"
-                  ? "text-gradient-pink-purple-blue"
-                  : "text-gray-800 hover:text-gradient-pink-purple-blue"
+                  ? "mobile-menu-link-active"
+                  : "mobile-menu-link-inactive"
               }`}
               role="menuitem"
               aria-current={
@@ -277,10 +277,10 @@ export function MobileMenu({
 
             <button
               onClick={() => onNavigation("portfolio")}
-              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-4 rounded-md px-4 py-2 ${
+              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-4 dark:focus:ring-offset-purple-900 rounded-md px-4 py-2 ${
                 currentPage === "portfolio"
-                  ? "text-gradient-pink-purple-blue"
-                  : "text-gray-800 hover:text-gradient-pink-purple-blue"
+                  ? "mobile-menu-link-active"
+                  : "mobile-menu-link-inactive"
               }`}
               role="menuitem"
               aria-current={
@@ -294,10 +294,10 @@ export function MobileMenu({
 
             <button
               onClick={() => onNavigation("blog")}
-              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-4 rounded-md px-4 py-2 ${
+              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-4 dark:focus:ring-offset-purple-900 rounded-md px-4 py-2 ${
                 currentPage === "blog"
-                  ? "text-gradient-pink-purple-blue"
-                  : "text-gray-800 hover:text-gradient-pink-purple-blue"
+                  ? "mobile-menu-link-active"
+                  : "mobile-menu-link-inactive"
               }`}
               role="menuitem"
               aria-current={
@@ -308,11 +308,16 @@ export function MobileMenu({
             </button>
 
             <button
-              onClick={() =>
-                onNavigation("home", "contact")
-              }
-              className="text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold text-gray-800 hover:text-gradient-pink-purple-blue transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-4 rounded-md px-4 py-2"
+              onClick={() => onNavigation("contact")}
+              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-4 dark:focus:ring-offset-purple-900 rounded-md px-4 py-2 ${
+                currentPage === "contact"
+                  ? "mobile-menu-link-active"
+                  : "mobile-menu-link-inactive"
+              }`}
               role="menuitem"
+              aria-current={
+                currentPage === "contact" ? "page" : undefined
+              }
             >
               Contact
             </button>
@@ -322,19 +327,19 @@ export function MobileMenu({
         {/* Decorative Elements - positioned to avoid interference */}
         <div className="absolute bottom-20 left-8">
           <div
-            className="w-16 h-16 sm:w-24 sm:h-24 bg-gradient-to-br from-pink-300 to-purple-400 rounded-full opacity-20 animate-pulse"
+            className="w-16 h-16 sm:w-24 sm:h-24 mobile-menu-orb-1 rounded-full animate-pulse"
             aria-hidden="true"
           />
         </div>
         <div className="absolute bottom-32 right-8">
           <div
-            className="w-12 h-12 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-300 to-teal-400 rounded-full opacity-25 animate-pulse delay-1000"
+            className="w-12 h-12 sm:w-20 sm:h-20 mobile-menu-orb-2 rounded-full animate-pulse delay-1000"
             aria-hidden="true"
           />
         </div>
         <div className="absolute top-1/3 right-12">
           <div
-            className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full opacity-20 animate-pulse delay-2000"
+            className="w-8 h-8 sm:w-12 sm:h-12 mobile-menu-orb-3 rounded-full animate-pulse delay-2000"
             aria-hidden="true"
           />
         </div>

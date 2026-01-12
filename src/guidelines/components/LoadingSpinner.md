@@ -17,6 +17,138 @@ Provide loading state feedback with:
 
 ---
 
+## Component Architecture
+
+### Loading State Flow (Mermaid)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Idle: Component ready
+    
+    Idle --> Loading: Data fetch initiated
+    
+    Loading --> ShowSpinner: Mount LoadingSpinner
+    ShowSpinner --> Animate: Start animation
+    
+    Animate --> Rotating: Spinner variant
+    Animate --> Pulsing: Pulse variant
+    Animate --> Bouncing: Dots variant
+    
+    Rotating --> LoadingComplete: Data received
+    Pulsing --> LoadingComplete
+    Bouncing --> LoadingComplete
+    
+    LoadingComplete --> FadeOut: Unmount spinner
+    FadeOut --> Success: Show content
+    
+    Loading --> Error: Fetch failed
+    Error --> ShowError: Display error message
+    ShowError --> Idle: Retry available
+    
+    note right of Animate
+        Continuous animation
+        Until data loads
+        Or error occurs
+    end note
+    
+    note right of LoadingComplete
+        Success state:
+        - Fade out spinner
+        - Show loaded content
+        - Announce to screen readers
+    end note
+```
+
+### Loading Spinner Variants (Mermaid)
+
+```mermaid
+flowchart TD
+    A[LoadingSpinner Component] --> B{Which Variant?}
+    
+    B -->|spinner default| C[Rotating Circle]
+    B -->|dots| D[Bouncing Dots]
+    B -->|pulse| E[Pulsing Circle]
+    B -->|bars| F[Animated Bars]
+    
+    C --> C1[SVG circle with spin animation<br/>360° rotation, infinite loop]
+    D --> D1[3 dots with staggered bounce<br/>scale animation, y-axis]
+    E --> E1[Expanding/contracting circle<br/>scale 0.8 ↔ 1.2]
+    F --> F1[4 bars with wave pattern<br/>height animation]
+    
+    C1 --> G[Apply Size]
+    D1 --> G
+    E1 --> G
+    F1 --> G
+    
+    G --> H{Size?}
+    
+    H -->|sm| I[w-4 h-4 / 16px]
+    H -->|md| J[w-8 h-8 / 32px]
+    H -->|lg| K[w-12 h-12 / 48px]
+    H -->|xl| L[w-16 h-16 / 64px]
+    
+    I --> M[Apply Color]
+    J --> M
+    K --> M
+    L --> M
+    
+    M --> N{Color Variant?}
+    
+    N -->|pink| O[text-pink-500]
+    N -->|purple| P[text-purple-500]
+    N -->|blue| Q[text-blue-500]
+    N -->|white| R[text-white]
+    N -->|gradient| S[bg-gradient-pink-purple-blue]
+    
+    style C1 fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
+    style D1 fill:#fce7f3,stroke:#ec4899,stroke-width:2px
+    style E1 fill:#f3e8ff,stroke:#a855f7,stroke-width:2px
+```
+
+### Full-Screen Loading Flow (Mermaid)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant P as Page Component
+    participant A as API
+    participant L as LoadingSpinner
+    participant SR as Screen Reader
+    
+    U->>P: Navigate to page
+    P->>P: Check if data exists
+    
+    alt No Data (Initial Load)
+        P->>A: Fetch data
+        P->>L: Show fullScreen spinner
+        L->>L: Mount overlay component
+        L->>SR: Announce "Loading..."
+        SR-->>U: Audio announcement ♿
+        
+        L-->>U: Display spinner with overlay
+        
+        Note over A: API processing...
+        
+        A-->>P: Return data
+        P->>P: Store in state
+        P->>L: Unmount spinner
+        L->>SR: Announce "Content loaded"
+        SR-->>U: Audio announcement ♿
+        P-->>U: Display content ✅
+        
+    else Has Data (Cached)
+        P-->>U: Display content immediately ✅
+    end
+    
+    alt Error State
+        A-->>P: Error response
+        P->>L: Unmount spinner
+        P-->>U: Show error message ❌
+    end
+```
+
+---
+
 ## Usage
 
 ### Basic Usage

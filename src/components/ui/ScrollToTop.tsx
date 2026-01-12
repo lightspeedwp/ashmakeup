@@ -221,10 +221,11 @@ export function ScrollToTop({
       className={`
         fixed bottom-6 right-6 z-50 w-12 h-12 
         bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 
-        disabled:from-purple-400 disabled:to-pink-400
+        dark:bg-gradient-to-br dark:from-purple-600 dark:to-pink-600 dark:hover:from-purple-500 dark:hover:to-pink-500
+        disabled:from-purple-400 disabled:to-pink-400 dark:disabled:from-purple-700 dark:disabled:to-pink-700
         text-white rounded-full shadow-lg hover:shadow-xl 
         transform hover:scale-105 transition-all duration-300 
-        focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50
+        focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-pink-400/50 focus:ring-opacity-50
         sm:bottom-8 sm:right-8
         ${className}
       `}

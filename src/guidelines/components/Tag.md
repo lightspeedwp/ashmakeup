@@ -18,6 +18,134 @@ Display labels and categories with:
 
 ---
 
+## Component Architecture
+
+### Tag Interaction Flow (Mermaid)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant T as Tag Component
+    participant B as BlogPage
+    participant F as Filter System
+    
+    Note over B: Display blog post with tags
+    B->>T: Render tags ['Festival', 'Tutorial', 'Glitter']
+    T-->>U: Display tag pills
+    
+    alt Clickable Tag
+        U->>T: Click "Festival" tag
+        T->>T: Check if onClick exists
+        T->>F: onClick('festival')
+        F->>B: Filter posts by tag
+        B->>B: Update filteredPosts
+        B-->>U: Show filtered results ✅
+    else Removable Tag
+        U->>T: Click X on tag
+        T->>T: Check if onRemove exists
+        T->>F: onRemove('festival')
+        F->>B: Remove from active filters
+        B-->>U: Update results ✅
+    else Static Tag
+        U->>T: Hover tag
+        T->>T: No onClick/onRemove
+        T-->>U: Display only (no action)
+    end
+```
+
+### Tag Variant Color Mapping (Mermaid)
+
+```mermaid
+flowchart TD
+    A[Tag Renders] --> B{Which Variant?}
+    
+    B -->|pink| C[Pink Gradient]
+    B -->|purple| D[Purple Gradient]
+    B -->|blue| E[Blue Gradient]
+    B -->|green| F[Green Solid]
+    B -->|orange| G[Orange Solid]
+    B -->|gray| H[Gray Neutral]
+    B -->|default| I[Default Gray]
+    
+    C --> C1["bg-gradient-to-r from-pink-500 to-rose-500<br/>text-white"]
+    D --> D1["bg-gradient-to-r from-purple-500 to-indigo-500<br/>text-white"]
+    E --> E1["bg-gradient-to-r from-blue-500 to-cyan-500<br/>text-white"]
+    F --> F1["bg-green-100 text-green-800<br/>border-green-300"]
+    G --> G1["bg-orange-100 text-orange-800<br/>border-orange-300"]
+    H --> H1["bg-gray-100 text-gray-700<br/>border-gray-300"]
+    I --> I1["bg-gray-200 text-gray-800"]
+    
+    C1 --> J[Render Tag]
+    D1 --> J
+    E1 --> J
+    F1 --> J
+    G1 --> J
+    H1 --> J
+    I1 --> J
+    
+    J --> K{Has Icon?}
+    
+    K -->|Yes| L[Render icon + text]
+    K -->|No| M[Render text only]
+    
+    L --> N{Size?}
+    M --> N
+    
+    N -->|sm| O[px-2 py-1 text-xs]
+    N -->|md| P[px-3 py-1.5 text-sm]
+    N -->|lg| Q[px-4 py-2 text-base]
+    
+    style C1 fill:#fce7f3,stroke:#ec4899,stroke-width:2px
+    style D1 fill:#f3e8ff,stroke:#a855f7,stroke-width:2px
+    style E1 fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
+```
+
+### Tag State Management (Mermaid)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Static: onClick/onRemove undefined
+    [*] --> Interactive: onClick defined
+    [*] --> Removable: onRemove defined
+    
+    Static --> Idle: Display only
+    Idle --> Idle: No user actions
+    
+    Interactive --> Clickable: Cursor pointer
+    Clickable --> Hover: Mouse enter
+    Clickable --> Focused: Keyboard focus
+    
+    Hover --> Click: Mouse click
+    Focused --> Click: Enter/Space key
+    
+    Click --> FilterActive: Execute onClick
+    FilterActive --> UpdateUI: Apply filter
+    UpdateUI --> Clickable: Return to idle
+    
+    Removable --> RemovableIdle: Show X button
+    RemovableIdle --> RemoveHover: Hover X button
+    RemoveHover --> Remove: Click X
+    
+    Remove --> Unmount: Execute onRemove
+    Unmount --> [*]: Tag removed from DOM
+    
+    note right of Interactive
+        Clickable tags:
+        - Cursor pointer
+        - Hover effects
+        - Filter on click
+    end note
+    
+    note right of Removable
+        Removable tags:
+        - X close button
+        - Remove from list
+        - Dismiss action
+    end note
+```
+
+---
+
 ## Usage
 
 ### Basic Usage

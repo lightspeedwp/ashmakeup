@@ -17,249 +17,69 @@ Provide content filtering by category with:
 
 ---
 
-## 🔄 Filtering Flow Diagram
+## Component Architecture
 
+### Category Filter Interaction (Mermaid)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant C as CategoryFilter
+    participant P as Parent (BlogPage)
+    participant F as Filter Logic
+    participant L as Content List
+    
+    Note over P: Initial state: "All" active
+    P->>C: Render with activeCategory="all"
+    C-->>U: Display categories (All highlighted)
+    
+    U->>C: Click "Festival"
+    C->>P: onChange("festival")
+    P->>P: setActiveCategory("festival")
+    P->>F: Filter content by category
+    F->>F: items.filter(i => i.category === "festival")
+    F-->>P: Return filtered results
+    P->>L: Update displayed items
+    L-->>U: Show only Festival items ✅
+    P->>C: Re-render with activeCategory="festival"
+    C-->>U: Highlight "Festival" button
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    CATEGORY FILTER FLOW                              │
-└─────────────────────────────────────────────────────────────────────┘
 
-┌────────────────────────────────────────────────────────────────────┐
-│                      COMPONENT INITIALIZATION                       │
-└────────────────────────────────────────────────────────────────────┘
-                               │
-                    ┌──────────▼──────────┐
-                    │  Page Component     │
-                    │  Loads              │
-                    │                     │
-                    │  • Fetch categories │
-                    │  • Set initial      │
-                    │    active = 'all'   │
-                    │  • Load all content │
-                    └──────────┬──────────┘
-                               │
-                    ┌──────────▼──────────┐
-                    │  CategoryFilter     │
-                    │  Renders            │
-                    │                     │
-                    │  Categories:        │
-                    │  ┌───────────────┐  │
-                    │  │ ALL (active)  │  │
-                    │  ├───────────────┤  │
-                    │  │ Festival      │  │
-                    │  ├───────────────┤  │
-                    │  │ Editorial     │  │
-                    │  ├───────────────┤  │
-                    │  │ Special Event │  │
-                    │  ├───────────────┤  │
-                    │  │ Nails         │  │
-                    │  └───────────────┘  │
-                    └──────────┬──────────┘
-                               │
-┌────────────────────────────────────────────────────────────────────┐
-│                        USER INTERACTION                             │
-└────────────────────────────────────────────────────────────────────┘
-                               │
-                    ┌──────────▼──────────┐
-                    │  User Clicks        │
-                    │  "Festival" Button  │
-                    └──────────┬──────────┘
-                               │
-                    ┌──────────▼──────────┐
-                    │  onClick Handler    │
-                    │  Triggers           │
-                    └──────────┬──────────┘
-                               │
-                    ┌──────────▼──────────┐
-                    │  onCategoryChange   │
-                    │  Callback           │
-                    │                     │
-                    │  ('festival')       │
-                    └──────────┬──────────┘
-                               │
-┌────────────────────────────────────────────────────────────────────┐
-│                      STATE UPDATE & FILTERING                       │
-└────────────────────────────────────────────────────────────────────┘
-                               │
-                    ┌──────────▼──────────┐
-                    │  Parent Component   │
-                    │  Updates State      │
-                    │                     │
-                    │  activeCategory =   │
-                    │  'festival'         │
-                    └──────────┬──────────┘
-                               │
-                    ┌──────────▼──────────┐
-                    │  Filter Content     │
-                    │                     │
-                    │  items.filter(item  │
-                    │    => item.category │
-                    │    === 'festival'   │
-                    │  )                  │
-                    └──────────┬──────────┘
-                               │
-                    ┌──────────▼──────────┐
-                    │  Re-render Grid     │
-                    │  with Filtered      │
-                    │  Results            │
-                    │                     │
-                    │  12 items shown     │
-                    │  (Festival only)    │
-                    └──────────┬──────────┘
-                               │
-┌────────────────────────────────────────────────────────────────────┐
-│                      VISUAL FEEDBACK                                │
-└────────────────────────────────────────────────────────────────────┘
-                               │
-                    ┌──────────▼──────────┐
-                    │  CategoryFilter     │
-                    │  Updates UI         │
-                    │                     │
-                    │  ┌───────────────┐  │
-                    │  │ All           │  │
-                    │  ├───────────────┤  │
-                    │  │ FESTIVAL ✓    │← Active (pink bg)
-                    │  ├───────────────┤  │
-                    │  │ Editorial     │  │
-                    │  ├───────────────┤  │
-                    │  │ Special Event │  │
-                    │  ├───────────────┤  │
-                    │  │ Nails         │  │
-                    │  └───────────────┘  │
-                    └─────────────────────┘
+### Category Selection Flow (Mermaid)
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                    MULTI-FILTER INTEGRATION                          │
-└─────────────────────────────────────────────────────────────────────┘
-
-Page with Multiple Filters (e.g., BlogPage):
-
-┌────────────────────────────────────────────────────────────────┐
-│  Page State Management                                         │
-├────────────────────────────────────────────────────────────────┤
-│  • activeCategory: string = 'all'                              │
-│  • searchQuery: string = ''                                    │
-│  • currentPage: number = 1                                     │
-│  • sortBy: 'date' | 'popular' = 'date'                         │
-└────────────────────────────────────────────────────────────────┘
-                               │
-                               ▼
-┌────────────────────────────────────────────────────────────────┐
-│  Filtering Pipeline                                            │
-├────────────────────────────────────────────────────────────────┤
-│                                                                │
-│  Step 1: Category Filter                                      │
-│  ────────────────────────                                     │
-│  allPosts (50) ──→ Filter by category ──→ (12 posts)         │
-│                                                                │
-│  Step 2: Search Filter                                        │
-│  ────────────────────────                                     │
-│  (12 posts) ──→ Filter by search query ──→ (5 posts)         │
-│                                                                │
-│  Step 3: Sort                                                  │
-│  ────────────────────────                                     │
-│  (5 posts) ──→ Sort by date/popular ──→ (5 posts sorted)     │
-│                                                                │
-│  Step 4: Paginate                                              │
-│  ────────────────────────                                     │
-│  (5 posts) ──→ Show page 1 (items 0-9) ──→ (5 posts)         │
-│                                                                │
-└────────────────────────────────────────────────────────────────┘
-                               │
-                               ▼
-                    ┌──────────────────┐
-                    │  Render Grid     │
-                    │  with 5 results  │
-                    └──────────────────┘
-
-┌─────────────────────────────────────────────────────────────────────┐
-│                    RESPONSIVE BEHAVIOR                               │
-└─────────────────────────────────────────────────────────────────────┘
-
-DESKTOP (>= 768px):
-┌────────────────────────────────────────────────────────────┐
-│  ┌─────┐ ┌─────────┐ ┌──────────┐ ┌─────────────┐ ┌─────┐ │
-│  │ All │ │Festival │ │Editorial │ │Special Event│ │Nails│ │
-│  └─────┘ └─────────┘ └──────────┘ └─────────────┘ └─────┘ │
-└────────────────────────────────────────────────────────────┘
-All buttons visible, flex-wrap, centered alignment
-
-MOBILE (< 768px):
-┌────────────────────────────────────────────────────────────┐
-│ ← ┌─────┐ ┌─────────┐ ┌──────────┐ ┌─────────────┐     → │
-│   │ All │ │Festival │ │Editorial │ │Special Event│       │
-│   └─────┘ └─────────┘ └──────────┘ └─────────────┘       │
-└────────────────────────────────────────────────────────────┘
-Horizontal scroll, overflow-x-auto, no wrap
-
-┌─────────────────────────────────────────────────────────────────────┐
-│                    KEYBOARD NAVIGATION                               │
-└─────────────────────────────────────────────────────────────────────┘
-
-Key Press Flow:
-
-TAB → Focus first category button
-      │
-      ▼
-    ┌─────────────────┐
-    │ Category Button │
-    │ (Focused)       │
-    │                 │
-    │ • Focus ring    │
-    │ • Outline 2px   │
-    └─────────────────┘
-      │
-      │ TAB → Next button
-      │ SHIFT+TAB → Previous button
-      │ ENTER/SPACE → Activate
-      │
-      ▼ ENTER/SPACE
-    ┌─────────────────┐
-    │ Trigger onClick │
-    │ Filter content  │
-    │ Update active   │
-    └─────────────────┘
-
-┌─────────────────────────────────────────────────────────────────────┐
-│                    STATE TRANSITIONS                                 │
-└─────────────────────────────────────────────────────────────────────┘
-
-Category Button States:
-
-1. INACTIVE (Default)
-   ┌──────────────┐
-   │   Festival   │  ← Gray background
-   │              │  ← Gray text
-   │              │  ← No border
-   └──────────────┘
-   
-   Hover:
-   ┌──────────────┐
-   │   Festival   │  ← Slightly darker gray
-   │              │  ← Scale 1.05
-   │              │  ← Shadow increase
-   └──────────────┘
-
-2. ACTIVE (Selected)
-   ┌──────────────┐
-   │   Festival ✓ │  ← Pink/purple gradient
-   │              │  ← White text
-   │              │  ← Checkmark icon
-   └──────────────┘
-   
-   Hover (active):
-   ┌──────────────┐
-   │   Festival ✓ │  ← Darker gradient
-   │              │  ← White text
-   │              │  ← Scale 1.05
-   └──────────────┘
-
-3. FOCUSED (Keyboard)
-   ┌──────────────┐
-   │ ┌──────────┐ │  ← Focus ring (pink)
-   │ │ Festival │ │  ← 2px outline
-   │ └──────────┘ │  ← Offset 2px
-   └──────────────┘
+```mermaid
+flowchart TD
+    A[User Views Page] --> B[CategoryFilter Renders]
+    
+    B --> C[All Categories Button]
+    C --> D{"'All' Active?"}
+    
+    D -->|Yes| E[Highlight with gradient]
+    D -->|No| F[Show inactive state]
+    
+    B --> G[Festival Button]
+    G --> H{"'Festival' Active?"}
+    
+    H -->|Yes| E
+    H -->|No| F
+    
+    E --> I[Apply active styles:<br/>bg-gradient-pink-purple-blue<br/>text-white<br/>shadow-lg]
+    
+    F --> J[Apply inactive styles:<br/>bg-white/80<br/>text-gray-700<br/>hover:shadow-md]
+    
+    I --> K[User Clicks Category]
+    J --> K
+    
+    K --> L[Trigger onChange]
+    L --> M[Parent Updates State]
+    M --> N[Filter Content]
+    N --> O[Re-render with New Active]
+    
+    O --> B
+    
+    style E fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style F fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
+    style N fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
 ```
 
 ---

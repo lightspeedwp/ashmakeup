@@ -83,6 +83,7 @@ interface HeroLayoutProps {
  * @param {string} [props.description] - Optional description paragraph
  * @param {string} [props.className] - Additional CSS classes
  * @param {Object} [props.backgroundGradient] - Background gradient configuration
+ * @param {Object} [props.backgroundStyle] - Inline background style (e.g., gradient)
  * @param {Object} [props.titleGradient] - Title text gradient configuration
  * @param {Object} [props.subtitleGradient] - Subtitle text gradient configuration
  * @param {React.ReactNode} [props.decorativeElements] - Decorative visual elements
@@ -268,13 +269,16 @@ export function HeroLayout({
     ? "min-h-screen flex items-center justify-center px-fluid-md py-0"
     : sizeClasses[size];
 
+  // Default background: Soft pastel gradient in light mode, dark purple in dark mode
+  const defaultBackgroundClass = "bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950";
+  
   const backgroundClass = backgroundGradient
     ? `bg-gradient-to-br from-${backgroundGradient.from} ${
         backgroundGradient.via
           ? `via-${backgroundGradient.via}`
           : ""
       } to-${backgroundGradient.to}`
-    : "";
+    : defaultBackgroundClass;
 
   const titleGradientClass = titleGradient
     ? `bg-gradient-to-r from-${titleGradient.from} ${
@@ -305,9 +309,21 @@ export function HeroLayout({
 
   return (
     <section
-      className={`relative overflow-x-hidden min-h-screen lg:h-screen flex flex-col justify-center ${backgroundClass} ${containerClasses} ${className}`}
+      className={`relative overflow-x-hidden min-h-screen flex flex-col transition-colors duration-300 ${backgroundClass} ${containerClasses} ${className}`}
     >
-      {/* Decorative Elements */}
+      {/* Decorative Floating Circles - Light Mode Only */}
+      <div className="absolute inset-0 pointer-events-none dark:opacity-0 opacity-100 transition-opacity duration-300" aria-hidden="true">
+        {/* Top left pink-purple gradient circle */}
+        <div className="hero-circle-1 bg-hero-circle-pink-purple" />
+        
+        {/* Top right blue-teal gradient circle */}
+        <div className="hero-circle-2 bg-hero-circle-blue-teal" />
+        
+        {/* Bottom left yellow-pink gradient circle */}
+        <div className="hero-circle-3 bg-hero-circle-yellow-pink" />
+      </div>
+
+      {/* Decorative Elements (existing custom decorations) */}
       {decorativeElements && (
         <div
           className="absolute inset-0 pointer-events-none"
@@ -325,18 +341,14 @@ export function HeroLayout({
             className={`${contentMaxWidth[layout]} pt-fluid-lg`}
           >
             <h1
-              className={`text-fluid-3xl font-title font-normal mb-fluid-md ${titleGradientClass}`}
-              style={{ 
-                fontFamily: 'var(--font-title)'
-              }}
+              className={`text-fluid-3xl font-title font-normal mb-fluid-md transition-colors duration-300 ${titleGradientClass}`}
             >
               {title}
             </h1>
 
             {subtitle && (
               <h2
-                className={`text-section-h2 font-heading font-bold leading-tight mb-fluid-md ${subtitleGradientClass}`}
-                style={{ fontFamily: 'var(--font-heading)' }}
+                className={`text-section-h2 font-heading font-bold leading-tight mb-fluid-md transition-colors duration-300 ${subtitleGradientClass}`}
               >
                 {subtitle}
               </h2>
@@ -344,8 +356,7 @@ export function HeroLayout({
 
             {description && (
               <p 
-                className="text-body-guideline font-body font-normal text-gray-600 leading-relaxed mb-fluid-md"
-                style={{ fontFamily: 'var(--font-body)' }}
+                className="text-body-guideline font-body font-normal text-hero-description leading-relaxed mb-fluid-md transition-colors duration-300"
               >
                 {description}
               </p>

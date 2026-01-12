@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Section Card Themes */
+@import './section-card-themes.css';
+
 /* GOOGLE FONTS CDN - Variable Fonts Loaded via HTML */
 /* Fonts are loaded from Google Fonts CDN in index.html for Figma Make compatibility */
 /* Font families: Inter (100-900), Playfair Display (400-900), Righteous (400) */
@@ -59,6 +62,31 @@
     --gradient-gold-peach-coral-start: #ffd700;
     --gradient-gold-peach-coral-middle: #ff9966;
     --gradient-gold-peach-coral-end: #ff5e62;
+
+    /* Figma Light Mode Section Backgrounds */
+    /* Hero sections - soft pink/purple/blue gradient */
+    --bg-hero-light: linear-gradient(143.477deg, rgb(253, 242, 248) 0%, rgb(250, 245, 255) 50%, rgb(239, 246, 255) 100%);
+    
+    /* Journey section - warm yellow/cream gradient */
+    --bg-journey-light: linear-gradient(147.769deg, rgb(255, 237, 212) 0%, rgb(254, 249, 194) 50%, rgb(255, 255, 255) 100%);
+    
+    /* Festival/Values section - fresh mint/green gradient */
+    --bg-festival-light: linear-gradient(148.35deg, rgb(220, 252, 231) 0%, rgb(208, 250, 229) 50%, rgb(203, 251, 241) 100%);
+    
+    /* Nightlife section - vibrant purple gradient */
+    --bg-nightlife-light: linear-gradient(146deg, rgb(243, 232, 255) 0%, rgb(237, 233, 254) 50%, rgb(251, 207, 232) 100%);
+    
+    /* UV/Tech section - cool cyan/blue gradient */
+    --bg-uv-light: linear-gradient(144.233deg, rgb(206, 250, 254) 0%, rgb(224, 242, 254) 100%);
+    
+    /* Professional section - soft pink gradient */
+    --bg-professional-light: linear-gradient(147.992deg, rgb(255, 228, 230) 0%, rgb(252, 231, 243) 50%, rgb(255, 226, 226) 100%);
+    
+    /* Skills section - teal/mint gradient */
+    --bg-skills-light: linear-gradient(148.99deg, rgb(255, 255, 255) 0%, rgb(208, 250, 229) 50%, rgb(220, 252, 231) 100%);
+
+    /* Dark Mode - All sections use purple gradient */
+    --bg-section-dark: linear-gradient(to bottom right, rgb(88, 28, 135), rgba(88, 28, 135, 0.5), rgb(88, 28, 135));
 
     /* WordPress 6.6+ Inspired Typography Scale - Height-Aware Responsive */
     /* Mobile-first fluid typography with VW + VH calculations for better viewport adaptation */
@@ -118,25 +146,26 @@
   }
 
   .dark {
-    --background: #0f172a;
-    --foreground: #f8fafc;
-    --card: #0f172a;
-    --card-foreground: #f8fafc;
-    --popover: #0f172a;
-    --popover-foreground: #f8fafc;
-    --primary: #f8fafc;
-    --primary-foreground: #0f172a;
-    --secondary: #1e293b;
-    --secondary-foreground: #f8fafc;
-    --muted: #1e293b;
-    --muted-foreground: #94a3b8;
-    --accent: #1e293b;
-    --accent-foreground: #f8fafc;
+    /* Deep Purple Dark Mode - Elegant midnight purple theme */
+    --background: #0a0118; /* Deep purple-black #0a0118 (darker than before) */
+    --foreground: #f5f3ff; /* Lavender white */
+    --card: #1a0f2e; /* Rich deep purple for cards */
+    --card-foreground: #f5f3ff;
+    --popover: #1a0f2e;
+    --popover-foreground: #f5f3ff;
+    --primary: #f5f3ff;
+    --primary-foreground: #0a0118;
+    --secondary: #2d1b4e; /* Medium purple */
+    --secondary-foreground: #f5f3ff;
+    --muted: #2d1b4e;
+    --muted-foreground: #c4b5fd; /* Light purple for muted text */
+    --accent: #3b2667; /* Vibrant accent purple */
+    --accent-foreground: #f5f3ff;
     --destructive: #dc2626;
-    --destructive-foreground: #f8fafc;
-    --border: #1e293b;
-    --input: #1e293b;
-    --ring: #94a3b8;
+    --destructive-foreground: #f5f3ff;
+    --border: #3b2667; /* Purple borders instead of gray */
+    --input: #1a0f2e;
+    --ring: #a78bfa; /* Purple ring for focus */
   }
 
   * {
@@ -144,14 +173,19 @@
   }
 
   body {
+    margin: 0;
+    padding: 0;
     background-color: var(--background);
     color: var(--foreground);
     font-family: var(--font-body);
     font-size: var(--text-base);
     line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   html {
+    margin: 0;
+    padding: 0;
     font-size: 18px;
     scroll-behavior: smooth;
   }
@@ -177,7 +211,7 @@
 
   h3 {
     font-family: var(--font-heading) !important;
-    font-size: var(--text-3xl) !important;
+    font-size: var(--text-2xl) !important;
     font-weight: var(--font-weight-semibold);
     line-height: 1.3;
     font-display: swap;
@@ -213,6 +247,21 @@
     font-weight: var(--font-weight-regular);
     line-height: 1.7;
     font-display: swap;
+  }
+
+  /* Subheading Style - for p tags that follow h2 headings */
+  h2 + p,
+  .subheading {
+    color: #ec4899; /* Pink-500 for light mode */
+    font-size: var(--text-lg) !important;
+    font-weight: var(--font-weight-normal);
+    font-family: var(--font-body) !important;
+    line-height: 1.6;
+  }
+
+  .dark h2 + p,
+  .dark .subheading {
+    color: #f9a8d4; /* Pink-300 for dark mode */
   }
 
   /* Button and interactive element font enforcement with variable weights */
@@ -527,41 +576,251 @@
     -webkit-text-fill-color: transparent;
   }
 
-  /* Standard Tailwind Gradient Utilities for SectionCard Component */
-  /* Orange to Amber (Journey theme) */
-  .bg-gradient-to-r.from-orange-500.to-amber-500 {
-    background: linear-gradient(to right, #f97316, #f59e0b);
+  /* Dark Gradient Variant - Top-heavy purple to blue */
+  .text-gradient-pink-purple-blue-dark {
+    background: linear-gradient(
+      180deg,
+      #c026d3 0%,
+      #a855f7 30%,
+      #ff66cc 60%,
+      #9933ff 80%,
+      #3399ff 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
-  
-  /* Cyan to Indigo (UV theme) */
-  .bg-gradient-to-r.from-cyan-500.to-indigo-500 {
-    background: linear-gradient(to right, #06b6d4, #6366f1);
+
+  /* Featured Section Background Gradient - Figma Design System */
+  .bg-featured-section {
+    background: linear-gradient(128.332deg, rgb(252, 231, 243) 0%, rgb(243, 232, 255) 50%, rgb(219, 234, 254) 100%);
   }
-  
-  /* Green to Teal (Festival theme) */
-  .bg-gradient-to-r.from-green-500.to-teal-500 {
-    background: linear-gradient(to right, #22c55e, #14b8a6);
+
+  .dark .bg-featured-section {
+    background: linear-gradient(135deg, rgba(88, 28, 135, 0.4) 0%, rgba(109, 40, 217, 0.3) 50%, rgba(30, 58, 138, 0.4) 100%);
   }
-  
-  /* Rose to Red (Mousse theme) */
-  .bg-gradient-to-r.from-rose-500.to-red-500 {
-    background: linear-gradient(to right, #f43f5e, #ef4444);
+
+  /* Fusion Nails Section Background Gradient - Figma Design System */
+  .bg-fusion-nails-section {
+    background: linear-gradient(133.515deg, rgb(255, 228, 230) 0%, rgb(252, 231, 243) 50%, rgb(255, 237, 212) 100%);
   }
-  
-  /* Teal to Green (Nails theme) */
-  .bg-gradient-to-r.from-teal-500.to-green-500 {
-    background: linear-gradient(to right, #14b8a6, #22c55e);
+
+  .dark .bg-fusion-nails-section {
+    background: rgb(59, 7, 100); /* Deep purple solid background */
   }
-  
-  /* Indigo to Violet (Creative theme) */
-  .bg-gradient-to-r.from-indigo-500.to-violet-500 {
-    background: linear-gradient(to right, #6366f1, #8b5cf6);
+
+  /* Fusion Nails Decorative Elements */
+  .bg-fusion-decoration-1 {
+    background: linear-gradient(135deg, rgb(253, 164, 175) 0%, rgb(251, 207, 232) 100%); /* rose-300 to pink-400 */
   }
-  
-  /* Purple to Blue (Future theme) */
-  .bg-gradient-to-r.from-purple-500.to-blue-500 {
-    background: linear-gradient(to right, #a855f7, #3b82f6);
+
+  .dark .bg-fusion-decoration-1 {
+    background: linear-gradient(135deg, rgb(225, 29, 72) 0%, rgb(219, 39, 119) 100%); /* rose-600 to pink-700 */
   }
+
+  .bg-fusion-decoration-2 {
+    background: linear-gradient(135deg, rgb(253, 186, 116) 0%, rgb(248, 113, 113) 100%); /* orange-300 to red-400 */
+  }
+
+  .dark .bg-fusion-decoration-2 {
+    background: linear-gradient(135deg, rgb(234, 88, 12) 0%, rgb(185, 28, 28) 100%); /* orange-600 to red-700 */
+  }
+
+  /* Fusion Nails Button Focus Ring */
+  .focus-ring-fusion-button {
+    outline: none;
+  }
+
+  .focus-ring-fusion-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(254, 215, 170, 0.5); /* orange-200 with 50% opacity */
+  }
+
+  .dark .focus-ring-fusion-button:focus {
+    box-shadow: 0 0 0 4px rgba(251, 146, 60, 0.5); /* orange-400 with 50% opacity */
+  }
+
+  /* Hero Section Background Gradient - Figma Design System */
+  .bg-hero-section {
+    background: linear-gradient(135deg, rgb(254, 242, 242) 0%, rgb(250, 245, 255) 50%, rgb(239, 246, 255) 100%);
+  }
+
+  .dark .bg-hero-section {
+    background: linear-gradient(135deg, rgba(88, 28, 135, 0.3) 0%, rgba(109, 40, 217, 0.2) 50%, rgba(88, 28, 135, 0.3) 100%);
+  }
+
+  /* Blog Preview Section Background Gradient - Figma Design System */
+  .bg-blog-preview-section {
+    background: linear-gradient(135deg, rgb(239, 246, 255) 0%, rgb(250, 245, 255) 50%, rgb(254, 242, 242) 100%);
+  }
+
+  .dark .bg-blog-preview-section {
+    background: linear-gradient(135deg, rgba(88, 28, 135, 0.2) 0%, rgba(109, 40, 217, 0.1) 50%, rgba(88, 28, 135, 0.2) 100%);
+  }
+
+  /* Blog Page Header - Full Page Header Section */
+  .blog-page-header {
+    /* Light mode: Soft gradient background (pink → purple → blue) */
+    background: linear-gradient(to bottom right, #fdf2f8, #faf5ff, #eff6ff);
+    
+    /* Vertical spacing */
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+    
+    /* Smooth transitions for theme switching */
+    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+  }
+
+  .dark .blog-page-header {
+    /* Dark mode: Deep purple gradient with transparency */
+    background: linear-gradient(to bottom right, rgba(88, 28, 135, 0.4), rgba(88, 28, 135, 0.3), rgba(88, 28, 135, 0.4));
+  }
+
+  /* Contact Page Main Content Area */
+  .contact-page-main {
+    /* Height-aware responsive vertical padding (2rem → 4rem based on viewport height) */
+    padding-top: clamp(2rem, 8vh, 4rem);
+    padding-bottom: clamp(2rem, 8vh, 4rem);
+    
+    /* Smooth transitions for theme switching */
+    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+  }
+
+  /* Dark mode - no additional styling needed, inherits from layout */
+  .dark .contact-page-main {
+    /* Uses parent background, no override needed */
+  }
+
+  /* Blog Page Content Area */
+  .blog-page-content {
+    /* Layout - max width, center alignment, horizontal padding */
+    max-width: 80rem; /* 1280px - same as max-w-7xl */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+    
+    /* Vertical spacing */
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-lg);
+    
+    /* Light mode - inherits white/light background from parent */
+    background-color: transparent;
+    
+    /* Smooth transitions for theme switching */
+    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+  }
+
+  .dark .blog-page-content {
+    /* Dark mode - inherits purple background from parent */
+    background-color: transparent;
+  }
+
+  /* Portfolio Page Header Section */
+  .portfolio-page-header {
+    /* Light mode - soft gradient background */
+    background: linear-gradient(to bottom right, rgb(253, 242, 248), rgb(250, 245, 255), rgb(239, 246, 255));
+    
+    /* Vertical spacing - extra large for hero section */
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+    
+    /* Smooth transitions for theme switching */
+    transition: background 300ms ease-in-out;
+  }
+
+  .dark .portfolio-page-header {
+    /* Dark mode - deep purple gradient with transparency */
+    background: linear-gradient(to bottom right, rgba(88, 28, 135, 0.4), rgba(109, 40, 217, 0.3), rgba(88, 28, 135, 0.4));
+  }
+
+  /* Portfolio Page Content Area */
+  .portfolio-page-content {
+    /* Layout - max width, center alignment, horizontal padding */
+    max-width: 80rem; /* 1280px - same as max-w-7xl */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+    
+    /* Vertical spacing - bottom padding for content area */
+    padding-bottom: var(--space-2xl);
+    
+    /* Light mode - transparent to inherit parent background */
+    background-color: transparent;
+    
+    /* Smooth transitions for theme switching */
+    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+  }
+
+  .dark .portfolio-page-content {
+    /* Dark mode - transparent to inherit parent background */
+    background-color: transparent;
+  }
+
+  /* Testimonials Section Background Gradient - Figma Design System */
+  .bg-testimonials-section {
+    background: linear-gradient(135deg, rgb(254, 242, 242) 0%, rgb(250, 245, 255) 50%, rgb(239, 246, 255) 100%);
+  }
+
+  .dark .bg-testimonials-section {
+    background: linear-gradient(135deg, rgb(46, 16, 101) 0%, rgb(59, 7, 100) 50%, rgb(46, 16, 101) 100%);
+  }
+
+  /* Testimonials Slider - Slide Width - Responsive */
+  .testimonial-slide-width {
+    width: calc(100% - 0px); /* Mobile: Full width, single column */
+  }
+
+  @media (min-width: 768px) {
+    .testimonial-slide-width {
+      width: calc(50% - 12px); /* Tablet/Desktop: Half width, two columns */
+    }
+  }
+
+  /* Testimonials Slider - Transform Animation - Responsive */
+  .testimonial-slider-transform {
+    transform: translateX(calc(var(--testimonial-index, 0) * -100%)); /* Mobile: 100% per slide */
+  }
+
+  @media (min-width: 768px) {
+    .testimonial-slider-transform {
+      transform: translateX(calc(var(--testimonial-index, 0) * -50%)); /* Tablet/Desktop: 50% per slide */
+    }
+  }
+
+  /* Footer Section Background Gradient - Figma Design System */
+  .bg-footer-section {
+    background: linear-gradient(131.072deg, rgb(249, 250, 251) 0%, rgb(250, 245, 255) 50%, rgb(253, 242, 248) 100%);
+  }
+
+  .dark .bg-footer-section {
+    background: #0a0118; /* Extremely dark purple - matches main dark background */
+  }
+
+  /* Why Section Background - White in light mode, Purple in dark mode */
+  .bg-why-section {
+    background: rgb(255, 255, 255);
+  }
+
+  .dark .bg-why-section {
+    background: linear-gradient(135deg, rgba(88, 28, 135, 1) 0%, rgba(109, 40, 217, 0.9) 50%, rgba(88, 28, 135, 1) 100%);
+  }
+
+  /* Three Column Layout - Default Background and Text Colors */
+  .bg-three-column-layout {
+    background-color: rgb(255, 255, 255);
+    color: rgb(17, 24, 39); /* gray-900 */
+  }
+
+  .dark .bg-three-column-layout {
+    background-color: rgb(88, 28, 135); /* purple-900 */
+    color: rgb(255, 255, 255); /* white */
+  }
+
+  /* SectionCard Component Themes */
+  /* NOTE: SectionCard now uses semantic CSS classes defined at the end of this file */
+  /* See .section-card-journey, .section-card-festival, .section-card-berlin, etc. */
 
   /* WordPress-Inspired Component Spacing - Semantic Utilities */
   .px-button {
@@ -1138,127 +1397,1866 @@
     background: linear-gradient(to right, transparent, #e5e7eb, transparent);
     margin: 2em 0;
   }
-}
 
-/* Reduced motion preferences */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+  /* Section Background Gradients - Light/Dark Mode */
+  .bg-hero-section {
+    background-image: var(--bg-hero-light);
   }
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  * {
-    --ring: #000000;
-    --border: #000000;
+  .dark .bg-hero-section {
+    background-image: var(--bg-section-dark);
   }
 
-  .text-gray-700 {
-    color: #1f2937 !important;
+  .bg-journey-section {
+    background: linear-gradient(147.769deg, rgb(255, 237, 212) 0%, rgb(254, 249, 194) 50%, rgb(255, 255, 255) 100%);
   }
 
-  .text-gray-600 {
-    color: #374151 !important;
+  .dark .bg-journey-section {
+    background: linear-gradient(135deg, rgba(88, 28, 135, 1) 0%, rgba(109, 40, 217, 0.8) 50%, rgba(88, 28, 135, 1) 100%);
   }
 
-  .opacity-25,
-  .opacity-30 {
-    opacity: 0.1 !important;
+  .bg-festival-section {
+    background: linear-gradient(148.35deg, rgb(220, 252, 231) 0%, rgb(208, 250, 229) 50%, rgb(203, 251, 241) 100%);
   }
 
-  .border-gray-200 {
-    border-color: #6b7280 !important;
-  }
-}
-
-/* Forced colors mode support */
-@media (forced-colors: active) {
-  .bg-gradient-to-r,
-  .bg-gradient-to-br,
-  .bg-gradient-to-l,
-  .bg-gradient-to-t,
-  .bg-gradient-to-b {
-    background: Canvas !important;
+  .dark .bg-festival-section {
+    background: linear-gradient(135deg, rgba(88, 28, 135, 1) 0%, rgba(109, 40, 217, 0.8) 50%, rgba(88, 28, 135, 1) 100%);
   }
 
-  .text-transparent {
-    color: CanvasText !important;
-    -webkit-text-fill-color: CanvasText !important;
+  .bg-nightlife-section {
+    background: linear-gradient(146deg, rgb(243, 232, 255) 0%, rgb(237, 233, 254) 50%, rgb(251, 207, 232) 100%);
   }
 
-  .border-gradient-to-r {
-    border-color: ButtonBorder !important;
+  .dark .bg-nightlife-section {
+    background: linear-gradient(135deg, rgba(88, 28, 135, 1) 0%, rgba(109, 40, 217, 0.8) 50%, rgba(88, 28, 135, 1) 100%);
   }
 
-  [aria-hidden="true"] {
-    display: none !important;
+  .bg-uv-section {
+    background: linear-gradient(144.233deg, rgb(206, 250, 254) 0%, rgb(224, 242, 254) 100%);
   }
 
-  .bg-white\/80,
-  .bg-white\/60 {
-    background: Canvas !important;
-    border: 1px solid ButtonBorder !important;
+  .dark .bg-uv-section {
+    background: linear-gradient(135deg, rgba(88, 28, 135, 1) 0%, rgba(109, 40, 217, 0.8) 50%, rgba(88, 28, 135, 1) 100%);
   }
-}
 
-/* Focus indicators for better keyboard navigation */
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
-select:focus-visible {
-  outline: 2px solid #ec4899;
-  outline-offset: 2px;
-  border-radius: 4px;
-}
+  .bg-professional-section {
+    background: linear-gradient(147.992deg, rgb(255, 228, 230) 0%, rgb(252, 231, 243) 50%, rgb(255, 226, 226) 100%);
+  }
 
-/* Portfolio Pagination Consistency Fix - Force consistent padding across all pagination elements */
-[data-slot="pagination-link"] {
-  width: auto !important;
-  min-width: 0 !important;
-  padding-left: 0.75rem !important; /* px-3 */
-  padding-right: 0.75rem !important; /* px-3 */
-  padding-top: 0.5rem !important; /* py-2 */
-  padding-bottom: 0.5rem !important; /* py-2 */
-}
+  .dark .bg-professional-section {
+    background: linear-gradient(135deg, rgba(88, 28, 135, 1) 0%, rgba(109, 40, 217, 0.8) 50%, rgba(88, 28, 135, 1) 100%);
+  }
 
-/* Ensure Previous/Next buttons also match */
-[data-slot="pagination-link"]:has(.lucide-chevron-left),
-[data-slot="pagination-link"]:has(.lucide-chevron-right) {
-  padding-left: 0.75rem !important; /* px-3 */
-  padding-right: 0.75rem !important; /* px-3 */
-  width: auto !important;
-  min-width: 0 !important;
-}
+  .bg-skills-section {
+    background: linear-gradient(135deg, rgba(88, 28, 135, 1) 0%, rgba(109, 40, 217, 0.8) 50%, rgba(88, 28, 135, 1) 100%);
+  }
 
-/* Large Logo Height Classes for 3x Larger Logos */
-.h-24 {
-  height: 6rem; /* 96px - 3x the sm size (32px) */
-}
+  /* ============================================
+     DECORATIVE GRADIENT UTILITIES
+     Following guidelines: NO INLINE STYLES
+     All gradients must be defined as CSS classes
+     ============================================ */
 
-.h-30 {
-  height: 7.5rem; /* 120px - 3x the md size (40px) */
-}
+  /* Hero Decorative Circle Gradients - Light Mode Only */
+  .bg-hero-circle-pink-purple {
+    background-image: linear-gradient(135deg, rgb(253, 165, 213) 0%, rgb(194, 122, 255) 100%);
+  }
+  
+  .bg-hero-circle-blue-teal {
+    background-image: linear-gradient(135deg, rgb(142, 197, 255) 0%, rgb(0, 213, 190) 100%);
+  }
+  
+  .bg-hero-circle-yellow-pink {
+    background-image: linear-gradient(135deg, rgb(255, 223, 32) 0%, rgb(251, 100, 182) 100%);
+  }
+  
+  /* Hero Decorative Circle Positioning & Sizing - Light Mode Only */
+  .hero-circle-1 {
+    position: absolute;
+    top: 45px;
+    left: 45px;
+    width: 144px;
+    height: 144px;
+    border-radius: 9999px;
+    opacity: 0.241;
+  }
+  
+  .hero-circle-2 {
+    position: absolute;
+    top: 90px;
+    right: 90px;
+    width: 108px;
+    height: 108px;
+    border-radius: 9999px;
+    opacity: 0.466;
+  }
+  
+  .hero-circle-3 {
+    position: absolute;
+    bottom: 180px;
+    left: 25%;
+    width: 180px;
+    height: 180px;
+    border-radius: 9999px;
+    opacity: 0.198;
+  }
+  
+  /* Social Share Button Gradients */
+  .bg-gradient-x-twitter {
+    background: linear-gradient(135deg, #000000, #333333);
+  }
+  
+  .bg-gradient-facebook {
+    background: linear-gradient(135deg, #1877f2, #42a5f5);
+  }
+  
+  .bg-gradient-instagram {
+    background: linear-gradient(135deg, #e1306c, #fd1d1d, #fcaf45);
+  }
+  
+  .bg-gradient-whatsapp {
+    background: linear-gradient(135deg, #25d366, #1ebe57);
+  }
+  
+  .bg-gradient-email {
+    background: linear-gradient(135deg, #10b981, #059669);
+  }
+  
+  .bg-gradient-copy {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  }
+  
+  .bg-gradient-copy-success {
+    background: linear-gradient(135deg, #10b981, #059669);
+  }
+  
+  /* Social Links Gradients - Platform Specific */
+  .bg-gradient-social-instagram {
+    background: linear-gradient(135deg, #e1306c, #fd1d1d 50%, #fcaf45);
+  }
+  
+  .bg-gradient-social-facebook {
+    background: linear-gradient(135deg, #1877f2, #42a5f5);
+  }
+  
+  .bg-gradient-social-tiktok {
+    background: linear-gradient(135deg, #000000, #fe2c55);
+  }
+  
+  .bg-gradient-social-linkedin {
+    background: linear-gradient(135deg, #0077b5, #00a0dc);
+  }
+  
+  .bg-gradient-social-email {
+    background: linear-gradient(135deg, #10b981, #059669);
+  }
 
-.h-36 {
-  height: 9rem; /* 144px - 3x the lg size (48px) */
-}
+  /* Portfolio Section Decorative Gradients */
+  .bg-decorative-pink-purple {
+    background: linear-gradient(135deg, rgb(251, 100, 182) 0%, rgb(173, 70, 255) 100%);
+  }
 
-.h-15 {
-  height: 3.75rem; /* 60px - Half of h-30 for mobile menu */
-}
+  .bg-decorative-blue-teal {
+    background: linear-gradient(135deg, rgb(81, 162, 255) 0%, rgb(0, 187, 167) 100%);
+  }
 
-/* Header Logo Width Class for 220px Wide Logo */
-.w-header-logo {
-  width: 220px; /* Specific width for header logo */
-  height: auto; /* Maintain aspect ratio */
+  /* ============================================
+     PORTFOLIO PAGE SPECIFIC GRADIENTS
+     Extracted from Figma design
+     ============================================ */
+
+  /* Portfolio Page Background */
+  .bg-portfolio-page {
+    background-image: linear-gradient(161.854deg, rgb(253, 242, 248) 0%, rgb(250, 245, 255) 50%, rgb(239, 246, 255) 100%);
+  }
+
+  /* Portfolio Heading Gradient Text */
+  .text-gradient-portfolio-heading {
+    background: linear-gradient(90deg, rgb(15, 23, 42) 0%, rgb(15, 23, 42) 100%), linear-gradient(162.111deg, rgb(255, 102, 204) 0%, rgb(153, 51, 255) 50%, rgb(51, 153, 255) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Category Badge Gradients */
+  .bg-category-all {
+    background-image: linear-gradient(155.363deg, rgb(255, 102, 204) 0%, rgb(153, 51, 255) 50%, rgb(51, 153, 255) 100%);
+  }
+
+  .bg-category-festival {
+    background-image: linear-gradient(164.322deg, rgb(0, 191, 255) 0%, rgb(32, 201, 151) 50%, rgb(50, 205, 50) 100%);
+  }
+
+  .bg-category-uv {
+    background-image: linear-gradient(160.19deg, rgb(255, 215, 0) 0%, rgb(255, 153, 102) 50%, rgb(255, 94, 98) 100%);
+  }
+
+  .bg-category-nails {
+    background-image: linear-gradient(160.838deg, rgb(255, 102, 204) 0%, rgb(153, 51, 255) 50%, rgb(51, 153, 255) 100%);
+  }
+
+  .bg-category-travel {
+    background-image: linear-gradient(166.937deg, rgb(255, 215, 0) 0%, rgb(255, 153, 102) 50%, rgb(255, 94, 98) 100%);
+  }
+
+  /* Portfolio Entry Date Text Gradients */
+  .text-gradient-portfolio-date {
+    background: linear-gradient(90deg, rgb(15, 23, 42) 0%, rgb(15, 23, 42) 100%), linear-gradient(164.238deg, rgb(0, 191, 255) 0%, rgb(32, 201, 151) 50%, rgb(50, 205, 50) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Portfolio Dot Indicator - Pink-Purple-Blue */
+  .bg-portfolio-dot {
+    background-image: linear-gradient(135deg, rgb(255, 102, 204) 0%, rgb(153, 51, 255) 50%, rgb(51, 153, 255) 100%);
+  }
+
+  /* ============================================
+     HEADER SPECIFIC GRADIENTS
+     Extracted from Figma design
+     ============================================ */
+
+  /* Header Light Mode Background - White with 95% opacity (matching Figma) */
+  .bg-header-light {
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+
+  /* Header Dark Mode Background - Black with 95% opacity */
+  .dark .bg-header-light {
+    background-color: rgba(0, 0, 0, 0.95);
+  }
+
+  /* Header Shadow - Light mode subtle shadow */
+  .shadow-header-light {
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  /* ============================================
+     HEADER NAVIGATION COLORS
+     Semantic color classes for navigation links
+     ============================================ */
+
+  /* Header Border Color */
+  .border-header {
+    border-color: #e2e8f0;
+  }
+
+  .dark .border-header {
+    border-color: rgb(126, 34, 206); /* purple-800 */
+  }
+
+  /* Navigation Link Typography */
+  .text-nav-link {
+    font-size: 22.5px;
+    line-height: 36px;
+    letter-spacing: 0.225px;
+  }
+
+  /* Navigation Link - Active state */
+  .nav-link-active {
+    color: #f6339a;
+  }
+
+  .dark .nav-link-active {
+    color: rgb(252, 165, 165); /* pink-300 */
+  }
+
+  /* Navigation Link - Inactive state */
+  .nav-link-inactive {
+    color: #374151;
+  }
+
+  .dark .nav-link-inactive {
+    color: rgb(255, 255, 255);
+  }
+
+  /* Navigation Link - Hover state */
+  .nav-link-inactive:hover {
+    color: #f6339a;
+  }
+
+  .dark .nav-link-inactive:hover {
+    color: rgb(252, 165, 165); /* pink-300 */
+  }
+
+  /* ============================================
+     MOBILE MENU STYLES
+     Semantic classes for mobile navigation overlay
+     ============================================ */
+
+  /* Mobile Menu Backdrop - Light Mode */
+  .mobile-menu-backdrop {
+    background: linear-gradient(
+      to bottom right,
+      rgba(236, 72, 153, 0.2),
+      rgba(168, 85, 247, 0.2),
+      rgba(59, 130, 246, 0.2)
+    );
+  }
+
+  /* Mobile Menu Backdrop - Dark Mode */
+  .dark .mobile-menu-backdrop {
+    background: linear-gradient(
+      to bottom right,
+      rgba(88, 28, 135, 0.4),
+      rgba(107, 33, 168, 0.4),
+      rgba(76, 29, 149, 0.4)
+    );
+  }
+
+  /* Mobile Menu Content Background - Light Mode */
+  .mobile-menu-content {
+    background: linear-gradient(
+      to bottom right,
+      rgb(255, 255, 255),
+      rgb(254, 242, 242),
+      rgb(250, 245, 255)
+    );
+  }
+
+  /* Mobile Menu Content Background - Dark Mode */
+  .dark .mobile-menu-content {
+    background: linear-gradient(
+      to bottom right,
+      rgb(46, 16, 101),
+      rgb(88, 28, 135),
+      rgb(76, 29, 149)
+    );
+  }
+
+  /* Mobile Menu Close Button */
+  .mobile-menu-close-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Mobile Menu Close Button Lines */
+  .mobile-menu-close-line {
+    display: block;
+    width: 1.5rem;
+    height: 0.125rem;
+    background-color: #1f2937;
+    transition: all 300ms ease-in-out;
+  }
+
+  .dark .mobile-menu-close-line {
+    background-color: #ffffff;
+  }
+
+  /* Mobile Menu Link - Active */
+  .mobile-menu-link-active {
+    background: linear-gradient(to right, #f6339a, #9c27b0, #2196f3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Mobile Menu Link - Inactive Light Mode */
+  .mobile-menu-link-inactive {
+    color: #1f2937;
+  }
+
+  .mobile-menu-link-inactive:hover {
+    background: linear-gradient(to right, #f6339a, #9c27b0, #2196f3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Mobile Menu Link - Inactive Dark Mode */
+  .dark .mobile-menu-link-inactive {
+    color: #ffffff;
+  }
+
+  .dark .mobile-menu-link-inactive:hover {
+    background: linear-gradient(to right, #f6339a, #9c27b0, #2196f3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Mobile Menu Decorative Orb 1 - Pink/Purple */
+  .mobile-menu-orb-1 {
+    background: linear-gradient(to bottom right, rgb(248, 180, 217), rgb(192, 132, 252));
+    opacity: 0.2;
+  }
+
+  .dark .mobile-menu-orb-1 {
+    opacity: 0.15;
+  }
+
+  /* Mobile Menu Decorative Orb 2 - Blue/Teal */
+  .mobile-menu-orb-2 {
+    background: linear-gradient(to bottom right, rgb(147, 197, 253), rgb(94, 234, 212));
+    opacity: 0.25;
+  }
+
+  .dark .mobile-menu-orb-2 {
+    opacity: 0.15;
+  }
+
+  /* Mobile Menu Decorative Orb 3 - Yellow/Orange */
+  .mobile-menu-orb-3 {
+    background: linear-gradient(to bottom right, rgb(253, 224, 71), rgb(251, 146, 60));
+    opacity: 0.2;
+  }
+
+  .dark .mobile-menu-orb-3 {
+    opacity: 0.15;
+  }
+
+  /* ============================================
+     HEADER BURGER MENU BUTTON
+     Semantic classes for mobile hamburger menu button
+     ============================================ */
+
+  /* Burger Button Container */
+  .burger-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    position: relative;
+    z-index: 50;
+    border-radius: 0.375rem;
+    padding: 0.25rem;
+  }
+
+  .burger-button:focus {
+    outline: none;
+  }
+
+  /* Burger Button Focus Ring - Light Mode */
+  .burger-button:focus-visible {
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #ec4899;
+  }
+
+  /* Burger Button Focus Ring - Dark Mode */
+  .dark .burger-button:focus-visible {
+    box-shadow: 0 0 0 2px #000000, 0 0 0 4px #f9a8d4;
+  }
+
+  /* Burger Line Base Styles */
+  .burger-line {
+    display: block;
+    width: 1.5rem;
+    height: 0.125rem;
+    background-color: #000000;
+    transition: all 300ms ease-in-out;
+  }
+
+  /* Burger Line Dark Mode */
+  .dark .burger-line {
+    background-color: #ffffff;
+  }
+
+  /* Burger Line Spacing */
+  .burger-line:not(:last-child) {
+    margin-bottom: 0.375rem;
+  }
+
+  /* Burger Line - Open State (Top Line) */
+  .burger-line-open-top {
+    transform: rotate(45deg) translateY(0.5rem);
+  }
+
+  /* Burger Line - Open State (Middle Line) */
+  .burger-line-open-middle {
+    opacity: 0;
+  }
+
+  /* Burger Line - Open State (Bottom Line) */
+  .burger-line-open-bottom {
+    transform: rotate(-45deg) translateY(-0.5rem);
+  }
+
+  /* ============================================
+     WHY SECTION HEADER
+     Semantic classes for Why Section header container and text
+     ============================================ */
+
+  /* Why Section Header Container */
+  .why-section-header {
+    text-align: center;
+  }
+
+  /* Why Section Title - Uses design token gradient */
+  .why-section-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    margin-bottom: var(--spacing-fluid-sm);
+    background: linear-gradient(to right, #f6339a, #9c27b0, #2196f3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Why Section Subtitle - Pink in light mode, lighter pink in dark mode */
+  .why-section-subtitle {
+    font-family: var(--font-body);
+    font-weight: 400;
+    margin-bottom: var(--spacing-fluid-lg);
+    color: #ec4899; /* pink-500 */
+  }
+
+  .dark .why-section-subtitle {
+    color: #f9a8d4; /* pink-300 */
+  }
+
+  /* ============================================
+     CARD BACKGROUNDS
+     Semantic background classes for card components
+     ============================================ */
+
+  /* Card Background - White in light mode, purple in dark mode */
+  .bg-card {
+    background-color: #ffffff;
+  }
+
+  .dark .bg-card {
+    background-color: rgba(88, 28, 135, 0.5); /* purple-900/50 */
+  }
+
+  /* ============================================
+     TEXT COLORS
+     Semantic text color classes for body content
+     ============================================ */
+
+  /* Hero Description Text - Gray in light mode, white in dark mode */
+  .text-hero-description {
+    color: #4b5563;
+  }
+
+  .dark .text-hero-description {
+    color: rgb(255, 255, 255);
+  }
+
+  /* Card Title Text - Gray-800 in light mode, white in dark mode */
+  .text-card-title {
+    color: #1f2937; /* gray-800 */
+  }
+
+  .dark .text-card-title {
+    color: rgb(255, 255, 255);
+  }
+
+  /* Card Description Text - Gray-500 in light mode, gray-300 in dark mode */
+  .text-card-description {
+    color: #6b7280; /* gray-500 */
+  }
+
+  .dark .text-card-description {
+    color: #d1d5db; /* gray-300 */
+  }
+
+  /* Card Subtitle Text - Gradient for visual emphasis with light/dark mode support */
+  .text-card-subtitle {
+    background: linear-gradient(135deg, #be185d 0%, #7c3aed 100%); /* pink-700 to purple-600 */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .dark .text-card-subtitle {
+    background: linear-gradient(135deg, #fbbf24 0%, #f472b6 100%); /* amber-400 to pink-400 - bright and readable on dark */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Card Subtitle Text - Fusion Nails Variant (Rose/Orange theme) */
+  .text-card-subtitle-fusion {
+    background: linear-gradient(135deg, #e11d48 0%, #f97316 100%); /* rose-600 to orange-500 - warm fusion colors */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .dark .text-card-subtitle-fusion {
+    background: linear-gradient(135deg, #fbbf24 0%, #fb923c 100%); /* amber-400 to orange-400 - bright and warm on dark */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Section Heading Text - Black in light mode, white in dark mode */
+  .text-section-heading-black {
+    color: #000000; /* Pure black */
+  }
+
+  .dark .text-section-heading-black {
+    color: rgb(255, 255, 255); /* Pure white */
+  }
+
+  /* ============================================
+     SLIDER CARD COMPONENTS
+     Styles for portfolio slider cards
+     ============================================ */
+
+  /* Slider Image Container - Prevents text selection during swipe */
+  .slider-image-container {
+    background-size: cover;
+    background-position: center;
+    touch-action: pan-y; /* Allow vertical scrolling but handle horizontal swipes */
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+
+  /* Slider Pagination Dot - Minimum touch target size */
+  .slider-pagination-dot {
+    min-width: 12px;
+    min-height: 12px;
+    touch-action: manipulation;
+  }
+
+  /* ============================================
+     THEME TOGGLE BUTTON
+     Styles for the light/dark mode toggle button
+     ============================================ */
+
+  /* Theme Toggle Shadow - Exact Figma design */
+  .shadow-theme-toggle {
+    box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Theme Toggle Border Color */
+  .border-theme-toggle {
+    border-color: #e5e7eb;
+  }
+
+  .dark .border-theme-toggle {
+    border-color: rgb(126, 34, 206); /* purple-700 */
+  }
+
+  /* Theme Toggle Sun Icon Color - Exact Figma orange */
+  .text-theme-sun {
+    color: #FE9A00;
+  }
+
+  /* Theme Toggle Moon Icon Color */
+  .text-theme-moon {
+    color: rgb(216, 180, 254); /* purple-300 */
+  }
+
+  /* ============================================
+     WHY SECTION CARDS
+     Styles for Why I Do Makeup section cards
+     ============================================ */
+
+  /* Why Card Border Radius - Exact design specification */
+  .rounded-why-card {
+    border-radius: 18.45px;
+  }
+
+  /* Why Card Shadow - Consistent with design system */
+  .shadow-why-card {
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Why Card Background - Light mode */
+  .bg-why-card {
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .dark .bg-why-card {
+    background-color: rgb(0, 0, 0); /* Black background for dark mode */
+  }
+
+  /* Why Card Border Color */
+  .border-why-card {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .dark .border-why-card {
+    border-color: rgb(147, 51, 234); /* purple-600 */
+  }
+
+  /* Why Card Icon Grayscale Effect - Dark mode only */
+  .dark .icon-why-card {
+    filter: grayscale(1) brightness(1.8);
+  }
+
+  .dark .group:hover .icon-why-card {
+    filter: grayscale(0) brightness(1);
+  }
+
+  /* Why Card Title Color */
+  .text-why-card-title {
+    color: rgb(31, 41, 55); /* gray-800 */
+  }
+
+  .dark .text-why-card-title {
+    color: rgb(255, 255, 255) !important;
+  }
+
+  /* Why Card Title Hover Gradient */
+  .group:hover .text-why-card-title {
+    background: linear-gradient(to right, rgb(219, 39, 119), rgb(147, 51, 234), rgb(37, 99, 235));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  /* Why Card Description Color */
+  .text-why-card-description {
+    color: rgb(75, 85, 99); /* gray-600 */
+  }
+
+  .dark .text-why-card-description {
+    color: rgb(243, 232, 255) !important; /* purple-100 */
+  }
+
+  /* ============================================
+     PORTFOLIO SECTION BACKGROUNDS
+     Dedicated section backgrounds for portfolio pages
+     ============================================ */
+
+  /* Portfolio Section Background - White in light mode, dark purple in dark mode */
+  .bg-portfolio-section {
+    background-color: rgb(255, 255, 255);
+  }
+
+  .dark .bg-portfolio-section {
+    background-color: rgb(59, 7, 100);
+  }
+
+  /* ============================================
+     INSTAGRAM FEED SECTION STYLES
+     Complete styling for Instagram integration section
+     ============================================ */
+
+  /* Instagram Section Background - White in light mode, black in dark mode */
+  .bg-instagram-section {
+    background-color: rgb(255, 255, 255);
+  }
+
+  .dark .bg-instagram-section {
+    background-color: rgb(0, 0, 0);
+  }
+
+  /* Instagram Icon Color - Pink tones */
+  .text-instagram-icon {
+    color: rgb(236, 72, 153); /* pink-500 */
+  }
+
+  .dark .text-instagram-icon {
+    color: rgb(244, 114, 182); /* pink-400 */
+  }
+
+  .text-instagram-link {
+    color: rgb(236, 72, 153); /* pink-500 */
+  }
+
+  .dark .text-instagram-link {
+    color: rgb(244, 114, 182); /* pink-400 */
+  }
+
+  .text-instagram-link:hover {
+    color: rgb(219, 39, 119); /* pink-600 */
+  }
+
+  .dark .text-instagram-link:hover {
+    color: rgb(249, 168, 212); /* pink-300 */
+  }
+
+  /* API Status Badge */
+  .bg-instagram-api-badge {
+    background-color: rgb(239, 246, 255); /* blue-50 */
+    border-color: rgb(191, 219, 254); /* blue-200 */
+  }
+
+  .dark .bg-instagram-api-badge {
+    background-color: rgba(30, 58, 138, 0.3); /* blue-900/30 */
+    border-color: rgb(29, 78, 216); /* blue-700 */
+  }
+
+  .text-instagram-api-icon {
+    color: rgb(37, 99, 235); /* blue-600 */
+  }
+
+  .dark .text-instagram-api-icon {
+    color: rgb(96, 165, 250); /* blue-400 */
+  }
+
+  .text-instagram-api-text {
+    color: rgb(29, 78, 216); /* blue-700 */
+  }
+
+  .dark .text-instagram-api-text {
+    color: rgb(147, 197, 253); /* blue-300 */
+  }
+
+  /* Cache Info Text */
+  .text-instagram-cache {
+    color: rgb(107, 114, 128); /* gray-500 */
+  }
+
+  .dark .text-instagram-cache {
+    color: rgb(192, 132, 252); /* purple-400 */
+  }
+
+  /* Loading Skeleton */
+  .bg-instagram-skeleton {
+    background-color: rgb(229, 231, 235); /* gray-200 */
+  }
+
+  .dark .bg-instagram-skeleton {
+    background-color: rgba(88, 28, 135, 0.3); /* purple-900/30 */
+  }
+
+  /* Video Badge Background */
+  .bg-instagram-video-badge {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  /* Post Overlay Gradient */
+  .bg-instagram-overlay {
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4), transparent);
+  }
+
+  /* Instagram Icon Badge */
+  .bg-instagram-icon-badge {
+    background-color: rgb(236, 72, 153); /* pink-500 */
+  }
+
+  /* Focus Ring for Instagram Buttons */
+  .focus-ring-instagram {
+    outline: none;
+  }
+
+  .focus-ring-instagram:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgb(251, 207, 232); /* pink-200 */
+  }
+
+  .dark .focus-ring-instagram:focus {
+    box-shadow: 0 0 0 4px rgb(126, 34, 206); /* purple-500 */
+  }
+
+  /* ============================================
+     PORTFOLIO CATEGORY FILTERS
+     Category filter buttons with light/dark mode support
+     ============================================ */
+
+  /* Category Filters Section Background */
+  .bg-category-filters-section {
+    background-color: rgb(255, 255, 255); /* white */
+  }
+
+  .dark .bg-category-filters-section {
+    background-color: rgb(59, 7, 100); /* purple-950 */
+  }
+
+  /* Category Filter Label */
+  .text-category-label {
+    color: rgb(31, 41, 55); /* gray-800 */
+  }
+
+  .dark .text-category-label {
+    color: rgb(243, 232, 255); /* purple-100 */
+  }
+
+  /* Category Button - Inactive State */
+  .category-btn-inactive {
+    background-color: rgb(243, 244, 246); /* gray-100 */
+    color: rgb(55, 65, 81); /* gray-700 */
+    border-color: rgb(229, 231, 235); /* gray-200 */
+  }
+
+  .dark .category-btn-inactive {
+    background-color: rgba(139, 92, 246, 0.1); /* purple-500/10 */
+    color: rgb(216, 180, 254); /* purple-300 */
+    border-color: rgba(139, 92, 246, 0.3); /* purple-500/30 */
+  }
+
+  /* Category Button Hover - Pink/Purple Gradient */
+  .category-btn-inactive.gradient-pink-purple:hover {
+    background: linear-gradient(to right, rgb(236, 72, 153), rgb(168, 85, 247)); /* pink-500 to purple-500 */
+    color: rgb(255, 255, 255);
+  }
+
+  .dark .category-btn-inactive.gradient-pink-purple:hover {
+    background: linear-gradient(to right, rgb(236, 72, 153), rgb(168, 85, 247));
+    color: rgb(255, 255, 255);
+  }
+
+  /* Category Button Hover - Blue/Teal Gradient */
+  .category-btn-inactive.gradient-blue-teal:hover {
+    background: linear-gradient(to right, rgb(59, 130, 246), rgb(20, 184, 166)); /* blue-500 to teal-500 */
+    color: rgb(255, 255, 255);
+  }
+
+  .dark .category-btn-inactive.gradient-blue-teal:hover {
+    background: linear-gradient(to right, rgb(59, 130, 246), rgb(20, 184, 166));
+    color: rgb(255, 255, 255);
+  }
+
+  /* Category Button Hover - Gold/Peach Gradient */
+  .category-btn-inactive.gradient-gold-peach:hover {
+    background: linear-gradient(to right, rgb(234, 179, 8), rgb(249, 115, 22)); /* yellow-500 to orange-500 */
+    color: rgb(255, 255, 255);
+  }
+
+  .dark .category-btn-inactive.gradient-gold-peach:hover {
+    background: linear-gradient(to right, rgb(234, 179, 8), rgb(249, 115, 22));
+    color: rgb(255, 255, 255);
+  }
+
+  /* Category Button - Active State (inherits gradient from component) */
+  .category-btn-active {
+    color: rgb(255, 255, 255);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Active Filters Summary Box */
+  .bg-active-filters {
+    background-color: rgb(239, 246, 255); /* blue-50 */
+  }
+
+  .dark .bg-active-filters {
+    background-color: rgba(139, 92, 246, 0.1); /* purple-500/10 */
+  }
+
+  /* Active Filters Text */
+  .text-active-filters-label {
+    color: rgb(30, 64, 175); /* blue-800 */
+  }
+
+  .dark .text-active-filters-label {
+    color: rgb(196, 181, 253); /* purple-300 */
+  }
+
+  /* Active Filter Badge */
+  .bg-active-filter-badge {
+    background-color: rgb(219, 234, 254); /* blue-100 */
+    color: rgb(30, 64, 175); /* blue-800 */
+  }
+
+  .dark .bg-active-filter-badge {
+    background-color: rgba(139, 92, 246, 0.2); /* purple-500/20 */
+    color: rgb(216, 180, 254); /* purple-300 */
+  }
+
+  /* Clear Filters Button */
+  .text-clear-filters {
+    color: rgb(37, 99, 235); /* blue-600 */
+  }
+
+  .text-clear-filters:hover {
+    color: rgb(30, 64, 175); /* blue-800 */
+  }
+
+  .dark .text-clear-filters {
+    color: rgb(167, 139, 250); /* purple-400 */
+  }
+
+  .dark .text-clear-filters:hover {
+    color: rgb(196, 181, 253); /* purple-300 */
+  }
+
+  /* ============================================
+     BLOG PAGE CONTENT STYLES
+     Blog filters, categories, and content sections
+     ============================================ */
+
+  /* Contentful Setup Notice */
+  .bg-contentful-notice {
+    background-color: rgb(239, 246, 255); /* blue-50 */
+    border-color: rgb(191, 219, 254); /* blue-200 */
+  }
+
+  .dark .bg-contentful-notice {
+    background-color: rgba(139, 92, 246, 0.1); /* purple-500/10 */
+    border-color: rgba(139, 92, 246, 0.3); /* purple-500/30 */
+  }
+
+  .text-contentful-notice-icon {
+    color: rgb(37, 99, 235); /* blue-600 */
+  }
+
+  .dark .text-contentful-notice-icon {
+    color: rgb(167, 139, 250); /* purple-400 */
+  }
+
+  .text-contentful-notice-title {
+    color: rgb(30, 64, 175); /* blue-800 */
+  }
+
+  .dark .text-contentful-notice-title {
+    color: rgb(196, 181, 253); /* purple-300 */
+  }
+
+  .text-contentful-notice-body {
+    color: rgb(29, 78, 216); /* blue-700 */
+  }
+
+  .dark .text-contentful-notice-body {
+    color: rgb(216, 180, 254); /* purple-300 */
+  }
+
+  .text-contentful-notice-link {
+    color: rgb(37, 99, 235); /* blue-600 */
+  }
+
+  .text-contentful-notice-link:hover {
+    color: rgb(30, 64, 175); /* blue-800 */
+  }
+
+  .dark .text-contentful-notice-link {
+    color: rgb(167, 139, 250); /* purple-400 */
+  }
+
+  .dark .text-contentful-notice-link:hover {
+    color: rgb(196, 181, 253); /* purple-300 */
+  }
+
+  /* Blog Category Filter Label */
+  .text-blog-category-label {
+    color: rgb(55, 65, 81); /* gray-700 */
+  }
+
+  .dark .text-blog-category-label {
+    color: rgb(216, 180, 254); /* purple-300 */
+  }
+
+  /* Blog Category Button - Inactive */
+  .blog-category-btn-inactive {
+    background-color: rgb(243, 244, 246); /* gray-100 */
+    color: rgb(55, 65, 81); /* gray-700 */
+  }
+
+  .blog-category-btn-inactive:hover {
+    background-color: rgb(229, 231, 235); /* gray-200 */
+  }
+
+  .dark .blog-category-btn-inactive {
+    background-color: rgba(139, 92, 246, 0.5); /* purple-800/50 */
+    color: rgb(233, 213, 255); /* purple-100 */
+  }
+
+  .dark .blog-category-btn-inactive:hover {
+    background-color: rgba(126, 34, 206, 0.5); /* purple-700/50 */
+  }
+
+  /* Blog Active Filters Box */
+  .bg-blog-active-filters {
+    background-color: rgb(239, 246, 255); /* blue-50 */
+    border-color: rgb(191, 219, 254); /* blue-200 */
+  }
+
+  .dark .bg-blog-active-filters {
+    background-color: rgba(30, 58, 138, 0.3); /* blue-900/30 */
+    border-color: rgb(29, 78, 216); /* blue-700 */
+  }
+
+  .text-blog-active-filters-label {
+    color: rgb(30, 64, 175); /* blue-800 */
+  }
+
+  .dark .text-blog-active-filters-label {
+    color: rgb(147, 197, 253); /* blue-300 */
+  }
+
+  /* Blog Active Filter Badge */
+  .bg-blog-filter-badge {
+    background-color: rgb(219, 234, 254); /* blue-100 */
+    color: rgb(30, 64, 175); /* blue-800 */
+  }
+
+  .dark .bg-blog-filter-badge {
+    background-color: rgba(30, 64, 175, 0.5); /* blue-800/50 */
+    color: rgb(191, 219, 254); /* blue-200 */
+  }
+
+  /* Blog Clear Filters Button */
+  .text-blog-clear-filters {
+    color: rgb(37, 99, 235); /* blue-600 */
+  }
+
+  .text-blog-clear-filters:hover {
+    color: rgb(30, 64, 175); /* blue-800 */
+  }
+
+  .dark .text-blog-clear-filters {
+    color: rgb(96, 165, 250); /* blue-400 */
+  }
+
+  .dark .text-blog-clear-filters:hover {
+    color: rgb(147, 197, 253); /* blue-300 */
+  }
+
+  /* Blog Loading Skeleton */
+  .bg-blog-loading-skeleton {
+    background-color: rgb(229, 231, 235); /* gray-200 */
+  }
+
+  .dark .bg-blog-loading-skeleton {
+    background-color: rgba(139, 92, 246, 0.2); /* purple-500/20 */
+  }
+
+  /* Blog Error State */
+  .bg-blog-error {
+    background-color: rgb(254, 242, 242); /* red-50 */
+    border-color: rgb(254, 202, 202); /* red-200 */
+  }
+
+  .dark .bg-blog-error {
+    background-color: rgba(220, 38, 38, 0.1); /* red-600/10 */
+    border-color: rgba(220, 38, 38, 0.3); /* red-600/30 */
+  }
+
+  .text-blog-error-title {
+    color: rgb(153, 27, 27); /* red-800 */
+  }
+
+  .dark .text-blog-error-title {
+    color: rgb(252, 165, 165); /* red-300 */
+  }
+
+  .text-blog-error-body {
+    color: rgb(185, 28, 28); /* red-700 */
+  }
+
+  .dark .text-blog-error-body {
+    color: rgb(254, 202, 202); /* red-200 */
+  }
+
+  /* Blog Empty State */
+  .text-blog-empty-icon {
+    color: rgb(209, 213, 219); /* gray-300 */
+  }
+
+  .dark .text-blog-empty-icon {
+    color: rgba(139, 92, 246, 0.3); /* purple-500/30 */
+  }
+
+  .text-blog-empty-title {
+    color: rgb(31, 41, 55); /* gray-800 */
+  }
+
+  .dark .text-blog-empty-title {
+    color: rgb(216, 180, 254); /* purple-300 */
+  }
+
+  .text-blog-empty-body {
+    color: rgb(75, 85, 99); /* gray-600 */
+  }
+
+  .dark .text-blog-empty-body {
+    color: rgb(233, 213, 255); /* purple-100 */
+  }
+
+  /* ============================================
+     BLOG PREVIEW SECTION STYLES
+     Homepage blog preview section styling
+     ============================================ */
+
+  /* Blog Preview Heading Text */
+  .text-blog-preview-heading {
+    color: rgb(255, 255, 255); /* white */
+  }
+
+  .dark .text-blog-preview-heading {
+    color: rgb(255, 255, 255); /* white */
+  }
+
+  /* Blog Card Background - Lighter for better readability */
+  .bg-blog-card {
+    background-color: rgb(249, 250, 251); /* gray-50 - softer than pure white */
+  }
+
+  .dark .bg-blog-card {
+    background-color: rgba(88, 28, 135, 0.3); /* purple-900/30 */
+  }
+
+  /* Blog Preview Description Text */
+  .text-blog-preview-description {
+    color: rgb(55, 65, 81); /* gray-700 */
+  }
+
+  .dark .text-blog-preview-description {
+    color: rgb(233, 213, 255); /* purple-100 */
+  }
+
+  /* Blog Preview Loading Card Background */
+  .bg-blog-preview-loading-card {
+    background-color: rgba(255, 255, 255, 0.8); /* white/80 */
+  }
+
+  .dark .bg-blog-preview-loading-card {
+    background-color: rgba(88, 28, 135, 0.4); /* purple-900/40 */
+  }
+
+  /* Blog Preview Loading Skeleton */
+  .bg-blog-preview-loading-skeleton {
+    background-color: rgb(229, 231, 235); /* gray-200 */
+  }
+
+  .dark .bg-blog-preview-loading-skeleton {
+    background-color: rgb(107, 33, 168); /* purple-800 */
+  }
+
+  /* Blog Preview Error Message Text */
+  .text-blog-preview-error {
+    color: rgb(75, 85, 99); /* gray-600 */
+  }
+
+  .dark .text-blog-preview-error {
+    color: rgb(233, 213, 255); /* purple-200 */
+  }
+
+  /* Blog Post Card Meta Container (Reading time + Date) */
+  .blog-card-meta {
+    background-color: transparent;
+    color: rgb(55, 65, 81); /* gray-700 - WCAG AAA compliant */
+  }
+
+  .dark .blog-card-meta {
+    background-color: transparent;
+    color: rgb(243, 232, 255); /* purple-100 - WCAG AAA compliant */
+  }
+
+  /* Blog Post Card Excerpt Text */
+  .blog-card-excerpt {
+    color: rgb(55, 65, 81); /* gray-700 - dark readable text for light mode */
+  }
+
+  .dark .blog-card-excerpt {
+    color: rgb(216, 180, 254); /* purple-200 - light readable text for dark mode */
+  }
+
+  /* Blog Post Card Title */
+  .blog-card-title {
+    color: rgb(17, 24, 39); /* gray-900 - very dark text for light mode */
+  }
+
+  .dark .blog-card-title {
+    color: rgb(255, 255, 255); /* white - clean text for dark mode */
+  }
+
+  /* Festival Countdown Section - Background */
+  .bg-festival-countdown-section {
+    background: linear-gradient(to bottom right, 
+      rgb(254, 242, 242) 0%,    /* red-50 - very light pink */
+      rgb(250, 245, 255) 33%,   /* purple-50 - very light purple */
+      rgb(239, 246, 255) 66%,   /* blue-50 - very light blue */
+      rgb(254, 242, 242) 100%   /* red-50 - very light pink */
+    );
+  }
+
+  .dark .bg-festival-countdown-section {
+    background: linear-gradient(to bottom right,
+      rgb(88, 28, 135) 0%,      /* purple-900 - deep purple */
+      rgb(157, 23, 77) 50%,     /* pink-900 - deep pink */
+      rgb(30, 58, 138) 100%     /* blue-900 - deep blue */
+    );
+  }
+
+  /* Festival Countdown - Decorative Circles */
+  .bg-festival-countdown-circle {
+    background-color: rgba(147, 51, 234, 0.15); /* purple-600/15 - visible on light bg */
+  }
+
+  .dark .bg-festival-countdown-circle {
+    background-color: rgba(255, 255, 255, 0.1); /* white/10 - subtle on dark bg */
+  }
+
+  /* Festival Countdown - Heading Text */
+  .text-festival-heading {
+    color: rgb(88, 28, 135); /* purple-900 - dark purple for light mode */
+  }
+
+  .dark .text-festival-heading {
+    color: rgb(255, 255, 255); /* white for dark mode */
+  }
+
+  /* Festival Countdown - Body Text */
+  .text-festival-body {
+    color: rgb(55, 65, 81); /* gray-700 - readable dark text for light mode */
+  }
+
+  .dark .text-festival-body {
+    color: rgba(255, 255, 255, 0.9); /* white/90 for dark mode */
+  }
+
+  /* Festival Countdown - Badge Text */
+  .text-festival-badge {
+    color: rgb(88, 28, 135); /* purple-900 for light mode */
+  }
+
+  .dark .text-festival-badge {
+    color: rgb(255, 255, 255); /* white for dark mode */
+  }
+
+  /* Festival Countdown - Timer Numbers */
+  .text-festival-timer-number {
+    color: rgb(109, 40, 217); /* purple-700 - vibrant purple for light mode */
+  }
+
+  .dark .text-festival-timer-number {
+    color: rgb(255, 255, 255); /* white for dark mode */
+  }
+
+  /* Festival Countdown - Timer Labels */
+  .text-festival-timer-label {
+    color: rgb(107, 114, 128); /* gray-500 for light mode */
+  }
+
+  .dark .text-festival-timer-label {
+    color: rgba(255, 255, 255, 0.8); /* white/80 for dark mode */
+  }
+
+  /* Button Focus Ring - Primary (Pink) */
+  .focus-ring-primary {
+    --tw-ring-opacity: 0.5;
+    --tw-ring-color: rgb(251, 207, 232); /* pink-200 */
+  }
+
+  .dark .focus-ring-primary {
+    --tw-ring-opacity: 0.5;
+    --tw-ring-color: rgba(139, 92, 246, 0.5); /* purple-500/50 */
+  }
+
+  /* Button Focus Ring - Secondary (Teal) */
+  .focus-ring-secondary {
+    --tw-ring-opacity: 0.5;
+    --tw-ring-color: rgb(153, 246, 228); /* teal-200 */
+  }
+
+  .dark .focus-ring-secondary {
+    --tw-ring-opacity: 0.5;
+    --tw-ring-color: rgba(139, 92, 246, 0.5); /* purple-500/50 */
+  }
+
+  /* ============================================
+     SLIDER CARD STYLES (SITE-WIDE)
+     Testimonials, Featured Work, Fusion Nails sliders
+     ============================================ */
+
+  /* Slider Card Background */
+  .bg-slider-card {
+    background-color: rgba(255, 255, 255, 0.6); /* white/60 */
+  }
+
+  .dark .bg-slider-card {
+    background-color: rgba(88, 28, 135, 0.3); /* purple-900/30 */
+  }
+
+  /* Slider Card Border */
+  .border-slider-card {
+    border-color: rgba(255, 255, 255, 0.5); /* white/50 */
+  }
+
+  .dark .border-slider-card {
+    border-color: rgba(126, 34, 206, 0.5); /* purple-700/50 */
+  }
+
+  /* Slider Card Text (Main Content) */
+  .text-slider-card-content {
+    color: rgb(55, 65, 81); /* gray-700 */
+  }
+
+  .dark .text-slider-card-content {
+    color: rgb(243, 232, 255); /* purple-100 */
+  }
+
+  /* Slider Card Divider */
+  .border-slider-card-divider {
+    border-color: rgb(229, 231, 235); /* gray-200 */
+  }
+
+  .dark .border-slider-card-divider {
+    border-color: rgb(126, 34, 206); /* purple-700 */
+  }
+
+  /* Slider Card Heading Text */
+  .text-slider-card-heading {
+    color: rgb(17, 24, 39); /* gray-900 */
+  }
+
+  .dark .text-slider-card-heading {
+    color: rgb(243, 232, 255); /* purple-100 */
+  }
+
+  /* Slider Card Subtext */
+  .text-slider-card-subtext {
+    color: rgb(75, 85, 99); /* gray-600 */
+  }
+
+  .dark .text-slider-card-subtext {
+    color: rgb(216, 180, 254); /* purple-300 */
+  }
+
+  /* Slider Dots - Inactive */
+  .bg-slider-dot-inactive {
+    background-color: rgb(209, 213, 219); /* gray-300 */
+  }
+
+  .dark .bg-slider-dot-inactive {
+    background-color: rgb(126, 34, 206); /* purple-700 */
+  }
+
+  /* Slider Dots - Inactive Hover */
+  .bg-slider-dot-inactive:hover {
+    background-color: rgb(156, 163, 175); /* gray-400 */
+  }
+
+  .dark .bg-slider-dot-inactive:hover {
+    background-color: rgb(147, 51, 234); /* purple-600 */
+  }
+
+  /* Testimonials Section Heading - Override for white text */
+  .text-testimonials-heading {
+    color: rgb(255, 255, 255); /* white - stands out on gradient background */
+  }
+
+  .dark .text-testimonials-heading {
+    color: rgb(255, 255, 255); /* white - clean on dark purple background */
+  }
+
+  /* ============================================
+     PAGINATION COMPONENT STYLES
+     Mobile-optimized pagination with WCAG AAA compliance
+     ============================================ */
+
+  /* Pagination Link - Base Styles */
+  .pagination-link {
+    background-color: rgb(249, 250, 251); /* gray-50 - soft background */
+    color: rgb(31, 41, 55); /* gray-800 - high contrast text */
+    border: 1px solid rgb(229, 231, 235); /* gray-200 */
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .dark .pagination-link {
+    background-color: rgb(88, 28, 135); /* purple-900 - solid purple */
+    color: rgb(255, 255, 255); /* white - maximum contrast */
+    border: 1px solid rgb(107, 33, 168); /* purple-800 */
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  /* Pagination Link - Hover State */
+  .pagination-link:hover:not(:disabled) {
+    background-color: rgb(243, 244, 246); /* gray-100 */
+    color: rgb(17, 24, 39); /* gray-900 */
+    border-color: rgb(209, 213, 219); /* gray-300 */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .pagination-link:hover:not(:disabled) {
+    background-color: rgb(107, 33, 168); /* purple-800 - lighter purple */
+    color: rgb(255, 255, 255); /* white */
+    border-color: rgb(126, 34, 206); /* purple-700 */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Pagination Link - Active State with Gradient */
+  .pagination-link-active {
+    background: linear-gradient(to right, #ff66cc, #9933ff, #3399ff);
+    color: rgb(255, 255, 255); /* white */
+    border: 1px solid transparent;
+    box-shadow: 0 4px 6px -1px rgba(255, 102, 204, 0.3);
+  }
+
+  .dark .pagination-link-active {
+    background: linear-gradient(to right, #ff66cc, #9933ff, #3399ff);
+    color: rgb(255, 255, 255); /* white */
+    border: 1px solid transparent;
+    box-shadow: 0 4px 6px -1px rgba(153, 51, 255, 0.5);
+  }
+
+  /* Pagination Link - Active Hover State */
+  .pagination-link-active:hover:not(:disabled) {
+    background: linear-gradient(to right, #e54db8, #7b1fcc, #1e7acc);
+    box-shadow: 0 10px 15px -3px rgba(255, 102, 204, 0.4);
+  }
+
+  .dark .pagination-link-active:hover:not(:disabled) {
+    background: linear-gradient(to right, #e54db8, #7b1fcc, #1e7acc);
+    box-shadow: 0 10px 15px -3px rgba(153, 51, 255, 0.6);
+  }
+
+  /* Pagination Link - Disabled State */
+  .pagination-link:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .dark .pagination-link:disabled {
+    opacity: 0.5;
+  }
+
+  /* Pagination Previous/Next Button Styles */
+  .pagination-nav-button {
+    gap: 0.25rem; /* gap-1 */
+    padding-left: 0.75rem; /* px-3 */
+    padding-right: 0.75rem;
+    width: auto;
+    min-width: 44px; /* Mobile touch target */
+  }
+
+  @media (min-width: 640px) {
+    .pagination-nav-button {
+      min-width: auto;
+    }
+  }
+
+  /* Pagination Ellipsis */
+  .pagination-ellipsis-icon {
+    color: rgb(156, 163, 175); /* gray-400 */
+  }
+
+  .dark .pagination-ellipsis-icon {
+    color: rgb(192, 132, 252); /* purple-400 */
+  }
+
+  /* Pagination Focus Ring */
+  .pagination-focus-ring {
+    --tw-ring-width: 2px;
+    --tw-ring-offset-width: 2px;
+    --tw-ring-color: rgba(236, 72, 153, 0.5); /* pink-500/50 */
+  }
+
+  .dark .pagination-focus-ring {
+    --tw-ring-color: rgba(168, 85, 247, 0.5); /* purple-500/50 */
+  }
+
+  /* ============================================
+     CONTACT PAGE STYLES
+     Attractive light/dark mode with WCAG AAA compliance
+     ============================================ */
+
+  /* Contact Page Body Text */
+  .text-contact-body {
+    color: rgb(31, 41, 55); /* gray-800 - high contrast */
+  }
+
+  .dark .text-contact-body {
+    color: rgb(255, 255, 255); /* white - maximum contrast on purple */
+  }
+
+  /* Contact Page Section Heading (h3) */
+  .text-contact-heading {
+    color: rgb(17, 24, 39); /* gray-900 - maximum contrast */
+  }
+
+  .dark .text-contact-heading {
+    color: rgb(255, 255, 255); /* white - clean and readable */
+  }
+
+  /* Contact Page Divider Border */
+  .border-contact-divider {
+    border-color: rgb(229, 231, 235); /* gray-200 - subtle in light */
+  }
+
+  .dark .border-contact-divider {
+    border-color: rgb(126, 34, 206); /* purple-700 - vibrant purple accent */
+  }
+
+  /* Contact Page Logo Focus Ring */
+  .focus-ring-contact-logo {
+    --tw-ring-width: 2px;
+    --tw-ring-offset-width: 2px;
+    --tw-ring-color: rgba(236, 72, 153, 0.5); /* pink-500/50 */
+    --tw-ring-offset-color: rgb(255, 255, 255); /* white */
+  }
+
+  .dark .focus-ring-contact-logo {
+    --tw-ring-color: rgba(244, 114, 182, 0.6); /* pink-400/60 - brighter in dark */
+    --tw-ring-offset-color: rgb(88, 28, 135); /* purple-900 */
+  }
+
+  /* Contact Form Container - Attractive card styling */
+  .contact-form-container {
+    background: rgba(255, 255, 255, 0.95); /* white/95 - clean, modern */
+    backdrop-filter: blur(12px);
+    border-radius: 1rem; /* 16px - rounded-2xl */
+    padding: clamp(1.5rem, 4vw, 2.5rem); /* Responsive padding */
+    border: 1px solid rgba(229, 231, 235, 0.8); /* gray-200/80 - subtle border */
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-lg */
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .contact-form-container:hover {
+    box-shadow: 
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl on hover */
+    transform: translateY(-2px); /* Subtle lift effect */
+  }
+
+  .dark .contact-form-container {
+    background: rgba(88, 28, 135, 0.4); /* purple-900/40 - rich purple */
+    border: 1px solid rgba(126, 34, 206, 0.5); /* purple-700/50 - vibrant border */
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.3),
+      0 2px 4px -1px rgba(0, 0, 0, 0.2),
+      0 0 0 1px rgba(168, 85, 247, 0.1); /* purple glow */
+  }
+
+  .dark .contact-form-container:hover {
+    background: rgba(88, 28, 135, 0.5); /* purple-900/50 - brighter on hover */
+    border-color: rgba(147, 51, 234, 0.6); /* purple-600/60 */
+    box-shadow: 
+      0 10px 15px -3px rgba(0, 0, 0, 0.4),
+      0 4px 6px -2px rgba(0, 0, 0, 0.3),
+      0 0 20px rgba(168, 85, 247, 0.3); /* Enhanced purple glow */
+    transform: translateY(-2px);
+  }
+
+  /* Contact Form Field Wrapper - Glassmorphism card for each field */
+  .contact-field-wrapper {
+    background: rgba(255, 255, 255, 0.9); /* white/90 - subtle transparency */
+    backdrop-filter: blur(8px);
+    border-radius: 0.5rem; /* 8px - rounded-lg */
+    border: 1px solid rgba(229, 231, 235, 0.6); /* gray-200/60 - soft border */
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-lg */
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .contact-field-wrapper:hover {
+    box-shadow: 
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl on hover */
+  }
+
+  .dark .contact-field-wrapper {
+    background: rgba(255, 255, 255, 0.95); /* white/95 - bright white in dark mode */
+    border: 1px solid rgba(203, 213, 225, 0.3); /* slate-300/30 - subtle border */
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.2),
+      0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .contact-field-wrapper:hover {
+    background: rgb(255, 255, 255); /* Full white on hover */
+    border-color: rgba(168, 85, 247, 0.4); /* purple-500/40 - purple accent */
+    box-shadow: 
+      0 10px 15px -3px rgba(0, 0, 0, 0.3),
+      0 4px 6px -2px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(168, 85, 247, 0.2); /* purple glow ring */
+  }
+
+  /* Contact Form Input/Textarea - White with dark text */
+  .contact-form-input {
+    background: transparent; /* Relies on wrapper background */
+    color: rgb(31, 41, 55); /* gray-800 - dark text for readability */
+    border: none;
+    outline: none;
+    border-radius: 0.5rem; /* 8px - matches wrapper */
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .contact-form-input::placeholder {
+    color: rgb(107, 114, 128); /* gray-500 - medium gray for readability */
+    opacity: 0.8;
+  }
+
+  .dark .contact-form-input {
+    color: rgb(17, 24, 39); /* gray-900 - darker text on white background */
+  }
+
+  .dark .contact-form-input::placeholder {
+    color: rgb(75, 85, 99); /* gray-600 - darker gray for better contrast on white */
+    opacity: 0.7;
+  }
+
+  .contact-form-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .contact-form-input:focus {
+    outline: none;
+    --tw-ring-width: 4px;
+    --tw-ring-color: rgba(236, 72, 153, 0.3); /* pink-500/30 */
+  }
+
+  .dark .contact-form-input:focus {
+    --tw-ring-color: rgba(168, 85, 247, 0.4); /* purple-500/40 - purple focus in dark */
+  }
+
+  /* Character Counter Text */
+  .contact-char-counter {
+    color: rgb(107, 114, 128); /* gray-500 */
+  }
+
+  .dark .contact-char-counter {
+    color: rgb(75, 85, 99); /* gray-600 - darker for better contrast */
+  }
+
+  /* ============================================
+     FOOTER SECTION STYLES
+     Comprehensive footer styling matching Figma design
+     ============================================ */
+
+  /* Footer Padding - Responsive vertical spacing */
+  .py-footer {
+    padding-top: clamp(2rem, 8vh, 4rem);
+    padding-bottom: clamp(2rem, 8vh, 4rem);
+  }
+
+  /* Footer Text Color - Gray in light mode, white in dark mode */
+  .text-footer-description {
+    color: #4b5563; /* gray-600 */
+  }
+
+  .dark .text-footer-description {
+    color: rgb(255, 255, 255);
+  }
+
+  /* Footer Decoration 1 - Top right circle */
+  .bg-footer-decoration-1 {
+    background: linear-gradient(135deg, rgb(252, 206, 232) 0%, rgb(218, 178, 255) 100%);
+  }
+
+  .dark .bg-footer-decoration-1 {
+    background: linear-gradient(135deg, rgb(219, 39, 119) 0%, rgb(147, 51, 234) 100%);
+  }
+
+  /* Footer Decoration 2 - Bottom left circle */
+  .bg-footer-decoration-2 {
+    background: linear-gradient(135deg, rgb(233, 212, 255) 0%, rgb(142, 197, 255) 100%);
+  }
+
+  .dark .bg-footer-decoration-2 {
+    background: linear-gradient(135deg, rgb(147, 51, 234) 0%, rgb(37, 99, 235) 100%);
+  }
+
+  /* Footer Separator Gradient - Exact Figma design */
+  .bg-footer-separator {
+    background: linear-gradient(to right, #fccee8 0%, #e9d4ff 50%, #bedbff 100%);
+  }
+
+  .dark .bg-footer-separator {
+    background: linear-gradient(to right, rgb(219, 39, 119) 0%, rgb(147, 51, 234) 50%, rgb(37, 99, 235) 100%);
+  }
+
+  /* Footer Logo Focus Ring */
+  .focus-ring-footer-logo {
+    outline: none;
+    border-radius: 0.375rem; /* rounded-md */
+  }
+
+  .focus-ring-footer-logo:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(236, 72, 153), 0 0 0 4px rgba(236, 72, 153, 0.1); /* pink-500 with offset */
+  }
+
+  .dark .focus-ring-footer-logo:focus {
+    box-shadow: 0 0 0 2px rgb(244, 114, 182), 0 0 0 4px rgba(88, 28, 135, 1); /* pink-400 with purple-900 offset */
+  }
+
+  /* ============================================
+     EXTRACTED INLINE STYLES - Production Components
+     Semantic CSS classes to replace inline styles
+     ============================================ */
+
+  /* Touch and User Interaction */
+  .touch-pan-y {
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+
+  /* Minimum Dimensions for Accessibility - Touch Targets */
+  .min-touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .min-touch-target-lg {
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .min-touch-target-xl {
+    min-width: 56px;
+    min-height: 56px;
+  }
+
+  /* Minimum Dimensions - Pagination Dots */
+  .min-dot-target {
+    min-width: 8px;
+    min-height: 8px;
+  }
+
+  .min-dot-target-md {
+    min-width: 12px;
+    min-height: 12px;
+  }
+
+  .min-dot-target-lg {
+    min-width: 16px;
+    min-height: 16px;
+  }
+
+  /* Minimum Dimensions - Thumbnails */
+  .min-thumbnail-target {
+    min-width: 64px;
+    min-height: 64px;
+  }
+
+  /* Cursor Styles for Interactive Elements */
+  .cursor-zoom-in {
+    cursor: zoom-in;
+  }
+
+  .cursor-zoom-out {
+    cursor: zoom-out;
+  }
+
+  /* Transform Utilities for Centering */
+  .transform-center-x {
+    transform: translateX(-50%);
+  }
+
+  .transform-center-y {
+    transform: translateY(-50%);
+  }
+
+  .transform-center {
+    transform: translate(-50%, -50%);
+  }
+
+  /* Aspect Ratios for Images and Media */
+  .aspect-video {
+    aspect-ratio: 16/9;
+  }
+
+  .aspect-square {
+    aspect-ratio: 1/1;
+  }
+
+  /* Scroll Behavior */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+
+  /* Animation Durations - Extended */
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-pulse-slower {
+    animation: pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Progress Bar Transform Utility */
+  .progress-transform {
+    transform: translateX(calc(-100% + var(--progress-value, 0%)));
+  }
 }

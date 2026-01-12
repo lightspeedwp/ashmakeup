@@ -41,6 +41,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
 import { useModal } from "./ModalContext";
+import { ThemeToggle } from "./ThemeToggle";
 
 /**
  * Props interface for Header component with comprehensive type safety
@@ -171,15 +172,15 @@ export function Header({
 
 
       <nav
-        className="bg-white/95 backdrop-blur-sm h-24 w-full relative flex items-center justify-between px-fluid-md shadow-sm border-b border-gradient-to-r from-pink-100 to-purple-100 z-40"
+        className="sticky top-0 bg-header-light backdrop-blur-sm h-[108px] w-full relative flex items-center justify-between px-4 sm:px-6 lg:px-9 shadow-header-light dark:shadow-lg border-b border-header z-40 transition-colors duration-300"
         role="navigation"
         aria-label="Main navigation"
       >
         {/* Logo - clickable to home */}
-        <div className="flex items-center">
+        <div className="flex items-center flex-shrink-0 -ml-1 sm:ml-0">
           <button
             onClick={() => handleNavigation("home")}
-            className="flex items-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-md p-1"
+            className="flex items-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-md"
             aria-label="Go to home page"
           >
             <Logo size="header" />
@@ -188,15 +189,15 @@ export function Header({
 
         {/* Desktop Navigation */}
         <div
-          className="hidden md:flex items-center gap-8"
+          className="hidden md:flex items-center gap-6 lg:gap-8"
           role="menubar"
         >
           <button
             onClick={() => handleNavigation("home")}
-            className={`text-fluid-lg font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-md px-2 py-1 ${
+            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-md px-3 py-1 ${
               currentPage === "home"
-                ? "text-pink-500"
-                : "text-gray-700 hover:text-pink-500"
+                ? "nav-link-active"
+                : "nav-link-inactive"
             }`}
             role="menuitem"
             aria-current={
@@ -207,10 +208,10 @@ export function Header({
           </button>
           <button
             onClick={() => handleNavigation("about")}
-            className={`text-fluid-lg font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-md px-2 py-1 ${
+            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-md px-3 py-1 ${
               currentPage === "about"
-                ? "text-pink-500"
-                : "text-gray-700 hover:text-pink-500"
+                ? "nav-link-active"
+                : "nav-link-inactive"
             }`}
             role="menuitem"
             aria-current={
@@ -221,10 +222,10 @@ export function Header({
           </button>
           <button
             onClick={() => handleNavigation("portfolio")}
-            className={`text-fluid-lg font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-md px-2 py-1 ${
+            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-md px-3 py-1 ${
               currentPage === "portfolio"
-                ? "text-pink-500"
-                : "text-gray-700 hover:text-pink-500"
+                ? "nav-link-active"
+                : "nav-link-inactive"
             }`}
             role="menuitem"
             aria-current={
@@ -235,10 +236,10 @@ export function Header({
           </button>
           <button
             onClick={() => handleNavigation("blog")}
-            className={`text-fluid-lg font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-md px-2 py-1 ${
+            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-md px-3 py-1 ${
               currentPage === "blog"
-                ? "text-pink-500"
-                : "text-gray-700 hover:text-pink-500"
+                ? "nav-link-active"
+                : "nav-link-inactive"
             }`}
             role="menuitem"
             aria-current={
@@ -248,50 +249,68 @@ export function Header({
             Blog
           </button>
           <button
-            onClick={() => handleNavigation("home", "contact")}
-            className="text-fluid-lg font-body font-medium text-gray-700 hover:text-pink-500 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-md px-2 py-1"
+            onClick={() => handleNavigation("contact")}
+            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-md px-3 py-1 ${
+              currentPage === "contact"
+                ? "nav-link-active"
+                : "nav-link-inactive"
+            }`}
             role="menuitem"
+            aria-current={
+              currentPage === "contact" ? "page" : undefined
+            }
           >
             Contact
           </button>
+          
+          {/* Divider between nav links and theme toggle */}
+          <div className="w-px h-6 bg-gray-300 dark:bg-purple-700 mx-2" aria-hidden="true" />
+          
+          {/* Theme Toggle - Desktop */}
+          <ThemeToggle />
         </div>
 
-        {/* Mobile Burger Menu Button */}
-        <button
-          ref={menuButtonRef}
-          className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1 z-50 relative focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-md p-1"
-          onClick={toggleMobileMenu}
-          aria-label={
-            isMobileMenuOpen
-              ? "Close mobile menu"
-              : "Open mobile menu"
-          }
-          aria-expanded={isMobileMenuOpen}
-          aria-controls="mobile-menu"
-        >
-          <span
-            className={`block w-6 h-0.5 bg-gray-700 transition-all duration-300 ${
+        {/* Mobile Controls: Theme Toggle + Burger Menu */}
+        <div className="md:hidden flex items-center gap-3">
+          {/* Theme Toggle - Mobile */}
+          <ThemeToggle />
+          
+          {/* Divider between theme toggle and burger menu */}
+          <div className="w-px h-6 bg-gray-300 dark:bg-purple-700" aria-hidden="true" />
+          
+          {/* Mobile Burger Menu Button */}
+          <button
+            ref={menuButtonRef}
+            className="burger-button"
+            onClick={toggleMobileMenu}
+            aria-label={
               isMobileMenuOpen
-                ? "rotate-45 translate-y-1.5"
-                : ""
-            }`}
-            aria-hidden="true"
-          />
-          <span
-            className={`block w-6 h-0.5 bg-gray-700 transition-all duration-300 ${
-              isMobileMenuOpen ? "opacity-0" : ""
-            }`}
-            aria-hidden="true"
-          />
-          <span
-            className={`block w-6 h-0.5 bg-gray-700 transition-all duration-300 ${
-              isMobileMenuOpen
-                ? "-rotate-45 -translate-y-1.5"
-                : ""
-            }`}
-            aria-hidden="true"
-          />
-        </button>
+                ? "Close mobile menu"
+                : "Open mobile menu"
+            }
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
+          >
+            <span
+              className={`burger-line ${
+                isMobileMenuOpen ? "burger-line-open-top" : ""
+              }`}
+              aria-hidden="true"
+            />
+            <span
+              className={`burger-line ${
+                isMobileMenuOpen ? "burger-line-open-middle" : ""
+              }`}
+              aria-hidden="true"
+            />
+            <span
+              className={`burger-line ${
+                isMobileMenuOpen ? "burger-line-open-bottom" : ""
+              }`}
+              aria-hidden="true"
+            />
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Menu Component */}

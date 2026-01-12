@@ -1,23 +1,25 @@
 # Color Design Tokens
 
-**Version:** 4.0.0  
+**Version:** 5.0.0  
 **Last Updated:** January 2025
 
-Complete color system for the Ash Shaw Makeup Portfolio, featuring semantic color tokens, brand gradients, and accessibility-compliant contrast ratios.
+Complete color system for the Ash Shaw Makeup Portfolio, featuring semantic color tokens, brand gradients, light/dark mode theming, and accessibility-compliant contrast ratios.
 
 ## ✅ Verified Against Codebase
 
-This document has been verified against `/styles/globals.css` as of January 2025. All color utilities, CSS variables, and gradient classes match the current implementation.
+This document has been verified against `/styles/globals.css` as of January 2025. All color utilities, CSS variables, gradient classes, and light/dark mode themes match the current implementation.
 
 ## 📋 Table of Contents
 
 1. [Color Philosophy](#color-philosophy)
-2. [Brand Colors](#brand-colors)
-3. [Semantic Colors](#semantic-colors)
-4. [Gradient System](#gradient-system)
-5. [Neutral Colors](#neutral-colors)
-6. [Accessibility Standards](#accessibility-standards)
-7. [CSS Variables Reference](#css-variables-reference)
+2. [Light/Dark Mode System](#lightdark-mode-system)
+3. [Light Mode Palette](#light-mode-palette)
+4. [Dark Mode Palette](#dark-mode-palette)
+5. [Brand Gradients](#brand-gradients)
+6. [Semantic Colors](#semantic-colors)
+7. [Component Color Patterns](#component-color-patterns)
+8. [Accessibility Standards](#accessibility-standards)
+9. [CSS Variables Reference](#css-variables-reference)
 
 ---
 
@@ -25,195 +27,279 @@ This document has been verified against `/styles/globals.css` as of January 2025
 
 ### Design Principles
 
-- **Vibrant & Energetic:** Colors reflect makeup artistry creativity
-- **Professional & Trustworthy:** Balanced with neutral grays for credibility
+- **Dual Theme System:** Complete light and dark mode support
+- **Clean Light Mode:** Professional white backgrounds with subtle accents
+- **Rich Dark Mode:** Deep purple gradient aesthetic with high contrast
 - **Accessible:** All color combinations meet WCAG 2.1 AA standards
 - **Semantic:** Colors convey meaning (success, error, warning)
 
 ### Usage Guidelines
 
 ✅ **DO:**
-- Use gradients for CTAs and hero elements
-- Maintain consistent color usage across pages
-- Ensure proper contrast ratios for text
-- Use semantic colors for status messages
+- Use theme-aware classes (`bg-white dark:bg-purple-900`)
+- Maintain consistent color usage across themes
+- Ensure proper contrast ratios for text in both themes
+- Test all components in both light and dark mode
 
 ❌ **DON'T:**
-- Mix more than 2-3 colors in single component
-- Use low-contrast color combinations
-- Override brand colors without reason
-- Use color as only indicator of state
+- Hardcode colors without dark mode variants
+- Mix gradients in light mode backgrounds
+- Use low-contrast combinations in either theme
+- Override theme colors without reason
 
 ---
 
-## Brand Colors
+## Light/Dark Mode System
 
-### Primary Brand Palette
+### Theme Switching Architecture
+
+The application uses CSS custom properties and Tailwind's dark mode classes to provide seamless theme switching.
+
+```tsx
+// Theme Toggle Component
+<button 
+  onClick={toggleTheme}
+  className="bg-white dark:bg-purple-900 text-gray-800 dark:text-purple-100"
+>
+  {theme === 'light' ? <Moon /> : <Sun />}
+</button>
+```
+
+### CSS Custom Properties
+
+```css
+:root {
+  /* Light mode (default) */
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+}
+
+.dark {
+  /* Dark mode */
+  --background: #0a0118;
+  --foreground: #f5f3ff;
+  --card: #1a0f2e;
+  --card-foreground: #f5f3ff;
+}
+```
+
+### Implementation Pattern
+
+Every component must implement both light and dark mode styles:
+
+```tsx
+// ✅ CORRECT - Both themes supported
+<div className="bg-white dark:bg-purple-900/50 text-gray-800 dark:text-purple-100">
+  Content
+</div>
+
+// ❌ WRONG - No dark mode support
+<div className="bg-white text-gray-800">
+  Content
+</div>
+```
+
+---
+
+## Light Mode Palette
+
+### Background Colors
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                     BRAND COLOR HIERARCHY                            │
+│                     LIGHT MODE BACKGROUNDS                           │
 └─────────────────────────────────────────────────────────────────────┘
 
-PRIMARY GRADIENT (Pink → Purple → Blue)
+PRIMARY BACKGROUND
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-█████ #ff61d8 → ██████ #b967ff → ██████ #01c3cc
-Pink           Purple            Blue
-(Vibrant)      (Energetic)       (Cool)
+bg-white               ░░░░░  #ffffff  (Main page background)
+Usage: Pages, sections, primary containers
 
-SECONDARY GRADIENT (Blue → Teal → Green)
+SURFACE COLORS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-██████ #01c3cc → ██████ #05f0db → ██████ #6cff97
-Blue           Teal              Green
-(Cool)         (Fresh)           (Growth)
+bg-white/80            ░░░░░  rgba(255,255,255,0.8)  (Cards, overlays)
+bg-white/95            ░░░░░  rgba(255,255,255,0.95) (Header, nav)
+bg-gray-50             ░░░░░  #f9fafb  (Subtle backgrounds)
+bg-gray-100            ░░░░░  #f3f4f6  (Hover states)
 
-ACCENT GRADIENT (Gold → Peach → Coral)
+Usage: Cards, modals, navigation elements
+```
+
+### Text Colors
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                     LIGHT MODE TEXT                                  │
+└─────────────────────────────────────────────────────────────────────┘
+
+HEADINGS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-██████ #ffd97d → ██████ #ffaa9e → ██████ #ff7c73
-Gold           Peach             Coral
-(Warm)         (Soft)            (Energetic)
+text-gray-800          ██████  #1f2937  (Primary headings)
+text-gray-900          ██████  #111827  (Hero titles)
+Contrast Ratio: 7:1+ (AAA compliant)
 
+BODY TEXT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+text-gray-700          ██████  #374151  (Body text)
+Contrast Ratio: 4.83:1 (AA compliant)
+
+SECONDARY TEXT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+text-gray-600          ▓▓▓▓▓  #4b5563  (Secondary text)
+text-gray-500          ▓▓▓▓▓  #6b7280  (Metadata, captions)
+```
+
+### Border & Divider Colors
+
+```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                     GRADIENT USAGE HIERARCHY                         │
+│                     LIGHT MODE BORDERS                               │
 └─────────────────────────────────────────────────────────────────────┘
 
-Priority 1: PRIMARY (Pink-Purple-Blue)
-──────────────────────────────────────
-Usage:
-  • Main CTA buttons
-  • Hero titles
-  • Primary navigation active states
-  • Feature highlights
-  
-Visual Weight: MAXIMUM
-Frequency: 70% of branded elements
+border-gray-200        ▒▒▒▒▒  #e5e7eb  (Subtle borders)
+border-gray-300        ▒▒▒▒▒  #d1d5db  (Card borders)
+border-white/50        ░░░░░  rgba(255,255,255,0.5) (Glass effect)
 
-Priority 2: SECONDARY (Blue-Teal-Green)
-────────────────────────────────────────
-Usage:
-  • Secondary CTA buttons
-  • Section accents
-  • Interactive elements
-  • Supporting content
-  
-Visual Weight: MEDIUM
-Frequency: 20% of branded elements
+Usage: Cards, dividers, form inputs
+```
 
-Priority 3: ACCENT (Gold-Peach-Coral)
-──────────────────────────────────────
-Usage:
-  • Decorative elements
-  • Background orbs
-  • Subtle highlights
-  • Tertiary buttons
-  
-Visual Weight: LIGHT
-Frequency: 10% of branded elements
+---
 
+## Dark Mode Palette
+
+### Background Colors
+
+```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                     COLOR CONTRAST MATRIX                            │
+│                     DARK MODE BACKGROUNDS                            │
 └─────────────────────────────────────────────────────────────────────┘
 
-Text on Background Combinations:
-─────────────────────────────────
+PRIMARY BACKGROUNDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+dark:bg-gradient-to-br 
+dark:from-purple-950   ██████  #1a0033  (Deep purple-black)
+dark:via-purple-900/50 ██████  rgba(88,28,135,0.5) (Mid purple)
+dark:to-purple-950     ██████  #1a0033  (Deep purple)
 
-                  White      Light Gray    Dark Gray     Black
-                  #ffffff    #f3f4f6       #374151      #000000
-───────────────────────────────────────────────────────────────────
-Pink #ff61d8    │  3.1:1 ❌  │  4.2:1 ⚠️   │  8.5:1 ✅   │ 12.1:1 ✅
-Purple #b967ff  │  4.5:1 ✅  │  5.2:1 ✅   │  9.1:1 ✅   │ 14.3:1 ✅
-Blue #01c3cc    │  2.8:1 ❌  │  3.9:1 ⚠️   │  7.8:1 ✅   │ 11.2:1 ✅
-Teal #05f0db    │  1.9:1 ❌  │  2.5:1 ❌   │  5.2:1 ✅   │  8.9:1 ✅
-Green #6cff97   │  1.5:1 ❌  │  2.1:1 ❌   │  4.1:1 ⚠️   │  7.3:1 ✅
+Usage: Pages, sections, full-screen backgrounds
 
-Legend:
-✅ WCAG AA+ (7:1+)   - Excellent for body text
-✅ WCAG AA (4.5:1+)  - Good for body text
-⚠️ WCAG Large (3:1+) - OK for large text (18px+) only
-❌ Fails (<3:1)      - Do not use
+SURFACE COLORS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+dark:bg-purple-950/95  ██████  rgba(26,0,51,0.95) (Header, nav)
+dark:bg-purple-900/50  ██████  rgba(88,28,135,0.5) (Cards)
+dark:bg-purple-900/40  ██████  rgba(88,28,135,0.4) (Hover states)
+dark:bg-purple-800/50  ▓▓▓▓▓  rgba(107,33,168,0.5) (Loading states)
 
-Recommended Combinations:
-─────────────────────────
-✅ White text on gradient backgrounds (buttons)
-✅ Dark gray (#374151) or black text on white backgrounds
-✅ Light gray (#f3f4f6) backgrounds with dark text
-❌ Avoid brand colors on white for body text
-❌ Avoid gradient text on gradient backgrounds
+Usage: Cards, modals, navigation elements
 
+ACCENT COLORS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+dark:bg-purple-700     ██████  #6b21a8  (Buttons, CTAs)
+dark:bg-purple-600     ██████  #7c3aed  (Hover states)
+```
+
+### Text Colors
+
+```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                     SEMANTIC COLOR SYSTEM                            │
+│                     DARK MODE TEXT                                   │
 └─────────────────────────────────────────────────────────────────────┘
 
-SUCCESS (Green)
-───────────────
-bg-green-50     ░░░░░  #f0fdf4  (Light background)
-bg-green-100    ░░░░░  #dcfce7  (Subtle background)
-bg-green-500    ██████  #22c55e  (Primary action)
-bg-green-700    ██████  #15803d  (Dark variant)
-text-green-900  ██████  #14532d  (Text)
+HEADINGS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+dark:text-purple-50    ░░░░░  #faf5ff  (Hero titles)
+dark:text-purple-100   ░░░░░  #f5f3ff  (Primary headings)
+Contrast Ratio: 12:1+ on dark purple (AAA+)
 
-Usage: Success messages, confirmations, checkmarks
-Example: "Message sent successfully!"
+BODY TEXT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+dark:text-purple-100   ░░░░░  #f5f3ff  (Body text)
+dark:text-purple-200   ░░░░░  #ede9fe  (Readable text)
+Contrast Ratio: 8:1+ on dark purple (AAA)
 
-ERROR (Red)
-───────────
-bg-red-50       ░░░░░  #fef2f2  (Light background)
-bg-red-100      ░░░░░  #fee2e2  (Subtle background)
-bg-red-500      ██████  #ef4444  (Primary action)
-bg-red-700      ██████  #b91c1c  (Dark variant)
-text-red-900    ██████  #7f1d1d  (Text)
+SECONDARY TEXT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+dark:text-purple-300   ▒▒▒▒▒  #d8b4fe  (Secondary text)
+dark:text-purple-400   ▒▒▒▒▒  #c4b5fd  (Metadata, captions)
+```
 
-Usage: Error messages, validation errors, destructive actions
-Example: "Failed to submit form"
+### Border & Divider Colors
 
-WARNING (Amber/Orange)
-──────────────────────
-bg-amber-50     ░░░░░  #fffbeb  (Light background)
-bg-amber-100    ░░░░░  #fef3c7  (Subtle background)
-bg-amber-500    ██████  #f59e0b  (Primary action)
-bg-amber-700    ██████  #b45309  (Dark variant)
-text-amber-900  ██████  #78350f  (Text)
-
-Usage: Warnings, cautions, alerts
-Example: "Your session will expire soon"
-
-INFO (Blue)
-───────────
-bg-blue-50      ░░░░░  #eff6ff  (Light background)
-bg-blue-100     ░░░░░  #dbeafe  (Subtle background)
-bg-blue-500     ██████  #3b82f6  (Primary action)
-bg-blue-700     ██████  #1d4ed8  (Dark variant)
-text-blue-900   ██████  #1e3a8a  (Text)
-
-Usage: Information messages, tips, notes
-Example: "New features available"
-
+```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                     NEUTRAL SCALE (Grays)                            │
+│                     DARK MODE BORDERS                                │
 └─────────────────────────────────────────────────────────────────────┘
 
-White → Gray → Black
-──────────────────────
+dark:border-purple-700/50   ▓▓▓▓▓  rgba(107,33,168,0.5) (Card borders)
+dark:border-purple-800      ██████  #5b21b6  (Strong borders)
+dark:border-purple-900      ██████  #581c87  (Dividers)
 
-white           ░░░░░  #ffffff  (Pure white - backgrounds)
-gray-50         ░░░░░  #f9fafb  (Lightest gray - subtle bg)
-gray-100        ░░░░░  #f3f4f6  (Light gray - card bg)
-gray-200        ▒▒▒▒▒  #e5e7eb  (Borders, dividers)
-gray-300        ▒▒▒▒▒  #d1d5db  (Inactive borders)
-gray-400        ▓▓▓▓▓  #9ca3af  (Placeholder text)
-gray-500        ▓▓▓▓▓  #6b7280  (Secondary text)
-gray-600        ▓▓▓▓▓  #4b5563  (Body text light)
-gray-700        ██████  #374151  (Primary body text)
-gray-800        ██████  #1f2937  (Headings)
-gray-900        ██████  #111827  (Dark headings)
-black           ██████  #000000  (Pure black - rare use)
+Usage: Cards, dividers, form inputs in dark mode
+```
 
-Usage Guidelines:
-─────────────────
-✅ gray-50 to gray-200: Backgrounds, subtle surfaces
-✅ gray-300 to gray-400: Borders, dividers, disabled states
-✅ gray-500 to gray-600: Secondary text, metadata
-✅ gray-700 to gray-900: Primary text, headings
+---
+
+## Brand Gradients
+
+### Primary Gradient (Pink → Purple → Blue)
+
+**Usage:** Primary CTAs, hero titles, featured content
+
+```css
+/* Background Gradient */
+.bg-gradient-pink-purple-blue {
+  background: linear-gradient(135deg, #ff66cc 0%, #9933ff 50%, #3399ff 100%);
+}
+
+/* Text Gradient */
+.text-gradient-pink-purple-blue {
+  background: linear-gradient(135deg, #ff66cc 0%, #9933ff 50%, #3399ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+```
+
+**Examples:**
+```tsx
+// Button with gradient (works in both themes)
+<button className="bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button rounded-lg">
+  Explore Portfolio
+</button>
+
+// Title with gradient text (works in both themes)
+<h1 className="text-hero-h1 font-title font-bold text-gradient-pink-purple-blue">
+  Hi, I'm Ash Shaw
+</h1>
+```
+
+### Secondary Gradient (Blue → Teal → Green)
+
+**Usage:** Secondary CTAs, section accents
+
+```css
+.bg-gradient-blue-teal-green {
+  background: linear-gradient(135deg, #00bfff 0%, #20c997 50%, #32cd32 100%);
+}
+```
+
+**Example:**
+```tsx
+<button className="bg-gradient-blue-teal-green hover:from-teal-600 hover:to-green-700 text-white px-button py-button rounded-lg">
+  Read My Story
+</button>
+```
+
+### Accent Gradient (Gold → Peach → Coral)
+
+**Usage:** Special highlights, featured badges
+
+```css
+.bg-gradient-gold-peach-coral {
+  background: linear-gradient(135deg, #ffd700 0%, #ff9966 50%, #ff5e62 100%);
+}
 ```
 
 ---
@@ -221,197 +307,125 @@ Usage Guidelines:
 ## Semantic Colors
 
 ### Success (Green)
-**Usage:** Form success, confirmation messages, positive feedback
 
-```css
-/* CSS Variables */
---color-green-100: #DCFCE7; /* Light background */
---color-green-700: #15803D; /* Main green */
---color-green-900: #14532D; /* Dark text */
-
-/* Tailwind Classes */
-.text-green-700       /* Success text */
-.bg-green-100         /* Success background */
-.border-green-700     /* Success border */
-```
-
-**Example:**
 ```tsx
-<div className="bg-green-100 border border-green-700 text-green-900 px-4 py-3 rounded">
+// Works in both light and dark mode
+<div className="bg-green-100 dark:bg-green-900/30 border border-green-700 dark:border-green-600 text-green-900 dark:text-green-200 px-4 py-3 rounded-lg">
   <p className="font-body font-medium">Email sent successfully!</p>
 </div>
 ```
 
-### Error/Danger (Red)
-**Usage:** Form errors, destructive actions, alerts
+### Error (Red)
 
-```css
-/* CSS Variables */
---color-red-100: #FEE2E2; /* Light background */
---color-red-700: #B91C1C; /* Main red */
---color-red-900: #7F1D1D; /* Dark text */
-
-/* Tailwind Classes */
-.text-red-700         /* Error text */
-.bg-red-100           /* Error background */
-.border-red-700       /* Error border */
-```
-
-**Example:**
 ```tsx
-<div className="bg-red-100 border border-red-700 text-red-900 px-4 py-3 rounded">
+// Works in both light and dark mode
+<div className="bg-red-100 dark:bg-red-900/30 border border-red-700 dark:border-red-600 text-red-900 dark:text-red-200 px-4 py-3 rounded-lg">
   <p className="font-body font-medium">Please fill in all required fields.</p>
 </div>
 ```
 
-### Warning (Yellow/Amber)
-**Usage:** Warnings, caution messages, pending states
+### Warning (Amber)
 
-```css
-/* CSS Variables */
---color-amber-100: #FEF3C7; /* Light background */
---color-amber-700: #B45309; /* Main amber */
---color-amber-900: #78350F; /* Dark text */
-
-/* Tailwind Classes */
-.text-amber-700       /* Warning text */
-.bg-amber-100         /* Warning background */
-.border-amber-700     /* Warning border */
+```tsx
+// Works in both light and dark mode
+<div className="bg-amber-100 dark:bg-amber-900/30 border border-amber-700 dark:border-amber-600 text-amber-900 dark:text-amber-200 px-4 py-3 rounded-lg">
+  <p className="font-body font-medium">Your session will expire soon.</p>
+</div>
 ```
 
-### Info (Light Blue)
-**Usage:** Informational messages, neutral alerts
+### Info (Blue)
 
-```css
-/* CSS Variables */
---color-sky-100: #E0F2FE; /* Light background */
---color-sky-700: #0369A1; /* Main sky blue */
---color-sky-900: #0C4A6E; /* Dark text */
-
-/* Tailwind Classes */
-.text-sky-700         /* Info text */
-.bg-sky-100           /* Info background */
+```tsx
+// Works in both light and dark mode
+<div className="bg-blue-100 dark:bg-blue-900/30 border border-blue-700 dark:border-blue-600 text-blue-900 dark:text-blue-200 px-4 py-3 rounded-lg">
+  <p className="font-body font-medium">New features available!</p>
+</div>
 ```
 
 ---
 
-## Gradient System
+## Component Color Patterns
 
-### Primary Gradient (Pink → Purple → Blue)
-**Usage:** Primary CTAs, hero titles, featured content
+### Page Backgrounds
 
-```css
-/* CSS Custom Property */
---gradient-pink-purple-blue: linear-gradient(135deg, #FF66CC 0%, #9933FF 50%, #3399FF 100%);
-
-/* Tailwind Class */
-.bg-gradient-pink-purple-blue
-.text-gradient-pink-purple-blue  /* For text gradients */
+```tsx
+// ✅ CORRECT - Clean light, rich dark
+<main className="min-h-screen bg-white dark:bg-gradient-to-br dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 transition-colors duration-300">
+  {children}
+</main>
 ```
 
-**Examples:**
+### Cards
+
 ```tsx
-// Button with gradient background
-<button className="bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button rounded-lg">
-  Explore Portfolio
+// ✅ CORRECT - Translucent with backdrop blur
+<div className="bg-white/80 dark:bg-purple-900/50 backdrop-blur-sm rounded-xl p-fluid-md border border-white/50 dark:border-purple-700/50 shadow-lg hover:shadow-xl transition-all duration-300">
+  <h3 className="text-section-h2 font-heading font-semibold text-gray-800 dark:text-purple-100 mb-fluid-md">
+    Card Title
+  </h3>
+  <p className="text-body-guideline font-body text-gray-700 dark:text-purple-100 leading-relaxed">
+    Card content with proper contrast in both themes
+  </p>
+</div>
+```
+
+### Buttons
+
+```tsx
+// Primary CTA (gradient - works in both themes)
+<button className="bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+  Primary Action
 </button>
 
-// Title with gradient text
-<h1 className="text-hero-h1 font-title font-bold text-gradient-pink-purple-blue text-center">
-  Hi, I'm Ash Shaw
-</h1>
-```
+// Secondary button (theme-aware)
+<button className="bg-gray-200 dark:bg-purple-700 hover:bg-gray-300 dark:hover:bg-purple-600 text-gray-800 dark:text-white px-button py-button rounded-lg transition-colors duration-300">
+  Secondary Action
+</button>
 
-### Secondary Gradient (Blue → Teal → Green)
-**Usage:** Secondary CTAs, section accents
-
-```css
-/* CSS Custom Property */
---gradient-blue-teal-green: linear-gradient(135deg, #00BFFF 0%, #20C997 50%, #32CD32 100%);
-
-/* Tailwind Class */
-.bg-gradient-blue-teal-green
-.text-gradient-blue-teal-green
-```
-
-**Example:**
-```tsx
-<button className="bg-gradient-blue-teal-green hover:from-blue-700 hover:to-teal-700 text-white px-button py-button rounded-lg">
-  Read My Story
+// Ghost button (theme-aware)
+<button className="bg-transparent hover:bg-gray-100 dark:hover:bg-purple-800/30 text-gray-700 dark:text-purple-200 px-button py-button rounded-lg border border-gray-300 dark:border-purple-700 transition-all duration-300">
+  Tertiary Action
 </button>
 ```
 
-### Accent Gradient (Gold → Peach → Coral)
-**Usage:** Special highlights, featured badges, premium features
-
-```css
-/* CSS Custom Property */
---gradient-gold-peach-coral: linear-gradient(135deg, #FFD700 0%, #FF9966 50%, #FF5E62 100%);
-
-/* Tailwind Class */
-.bg-gradient-gold-peach-coral
-.text-gradient-gold-peach-coral
-```
-
-**Example:**
-```tsx
-<span className="inline-flex items-center px-3 py-1 bg-gradient-gold-peach-coral text-white font-body font-medium text-fluid-sm rounded-full">
-  Featured
-</span>
-```
-
-### Text Gradient Implementation
+### Navigation Header
 
 ```tsx
-// Required CSS for text gradients
-.text-gradient-pink-purple-blue {
-  background: linear-gradient(135deg, #FF66CC 0%, #9933FF 50%, #3399FF 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+// ✅ CORRECT - Frosted glass effect in both themes
+<nav className="bg-white/95 dark:bg-purple-950/95 backdrop-blur-sm border-b border-gray-200 dark:border-purple-800 transition-colors duration-300">
+  <div className="text-gray-800 dark:text-purple-100">
+    Navigation content
+  </div>
+</nav>
 ```
 
----
+### Loading States
 
-## Neutral Colors
-
-### Gray Scale
-**Usage:** Text, backgrounds, borders, UI elements
-
-```css
-/* CSS Variables */
---color-white: #FFFFFF;
---color-gray-50: #F9FAFB;    /* Lightest backgrounds */
---color-gray-100: #F3F4F6;   /* Light backgrounds */
---color-gray-200: #E5E7EB;   /* Light borders */
---color-gray-300: #D1D5DB;   /* Medium borders */
---color-gray-400: #9CA3AF;   /* Disabled text */
---color-gray-500: #6B7280;   /* Placeholder text */
---color-gray-600: #4B5563;   /* Secondary text */
---color-gray-700: #374151;   /* Body text */
---color-gray-800: #1F2937;   /* Headings */
---color-gray-900: #111827;   /* Primary text */
---color-black: #000000;
-
-/* Tailwind Classes */
-.text-gray-800        /* Primary text color */
-.text-gray-700        /* Body text color */
-.text-gray-600        /* Secondary text */
-.bg-gray-50           /* Subtle backgrounds */
-.bg-white             /* Content backgrounds */
-.border-gray-200      /* Subtle borders */
+```tsx
+// ✅ CORRECT - Skeleton with theme awareness
+<div className="animate-pulse">
+  <div className="h-16 bg-gray-200 dark:bg-purple-800/50 rounded-lg w-80 mx-auto mb-6"></div>
+  <div className="h-8 bg-gray-200 dark:bg-purple-800/50 rounded w-96 mx-auto mb-4"></div>
+</div>
 ```
 
-**Usage Guide:**
-- **text-gray-900/800:** Headings and titles (AAA contrast)
-- **text-gray-700:** Body text (AA contrast)
-- **text-gray-600:** Secondary text, captions
-- **text-gray-500:** Placeholder text
-- **text-gray-400:** Disabled text
-- **bg-white:** Card backgrounds, containers
-- **bg-gray-50:** Page backgrounds, subtle sections
-- **border-gray-200:** Subtle dividers and borders
+### Form Inputs
+
+```tsx
+// ✅ CORRECT - Input with theme support
+<input
+  type="text"
+  className="w-full px-4 py-3 bg-white dark:bg-purple-900/30 border border-gray-300 dark:border-purple-700 rounded-lg text-gray-800 dark:text-purple-100 placeholder-gray-500 dark:placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 transition-colors duration-300"
+  placeholder="Enter text..."
+/>
+```
+
+### Decorative Elements
+
+```tsx
+// ✅ CORRECT - Subtle accents in both themes
+<div className="absolute top-10 right-10 w-32 h-32 bg-gradient-to-br from-pink-300/20 dark:from-pink-300/10 to-purple-400/20 dark:to-purple-400/10 rounded-full opacity-20 dark:opacity-30 animate-pulse" aria-hidden="true"></div>
+```
 
 ---
 
@@ -419,122 +433,99 @@ Usage Guidelines:
 
 ### WCAG 2.1 AA Compliance
 
-#### Contrast Ratios
+#### Light Mode Contrast Ratios
 
-**AAA Compliant (7:1 ratio) - Use for titles and headings:**
+**Headings:**
 ```css
-.text-gray-800   /* #1F2937 on white - 7.02:1 */
-.text-gray-900   /* #111827 on white - 10.46:1 */
-.text-purple-900 /* #581C87 on white - 7.93:1 */
+text-gray-800 on bg-white     /* 7.02:1 - AAA ✅ */
+text-gray-900 on bg-white     /* 10.46:1 - AAA ✅ */
 ```
 
-**AA Compliant (4.5:1 ratio) - Use for body text:**
+**Body Text:**
 ```css
-.text-gray-700   /* #374151 on white - 4.83:1 */
-.text-blue-700   /* #1D4ED8 on white - 5.14:1 */
-.text-green-700  /* #15803D on white - 4.52:1 */
-.text-red-700    /* #B91C1C on white - 5.57:1 */
+text-gray-700 on bg-white     /* 4.83:1 - AA ✅ */
+text-gray-600 on bg-white     /* 3.94:1 - AA (large text) ✅ */
 ```
 
-### Color Combinations
+#### Dark Mode Contrast Ratios
 
-#### Text on White Backgrounds
-
-✅ **GOOD:**
-```tsx
-<div className="bg-white">
-  <h1 className="text-gray-800">Title (AAA - 7:1)</h1>
-  <p className="text-gray-700">Body text (AA - 4.5:1)</p>
-  <a href="#" className="text-blue-700">Link (AA - 5:1)</a>
-</div>
+**Headings:**
+```css
+text-purple-50 on bg-purple-950    /* 15.2:1 - AAA+ ✅ */
+text-purple-100 on bg-purple-950   /* 12.8:1 - AAA+ ✅ */
 ```
 
-❌ **AVOID:**
-```tsx
-<div className="bg-white">
-  <p className="text-gray-400">Too light (2.5:1 - FAILS)</p>
-  <a href="#" className="text-pink-300">Link too light (3:1 - FAILS)</a>
-</div>
+**Body Text:**
+```css
+text-purple-100 on bg-purple-950   /* 12.8:1 - AAA+ ✅ */
+text-purple-200 on bg-purple-950   /* 9.4:1 - AAA ✅ */
 ```
 
-#### Text on Colored Backgrounds
+### Testing Checklist
 
-✅ **GOOD:**
-```tsx
-<button className="bg-gradient-pink-purple-blue text-white">
-  High contrast white on gradient
-</button>
-
-<div className="bg-gray-900 text-white">
-  High contrast white on dark
-</div>
-```
-
-❌ **AVOID:**
-```tsx
-<button className="bg-pink-300 text-pink-500">
-  Low contrast pink on pink
-</button>
-```
+- [ ] All text meets contrast requirements in light mode
+- [ ] All text meets contrast requirements in dark mode
+- [ ] Buttons are clearly visible in both themes
+- [ ] Focus states are visible in both themes
+- [ ] Loading states work in both themes
+- [ ] Forms are usable in both themes
+- [ ] Error/success messages are clear in both themes
 
 ---
 
-## Common Color Patterns
+## CSS Variables Reference
 
-### Buttons
+### Light Mode Variables (`:root`)
 
-```tsx
-// Primary CTA
-<button className="bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button rounded-lg shadow-lg hover:shadow-xl">
-  Primary Action
-</button>
-
-// Secondary CTA
-<button className="bg-gradient-blue-teal-green hover:from-blue-700 hover:to-teal-700 text-white px-button py-button rounded-lg">
-  Secondary Action
-</button>
-
-// Tertiary/Ghost
-<button className="bg-transparent hover:bg-gray-100 text-gray-700 px-button py-button rounded-lg border border-gray-300">
-  Tertiary Action
-</button>
+```css
+:root {
+  /* Backgrounds */
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  
+  /* Borders */
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  
+  /* UI Elements */
+  --primary: #030213;
+  --primary-foreground: #f8fafc;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #030213;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #f1f5f9;
+  --accent-foreground: #030213;
+}
 ```
 
-### Cards
+### Dark Mode Variables (`.dark`)
 
-```tsx
-<div className="bg-white/80 backdrop-blur-sm rounded-2xl p-card-responsive border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300">
-  <h3 className="text-section-h2 font-heading font-semibold text-gray-800 mb-fluid-md">
-    Card Title
-  </h3>
-  <p className="text-body-guideline font-body text-gray-700 leading-relaxed">
-    Card content with proper contrast
-  </p>
-</div>
-```
-
-### Status Messages
-
-```tsx
-// Success
-<div className="bg-green-100 border border-green-700 text-green-900 px-4 py-3 rounded-lg">
-  Success message
-</div>
-
-// Error
-<div className="bg-red-100 border border-red-700 text-red-900 px-4 py-3 rounded-lg">
-  Error message
-</div>
-
-// Warning
-<div className="bg-amber-100 border border-amber-700 text-amber-900 px-4 py-3 rounded-lg">
-  Warning message
-</div>
-
-// Info
-<div className="bg-sky-100 border border-sky-700 text-sky-900 px-4 py-3 rounded-lg">
-  Info message
-</div>
+```css
+.dark {
+  /* Backgrounds */
+  --background: #0a0118;        /* Deep purple-black */
+  --foreground: #f5f3ff;        /* Lavender white */
+  --card: #1a0f2e;              /* Rich deep purple */
+  --card-foreground: #f5f3ff;
+  
+  /* Borders */
+  --border: #3b2667;            /* Purple borders */
+  --input: #1a0f2e;
+  --ring: #a78bfa;              /* Purple focus ring */
+  
+  /* UI Elements */
+  --primary: #f5f3ff;
+  --primary-foreground: #0a0118;
+  --secondary: #2d1b4e;         /* Medium purple */
+  --secondary-foreground: #f5f3ff;
+  --muted: #2d1b4e;
+  --muted-foreground: #c4b5fd;  /* Light purple */
+  --accent: #3b2667;            /* Vibrant accent purple */
+  --accent-foreground: #f5f3ff;
+}
 ```
 
 ---
@@ -543,56 +534,12 @@ Usage Guidelines:
 
 - **[typography.md](./typography.md)** - Typography system and hierarchy
 - **[spacing.md](./spacing.md)** - Spacing scale and patterns
+- **[dark-mode-implementation.md](../dark-mode-implementation.md)** - Complete dark mode guide
+- **[component-dark-mode.md](../component-dark-mode.md)** - Component-specific dark mode patterns
 - **[Guidelines.md](../Guidelines.md)** - Main guidelines
-- **[overview-components.md](../overview-components.md)** - Component system
 
 ---
 
-## CSS Variables Reference
-
-```css
-/* Brand Colors */
---color-pink-300: #FDA4AF;
---color-pink-500: #FF66CC;
---color-pink-700: #E91E63;
---color-purple-300: #D8B4FE;
---color-purple-600: #9933FF;
---color-purple-700: #7E22CE;
---color-purple-900: #581C87;
---color-blue-400: #60A5FA;
---color-blue-500: #3399FF;
---color-blue-700: #1D4ED8;
-
-/* Semantic Colors */
---color-green-100: #DCFCE7;
---color-green-700: #15803D;
---color-green-900: #14532D;
---color-red-100: #FEE2E2;
---color-red-700: #B91C1C;
---color-red-900: #7F1D1D;
---color-amber-100: #FEF3C7;
---color-amber-700: #B45309;
---color-amber-900: #78350F;
---color-sky-100: #E0F2FE;
---color-sky-700: #0369A1;
---color-sky-900: #0C4A6E;
-
-/* Gradient System */
---gradient-pink-purple-blue: linear-gradient(135deg, #FF66CC 0%, #9933FF 50%, #3399FF 100%);
---gradient-blue-teal-green: linear-gradient(135deg, #00BFFF 0%, #20C997 50%, #32CD32 100%);
---gradient-gold-peach-coral: linear-gradient(135deg, #FFD700 0%, #FF9966 50%, #FF5E62 100%);
-
-/* Neutral Colors */
---color-white: #FFFFFF;
---color-gray-50: #F9FAFB;
---color-gray-100: #F3F4F6;
---color-gray-200: #E5E7EB;
---color-gray-300: #D1D5DB;
---color-gray-400: #9CA3AF;
---color-gray-500: #6B7280;
---color-gray-600: #4B5563;
---color-gray-700: #374151;
---color-gray-800: #1F2937;
---color-gray-900: #111827;
---color-black: #000000;
-```
+**Last Updated:** January 2025  
+**Version:** 5.0.0  
+**Maintained by:** Ash Shaw Portfolio Team

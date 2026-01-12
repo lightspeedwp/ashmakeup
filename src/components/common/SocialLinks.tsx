@@ -81,10 +81,7 @@ export function SocialLinks({
               ? undefined
               : "noopener noreferrer"
           }
-          className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg"
-          style={{
-            background: getGradientForPlatform(social.platform),
-          }}
+          className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-pink-400/50 focus:ring-offset-2 dark:focus:ring-offset-purple-900 ${getGradientClassForPlatform(social.platform)}`}
           aria-label={`Visit Ash Shaw on ${social.platform}`}
         >
           <svg
@@ -110,18 +107,19 @@ export function SocialLinks({
   );
 }
 
-function getGradientForPlatform(platform: string): string {
-  const baseGradient = "linear-gradient(135deg, ";
-  const hoverStates = {
-    Instagram: `${baseGradient}#e1306c, #fd1d1d, #fcaf45)`,
-    Facebook: `${baseGradient}#1877f2, #42a5f5)`,
-    LinkedIn: `${baseGradient}#0077b5, #00a0dc)`,
-    Email: `${baseGradient}#10b981, #059669)`,
+/**
+ * Get CSS class for platform-specific gradient
+ */
+function getGradientClassForPlatform(platform: string): string {
+  const gradientClasses: { [key: string]: string } = {
+    Instagram: 'bg-gradient-social-instagram',
+    Facebook: 'bg-gradient-social-facebook',
+    TikTok: 'bg-gradient-social-tiktok',
+    LinkedIn: 'bg-gradient-social-linkedin',
+    Email: 'bg-gradient-social-email',
   };
-
-  return (
-    hoverStates[platform] || `${baseGradient}#6366f1, #8b5cf6)`
-  );
+  
+  return gradientClasses[platform] || 'bg-gradient-pink-purple-blue';
 }
 
 function getViewBoxForPlatform(platform: string): string {

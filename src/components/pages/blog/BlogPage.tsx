@@ -43,7 +43,7 @@ import { ShareComponent } from '../../ui/ShareComponent';
 import { BlogPagination } from '../../ui/BlogPagination';
 import { Footer } from '../../common/Footer';
 import { useContentfulConfigured } from '../../admin/ContentfulStatus';
-import { Calendar, Clock, Tag, User, Search, Filter, ArrowLeft, ArrowRight, Share2, Settings } from 'lucide-react';
+import { Calendar, Clock, Tag, User, Search, Filter, ArrowLeft, ArrowRight, Share2, Settings, ExternalLink } from 'lucide-react';
 import { ScrollToTop } from '../../ui/ScrollToTop';
 
 /**
@@ -54,6 +54,8 @@ import { ScrollToTop } from '../../ui/ScrollToTop';
 interface BlogPageProps {
   /** Enhanced navigation function supporting blog post routing */
   setCurrentPage: (page: string, slug?: string) => void;
+  /** Optional initial blog post slug for direct linking */
+  initialSlug?: string;
 }
 
 /**
@@ -62,6 +64,10 @@ interface BlogPageProps {
  * @interface BlogPageState
  */
 interface BlogPageState {
+  /** Current view mode */
+  view?: 'list' | 'post';
+  /** Current blog post slug */
+  slug?: string;
   /** Current page number for pagination */
   page: number;
   /** Selected category filter */
@@ -137,10 +143,7 @@ export function BlogPage({ setCurrentPage, initialSlug }: BlogPageProps) {
 
   // Debounced search query for performance
   const [debouncedSearch, setDebouncedSearch] = useState(blogState.searchQuery);
-  
-
-
-
+ 
 
 
 
@@ -480,12 +483,12 @@ export function BlogPage({ setCurrentPage, initialSlug }: BlogPageProps) {
   // Show single blog post view
   if (blogState.view === 'post') {
     return (
-      <main id="main-content" role="main" tabIndex={-1} className="min-h-screen bg-white">
+      <main id="main-content" role="main" tabIndex={-1} className="min-h-screen bg-white dark:bg-gradient-to-br dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 transition-colors duration-300">
         {/* Back navigation */}
         <div className="max-w-7xl mx-auto px-fluid-md py-fluid-lg">
           <button
             onClick={backToBlogList}
-            className="inline-flex items-center gap-fluid-sm text-gray-600 hover:text-gray-800 transition-colors duration-200 mb-fluid-lg group focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50 rounded-lg px-fluid-sm py-fluid-xs"
+            className="inline-flex items-center gap-fluid-sm text-gray-600 dark:text-purple-300 hover:text-gray-800 dark:hover:text-purple-100 transition-colors duration-200 mb-fluid-lg group focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-purple-500 focus:ring-opacity-50 rounded-lg px-fluid-sm py-fluid-xs"
             aria-label="Return to blog post listing"
           >
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-200" />
@@ -679,10 +682,10 @@ export function BlogPage({ setCurrentPage, initialSlug }: BlogPageProps) {
 
   // Show blog listing view
   return (
-    <main id="main-content" role="main" tabIndex={-1} className="min-h-screen bg-white">
+    <main id="main-content" role="main" tabIndex={-1} className="min-h-screen bg-white dark:bg-gradient-to-br dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 transition-colors duration-300">
       {/* Page header with blog anchor */}
       <div 
-        className="bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 py-fluid-2xl" 
+        className="blog-page-header" 
         data-blog-header
       >
         <div className="max-w-7xl mx-auto px-fluid-md">
@@ -690,7 +693,7 @@ export function BlogPage({ setCurrentPage, initialSlug }: BlogPageProps) {
             <h1 className="text-hero-h1 font-heading font-bold text-gradient-pink-purple-blue leading-tight tracking-tight mb-fluid-md">
               Makeup Artistry Blog
             </h1>
-            <p className="text-body-guideline font-body font-normal text-gray-700 leading-relaxed mb-fluid-lg">
+            <p className="text-body-guideline font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed mb-fluid-lg">
               Explore tutorials, behind-the-scenes insights, and creative inspiration from the world of festival and UV makeup artistry.
             </p>
             
@@ -705,21 +708,21 @@ export function BlogPage({ setCurrentPage, initialSlug }: BlogPageProps) {
       </div>
 
       {/* Content area */}
-      <div className="max-w-7xl mx-auto px-fluid-md py-fluid-lg">
+      <div className="blog-page-content">
         
         {/* Contentful Setup Notice (Development Only) */}
         {!isContentfulConfigured && import.meta?.env?.DEV && (
-          <div className="mb-fluid-lg p-fluid-md bg-blue-50 border border-blue-200 rounded-xl">
+          <div className="mb-fluid-lg p-fluid-md bg-contentful-notice border rounded-xl transition-colors duration-300">
             <div className="flex items-start gap-fluid-sm">
-              <Settings className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
+              <Settings className="w-5 h-5 text-contentful-notice-icon mt-1 flex-shrink-0" />
               <div>
-                <h3 className="font-body font-semibold text-blue-800 mb-fluid-xs">
+                <h3 className="font-body font-semibold text-contentful-notice-title mb-fluid-xs">
                   Dynamic Blog Content Available
                 </h3>
-                <p className="text-fluid-sm font-body text-blue-700 mb-fluid-sm">
+                <p className="text-fluid-sm font-body text-contentful-notice-body mb-fluid-sm">
                   This blog is currently showing static content with full functionality. To enable dynamic content management:
                 </p>
-                <ol className="text-fluid-sm font-body text-blue-700 list-decimal list-inside space-y-1 mb-fluid-sm">
+                <ol className="text-fluid-sm font-body text-contentful-notice-body list-decimal list-inside space-y-1 mb-fluid-sm">
                   <li>Set up your Contentful space using the provided content types</li>
                   <li>Configure VITE_CONTENTFUL_SPACE_ID and VITE_CONTENTFUL_ACCESS_TOKEN</li>
                   <li>Create blog posts using the "Blog Post" content type</li>
@@ -727,7 +730,7 @@ export function BlogPage({ setCurrentPage, initialSlug }: BlogPageProps) {
                 <a 
                   href="/BLOG_SETUP_GUIDE.md" 
                   target="_blank"
-                  className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 font-medium text-fluid-sm underline"
+                  className="inline-flex items-center gap-1 text-contentful-notice-link font-medium text-fluid-sm underline transition-colors duration-200"
                 >
                   📚 View Complete Setup Guide
                   <ExternalLink className="w-3 h-3" />
@@ -748,14 +751,14 @@ export function BlogPage({ setCurrentPage, initialSlug }: BlogPageProps) {
             {/* Category filter */}
             {blogData?.categories && blogData.categories.length > 0 && (
               <div className="flex flex-wrap items-center gap-fluid-sm">
-                <h3 className="font-body font-medium text-fluid-xs text-gray-700">Categories:</h3>
+                <h3 className="font-body font-medium text-fluid-xs text-blog-category-label">Categories:</h3>
                 <div className="flex flex-wrap gap-fluid-xs">
                   <button
                     onClick={() => selectCategory(undefined)}
-                    className={`px-fluid-sm py-fluid-xs text-fluid-xs font-body font-medium rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-200 ${
+                    className={`px-fluid-sm py-fluid-xs text-fluid-xs font-body font-medium rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-200 dark:focus:ring-purple-500 ${
                       !blogState.category
                         ? 'bg-gradient-pink-purple-blue text-white shadow-lg'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md'
+                        : 'blog-category-btn-inactive hover:shadow-md'
                     }`}
                   >
                     All Categories
@@ -764,10 +767,10 @@ export function BlogPage({ setCurrentPage, initialSlug }: BlogPageProps) {
                     <button
                       key={category}
                       onClick={() => selectCategory(category)}
-                      className={`px-fluid-sm py-fluid-xs text-fluid-xs font-body font-medium rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-200 capitalize ${
+                      className={`px-fluid-sm py-fluid-xs text-fluid-xs font-body font-medium rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-200 dark:focus:ring-purple-500 capitalize ${
                         blogState.category === category
                           ? 'bg-gradient-pink-purple-blue text-white shadow-lg'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md'
+                          : 'blog-category-btn-inactive hover:shadow-md'
                       }`}
                       title={`Filter by ${category} category`}
                     >
@@ -778,32 +781,31 @@ export function BlogPage({ setCurrentPage, initialSlug }: BlogPageProps) {
               </div>
             )}
 
-
           </div>
 
           {/* Active filters summary */}
           {(blogState.category || blogState.tags.length > 0 || blogState.searchQuery) && (
-            <div className="mt-fluid-md p-fluid-sm bg-blue-50 rounded-lg">
+            <div className="mt-fluid-md p-fluid-sm bg-blog-active-filters rounded-lg border transition-colors duration-300">
               <div className="flex flex-wrap items-center gap-fluid-sm text-fluid-sm">
-                <span className="font-body font-medium text-blue-800">Active filters:</span>
+                <span className="font-body font-medium text-blog-active-filters-label">Active filters:</span>
                 {blogState.category && (
-                  <span className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                  <span className="inline-flex items-center px-2 py-1 bg-blog-filter-badge rounded transition-colors duration-300">
                     Category: {blogState.category}
                   </span>
                 )}
                 {blogState.tags.map(tag => (
-                  <span key={tag} className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                  <span key={tag} className="inline-flex items-center px-2 py-1 bg-blog-filter-badge rounded transition-colors duration-300">
                     Tag: {tag}
                   </span>
                 ))}
                 {blogState.searchQuery && (
-                  <span className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                  <span className="inline-flex items-center px-2 py-1 bg-blog-filter-badge rounded transition-colors duration-300">
                     Search: "{blogState.searchQuery}"
                   </span>
                 )}
                 <button
                   onClick={() => updateBlogState({ category: undefined, tags: [], searchQuery: '' })}
-                  className="text-blue-600 hover:text-blue-800 font-medium"
+                  className="text-blog-clear-filters font-medium transition-colors duration-200"
                 >
                   Clear all
                 </button>
@@ -818,14 +820,14 @@ export function BlogPage({ setCurrentPage, initialSlug }: BlogPageProps) {
             {/* Loading filters */}
             <div className="mb-fluid-lg animate-pulse">
               <div className="flex gap-fluid-md mb-fluid-md">
-                <div className="h-4 bg-gray-200 rounded w-16"></div>
+                <div className="h-4 bg-blog-loading-skeleton rounded w-16"></div>
                 {[...Array(4)].map((_, i) => (
-                  <div key={i} className="h-8 bg-gray-200 rounded-full w-20"></div>
+                  <div key={i} className="h-8 bg-blog-loading-skeleton rounded-full w-20"></div>
                 ))}
               </div>
               <div className="flex gap-fluid-xs">
                 {[...Array(6)].map((_, i) => (
-                  <div key={i} className="h-6 bg-gray-200 rounded-full w-16"></div>
+                  <div key={i} className="h-6 bg-blog-loading-skeleton rounded-full w-16"></div>
                 ))}
               </div>
             </div>
@@ -833,24 +835,24 @@ export function BlogPage({ setCurrentPage, initialSlug }: BlogPageProps) {
             {/* Loading posts grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-fluid-lg mb-fluid-xl">
               {[...Array(blogState.limit)].map((_, i) => (
-                <div key={i} className="bg-white rounded-xl overflow-hidden shadow-lg animate-pulse">
-                  <div className="aspect-w-16 aspect-h-9 bg-gray-200"></div>
+                <div key={i} className="bg-white dark:bg-purple-900/30 rounded-xl overflow-hidden shadow-lg animate-pulse transition-colors duration-300">
+                  <div className="aspect-w-16 aspect-h-9 bg-blog-loading-skeleton"></div>
                   <div className="p-fluid-md space-y-fluid-sm">
                     <div className="flex justify-between">
-                      <div className="h-4 bg-gray-200 rounded-full w-16"></div>
-                      <div className="h-4 bg-gray-200 rounded w-8"></div>
+                      <div className="h-4 bg-blog-loading-skeleton rounded-full w-16"></div>
+                      <div className="h-4 bg-blog-loading-skeleton rounded w-8"></div>
                     </div>
-                    <div className="h-6 bg-gray-200 rounded w-full"></div>
-                    <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-                    <div className="h-4 bg-gray-200 rounded w-4/6"></div>
+                    <div className="h-6 bg-blog-loading-skeleton rounded w-full"></div>
+                    <div className="h-4 bg-blog-loading-skeleton rounded w-5/6"></div>
+                    <div className="h-4 bg-blog-loading-skeleton rounded w-4/6"></div>
                     <div className="flex gap-fluid-xs">
                       {[...Array(3)].map((_, j) => (
-                        <div key={j} className="h-4 bg-gray-200 rounded-full w-12"></div>
+                        <div key={j} className="h-4 bg-blog-loading-skeleton rounded-full w-12"></div>
                       ))}
                     </div>
                     <div className="flex justify-between items-center pt-fluid-sm">
-                      <div className="h-4 bg-gray-200 rounded w-20"></div>
-                      <div className="h-6 bg-gray-200 rounded w-16"></div>
+                      <div className="h-4 bg-blog-loading-skeleton rounded w-20"></div>
+                      <div className="h-6 bg-blog-loading-skeleton rounded w-16"></div>
                     </div>
                   </div>
                 </div>
@@ -861,7 +863,7 @@ export function BlogPage({ setCurrentPage, initialSlug }: BlogPageProps) {
             <div className="flex justify-center">
               <div className="flex gap-fluid-xs animate-pulse">
                 {[...Array(5)].map((_, i) => (
-                  <div key={i} className="h-10 w-10 bg-gray-200 rounded-lg"></div>
+                  <div key={i} className="h-10 w-10 bg-blog-loading-skeleton rounded-lg"></div>
                 ))}
               </div>
             </div>
@@ -871,11 +873,11 @@ export function BlogPage({ setCurrentPage, initialSlug }: BlogPageProps) {
         {/* Error state */}
         {postsError && (
           <div className="text-center py-fluid-xl">
-            <div className="bg-red-50 border border-red-200 rounded-xl p-fluid-md max-w-md mx-auto">
-              <h2 className="text-fluid-xl font-heading font-semibold text-red-800 mb-fluid-sm">
+            <div className="bg-blog-error border rounded-xl p-fluid-md max-w-md mx-auto transition-colors duration-300">
+              <h2 className="text-fluid-xl font-heading font-semibold text-blog-error-title mb-fluid-sm">
                 Error Loading Blog Posts
               </h2>
-              <p className="text-fluid-base font-body text-red-700 mb-fluid-md">
+              <p className="text-fluid-base font-body text-blog-error-body mb-fluid-md">
                 {postsError}
               </p>
               <button
@@ -894,11 +896,11 @@ export function BlogPage({ setCurrentPage, initialSlug }: BlogPageProps) {
             {filteredPosts.length === 0 ? (
               <div className="text-center py-fluid-xl">
                 <div className="max-w-md mx-auto">
-                  <Search className="w-16 h-16 text-gray-300 mx-auto mb-fluid-md" />
-                  <h2 className="text-fluid-xl font-heading font-semibold text-gray-800 mb-fluid-sm">
+                  <Search className="w-16 h-16 text-blog-empty-icon mx-auto mb-fluid-md" />
+                  <h2 className="text-fluid-xl font-heading font-semibold text-blog-empty-title mb-fluid-sm">
                     No posts found
                   </h2>
-                  <p className="text-fluid-base font-body text-gray-600 mb-fluid-md">
+                  <p className="text-fluid-base font-body text-blog-empty-body mb-fluid-md">
                     Try adjusting your search or filter criteria to find more posts.
                   </p>
                   <button
@@ -971,7 +973,7 @@ interface BlogPostCardProps {
  */
 function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
   return (
-    <article className="bg-white/80 backdrop-blur-sm rounded-xl border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer overflow-hidden">
+    <article className="bg-white/80 dark:bg-purple-900/50 backdrop-blur-sm rounded-xl border border-white/50 dark:border-purple-700/50 shadow-lg hover:shadow-xl dark:hover:shadow-purple-500/30 transition-all duration-300 group cursor-pointer overflow-hidden">
       {/* Featured image */}
       {post.featuredImage && (
         <div 
@@ -990,8 +992,7 @@ function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
           <ImageWithFallback
             src={post.featuredImage.url}
             alt={post.featuredImage.alt}
-            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 rounded-t-xl"
-            style={{ aspectRatio: '16/9' }}
+            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 rounded-t-xl aspect-video"
           />
         </div>
       )}
@@ -1007,14 +1008,14 @@ function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
 
         {/* Title */}
         <h3 
-          className="text-fluid-xl font-heading font-semibold text-gray-800 mb-fluid-sm group-hover:text-gradient-pink-purple-blue transition-colors duration-300 line-clamp-2 cursor-pointer"
+          className="text-fluid-xl font-heading font-semibold text-gray-800 dark:text-purple-100 mb-fluid-sm group-hover:text-gradient-pink-purple-blue transition-colors duration-300 line-clamp-2 cursor-pointer"
           onClick={() => onViewPost(post.slug)}
         >
           {post.title}
         </h3>
 
         {/* Reading time and date */}
-        <div className="flex items-center justify-between gap-fluid-sm text-gray-500 mb-fluid-sm">
+        <div className="flex items-center justify-between gap-fluid-sm text-gray-500 dark:text-purple-300 mb-fluid-sm">
           {post.readingTime && (
             <div className="flex items-center gap-fluid-sm">
               <Clock className="w-4 h-4" />
@@ -1030,7 +1031,7 @@ function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
         </div>
 
         {/* Excerpt */}
-        <p className="text-body-guideline font-body font-normal text-gray-700 leading-relaxed mb-fluid-md line-clamp-3">
+        <p className="text-body-guideline font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed mb-fluid-md line-clamp-3">
           {post.excerpt}
         </p>
 
@@ -1042,7 +1043,7 @@ function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
         </div>
 
         {/* Footer with Read more */}
-        <div className="flex items-center justify-end pt-fluid-md border-t border-gray-100">
+        <div className="flex items-center justify-end pt-fluid-md border-t border-gray-100 dark:border-purple-700">
           <ReadMoreButton 
             postTitle={post.title}
             postSlug={post.slug}

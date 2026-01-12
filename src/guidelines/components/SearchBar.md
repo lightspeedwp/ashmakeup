@@ -18,6 +18,113 @@ Provide content search functionality with:
 
 ---
 
+## Component Architecture
+
+### SearchBar Interaction Flow (Mermaid)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant S as SearchBar
+    participant D as Debounce Logic
+    participant P as Parent Component
+    participant A as API/Filter
+    
+    U->>S: Types "festival"
+    S->>S: Update local state
+    
+    alt Debounce Enabled
+        S->>D: Queue onChange (300ms)
+        Note over D: Wait for typing to stop
+        D->>P: Trigger onChange("festival")
+    else Immediate
+        S->>P: Trigger onChange("festival")
+    end
+    
+    P->>A: Filter/search with query
+    A-->>P: Return results
+    P-->>S: Update loading state
+    S-->>U: Display results count ✅
+    
+    Note over U: User clicks clear button
+    U->>S: Click clear (X) button
+    S->>S: Clear local state
+    S->>P: onChange("")
+    P->>A: Show all results
+    A-->>P: Return all items
+    P-->>U: Display all ✅
+```
+
+### Keyboard Shortcut Handling (Mermaid)
+
+```mermaid
+flowchart TD
+    A[User Presses Key] --> B{Which key?}
+    
+    B -->|Cmd/Ctrl + K| C[Global Shortcut]
+    B -->|Enter| D[Submit Search]
+    B -->|Escape| E[Clear Search]
+    B -->|Other Keys| F[Normal Input]
+    
+    C --> G[Focus SearchBar]
+    G --> H[Select All Text]
+    H --> I[Ready for New Input]
+    
+    D --> J{onSearch Provided?}
+    J -->|Yes| K[Call onSearch Handler]
+    J -->|No| L[Just update value]
+    
+    E --> M[Clear Input]
+    M --> N[Trigger onChange ""]
+    
+    F --> O[Update Input Value]
+    
+    style C fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style D fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
+    style E fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+```
+
+### State Management (Mermaid)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Empty: Initial state
+    
+    Empty --> Typing: User types
+    
+    Typing --> HasValue: Input has text
+    Typing --> Empty: User clears
+    
+    HasValue --> Searching: Debounce triggered
+    HasValue --> HasValue: Continue typing
+    HasValue --> Empty: Click clear button
+    
+    Searching --> ResultsShown: Filter complete
+    
+    ResultsShown --> Typing: User modifies
+    ResultsShown --> Empty: Clear search
+    
+    note right of Empty
+        - No value
+        - Only search icon
+        - Placeholder text
+    end note
+    
+    note right of HasValue
+        - Has value
+        - Show clear button
+        - Ready to search
+    end note
+    
+    note right of Searching
+        - Show loading indicator
+        - Debounce delay
+        - Processing search
+    end note
+```
+
+---
+
 ## Usage
 
 ### Basic Usage

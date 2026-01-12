@@ -1,78 +1,9 @@
 /**
- * @fileoverview Contact form component for Ash Shaw Makeup Portfolio
- * 
- * Core Features:
- * - Professional email integration with SendGrid for real email delivery
- * - Comprehensive form validation with real-time error feedback
- * - Loading states with animated spinner and disabled form fields
- * - Success states with personalized thank you message and auto-reset
- * - Demo mode for development environments without SendGrid configuration
- * - Accessible form design with proper labeling and screen reader support
- * 
- * Email System:
- * - Dual email delivery: notification to Ash Shaw + auto-reply to sender
- * - Professional HTML email templates with brand-consistent design
- * - Graceful fallback to demo mode when SendGrid service unavailable
- * - Automatic configuration validation and service initialization
- * 
- * Dependencies:
- * - React 18+ for state management and form handling
- * - SendGrid for professional email delivery service
- * - Centralized social links data from /data/mock/ui/social-links
- * - emailService.ts for email sending and validation utilities
- * 
- * Accessibility:
- * - WCAG 2.1 AA compliant form design with proper labeling
- * - Keyboard navigation support with logical tab order
- * - Screen reader compatibility with ARIA labels and live regions
- * - High contrast mode support for form elements and error states
- * - Touch-optimized form fields with proper sizing for mobile
- * 
- * Performance:
- * - Efficient state management with minimal re-renders
- * - Optimized SendGrid service initialization with health checking
- * - Form field debouncing for smooth typing experience
- * - Lazy loading of email service with graceful error handling
- * 
- * @author Ash Shaw Portfolio Team
- * @version 3.0.0 - Using centralized mock data
- * @since 1.0.0 - Initial contact form implementation
- * @since 2.0.0 - EmailJS integration with dual email system
- * @since 2.1.0 - Enhanced validation and error handling
- * @since 2.2.0 - Comprehensive JSDoc documentation and accessibility improvements
- * @since 3.0.0 - Migrated to centralized data structure
- * @lastModified 2025-01-17
- */
-
-import React, { useState, useEffect } from "react";
-import { socialLinks } from "../../data/mock/ui/social-links";
-import { sendContactForm, sendContactFormDemo, validateEmailService, initializeEmailJS, type ContactFormData } from "../../utils/emailService";
-
-/**
- * Props interface for ContactForm component with comprehensive type safety
- * 
- * @interface ContactFormProps
- * @description Defines all properties accepted by the ContactForm component
- */
-interface ContactFormProps {
-  /** 
-   * Optional custom CSS classes for extending form container styling
-   * Should follow Tailwind utility patterns and brand guidelines
-   * @default ""
-   * @example "max-w-md mx-auto bg-white/80 p-fluid-xl rounded-2xl shadow-lg"
-   */
-  className?: string;
-}
-
-/**
- * ContactForm - Professional email contact form with SendGrid integration
- * 
- * A comprehensive contact form component implementing real email delivery,
- * validation, accessibility compliance, and responsive design with brand-
- * consistent styling and professional user experience.
+ * @fileoverview Professional contact form component for Ash Shaw Makeup Portfolio
+ * Production-ready form with comprehensive validation, accessibility, and demo mode email delivery.
  * 
  * Features:
- * - Professional email delivery with SendGrid integration via Supabase Edge Functions
+ * - Professional email delivery with demo mode
  * - Dual email system: notification to Ash Shaw + auto-reply to sender
  * - Real-time form validation with accessible error feedback
  * - Loading states with animated spinner and form field disabling
@@ -236,6 +167,21 @@ interface ContactFormProps {
  * }
  * ```
  */
+
+import React, { useState, useEffect } from 'react';
+import { sendContactForm, sendContactFormDemo, validateEmailService, initializeEmailJS, type ContactFormData } from '../../utils/emailService';
+import { Loader2, CheckCircle2, Mail, User, MessageSquare, AlertCircle } from 'lucide-react';
+
+/**
+ * Contact form component properties
+ * 
+ * @interface ContactFormProps
+ */
+interface ContactFormProps {
+  /** Optional additional CSS classes for styling customization */
+  className?: string;
+}
+
 export function ContactForm({
   className = "",
 }: ContactFormProps) {
@@ -462,7 +408,7 @@ export function ContactForm({
   if (isSubmitted) {
     return (
       <div className={`space-y-6 ${className}`}>
-        <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-fluid-xl text-center">
+        <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 border-2 border-green-200 dark:border-green-700 rounded-xl p-fluid-xl text-center transition-colors duration-300">
           <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-fluid-lg">
             <svg
               className="w-8 h-8 text-white"
@@ -478,10 +424,10 @@ export function ContactForm({
               />
             </svg>
           </div>
-          <h3 className="text-fluid-xl font-heading font-semibold text-gradient-blue-teal-green mb-fluid-lg">
+          <h3 className="text-fluid-lg font-heading font-semibold text-gradient-blue-teal-green mb-fluid-lg">
             Thank You!
           </h3>
-          <p className="text-body-guideline font-body font-normal text-green-700 leading-relaxed mb-fluid-lg">
+          <p className="text-body-guideline font-body font-normal text-green-800 dark:text-green-100 leading-relaxed mb-fluid-lg transition-colors duration-300">
             Thank you for getting in touch! I will get back to
             you within the next 24 to 48 hours.
           </p>
@@ -490,14 +436,14 @@ export function ContactForm({
             <br />
             Ash ✨
           </p>
-          <p className="text-fluid-sm font-body font-normal text-green-600 mt-fluid-lg italic">
+          <p className="text-fluid-sm font-body font-normal text-green-700 dark:text-green-200 mt-fluid-lg italic transition-colors duration-300">
             {isEmailServiceConfigured 
               ? `A confirmation email will be sent to ${formData.email}`
               : `Demo mode: All functionality works perfectly for development and testing`
             }
           </p>
           {!isEmailServiceConfigured && import.meta?.env?.DEV && (
-            <p className="text-fluid-xs font-body font-normal text-green-500 mt-fluid-sm">
+            <p className="text-fluid-xs font-body font-normal text-green-600 dark:text-green-300 mt-fluid-sm transition-colors duration-300">
               💡 In production, this will send real emails via SendGrid
             </p>
           )}
@@ -579,7 +525,7 @@ export function ContactForm({
       </div>
       
       {/* Name field */}
-      <div className="bg-white/70 backdrop-blur-sm rounded-lg border border-white/50 shadow-lg hover:shadow-xl transition-shadow duration-300">
+      <div className="contact-field-wrapper">
         <label htmlFor="contact-name" className="sr-only">Your Name</label>
         <input
           type="text"
@@ -591,7 +537,7 @@ export function ContactForm({
           required
           disabled={isSubmitting}
           maxLength={100}
-          className="w-full px-fluid-md py-fluid-md bg-transparent text-body-guideline font-body font-normal text-gray-800 placeholder-gray-600 border-none outline-none rounded-lg disabled:opacity-50 focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50"
+          className="contact-form-input w-full px-fluid-md py-fluid-md text-body-guideline font-body font-normal rounded-lg disabled:opacity-50 focus:outline-none focus:ring-4"
           aria-label="Your full name (required)"
           aria-describedby="name-help"
         />
@@ -599,7 +545,7 @@ export function ContactForm({
       </div>
       
       {/* Email field */}
-      <div className="bg-white/70 backdrop-blur-sm rounded-lg border border-white/50 shadow-lg hover:shadow-xl transition-shadow duration-300">
+      <div className="contact-field-wrapper">
         <label htmlFor="contact-email" className="sr-only">Your Email Address</label>
         <input
           type="email"
@@ -611,7 +557,7 @@ export function ContactForm({
           required
           disabled={isSubmitting}
           maxLength={150}
-          className="w-full px-fluid-md py-fluid-md bg-transparent text-body-guideline font-body font-normal text-gray-800 placeholder-gray-600 border-none outline-none rounded-lg disabled:opacity-50 focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50"
+          className="contact-form-input w-full px-fluid-md py-fluid-md text-body-guideline font-body font-normal rounded-lg disabled:opacity-50 focus:outline-none focus:ring-4"
           aria-label="Your email address (required)"
           aria-describedby="email-help"
         />
@@ -619,7 +565,7 @@ export function ContactForm({
       </div>
       
       {/* Message field */}
-      <div className="bg-white/70 backdrop-blur-sm rounded-lg border border-white/50 shadow-lg hover:shadow-xl transition-shadow duration-300">
+      <div className="contact-field-wrapper">
         <label htmlFor="contact-message" className="sr-only">Your Message</label>
         <textarea
           id="contact-message"
@@ -631,12 +577,12 @@ export function ContactForm({
           required
           disabled={isSubmitting}
           maxLength={2000}
-          className="w-full px-fluid-md py-fluid-md bg-transparent text-body-guideline font-body font-normal text-gray-800 placeholder-gray-600 border-none outline-none resize-none rounded-lg disabled:opacity-50 focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50"
+          className="contact-form-input w-full px-fluid-md py-fluid-md text-body-guideline font-body font-normal resize-none rounded-lg disabled:opacity-50 focus:outline-none focus:ring-4"
           aria-label="Your message (required)"
           aria-describedby="message-help"
         />
         <div id="message-help" className="sr-only">Tell me about your makeup needs or any questions you have</div>
-        <div className="text-right text-fluid-xs text-gray-500 px-fluid-sm pb-fluid-xs">
+        <div className="text-right text-fluid-xs contact-char-counter px-fluid-sm pb-fluid-xs">
           {formData.message.length}/2000 characters
         </div>
       </div>

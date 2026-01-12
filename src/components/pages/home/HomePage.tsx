@@ -13,9 +13,13 @@ import { WhySection } from "../../sections/WhySection";
 import { FeaturedSection } from "../../sections/FeaturedSection";
 import { BlogPreviewSection } from "../../sections/BlogPreviewSection";
 import { FusionNailsSection } from "../../sections/FusionNailsSection";
+import { TestimonialsSection } from "../../sections/TestimonialsSection";
+import { FestivalCountdown } from "../../sections/FestivalCountdown";
+import { InstagramFeed } from "../../sections/InstagramFeed";
 import { Footer } from "../../common/Footer";
 import { useHomepageContent } from "../../../hooks/useContentful";
 import { ScrollToTop } from "../../ui/ScrollToTop";
+import { BlurredCircles } from "../../ui/BlurredCircles";
 
 // Import mock data for fallbacks
 import { homepageHero } from "../../../data/mock/pages/home";
@@ -78,14 +82,14 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
 
   // Loading state component
   const LoadingState = () => (
-    <main id="main-content" role="main" className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50">
+    <main id="main-content" role="main" className="min-h-screen bg-white dark:bg-gradient-to-br dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 transition-colors duration-300">
       <div className="container mx-auto px-4 py-16">
         <div className="text-center">
           <div className="animate-pulse">
-            <div className="h-16 bg-gray-200 rounded-lg w-80 mx-auto mb-6"></div>
-            <div className="h-8 bg-gray-200 rounded w-96 mx-auto mb-4"></div>
-            <div className="h-6 bg-gray-200 rounded w-64 mx-auto mb-8"></div>
-            <div className="h-12 bg-gray-200 rounded-lg w-48 mx-auto"></div>
+            <div className="h-16 bg-gray-200 dark:bg-purple-800/50 rounded-lg w-80 mx-auto mb-6"></div>
+            <div className="h-8 bg-gray-200 dark:bg-purple-800/50 rounded w-96 mx-auto mb-4"></div>
+            <div className="h-6 bg-gray-200 dark:bg-purple-800/50 rounded w-64 mx-auto mb-8"></div>
+            <div className="h-12 bg-gray-200 dark:bg-purple-800/50 rounded-lg w-48 mx-auto"></div>
           </div>
         </div>
       </div>
@@ -94,27 +98,27 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
 
   // Error state component with retry functionality
   const ErrorState = () => (
-    <main id="main-content" role="main" className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 flex items-center justify-center">
+    <main id="main-content" role="main" className="min-h-screen bg-white dark:bg-gradient-to-br dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 flex items-center justify-center transition-colors duration-300">
       <div className="text-center p-8">
         <div className="mb-6">
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-red-500 text-2xl">⚠️</span>
+          <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-red-500 dark:text-red-400 text-2xl">⚠️</span>
           </div>
-          <h1 className="text-3xl font-semibold text-gray-800 mb-2">Content Temporarily Unavailable</h1>
-          <p className="text-gray-600 mb-6">
+          <h1 className="text-3xl font-semibold text-gray-800 dark:text-purple-100 mb-2">Content Temporarily Unavailable</h1>
+          <p className="text-gray-600 dark:text-purple-300 mb-6">
             {contentError || "There was an issue loading the homepage content. Please try again."}
           </p>
         </div>
         <div className="space-x-4">
           <button
             onClick={refreshContent}
-            className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+            className="px-6 py-3 bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-600 text-white rounded-lg transition-colors"
           >
             Try Again
           </button>
           <button
             onClick={() => window.location.reload()}
-            className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+            className="px-6 py-3 bg-gray-600 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-colors"
           >
             Refresh Page
           </button>
@@ -184,11 +188,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
         description={heroContent.description}
         size="xl"
         layout="split"
-        backgroundGradient={{
-          from: "pink-50",
-          via: "purple-50",
-          to: "blue-50",
-        }}
+        className="bg-hero-section"
         titleGradient={{ from: "pink-500", to: "purple-600" }}
         scrollArrowTarget="why-section"
         heroImages={heroContent.images}
@@ -198,30 +198,14 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
           <button
             onClick={() => setCurrentPage("portfolio")}
             className="w-full sm:w-auto px-button py-button bg-gradient-pink-purple-blue text-white font-body font-medium rounded-lg shadow-lg hover:shadow-xl transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50 justify-center text-center"
-            style={{ fontFamily: 'var(--font-body)' }}
             aria-label="Navigate to portfolio page to view makeup artistry work"
           >
             {heroContent.ctaText}
           </button>
         }
-        decorativeElements={
-          <>
-            <div
-              className="absolute top-10 left-4 sm:left-10 w-16 h-16 sm:w-32 sm:h-32 bg-gradient-to-br from-pink-300 to-purple-400 rounded-full opacity-20 animate-pulse"
-              aria-hidden="true"
-            ></div>
-            <div
-              className="absolute top-20 right-8 sm:right-20 w-12 h-12 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-300 to-teal-400 rounded-full opacity-25 animate-pulse delay-1000"
-              aria-hidden="true"
-            ></div>
-            <div
-              className="absolute bottom-16 left-1/4 w-20 h-20 sm:w-40 sm:h-40 bg-gradient-to-br from-yellow-300 to-pink-400 rounded-full opacity-15 animate-pulse delay-2000"
-              aria-hidden="true"
-            ></div>
-          </>
-        }
+        decorativeElements={<BlurredCircles variant="hero" />}
       />
-
+      
       {/* Why Section - now uses centralized mock data */}
       <WhySection setCurrentPage={setCurrentPage} />
       
@@ -231,11 +215,21 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
       {/* Blog Preview Section - showcases latest blog posts */}
       <BlogPreviewSection setCurrentPage={setCurrentPage} />
       
+      {/* Testimonials Section - client reviews and social proof */}
+      <TestimonialsSection />
+      
+      {/* Festival Countdown - Origin Festival urgency */}
+      <FestivalCountdown />
+      
+      {/* Instagram Feed - @feedmymedia */}
+      <InstagramFeed />
+      
       <FusionNailsSection setCurrentPage={setCurrentPage} />
       <Footer setCurrentPage={setCurrentPage} />
       
       {/* Scroll to top button */}
       <ScrollToTop />
+      <BlurredCircles />
     </main>
   );
 }

@@ -15,6 +15,77 @@ Display the Ash Shaw brand logo consistently across the site with:
 
 ---
 
+## Component Architecture
+
+### Logo Component Flow (Mermaid)
+
+```mermaid
+flowchart TD
+    A[Logo Component] --> B{Has onClick?}
+    
+    B -->|Yes| C[Clickable Logo]
+    B -->|No| D[Static Logo]
+    
+    C --> E[Wrap in Interactive Element]
+    E --> F[Add role=button]
+    E --> G[Add tabIndex=0]
+    E --> H[Add keyboard handlers]
+    
+    D --> I[Render Logo Image]
+    
+    C --> I
+    
+    I --> J{Size Prop?}
+    
+    J -->|sm| K[h-8: 32px]
+    J -->|md| L[h-10: 40px]
+    J -->|lg| M[h-12: 48px]
+    J -->|xl| N[h-24: 96px]
+    J -->|header| O[w-header-logo: 220px]
+    
+    K --> P[Apply Sizing Classes]
+    L --> P
+    M --> P
+    N --> P
+    O --> P
+    
+    P --> Q[Render Complete Logo]
+    
+    style C fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style D fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
+    style Q fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+```
+
+### Logo Click Interaction (Mermaid)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant L as Logo Component
+    participant H as Header/Parent
+    participant R as React Router
+    participant W as Window
+    
+    U->>L: Click logo
+    
+    L->>L: Check if onClick provided
+    
+    alt onClick Handler Exists
+        L->>H: Trigger onClick()
+        H->>R: Navigate to home
+        R->>R: Update route to "/"
+        H->>W: Scroll to top
+        W->>W: window.scrollTo({ top: 0 })
+        W-->>U: Smooth scroll to top ✅
+        R-->>U: Homepage displayed ✅
+    else No onClick Handler
+        Note over L: Static logo
+        Note over U: No navigation
+    end
+```
+
+---
+
 ## Usage
 
 ### Basic Usage
@@ -100,6 +171,37 @@ interface LogoProps {
 ---
 
 ## Size Variants
+
+### Logo Size Comparison (Mermaid)
+
+```mermaid
+flowchart LR
+    A[Logo Sizes] --> B[sm: 32px]
+    A --> C[md: 40px]
+    A --> D[lg: 48px]
+    A --> E[xl: 96px]
+    A --> F[header: 220px width]
+    
+    B --> G[Footer]
+    B --> H[Mobile Header]
+    
+    C --> I[Desktop Header]
+    C --> J[Standard Sections]
+    
+    D --> K[Hero Sections]
+    D --> L[Mobile Menu]
+    D --> M[Footer - matches social icons]
+    
+    E --> N[Landing Pages]
+    
+    F --> O[Desktop Header - full width]
+    
+    style B fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
+    style C fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style D fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style E fill:#fed7aa,stroke:#f97316,stroke-width:2px
+    style F fill:#fecaca,stroke:#ef4444,stroke-width:2px
+```
 
 ### Small (`size="sm"`)
 - **Usage:** Footer, mobile menu (collapsed), sidebar

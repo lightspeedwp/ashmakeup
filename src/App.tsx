@@ -1,11 +1,11 @@
 /**
  * @fileoverview Main application component for Ash Shaw Makeup Portfolio
  * Production-ready single-page application with comprehensive Tailwind V4 styling system,
- * SendGrid email integration via Supabase Edge Functions, and WCAG 2.1 AA compliance.
+ * contact form with demo mode, and WCAG 2.1 AA compliance.
  * 
  * Core Features:
  * - Client-side routing between Home, About, Portfolio, and Blog pages
- * - SendGrid-powered contact form with dual email system (notification + auto-reply)
+ * - Contact form with demo mode for development
  * - Contentful CMS integration for dynamic blog content management
  * - Mobile-responsive navigation with accessibility support
  * - Focus management and screen reader announcements
@@ -42,6 +42,7 @@ import { PortfolioMainPage } from "./components/pages/portfolio/PortfolioMainPag
 import { PortfolioDetailPage } from "./components/pages/portfolio/PortfolioDetailPage";
 import { BlogPage } from "./components/pages/blog/BlogPage";
 import { BlogPostPage } from "./components/pages/blog/BlogPostPage";
+import { ContactPage } from "./components/pages/contact/ContactPage";
 import { ContentfulStatus, useContentfulConfigured } from "./components/admin/ContentfulStatus";
 import { ErrorBoundary } from "./components/common/ErrorBoundary";
 import { initializeTimeoutHandling } from "./utils/timeoutHandler";
@@ -54,7 +55,7 @@ import { ModalProvider } from "./components/common/ModalContext";
  * - Single-page application with client-side routing via React state
  * - State-driven navigation between Home, About, Portfolio, and Blog pages
  * - Contentful CMS integration for dynamic blog content with static fallbacks
- * - Integrated contact form functionality with SendGrid via Supabase Edge Functions
+ * - Integrated contact form functionality with demo mode
  * - Progressive enhancement with graceful fallbacks
  * - Mobile-first responsive design with Tailwind V4 implementation
  * - Comprehensive brand guidelines enforcement through CSS variables
@@ -97,11 +98,8 @@ import { ModalProvider } from "./components/common/ModalContext";
  * - Image optimization and compression for fast loading
  *
  * @sendgrid Professional Email Integration
- * - SendGrid API integration via Supabase Edge Functions with TypeScript
+ * - Contact form with demo mode for development and testing
  * - Professional HTML email templates with brand-consistent design
- * - Dual email system: notification to Ash Shaw + auto-reply to sender
- * - Demo mode for development without SendGrid configuration
- * - Comprehensive error handling with user-friendly feedback
  * - Form validation with accessibility compliance and ARIA support
  * - Real-time form validation with graceful error recovery
  *
@@ -271,6 +269,7 @@ export default function App() {
       "portfolio-detail": portfolioId ? `Portfolio - ${portfolioId.replace(/-/g, ' ')}` : "Portfolio Detail",
       blog: "Blog - Makeup Artistry Insights",
       "blog-post": blogPostSlug ? `Blog Post - ${blogPostSlug.replace(/-/g, ' ')}` : "Blog Post",
+      contact: "Contact - Get in Touch",
     };
     const pageName =
       pageNames[currentPage as keyof typeof pageNames] ||
@@ -355,7 +354,7 @@ export default function App() {
       }}
     >
       <ModalProvider>
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white dark:bg-gradient-to-br dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 transition-colors duration-300">
         {/* Live region for screen reader announcements - Enhanced for contact form */}
         <div
           aria-live="polite"
@@ -421,6 +420,12 @@ export default function App() {
         {currentPage === "blog-post" && blogPostSlug && (
           <ErrorBoundary>
             <BlogPostPage slug={blogPostSlug} setCurrentPage={navigateToPage} />
+          </ErrorBoundary>
+        )}
+
+        {currentPage === "contact" && (
+          <ErrorBoundary>
+            <ContactPage setCurrentPage={navigateToPage} />
           </ErrorBoundary>
         )}
 

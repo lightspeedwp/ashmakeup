@@ -285,10 +285,9 @@ export function PortfolioDetailPage({
       <section className="relative w-full h-screen overflow-hidden">
         {/* Background Image with Parallax Effect */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-500"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-500 scale-110"
           style={{
             backgroundImage: `url('${resolvedFeaturedImageUrl}')`,
-            transform: 'scale(1.1)', // Slight zoom for parallax effect
           }}
         />
         

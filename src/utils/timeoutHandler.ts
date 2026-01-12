@@ -153,14 +153,16 @@ export async function withEnhancedTimeout<T>(
  * @param {string} reason - Reason for aborting requests
  */
 export function abortAllRequests(reason: string = 'Manual abort'): void {
-  console.warn(`🛑 Aborting ${activeRequests.size} active requests: ${reason}`);
-  
-  activeRequests.forEach((controller, requestId) => {
-    controller.abort();
-    console.log(`❌ Aborted request ${requestId}`);
-  });
-  
-  activeRequests.clear();
+  // Only log if there are actually requests to abort
+  if (activeRequests.size > 0) {
+    console.log(`📴 Cleaning up ${activeRequests.size} active request(s): ${reason}`);
+    
+    activeRequests.forEach((controller, requestId) => {
+      controller.abort();
+    });
+    
+    activeRequests.clear();
+  }
 }
 
 /**
@@ -396,7 +398,7 @@ export function initializeTimeoutHandling(): void {
   // Emergency cleanup on visibility change
   document.addEventListener('visibilitychange', () => {
     if (document.hidden && activeRequests.size > 0) {
-      console.log('📴 Page hidden - aborting active requests for performance');
+      console.log('📴 Page visibility changed - cleaning up active requests for performance');
       abortAllRequests('Page hidden');
     }
   });

@@ -11,6 +11,7 @@ import { EnhancedLightbox } from "../ui/EnhancedLightbox";
 import { SliderCard } from "../ui/SliderCard";
 import { featuredWork } from "../../data/mock/portfolio/featured";
 import type { PortfolioEntry } from "../../data/types";
+import { BlurredCircles } from "../ui/BlurredCircles";
 
 /**
  * Featured Work section component displaying latest festival makeup artistry
@@ -116,50 +117,57 @@ export function FeaturedSection({
     <>
       <section
         id="work"
-        className="relative bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 py-fluid-3xl px-fluid-lg w-full"
+        className="relative bg-featured-section py-fluid-3xl px-fluid-lg w-full transition-colors duration-300"
       >
+        {/* Decorative Blurred Circles */}
+        <BlurredCircles variant="featured" />
+        
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Section Header */}
           <div className="text-center mb-fluid-2xl">
-            <h2 className="text-section-h2 font-heading font-semibold text-gray-800 mb-fluid-md">
+            <h2 className="text-section-h2 font-heading font-semibold dark:text-red-800 mb-fluid-md text-[rgb(255,255,255)]">
               Featured Work
             </h2>
-            <p className="text-body-guideline font-body font-normal text-gray-700 leading-relaxed max-w-3xl mx-auto mb-fluid-lg">
+            <p className="text-body-guideline font-body font-normal leading-relaxed max-w-3xl mx-auto mb-fluid-lg text-[rgb(255,233,246)]">
               Discover the artistry and passion behind each creation — from vibrant festival face art to stunning UV-reactive designs that bring joy and connection to every celebration.
             </p>
           </div>
 
-          {/* Desktop Grid */}
-          <div className="hidden md:grid md:grid-cols-2 gap-fluid-lg mb-fluid-xl max-w-7xl mx-auto">
-            {displayData && displayData.length > 0 ? displayData.slice(0, 2).map((work, index) => (
-              <SliderCard
-                key={work.id || index}
-                data={work}
-                onImageClick={(imageIndex) => {
-                  openLightbox(
-                    work.images || [],
-                    imageIndex,
-                    work.title,
-                    work.subtitle ? `${work.subtitle} - ${work.description}` : work.description,
-                  );
-                }}
-                gradientConfig={{
-                  subtitleGradient:
-                    "from-pink-700 to-purple-600",
-                }}
-                className="w-full"
-              />
-            )) : (
-              <div className="col-span-2 text-center py-8">
-                <p className="text-gray-600">No featured work available</p>
+          {/* Mobile: Horizontal slider / Desktop: 2-column grid */}
+          <div className="mb-fluid-xl max-w-7xl mx-auto">
+            {/* Mobile: Horizontal slider with snap scrolling */}
+            <div className="md:hidden overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-fluid-md px-fluid-md pb-4">
+              <div className="flex gap-fluid-md" style={{ scrollSnapType: 'x mandatory' }}>
+                {displayData && displayData.length > 0 ? displayData.slice(0, 6).map((work, index) => (
+                  <div
+                    key={work.id || index}
+                    className="flex-none w-[85vw] snap-center"
+                    style={{ scrollSnapAlign: 'center' }}
+                  >
+                    <SliderCard
+                      data={work}
+                      onImageClick={(imageIndex) => {
+                        openLightbox(
+                          work.images || [],
+                          imageIndex,
+                          work.title,
+                          work.subtitle ? `${work.subtitle} - ${work.description}` : work.description,
+                        );
+                      }}
+                      className="w-full h-full"
+                    />
+                  </div>
+                )) : (
+                  <div className="w-full text-center py-8">
+                    <p className="text-slider-card-subtext">No featured work available</p>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </div>
 
-          {/* Mobile Slider */}
-          <div className="md:hidden">
-            <div className="grid grid-cols-1 gap-fluid-lg mb-fluid-xl max-w-5xl mx-auto">
-              {displayData && displayData.length > 0 ? displayData.map((work, index) => (
+            {/* Desktop: 2-column grid */}
+            <div className="hidden md:grid md:grid-cols-2 gap-fluid-lg">
+              {displayData && displayData.length > 0 ? displayData.slice(0, 6).map((work, index) => (
                 <SliderCard
                   key={work.id || index}
                   data={work}
@@ -171,15 +179,11 @@ export function FeaturedSection({
                       work.subtitle ? `${work.subtitle} - ${work.description}` : work.description,
                     );
                   }}
-                  gradientConfig={{
-                    subtitleGradient:
-                      "from-pink-700 to-purple-600",
-                  }}
                   className="w-full"
                 />
               )) : (
-                <div className="text-center py-8">
-                  <p className="text-gray-600">No featured work available for mobile</p>
+                <div className="col-span-2 text-center py-8">
+                  <p className="text-slider-card-subtext">No featured work available</p>
                 </div>
               )}
             </div>
@@ -189,7 +193,7 @@ export function FeaturedSection({
           <div className="text-center">
             <button
               onClick={() => setCurrentPage("portfolio")}
-              className="w-full sm:w-auto justify-center text-center bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50"
+              className="w-full sm:w-auto justify-center text-center bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus-ring-primary"
               aria-label="Navigate to full portfolio page to view all makeup artistry work"
             >
               View Full Portfolio

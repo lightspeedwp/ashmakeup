@@ -19,6 +19,131 @@ Provide modal dialog functionality with:
 
 ---
 
+## Component Architecture
+
+### Modal Lifecycle (Mermaid)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Closed: Initial state
+    
+    Closed --> Opening: setIsOpen(true)
+    
+    Opening --> MountComponent: Render modal
+    MountComponent --> SetupFocusTrap: Trap keyboard focus
+    SetupFocusTrap --> DisableBodyScroll: Prevent body scroll
+    DisableBodyScroll --> AnimateIn: Fade in overlay + slide up
+    
+    AnimateIn --> Open: Animation complete
+    
+    Open --> Closing: User action to close
+    
+    Closing --> CheckCloseMethod: Determine close trigger
+    
+    CheckCloseMethod --> AnimateOut: Close initiated
+    
+    AnimateOut --> RestoreBodyScroll: Re-enable scroll
+    RestoreBodyScroll --> RemoveFocusTrap: Remove focus trap
+    RemoveFocusTrap --> UnmountComponent: Clean up
+    UnmountComponent --> Closed: onClose() callback
+    
+    note right of Open
+        Modal fully visible
+        - Focus trapped inside
+        - Escape closes
+        - Backdrop click closes
+        - Body scroll disabled
+    end note
+    
+    note right of CheckCloseMethod
+        Three close methods:
+        - Click backdrop
+        - Press Escape
+        - Click close button
+    end note
+```
+
+### Focus Trap Interaction (Mermaid)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant M as Modal
+    participant F as Focus Trap
+    participant T as Tabbable Elements
+    participant B as Body
+    
+    U->>M: Click trigger button
+    M->>M: setIsOpen(true)
+    M->>B: Disable body scroll
+    M->>F: Initialize focus trap
+    
+    F->>T: Find all focusable elements
+    T-->>F: Return [close, input, button]
+    
+    F->>T: Focus first element (close button)
+    T-->>U: Close button focused ✅
+    
+    loop User navigates with Tab
+        U->>F: Press Tab
+        F->>F: Check if last element focused
+        
+        alt At last element
+            F->>T: Focus first element (loop)
+            T-->>U: Focus wraps to start
+        else Not at last element
+            F->>T: Focus next element
+            T-->>U: Focus moves forward
+        end
+    end
+    
+    U->>M: Press Escape
+    M->>F: Destroy focus trap
+    M->>B: Re-enable body scroll
+    M->>M: onClose()
+    M-->>U: Modal closed, focus restored ✅
+```
+
+### Close Triggers (Mermaid)
+
+```mermaid
+flowchart TD
+    A[Modal Open] --> B{User Action?}
+    
+    B -->|Press Escape| C[Keyboard Close]
+    B -->|Click Backdrop| D[Backdrop Close]
+    B -->|Click X Button| E[Button Close]
+    B -->|Click Cancel| F[Cancel Action]
+    B -->|Click Confirm| G[Confirm Action]
+    
+    C --> H[Check closeOnEscape prop]
+    H -->|true default| I[Trigger onClose]
+    H -->|false| J[Do nothing]
+    
+    D --> K[Check closeOnBackdrop prop]
+    K -->|true default| I
+    K -->|false| J
+    
+    E --> I
+    F --> I
+    G --> L[Execute primary action]
+    L --> M{Keep open after action?}
+    M -->|No default| I
+    M -->|Yes| N[Stay open]
+    
+    I --> O[Animate Out]
+    O --> P[Restore Focus]
+    P --> Q[Re-enable Body Scroll]
+    Q --> R[Unmount Modal]
+    
+    style C fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
+    style D fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style E fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style I fill:#fed7aa,stroke:#f97316,stroke-width:2px
+```
+
+---
+
 ## Usage
 
 ### Basic Usage

@@ -19,6 +19,182 @@ Create impactful homepage hero with:
 
 ---
 
+## Component Architecture
+
+### Hero Section Layout Flow (Mermaid)
+
+```mermaid
+flowchart TD
+    A[HeroSection Renders] --> B[Load Hero Data]
+    
+    B --> C[Import from mock data]
+    C --> D[homepageHero object]
+    C --> E[homepageHeroImages array]
+    
+    D --> F[Extract Content]
+    F --> F1[title: 'Ash Shaw']
+    F --> F2[subtitle: 'Makeup Artist']
+    F --> F3[tagline: 'Makeup that shines...']
+    F --> F4[CTAs: primaryCTA, secondaryCTA]
+    
+    E --> G[Background Images]
+    G --> G1[Image 1: figma:asset/...]
+    G --> G2[Image 2: figma:asset/...]
+    G --> G3[Image 3: figma:asset/...]
+    
+    F --> H[Render Hero Content]
+    G --> H
+    
+    H --> I[Layout Container]
+    I --> J[Background Layer]
+    I --> K[Content Layer]
+    I --> L[CTA Layer]
+    I --> M[ScrollDownArrow]
+    
+    J --> J1[Background images with gradient overlay]
+    K --> K1[Title with gradient text effect]
+    K --> K2[Subtitle with sans-serif font]
+    K --> K3[Tagline with body text]
+    
+    L --> L1[Primary CTA: View Portfolio]
+    L --> L2[Secondary CTA: Get In Touch]
+    
+    M --> M1[Animated scroll indicator]
+    
+    style F1 fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style K1 fill:#fce7f3,stroke:#ec4899,stroke-width:2px
+    style L1 fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+```
+
+### Responsive Typography Scaling (Mermaid)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Mobile: Screen < 768px
+    [*] --> Tablet: Screen 768-1023px
+    [*] --> Desktop: Screen >= 1024px
+    
+    Mobile --> MobileTitle: Title 36px (2.25rem)
+    Mobile --> MobileSubtitle: Subtitle 20px (1.25rem)
+    Mobile --> MobileTagline: Tagline 16px (1rem)
+    Mobile --> MobileCTA: CTA full-width stacked
+    
+    MobileTitle --> Fluid1: clamp(2.25rem, 6vw, 7.5rem)
+    MobileSubtitle --> Fluid2: clamp(1.25rem, 3vw, 2rem)
+    MobileTagline --> Fluid3: clamp(1rem, 1.5vw, 1.25rem)
+    
+    Tablet --> TabletTitle: Title ~60px
+    Tablet --> TabletSubtitle: Subtitle ~28px
+    Tablet --> TabletTagline: Tagline ~18px
+    Tablet --> TabletCTA: CTA side-by-side
+    
+    TabletTitle --> Fluid1
+    TabletSubtitle --> Fluid2
+    TabletTagline --> Fluid3
+    
+    Desktop --> DesktopTitle: Title 120px (7.5rem)
+    Desktop --> DesktopSubtitle: Subtitle 32px (2rem)
+    Desktop --> DesktopTagline: Tagline 20px (1.25rem)
+    Desktop --> DesktopCTA: CTA horizontal with spacing
+    
+    DesktopTitle --> Fluid1
+    DesktopSubtitle --> Fluid2
+    DesktopTagline --> Fluid3
+    
+    note right of Fluid1
+        Title uses text-hero-h1
+        Playfair Display/Righteous
+        Bold, gradient effect
+    end note
+    
+    note right of Fluid3
+        Tagline uses text-body-guideline
+        Inter font
+        Normal weight
+    end note
+```
+
+### CTA Interaction Flow (Mermaid)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant H as HeroSection
+    participant R as React Router
+    participant P as Portfolio Page
+    participant C as Contact Section
+    
+    Note over U: User lands on homepage
+    H-->>U: Display hero with CTAs
+    
+    alt Primary CTA Click
+        U->>H: Click "View Portfolio"
+        H->>H: Handle primaryCTA.onClick
+        H->>R: navigate('/portfolio')
+        R->>P: Route to portfolio page
+        P-->>U: Show portfolio grid ✅
+    else Secondary CTA Click
+        U->>H: Click "Get In Touch"
+        H->>H: Handle secondaryCTA.onClick
+        
+        alt Navigate to Contact Page
+            H->>R: navigate('/contact')
+            R->>C: Route to contact page
+            C-->>U: Show contact form ✅
+        else Scroll to Contact Form
+            H->>H: Smooth scroll
+            H->>C: scrollIntoView({ behavior: 'smooth' })
+            C-->>U: Contact form in view ✅
+        end
+    end
+    
+    U->>H: Scroll down
+    H->>H: Fade out hero
+    H->>H: Show next section
+```
+
+### Background Image Handling (Mermaid)
+
+```mermaid
+flowchart TD
+    A[Hero Mounts] --> B{Has Background Images?}
+    
+    B -->|Yes| C[Load from homepageHeroImages]
+    B -->|No| D[Use Gradient Fallback]
+    
+    C --> E[Choose Image Strategy]
+    
+    E --> F{Strategy?}
+    
+    F -->|Single Image| G[Display one background]
+    F -->|Slideshow| H[Auto-rotate images]
+    F -->|Random| I[Pick random on mount]
+    
+    G --> J[Apply Background]
+    H --> K[Start Interval Timer]
+    I --> J
+    
+    K --> L[Every 5 seconds]
+    L --> M[Transition to next image]
+    M --> N[Fade effect]
+    N --> L
+    
+    D --> O[bg-gradient-pink-purple-blue]
+    
+    J --> P[Add Overlay]
+    O --> P
+    
+    P --> Q[Dark gradient overlay<br/>for text readability]
+    
+    Q --> R[Render Hero Content]
+    
+    style C fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style D fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style Q fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
+```
+
+---
+
 ## Usage
 
 ### Basic Usage

@@ -92,18 +92,18 @@ export function PortfolioPage({
 
   // Loading state component
   const LoadingState = () => (
-    <div className="min-h-screen bg-gradient-to-br from-white via-pink-50 to-purple-50">
+    <div className="min-h-screen bg-white dark:bg-gradient-to-br dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 transition-colors duration-300">
       <div className="container mx-auto px-4 py-16">
         <div className="text-center">
           <div className="animate-pulse">
-            <div className="h-12 bg-gray-200 rounded-lg w-64 mx-auto mb-4"></div>
-            <div className="h-6 bg-gray-200 rounded w-96 mx-auto mb-8"></div>
+            <div className="h-12 bg-gray-200 dark:bg-purple-800/50 rounded-lg w-64 mx-auto mb-4"></div>
+            <div className="h-6 bg-gray-200 dark:bg-purple-800/50 rounded w-96 mx-auto mb-8"></div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="bg-white rounded-xl p-6 shadow-sm">
-                  <div className="h-48 bg-gray-200 rounded-lg mb-4"></div>
-                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                  <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                <div key={i} className="bg-white dark:bg-purple-900/30 rounded-xl p-6 shadow-sm">
+                  <div className="h-48 bg-gray-200 dark:bg-purple-800/50 rounded-lg mb-4"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-purple-800/50 rounded w-3/4 mb-2"></div>
+                  <div className="h-3 bg-gray-200 dark:bg-purple-800/50 rounded w-1/2"></div>
                 </div>
               ))}
             </div>
@@ -115,27 +115,27 @@ export function PortfolioPage({
 
   // Error state component
   const ErrorState = () => (
-    <div className="min-h-screen bg-gradient-to-br from-white via-pink-50 to-purple-50 flex items-center justify-center">
+    <div className="min-h-screen bg-white dark:bg-gradient-to-br dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 flex items-center justify-center transition-colors duration-300">
       <div className="text-center p-8">
         <div className="mb-6">
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-red-500 text-2xl">⚠️</span>
+          <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-red-500 dark:text-red-400 text-2xl">⚠️</span>
           </div>
-          <h2 className="text-2xl font-semibold text-gray-800 mb-2">Unable to Load Portfolio</h2>
-          <p className="text-gray-600 mb-6">
+          <h2 className="text-2xl font-semibold text-gray-800 dark:text-purple-100 mb-2">Unable to Load Portfolio</h2>
+          <p className="text-gray-600 dark:text-purple-300 mb-6">
             {portfolioError || "There was an issue loading the portfolio content. Please try again."}
           </p>
         </div>
         <div className="space-x-4">
           <button
             onClick={refreshPortfolio}
-            className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+            className="px-6 py-3 bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-600 text-white rounded-lg transition-colors"
           >
             Try Again
           </button>
           <button
             onClick={() => window.location.reload()}
-            className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+            className="px-6 py-3 bg-gray-600 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-colors"
           >
             Refresh Page
           </button>
@@ -155,7 +155,7 @@ export function PortfolioPage({
   }
 
   return (
-    <main id="main-content" role="main" tabIndex={-1} className="bg-gradient-to-br from-white via-pink-50 to-purple-50 min-h-screen">
+    <main id="main-content" role="main" tabIndex={-1} className="bg-white dark:bg-gradient-to-br dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 min-h-screen transition-colors duration-300">
       {/* Portfolio Header with Mosaic */}
       <HeroLayout
         title="Portfolio"
