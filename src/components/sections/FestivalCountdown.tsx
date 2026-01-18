@@ -86,15 +86,15 @@ export function FestivalCountdown() {
   const isFestivalHappening = timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0;
   
   return (
-    <section className="py-section bg-festival-countdown-section relative overflow-hidden transition-colors duration-300">
+    <section className="py-section-md px-section-md bg-festival-countdown-section relative overflow-hidden transition-colors duration-300">
       {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden px-[32px] py-[144px]">
         <div className="absolute top-10 left-10 w-32 h-32 bg-festival-countdown-circle rounded-full blur-3xl animate-pulse transition-colors duration-300" />
         <div className="absolute bottom-10 right-10 w-40 h-40 bg-festival-countdown-circle rounded-full blur-3xl animate-pulse delay-1000 transition-colors duration-300" />
         <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-festival-countdown-circle rounded-full blur-2xl animate-pulse delay-500 transition-colors duration-300" />
       </div>
       
-      <div className="max-w-6xl mx-auto px-fluid-md relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10">
         {isFestivalHappening ? (
           // Festival is happening NOW!
           <div className="text-center">
@@ -213,7 +213,7 @@ export function FestivalCountdown() {
                 
                 <a
                   href="#portfolio"
-                  className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white border-2 border-white px-8 py-4 font-body font-bold text-xl rounded-lg hover:bg-white/30 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white/50"
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-700 to-pink-600 text-white border-2 border-purple-800 dark:bg-white/20 dark:backdrop-blur-sm dark:border-white px-8 py-4 font-body font-bold text-xl rounded-lg hover:from-purple-800 hover:to-pink-700 dark:hover:bg-white/30 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-purple-300 dark:focus:ring-white/50"
                 >
                   <Sparkles className="w-6 h-6" />
                   View Festival Looks

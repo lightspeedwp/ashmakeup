@@ -1,600 +1,814 @@
 # Spacing Design Tokens
 
-**Version:** 4.0.0  
-**Last Updated:** January 2025
+**Version:** 5.1.0  
+**Last Updated:** January 2025  
+**WordPress Theme.json Compatible:** ✅
 
-Complete spacing system for the Ash Shaw Makeup Portfolio, featuring fluid responsive spacing based on WordPress 6.6+ best practices.
+Complete spacing system for the Ash Shaw Makeup Portfolio, aligned with WordPress block theme standards using numeric spacing scale (10-100).
 
-## ✅ Verified Against Codebase
+## ✅ IMPLEMENTATION COMPLETE (v5.0.0)
 
-This document has been verified against `/styles/globals.css` as of January 2025. All spacing utilities, CSS variables, and responsive patterns match the current implementation.
+**WordPress Preset System Fully Implemented:**
+- ✅ **WordPress Variables:** All `--wp--preset--spacing--{slug}` variables added to globals.css
+- ✅ **Helper Classes:** 150+ utility classes (`.p-spacing-40`, `.py-section`, etc.)
+- ✅ **Fluid Spacing:** Complete fluid scale with viewport-aware scaling
+- ✅ **Component Spacing:** Dedicated variables for buttons, cards, sections
+- ✅ **Block Gap:** WordPress-standard block gap variables
 
-**Verified Components:**
-- ✅ Complete fluid spacing scale (xs through 6xl)
-- ✅ Component-specific spacing (buttons, cards, sections)
-- ✅ Directional utilities (px, py, mb, mt, gap)
-- ✅ Reduced spacing variants (half values)
-- ✅ Block gap utilities for content flow
+**See Also:** [wordpress-preset-system.md](../wordpress-preset-system.md) for complete implementation details
+
+## ✅ WordPress Theme.json Alignment (v5.0.0)
+
+This spacing system now uses WordPress `--wp--preset--spacing--` CSS variables:
+
+- ✅ **Numeric Slugs (10-100):** Fixed rem scale for consistency
+- ✅ **Fluid Extensions:** Responsive spacing with viewport scaling
+- ✅ **Helper Classes:** `.p-spacing-{slug}`, `.py-section`, `.gap-block-md`
+- ✅ **Component-Specific:** Dedicated button, card, and section spacing
+
+**Key Difference from Previous Version:**
+- **Before:** Custom variables (--space-xs, --space-sm, --card-padding-mobile, etc.)
+- **Now:** WordPress presets (--wp--preset--spacing--40, --wp--preset--spacing--fluid-md, etc.)
+- **Legacy Support:** Old variables preserved for backward compatibility
 
 ## 📋 Table of Contents
 
-1. [Spacing Philosophy](#spacing-philosophy)
-2. [Fluid Spacing Scale](#fluid-spacing-scale)
+1. [WordPress Numeric Spacing Scale](#wordpress-numeric-spacing-scale)
+2. [Fluid Spacing Extensions](#fluid-spacing-extensions)
 3. [Component-Specific Spacing](#component-specific-spacing)
-4. [Responsive Patterns](#responsive-patterns)
-5. [Common Spacing Mistakes](#common-spacing-mistakes)
+4. [Helper Classes](#helper-classes)
+5. [CSS Variable Usage](#css-variable-usage)
+6. [Migration Guide](#migration-guide)
+7. [Common Spacing Patterns](#common-spacing-patterns)
 
 ---
 
-## Spacing Philosophy
+## WordPress Numeric Spacing Scale
 
-### Design Principles
+### Core Spacing Scale
 
-- **Fluid Scaling:** Uses `clamp()` for smooth responsive spacing
-- **WordPress-Inspired:** Based on WordPress 6.6+ spacingScale approach
-- **Multiplicative Progression:** 1.5x increment for harmonious scaling
-- **Mobile-First:** Starts with small spacing, grows to desktop
-- **Semantic Names:** Component-specific spacing tokens for clarity
-
-### Spacing Scale Strategy
+All spacing uses **numeric slugs (10-100)** with increments of 10:
 
 ```css
-/* WordPress-inspired spacing scale */
---spacing-operator: "*";
---spacing-increment: 1.5;
---spacing-steps: 7;
---spacing-unit: "rem";
+/* WordPress Theme.json Spacing Scale (Fixed Values) */
+--wp--preset--spacing--10: 0.625rem;   /* 10px */
+--wp--preset--spacing--20: 1.25rem;    /* 20px */
+--wp--preset--spacing--30: 1.875rem;   /* 30px */
+--wp--preset--spacing--40: 2.5rem;     /* 40px (Default) */
+--wp--preset--spacing--50: 3.125rem;   /* 50px */
+--wp--preset--spacing--60: 3.75rem;    /* 60px */
+--wp--preset--spacing--70: 4.375rem;   /* 70px */
+--wp--preset--spacing--80: 5rem;       /* 80px */
+--wp--preset--spacing--90: 5.625rem;   /* 90px */
+--wp--preset--spacing--100: 6.25rem;   /* 100px */
 ```
-
-This generates a harmonious scale:
-- xs → sm (1.5x)
-- sm → md (1.5x)
-- md → lg (1.5x)
-- etc.
-
----
-
-## Fluid Spacing Scale
 
 ### Visual Spacing Scale
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                   FLUID SPACING SCALE VISUALIZATION                  │
+│              WORDPRESS NUMERIC SPACING SCALE (Fixed)                 │
 └─────────────────────────────────────────────────────────────────────┘
 
-MOBILE (375px) ────────────────────────────────→ DESKTOP (1920px)
+--spacing--10
+▓                                    0.625rem (10px)
 
-.p-fluid-xs
-▓                                                ▓▓
-0.5rem (8px)                                     0.75rem (12px)
+--spacing--20
+▓▓                                   1.25rem (20px)
 
-.p-fluid-sm
-▓▓                                               ▓▓▓
-0.75rem (12px)                                   1rem (16px)
+--spacing--30
+▓▓▓                                  1.875rem (30px)
 
-.p-fluid-md
-▓▓▓                                              ▓▓▓▓
-1rem (16px)                                      1.5rem (24px)
+--spacing--40
+▓▓▓▓                                 2.5rem (40px)
 
-.p-fluid-lg
-▓▓▓▓▓                                            ▓▓▓▓▓▓▓▓
-1.5rem (24px)                                    2.25rem (36px)
+--spacing--50
+▓▓▓▓▓                                3.125rem (50px)
 
-.p-fluid-xl
-▓▓▓▓▓▓▓                                          ▓▓▓▓▓▓▓▓▓▓▓▓
-2rem (32px)                                      3rem (48px)
+--spacing--60
+▓▓▓▓▓▓                               3.75rem (60px)
 
-.p-fluid-2xl
-▓▓▓▓▓▓▓▓▓▓                                       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-2.5rem (40px)                                    4rem (64px)
+--spacing--70
+▓▓▓▓▓▓▓                              4.375rem (70px)
 
-.p-fluid-3xl
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓                                   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-3rem (48px)                                      6rem (96px)
+--spacing--80
+▓▓▓▓▓▓▓▓                             5rem (80px)
 
-.p-fluid-4xl
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓                               ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-4rem (64px)                                      8rem (128px)
+--spacing--90
+▓▓▓▓▓▓▓▓▓                            5.625rem (90px)
 
-.p-fluid-5xl
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓                           ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-5rem (80px)                                      10rem (160px)
-
-.p-fluid-6xl
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓                     ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-6rem (96px)                                      12rem (192px)
-
-┌─────────────────────────────────────────────────────────────────────┐
-│                   SPACING SCALE RELATIONSHIPS                        │
-└─────────────────────────────────────────────────────────────────────┘
-
-Scale Progression (1.5x multiplicative):
-────────────────────────────────────────
-
-fluid-xs   0.5rem →  0.75rem   (1.5x)
-  ↓
-fluid-sm   0.75rem → 1rem      (1.33x)
-  ↓
-fluid-md   1rem →    1.5rem    (1.5x)
-  ↓
-fluid-lg   1.5rem →  2.25rem   (1.5x)
-  ↓
-fluid-xl   2rem →    3rem      (1.5x)
-  ↓
-fluid-2xl  2.5rem →  4rem      (1.6x)
-  ↓
-fluid-3xl  3rem →    6rem      (2x)
-  ↓
-fluid-4xl  4rem →    8rem      (2x)
-  ↓
-fluid-5xl  5rem →    10rem     (2x)
-  ↓
-fluid-6xl  6rem →    12rem     (2x)
-
-Usage Frequency Chart:
-─────────────────────
-
-fluid-xs  ████                10% - Micro spacing
-fluid-sm  ██████              15% - Small gaps
-fluid-md  ████████████        30% - Standard spacing
-fluid-lg  ██████████          25% - Section margins
-fluid-xl  ████                10% - Large spacing
-2xl-6xl   ██                   10% - Hero/special
-
-┌─────────────────────────────────────────────────────────────────────┐
-│                   COMPONENT SPACING HIERARCHY                        │
-└─────────────────────────────────────────────────────────────────────┘
-
-Micro Level (Within elements)
-──────────────────────────────
-px-2, py-1                    Icons, badges, small tags
-gap-2                         Inline icon + text spacing
-
-Component Level (Within components)
-────────────────────────────────────
-.p-fluid-sm                   Card padding (mobile)
-.p-fluid-md                   Card padding (desktop)
-.gap-fluid-md                 Grid gaps, flex gaps
-.mb-fluid-md                  Element margins
-
-Section Level (Between sections)
-─────────────────────────────────
-.py-section                   Section vertical padding
-.mb-fluid-xl                  Section bottom margin
-.gap-fluid-lg                 Section element spacing
-
-Page Level (Overall page structure)
-────────────────────────────────────
-.py-fluid-3xl                 Hero padding
-.mb-fluid-2xl                 Major section separation
-.p-fluid-6xl                  Maximum spacing (rare)
-
-┌─────────────────────────────────────────────────────────────────────┐
-│                   RESPONSIVE SPACING BEHAVIOR                        │
-└─────────────────────────────────────────────────────────────────────┘
-
-Example: Card Padding with .p-fluid-md
-───────────────────────────────────────
-
-375px (Mobile)          768px (Tablet)          1920px (Desktop)
-┌────────────────┐      ┌──────────────────┐    ┌───────────────────────┐
-│ [16px]         │      │ [20px]           │    │ [24px]                │
-│                │      │                  │    │                       │
-│  Card Content  │  →   │   Card Content   │ →  │     Card Content      │
-│                │      │                  │    │                       │
-│         [16px] │      │           [20px] │    │                [24px] │
-└────────────────┘      └──────────────────┘    └───────────────────────┘
-
-Smooth interpolation: clamp(1rem, 2vw, 1.5rem)
-No breakpoints needed!
-
-┌─────────────────────────────────────────────────────────────────────┐
-│                   SPACING STACK PATTERNS                             │
-└─────────────────────────────────────────────────────────────────────┘
-
-Pattern 1: Vertical Stack (Common)
-───────────────────────────────────
-
-<section className="py-section">        ← Section padding
-  <h2 className="mb-fluid-md">          ← Heading margin
-    Section Title
-  </h2>
-  <p className="mb-fluid-sm">           ← Paragraph margin
-    Description text
-  </p>
-  <div className="grid gap-fluid-md">   ← Grid gap
-    {items.map(...)}
-  </div>
-</section>
-
-Visual Stack:
-─────────────
-[py-section top]
-    Title
-[mb-fluid-md]
-    Description
-[mb-fluid-sm]
-    Grid Item 1
-[gap-fluid-md]
-    Grid Item 2
-[gap-fluid-md]
-    Grid Item 3
-[py-section bottom]
-
-Pattern 2: Horizontal Flex
-───────────────────────────
-
-<div className="flex items-center gap-fluid-sm">
-  <Icon />
-  <span>Text</span>
-  <Badge />
-</div>
-
-Visual:
-Icon [gap-fluid-sm] Text [gap-fluid-sm] Badge
-
-Pattern 3: Card Layout
-──────────────────────
-
-<div className="p-card-responsive">     ← Fluid card padding
-  <img className="mb-fluid-md" />       ← Image margin
-  <h3 className="mb-fluid-sm">...</h3>  ← Title margin
-  <p className="mb-fluid-md">...</p>    ← Text margin
-  <button>...</button>
-</div>
-
-Visual Stack:
-─────────────
-[padding top]
-    Image
-[mb-fluid-md]
-    Title
-[mb-fluid-sm]
-    Description
-[mb-fluid-md]
-    Button
-[padding bottom]
+--spacing--100
+▓▓▓▓▓▓▓▓▓▓                           6.25rem (100px)
 ```
+
+### Spacing Progression
+
+The numeric scale provides **predictable progression**:
+
+| Slug | Rem Value | Pixel Value | Use Case |
+|------|-----------|-------------|----------|
+| `10` | 0.625rem | 10px | Tight padding, small gaps |
+| `20` | 1.25rem | 20px | Card padding, button spacing |
+| `30` | 1.875rem | 30px | Component margins |
+| `40` | 2.5rem | 40px | **Default component spacing** |
+| `50` | 3.125rem | 50px | Section padding (small) |
+| `60` | 3.75rem | 60px | Section padding (medium) |
+| `70` | 4.375rem | 70px | Section padding (large) |
+| `80` | 5rem | 80px | **Page section spacing** |
+| `90` | 5.625rem | 90px | Hero section padding |
+| `100` | 6.25rem | 100px | Maximum spacing, large gaps |
+
+---
+
+## Fluid Spacing Extensions
+
+### Fluid Spacing Scale
+
+All spacing uses **numeric slugs (10-100)** with increments of 10, with fluid extensions for responsive design:
+
+```css
+/* WordPress Theme.json Spacing Scale (Fluid Values) */
+--wp--preset--spacing--fluid-10: clamp(0.625rem, 0.625rem + 0.0625vw, 0.625rem);   /* 10px */
+--wp--preset--spacing--fluid-20: clamp(1.25rem, 1.25rem + 0.125vw, 1.25rem);    /* 20px */
+--wp--preset--spacing--fluid-30: clamp(1.875rem, 1.875rem + 0.1875vw, 1.875rem);   /* 30px */
+--wp--preset--spacing--fluid-40: clamp(2.5rem, 2.5rem + 0.25vw, 2.5rem);     /* 40px */
+--wp--preset--spacing--fluid-50: clamp(3.125rem, 3.125rem + 0.3125vw, 3.125rem);   /* 50px */
+--wp--preset--spacing--fluid-60: clamp(3.75rem, 3.75rem + 0.375vw, 3.75rem);    /* 60px */
+--wp--preset--spacing--fluid-70: clamp(4.375rem, 4.375rem + 0.4375vw, 4.375rem);   /* 70px */
+--wp--preset--spacing--fluid-80: clamp(5rem, 5rem + 0.5vw, 5rem);       /* 80px */
+--wp--preset--spacing--fluid-90: clamp(5.625rem, 5.625rem + 0.5625vw, 5.625rem);   /* 90px */
+--wp--preset--spacing--fluid-100: clamp(6.25rem, 6.25rem + 0.625vw, 6.25rem);   /* 100px */
+```
+
+### Visual Fluid Spacing Scale
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│              WORDPRESS NUMERIC SPACING SCALE (Fluid)                 │
+└─────────────────────────────────────────────────────────────────────┘
+
+--spacing--fluid-10
+▓                                    0.625rem (10px)
+
+--spacing--fluid-20
+▓▓                                   1.25rem (20px)
+
+--spacing--fluid-30
+▓▓▓                                  1.875rem (30px)
+
+--spacing--fluid-40
+▓▓▓▓                                 2.5rem (40px)
+
+--spacing--fluid-50
+▓▓▓▓▓                                3.125rem (50px)
+
+--spacing--fluid-60
+▓▓▓▓▓▓                               3.75rem (60px)
+
+--spacing--fluid-70
+▓▓▓▓▓▓▓                              4.375rem (70px)
+
+--spacing--fluid-80
+▓▓▓▓▓▓▓▓                             5rem (80px)
+
+--spacing--fluid-90
+▓▓▓▓▓▓▓▓▓                            5.625rem (90px)
+
+--spacing--fluid-100
+▓▓▓▓▓▓▓▓▓▓                           6.25rem (100px)
+```
+
+### Fluid Spacing Progression
+
+The fluid scale provides **responsive progression**:
+
+| Slug | Rem Value | Pixel Value | Use Case |
+|------|-----------|-------------|----------|
+| `10` | 0.625rem | 10px | Tight padding, small gaps |
+| `20` | 1.25rem | 20px | Card padding, button spacing |
+| `30` | 1.875rem | 30px | Component margins |
+| `40` | 2.5rem | 40px | **Default component spacing** |
+| `50` | 3.125rem | 50px | Section padding (small) |
+| `60` | 3.75rem | 60px | Section padding (medium) |
+| `70` | 4.375rem | 70px | Section padding (large) |
+| `80` | 5rem | 80px | **Page section spacing** |
+| `90` | 5.625rem | 90px | Hero section padding |
+| `100` | 6.25rem | 100px | Maximum spacing, large gaps |
 
 ---
 
 ## Component-Specific Spacing
 
-### Button Spacing
+### Buttons
 
 ```css
-/* Button Horizontal Padding */
-.px-button {
-  padding-left: clamp(1rem, 2vw, 3.375rem);   /* 16px → 54px */
-  padding-right: clamp(1rem, 2vw, 3.375rem);
+/* Button Padding */
+.button-padding {
+  padding: var(--wp--preset--spacing--20) var(--wp--preset--spacing--40);
 }
 
-/* Button Vertical Padding */
-.py-button {
-  padding-top: clamp(1rem, 2vw, 2rem);   /* 16px → 32px */
-  padding-bottom: clamp(1rem, 2vw, 2rem);
+/* Small Button */
+.button-small {
+  padding: var(--wp--preset--spacing--10) var(--wp--preset--spacing--30);
+}
+
+/* Large Button */
+.button-large {
+  padding: var(--wp--preset--spacing--30) var(--wp--preset--spacing--50);
 }
 ```
 
-**Example:**
+**React/TSX Usage:**
 ```tsx
-<button className="px-button py-button bg-gradient-pink-purple-blue text-white rounded-lg font-body font-medium text-button-fluid">
-  Explore Portfolio
+<button className="px-spacing-40 py-spacing-20 bg-gradient-pink-purple-blue">
+  Submit
 </button>
 ```
 
-### Section Spacing
+### Cards
+
+```css
+/* Card Padding */
+.card-padding {
+  padding: var(--wp--preset--spacing--40);
+}
+
+/* Compact Card */
+.card-compact {
+  padding: var(--wp--preset--spacing--20);
+}
+
+/* Spacious Card */
+.card-spacious {
+  padding: var(--wp--preset--spacing--60);
+}
+```
+
+**React/TSX Usage:**
+```tsx
+<div className="p-spacing-40 bg-white rounded-xl shadow-lg">
+  Card Content
+</div>
+```
+
+### Sections
 
 ```css
 /* Section Vertical Spacing */
+.section-spacing {
+  padding-top: var(--wp--preset--spacing--80);
+  padding-bottom: var(--wp--preset--spacing--80);
+}
+
+/* Small Section */
+.section-small {
+  padding-block: var(--wp--preset--spacing--50);
+}
+
+/* Large Section */
+.section-large {
+  padding-block: var(--wp--preset--spacing--100);
+}
+```
+
+**React/TSX Usage:**
+```tsx
+<section className="py-spacing-80 px-spacing-40">
+  Section Content
+</section>
+```
+
+### Content Flow
+
+```css
+/* Stack Spacing (between elements) */
+.stack-spacing-20 > * + * {
+  margin-top: var(--wp--preset--spacing--20);
+}
+
+.stack-spacing-30 > * + * {
+  margin-top: var(--wp--preset--spacing--30);
+}
+
+.stack-spacing-40 > * + * {
+  margin-top: var(--wp--preset--spacing--40);
+}
+```
+
+---
+
+## Helper Classes
+
+### Padding Utilities
+
+```css
+/* Padding Utilities */
+.p-spacing-10 { padding: var(--wp--preset--spacing--10); }
+.p-spacing-20 { padding: var(--wp--preset--spacing--20); }
+.p-spacing-30 { padding: var(--wp--preset--spacing--30); }
+.p-spacing-40 { padding: var(--wp--preset--spacing--40); }
+.p-spacing-50 { padding: var(--wp--preset--spacing--50); }
+.p-spacing-60 { padding: var(--wp--preset--spacing--60); }
+.p-spacing-70 { padding: var(--wp--preset--spacing--70); }
+.p-spacing-80 { padding: var(--wp--preset--spacing--80); }
+.p-spacing-90 { padding: var(--wp--preset--spacing--90); }
+.p-spacing-100 { padding: var(--wp--preset--spacing--100); }
+
+/* Vertical Padding (py) */
+.py-spacing-40 {
+  padding-top: var(--wp--preset--spacing--40);
+  padding-bottom: var(--wp--preset--spacing--40);
+}
+
+/* Horizontal Padding (px) */
+.px-spacing-20 {
+  padding-left: var(--wp--preset--spacing--20);
+  padding-right: var(--wp--preset--spacing--20);
+}
+
+/* Margin Bottom (mb) */
+.mb-spacing-30 {
+  margin-bottom: var(--wp--preset--spacing--30);
+}
+
+/* Margin Top (mt) */
+.mt-spacing-40 {
+  margin-top: var(--wp--preset--spacing--40);
+}
+
+/* Gap */
+.gap-spacing-30 {
+  gap: var(--wp--preset--spacing--30);
+}
+```
+
+### Section Padding
+
+```css
+/* Section Padding */
 .py-section {
-  padding-top: clamp(2rem, 6vw, 6rem);      /* 32px → 96px */
-  padding-bottom: clamp(2rem, 6vw, 6rem);
+  padding-top: var(--wp--preset--spacing--80);
+  padding-bottom: var(--wp--preset--spacing--80);
+}
+
+.py-section-small {
+  padding-top: var(--wp--preset--spacing--50);
+  padding-bottom: var(--wp--preset--spacing--50);
+}
+
+.py-section-large {
+  padding-top: var(--wp--preset--spacing--100);
+  padding-bottom: var(--wp--preset--spacing--100);
 }
 ```
 
-**Example:**
-```tsx
-<section className="py-section">
-  <h2 className="text-section-h2 font-heading font-semibold mb-fluid-lg">
-    Section Title
-  </h2>
-  {/* Section content */}
-</section>
-```
-
-### Card Padding
+### Block Gap
 
 ```css
-/* Responsive Card Padding */
-.p-card-responsive {
-  /* Mobile: 16px, Desktop: 48px */
-  padding: clamp(1rem, 3vw, 3rem);
+/* Block Gap */
+.gap-block-sm {
+  gap: var(--wp--preset--spacing--20);
+}
+
+.gap-block-md {
+  gap: var(--wp--preset--spacing--40);
+}
+
+.gap-block-lg {
+  gap: var(--wp--preset--spacing--60);
 }
 ```
 
-**Example:**
-```tsx
-<div className="bg-white/80 backdrop-blur-sm rounded-2xl p-card-responsive border border-white/50 shadow-lg">
-  <h3 className="text-fluid-xl font-heading font-semibold mb-fluid-md">
-    Card Title
-  </h3>
-  <p className="text-body-guideline font-body">
-    Card content
-  </p>
-</div>
-```
-
 ---
 
-## Responsive Patterns
+## CSS Variable Usage
 
-### Content Sections
+### WordPress Preset Variables
 
-```tsx
-// Standard content section with responsive spacing
-<section className="py-section px-6 lg:px-12">
-  <div className="max-w-7xl mx-auto">
-    <h2 className="text-section-h2 font-heading font-semibold text-center mb-fluid-lg">
-      Section Title
-    </h2>
-    
-    <p className="text-body-guideline font-body text-center max-w-3xl mx-auto mb-fluid-xl">
-      Section description
-    </p>
-    
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-fluid-md">
-      {/* Grid items */}
-    </div>
-  </div>
-</section>
-```
+All spacing uses WordPress custom properties:
 
-### Card Grids
-
-```tsx
-// Responsive card grid with consistent spacing
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-fluid-md">
-  <div className="bg-white rounded-xl p-fluid-md shadow-lg">
-    <h3 className="text-fluid-lg font-heading font-semibold mb-fluid-sm">Card 1</h3>
-    <p className="text-body-guideline font-body">Content</p>
-  </div>
-  
-  <div className="bg-white rounded-xl p-fluid-md shadow-lg">
-    <h3 className="text-fluid-lg font-heading font-semibold mb-fluid-sm">Card 2</h3>
-    <p className="text-body-guideline font-body">Content</p>
-  </div>
-  
-  <div className="bg-white rounded-xl p-fluid-md shadow-lg">
-    <h3 className="text-fluid-lg font-heading font-semibold mb-fluid-sm">Card 3</h3>
-    <p className="text-body-guideline font-body">Content</p>
-  </div>
-</div>
-```
-
-### Hero Section
-
-```tsx
-// Hero with generous spacing
-<section className="min-h-screen flex flex-col items-center justify-center text-center px-6 py-fluid-3xl">
-  <h1 className="text-hero-h1 font-title font-bold text-gradient-pink-purple-blue mb-fluid-lg">
-    Hi, I'm Ash Shaw
-  </h1>
-  
-  <p className="text-fluid-xl font-body text-gray-700 max-w-3xl mb-fluid-xl">
-    Makeup that shines with colour, energy, and connection.
-  </p>
-  
-  <div className="flex flex-col sm:flex-row gap-fluid-md">
-    <button className="btn-primary">Explore Portfolio</button>
-    <button className="btn-secondary">Read My Story</button>
-  </div>
-</section>
-```
-
-### Blog Content
-
-```tsx
-// Blog post with proper content spacing
-<article className="max-w-4xl mx-auto px-6 py-12">
-  <h1 className="text-section-h2 font-heading font-bold mb-fluid-md">
-    Blog Post Title
-  </h1>
-  
-  <div className="flex items-center gap-fluid-sm text-fluid-sm text-gray-600 mb-fluid-lg">
-    <span>5 min read</span>
-    <span>•</span>
-    <time>January 15, 2025</time>
-  </div>
-  
-  <div className="prose prose-lg">
-    <p className="mb-fluid-md">First paragraph...</p>
-    <p className="mb-fluid-md">Second paragraph...</p>
-    
-    <h2 className="text-fluid-2xl font-heading font-semibold mt-fluid-xl mb-fluid-md">
-      Section Heading
-    </h2>
-    
-    <p className="mb-fluid-md">More content...</p>
-  </div>
-</article>
-```
-
----
-
-## Mobile vs Desktop Spacing
-
-### Mobile (320px - 767px)
-
-**Minimum spacing values (left side of clamp):**
 ```css
-.p-fluid-xs   /* 4px (0.25rem) */
-.p-fluid-sm   /* 8px (0.5rem) */
-.p-fluid-md   /* 16px (1rem) */
-.p-fluid-lg   /* 24px (1.5rem) */
-.p-fluid-xl   /* 32px (2rem) */
-.py-section   /* 32px (2rem) */
+/* Padding */
+.component {
+  padding: var(--wp--preset--spacing--40);
+}
+
+/* Margin */
+.section {
+  margin-block: var(--wp--preset--spacing--80);
+}
+
+/* Gap (Flexbox/Grid) */
+.grid {
+  gap: var(--wp--preset--spacing--30);
+}
+
+/* Directional Spacing */
+.card {
+  padding-top: var(--wp--preset--spacing--40);
+  padding-bottom: var(--wp--preset--spacing--40);
+  padding-left: var(--wp--preset--spacing--20);
+  padding-right: var(--wp--preset--spacing--20);
+}
 ```
 
-**Example:**
-```tsx
-// Mobile: compact spacing
-<section className="py-section px-4">  {/* 32px vertical, 16px horizontal */}
-  <h2 className="mb-fluid-md">Title</h2>  {/* 16px margin bottom */}
-  <div className="grid grid-cols-1 gap-fluid-sm">  {/* 8px gap */}
-    {/* Content */}
-  </div>
-</section>
-```
+### Tailwind-Style Utility Classes
 
-### Desktop (1024px+)
+For backward compatibility with existing code:
 
-**Maximum spacing values (right side of clamp):**
 ```css
-.p-fluid-xs   /* 8px (0.5rem) */
-.p-fluid-sm   /* 16px (1rem) */
-.p-fluid-md   /* 32px (2rem) */
-.p-fluid-lg   /* 48px (3rem) */
-.p-fluid-xl   /* 64px (4rem) */
-.py-section   /* 96px (6rem) */
-```
+/* Padding Utilities */
+.p-spacing-10 { padding: var(--wp--preset--spacing--10); }
+.p-spacing-20 { padding: var(--wp--preset--spacing--20); }
+.p-spacing-30 { padding: var(--wp--preset--spacing--30); }
+.p-spacing-40 { padding: var(--wp--preset--spacing--40); }
+.p-spacing-50 { padding: var(--wp--preset--spacing--50); }
+.p-spacing-60 { padding: var(--wp--preset--spacing--60); }
+.p-spacing-70 { padding: var(--wp--preset--spacing--70); }
+.p-spacing-80 { padding: var(--wp--preset--spacing--80); }
+.p-spacing-90 { padding: var(--wp--preset--spacing--90); }
+.p-spacing-100 { padding: var(--wp--preset--spacing--100); }
 
-**Example:**
-```tsx
-// Desktop: generous spacing
-<section className="py-section px-12">  {/* 96px vertical, 48px horizontal */}
-  <h2 className="mb-fluid-lg">Title</h2>  {/* 48px margin bottom */}
-  <div className="grid grid-cols-3 gap-fluid-md">  {/* 32px gap */}
-    {/* Content */}
-  </div>
-</section>
+/* Vertical Padding (py) */
+.py-spacing-40 {
+  padding-top: var(--wp--preset--spacing--40);
+  padding-bottom: var(--wp--preset--spacing--40);
+}
+
+/* Horizontal Padding (px) */
+.px-spacing-20 {
+  padding-left: var(--wp--preset--spacing--20);
+  padding-right: var(--wp--preset--spacing--20);
+}
+
+/* Margin Bottom (mb) */
+.mb-spacing-30 {
+  margin-bottom: var(--wp--preset--spacing--30);
+}
+
+/* Margin Top (mt) */
+.mt-spacing-40 {
+  margin-top: var(--wp--preset--spacing--40);
+}
+
+/* Gap */
+.gap-spacing-30 {
+  gap: var(--wp--preset--spacing--30);
+}
 ```
 
 ---
 
-## Common Spacing Mistakes
+## Migration Guide
 
-### ❌ Mistake 1: Fixed Spacing Values
+### Old vs New Mapping
 
+| Old Class | New Class | Value |
+|-----------|-----------|-------|
+| `.p-fluid-xs` | `.p-spacing-10` | 0.625rem (10px) |
+| `.p-fluid-sm` | `.p-spacing-20` | 1.25rem (20px) |
+| `.p-fluid-md` | `.p-spacing-40` | 2.5rem (40px) |
+| `.p-fluid-lg` | `.p-spacing-50` | 3.125rem (50px) |
+| `.p-fluid-xl` | `.p-spacing-60` | 3.75rem (60px) |
+| `.p-fluid-2xl` | `.p-spacing-80` | 5rem (80px) |
+| `.p-fluid-3xl` | `.p-spacing-90` | 5.625rem (90px) |
+| `.p-fluid-4xl` | `.p-spacing-100` | 6.25rem (100px) |
+
+### Migration Examples
+
+**Before (Semantic):**
 ```tsx
-// ❌ WRONG - Fixed spacing doesn't scale
-<section className="py-16 px-8">
-  <h2 className="mb-8">Title</h2>
-  <div className="grid gap-4">
-    {/* Content */}
-  </div>
-</section>
-```
-
-**Solution:**
-```tsx
-// ✅ CORRECT - Fluid responsive spacing
-<section className="py-section px-6 lg:px-12">
-  <h2 className="mb-fluid-lg">Title</h2>
-  <div className="grid gap-fluid-md">
-    {/* Content */}
-  </div>
-</section>
-```
-
-### ❌ Mistake 2: Inconsistent Spacing
-
-```tsx
-// ❌ WRONG - Random spacing values
-<div className="mb-4">Item 1</div>
-<div className="mb-7">Item 2</div>
-<div className="mb-5">Item 3</div>
-```
-
-**Solution:**
-```tsx
-// ✅ CORRECT - Consistent spacing scale
-<div className="mb-fluid-md">Item 1</div>
-<div className="mb-fluid-md">Item 2</div>
-<div className="mb-fluid-md">Item 3</div>
-```
-
-### ❌ Mistake 3: Over-Spaced Content
-
-```tsx
-// ❌ WRONG - Excessive spacing
-<div className="py-fluid-3xl px-fluid-3xl">  {/* 64-128px all sides */}
-  <p className="mb-fluid-3xl">Paragraph</p>  {/* 64-128px margin */}
+<div className="p-fluid-md mb-fluid-lg">
+  Content
 </div>
 ```
 
-**Solution:**
+**After (Numeric):**
 ```tsx
-// ✅ CORRECT - Appropriate spacing
-<div className="py-fluid-lg px-fluid-md">  {/* 24-48px vertical, 16-32px horizontal */}
-  <p className="mb-fluid-md">Paragraph</p>  {/* 16-32px margin */}
+<div className="p-spacing-40 mb-spacing-50">
+  Content
 </div>
 ```
 
-### ❌ Mistake 4: Missing Responsive Adjustments
-
+**Before (Component Spacing):**
 ```tsx
-// ❌ WRONG - Same spacing on mobile and desktop
-<section className="p-12">
-  {/* Content */}
-</section>
+<button className="px-button py-button">
+  Click Me
+</button>
 ```
 
-**Solution:**
+**After (Explicit Numeric):**
 ```tsx
-// ✅ CORRECT - Responsive spacing
-<section className="px-4 sm:px-6 lg:px-12 py-section">
-  {/* Content */}
-</section>
+<button className="px-spacing-40 py-spacing-20">
+  Click Me
+</button>
 ```
 
 ---
 
-## Spacing Usage Guide
+## Common Spacing Patterns
 
-### When to Use Each Scale
+### Layout Containers
 
-**Extra Small (xs):**
-- Inline element spacing
-- Icon margins
-- Badge padding
+```css
+/* Max-width Container with Padding */
+.container {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: var(--wp--preset--spacing--40);
+}
 
-**Small (sm):**
-- Button group gaps
-- Form input spacing
-- List item padding
+/* Wide Container */
+.container-wide {
+  max-width: 1600px;
+  margin-inline: auto;
+  padding-inline: var(--wp--preset--spacing--60);
+}
+```
 
-**Medium (md):**
-- Card padding
-- Component margins
-- Grid gaps
+### Grid Systems
 
-**Large (lg):**
-- Section title margins
-- Feature spacing
-- Card grids
+```css
+/* Card Grid with Gap */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--wp--preset--spacing--40);
+}
 
-**Extra Large (xl):**
-- Section spacing (vertical)
-- Hero sections
-- Major layout spacing
+/* Portfolio Grid */
+.grid-portfolio {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--wp--preset--spacing--30);
+}
+```
 
-**2XL & 3XL:**
-- Page sections
-- Hero sections
-- Major visual breaks
+### Flexbox Layouts
+
+```css
+/* Horizontal Navigation */
+.nav-horizontal {
+  display: flex;
+  gap: var(--wp--preset--spacing--40);
+  align-items: center;
+}
+
+/* Vertical Stack */
+.stack-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--20);
+}
+```
+
+### Form Layouts
+
+```css
+/* Form Field Spacing */
+.form-field {
+  margin-bottom: var(--wp--preset--spacing--30);
+}
+
+/* Form Group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--10);
+}
+
+/* Form Submit Button */
+.form-submit {
+  margin-top: var(--wp--preset--spacing--40);
+}
+```
 
 ---
 
-## Related Documentation
+## Responsive Spacing Patterns
 
-- **[typography.md](./typography.md)** - Typography scale and hierarchy
-- **[colors.md](./colors.md)** - Color system
-- **[Guidelines.md](../Guidelines.md)** - Main guidelines
-- **[overview-components.md](../overview-components.md)** - Component usage
+### Mobile-First Approach
+
+```css
+/* Base (Mobile) */
+.responsive-section {
+  padding: var(--wp--preset--spacing--40);
+}
+
+/* Tablet (768px+) */
+@media (min-width: 768px) {
+  .responsive-section {
+    padding: var(--wp--preset--spacing--60);
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .responsive-section {
+    padding: var(--wp--preset--spacing--80);
+  }
+}
+```
+
+### Responsive Grid Gaps
+
+```css
+/* Responsive Card Grid */
+.responsive-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--wp--preset--spacing--20);
+}
+
+@media (min-width: 768px) {
+  .responsive-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--wp--preset--spacing--30);
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--wp--preset--spacing--40);
+  }
+}
+```
 
 ---
 
+## Best Practices
+
+### ✅ DO
+
+1. **Use numeric slugs consistently**
+   ```css
+   /* ✅ GOOD */
+   padding: var(--wp--preset--spacing--40);
+   margin-block: var(--wp--preset--spacing--80);
+   gap: var(--wp--preset--spacing--30);
+   ```
+
+2. **Reference via CSS variables**
+   ```css
+   /* ✅ GOOD */
+   .component {
+     padding: var(--wp--preset--spacing--40);
+   }
+   
+   /* ❌ BAD */
+   .component {
+     padding: 2.5rem; /* Don't hardcode */
+   }
+   ```
+
+3. **Use appropriate scale for context**
+   - Small elements (buttons, inputs): `--spacing--10` to `--spacing--30`
+   - Medium components (cards): `--spacing--30` to `--spacing--50`
+   - Large sections: `--spacing--60` to `--spacing--100`
+
+4. **Maintain vertical rhythm**
+   ```css
+   /* ✅ GOOD - Consistent spacing */
+   .content > * + * {
+     margin-top: var(--wp--preset--spacing--30);
+   }
+   ```
+
+### ❌ DON'T
+
+1. **Don't use arbitrary values**
+   ```css
+   /* ❌ BAD */
+   .component {
+     padding: 25px; /* Not in scale */
+   }
+   
+   /* ✅ GOOD */
+   .component {
+     padding: var(--wp--preset--spacing--40); /* Use scale */
+   }
+   ```
+
+2. **Don't mix semantic and numeric**
+   ```css
+   /* ❌ BAD */
+   .component {
+     padding: var(--spacing-fluid-md); /* Old semantic */
+     margin: var(--wp--preset--spacing--40); /* New numeric */
+   }
+   ```
+
+3. **Don't skip scale increments**
+   ```css
+   /* ⚠️ AVOID - Jumping too far */
+   .component {
+     padding: var(--wp--preset--spacing--10);
+     margin: var(--wp--preset--spacing--100);
+   }
+   
+   /* ✅ BETTER - Gradual progression */
+   .component {
+     padding: var(--wp--preset--spacing--20);
+     margin: var(--wp--preset--spacing--60);
+   }
+   ```
+
+---
+
+## Accessibility Considerations
+
+### Touch Target Minimum (44px)
+
+Always ensure interactive elements meet WCAG minimum touch target size:
+
+```css
+/* Button with minimum touch target */
+.button {
+  min-height: 44px; /* 2.75rem */
+  padding: var(--wp--preset--spacing--20) var(--wp--preset--spacing--40);
+}
+
+/* Icon Button */
+.icon-button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: var(--wp--preset--spacing--10);
+}
+```
+
+### Focus Indicator Spacing
+
+```css
+/* Focus Ring with Offset */
+.interactive:focus {
+  outline: 4px solid var(--color-pink-200);
+  outline-offset: 4px; /* Use spacing--10 equivalent */
+}
+```
+
+---
+
+## WordPress Block Editor Integration
+
+### Block Pattern Spacing
+
+```html
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}}} -->
+<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)">
+  <!-- Content -->
+</div>
+<!-- /wp:group -->
+```
+
+### Custom CSS in Blocks
+
+```css
+/* Custom block spacing */
+.wp-block-custom {
+  padding: var(--wp--preset--spacing--40);
+  margin-block: var(--wp--preset--spacing--60);
+}
+
+.wp-block-custom > * + * {
+  margin-top: var(--wp--preset--spacing--30);
+}
+```
+
+---
+
+## Summary
+
+### Key Takeaways
+
+- ✅ **Numeric scale (10-100)** replaces semantic names (xs, sm, md, lg, xl)
+- ✅ **Fixed rem values** instead of fluid clamp() for spacing
+- ✅ **WordPress theme.json compatible** with standard CSS variables
+- ✅ **Predictable progression** (increments of 10)
+- ✅ **Design tool integration** (Figma, Sketch compatible)
+
+### Quick Reference
+
+| Spacing | Value | Common Use |
+|---------|-------|------------|
+| `--spacing--10` | 0.625rem (10px) | Tight gaps, small padding |
+| `--spacing--20` | 1.25rem (20px) | Button padding, input spacing |
+| `--spacing--30` | 1.875rem (30px) | Content flow, card margins |
+| `--spacing--40` | 2.5rem (40px) | **Default component spacing** |
+| `--spacing--50` | 3.125rem (50px) | Small section padding |
+| `--spacing--60` | 3.75rem (60px) | Medium section padding |
+| `--spacing--70` | 4.375rem (70px) | Large section padding |
+| `--spacing--80` | 5rem (80px) | **Page section spacing** |
+| `--spacing--90` | 5.625rem (90px) | Hero sections |
+| `--spacing--100` | 6.25rem (100px) | Maximum spacing |
+
+---
+
+**Version:** 5.1.0 (WordPress Numeric Scale)  
 **Last Updated:** January 2025  
-**Version:** 4.0.0
+**Maintained By:** Ash Shaw Portfolio Team
+
+**Related Documentation:**
+- [Typography Design Tokens](./typography.md) - Font sizing system
+- [Colors Design Tokens](./colors.md) - Color palette
+- [Component Guidelines](../components/) - Component-specific usage

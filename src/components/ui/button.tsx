@@ -8,7 +8,7 @@ import {
 import { cn } from "./utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center text-center gap-2 whitespace-nowrap rounded-lg text-button-fluid font-medium font-body transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center text-center gap-2 whitespace-nowrap rounded-500 text-button-fluid font-medium font-body transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
@@ -26,9 +26,9 @@ const buttonVariants = cva(
       },
       size: {
         default: "px-button py-button has-[>svg]:px-button",
-        sm: "px-3 py-2 rounded-lg gap-1.5 has-[>svg]:px-2.5",
-        lg: "px-6 py-4 rounded-lg has-[>svg]:px-4",
-        icon: "p-3 rounded-lg",
+        sm: "px-spacing-20 py-spacing-10 rounded-500 gap-1.5 has-[>svg]:px-spacing-20",
+        lg: "px-spacing-40 py-spacing-30 rounded-500 has-[>svg]:px-spacing-30",
+        icon: "p-spacing-20 rounded-500",
       },
     },
     defaultVariants: {

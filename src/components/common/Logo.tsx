@@ -143,7 +143,7 @@ export function Logo({
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className={`
-            ${classes.logo} max-w-[220px] w-auto object-contain max-[320px]:scale-90
+            ${classes.logo} max-w-[180px] sm:max-w-[220px] w-auto object-contain max-[320px]:scale-90
             transition-all duration-300
             drop-shadow-[0_0_16px_rgba(168,85,247,0.6)] drop-shadow-[0_0_32px_rgba(168,85,247,0.3)]
           `}
@@ -207,7 +207,7 @@ export function Logo({
           src={logoImage}
           alt="AshShaw makeup artist logo featuring colorful paintbrush with rainbow bristles on pink circular background"
           className={`
-            ${classes.logo} max-w-[220px] w-auto object-contain max-[320px]:scale-90
+            ${classes.logo} max-w-[180px] sm:max-w-[220px] w-auto object-contain max-[320px]:scale-90
             transition-all duration-300
             drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]
           `}

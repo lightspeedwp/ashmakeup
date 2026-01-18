@@ -104,7 +104,7 @@ export function FusionNailsSection({
     <>
       <section
         id="fusion-nails"
-        className="relative bg-fusion-nails-section py-fluid-3xl px-fluid-md w-full transition-colors duration-300"
+        className="relative bg-fusion-nails-section py-section-md px-section-md w-full transition-colors duration-300 px-[32px] py-[144px]"
       >
         {/* Background decoration - responsive */}
         <div className="absolute top-20 left-1/4 w-20 h-20 sm:w-40 sm:h-40 bg-fusion-decoration-1 rounded-full opacity-15 dark:opacity-20 animate-pulse"></div>
@@ -114,11 +114,11 @@ export function FusionNailsSection({
           <div className="text-center mb-fluid-2xl">
             <h2
               id="fusion-nails"
-              className="text-section-h2 font-heading font-bold text-section-heading-black mb-fluid-xl"
+              className="text-section-h2 font-heading font-bold text-section-heading-black mt-[0px] mr-[0px] mb-[32px] ml-[0px]"
             >
               Fusion Nails
             </h2>
-            <p className="text-body-guideline font-body font-normal max-w-3xl mx-auto leading-relaxed">
+            <p className="text-body-guideline font-body font-normal max-w-3xl mx-auto leading-relaxed text-[rgb(255,255,255)]">
               Creative nail artistry combining colors, stickers,
               and topcoats for unique, eye-catching designs that
               complement my makeup work.
@@ -367,7 +367,7 @@ export function FusionNailsSection({
                   );
                 }}
                 variant="fusion"
-                className="w-full p-fluid-md"
+                className="w-full p-fluid-sm"
               />
             ))}
             </div>
@@ -377,7 +377,7 @@ export function FusionNailsSection({
           <div className="text-center">
             <button
               onClick={() => setCurrentPage("portfolio")}
-              className="w-full sm:w-auto justify-center text-center bg-gradient-gold-peach-coral text-white px-button py-button rounded-lg font-body font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus-ring-fusion-button"
+              className="w-full sm:w-auto justify-center text-center bg-gradient-gold-peach-coral text-white px-button py-button rounded-lg font-body font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus-ring-fusion-button text-[32px]"
               aria-label="Navigate to Portfolio page to view nail artistry gallery"
             >
               See More Nails

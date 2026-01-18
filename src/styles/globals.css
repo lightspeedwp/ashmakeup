@@ -143,6 +143,213 @@
     --space-4xl: clamp(5rem, 2.5rem + 12.5vw, 10rem);             /* 80px → 160px (page section spacing) */
     --space-5xl: clamp(6rem, 3rem + 15vw, 15rem);                 /* 96px → 240px (hero spacing) */
     --space-6xl: clamp(8rem, 4rem + 20vw, 18rem);                 /* 128px → 288px (dramatic spacing) */
+
+    /* WordPress-Inspired Animation System - Numeric Duration Scale */
+    /* Follows WordPress 6.9+ standards with numeric slugs (100-400) */
+    --animation-100: 150ms;   /* Fast - Microinteractions (button hover, icon changes) */
+    --animation-200: 300ms;   /* Normal - Standard transitions (color, scale, fade) */
+    --animation-300: 500ms;   /* Slow - Complex animations (modals, slides, accordions) */
+    --animation-400: 800ms;   /* Very Slow - Hero effects (page transitions, reveals) */
+    
+    /* Easing Function Variables - Material Design Standard */
+    --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);          /* General purpose, most animations */
+    --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);         /* Elements entering screen (fast start, slow end) */
+    --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);         /* Elements leaving screen (slow start, fast end) */
+    --ease-sharp: cubic-bezier(0.4, 0, 0.6, 1);            /* Snappy, energetic interactions */
+    --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Playful bounce effect */
+
+    /* ============================================
+       WORDPRESS-ALIGNED PRESET SYSTEM (v5.0.0)
+       Following WordPress theme.json standards
+       ============================================ */
+
+    /* ============================================
+       TYPOGRAPHY PRESETS
+       --wp--preset--font-family--{slug}
+       --wp--preset--font-size--{slug}
+       ============================================ */
+
+    /* Font Family Presets (Semantic Slugs) */
+    --wp--preset--font-family--brand-title: var(--font-title);
+    --wp--preset--font-family--brand-heading: var(--font-heading);
+    --wp--preset--font-family--brand-body: var(--font-body);
+    --wp--preset--font-family--brand-sans: var(--font-body);
+    --wp--preset--font-family--brand-serif: var(--font-heading);
+
+    /* Font Size Presets (Numeric Slugs 100-900) */
+    --wp--preset--font-size--100: clamp(0.75rem, 0.65rem + 0.5vw, 0.875rem);   /* 12px → 14px (Tiny) */
+    --wp--preset--font-size--200: clamp(1rem, 0.85rem + 0.75vw, 1.125rem);     /* 16px → 18px (Base) */
+    --wp--preset--font-size--300: clamp(1.125rem, 0.95rem + 0.875vw, 1.25rem); /* 18px → 20px (Small) */
+    --wp--preset--font-size--400: clamp(1.25rem, 1rem + 1.25vw, 1.5rem);       /* 20px → 24px (Medium) */
+    --wp--preset--font-size--500: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);         /* 24px → 32px (Large) */
+    --wp--preset--font-size--600: clamp(1.875rem, 1.4rem + 2.375vw, 2.5rem);   /* 30px → 40px (X-Large) */
+    --wp--preset--font-size--700: clamp(2.25rem, 1.75rem + 2.5vw, 3rem);       /* 36px → 48px (Huge) */
+    --wp--preset--font-size--800: clamp(2.5rem, 1.9rem + 3vw, 3.5rem);         /* 40px → 56px (Gigantic) */
+    --wp--preset--font-size--900: clamp(3rem, 2.2rem + 4vw, 4.5rem);           /* 48px → 72px (Colossal) */
+
+    /* Special Font Sizes (Height-Aware) */
+    --wp--preset--font-size--hero: clamp(2.25rem, min(4vw + 1rem, 3vh + 2rem), 7.5rem);   /* Hero titles */
+    --wp--preset--font-size--section: clamp(1.5rem, min(3vw + 0.5rem, 2.5vh + 1rem), 3rem); /* Section headings */
+    --wp--preset--font-size--body-lg: clamp(1rem, 1.2vw + 0.2rem, 1.25rem);               /* Body guideline */
+    --wp--preset--font-size--button: clamp(1.25rem, 1.5vw + 0.5rem, 2rem);                /* Button text */
+
+    /* ============================================
+       COLOR PRESETS
+       --wp--preset--color--{slug}
+       ============================================ */
+
+    /* Semantic Role Colors */
+    --wp--preset--color--base: #ffffff;
+    --wp--preset--color--contrast: #111111;
+    --wp--preset--color--primary: #9933ff;
+    --wp--preset--color--brand: #9933ff;
+    --wp--preset--color--cta: #ff66cc;
+
+    /* Neutral Ramp (50-900) */
+    --wp--preset--color--neutral-50: #f9fafb;
+    --wp--preset--color--neutral-100: #f3f4f6;
+    --wp--preset--color--neutral-200: #e5e7eb;
+    --wp--preset--color--neutral-300: #d1d5db;
+    --wp--preset--color--neutral-400: #9ca3af;
+    --wp--preset--color--neutral-500: #6b7280;
+    --wp--preset--color--neutral-600: #4b5563;
+    --wp--preset--color--neutral-700: #374151;
+    --wp--preset--color--neutral-800: #1f2937;
+    --wp--preset--color--neutral-900: #111827;
+
+    /* Purple Accent Ramp (Dark Mode) */
+    --wp--preset--color--purple-50: #faf5ff;
+    --wp--preset--color--purple-100: #f5f3ff;
+    --wp--preset--color--purple-200: #ede9fe;
+    --wp--preset--color--purple-300: #d8b4fe;
+    --wp--preset--color--purple-400: #c4b5fd;
+    --wp--preset--color--purple-500: #a78bfa;
+    --wp--preset--color--purple-600: #7c3aed;
+    --wp--preset--color--purple-700: #6b21a8;
+    --wp--preset--color--purple-800: #5b21b6;
+    --wp--preset--color--purple-900: #581c87;
+    --wp--preset--color--purple-950: #1a0033;
+
+    /* Brand Gradient Color Points */
+    --wp--preset--color--gradient-pink-start: #ff66cc;
+    --wp--preset--color--gradient-pink-mid: #9933ff;
+    --wp--preset--color--gradient-pink-end: #3399ff;
+    --wp--preset--color--gradient-blue-start: #00bfff;
+    --wp--preset--color--gradient-blue-mid: #20c997;
+    --wp--preset--color--gradient-blue-end: #32cd32;
+    --wp--preset--color--gradient-gold-start: #ffd700;
+    --wp--preset--color--gradient-gold-mid: #ff9966;
+    --wp--preset--color--gradient-gold-end: #ff5e62;
+
+    /* ============================================
+       SPACING PRESETS
+       --wp--preset--spacing--{slug}
+       ============================================ */
+
+    /* Numeric Spacing Scale (10-100) */
+    --wp--preset--spacing--10: 0.625rem;    /* 10px */
+    --wp--preset--spacing--20: 1.25rem;     /* 20px */
+    --wp--preset--spacing--30: 1.875rem;    /* 30px */
+    --wp--preset--spacing--40: 2.5rem;      /* 40px (Default) */
+    --wp--preset--spacing--50: 3.125rem;    /* 50px */
+    --wp--preset--spacing--60: 3.75rem;     /* 60px */
+    --wp--preset--spacing--70: 4.375rem;    /* 70px */
+    --wp--preset--spacing--80: 5rem;        /* 80px */
+    --wp--preset--spacing--90: 5.625rem;    /* 90px */
+    --wp--preset--spacing--100: 6.25rem;    /* 100px */
+
+    /* Fluid Spacing Extensions */
+    --wp--preset--spacing--fluid-xs: clamp(0.25rem, 0.15rem + 0.5vw, 0.5rem);      /* 4px → 8px */
+    --wp--preset--spacing--fluid-sm: clamp(0.5rem, 0.3rem + 1vw, 1rem);            /* 8px → 16px */
+    --wp--preset--spacing--fluid-md: clamp(1rem, 0.6rem + 2vw, 2rem);              /* 16px → 32px */
+    --wp--preset--spacing--fluid-lg: clamp(1.5rem, 1rem + 2.5vw, 3rem);            /* 24px → 48px */
+    --wp--preset--spacing--fluid-xl: clamp(2rem, 1.2rem + 4vw, 4rem);              /* 32px → 64px */
+    --wp--preset--spacing--fluid-2xl: clamp(3rem, 1.5rem + 7.5vw, 6rem);           /* 48px → 96px */
+    --wp--preset--spacing--fluid-3xl: clamp(4rem, 2rem + 10vw, 8rem);              /* 64px → 128px */
+    --wp--preset--spacing--fluid-4xl: clamp(5rem, 2.5rem + 12.5vw, 10rem);         /* 80px → 160px */
+    --wp--preset--spacing--fluid-5xl: clamp(6rem, 3rem + 15vw, 15rem);             /* 96px → 240px */
+    --wp--preset--spacing--fluid-6xl: clamp(8rem, 4rem + 20vw, 18rem);             /* 128px → 288px */
+
+    /* Component-Specific Spacing */
+    --wp--preset--spacing--button-x: clamp(1.5rem, 2.5vw + 1rem, 3.375rem);
+    --wp--preset--spacing--button-y: clamp(1rem, 1.5vw + 0.5rem, 2rem);
+    --wp--preset--spacing--card-mobile: clamp(1rem, 2.5vw + 0.5rem, 2rem);
+    --wp--preset--spacing--card-desktop: clamp(2rem, 4vw + 1rem, 6rem);
+    --wp--preset--spacing--section: clamp(3rem, 6vw + 1rem, 8rem);
+
+    /* Block Gap Spacing */
+    --wp--preset--spacing--block-gap-sm: clamp(0.75rem, 1.5vw + 0.25rem, 1.5rem);
+    --wp--preset--spacing--block-gap-md: clamp(1.5rem, 3vw + 0.5rem, 3rem);
+    --wp--preset--spacing--block-gap-lg: clamp(2.5rem, 5vw + 1rem, 5rem);
+
+    /* ============================================
+       SHADOW PRESETS
+       --wp--preset--shadow--{slug}
+       ============================================ */
+
+    --wp--preset--shadow--100: 0 1px 2px 0 rgb(0 0 0 / 0.06);
+    --wp--preset--shadow--200: 0 1px 3px 0 rgb(0 0 0 / 0.10), 0 1px 2px -1px rgb(0 0 0 / 0.10);
+    --wp--preset--shadow--300: 0 4px 6px -1px rgb(0 0 0 / 0.10), 0 2px 4px -2px rgb(0 0 0 / 0.10);
+    --wp--preset--shadow--400: 0 10px 15px -3px rgb(0 0 0 / 0.10), 0 4px 6px -4px rgb(0 0 0 / 0.10);
+    --wp--preset--shadow--500: 0 20px 25px -5px rgb(0 0 0 / 0.12), 0 10px 10px -5px rgb(0 0 0 / 0.08);
+    --wp--preset--shadow--600: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+    /* ============================================
+       BORDER PRESETS
+       --wp--preset--border-radius--{slug}
+       ============================================ */
+
+    --wp--preset--border-radius--0: 0;
+    --wp--preset--border-radius--100: 0.125rem;   /* 2px */
+    --wp--preset--border-radius--200: 0.25rem;    /* 4px (Base) */
+    --wp--preset--border-radius--300: 0.375rem;   /* 6px */
+    --wp--preset--border-radius--400: 0.5rem;     /* 8px */
+    --wp--preset--border-radius--500: 0.75rem;    /* 12px */
+    --wp--preset--border-radius--600: 1rem;       /* 16px */
+    --wp--preset--border-radius--700: 1.5rem;     /* 24px */
+    --wp--preset--border-radius--800: 2rem;       /* 32px */
+    --wp--preset--border-radius--900: 9999px;     /* Full/Pill */
+
+    /* ============================================
+       CUSTOM TOKENS
+       --wp--custom--{category}--{slug}
+       ============================================ */
+
+    /* Border Width Tokens */
+    --wp--custom--border-width--0: 0;
+    --wp--custom--border-width--100: 1px;
+    --wp--custom--border-width--200: 2px;
+    --wp--custom--border-width--300: 4px;
+    --wp--custom--border-width--400: 8px;
+
+    /* Animation Duration Tokens */
+    --wp--custom--animation--100: 150ms;   /* Fast */
+    --wp--custom--animation--200: 300ms;   /* Normal */
+    --wp--custom--animation--300: 500ms;   /* Slow */
+    --wp--custom--animation--400: 800ms;   /* Very Slow */
+
+    /* Easing Function Tokens */
+    --wp--custom--ease--standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --wp--custom--ease--decelerate: cubic-bezier(0, 0, 0.2, 1);
+    --wp--custom--ease--accelerate: cubic-bezier(0.4, 0, 1, 1);
+    --wp--custom--ease--sharp: cubic-bezier(0.4, 0, 0.6, 1);
+    --wp--custom--ease--bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* Z-Index Scale */
+    --wp--custom--z-index--dropdown: 1000;
+    --wp--custom--z-index--sticky: 1020;
+    --wp--custom--z-index--fixed: 1030;
+    --wp--custom--z-index--modal-backdrop: 1040;
+    --wp--custom--z-index--modal: 1050;
+    --wp--custom--z-index--popover: 1060;
+    --wp--custom--z-index--tooltip: 1070;
+
+    /* Layout Width Variables */
+    --wp--style--global--content-size: 40rem;     /* 640px */
+    --wp--style--global--wide-size: 64rem;        /* 1024px */
+
+    /* Block Gap (WordPress Standard) */
+    --wp--style--block-gap: 1.5rem;
   }
 
   .dark {
@@ -838,6 +1045,48 @@
     padding-bottom: var(--section-spacing);
   }
 
+  .py-section-xs {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  /* Reduced VW Impact Section Padding - Optimized for Wide Screens (Halved) */
+  .py-section-sm {
+    padding-top: clamp(1rem, 0.75rem + 1.25vw, 2rem);    /* 16px → 32px (1.25vw, halved from 2.5vw) */
+    padding-bottom: clamp(1rem, 0.75rem + 1.25vw, 2rem);
+  }
+
+  .py-section-md {
+    padding-top: clamp(1.5rem, 1rem + 2.5vw, 3rem);        /* 24px → 48px (2.5vw, halved from 5vw) */
+    padding-bottom: clamp(1.5rem, 1rem + 2.5vw, 3rem);
+  }
+
+  .py-section-md-plus {
+    padding-top: clamp(1.725rem, 1.15rem + 2.875vw, 3.45rem);   /* 27.6px → 55.2px (~15% more than md) */
+    padding-bottom: clamp(1.725rem, 1.15rem + 2.875vw, 3.45rem);
+  }
+
+  .py-section-lg {
+    padding-top: clamp(2rem, 1.25rem + 3.75vw, 4rem);    /* 32px → 64px (3.75vw, halved from 7.5vw) */
+    padding-bottom: clamp(2rem, 1.25rem + 3.75vw, 4rem);
+  }
+
+  /* Standard Horizontal (Left/Right) Section Padding */
+  .px-section-sm {
+    padding-left: clamp(1rem, 0.75rem + 1.25vw, 2rem);    /* 16px → 32px */
+    padding-right: clamp(1rem, 0.75rem + 1.25vw, 2rem);
+  }
+
+  .px-section-md {
+    padding-left: clamp(1.5rem, 1rem + 2.5vw, 3rem);      /* 24px → 48px */
+    padding-right: clamp(1.5rem, 1rem + 2.5vw, 3rem);
+  }
+
+  .px-section-lg {
+    padding-left: clamp(2rem, 1.25rem + 3.75vw, 4rem);    /* 32px → 64px */
+    padding-right: clamp(2rem, 1.25rem + 3.75vw, 4rem);
+  }
+
   .p-card-responsive {
     padding: var(--card-padding-mobile);
   }
@@ -1103,6 +1352,75 @@
     gap: var(--space-3xl);
   }
 
+  /* ========================================
+     WHY SECTION CARD SYSTEM - Reduced Padding & Spacing
+     50% reduction for tighter, more compact layout
+     ======================================== */
+  
+  /* Card Container - Reduced padding to ~1rem (50% of p-fluid-md) */
+  .why-card-container {
+    /* Layout */
+    text-align: center;
+    cursor: pointer;
+    height: 100%;
+    
+    /* Padding - 50% reduction (1rem instead of 2rem) */
+    padding: 1rem;
+    
+    /* Visual styling */
+    border-radius: var(--radius-lg);
+    
+    /* Transitions */
+    transition: all 300ms ease-in-out;
+  }
+  
+  /* Icon Container - Reduced margin (50% of mb-fluid-lg) */
+  .why-card-icon-container {
+    /* Layout */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Spacing - 50% reduction from mb-fluid-lg */
+    margin-bottom: calc(var(--space-lg) * 0.5); /* 12px → 24px instead of 24px → 48px */
+    
+    /* Transitions */
+    transition: all 300ms ease-in-out;
+  }
+  
+  /* Icon Sizing */
+  .why-card-icon {
+    width: 8rem;  /* 128px - same as w-32 h-32 */
+    height: 8rem;
+    
+    /* Hover effect */
+    transition: transform 500ms ease-in-out;
+  }
+  
+  .why-card-container:hover .why-card-icon {
+    transform: scale(1.1);
+  }
+  
+  /* Card Title - Reduced margin (50% of mb-fluid-lg) */
+  .why-card-title-text {
+    /* Spacing - 50% reduction */
+    margin-bottom: calc(var(--space-lg) * 0.5); /* 12px → 24px instead of 24px → 48px */
+    
+    /* Typography - responsive fluid scale */
+    font-size: clamp(1rem, 1.5vw, 1.25rem); /* Replaces text-fluid-sm sm:text-fluid-base lg:text-fluid-lg */
+    line-height: 1.2;
+    
+    /* Transitions */
+    transition: all 300ms ease-in-out;
+  }
+  
+  /* Card Description Text */
+  .why-card-description-text {
+    /* Typography - fixed size */
+    font-size: clamp(1rem, 1.5vw, 1.25rem); /* Replaces text-fluid-lg */
+    line-height: 1.6;
+  }
+
   /* REDUCED HORIZONTAL SPACING CLASSES - Half the original values */
   /* Use these for tighter, more condensed layouts across the site */
   
@@ -1198,6 +1516,333 @@
   .animate-scroll-down-arrow {
     animation: scroll-down-arrow 3s ease-in-out infinite;
  }
+
+  /* ========================================
+     COMPREHENSIVE ANIMATION SYSTEM
+     WordPress 6.9+ Compatible
+     ======================================== */
+
+  /* Animation Duration Utility Classes */
+  .duration-100 {
+    transition-duration: var(--animation-100);
+  }
+
+  .duration-200 {
+    transition-duration: var(--animation-200);
+  }
+
+  .duration-300 {
+    transition-duration: var(--animation-300);
+  }
+
+  .duration-400 {
+    transition-duration: var(--animation-400);
+  }
+
+  /* Easing Utility Classes */
+  .ease-standard {
+    transition-timing-function: var(--ease-standard);
+  }
+
+  .ease-decelerate {
+    transition-timing-function: var(--ease-decelerate);
+  }
+
+  .ease-accelerate {
+    transition-timing-function: var(--ease-accelerate);
+  }
+
+  .ease-sharp {
+    transition-timing-function: var(--ease-sharp);
+  }
+
+  .ease-bounce {
+    transition-timing-function: var(--ease-bounce);
+  }
+
+  /* Common Keyframe Animations */
+  
+  /* Fade Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  /* Slide Animations */
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideOutLeft {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes slideOutRight {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+  }
+
+  /* Scale Animations */
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes scaleOut {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+  }
+
+  /* Rotation Animations */
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Loading Animations */
+  @keyframes shimmer {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+
+  @keyframes ripple {
+    from {
+      transform: scale(0);
+      opacity: 1;
+    }
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  /* Animation Utility Classes */
+  .animate-fadeIn {
+    animation: fadeIn var(--animation-200) var(--ease-decelerate);
+  }
+
+  .animate-fadeInUp {
+    animation: fadeInUp var(--animation-300) var(--ease-decelerate);
+  }
+
+  .animate-fadeInDown {
+    animation: fadeInDown var(--animation-300) var(--ease-decelerate);
+  }
+
+  .animate-fadeOut {
+    animation: fadeOut var(--animation-200) var(--ease-accelerate);
+  }
+
+  .animate-slideInLeft {
+    animation: slideInLeft var(--animation-300) var(--ease-decelerate);
+  }
+
+  .animate-slideInRight {
+    animation: slideInRight var(--animation-300) var(--ease-decelerate);
+  }
+
+  .animate-slideOutLeft {
+    animation: slideOutLeft var(--animation-300) var(--ease-accelerate);
+  }
+
+  .animate-slideOutRight {
+    animation: slideOutRight var(--animation-300) var(--ease-accelerate);
+  }
+
+  .animate-scaleIn {
+    animation: scaleIn var(--animation-200) var(--ease-decelerate);
+  }
+
+  .animate-scaleOut {
+    animation: scaleOut var(--animation-200) var(--ease-accelerate);
+  }
+
+  .animate-spin {
+    animation: spin var(--animation-400) linear infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer var(--animation-400) linear infinite;
+  }
+
+  .animate-ripple {
+    animation: ripple var(--animation-100) var(--ease-decelerate);
+  }
+
+  /* Hero Animation - Staggered Delays */
+  .animate-hero-title {
+    animation: fadeInUp var(--animation-400) var(--ease-decelerate);
+    animation-delay: 0ms;
+  }
+
+  .animate-hero-subtitle {
+    animation: fadeInUp var(--animation-400) var(--ease-decelerate);
+    animation-delay: 100ms;
+  }
+
+  .animate-hero-description {
+    animation: fadeInUp var(--animation-400) var(--ease-decelerate);
+    animation-delay: 200ms;
+  }
+
+  /* Component-Specific Animation Helpers */
+  .button-hover-lift {
+    transition: 
+      transform var(--animation-100) var(--ease-standard),
+      box-shadow var(--animation-100) var(--ease-standard);
+  }
+
+  .button-hover-lift:hover {
+    transform: translateY(-2px);
+  }
+
+  .card-hover-float {
+    transition: 
+      transform var(--animation-200) var(--ease-standard),
+      box-shadow var(--animation-200) var(--ease-standard);
+  }
+
+  .card-hover-float:hover {
+    transform: translateY(-8px) scale(1.02);
+  }
+
+  .modal-fade-in {
+    animation: fadeIn var(--animation-300) var(--ease-decelerate);
+  }
+
+  .modal-scale-in {
+    animation: scaleIn var(--animation-300) var(--ease-decelerate);
+  }
+
+
+
+  /* ========================================
+     ACCESSIBILITY: REDUCED MOTION
+     WCAG 2.1 Level AA Compliance
+     ======================================== */
+
+  /* Respect user preference for reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    /* Provide subtle opacity-only alternatives for critical animations */
+    .animate-fadeIn,
+    .animate-fadeInUp,
+    .animate-fadeInDown,
+    .animate-scaleIn {
+      animation: fadeIn var(--animation-100) linear;
+    }
+
+    /* Disable decorative animations entirely */
+    .animate-subtle-float,
+    .animate-scroll-down-arrow,
+    .animate-pulse-slow,
+    .animate-pulse-slower,
+    .animate-spin,
+    .animate-shimmer {
+      animation: none;
+    }
+
+    /* Instant transitions for interactive elements */
+    .button-hover-lift,
+    .card-hover-float {
+      transition: none;
+    }
+  }
+
 
 
 
@@ -1494,7 +2139,7 @@
   .hero-circle-3 {
     position: absolute;
     bottom: 180px;
-    left: 25%;
+    left: 90px;
     width: 180px;
     height: 180px;
     border-radius: 9999px;
@@ -1920,8 +2565,16 @@
     background-color: #ffffff;
   }
 
+  .bg-card:hover {
+    background-color: #f9fafb; /* Light gray for light mode - FIXED v4.1.1 */
+  }
+
   .dark .bg-card {
     background-color: rgba(88, 28, 135, 0.5); /* purple-900/50 */
+  }
+
+  .dark .bg-card:hover {
+    background-color: #000000; /* Black for dark mode */
   }
 
   /* ============================================
@@ -2034,6 +2687,15 @@
 
   .dark .border-theme-toggle {
     border-color: rgb(126, 34, 206); /* purple-700 */
+  }
+
+  /* Theme Toggle Background - Light mode: white, Dark mode: purple */
+  .bg-theme-toggle {
+    background-color: rgb(255, 255, 255); /* pure white - NO purple */
+  }
+
+  .dark .bg-theme-toggle {
+    background-color: rgba(88, 28, 135, 0.5); /* purple-900/50 */
   }
 
   /* Theme Toggle Sun Icon Color - Exact Figma orange */
@@ -3259,4 +3921,169 @@
   .progress-transform {
     transform: translateX(calc(-100% + var(--progress-value, 0%)));
   }
+
+  /* ============================================
+     WORDPRESS-ALIGNED HELPER CLASSES (v5.0.0)
+     Utility classes for WordPress preset variables
+     ============================================ */
+
+  /* Typography Helpers - Font Families */
+  .font-brand-title {
+    font-family: var(--wp--preset--font-family--brand-title);
+  }
+
+  .font-brand-heading {
+    font-family: var(--wp--preset--font-family--brand-heading);
+  }
+
+  .font-brand-body {
+    font-family: var(--wp--preset--font-family--brand-body);
+  }
+
+  .font-brand-sans {
+    font-family: var(--wp--preset--font-family--brand-sans);
+  }
+
+  .font-brand-serif {
+    font-family: var(--wp--preset--font-family--brand-serif);
+  }
+
+  /* Typography Helpers - Font Sizes */
+  .text-size-100 { font-size: var(--wp--preset--font-size--100); }
+  .text-size-200 { font-size: var(--wp--preset--font-size--200); }
+  .text-size-300 { font-size: var(--wp--preset--font-size--300); }
+  .text-size-400 { font-size: var(--wp--preset--font-size--400); }
+  .text-size-500 { font-size: var(--wp--preset--font-size--500); }
+  .text-size-600 { font-size: var(--wp--preset--font-size--600); }
+  .text-size-700 { font-size: var(--wp--preset--font-size--700); }
+  .text-size-800 { font-size: var(--wp--preset--font-size--800); }
+  .text-size-900 { font-size: var(--wp--preset--font-size--900); }
+
+  .text-size-hero { font-size: var(--wp--preset--font-size--hero); }
+  .text-size-section { font-size: var(--wp--preset--font-size--section); }
+  .text-size-body-lg { font-size: var(--wp--preset--font-size--body-lg); }
+  .text-size-button { font-size: var(--wp--preset--font-size--button); }
+
+  /* Color Helpers - Background Colors */
+  .bg-color-base { background-color: var(--wp--preset--color--base); }
+  .bg-color-contrast { background-color: var(--wp--preset--color--contrast); }
+  .bg-color-primary { background-color: var(--wp--preset--color--primary); }
+  .bg-color-brand { background-color: var(--wp--preset--color--brand); }
+  .bg-color-cta { background-color: var(--wp--preset--color--cta); }
+
+  /* Color Helpers - Text Colors */
+  .text-color-base { color: var(--wp--preset--color--base); }
+  .text-color-contrast { color: var(--wp--preset--color--contrast); }
+  .text-color-primary { color: var(--wp--preset--color--primary); }
+  .text-color-brand { color: var(--wp--preset--color--brand); }
+  .text-color-cta { color: var(--wp--preset--color--cta); }
+
+  /* Color Helpers - Border Colors */
+  .border-color-neutral-200 { border-color: var(--wp--preset--color--neutral-200); }
+  .border-color-neutral-300 { border-color: var(--wp--preset--color--neutral-300); }
+  .border-color-purple-700 { border-color: var(--wp--preset--color--purple-700); }
+
+  /* Spacing Helpers - Padding */
+  .p-spacing-10 { padding: var(--wp--preset--spacing--10); }
+  .p-spacing-20 { padding: var(--wp--preset--spacing--20); }
+  .p-spacing-30 { padding: var(--wp--preset--spacing--30); }
+  .p-spacing-40 { padding: var(--wp--preset--spacing--40); }
+  .p-spacing-50 { padding: var(--wp--preset--spacing--50); }
+  .p-spacing-60 { padding: var(--wp--preset--spacing--60); }
+  .p-spacing-80 { padding: var(--wp--preset--spacing--80); }
+  .p-spacing-100 { padding: var(--wp--preset--spacing--100); }
+
+  /* Spacing Helpers - Vertical Padding */
+  .py-spacing-40 { padding-top: var(--wp--preset--spacing--40); padding-bottom: var(--wp--preset--spacing--40); }
+  .py-spacing-60 { padding-top: var(--wp--preset--spacing--60); padding-bottom: var(--wp--preset--spacing--60); }
+  .py-spacing-80 { padding-top: var(--wp--preset--spacing--80); padding-bottom: var(--wp--preset--spacing--80); }
+  .py-section { padding-top: var(--wp--preset--spacing--section); padding-bottom: var(--wp--preset--spacing--section); }
+
+  /* Spacing Helpers - Horizontal Padding */
+  .px-spacing-10 { padding-left: var(--wp--preset--spacing--10); padding-right: var(--wp--preset--spacing--10); }
+  .px-spacing-20 { padding-left: var(--wp--preset--spacing--20); padding-right: var(--wp--preset--spacing--20); }
+  .px-spacing-30 { padding-left: var(--wp--preset--spacing--30); padding-right: var(--wp--preset--spacing--30); }
+  .px-spacing-40 { padding-left: var(--wp--preset--spacing--40); padding-right: var(--wp--preset--spacing--40); }
+  .px-spacing-50 { padding-left: var(--wp--preset--spacing--50); padding-right: var(--wp--preset--spacing--50); }
+  .px-spacing-60 { padding-left: var(--wp--preset--spacing--60); padding-right: var(--wp--preset--spacing--60); }
+  .px-spacing-70 { padding-left: var(--wp--preset--spacing--70); padding-right: var(--wp--preset--spacing--70); }
+  .px-spacing-80 { padding-left: var(--wp--preset--spacing--80); padding-right: var(--wp--preset--spacing--80); }
+  .px-spacing-90 { padding-left: var(--wp--preset--spacing--90); padding-right: var(--wp--preset--spacing--90); }
+  .px-spacing-100 { padding-left: var(--wp--preset--spacing--100); padding-right: var(--wp--preset--spacing--100); }
+  .px-button { padding-left: var(--wp--preset--spacing--button-x); padding-right: var(--wp--preset--spacing--button-x); }
+
+  /* Spacing Helpers - Margin */
+  .mb-spacing-40 { margin-bottom: var(--wp--preset--spacing--40); }
+  .mb-spacing-60 { margin-bottom: var(--wp--preset--spacing--60); }
+  .mt-spacing-40 { margin-top: var(--wp--preset--spacing--40); }
+  .mt-spacing-60 { margin-top: var(--wp--preset--spacing--60); }
+
+  /* Spacing Helpers - Vertical Padding */
+  .py-spacing-10 { padding-top: var(--wp--preset--spacing--10); padding-bottom: var(--wp--preset--spacing--10); }
+  .py-spacing-20 { padding-top: var(--wp--preset--spacing--20); padding-bottom: var(--wp--preset--spacing--20); }
+  .py-spacing-30 { padding-top: var(--wp--preset--spacing--30); padding-bottom: var(--wp--preset--spacing--30); }
+  .py-spacing-40 { padding-top: var(--wp--preset--spacing--40); padding-bottom: var(--wp--preset--spacing--40); }
+  .py-spacing-50 { padding-top: var(--wp--preset--spacing--50); padding-bottom: var(--wp--preset--spacing--50); }
+  .py-spacing-60 { padding-top: var(--wp--preset--spacing--60); padding-bottom: var(--wp--preset--spacing--60); }
+  .py-button { padding-top: var(--wp--preset--spacing--button-y); padding-bottom: var(--wp--preset--spacing--button-y); }
+
+  /* Spacing Helpers - Gap */
+  .gap-spacing-10 { gap: var(--wp--preset--spacing--10); }
+  .gap-spacing-20 { gap: var(--wp--preset--spacing--20); }
+  .gap-spacing-30 { gap: var(--wp--preset--spacing--30); }
+  .gap-spacing-40 { gap: var(--wp--preset--spacing--40); }
+  .gap-spacing-50 { gap: var(--wp--preset--spacing--50); }
+  .gap-spacing-60 { gap: var(--wp--preset--spacing--60); }
+  .gap-block-sm { gap: var(--wp--preset--spacing--block-gap-sm); }
+  .gap-block-md { gap: var(--wp--preset--spacing--block-gap-md); }
+  .gap-block-lg { gap: var(--wp--preset--spacing--block-gap-lg); }
+
+  /* Shadow Helpers */
+  .shadow-100 { box-shadow: var(--wp--preset--shadow--100); }
+  .shadow-200 { box-shadow: var(--wp--preset--shadow--200); }
+  .shadow-300 { box-shadow: var(--wp--preset--shadow--300); }
+  .shadow-400 { box-shadow: var(--wp--preset--shadow--400); }
+  .shadow-500 { box-shadow: var(--wp--preset--shadow--500); }
+  .shadow-600 { box-shadow: var(--wp--preset--shadow--600); }
+
+  /* Border Radius Helpers */
+  .rounded-0 { border-radius: var(--wp--preset--border-radius--0); }
+  .rounded-100 { border-radius: var(--wp--preset--border-radius--100); }
+  .rounded-200 { border-radius: var(--wp--preset--border-radius--200); }
+  .rounded-300 { border-radius: var(--wp--preset--border-radius--300); }
+  .rounded-400 { border-radius: var(--wp--preset--border-radius--400); }
+  .rounded-500 { border-radius: var(--wp--preset--border-radius--500); }
+  .rounded-600 { border-radius: var(--wp--preset--border-radius--600); }
+  .rounded-700 { border-radius: var(--wp--preset--border-radius--700); }
+  .rounded-800 { border-radius: var(--wp--preset--border-radius--800); }
+  .rounded-900 { border-radius: var(--wp--preset--border-radius--900); }
+
+  /* Border Width Helpers */
+  .border-w-0 { border-width: var(--wp--custom--border-width--0); }
+  .border-w-100 { border-width: var(--wp--custom--border-width--100); }
+  .border-w-200 { border-width: var(--wp--custom--border-width--200); }
+  .border-w-300 { border-width: var(--wp--custom--border-width--300); }
+  .border-w-400 { border-width: var(--wp--custom--border-width--400); }
+
+  /* Animation Duration Helpers */
+  .duration-100 { transition-duration: var(--wp--custom--animation--100); }
+  .duration-200 { transition-duration: var(--wp--custom--animation--200); }
+  .duration-300 { transition-duration: var(--wp--custom--animation--300); }
+  .duration-400 { transition-duration: var(--wp--custom--animation--400); }
+
+  /* Easing Helpers */
+  .ease-standard { transition-timing-function: var(--wp--custom--ease--standard); }
+  .ease-decelerate { transition-timing-function: var(--wp--custom--ease--decelerate); }
+  .ease-accelerate { transition-timing-function: var(--wp--custom--ease--accelerate); }
+  .ease-sharp { transition-timing-function: var(--wp--custom--ease--sharp); }
+  .ease-bounce { transition-timing-function: var(--wp--custom--ease--bounce); }
+
+  /* Z-Index Helpers */
+  .z-dropdown { z-index: var(--wp--custom--z-index--dropdown); }
+  .z-sticky { z-index: var(--wp--custom--z-index--sticky); }
+  .z-fixed { z-index: var(--wp--custom--z-index--fixed); }
+  .z-modal-backdrop { z-index: var(--wp--custom--z-index--modal-backdrop); }
+  .z-modal { z-index: var(--wp--custom--z-index--modal); }
+  .z-popover { z-index: var(--wp--custom--z-index--popover); }
+  .z-tooltip { z-index: var(--wp--custom--z-index--tooltip); }
 }

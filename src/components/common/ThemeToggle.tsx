@@ -60,13 +60,13 @@ export function ThemeToggle() {
       onClick={toggleTheme}
       onKeyDown={handleKeyDown}
       aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-      className="relative w-[50px] h-[50px] flex items-center justify-center bg-[rgb(255,255,255)] dark:bg-purple-900/50 border-2 border-gray-200 dark:border-purple-700 rounded-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:focus:ring-purple-500/50 shadow-md hover:shadow-lg dark:shadow-lg group text-[rgb(47,65,125)]"
+      className="relative w-[48px] h-[48px] sm:w-[56px] sm:h-[56px] flex items-center justify-center bg-theme-toggle border-w-200 border-theme-toggle rounded-900 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:focus:ring-purple-500/50 shadow-theme-toggle hover:shadow-400 dark:shadow-400 group"
     >
       {/* Sun Icon (Light Mode) */}
       <Sun 
         className={`
-          absolute w-[22.5px] h-[22.5px] text-theme-sun
-          transition-all duration-300
+          absolute w-[22px] h-[22px] sm:w-[25px] sm:h-[25px] text-theme-sun
+          transition-all duration-200
           ${darkMode ? 'opacity-0 rotate-90 scale-0' : 'opacity-100 rotate-0 scale-100'}
           group-hover:scale-110
         `}
@@ -76,8 +76,8 @@ export function ThemeToggle() {
       {/* Moon Icon (Dark Mode) */}
       <Moon 
         className={`
-          absolute w-[22.5px] h-[22.5px] text-theme-moon
-          transition-all duration-300
+          absolute w-[22px] h-[22px] sm:w-[25px] sm:h-[25px] text-theme-moon
+          transition-all duration-200
           ${darkMode ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'}
           group-hover:scale-110
         `}

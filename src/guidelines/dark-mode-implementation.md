@@ -471,6 +471,44 @@ describe('Component Dark Mode', () => {
 </script>
 ```
 
+### Issue: `.bg-card:hover` Forces Black Background in Light Mode
+
+**Problem:** Cards with `.bg-card` class turn black on hover in light mode instead of light gray
+
+**Root Cause:** Global CSS file (`/styles/globals.css`) has incorrect hover state around line 2375:
+
+```css
+/* ❌ CURRENT - Forces black in both modes */
+.bg-card:hover {
+  background-color: #000000;  /* Wrong for light mode */
+}
+
+.dark .bg-card:hover {
+  background-color: #000000;  /* Correct for dark mode */
+}
+```
+
+**Solution:**
+Update `/styles/globals.css` to use light gray hover in light mode:
+
+```css
+/* ✅ CORRECT - Light gray for light mode, black for dark mode */
+.bg-card:hover {
+  background-color: #f9fafb;  /* gray-50 - very light gray */
+}
+
+.dark .bg-card:hover {
+  background-color: #000000;  /* Keep black for dark mode */
+}
+```
+
+**Affected Components:**
+- SliderCard (home page featured section)
+- PortfolioCard (portfolio page)
+- Any component using `.bg-card` class
+
+**Status:** 🐛 **KNOWN ISSUE** - Fix pending in v4.1.1
+
 ### Issue: Missing Dark Mode Styles
 
 **Problem:** Component doesn't change in dark mode

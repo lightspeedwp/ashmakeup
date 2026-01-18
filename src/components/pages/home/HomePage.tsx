@@ -188,7 +188,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
         description={heroContent.description}
         size="xl"
         layout="split"
-        className="bg-hero-section"
+        className="bg-hero-section text-[32px] px-[48px] py-[24px]"
         titleGradient={{ from: "pink-500", to: "purple-600" }}
         scrollArrowTarget="why-section"
         heroImages={heroContent.images}
@@ -197,7 +197,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
         actions={
           <button
             onClick={() => setCurrentPage("portfolio")}
-            className="w-full sm:w-auto px-button py-button bg-gradient-pink-purple-blue text-white font-body font-medium rounded-lg shadow-lg hover:shadow-xl transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50 justify-center text-center"
+            className="w-full sm:w-auto justify-center text-center bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50"
             aria-label="Navigate to portfolio page to view makeup artistry work"
           >
             {heroContent.ctaText}

@@ -407,9 +407,9 @@ export function ContactForm({
 
   if (isSubmitted) {
     return (
-      <div className={`space-y-6 ${className}`}>
-        <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 border-2 border-green-200 dark:border-green-700 rounded-xl p-fluid-xl text-center transition-colors duration-300">
-          <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-fluid-lg">
+      <div className={`flex flex-col gap-spacing-30 ${className}`}>
+        <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 border-w-200 border-green-200 dark:border-green-700 rounded-600 p-fluid-xl text-center transition-colors duration-200">
+          <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-900 flex items-center justify-center mx-auto mb-fluid-lg">
             <svg
               className="w-8 h-8 text-white"
               fill="none"
@@ -455,11 +455,11 @@ export function ContactForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className={`space-y-5 ${className}`}
+      className={`flex flex-col gap-spacing-30 ${className}`}
     >
       {/* Development status indicator - friendly and informative */}
       {serviceCheckComplete && !isEmailServiceConfigured && import.meta?.env?.DEV && (
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg p-fluid-md text-center mb-fluid-md">
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-w-200 border-blue-200 rounded-500 p-fluid-md text-center mb-fluid-md">
           <div className="flex items-center justify-center gap-fluid-xs">
             <svg
               className="w-5 h-5 text-blue-600"
@@ -484,7 +484,7 @@ export function ContactForm({
       {/* Error message display with enhanced accessibility */}
       {submitError && (
         <div 
-          className="bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-200 rounded-lg p-fluid-md text-center"
+          className="bg-gradient-to-r from-red-50 to-pink-50 border-w-200 border-red-200 rounded-500 p-fluid-md text-center"
           role="alert"
           aria-live="polite"
         >
@@ -537,7 +537,7 @@ export function ContactForm({
           required
           disabled={isSubmitting}
           maxLength={100}
-          className="contact-form-input w-full px-fluid-md py-fluid-md text-body-guideline font-body font-normal rounded-lg disabled:opacity-50 focus:outline-none focus:ring-4"
+          className="contact-form-input w-full px-fluid-md py-fluid-md text-body-guideline font-body font-normal rounded-500 disabled:opacity-50 focus:outline-none focus:ring-4"
           aria-label="Your full name (required)"
           aria-describedby="name-help"
         />
@@ -557,7 +557,7 @@ export function ContactForm({
           required
           disabled={isSubmitting}
           maxLength={150}
-          className="contact-form-input w-full px-fluid-md py-fluid-md text-body-guideline font-body font-normal rounded-lg disabled:opacity-50 focus:outline-none focus:ring-4"
+          className="contact-form-input w-full px-fluid-md py-fluid-md text-body-guideline font-body font-normal rounded-500 disabled:opacity-50 focus:outline-none focus:ring-4"
           aria-label="Your email address (required)"
           aria-describedby="email-help"
         />
@@ -577,7 +577,7 @@ export function ContactForm({
           required
           disabled={isSubmitting}
           maxLength={2000}
-          className="contact-form-input w-full px-fluid-md py-fluid-md text-body-guideline font-body font-normal resize-none rounded-lg disabled:opacity-50 focus:outline-none focus:ring-4"
+          className="contact-form-input w-full px-fluid-md py-fluid-md text-body-guideline font-body font-normal resize-none rounded-500 disabled:opacity-50 focus:outline-none focus:ring-4"
           aria-label="Your message (required)"
           aria-describedby="message-help"
         />
@@ -590,7 +590,7 @@ export function ContactForm({
       <button
         type="submit"
         disabled={isSubmitting || !serviceCheckComplete}
-        className="w-full justify-center text-center bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 disabled:from-purple-400 disabled:to-pink-400 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed flex items-center gap-fluid-xs focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50"
+        className="w-full justify-center text-center bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 disabled:from-purple-400 disabled:to-pink-400 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-200 rounded-500 shadow-400 hover:shadow-500 transform hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed flex items-center gap-fluid-xs focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50"
         aria-label={isSubmitting ? "Sending your message, please wait" : "Submit contact form to send message to Ash Shaw"}
         aria-describedby="submit-help"
       >

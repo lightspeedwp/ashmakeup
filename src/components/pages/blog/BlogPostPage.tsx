@@ -321,7 +321,7 @@ export function BlogPostPage({ slug, setCurrentPage }: BlogPostPageProps) {
           <nav className="mb-fluid-lg" aria-label="Blog navigation">
             <button
               onClick={handleBackToBlog}
-              className="inline-flex items-center gap-fluid-sm text-gradient-pink-purple-blue font-body font-medium text-fluid-lg hover:underline transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-pink-200 focus:ring-opacity-50 rounded-sm"
+              className="inline-flex items-center gap-fluid-sm text-gradient-pink-purple-blue font-body font-medium text-fluid-lg hover:underline transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-pink-200 dark:focus:ring-purple-500 focus:ring-opacity-50 rounded-sm"
               aria-label="Return to blog listing"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -331,7 +331,7 @@ export function BlogPostPage({ slug, setCurrentPage }: BlogPostPageProps) {
 
           {/* Article header */}
           <header className="mb-fluid-lg">
-            <h2 className="text-section-h2 font-heading font-bold text-gray-800 mb-fluid-md leading-tight">
+            <h2 className="text-section-h2 font-heading font-bold text-gray-800 dark:text-purple-100 mb-fluid-md leading-tight">
               {post.title}
             </h2>
 
@@ -357,16 +357,16 @@ export function BlogPostPage({ slug, setCurrentPage }: BlogPostPageProps) {
                   </div>
                 )}
                 <div>
-                  <div className="font-body font-medium text-gray-800 text-fluid-base">
+                  <div className="font-body font-medium text-gray-800 dark:text-purple-100 text-fluid-base">
                     {post.author?.name || 'Ash Shaw'}
                   </div>
-                  <div className="font-body font-normal text-gray-600 text-fluid-sm">
+                  <div className="font-body font-normal text-gray-600 dark:text-purple-300 text-fluid-sm">
                     Makeup Artist & Creative Director
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-fluid-md text-gray-600">
+              <div className="flex items-center gap-fluid-md text-gray-600 dark:text-purple-300">
                 <div className="flex items-center gap-fluid-sm">
                   <Calendar className="w-4 h-4" />
                   <time className="text-fluid-sm font-body" dateTime={post.publishedDate}>
@@ -408,40 +408,40 @@ export function BlogPostPage({ slug, setCurrentPage }: BlogPostPageProps) {
           <div className="prose prose-lg max-w-none mb-fluid-lg">
             {/* Excerpt */}
             {post.excerpt && (
-              <div className="text-fluid-lg font-body font-normal text-gray-700 italic mb-fluid-md p-fluid-md bg-gray-50 rounded-xl border-l-4 border-pink-400">
+              <div className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-200 italic mb-fluid-md p-fluid-md bg-gray-50 dark:bg-purple-900/50 rounded-xl border-l-4 border-pink-400 dark:border-purple-400">
                 {post.excerpt}
               </div>
             )}
 
             {/* Main content */}
             <div 
-              className="font-body text-body-guideline leading-relaxed"
+              className="font-body text-body-guideline leading-relaxed text-gray-800 dark:text-purple-100"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </div>
 
           {/* Tags and Share Section */}
-          <section className="border-t border-gray-200 pt-fluid-md mb-fluid-lg">
+          <section className="border-t border-gray-200 dark:border-purple-700 pt-fluid-md mb-fluid-lg">
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-fluid-md">
               {/* Tags Section */}
               <div className="flex-1">
-                <h3 className="text-fluid-lg font-heading font-semibold text-gray-800 mb-fluid-sm">
+                <h3 className="text-fluid-lg font-heading font-semibold text-gray-800 dark:text-purple-100 mb-fluid-sm">
                   Tagged Topics
                 </h3>
                 {post.tags && post.tags.length > 0 ? (
                   <div className="flex flex-wrap items-center gap-fluid-sm">
-                    <Tag className="w-4 h-4 text-gray-500" />
+                    <Tag className="w-4 h-4 text-gray-500 dark:text-purple-300" />
                     {post.tags.map((tag, index) => (
                       <span
                         key={index}
-                        className="inline-flex items-center px-fluid-sm py-fluid-xs bg-gray-100 hover:bg-gray-200 text-gray-700 font-body font-normal text-fluid-sm rounded-full transition-colors duration-200"
+                        className="inline-flex items-center px-fluid-sm py-fluid-xs bg-gray-100 dark:bg-purple-800 hover:bg-gray-200 dark:hover:bg-purple-700 text-gray-700 dark:text-purple-200 font-body font-normal text-fluid-sm rounded-full transition-colors duration-200"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-fluid-sm font-body text-gray-600 italic">
+                  <p className="text-fluid-sm font-body text-gray-600 dark:text-purple-300 italic">
                     No tags assigned to this article.
                   </p>
                 )}
@@ -449,7 +449,7 @@ export function BlogPostPage({ slug, setCurrentPage }: BlogPostPageProps) {
 
               {/* Share Section */}
               <div className="flex-shrink-0">
-                <h3 className="text-fluid-lg font-heading font-semibold text-gray-800 mb-fluid-sm lg:text-right">
+                <h3 className="text-fluid-lg font-heading font-semibold text-gray-800 dark:text-purple-100 mb-fluid-sm lg:text-right">
                   Share This Article
                 </h3>
                 <div className="flex justify-start lg:justify-end">
@@ -468,8 +468,8 @@ export function BlogPostPage({ slug, setCurrentPage }: BlogPostPageProps) {
 
           {/* Author bio section */}
           {post.author?.bio && (
-            <section className="bg-gradient-to-br from-gray-50 to-pink-50 rounded-xl p-fluid-lg mb-fluid-lg">
-              <h2 className="text-fluid-xl font-heading font-semibold text-gray-800 mb-fluid-md">
+            <section className="bg-gradient-to-br from-gray-50 to-pink-50 dark:bg-purple-900/50 rounded-xl p-fluid-lg mb-fluid-lg">
+              <h2 className="text-fluid-xl font-heading font-semibold text-gray-800 dark:text-purple-100 mb-fluid-md">
                 About the Author
               </h2>
               <div className="flex flex-col sm:flex-row gap-fluid-md">
@@ -485,10 +485,10 @@ export function BlogPostPage({ slug, setCurrentPage }: BlogPostPageProps) {
                   </div>
                 )}
                 <div>
-                  <h3 className="font-heading font-semibold text-gray-800 text-fluid-lg mb-fluid-sm">
+                  <h3 className="font-heading font-semibold text-gray-800 dark:text-purple-100 text-fluid-lg mb-fluid-sm">
                     {post.author.name}
                   </h3>
-                  <p className="font-body text-gray-700 text-body-guideline leading-relaxed">
+                  <p className="font-body text-gray-700 dark:text-purple-200 text-body-guideline leading-relaxed">
                     {post.author.bio}
                   </p>
                 </div>
@@ -497,17 +497,17 @@ export function BlogPostPage({ slug, setCurrentPage }: BlogPostPageProps) {
           )}
 
           {/* Related posts section - placeholder for future implementation */}
-          <section className="border-t border-gray-200 pt-fluid-lg">
-            <h2 className="text-fluid-xl font-heading font-semibold text-gray-800 mb-fluid-md text-center">
+          <section className="border-t border-gray-200 dark:border-purple-700 pt-fluid-lg">
+            <h2 className="text-fluid-xl font-heading font-semibold text-gray-800 dark:text-purple-100 mb-fluid-md text-center">
               Explore More Articles
             </h2>
-            <div className="bg-gradient-to-br from-gray-50 to-pink-50 rounded-xl p-fluid-lg text-center">
-              <p className="font-body text-gray-600 text-body-guideline mb-fluid-md">
+            <div className="bg-gradient-to-br from-gray-50 to-pink-50 dark:bg-purple-900/50 rounded-xl p-fluid-lg text-center">
+              <p className="font-body text-gray-600 dark:text-purple-200 text-body-guideline mb-fluid-md">
                 Discover more makeup artistry insights, tutorials, and behind-the-scenes content.
               </p>
               <button
                 onClick={handleBackToBlog}
-                className="inline-flex items-center gap-fluid-sm bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50"
+                className="inline-flex items-center gap-fluid-sm bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-purple-500 focus:ring-opacity-50"
               >
                 View All Articles
                 <BookOpen className="w-5 h-5" />

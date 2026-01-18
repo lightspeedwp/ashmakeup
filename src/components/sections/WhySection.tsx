@@ -78,7 +78,7 @@ export function WhySection({
     <div className="text-center">
       <button
         onClick={() => setCurrentPage("about")}
-        className="w-full sm:w-auto justify-center text-center bg-gradient-pink-purple-blue text-white px-button py-button rounded-lg font-body font-medium text-button-fluid shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-purple-500/50 focus:ring-opacity-50"
+        className="w-full sm:w-auto justify-center text-center bg-gradient-pink-purple-blue text-white px-button py-button rounded-lg font-body font-medium text-[32px] shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-purple-500/50 focus:ring-opacity-50"
         aria-label="Navigate to About page to read full story"
       >
         Read My Full Story
@@ -101,19 +101,19 @@ export function WhySection({
         return (
           <div
             key={index}
-            className="text-center cursor-pointer group bg-why-card backdrop-blur-sm rounded-why-card p-fluid-md shadow-why-card hover:shadow-xl transition-all duration-300 border border-why-card h-full"
+            className="why-card-container group bg-why-card backdrop-blur-sm rounded-why-card shadow-why-card hover:shadow-xl border border-why-card"
             onClick={() => setCurrentPage("about")}
           >
-            <div className="mb-fluid-lg flex justify-center transition-all duration-300">
+            <div className="why-card-icon-container">
               <IconComponent
                 size="lg"
-                className="w-32 h-32 group-hover:scale-110 transition-transform duration-500 icon-why-card"
+                className="why-card-icon icon-why-card"
               />
             </div>
-            <h3 className="text-fluid-sm sm:text-fluid-base lg:text-fluid-lg font-heading font-semibold text-why-card-title mb-fluid-lg leading-tight transition-all duration-300">
+            <h3 className="why-card-title-text font-heading font-semibold text-why-card-title">
               {reason.title}
             </h3>
-            <p className="text-fluid-lg font-body font-normal text-why-card-description leading-relaxed">
+            <p className="why-card-description-text font-body font-normal text-why-card-description">
               {reason.description}
             </p>
           </div>

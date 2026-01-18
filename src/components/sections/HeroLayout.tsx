@@ -183,14 +183,14 @@ export function HeroLayout({
 
     return (
       <div className="flex-1 max-w-2xl relative w-full">
-        <div className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px]">
+        <div className="relative w-full h-[50vh] sm:h-[55vh] md:h-[60vh] lg:h-[65vh] xl:h-[70vh] min-h-[400px] max-h-[800px]">
           {/* Render hero images with lightbox functionality */}
           {heroImages.map((image, index) => (
             <div
               key={index}
               className={
                 image.className ||
-                "absolute top-6 left-4 sm:top-12 sm:left-8 w-48 h-56 sm:w-72 sm:h-80 md:w-80 md:h-96 rounded-2xl bg-cover bg-center shadow-2xl transform rotate-3 z-20 border-4 border-white ring-4 ring-pink-200/50 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-3xl hover:z-30"
+                "absolute top-6 left-4 sm:top-12 sm:left-8 w-48 h-56 sm:w-72 sm:h-80 md:w-80 md:h-96 rounded-700 bg-cover bg-center shadow-600 transform rotate-3 z-20 border-w-400 border-white ring-4 ring-pink-200/50 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-600 hover:z-30"
               }
               style={{ backgroundImage: `url("${image.src}")` }}
               onClick={() => openLightbox(index)}
@@ -210,33 +210,33 @@ export function HeroLayout({
           {heroImages && heroImages.length > 0 && (
             <>
               <div
-                className="absolute top-8 right-6 sm:top-16 sm:right-12 w-3 h-3 sm:w-6 sm:h-6 bg-gradient-to-br from-pink-400 to-rose-500 rounded-full opacity-70 animate-pulse z-30 shadow-lg"
+                className="absolute top-8 right-6 sm:top-16 sm:right-12 w-3 h-3 sm:w-6 sm:h-6 bg-gradient-to-br from-pink-400 to-rose-500 rounded-900 opacity-70 animate-pulse z-30 shadow-400"
                 aria-hidden="true"
               />
               <div
-                className="absolute bottom-12 right-2 sm:bottom-24 sm:right-4 w-2 h-2 sm:w-4 sm:h-4 bg-gradient-to-br from-purple-400 to-violet-500 rounded-full opacity-70 animate-pulse delay-300 z-30 shadow-lg"
+                className="absolute bottom-12 right-2 sm:bottom-24 sm:right-4 w-2 h-2 sm:w-4 sm:h-4 bg-gradient-to-br from-purple-400 to-violet-500 rounded-900 opacity-70 animate-pulse delay-300 z-30 shadow-400"
                 aria-hidden="true"
               />
               <div
-                className="absolute top-16 left-0 sm:top-32 sm:left-1 w-2 h-2 sm:w-3 sm:h-3 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full opacity-70 animate-pulse delay-700 z-30 shadow-lg"
+                className="absolute top-16 left-0 sm:top-32 sm:left-1 w-2 h-2 sm:w-3 sm:h-3 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-900 opacity-70 animate-pulse delay-700 z-30 shadow-400"
                 aria-hidden="true"
               />
               <div
-                className="absolute bottom-6 left-8 sm:bottom-12 sm:left-16 w-3 h-3 sm:w-4 sm:h-4 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full opacity-70 animate-pulse delay-1000 z-30 shadow-lg"
+                className="absolute bottom-6 left-8 sm:bottom-12 sm:left-16 w-3 h-3 sm:w-4 sm:h-4 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-900 opacity-70 animate-pulse delay-1000 z-30 shadow-400"
                 aria-hidden="true"
               />
 
               {/* Additional enriching dots that adapt to different layouts */}
               <div
-                className="absolute top-1/3 left-1/2 w-1.5 h-1.5 sm:w-2.5 sm:h-2.5 bg-gradient-to-br from-teal-400 to-green-500 rounded-full opacity-60 animate-pulse delay-1500 z-30 shadow-lg"
+                className="absolute top-1/3 left-1/2 w-1.5 h-1.5 sm:w-2.5 sm:h-2.5 bg-gradient-to-br from-teal-400 to-green-500 rounded-900 opacity-60 animate-pulse delay-1500 z-30 shadow-400"
                 aria-hidden="true"
               />
               <div
-                className="absolute bottom-1/4 left-1/4 w-2 h-2 sm:w-3 sm:h-3 bg-gradient-to-br from-indigo-400 to-purple-600 rounded-full opacity-60 animate-pulse delay-2000 z-30 shadow-lg"
+                className="absolute bottom-1/4 left-1/4 w-2 h-2 sm:w-3 sm:h-3 bg-gradient-to-br from-indigo-400 to-purple-600 rounded-900 opacity-60 animate-pulse delay-2000 z-30 shadow-400"
                 aria-hidden="true"
               />
               <div
-                className="absolute top-2/3 right-1/4 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gradient-to-br from-rose-400 to-pink-600 rounded-full opacity-50 animate-pulse delay-2500 z-30 shadow-lg"
+                className="absolute top-2/3 right-1/4 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gradient-to-br from-rose-400 to-pink-600 rounded-900 opacity-50 animate-pulse delay-2500 z-30 shadow-400"
                 aria-hidden="true"
               />
             </>
@@ -244,13 +244,13 @@ export function HeroLayout({
 
           {/* Adaptive background gradient overlay that complements different hero image sets */}
           <div
-            className="absolute inset-0 bg-gradient-to-br from-pink-50/20 via-purple-50/15 to-blue-50/20 rounded-3xl pointer-events-none z-5"
+            className="absolute inset-0 bg-gradient-to-br from-pink-50/20 via-purple-50/15 to-blue-50/20 rounded-800 pointer-events-none z-5"
             aria-hidden="true"
           />
 
           {/* Subtle depth enhancement for better visual hierarchy */}
           <div
-            className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent rounded-3xl pointer-events-none z-10"
+            className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent rounded-800 pointer-events-none z-10"
             aria-hidden="true"
           />
         </div>
@@ -258,15 +258,15 @@ export function HeroLayout({
     );
   };
   const sizeClasses = {
-    sm: "py-fluid-2xl px-fluid-md",
-    md: "py-fluid-3xl px-fluid-md",
-    lg: "py-fluid-4xl px-fluid-md",
-    xl: "py-fluid-5xl px-fluid-md",
+    sm: "py-section-sm px-section-sm",
+    md: "py-section-md px-section-md",
+    lg: "py-section-lg px-section-lg",
+    xl: "py-section-lg px-section-lg",
   };
 
   // Fullscreen mode overrides size classes
   const containerClasses = fullscreen
-    ? "min-h-screen flex items-center justify-center px-fluid-md py-0"
+    ? "min-h-screen flex items-center justify-center px-section-md py-0"
     : sizeClasses[size];
 
   // Default background: Soft pastel gradient in light mode, dark purple in dark mode
@@ -309,7 +309,7 @@ export function HeroLayout({
 
   return (
     <section
-      className={`relative overflow-x-hidden min-h-screen flex flex-col transition-colors duration-300 ${backgroundClass} ${containerClasses} ${className}`}
+      className={`relative overflow-x-hidden flex flex-col px-4 sm:px-8 transition-colors duration-300 ${backgroundClass} ${containerClasses} ${className}`}
     >
       {/* Decorative Floating Circles - Light Mode Only */}
       <div className="absolute inset-0 pointer-events-none dark:opacity-0 opacity-100 transition-opacity duration-300" aria-hidden="true">
@@ -338,7 +338,7 @@ export function HeroLayout({
         <div className={layoutClasses[layout]}>
           {/* Text Content */}
           <div
-            className={`${contentMaxWidth[layout]} pt-fluid-lg`}
+            className={`${contentMaxWidth[layout]} pt-fluid-md`}
           >
             <h1
               className={`text-fluid-3xl font-title font-normal mb-fluid-md transition-colors duration-300 ${titleGradientClass}`}

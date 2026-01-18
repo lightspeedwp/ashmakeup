@@ -117,7 +117,7 @@ export function FeaturedSection({
     <>
       <section
         id="work"
-        className="relative bg-featured-section py-fluid-3xl px-fluid-lg w-full transition-colors duration-300"
+        className="relative bg-featured-section py-section-md-plus px-section-md w-full transition-colors duration-300 px-[32px] py-[144px]"
       >
         {/* Decorative Blurred Circles */}
         <BlurredCircles variant="featured" />
@@ -128,7 +128,7 @@ export function FeaturedSection({
             <h2 className="text-section-h2 font-heading font-semibold dark:text-red-800 mb-fluid-md text-[rgb(255,255,255)]">
               Featured Work
             </h2>
-            <p className="text-body-guideline font-body font-normal leading-relaxed max-w-3xl mx-auto mb-fluid-lg text-[rgb(255,233,246)]">
+            <p className="text-body-guideline font-body font-normal leading-relaxed max-w-3xl mx-auto mb-fluid-lg dark:text-purple-100 text-[rgb(255,255,255)]">
               Discover the artistry and passion behind each creation — from vibrant festival face art to stunning UV-reactive designs that bring joy and connection to every celebration.
             </p>
           </div>
@@ -179,7 +179,7 @@ export function FeaturedSection({
                       work.subtitle ? `${work.subtitle} - ${work.description}` : work.description,
                     );
                   }}
-                  className="w-full"
+                  className="w-full p-fluid-sm"
                 />
               )) : (
                 <div className="col-span-2 text-center py-8">
@@ -193,7 +193,7 @@ export function FeaturedSection({
           <div className="text-center">
             <button
               onClick={() => setCurrentPage("portfolio")}
-              className="w-full sm:w-auto justify-center text-center bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus-ring-primary"
+              className="w-full sm:w-auto justify-center text-center bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-3 py-1.5 sm:px-button sm:py-button font-body font-medium text-[32px] transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus-ring-primary"
               aria-label="Navigate to full portfolio page to view all makeup artistry work"
             >
               View Full Portfolio

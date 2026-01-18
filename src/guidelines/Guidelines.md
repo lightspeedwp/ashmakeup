@@ -2,8 +2,28 @@
 
 This document defines the core design, development, and technical guidelines for building and maintaining the Ash Shaw Makeup Portfolio in **Figma Make**. It serves as the entry point to a comprehensive design system with detailed documentation organized in separate files.
 
-**Version:** 4.0.0  
+**Version:** 5.0.0  
 **Last Updated:** January 2025
+
+## 📋 Major Update (v5.0.0)
+
+**🚀 WordPress-Aligned Design Token System**
+
+This version introduces a complete restructuring of our CSS variable system to align with WordPress theme.json standards while maintaining our existing visual design. This architectural improvement provides:
+
+- ✅ **Single Source of Truth:** Predictable, token-based system
+- ✅ **WordPress Standards:** CSS variables follow `--wp--preset--` naming conventions
+- ✅ **Numeric Slugs:** Size-like presets use numeric scale (100-900)
+- ✅ **Semantic Colors:** Color presets use semantic names + prefixed scales
+- ✅ **Future-Proof:** Compatible with WordPress block theme ecosystem
+
+**Migration Impact:**
+- CSS variables renamed from custom names to WordPress-aligned names
+- Design tokens reorganized into WordPress preset categories
+- No visual changes to the website
+- Better maintainability and predictability
+
+**See:** [wordpress-preset-system.md](./wordpress-preset-system.md) for complete implementation details
 
 ## 📚 How to Use These Guidelines
 
@@ -48,6 +68,32 @@ Before using ANY icon, check **[overview-icons.md](./overview-icons.md)** for th
 
 ## 🚨 CRITICAL STYLING RULE - MUST FOLLOW
 
+### ⚠️ Global CSS Classes Over Tailwind Utilities
+
+**SYSTEMATIC TRANSITION IN PROGRESS:** This codebase is actively migrating from Tailwind utility classes to WordPress-aligned global CSS classes defined in `/styles/globals.css`.
+
+**Priority Order for Styling:**
+1. **✅ FIRST CHOICE:** Use global CSS classes from `/styles/globals.css` (e.g., `.bg-card`, `.text-hero-h1`, `.py-section-md`)
+2. **⚠️ FALLBACK ONLY:** Use Tailwind utilities ONLY when global CSS class doesn't exist
+3. **🚫 NEVER:** Use inline styles
+
+```tsx
+// ✅ CORRECT - Global CSS classes from globals.css
+<div className="bg-card p-card-responsive rounded-card-default">
+  <h2 className="text-section-h2 text-card-title">Title</h2>
+</div>
+
+// ⚠️ ACCEPTABLE - Tailwind as fallback when global class unavailable
+<div className="flex items-center gap-4">
+  <span className="text-gray-600 dark:text-gray-300">Text</span>
+</div>
+
+// ❌ WRONG - Inline styles
+<div style={{ padding: '16px', backgroundColor: '#ffffff' }}>
+  Content
+</div>
+```
+
 ### ⚠️ Base Component Override Requirements
 
 **YOU MUST EXPLICITLY SET ALL STYLING** from guidelines to override component defaults:
@@ -70,27 +116,6 @@ Before using ANY icon, check **[overview-icons.md](./overview-icons.md)** for th
 ### 🚫 NO INLINE STYLES - CRITICAL RULE
 
 **NEVER USE INLINE STYLES.** All styling must be done through CSS classes defined in `/styles/globals.css` or Tailwind utility classes.
-
-```tsx
-// ❌ WRONG - Inline styles are forbidden
-<h2 style={{ background: 'linear-gradient(...)', color: '#fff' }}>
-  Title
-</h2>
-
-// ✅ CORRECT - Use CSS classes from globals.css
-<h2 className="text-gradient-pink-purple-blue-dark">
-  Title
-</h2>
-```
-
-**Why this rule exists:**
-- **Maintainability**: Centralized styling is easier to update
-- **Consistency**: Design tokens ensure brand consistency
-- **Performance**: CSS classes are more performant than inline styles
-- **Dark Mode**: Theme switching requires CSS classes, not inline styles
-- **Guidelines Compliance**: All styling must follow design token system
-
-**Exception:** Only use inline styles for dynamic values that cannot be pre-defined (e.g., user-generated content positions, API-driven colors). Even then, prefer CSS variables when possible.
 
 ---
 
@@ -583,7 +608,38 @@ Icon categories and usage patterns:
 
 ## 🔄 Version History
 
-- **v4.0.0** (Current) - Restructured guidelines into modular files
+- **v5.0.0** (Current - January 2025) - WordPress-Aligned Design Token System
+  - **✅ COMPLETE:** WordPress theme.json preset standards implemented
+  - **CSS Variables:** Full `--wp--preset--` and `--wp--custom--` naming conventions
+  - **Typography Presets:** Numeric slugs (100-900) for font sizes
+  - **Color Presets:** Semantic roles + prefixed numeric scales
+  - **Spacing Presets:** Numeric scale (10-100) + fluid extensions
+  - **Shadow Presets:** Numeric elevation scale (100-600)
+  - **Border Presets:** Numeric radius scale (0-900) + width custom tokens
+  - **Helper Classes:** 150+ utility classes for WordPress variables
+  - **✅ FIXED:** `.bg-card:hover` light mode issue (v4.1.1)
+  - **Documentation:** Complete wordpress-preset-system.md guide
+  - **Migration:** Non-breaking phased approach, existing variables preserved
+  - **See:** [wordpress-preset-system.md](./wordpress-preset-system.md) for details
+
+- **v4.1.0** - Systematic CSS cleanup and optimization
+  - **CSS Migration:** Active transition from Tailwind utilities to WordPress-aligned global CSS classes
+  - **Spacing Optimizations:**
+    - Halved vertical padding for all hero section classes (50% VH/VW reduction)
+    - Added `.py-section-md-plus` class (15% increase over `.py-section-md`)
+    - Created Why Section card system with 50% reduced padding and spacing
+  - **Light/Dark Mode Refinements:**
+    - Fixed ThemeToggle purple background issue in light mode
+    - Updated PortfolioCard: white bg + dark text (light), black bg + light text (dark)
+    - Enhanced SliderCard hover states for proper light/dark mode behavior
+  - **Responsive Improvements:**
+    - HeroLayout now uses viewport-based fluid heights (50vh-70vh)
+    - Improved full-width responsiveness for hero media containers
+  - **Component Updates:**
+    - All sections now have consistent top/bottom/left/right padding
+    - Enhanced card hover effects with proper contrast in both modes
+
+- **v4.0.0** - Restructured guidelines into modular files
   - Separated component, token, and icon documentation
   - Created overview files for better navigation
   - Improved AI agent instructions and reading order

@@ -67,15 +67,15 @@ export function Footer({ setCurrentPage }: FooterProps) {
 
   return (
     <footer
-      className="relative bg-footer-section px-fluid-md py-footer transition-colors duration-300"
+      className="relative bg-footer-section px-fluid-md py-footer transition-colors duration-200"
     >
       {/* Background decoration - responsive */}
       <div
-        className="absolute top-1/4 right-1/4 w-24 h-24 sm:w-48 sm:h-48 bg-footer-decoration-1 rounded-full opacity-10 dark:opacity-20 blur-3xl transition-opacity duration-300"
+        className="absolute top-1/4 right-1/4 w-24 h-24 sm:w-48 sm:h-48 bg-footer-decoration-1 rounded-900 opacity-10 dark:opacity-20 blur-3xl transition-opacity duration-200"
         aria-hidden="true"
       />
       <div
-        className="absolute bottom-1/4 left-1/4 w-32 h-32 sm:w-64 sm:h-64 bg-footer-decoration-2 rounded-full opacity-10 dark:opacity-20 blur-3xl transition-opacity duration-300"
+        className="absolute bottom-1/4 left-1/4 w-32 h-32 sm:w-64 sm:h-64 bg-footer-decoration-2 rounded-900 opacity-10 dark:opacity-20 blur-3xl transition-opacity duration-200"
         aria-hidden="true"
       />
 
@@ -94,7 +94,7 @@ export function Footer({ setCurrentPage }: FooterProps) {
 
         {/* Separator line */}
         <div className="mb-fluid-lg">
-          <div className="w-full h-px bg-footer-separator transition-colors duration-300" />
+          <div className="w-full h-px bg-footer-separator transition-colors duration-200" />
         </div>
 
         {/* Social Links and Logo - Stacked and Centered */}
@@ -104,7 +104,7 @@ export function Footer({ setCurrentPage }: FooterProps) {
 
           {/* Logo - Centered Below */}
           <div
-            className="cursor-pointer transform hover:scale-105 transition-transform duration-300 focus-ring-footer-logo"
+            className="cursor-pointer transform hover:scale-105 transition-transform duration-200 focus-ring-footer-logo"
             onClick={handleLogoClick}
             role="button"
             tabIndex={0}

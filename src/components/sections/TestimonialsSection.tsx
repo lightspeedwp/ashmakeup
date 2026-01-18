@@ -28,8 +28,8 @@ export function TestimonialsSection() {
   };
   
   return (
-    <section className="py-section bg-testimonials-section transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-fluid-md">
+    <section className="py-section-md px-section-md bg-testimonials-section transition-colors duration-300 px-[47px] py-[144px]">
+      <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-fluid-2xl">
           <h2 className="text-section-h2 font-heading font-bold text-gradient-pink-purple-blue text-testimonials-heading mb-fluid-sm">

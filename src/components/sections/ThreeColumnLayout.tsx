@@ -105,12 +105,12 @@ export function ThreeColumnLayout({
   };
 
   const paddingClasses = {
-    sm: "py-fluid-sm px-fluid-md",
-    md: "py-fluid-md px-fluid-md",
-    lg: "py-fluid-lg px-fluid-md",
-    xl: "py-fluid-xl px-fluid-md",
-    "2xl": "py-fluid-2xl px-fluid-md",
-    "3xl": "py-fluid-3xl px-fluid-md",
+    sm: "py-section-sm px-section-sm",
+    md: "py-section-md px-section-md",
+    lg: "py-section-lg px-section-lg",
+    xl: "py-section-lg px-section-lg",
+    "2xl": "py-section-lg px-section-lg",
+    "3xl": "py-section-lg px-section-lg",
   };
 
   const alignmentClasses = {
@@ -142,7 +142,7 @@ export function ThreeColumnLayout({
   return (
     <section
       id={id}
-      className={`relative overflow-hidden ${paddingClasses[padding]} ${className} bg-three-column-layout transition-colors duration-300`}
+      className={`relative overflow-hidden px-4 md:px-8 ${paddingClasses[padding]} ${className} bg-three-column-layout transition-colors duration-300`}
     >
       {/* Decorative Elements */}
       {decorativeElements && (

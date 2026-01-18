@@ -1,65 +1,71 @@
 # Typography Design Tokens
 
-**Version:** 4.0.0  
-**Last Updated:** January 2025
+**Version:** 5.0.0  
+**Last Updated:** January 2025  
+**WordPress Theme.json Compatible:** ✅
 
-Complete typography system for the Ash Shaw Makeup Portfolio, featuring fluid responsive scaling, semantic HTML hierarchy, and WordPress-inspired best practices.
+Complete typography system for the Ash Shaw Makeup Portfolio, aligned with WordPress block theme standards using numeric font size scale (100-900) with fluid typography.
 
-## ✅ Verified Against Codebase
+## ✅ WordPress Theme.json Alignment (v5.0.0)
 
-This document has been verified against `/styles/globals.css` as of January 2025. All typography utilities, font families, font weights, and fluid scaling values match the current implementation.
+This typography system now uses WordPress `--wp--preset--` CSS variables:
 
-**Verified Components:**
-- ✅ Font face declarations (Google Fonts CDN)
-- ✅ Variable font system with custom weights
-- ✅ All fluid typography classes and clamp() values
-- ✅ Semantic HTML base styles
-- ✅ Font weight variables (including custom book/demibold weights)
+- ✅ **Font Families:** `--wp--preset--font-family--{slug}` (semantic slugs)
+- ✅ **Font Sizes:** `--wp--preset--font-size--{slug}` (numeric slugs 100-900)
+- ✅ **Fluid Typography:** Responsive clamp() functions for all sizes
+- ✅ **Helper Classes:** `.text-size-{slug}`, `.font-brand-{slug}`
+
+**See Also:** [wordpress-preset-system.md](../wordpress-preset-system.md) for complete implementation details
+
+**Key Difference from Previous Version:**
+- **Before:** Custom variables (--text-hero-h1, --text-section-h2, etc.)
+- **Now:** WordPress presets (--wp--preset--font-size--800, --wp--preset--font-size--700, etc.)
+- **Legacy Support:** Old variables preserved for backward compatibility
 
 ## 📋 Table of Contents
 
-1. [Typography Philosophy](#typography-philosophy)
-2. [Font Families](#font-families)
-3. [Variable Font System](#variable-font-system)
-4. [Fluid Typography Scale](#fluid-typography-scale)
-5. [Semantic HTML Usage](#semantic-html-usage)
-6. [Responsive Behavior](#responsive-behavior)
-
----
-
-## Typography Philosophy
-
-### Design Principles
-
-- **Fluid Scaling:** Uses `clamp()` functions for smooth responsive behavior
-- **Semantic HTML:** Proper HTML elements for SEO and accessibility
-- **Hierarchy:** Clear visual hierarchy through size and weight
-- **Readability:** Optimized line heights and letter spacing
-- **Performance:** Variable fonts reduce file requests by 73%
-
-### WordPress-Inspired Approach
-
-The typography system is inspired by WordPress 6.6+ fluid typography:
-- Low specificity base styles (easy to override)
-- `clamp()` functions for smooth scaling without media queries
-- Mobile-first responsive design
-- Golden ratio scale (1.25) for harmonious progression
+1. [Font Families](#font-families)
+2. [WordPress Numeric Typography Scale](#wordpress-numeric-typography-scale)
+3. [Fluid Typography System](#fluid-typography-system)
+4. [Helper Classes](#helper-classes)
+5. [Semantic HTML Mapping](#semantic-html-mapping)
+6. [Migration Guide](#migration-guide)
+7. [Common Typography Patterns](#common-typography-patterns)
 
 ---
 
 ## Font Families
 
-### Primary Fonts
+### WordPress Font Family Presets
+
+```css
+/* WordPress-Aligned Font Family Variables */
+--wp--preset--font-family--brand-title: "Righteous", "Arial Black", sans-serif;
+--wp--preset--font-family--brand-heading: "Playfair Display", "Times New Roman", serif;
+--wp--preset--font-family--brand-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+--wp--preset--font-family--brand-sans: var(--wp--preset--font-family--brand-body);
+--wp--preset--font-family--brand-serif: var(--wp--preset--font-family--brand-heading);
+```
+
+### Primary Fonts (Unchanged)
+
+The Ash Shaw brand uses these fonts (preserved from original design):
 
 #### Playfair Display (Serif)
 **Usage:** Headings, elegant titles, sophisticated moments
 
 ```css
-/* CSS Variable */
+/* WordPress CSS Variable */
+--wp--preset--font-family--brand-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+--wp--preset--font-family--brand-serif: var(--wp--preset--font-family--brand-heading);
+
+/* Legacy Variable (Preserved) */
 --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
 
-/* Tailwind Class */
-.font-heading
+/* Helper Classes */
+.font-brand-heading
+.font-brand-serif
+.font-heading /* legacy */
 ```
 
 **Characteristics:**
@@ -70,7 +76,7 @@ The typography system is inspired by WordPress 6.6+ fluid typography:
 
 **Example:**
 ```tsx
-<h1 className="font-heading font-semibold text-section-h2">
+<h1 className="font-brand-heading font-bold text-size-700">
   Elegant Section Title
 </h1>
 ```
@@ -79,11 +85,17 @@ The typography system is inspired by WordPress 6.6+ fluid typography:
 **Usage:** Body text, UI elements, readable content
 
 ```css
-/* CSS Variable */
+/* WordPress CSS Variable */
+--wp--preset--font-family--brand-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+--wp--preset--font-family--brand-sans: var(--wp--preset--font-family--brand-body);
+
+/* Legacy Variable (Preserved) */
 --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-/* Tailwind Class */
-.font-body
+/* Helper Classes */
+.font-brand-body
+.font-brand-sans
+.font-body /* legacy */
 ```
 
 **Characteristics:**
@@ -94,533 +106,691 @@ The typography system is inspired by WordPress 6.6+ fluid typography:
 
 **Example:**
 ```tsx
-<p className="font-body font-normal text-body-guideline text-gray-700">
+<p className="font-brand-body font-normal text-size-200">
   Readable body text with optimal line height
 </p>
 ```
 
 #### Righteous (Display)
-**Usage:** Hero titles, main headlines, special moments
+**Usage:** Hero titles, main branding, attention-grabbing headlines
 
 ```css
-/* CSS Variable */
---font-title: 'Righteous', cursive, fantasy;
+/* WordPress CSS Variable */
+--wp--preset--font-family--brand-title: 'Righteous', sans-serif;
 
-/* Tailwind Class */
-.font-title
+/* Legacy Variable (Preserved) */
+--font-title: 'Righteous', sans-serif;
+
+/* Helper Classes */
+.font-brand-title
+.font-title /* legacy */
 ```
 
 **Characteristics:**
-- Bold display font
-- High visual impact
-- Use sparingly for hero moments
-- Fixed weight (400 only)
+- Bold, modern display font
+- High impact for hero sections
+- Best for large sizes only
+- Single weight (400/normal)
 
 **Example:**
 ```tsx
-<h1 className="font-title font-bold text-hero-h1 text-gradient-pink-purple-blue">
+<h1 className="font-brand-title text-gradient-pink-purple-blue">
   Hi, I'm Ash Shaw
 </h1>
 ```
 
 ---
 
-## Variable Font System
+## WordPress Numeric Typography Scale
 
-### Performance Benefits
+### Core Font Size Scale
 
-**Before (Individual Fonts):**
-- 11 font files
-- ~400KB+ total size
-- 11 HTTP requests
-
-**After (Variable Fonts):**
-- 3 font files
-- ~200KB total size
-- 3 HTTP requests
-- ✅ **73% fewer requests**
-- ✅ **50% smaller download**
-- ✅ **Infinite weight flexibility**
-
-### Font Weight Variables
+All font sizes use **numeric slugs (100-900)** with fluid typography:
 
 ```css
-/* Standard Weights */
---font-weight-light: 300;
---font-weight-regular: 400;
---font-weight-medium: 500;
---font-weight-semibold: 600;
---font-weight-bold: 700;
---font-weight-extrabold: 800;  /* NEW with variable fonts */
-
-/* Custom Intermediate Weights (Variable fonts only) */
---font-weight-book: 450;       /* Between regular and medium */
---font-weight-demibold: 650;   /* Between semibold and bold */
-
-/* Tailwind Classes */
-.font-light       /* 300 */
-.font-normal      /* 400 */
-.font-book        /* 450 - Custom! */
-.font-medium      /* 500 */
-.font-semibold    /* 600 */
-.font-demibold    /* 650 - Custom! */
-.font-bold        /* 700 */
-.font-extrabold   /* 800 - NEW! */
+/* WordPress Theme.json Typography Scale */
+--wp--preset--font-size--100: clamp(0.65rem, 0.9vw, 0.75rem);      /* Tiny */
+--wp--preset--font-size--200: clamp(0.875rem, 1.1vw, 1rem);        /* Base */
+--wp--preset--font-size--300: clamp(1rem, 1.3vw, 1.25rem);         /* Small */
+--wp--preset--font-size--400: clamp(1.25rem, 1.6vw, 1.5rem);       /* Medium */
+--wp--preset--font-size--500: clamp(1.5rem, 2.2vw, 2rem);          /* Large */
+--wp--preset--font-size--600: clamp(2rem, 2.8vw, 2.5rem);          /* X-Large */
+--wp--preset--font-size--700: clamp(2.5rem, 3.5vw, 3rem);          /* XX-Large */
+--wp--preset--font-size--800: clamp(3rem, 4.5vw, 4rem);            /* Huge */
+--wp--preset--font-size--900: clamp(3.5rem, 6vw, 5rem);            /* Gigantic */
 ```
 
-**Example:**
-```tsx
-// Standard weights
-<h2 className="font-heading font-semibold text-section-h2">Section Title</h2>
-<p className="font-body font-normal text-body-guideline">Body text</p>
+### Visual Typography Scale
 
-// NEW: Custom weights with variable fonts
-<h3 className="font-heading font-book text-fluid-xl">Subtle Heading</h3>
-<button className="font-body font-demibold text-button-fluid">Button Text</button>
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│           WORDPRESS NUMERIC TYPOGRAPHY SCALE (Fluid)                 │
+└─────────────────────────────────────────────────────────────────────┘
 
-// NEW: Extra bold emphasis
-<span className="font-body font-extrabold text-fluid-2xl">Featured Text</span>
+MOBILE (320px) ────────────────────────────────→ DESKTOP (1440px)
+
+--font-size--100 (Tiny)
+▓                                                ▓▓
+0.65rem (10.4px)                                 0.75rem (12px)
+
+--font-size--200 (Base)
+▓▓                                               ▓▓▓
+0.875rem (14px)                                  1rem (16px)
+
+--font-size--300 (Small)
+▓▓▓                                              ▓▓▓▓
+1rem (16px)                                      1.25rem (20px)
+
+--font-size--400 (Medium)
+▓▓▓▓                                             ▓▓▓▓▓
+1.25rem (20px)                                   1.5rem (24px)
+
+--font-size--500 (Large)
+▓▓▓▓▓▓                                           ▓▓▓▓▓▓▓▓
+1.5rem (24px)                                    2rem (32px)
+
+--font-size--600 (X-Large)
+▓▓▓▓▓▓▓▓                                         ▓▓▓▓▓▓▓▓▓▓
+2rem (32px)                                      2.5rem (40px)
+
+--font-size--700 (XX-Large)
+▓▓▓▓▓▓▓▓▓▓                                       ▓▓▓▓▓▓▓▓▓▓▓▓
+2.5rem (40px)                                    3rem (48px)
+
+--font-size--800 (Huge)
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓                                   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+3rem (48px)                                      4rem (64px)
+
+--font-size--900 (Gigantic)
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓                                ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+3.5rem (56px)                                    5rem (80px)
+```
+
+### Font Size Progression
+
+| Slug | Min Size | Max Size | Name | Use Case |
+|------|----------|----------|------|----------|
+| `100` | 0.65rem (10.4px) | 0.75rem (12px) | Tiny | Fine print, captions |
+| `200` | 0.875rem (14px) | 1rem (16px) | **Base** | Body text default |
+| `300` | 1rem (16px) | 1.25rem (20px) | Small | Large body text, small headings |
+| `400` | 1.25rem (20px) | 1.5rem (24px) | Medium | H6, subheadings |
+| `500` | 1.5rem (24px) | 2rem (32px) | Large | H5, section subheadings |
+| `600` | 2rem (32px) | 2.5rem (40px) | X-Large | H4, card titles |
+| `700` | 2.5rem (40px) | 3rem (48px) | XX-Large | H3, section titles |
+| `800` | 3rem (48px) | 4rem (64px) | Huge | H2, page titles |
+| `900` | 3.5rem (56px) | 5rem (80px) | Gigantic | H1, hero titles |
+
+---
+
+## Fluid Typography System
+
+### How Fluid Typography Works
+
+WordPress uses `clamp()` for responsive font sizes without media queries:
+
+```css
+/* Anatomy of clamp() */
+font-size: clamp(
+  [minimum size],
+  [preferred size with viewport scaling],
+  [maximum size]
+);
+
+/* Example: Font Size 400 */
+font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+/*              ↑          ↑        ↑
+ *           minimum    fluid    maximum
+ *          (mobile)   scaling  (desktop)
+ */
+```
+
+### Viewport Scaling Configuration
+
+```css
+/* Global Fluid Typography Settings */
+--wp--typography--fluid--min-font-size: 0.875rem;  /* 14px minimum */
+--wp--typography--fluid--max-viewport-width: 1440px;
+--wp--typography--fluid--min-viewport-width: 320px;
+```
+
+### Benefits of Fluid Typography
+
+- ✅ **No breakpoints needed** - Smooth scaling across all viewport sizes
+- ✅ **Automatic clamping** - Prevents too-small or too-large text
+- ✅ **Better accessibility** - Text scales naturally with viewport
+- ✅ **Consistent hierarchy** - Maintains proportions at all sizes
+
+---
+
+## Helper Classes
+
+### Font Size Classes
+
+```css
+/* Font Size Helper Classes */
+.text-size-100 { font-size: var(--wp--preset--font-size--100); }
+.text-size-200 { font-size: var(--wp--preset--font-size--200); }
+.text-size-300 { font-size: var(--wp--preset--font-size--300); }
+.text-size-400 { font-size: var(--wp--preset--font-size--400); }
+.text-size-500 { font-size: var(--wp--preset--font-size--500); }
+.text-size-600 { font-size: var(--wp--preset--font-size--600); }
+.text-size-700 { font-size: var(--wp--preset--font-size--700); }
+.text-size-800 { font-size: var(--wp--preset--font-size--800); }
+.text-size-900 { font-size: var(--wp--preset--font-size--900); }
+```
+
+### Brand Font Classes
+
+```css
+/* Brand Font Helper Classes */
+.font-brand-title { font-family: var(--wp--preset--font-family--brand-title); }
+.font-brand-heading { font-family: var(--wp--preset--font-family--brand-heading); }
+.font-brand-body { font-family: var(--wp--preset--font-family--brand-body); }
+.font-brand-sans { font-family: var(--wp--preset--font-family--brand-sans); }
+.font-brand-serif { font-family: var(--wp--preset--font-family--brand-serif); }
 ```
 
 ---
 
-## Fluid Typography Scale
+## Semantic HTML Mapping
 
-### Complete Scale Hierarchy
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│              FLUID TYPOGRAPHY SCALE VISUALIZATION                    │
-└─────────────────────────────────────────────────────────────────────┘
-
-DESKTOP (1920px)                    MOBILE (375px)
-─────────────────────────────────────────────────────────────────────
-
-120px │ text-hero-h1          │ 36px
-      │ ███████████████       │ ███
-      │ HERO TITLE            │ HERO
-      │                       │
-96px  │ text-hero-h2          │ 32px  
-      │ ████████████          │ ██
-      │ SECONDARY HERO        │ HERO
-      │                       │
-48px  │ text-section-h2       │ 24px
-      │ ██████                │ █
-      │ Section Heading       │ Section
-      │                       │
-36px  │ text-section-h3       │ 20px
-      │ ████                  │ █
-      │ Subsection            │ Sub
-      │                       │
-24px  │ text-section-h4       │ 18px
-      │ ███                   │ ▓
-      │ Minor Heading         │ Minor
-      │                       │
-20px  │ text-body-guideline   │ 16px
-      │ ██                    │ ▓
-      │ Body text readable    │ Body
-      │                       │
-18px  │ text-body-fluid       │ 14px
-      │ ██                    │ ▓
-      │ Smaller body text     │ Small
-      │                       │
-14px  │ text-caption-fluid    │ 12px
-      │ █                     │ ▓
-      │ Captions & metadata   │ Meta
-
-┌─────────────────────────────────────────────────────────────────────┐
-│                    FLUID SCALING BEHAVIOR                            │
-└─────────────────────────────────────────────────────────────────────┘
-
-Screen Width →
-
-375px          768px          1024px         1920px+
-Mobile         Tablet         Laptop         Desktop
-│              │              │              │
-│              │              │              │
-36px ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 120px  text-hero-h1
-│   Smooth scaling with clamp()              │
-│                                             │
-24px ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48px   text-section-h2
-│                                             │
-16px ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20px   text-body-guideline
-│                                             │
-
-NO BREAKPOINTS NEEDED! clamp() handles all screen sizes smoothly.
-
-┌─────────────────────────────────────────────────────────────────────┐
-│                    clamp() FUNCTION ANATOMY                          │
-└─────────────────────────────────────────────────────────────────────┘
-
-font-size: clamp(MIN, PREFERRED, MAX);
-              ↓      ↓         ↓
-              │      │         │
-              │      │         └─ Maximum size (desktop)
-              │      │
-              │      └─ Viewport-based preferred size
-              │         (scales smoothly between min and max)
-              │
-              └─ Minimum size (mobile)
-
-EXAMPLE: text-hero-h1
-font-size: clamp(2.25rem, 6vw, 7.5rem);
-                 ↓       ↓      ↓
-              36px    6% of    120px
-                   viewport
-                    width
-
-At 375px width:  375 × 0.06 = 22.5px → clamped to 36px (MIN)
-At 768px width:  768 × 0.06 = 46px   → 46px (between MIN and MAX)
-At 1920px width: 1920 × 0.06 = 115px → clamped to 120px (MAX)
-
-┌─────────────────────────────────────────────────────────────────────┐
-│                    FONT WEIGHT HIERARCHY                             │
-└─────────────────────────────────────────────────────────────────────┘
-
-100  Thin         │ Rarely used
-200  Extra Light  │ 
-300  Light        │ ← font-light (body text accents)
-400  Regular      │ ← font-normal (default body)
-450  Book         │ ← font-book (custom weight for readability)
-500  Medium       │ ← font-medium (emphasized text)
-600  Semibold     │ ← font-semibold (subheadings)
-650  Demibold     │ ← font-demibold (custom weight)
-700  Bold         │ ← font-bold (main headings)
-800  Extra Bold   │
-900  Black        │ ← font-black (hero titles)
-
-CUSTOM WEIGHTS (Variable Fonts):
-- Book (450): Enhanced readability for body text
-- Demibold (650): Between semibold and bold
-
-┌─────────────────────────────────────────────────────────────────────┐
-│                    SEMANTIC HTML MAPPING                             │
-└─────────────────────────────────────────────────────────────────────┘
-
-HTML Element     Default Style              Usage
-─────────────────────────────────────────────────────────────────────
-<h1>          → text-hero-h1              Main page title (only one per page)
-<h2>          → text-section-h2           Major sections
-<h3>          → text-section-h3           Subsections  
-<h4>          → text-section-h4           Minor headings
-<h5>          → text-body-guideline       Smallest headings
-<h6>          → text-body-guideline       Rare usage
-
-<p>           → text-body-guideline       Standard paragraphs
-<span>        → Inherits                  Inline text
-<small>       → text-caption-fluid        Legal text, captions
-<strong>      → font-semibold             Emphasized text
-<em>          → italic                    Emphasized text
-<a>           → Underline on hover        Links
-
-<blockquote>  → text-fluid-xl + italic    Pull quotes
-<figcaption>  → text-caption-fluid        Image captions
-<label>       → text-body-fluid           Form labels
-<button>      → text-button-fluid         Button text
-```
-
-### Typography Classes Reference
+### Default Element Styles
 
 ```css
-/* Hero Title - Largest display text */
-.text-hero-h1 {
-  font-size: clamp(2.25rem, 6vw, 7.5rem);  /* 36px → 120px */
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
-
-/* Secondary Hero Title - Large display text */
-.text-hero-h2 {
-  font-size: clamp(2rem, 5vw, 6rem);  /* 32px → 96px */
+/* Heading Hierarchy */
+h1 {
+  font-size: var(--wp--preset--font-size--900);  /* Gigantic */
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.01em;
 }
 
-/* Section Headings - Page section titles */
-.text-section-h2 {
-  font-size: clamp(1.5rem, 4vw, 3rem);  /* 24px → 48px */
+h2 {
+  font-size: var(--wp--preset--font-size--800);  /* Huge */
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.01em;
 }
 
-/* Subsection Headings - Smaller section titles */
-.text-section-h3 {
-  font-size: clamp(1.25rem, 3vw, 2.5rem);  /* 20px → 36px */
+h3 {
+  font-size: var(--wp--preset--font-size--700);  /* XX-Large */
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-weight: 600;
   line-height: 1.3;
-  letter-spacing: 0;
 }
 
-/* Minor Headings - Smallest section titles */
-.text-section-h4 {
-  font-size: clamp(1rem, 2.5vw, 2rem);  /* 18px → 24px */
+h4 {
+  font-size: var(--wp--preset--font-size--600);  /* X-Large */
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h5 {
+  font-size: var(--wp--preset--font-size--500);  /* Large */
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-weight: 600;
   line-height: 1.4;
-  letter-spacing: 0;
 }
 
-/* Body Text - Standard content */
-.text-body-guideline {
-  font-size: clamp(1rem, 1.5vw, 1.25rem);  /* 16px → 20px */
+h6 {
+  font-size: var(--wp--preset--font-size--400);  /* Medium */
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* Body Text */
+p {
+  font-size: var(--wp--preset--font-size--200);  /* Base */
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-weight: 400;
   line-height: 1.6;
-  letter-spacing: 0;
 }
 
-/* Smaller Body Text - For additional content */
-.text-body-fluid {
-  font-size: clamp(0.875rem, 1.25vw, 1.125rem);  /* 14px → 18px */
+/* Small Text */
+small {
+  font-size: var(--wp--preset--font-size--100);  /* Tiny */
   line-height: 1.5;
-  letter-spacing: 0;
-}
-
-/* Caption Text - For metadata and small text */
-.text-caption-fluid {
-  font-size: clamp(0.75rem, 1vw, 0.875rem);  /* 12px → 14px */
-  line-height: 1.5;
-  letter-spacing: 0;
-}
-
-/* Quote Text - Large pull quotes */
-.text-quote-large {
-  font-size: clamp(2rem, 5vw, 5rem);  /* 32px → 80px */
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-
-/* Button Text - CTA buttons */
-.text-button-fluid {
-  font-size: clamp(1.25rem, 2vw, 2rem);  /* 20px → 32px */
-  line-height: 1;
-  letter-spacing: 0;
 }
 ```
 
----
-
-## Semantic HTML Usage
-
-### Required HTML Structure
-
-Always use proper semantic HTML elements with explicit typography classes:
+### React/TSX Usage Examples
 
 ```tsx
-// ✅ CORRECT - Semantic HTML with explicit classes
-<h1 className="text-hero-h1 font-title font-bold text-gradient-pink-purple-blue">
-  Main Page Title
+{/* Hero Title - Gigantic */}
+<h1 className="font-brand-title text-gradient-pink-purple-blue">
+  Hi, I'm Ash Shaw
 </h1>
 
-<h2 className="text-section-h2 font-heading font-semibold text-gray-800">
+{/* Section Title - Huge */}
+<h2 className="font-brand-heading font-bold text-foreground-light dark:text-foreground-dark">
+  Featured Work
+</h2>
+
+{/* Subsection Title - XX-Large */}
+<h3 className="font-brand-heading font-semibold">
+  Festival Makeup
+</h3>
+
+{/* Card Title - X-Large */}
+<h4 className="font-brand-heading font-medium">
+  UV Artistry
+</h4>
+
+{/* Body Text - Base */}
+<p className="font-brand-body font-normal text-body-light dark:text-body-dark">
+  Makeup that shines with colour, energy, and connection.
+</p>
+
+{/* Caption - Tiny */}
+<small className="font-brand-body text-caption-light dark:text-caption-dark">
+  Photo taken at Modem Festival 2024
+</small>
+```
+
+---
+
+## Migration Guide
+
+### Old vs New Mapping
+
+| Old Class | New WordPress Variable | Slug | Use Case |
+|-----------|----------------------|------|----------|
+| `.text-hero-h1` | `--font-size--900` | `900` | Hero titles |
+| `.text-section-h2` | `--font-size--800` | `800` | Section headings |
+| `.text-subsection-h3` | `--font-size--700` | `700` | Subsection titles |
+| `.text-card-h4` | `--font-size--600` | `600` | Card titles |
+| `.text-body-guideline` | `--font-size--200` | `200` | Body text |
+| `.text-small` | `--font-size--100` | `100` | Captions, fine print |
+
+### Migration Examples
+
+**Before (Semantic):**
+```tsx
+<h1 className="text-hero-h1 font-title font-bold">
+  Hero Title
+</h1>
+
+<h2 className="text-section-h2 font-heading font-semibold">
   Section Title
 </h2>
 
-<h3 className="text-fluid-xl font-heading font-semibold text-gray-800">
-  Subsection Title
-</h3>
-
-<p className="text-body-guideline font-body font-normal text-gray-700 leading-relaxed">
-  Body paragraph with proper line height and readability
+<p className="text-body-guideline font-body">
+  Body content
 </p>
-
-// ❌ WRONG - Div elements styled as headings
-<div className="text-2xl font-bold">
-  Fake heading (bad for SEO and accessibility)
-</div>
 ```
 
-### Heading Hierarchy
-
-Maintain logical heading levels for SEO and accessibility:
-
+**After (WordPress Numeric):**
 ```tsx
-// ✅ CORRECT - Logical hierarchy
-<h1>Main Title</h1>
-  <h2>Section 1</h2>
-    <h3>Subsection 1.1</h3>
-    <h3>Subsection 1.2</h3>
-  <h2>Section 2</h2>
-    <h3>Subsection 2.1</h3>
+<h1 className="font-brand-title font-bold">
+  Hero Title
+</h1>
 
-// ❌ WRONG - Skipped heading levels
-<h1>Main Title</h1>
-  <h4>Section 1</h4>  /* Skipped h2 and h3 */
+<h2 className="font-brand-heading font-semibold">
+  Section Title
+</h2>
+
+<p className="font-brand-body">
+  Body content
+</p>
 ```
+
+**Note:** The new system relies on semantic HTML (`<h1>`, `<h2>`, `<p>`) to automatically apply the correct font sizes. This is more maintainable and accessible.
 
 ---
 
-## Typography Patterns
+## Common Typography Patterns
 
-### Hero Section
+### Hero Sections
 
 ```tsx
-<section className="min-h-screen flex flex-col items-center justify-center text-center">
-  <h1 className="text-hero-h1 font-title font-bold text-gradient-pink-purple-blue mb-fluid-md">
+{/* Large Impact Hero */}
+<section className="hero">
+  <h1 className="font-brand-title font-normal text-gradient-pink-purple-blue">
     Hi, I'm Ash Shaw
   </h1>
-  
-  <p className="text-fluid-xl font-body font-normal text-gray-700 max-w-3xl mb-fluid-lg">
+  <h2 className="font-brand-heading font-bold text-gradient-purple-pink">
+    makeup artist
+  </h2>
+  <p className="font-brand-body font-normal text-hero-description">
     Makeup that shines with colour, energy, and connection.
   </p>
-  
-  <button className="bg-gradient-pink-purple-blue text-white px-button py-button font-body font-medium text-button-fluid rounded-lg">
-    Explore Portfolio
-  </button>
 </section>
 ```
 
-### Content Section
+### Section Headers
 
 ```tsx
-<section className="py-section">
-  <h2 className="text-section-h2 font-heading font-semibold text-gray-800 text-center mb-fluid-md">
-    Why I Do Makeup
+{/* Standard Section */}
+<section>
+  <h2 className="font-brand-heading font-bold mb-spacing-40">
+    Featured Work
   </h2>
-  
-  <p className="text-body-guideline font-body font-normal text-gray-700 text-center max-w-2xl mx-auto mb-fluid-lg leading-relaxed">
-    Makeup artistry is my passion, connecting with people through creative expression
-    and helping them feel confident and beautiful.
+  <p className="font-brand-body text-section-description mb-spacing-60">
+    Explore my latest festival and UV makeup artistry.
   </p>
 </section>
 ```
 
-### Card Content
+### Card Components
 
 ```tsx
-<div className="bg-white/80 backdrop-blur-sm rounded-2xl p-card-responsive">
-  <h3 className="text-fluid-xl font-heading font-semibold text-gray-800 mb-fluid-sm">
-    Card Title
+{/* Portfolio Card */}
+<article className="card">
+  <h3 className="font-brand-heading font-semibold mb-spacing-20">
+    Festival Artistry
   </h3>
-  
-  <p className="text-body-guideline font-body font-normal text-gray-700 leading-relaxed mb-fluid-md">
-    Card description with proper line height for optimal readability.
+  <p className="font-brand-body text-card-description">
+    Vibrant festival makeup with UV accents.
   </p>
-  
-  <a href="#" className="text-fluid-sm font-body font-medium text-blue-700 hover:text-pink-500 transition-colors">
-    Read More →
-  </a>
-</div>
+  <small className="font-brand-body text-caption">
+    Modem Festival 2024
+  </small>
+</article>
 ```
 
-### Blog Post Content
+### Blog Content
 
 ```tsx
-<article className="max-w-4xl mx-auto px-6 py-12">
-  <h1 className="text-section-h2 font-heading font-bold text-gray-800 mb-fluid-md">
-    Blog Post Title
+{/* Blog Post */}
+<article className="blog-post">
+  <h1 className="font-brand-heading font-bold mb-spacing-30">
+    Ultimate UV Makeup Guide
   </h1>
   
-  <div className="flex items-center gap-4 text-fluid-sm text-gray-600 mb-fluid-lg">
-    <span>5 min read</span>
-    <span>•</span>
-    <time>January 15, 2025</time>
-  </div>
+  <p className="font-brand-body mb-spacing-40">
+    Introduction paragraph with regular body text.
+  </p>
   
-  <div className="prose prose-lg">
-    <p className="text-body-guideline font-body font-normal text-gray-700 leading-relaxed mb-fluid-md">
-      First paragraph of blog content with optimal reading experience.
-    </p>
-    
-    <h2 className="text-fluid-2xl font-heading font-semibold text-gray-800 mt-fluid-xl mb-fluid-md">
-      Section Heading
-    </h2>
-    
-    <p className="text-body-guideline font-body font-normal text-gray-700 leading-relaxed">
-      More content here...
-    </p>
-  </div>
+  <h2 className="font-brand-heading font-semibold mb-spacing-20">
+    What is UV Makeup?
+  </h2>
+  
+  <p className="font-brand-body mb-spacing-30">
+    Body content explaining UV makeup techniques.
+  </p>
+  
+  <h3 className="font-brand-heading font-medium mb-spacing-20">
+    Essential Products
+  </h3>
+  
+  <ul className="font-brand-body">
+    <li>UV-reactive face paint</li>
+    <li>Blacklight for testing</li>
+    <li>Setting spray</li>
+  </ul>
 </article>
 ```
 
 ---
 
-## Responsive Behavior
+## Font Weight System
 
-### Mobile (320px - 767px)
-- Smallest font sizes from clamp() range
-- Single column layouts
-- Reduced line lengths for readability
-- Larger tap targets for buttons
+### Available Weights
 
-```tsx
-// Mobile-optimized text
-<h1 className="text-hero-h1">  {/* 36px on mobile */}
-<p className="text-body-guideline">  {/* 16px on mobile */}
+```css
+/* Font Weight Variables */
+--font-weight-thin: 100;
+--font-weight-extralight: 200;
+--font-weight-light: 300;
+--font-weight-normal: 400;
+--font-weight-medium: 500;
+--font-weight-semibold: 600;
+--font-weight-bold: 700;
+--font-weight-extrabold: 800;
+--font-weight-black: 900;
 ```
 
-### Tablet (768px - 1023px)
-- Mid-range font sizes
-- Two-column layouts where appropriate
-- Balanced spacing
+### Global CSS Font Weight Classes
 
-```tsx
-// Tablet-optimized (mid-range automatically applied)
-<h1 className="text-hero-h1">  {/* ~60px on tablet */}
-<p className="text-body-guideline">  {/* ~18px on tablet */}
+Defined in `/styles/globals.css` and available as utility classes:
+
+```css
+.font-thin { font-weight: 100; }
+.font-extralight { font-weight: 200; }
+.font-light { font-weight: 300; }
+.font-normal { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.font-extrabold { font-weight: 800; }
+.font-black { font-weight: 900; }
 ```
 
-### Desktop (1024px+)
-- Maximum font sizes from clamp() range
-- Multi-column layouts
-- Enhanced visual hierarchy
+**Note:** These classes are defined in the `/styles/globals.css` file and work seamlessly with WordPress theme.json standards. They're not raw Tailwind utilities, but semantic classes built on top of the Tailwind foundation.
 
-```tsx
-// Desktop-optimized (max sizes automatically applied)
-<h1 className="text-hero-h1">  {/* 120px on large desktop */}
-<p className="text-body-guideline">  {/* 20px on desktop */}
+### Weight Usage Guidelines
+
+| Weight | Class | Use Case |
+|--------|-------|----------|
+| 400 | `.font-normal` | Body text, paragraphs |
+| 500 | `.font-medium` | Emphasized text, buttons |
+| 600 | `.font-semibold` | Subheadings (H4-H6) |
+| 700 | `.font-bold` | Main headings (H1-H3) |
+
+---
+
+## Line Height System
+
+### Default Line Heights
+
+```css
+/* Line Height Variables */
+--line-height-none: 1;
+--line-height-tight: 1.2;
+--line-height-snug: 1.3;
+--line-height-normal: 1.5;
+--line-height-relaxed: 1.6;
+--line-height-loose: 1.8;
+```
+
+### Element-Specific Line Heights
+
+```css
+/* Headings: Tight */
+h1, h2, h3 {
+  line-height: 1.2;
+}
+
+/* Subheadings: Snug */
+h4, h5, h6 {
+  line-height: 1.3;
+}
+
+/* Body Text: Relaxed */
+p {
+  line-height: 1.6;
+}
+
+/* Small Text: Normal */
+small {
+  line-height: 1.5;
+}
 ```
 
 ---
 
-## Common Mistakes
+## Best Practices
 
-### ❌ Mistake 1: Fixed Font Sizes
+### ✅ DO
 
-```tsx
-// ❌ WRONG - Fixed sizes don't scale
-<h1 className="text-4xl">Title</h1>
-<p className="text-base">Body</p>
+1. **Use semantic HTML elements**
+   ```tsx
+   {/* ✅ GOOD - Semantic HTML applies correct sizing */}
+   <h1>Hero Title</h1>
+   <h2>Section Title</h2>
+   <p>Body text</p>
+   ```
+
+2. **Rely on default styles when possible**
+   ```tsx
+   {/* ✅ GOOD - Let CSS handle sizing */}
+   <h1 className="font-brand-title text-gradient-pink-purple-blue">
+     Hi, I'm Ash Shaw
+   </h1>
+   ```
+
+3. **Use WordPress CSS variables**
+   ```css
+   /* ✅ GOOD */
+   .custom-heading {
+     font-size: var(--wp--preset--font-size--700);
+   }
+   ```
+
+4. **Maintain hierarchy**
+   - Don't skip heading levels (h1 → h3)
+   - Keep consistent font family per element type
+   - Use appropriate weights for emphasis
+
+### ❌ DON'T
+
+1. **Don't hardcode font sizes**
+   ```css
+   /* ❌ BAD */
+   .heading {
+     font-size: 48px; /* Don't hardcode */
+   }
+   
+   /* ✅ GOOD */
+   .heading {
+     font-size: var(--wp--preset--font-size--800);
+   }
+   ```
+
+2. **Don't use non-semantic classes for sizing**
+   ```tsx
+   {/* ❌ BAD */}
+   <div className="text-5xl">Title</div>
+   
+   {/* ✅ GOOD */}
+   <h2>Title</h2>
+   ```
+
+3. **Don't break heading hierarchy**
+   ```tsx
+   {/* ❌ BAD */}
+   <h1>Page Title</h1>
+   <h3>Skipped H2</h3> {/* Don't skip levels */}
+   
+   {/* ✅ GOOD */}
+   <h1>Page Title</h1>
+   <h2>Section Title</h2>
+   <h3>Subsection Title</h3>
+   ```
+
+---
+
+## Accessibility Considerations
+
+### Minimum Font Size
+
+```css
+/* Always maintain readable minimum */
+--wp--typography--fluid--min-font-size: 0.875rem; /* 14px minimum */
 ```
 
-**Solution:**
-```tsx
-// ✅ CORRECT - Fluid responsive sizing
-<h1 className="text-hero-h1 font-title font-bold">Title</h1>
-<p className="text-body-guideline font-body">Body</p>
+**WCAG 2.2 Guidelines:**
+- Body text: Minimum 16px (1rem) recommended
+- Large text (18pt+/24px+): Easier to read for low vision users
+- Don't go below 14px for any content
+
+### High Contrast Mode
+
+```css
+/* Ensure sufficient color contrast */
+@media (prefers-contrast: high) {
+  body {
+    font-weight: 500; /* Slightly bolder in high contrast */
+  }
+}
 ```
 
-### ❌ Mistake 2: Missing Font Families
+### Font Scaling Respect
 
-```tsx
-// ❌ WRONG - No font family specified
-<h1 className="text-hero-h1 font-bold">Title</h1>
-```
+```css
+/* Respect user font size preferences */
+html {
+  font-size: 100%; /* Allow browser zoom */
+}
 
-**Solution:**
-```tsx
-// ✅ CORRECT - Explicit font family
-<h1 className="text-hero-h1 font-title font-bold">Title</h1>
-```
-
-### ❌ Mistake 3: Wrong HTML Elements
-
-```tsx
-// ❌ WRONG - Div styled as heading
-<div className="text-3xl font-bold">Heading</div>
-```
-
-**Solution:**
-```tsx
-// ✅ CORRECT - Semantic HTML
-<h2 className="text-section-h2 font-heading font-semibold">Heading</h2>
+/* Use rem, not px */
+p {
+  font-size: var(--wp--preset--font-size--200); /* Uses rem */
+}
 ```
 
 ---
 
-## Related Documentation
+## WordPress Block Editor Integration
 
-- **[colors.md](./colors.md)** - Color system and accessibility
-- **[spacing.md](./spacing.md)** - Spacing scale and patterns
-- **[Guidelines.md](../Guidelines.md)** - Main guidelines
-- **[overview-components.md](../overview-components.md)** - Component usage
+### Block Pattern Typography
+
+```html
+<!-- wp:heading {"level":1,"fontSize":"900"} -->
+<h1 class="wp-block-heading has-900-font-size">Hero Title</h1>
+<!-- /wp:heading -->
+
+<!-- wp:heading {"level":2,"fontSize":"800"} -->
+<h2 class="wp-block-heading has-800-font-size">Section Title</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"fontSize":"200"} -->
+<p class="has-200-font-size">Body text content.</p>
+<!-- /wp:paragraph -->
+```
+
+### Custom Block Styles
+
+```css
+/* Custom typography for blocks */
+.wp-block-custom-hero {
+  font-size: var(--wp--preset--font-size--900);
+  font-family: var(--wp--preset--font-family--brand-title);
+  line-height: 1.1;
+}
+
+.wp-block-custom-card-title {
+  font-size: var(--wp--preset--font-size--600);
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-weight: 600;
+}
+```
 
 ---
 
+## Summary
+
+### Key Takeaways
+
+- ✅ **Numeric scale (100-900)** replaces semantic names
+- ✅ **Fluid typography** with clamp() for all font sizes
+- ✅ **WordPress theme.json compatible** with standard CSS variables
+- ✅ **Semantic HTML** applies correct sizing automatically
+- ✅ **Brand fonts preserved** (Playfair Display, Inter, Righteous)
+
+### Quick Reference
+
+| Size | Slug | Min | Max | Element | Use Case |
+|------|------|-----|-----|---------|----------|
+| Tiny | `100` | 0.65rem | 0.75rem | `<small>` | Captions |
+| **Base** | `200` | 0.875rem | 1rem | `<p>` | Body text |
+| Small | `300` | 1rem | 1.25rem | - | Large body |
+| Medium | `400` | 1.25rem | 1.5rem | `<h6>` | Subheadings |
+| Large | `500` | 1.5rem | 2rem | `<h5>` | Section subs |
+| X-Large | `600` | 2rem | 2.5rem | `<h4>` | Card titles |
+| XX-Large | `700` | 2.5rem | 3rem | `<h3>` | Section titles |
+| Huge | `800` | 3rem | 4rem | `<h2>` | Page titles |
+| Gigantic | `900` | 3.5rem | 5rem | `<h1>` | Hero titles |
+
+---
+
+**Version:** 5.0.0 (WordPress Numeric Scale)  
 **Last Updated:** January 2025  
-**Version:** 4.0.0
+**Maintained By:** Ash Shaw Portfolio Team
+
+**Related Documentation:**
+- [Spacing Design Tokens](./spacing.md) - Spacing system
+- [Colors Design Tokens](./colors.md) - Color palette
+- [Component Guidelines](../components/) - Component-specific usage

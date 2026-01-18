@@ -203,7 +203,7 @@ export function MobileMenu({
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 mobile-menu-backdrop backdrop-blur-sm transition-colors duration-300"
+        className="absolute inset-0 mobile-menu-backdrop backdrop-blur-sm transition-colors duration-200"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -211,7 +211,7 @@ export function MobileMenu({
       {/* Menu Content */}
       <div
         ref={mobileMenuRef}
-        className="relative w-full h-full mobile-menu-content flex flex-col transition-colors duration-300"
+        className="relative w-full h-full mobile-menu-content flex flex-col transition-colors duration-200"
       >
         {/* Hidden title for screen readers */}
         <h2 id="mobile-menu-title" className="sr-only">
@@ -219,11 +219,11 @@ export function MobileMenu({
         </h2>
 
         {/* Header Section with Centered Logo and Absolute Close Button */}
-        <div className="relative p-6 pt-8">
+        <div className="relative p-spacing-30 pt-spacing-40">
           {/* Close Button positioned absolutely in top-right corner */}
           <button
             ref={firstFocusableRef}
-            className="absolute top-6 right-6 mobile-menu-close-btn focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-md p-1"
+            className="absolute top-spacing-30 right-spacing-30 mobile-menu-close-btn focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-300 p-spacing-10"
             onClick={onClose}
             aria-label="Close mobile menu"
           >
@@ -242,10 +242,10 @@ export function MobileMenu({
           </button>
 
           {/* Logo centered with proper spacing from close button */}
-          <div className="flex justify-center pt-8">
+          <div className="flex justify-center pt-spacing-40">
             <button
               onClick={() => onNavigation("home")}
-              className="focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-md p-2"
+              className="focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-300 p-spacing-10"
               aria-label="Go to home page"
             >
               <Logo size="mobile-sm" />
@@ -256,13 +256,13 @@ export function MobileMenu({
         {/* Navigation Items - Centered in remaining space */}
         <div className="flex-1 flex items-center justify-center">
           <nav
-            className="flex flex-col items-center space-y-8"
+            className="flex flex-col items-center gap-spacing-40"
             role="menu"
             aria-label="Mobile navigation"
           >
             <button
               onClick={() => onNavigation("about")}
-              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-4 dark:focus:ring-offset-purple-900 rounded-md px-4 py-2 ${
+              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-200 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-4 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-30 py-spacing-10 ${
                 currentPage === "about"
                   ? "mobile-menu-link-active"
                   : "mobile-menu-link-inactive"
@@ -277,7 +277,7 @@ export function MobileMenu({
 
             <button
               onClick={() => onNavigation("portfolio")}
-              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-4 dark:focus:ring-offset-purple-900 rounded-md px-4 py-2 ${
+              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-200 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-4 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-30 py-spacing-10 ${
                 currentPage === "portfolio"
                   ? "mobile-menu-link-active"
                   : "mobile-menu-link-inactive"
@@ -294,7 +294,7 @@ export function MobileMenu({
 
             <button
               onClick={() => onNavigation("blog")}
-              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-4 dark:focus:ring-offset-purple-900 rounded-md px-4 py-2 ${
+              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-200 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-4 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-30 py-spacing-10 ${
                 currentPage === "blog"
                   ? "mobile-menu-link-active"
                   : "mobile-menu-link-inactive"
@@ -309,7 +309,7 @@ export function MobileMenu({
 
             <button
               onClick={() => onNavigation("contact")}
-              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-4 dark:focus:ring-offset-purple-900 rounded-md px-4 py-2 ${
+              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-200 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-4 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-30 py-spacing-10 ${
                 currentPage === "contact"
                   ? "mobile-menu-link-active"
                   : "mobile-menu-link-inactive"
@@ -327,19 +327,19 @@ export function MobileMenu({
         {/* Decorative Elements - positioned to avoid interference */}
         <div className="absolute bottom-20 left-8">
           <div
-            className="w-16 h-16 sm:w-24 sm:h-24 mobile-menu-orb-1 rounded-full animate-pulse"
+            className="w-16 h-16 sm:w-24 sm:h-24 mobile-menu-orb-1 rounded-900 animate-pulse"
             aria-hidden="true"
           />
         </div>
         <div className="absolute bottom-32 right-8">
           <div
-            className="w-12 h-12 sm:w-20 sm:h-20 mobile-menu-orb-2 rounded-full animate-pulse delay-1000"
+            className="w-12 h-12 sm:w-20 sm:h-20 mobile-menu-orb-2 rounded-900 animate-pulse delay-1000"
             aria-hidden="true"
           />
         </div>
         <div className="absolute top-1/3 right-12">
           <div
-            className="w-8 h-8 sm:w-12 sm:h-12 mobile-menu-orb-3 rounded-full animate-pulse delay-2000"
+            className="w-8 h-8 sm:w-12 sm:h-12 mobile-menu-orb-3 rounded-900 animate-pulse delay-2000"
             aria-hidden="true"
           />
         </div>

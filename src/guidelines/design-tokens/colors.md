@@ -9,17 +9,22 @@ Complete color system for the Ash Shaw Makeup Portfolio, featuring semantic colo
 
 This document has been verified against `/styles/globals.css` as of January 2025. All color utilities, CSS variables, gradient classes, and light/dark mode themes match the current implementation.
 
+## 🆕 WordPress-Aligned Presets (v5.0.0)
+
+This color system now follows WordPress theme.json preset standards using `--wp--preset--color--{slug}` naming conventions. See [wordpress-preset-system.md](../wordpress-preset-system.md) for complete details.
+
 ## 📋 Table of Contents
 
 1. [Color Philosophy](#color-philosophy)
-2. [Light/Dark Mode System](#lightdark-mode-system)
-3. [Light Mode Palette](#light-mode-palette)
-4. [Dark Mode Palette](#dark-mode-palette)
-5. [Brand Gradients](#brand-gradients)
-6. [Semantic Colors](#semantic-colors)
-7. [Component Color Patterns](#component-color-patterns)
-8. [Accessibility Standards](#accessibility-standards)
-9. [CSS Variables Reference](#css-variables-reference)
+2. [WordPress Color Presets](#wordpress-color-presets)
+3. [Light/Dark Mode System](#lightdark-mode-system)
+4. [Light Mode Palette](#light-mode-palette)
+5. [Dark Mode Palette](#dark-mode-palette)
+6. [Brand Gradients](#brand-gradients)
+7. [Semantic Colors](#semantic-colors)
+8. [Component Color Patterns](#component-color-patterns)
+9. [Accessibility Standards](#accessibility-standards)
+10. [CSS Variables Reference](#css-variables-reference)
 
 ---
 
@@ -49,23 +54,73 @@ This document has been verified against `/styles/globals.css` as of January 2025
 
 ---
 
+## WordPress Color Presets
+
+### Preset Naming Conventions
+
+All color presets follow the `--wp--preset--color--{slug}` naming convention to align with WordPress theme.json standards.
+
+```css
+:root {
+  /* Light mode (default) */
+  --wp--preset--color--background: #ffffff;
+  --wp--preset--color--foreground: #0f172a;
+  --wp--preset--color--card: #ffffff;
+  --wp--preset--color--card-foreground: #0f172a;
+}
+
+.dark {
+  /* Dark mode */
+  --wp--preset--color--background: #0a0118;
+  --wp--preset--color--foreground: #f5f3ff;
+  --wp--preset--color--card: #1a0f2e;
+  --wp--preset--color--card-foreground: #f5f3ff;
+}
+```
+
+### Implementation Pattern
+
+Every component must implement both light and dark mode styles using the `dark:` prefix pattern:
+
+```tsx
+// ✅ CORRECT - Both themes supported with utility color classes
+// Note: In production, prefer semantic background classes like .bg-surface-light when available
+<div className="bg-white dark:bg-purple-900/50 text-gray-800 dark:text-purple-100">
+  Content
+</div>
+
+// ❌ WRONG - No dark mode support
+<div className="bg-white text-gray-800">
+  Content
+</div>
+```
+
+**WordPress Alignment:** While utilities like `bg-white` and `text-gray-800` are shown for clarity, components should use semantic classes from `/styles/globals.css` where they exist (e.g., `.bg-hero-section`, `.text-gradient-pink-purple-blue`).
+
+---
+
 ## Light/Dark Mode System
 
 ### Theme Switching Architecture
 
-The application uses CSS custom properties and Tailwind's dark mode classes to provide seamless theme switching.
+The application uses CSS custom properties defined in `/styles/globals.css` and the `dark:` class prefix to provide seamless theme switching. This system is WordPress-aligned and uses semantic color tokens rather than utility classes.
 
 ```tsx
-// Theme Toggle Component
+// Theme Toggle Component Example
+// Uses layout utilities (flex, items-center) but semantic color classes
 <button 
   onClick={toggleTheme}
-  className="bg-white dark:bg-purple-900 text-gray-800 dark:text-purple-100"
+  className="flex items-center gap-2 bg-white dark:bg-purple-900 text-gray-800 dark:text-purple-100 px-4 py-2 rounded-lg transition-colors duration-300"
 >
   {theme === 'light' ? <Moon /> : <Sun />}
 </button>
 ```
 
+**Note:** While this example shows some utility patterns (`gap-2`, `px-4`, `py-2`), production code should use semantic spacing classes from globals.css like `.px-button`, `.py-button`, `.gap-fluid-sm` for brand consistency.
+
 ### CSS Custom Properties
+
+All color values are defined as CSS custom properties in `/styles/globals.css`:
 
 ```css
 :root {
@@ -87,10 +142,11 @@ The application uses CSS custom properties and Tailwind's dark mode classes to p
 
 ### Implementation Pattern
 
-Every component must implement both light and dark mode styles:
+Every component must implement both light and dark mode styles using the `dark:` prefix pattern:
 
 ```tsx
-// ✅ CORRECT - Both themes supported
+// ✅ CORRECT - Both themes supported with utility color classes
+// Note: In production, prefer semantic background classes like .bg-surface-light when available
 <div className="bg-white dark:bg-purple-900/50 text-gray-800 dark:text-purple-100">
   Content
 </div>
@@ -100,6 +156,8 @@ Every component must implement both light and dark mode styles:
   Content
 </div>
 ```
+
+**WordPress Alignment:** While utilities like `bg-white` and `text-gray-800` are shown for clarity, components should use semantic classes from `/styles/globals.css` where they exist (e.g., `.bg-hero-section`, `.text-gradient-pink-purple-blue`).
 
 ---
 
@@ -368,6 +426,32 @@ Usage: Cards, dividers, form inputs in dark mode
   </p>
 </div>
 ```
+
+**✅ FIXED: `.bg-card` Hover State (v4.1.1)**
+
+The `.bg-card` global CSS class now has proper hover states for both light and dark modes:
+
+```css
+/* ✅ FIXED (globals.css line 2568) */
+.bg-card:hover {
+  background-color: #f9fafb;  /* Light gray for light mode */
+}
+
+.dark .bg-card:hover {
+  background-color: #000000;  /* Black for dark mode */
+}
+```
+
+**Usage:**
+No workarounds needed - use `.bg-card` normally:
+
+```tsx
+<div className="bg-card hover:shadow-xl transition-all duration-300">
+  Card content with proper hover in both modes
+</div>
+```
+
+**See Also:** [css-issues.md](../troubleshooting/css-issues.md#issue-1-bg-cardhover-forces-black-background-in-light-mode)
 
 ### Buttons
 

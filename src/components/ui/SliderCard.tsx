@@ -233,7 +233,7 @@ export function SliderCard({
 
   return (
     <div
-      className={`group cursor-pointer bg-card backdrop-blur-sm rounded-xl p-fluid-md shadow-lg hover:shadow-xl transition-all duration-300 border border-white/50 dark:border-purple-700/50 ${className}`}
+      className={`group cursor-pointer bg-card hover:bg-gray-50 dark:hover:bg-black backdrop-blur-sm rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-white/50 dark:border-purple-700/50 ${className}`}
       onClick={() => onImageClick(currentImageIndex)}
       onKeyDown={handleKeyDown}
       tabIndex={0}

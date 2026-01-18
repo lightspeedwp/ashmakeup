@@ -151,8 +151,8 @@ export function InstagramFeed() {
   };
   
   return (
-    <section className="py-section bg-instagram-section transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-fluid-md">
+    <section className="py-section-md px-section-md bg-instagram-section transition-colors duration-300 px-[32px] py-[144px]">
+      <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-fluid-2xl">
           <div className="flex items-center justify-center gap-3 mb-fluid-sm">
@@ -275,7 +275,7 @@ export function InstagramFeed() {
                 href="https://instagram.com/feedmymedia"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus-ring-instagram"
+                className="inline-flex items-center gap-3 bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-[32px] transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus-ring-instagram"
               >
                 <Instagram className="w-6 h-6" />
                 Follow @feedmymedia on Instagram

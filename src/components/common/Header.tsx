@@ -172,15 +172,15 @@ export function Header({
 
 
       <nav
-        className="sticky top-0 bg-header-light backdrop-blur-sm h-[108px] w-full relative flex items-center justify-between px-4 sm:px-6 lg:px-9 shadow-header-light dark:shadow-lg border-b border-header z-40 transition-colors duration-300"
+        className="sticky top-0 bg-header-light backdrop-blur-sm h-[108px] w-full relative flex items-center justify-between px-8 shadow-header-light dark:shadow-lg border-b border-header z-40 transition-colors duration-200"
         role="navigation"
         aria-label="Main navigation"
       >
         {/* Logo - clickable to home */}
-        <div className="flex items-center flex-shrink-0 -ml-1 sm:ml-0">
+        <div className="flex items-center flex-shrink-0">
           <button
             onClick={() => handleNavigation("home")}
-            className="flex items-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-md"
+            className="flex items-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-300"
             aria-label="Go to home page"
           >
             <Logo size="header" />
@@ -189,12 +189,12 @@ export function Header({
 
         {/* Desktop Navigation */}
         <div
-          className="hidden md:flex items-center gap-6 lg:gap-8"
+          className="hidden md:flex items-center gap-spacing-20 lg:gap-spacing-30"
           role="menubar"
         >
           <button
             onClick={() => handleNavigation("home")}
-            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-md px-3 py-1 ${
+            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-20 py-spacing-10 ${
               currentPage === "home"
                 ? "nav-link-active"
                 : "nav-link-inactive"
@@ -208,7 +208,7 @@ export function Header({
           </button>
           <button
             onClick={() => handleNavigation("about")}
-            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-md px-3 py-1 ${
+            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-20 py-spacing-10 ${
               currentPage === "about"
                 ? "nav-link-active"
                 : "nav-link-inactive"
@@ -222,7 +222,7 @@ export function Header({
           </button>
           <button
             onClick={() => handleNavigation("portfolio")}
-            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-md px-3 py-1 ${
+            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-20 py-spacing-10 ${
               currentPage === "portfolio"
                 ? "nav-link-active"
                 : "nav-link-inactive"
@@ -236,7 +236,7 @@ export function Header({
           </button>
           <button
             onClick={() => handleNavigation("blog")}
-            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-md px-3 py-1 ${
+            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-20 py-spacing-10 ${
               currentPage === "blog"
                 ? "nav-link-active"
                 : "nav-link-inactive"
@@ -250,7 +250,7 @@ export function Header({
           </button>
           <button
             onClick={() => handleNavigation("contact")}
-            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-md px-3 py-1 ${
+            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-20 py-spacing-10 ${
               currentPage === "contact"
                 ? "nav-link-active"
                 : "nav-link-inactive"
@@ -263,20 +263,14 @@ export function Header({
             Contact
           </button>
           
-          {/* Divider between nav links and theme toggle */}
-          <div className="w-px h-6 bg-gray-300 dark:bg-purple-700 mx-2" aria-hidden="true" />
-          
           {/* Theme Toggle - Desktop */}
           <ThemeToggle />
         </div>
 
         {/* Mobile Controls: Theme Toggle + Burger Menu */}
-        <div className="md:hidden flex items-center gap-3">
+        <div className="md:hidden flex items-center gap-spacing-20">
           {/* Theme Toggle - Mobile */}
           <ThemeToggle />
-          
-          {/* Divider between theme toggle and burger menu */}
-          <div className="w-px h-6 bg-gray-300 dark:bg-purple-700" aria-hidden="true" />
           
           {/* Mobile Burger Menu Button */}
           <button
