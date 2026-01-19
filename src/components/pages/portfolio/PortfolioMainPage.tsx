@@ -482,9 +482,6 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
           {/* Error State */}
           {entriesError && !entriesLoading && (
             <div className="text-center py-fluid-xl">
-              <p className="text-fluid-base font-body text-gray-600 mb-fluid-md">
-                Unable to load portfolio entries at the moment.
-              </p>
               <button
                 onClick={refreshEntries}
                 className="bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50"

@@ -117,7 +117,7 @@ export function FeaturedSection({
     <>
       <section
         id="work"
-        className="relative bg-featured-section py-section-md-plus px-section-md w-full transition-colors duration-300 px-[32px] py-[144px]"
+        className="relative bg-featured-section py-section-md-plus px-section-md w-full transition-colors duration-300"
       >
         {/* Decorative Blurred Circles */}
         <BlurredCircles variant="featured" />
@@ -125,10 +125,10 @@ export function FeaturedSection({
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Section Header */}
           <div className="text-center mb-fluid-2xl">
-            <h2 className="text-section-h2 font-heading font-semibold dark:text-red-800 mb-fluid-md text-[rgb(255,255,255)]">
+            <h2 className="text-section-h2 font-heading font-semibold text-gray-900 dark:text-white mb-fluid-md">
               Featured Work
             </h2>
-            <p className="text-body-guideline font-body font-normal leading-relaxed max-w-3xl mx-auto mb-fluid-lg dark:text-purple-100 text-[rgb(255,255,255)]">
+            <p className="text-body-guideline font-body font-normal leading-relaxed max-w-3xl mx-auto mb-fluid-lg text-gray-900 dark:text-purple-100">
               Discover the artistry and passion behind each creation — from vibrant festival face art to stunning UV-reactive designs that bring joy and connection to every celebration.
             </p>
           </div>
@@ -193,7 +193,7 @@ export function FeaturedSection({
           <div className="text-center">
             <button
               onClick={() => setCurrentPage("portfolio")}
-              className="w-full sm:w-auto justify-center text-center bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-3 py-1.5 sm:px-button sm:py-button font-body font-medium text-[32px] transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus-ring-primary"
+              className="w-full sm:w-auto justify-center text-center bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus-ring-primary"
               aria-label="Navigate to full portfolio page to view all makeup artistry work"
             >
               View Full Portfolio
@@ -210,7 +210,7 @@ export function FeaturedSection({
         images={lightbox.images}
         currentIndex={lightbox.currentIndex}
         title={lightbox.title}
-        description={lightbox.description} className="text-[28px] text-[32px]"
+        description={lightbox.description}
       />
     </>
   );

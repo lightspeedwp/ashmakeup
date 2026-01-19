@@ -1016,12 +1016,6 @@ function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
 
         {/* Reading time and date */}
         <div className="flex items-center justify-between gap-fluid-sm text-gray-500 dark:text-purple-300 mb-fluid-sm">
-          {post.readingTime && (
-            <div className="flex items-center gap-fluid-sm">
-              <Clock className="w-4 h-4" />
-              <span className="text-fluid-sm font-body">{post.readingTime}m</span>
-            </div>
-          )}
           <div className="flex items-center gap-fluid-sm">
             <Calendar className="w-4 h-4" />
             <time className="text-fluid-sm font-body" dateTime={post.publishedDate}>

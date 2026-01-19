@@ -919,7 +919,7 @@ export const ABOUT_SECTION_THEMES = {
     decorativeColor: "from-orange-300 to-amber-400",
     quoteColor: "text-amber-700", // WCAG AA compliant
     accentGradient: { from: "orange-500", to: "amber-500" }, // For decorative use only
-    name: "Journey - Warm Growth",
+    name: "journey",
   },
   festival: {
     backgroundGradient: {
@@ -932,7 +932,7 @@ export const ABOUT_SECTION_THEMES = {
     decorativeColor: "from-green-300 to-teal-400",
     quoteColor: "text-teal-700", // WCAG AA compliant
     accentGradient: { from: "green-500", to: "teal-500" }, // For decorative use only
-    name: "Festival - Nature Energy",
+    name: "festival",
   },
   berlin: {
     backgroundGradient: {
@@ -945,7 +945,7 @@ export const ABOUT_SECTION_THEMES = {
     decorativeColor: "from-purple-400 to-pink-500",
     quoteColor: "text-violet-700", // WCAG AA compliant
     accentGradient: { from: "purple-500", to: "pink-500" }, // For decorative use only
-    name: "Berlin - Nightclub Artistry",
+    name: "berlin",
   },
   uv: {
     backgroundGradient: {
@@ -958,7 +958,7 @@ export const ABOUT_SECTION_THEMES = {
     decorativeColor: "from-cyan-300 to-indigo-400",
     quoteColor: "text-blue-700", // WCAG AA compliant
     accentGradient: { from: "cyan-500", to: "indigo-500" }, // For decorative use only
-    name: "UV - Electric Neon",
+    name: "uv",
   },
   mousse: {
     backgroundGradient: {
@@ -971,7 +971,7 @@ export const ABOUT_SECTION_THEMES = {
     decorativeColor: "from-rose-300 to-red-400",
     quoteColor: "text-red-700", // WCAG AA compliant
     accentGradient: { from: "rose-500", to: "red-500" }, // For decorative use only
-    name: "Mousse - Professional Beauty",
+    name: "mousse",
   },
   nails: {
     backgroundGradient: {
@@ -984,7 +984,7 @@ export const ABOUT_SECTION_THEMES = {
     decorativeColor: "from-teal-300 to-green-400",
     quoteColor: "text-green-700", // WCAG AA compliant
     accentGradient: { from: "teal-500", to: "green-500" }, // For decorative use only
-    name: "Nails - Craft Precision",
+    name: "nails",
   },
   creative: {
     backgroundGradient: {
@@ -997,7 +997,7 @@ export const ABOUT_SECTION_THEMES = {
     decorativeColor: "from-indigo-300 to-violet-400",
     quoteColor: "text-violet-700", // WCAG AA compliant
     accentGradient: { from: "indigo-500", to: "violet-500" }, // For decorative use only
-    name: "Creative - Thought Process",
+    name: "creative",
   },
   future: {
     backgroundGradient: {
@@ -1010,6 +1010,6 @@ export const ABOUT_SECTION_THEMES = {
     decorativeColor: "from-violet-300 to-pink-400",
     quoteColor: "text-pink-700", // WCAG AA compliant
     accentGradient: { from: "violet-500", to: "pink-500" }, // For decorative use only
-    name: "Future - Hope & Growth",
+    name: "future",
   },
 };

@@ -39,19 +39,19 @@ export const socialLinks: SocialLink[] = [
   },
   {
     platform: 'Facebook',
-    url: 'https://facebook.com/ash.shaw/',
+    url: 'https://facebook.com/ashshaw',
     icon: 'facebook',
     label: 'Connect with Ash Shaw on Facebook'
   },
   {
     platform: 'LinkedIn',
-    url: 'https://www.linkedin.com/in/ashshaw/',
+    url: 'https://linkedin.com/in/ashshaw',
     icon: 'linkedin',
     label: 'Professional network with Ash Shaw on LinkedIn'
   },
   {
     platform: 'Email',
-    url: 'mailto:ashley@ashshaw.makeup',
+    url: 'mailto:hello@ashshaw.makeup',
     icon: 'mail',
     label: 'Email Ash Shaw'
   }

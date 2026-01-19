@@ -28,7 +28,7 @@ export function TestimonialsSection() {
   };
   
   return (
-    <section className="py-section-md px-section-md bg-testimonials-section transition-colors duration-300 px-[47px] py-[144px]">
+    <section className="py-section-md px-section-md bg-testimonials-section transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-fluid-2xl">

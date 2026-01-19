@@ -185,26 +185,35 @@ export function HeroLayout({
       <div className="flex-1 max-w-2xl relative w-full">
         <div className="relative w-full h-[50vh] sm:h-[55vh] md:h-[60vh] lg:h-[65vh] xl:h-[70vh] min-h-[400px] max-h-[800px]">
           {/* Render hero images with lightbox functionality */}
-          {heroImages.map((image, index) => (
-            <div
-              key={index}
-              className={
-                image.className ||
-                "absolute top-6 left-4 sm:top-12 sm:left-8 w-48 h-56 sm:w-72 sm:h-80 md:w-80 md:h-96 rounded-700 bg-cover bg-center shadow-600 transform rotate-3 z-20 border-w-400 border-white ring-4 ring-pink-200/50 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-600 hover:z-30"
-              }
-              style={{ backgroundImage: `url("${image.src}")` }}
-              onClick={() => openLightbox(index)}
-              role="button"
-              tabIndex={0}
-              aria-label={`View ${image.caption || image.alt} in portfolio gallery`}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  openLightbox(index);
-                }
-              }}
-            />
-          ))}
+          {heroImages.map((image, index) => {
+            // Mosaic tile configurations for random layered effect
+            const mosaicStyles = [
+              // Image 0: Left side, rotate left, middle layer
+              "absolute top-8 left-4 sm:top-16 sm:left-8 md:top-12 md:left-12 w-44 h-52 sm:w-64 sm:h-72 md:w-72 md:h-80 lg:w-80 lg:h-96 rounded-700 bg-cover bg-center shadow-600 transform -rotate-6 z-20 border-w-400 border-white ring-4 ring-pink-200/50 dark:ring-pink-400/30 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-600 hover:z-40",
+              // Image 1: Right side, rotate right, top layer
+              "absolute top-4 right-8 sm:top-8 sm:right-16 md:top-6 md:right-20 lg:right-24 w-48 h-56 sm:w-72 sm:h-80 md:w-80 md:h-96 lg:w-88 lg:h-[26rem] rounded-700 bg-cover bg-center shadow-600 transform rotate-3 z-30 border-w-400 border-white ring-4 ring-purple-200/50 dark:ring-purple-400/30 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-600 hover:z-40",
+              // Image 2: Bottom center, slight rotation, back layer
+              "absolute bottom-8 left-1/4 sm:bottom-12 sm:left-1/3 md:bottom-10 md:left-[35%] lg:left-[38%] w-40 h-48 sm:w-56 sm:h-64 md:w-64 md:h-72 lg:w-72 lg:h-80 rounded-700 bg-cover bg-center shadow-600 transform rotate-6 z-10 border-w-400 border-white ring-4 ring-blue-200/50 dark:ring-blue-400/30 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-600 hover:z-40"
+            ];
+
+            return (
+              <div
+                key={index}
+                className={image.className || mosaicStyles[index % 3]}
+                style={{ backgroundImage: `url("${image.src}")` }}
+                onClick={() => openLightbox(index)}
+                role="button"
+                tabIndex={0}
+                aria-label={`View ${image.caption || image.alt} in portfolio gallery`}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    openLightbox(index);
+                  }
+                }}
+              />
+            );
+          })}
 
           {/* Dynamic animated colorful dots positioned based on image count */}
           {heroImages && heroImages.length > 0 && (

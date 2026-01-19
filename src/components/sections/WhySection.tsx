@@ -78,7 +78,7 @@ export function WhySection({
     <div className="text-center">
       <button
         onClick={() => setCurrentPage("about")}
-        className="w-full sm:w-auto justify-center text-center bg-gradient-pink-purple-blue text-white px-button py-button rounded-lg font-body font-medium text-[32px] shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-purple-500/50 focus:ring-opacity-50"
+        className="w-full sm:w-auto justify-center text-center bg-gradient-pink-purple-blue text-white px-button py-button rounded-lg font-body font-medium text-button-fluid shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-purple-500/50 focus:ring-opacity-50"
         aria-label="Navigate to About page to read full story"
       >
         Read My Full Story

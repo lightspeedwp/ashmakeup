@@ -138,18 +138,18 @@ export function BlogPreviewSection({ setCurrentPage }: BlogPreviewSectionProps) 
   }
 
   return (
-    <section className="relative py-section-md px-section-md bg-blog-preview-section transition-colors duration-300 px-[32px] py-[144px]">
+    <section className="relative py-section-md px-section-md bg-blog-preview-section transition-colors duration-300">
       {/* Decorative Blurred Circles */}
       <BlurredCircles variant="blog" />
       
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section header */}
         <div className="text-center mb-fluid-2xl">
-          <h2 className="text-section-h2 font-heading font-semibold dark:text-white mb-fluid-md text-[rgb(255,255,255)]">
+          <h2 className="text-section-h2 font-heading font-semibold text-gray-900 dark:text-white mb-fluid-md">
             Latest from the{' '}
             <span className="text-gradient-pink-purple-blue">Blog</span>
           </h2>
-          <p className="text-body-guideline font-body font-normal leading-relaxed max-w-2xl mx-auto text-[rgb(255,255,255)]">
+          <p className="text-body-guideline font-body font-normal leading-relaxed max-w-2xl mx-auto text-gray-900 dark:text-white">
             Discover tutorials, behind-the-scenes insights, and creative inspiration from the world of festival and UV makeup artistry.
           </p>
         </div>
@@ -206,7 +206,7 @@ export function BlogPreviewSection({ setCurrentPage }: BlogPreviewSectionProps) 
             <div className="text-center">
               <button
                 onClick={goToBlog}
-                className="inline-flex items-center gap-fluid-sm bg-gradient-blue-teal-green hover:from-blue-700 hover:to-teal-700 text-white px-button py-button font-body font-medium text-[32px] transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus-ring-secondary"
+                className="inline-flex items-center gap-fluid-sm bg-gradient-blue-teal-green hover:from-blue-700 hover:to-teal-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus-ring-secondary"
                 aria-label="View all blog posts"
               >
                 <span>View All Blog Posts</span>

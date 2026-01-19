@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { FEATURED_NAILS_DATA } from "../common/Constants";
 import { EnhancedLightbox } from "../ui/EnhancedLightbox";
 import { SliderCard } from "../ui/SliderCard";
+import { BlurredCircles } from "../ui/BlurredCircles";
 
 /**
  * Fusion Nails section component displaying creative nail artistry portfolio
@@ -104,21 +105,21 @@ export function FusionNailsSection({
     <>
       <section
         id="fusion-nails"
-        className="relative bg-fusion-nails-section py-section-md px-section-md w-full transition-colors duration-300 px-[32px] py-[144px]"
+        className="relative bg-fusion-nails-section py-section-md px-section-md w-full transition-colors duration-300"
       >
         {/* Background decoration - responsive */}
-        <div className="absolute top-20 left-1/4 w-20 h-20 sm:w-40 sm:h-40 bg-fusion-decoration-1 rounded-full opacity-15 dark:opacity-20 animate-pulse"></div>
-        <div className="absolute bottom-20 right-1/4 w-16 h-16 sm:w-32 sm:h-32 bg-fusion-decoration-2 rounded-full opacity-20 dark:opacity-25 animate-pulse delay-1000"></div>
+        <BlurredCircles variant="fusion" />
 
         <div className="max-w-7xl mx-auto relative z-10">
+          {/* Section Header */}
           <div className="text-center mb-fluid-2xl">
             <h2
               id="fusion-nails"
-              className="text-section-h2 font-heading font-bold text-section-heading-black mt-[0px] mr-[0px] mb-[32px] ml-[0px]"
+              className="text-section-h2 font-heading font-bold text-section-heading-black mb-fluid-lg"
             >
               Fusion Nails
             </h2>
-            <p className="text-body-guideline font-body font-normal max-w-3xl mx-auto leading-relaxed text-[rgb(255,255,255)]">
+            <p className="text-body-guideline font-body font-normal max-w-3xl mx-auto leading-relaxed text-gray-900 dark:text-white">
               Creative nail artistry combining colors, stickers,
               and topcoats for unique, eye-catching designs that
               complement my makeup work.
@@ -377,7 +378,7 @@ export function FusionNailsSection({
           <div className="text-center">
             <button
               onClick={() => setCurrentPage("portfolio")}
-              className="w-full sm:w-auto justify-center text-center bg-gradient-gold-peach-coral text-white px-button py-button rounded-lg font-body font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus-ring-fusion-button text-[32px]"
+              className="w-full sm:w-auto justify-center text-center bg-gradient-gold-peach-coral text-white px-button py-button rounded-lg font-body font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus-ring-fusion-button text-button-fluid"
               aria-label="Navigate to Portfolio page to view nail artistry gallery"
             >
               See More Nails

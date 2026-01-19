@@ -167,43 +167,14 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
 
       {/* Dynamic Hero Section with mock data fallbacks */}
       <HeroLayout
-        title={heroContent.title}
-        subtitle={
-          <>
-            Makeup that shines with{" "}
-            <em className="italic bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
-              colour
-            </em>
-            ,{" "}
-            <em className="italic bg-gradient-to-r from-purple-500 to-violet-500 bg-clip-text text-transparent">
-              energy
-            </em>
-            , and{" "}
-            <em className="italic bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
-              connection
-            </em>
-            .
-          </>
-        }
-        description={heroContent.description}
+        {...homepageHero}
+        heroImages={homepageHeroImages}
+        enableLightbox={true}
+        setCurrentPage={setCurrentPage}
         size="xl"
         layout="split"
-        className="bg-hero-section text-[32px] px-[48px] py-[24px]"
         titleGradient={{ from: "pink-500", to: "purple-600" }}
         scrollArrowTarget="why-section"
-        heroImages={heroContent.images}
-        lightboxTitle="Ash Shaw Makeup Artistry"
-        enableLightbox={true}
-        actions={
-          <button
-            onClick={() => setCurrentPage("portfolio")}
-            className="w-full sm:w-auto justify-center text-center bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50"
-            aria-label="Navigate to portfolio page to view makeup artistry work"
-          >
-            {heroContent.ctaText}
-          </button>
-        }
-        decorativeElements={<BlurredCircles variant="hero" />}
       />
       
       {/* Why Section - now uses centralized mock data */}
