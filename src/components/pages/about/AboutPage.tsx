@@ -255,6 +255,17 @@ export function AboutPage({
         heroImages={heroImage ? [heroImage] : aboutHeroImages}
         lightboxTitle="Ash Shaw's Creative Journey"
         enableLightbox={true}
+        actions={
+          setCurrentPage && (
+            <button
+              onClick={handlePortfolioClick}
+              className="inline-flex items-center justify-center px-button py-button bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 text-white font-body font-medium text-fluid-base rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-pink-500/50"
+              aria-label="Navigate to Portfolio page to explore makeup artistry collection"
+            >
+              Explore My Portfolio
+            </button>
+          )
+        }
         decorativeElements={
           <>
             <div
@@ -417,9 +428,9 @@ export function AboutPage({
               <button
                 onClick={handlePortfolioClick}
                 className="inline-flex items-center justify-center px-button py-button bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 text-white font-body font-medium text-fluid-base rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-pink-500/50"
-                aria-label="Navigate to Portfolio page to explore full makeup artistry collection"
+                aria-label="Navigate to Portfolio page to explore makeup artistry collection"
               >
-                Explore Full Portfolio
+                Explore My Portfolio
               </button>
             </div>
           )

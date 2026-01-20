@@ -161,7 +161,7 @@ export function InstagramFeed() {
               Follow My Journey
             </h2>
           </div>
-          <p className="text-body-guideline font-body mb-fluid-md">
+          <p className="text-body-guideline font-body mb-fluid-md bg-gradient-to-r from-purple-500 to-violet-500 bg-clip-text text-transparent">
             See my latest work and behind-the-scenes moments
           </p>
           <a

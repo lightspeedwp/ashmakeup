@@ -125,10 +125,10 @@ export function FeaturedSection({
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Section Header */}
           <div className="text-center mb-fluid-2xl">
-            <h2 className="text-section-h2 font-heading font-semibold text-gray-900 dark:text-white mb-fluid-md">
+            <h2 className="text-section-h2 font-heading font-semibold text-gradient-pink-purple-blue mb-fluid-md">
               Featured Work
             </h2>
-            <p className="text-body-guideline font-body font-normal leading-relaxed max-w-3xl mx-auto mb-fluid-lg text-gray-900 dark:text-purple-100">
+            <p className="text-body-guideline font-body font-normal leading-relaxed max-w-3xl mx-auto mb-fluid-lg bg-gradient-to-r from-purple-500 to-violet-500 bg-clip-text text-transparent">
               Discover the artistry and passion behind each creation — from vibrant festival face art to stunning UV-reactive designs that bring joy and connection to every celebration.
             </p>
           </div>

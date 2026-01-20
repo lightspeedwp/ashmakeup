@@ -175,6 +175,15 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
         layout="split"
         titleGradient={{ from: "pink-500", to: "purple-600" }}
         scrollArrowTarget="why-section"
+        actions={
+          <button
+            onClick={() => setCurrentPage("portfolio")}
+            className="inline-flex items-center justify-center px-button py-button bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 text-white font-body font-medium text-fluid-base rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-pink-500/50"
+            aria-label="Navigate to Portfolio page to explore makeup artistry collection"
+          >
+            Explore My Portfolio
+          </button>
+        }
       />
       
       {/* Why Section - now uses centralized mock data */}

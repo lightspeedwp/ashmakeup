@@ -115,11 +115,11 @@ export function FusionNailsSection({
           <div className="text-center mb-fluid-2xl">
             <h2
               id="fusion-nails"
-              className="text-section-h2 font-heading font-bold text-section-heading-black mb-fluid-lg"
+              className="text-section-h2 font-heading font-bold text-gradient-pink-purple-blue mb-fluid-lg"
             >
               Fusion Nails
             </h2>
-            <p className="text-body-guideline font-body font-normal max-w-3xl mx-auto leading-relaxed text-gray-900 dark:text-white">
+            <p className="text-body-guideline font-body font-normal max-w-3xl mx-auto leading-relaxed bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
               Creative nail artistry combining colors, stickers,
               and topcoats for unique, eye-catching designs that
               complement my makeup work.

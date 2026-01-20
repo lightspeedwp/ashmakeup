@@ -145,11 +145,10 @@ export function BlogPreviewSection({ setCurrentPage }: BlogPreviewSectionProps) 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section header */}
         <div className="text-center mb-fluid-2xl">
-          <h2 className="text-section-h2 font-heading font-semibold text-gray-900 dark:text-white mb-fluid-md">
-            Latest from the{' '}
-            <span className="text-gradient-pink-purple-blue">Blog</span>
+          <h2 className="text-section-h2 font-heading font-semibold text-gradient-pink-purple-blue mb-fluid-md">
+            Latest from the Blog
           </h2>
-          <p className="text-body-guideline font-body font-normal leading-relaxed max-w-2xl mx-auto text-gray-900 dark:text-white">
+          <p className="text-body-guideline font-body font-normal leading-relaxed max-w-2xl mx-auto bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
             Discover tutorials, behind-the-scenes insights, and creative inspiration from the world of festival and UV makeup artistry.
           </p>
         </div>

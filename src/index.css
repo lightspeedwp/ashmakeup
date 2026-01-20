@@ -3577,6 +3577,10 @@
     font-style: italic;
   }
 
+  .not-italic {
+    font-style: normal;
+  }
+
   .underline {
     text-decoration-line: underline;
   }
@@ -6094,6 +6098,14 @@
     @media (hover: hover) {
       .dark\:hover\:text-purple-100:hover {
         color: var(--color-purple-100);
+      }
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    @media (hover: hover) {
+      .dark\:hover\:text-purple-200:hover {
+        color: var(--color-purple-200);
       }
     }
   }

@@ -64,11 +64,11 @@ export function WhySection({
     <div className="why-section-header">
       <h2
         id="why-section"
-        className="text-section-h2 why-section-title"
+        className="text-section-h2 why-section-title text-gradient-pink-purple-blue"
       >
         Why I Do Makeup
       </h2>
-      <p className="text-fluid-lg why-section-subtitle">
+      <p className="text-fluid-lg why-section-subtitle bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
         The heart of my creative journey
       </p>
     </div>

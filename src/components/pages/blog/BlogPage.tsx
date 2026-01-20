@@ -716,13 +716,13 @@ export function BlogPage({ setCurrentPage, initialSlug }: BlogPageProps) {
             <div className="flex items-start gap-fluid-sm">
               <Settings className="w-5 h-5 text-contentful-notice-icon mt-1 flex-shrink-0" />
               <div>
-                <h3 className="font-body font-semibold text-contentful-notice-title mb-fluid-xs">
+                <h3 className="font-body font-semibold text-gray-900 dark:text-purple-100 mb-fluid-xs">
                   Dynamic Blog Content Available
                 </h3>
-                <p className="text-fluid-sm font-body text-contentful-notice-body mb-fluid-sm">
+                <p className="text-fluid-sm font-body text-gray-700 dark:text-purple-200 mb-fluid-sm">
                   This blog is currently showing static content with full functionality. To enable dynamic content management:
                 </p>
-                <ol className="text-fluid-sm font-body text-contentful-notice-body list-decimal list-inside space-y-1 mb-fluid-sm">
+                <ol className="text-fluid-sm font-body text-gray-700 dark:text-purple-200 list-decimal list-inside space-y-1 mb-fluid-sm">
                   <li>Set up your Contentful space using the provided content types</li>
                   <li>Configure VITE_CONTENTFUL_SPACE_ID and VITE_CONTENTFUL_ACCESS_TOKEN</li>
                   <li>Create blog posts using the "Blog Post" content type</li>
@@ -730,7 +730,7 @@ export function BlogPage({ setCurrentPage, initialSlug }: BlogPageProps) {
                 <a 
                   href="/BLOG_SETUP_GUIDE.md" 
                   target="_blank"
-                  className="inline-flex items-center gap-1 text-contentful-notice-link font-medium text-fluid-sm underline transition-colors duration-200"
+                  className="inline-flex items-center gap-1 text-blue-600 dark:text-purple-300 hover:text-blue-800 dark:hover:text-purple-200 font-medium text-fluid-sm underline transition-colors duration-200"
                 >
                   📚 View Complete Setup Guide
                   <ExternalLink className="w-3 h-3" />

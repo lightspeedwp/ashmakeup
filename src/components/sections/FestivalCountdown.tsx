@@ -136,7 +136,7 @@ export function FestivalCountdown() {
                 </span>
               </div>
               
-              <h2 className="text-4xl md:text-6xl font-heading font-bold text-festival-heading mb-fluid-sm transition-colors duration-300">
+              <h2 className="text-4xl md:text-6xl font-heading font-bold text-gradient-pink-purple-blue mb-fluid-sm transition-colors duration-300">
                 {festivalName}
               </h2>
               

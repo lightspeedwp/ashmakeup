@@ -35,7 +35,7 @@ export function TestimonialsSection() {
           <h2 className="text-section-h2 font-heading font-bold text-gradient-pink-purple-blue text-testimonials-heading mb-fluid-sm">
             What Clients Say
           </h2>
-          <p className="text-body-guideline font-body max-w-2xl mx-auto text-slider-card-content">
+          <p className="text-body-guideline font-body max-w-2xl mx-auto bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
             Real experiences from real people who trusted me with their special moments
           </p>
         </div>

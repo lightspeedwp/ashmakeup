@@ -147,6 +147,45 @@ export function HeroLayout({
     title: "",
   });
 
+  // Helper function to render subtitle with colored words for brand tagline
+  const renderSubtitle = () => {
+    if (!subtitle) return null;
+    
+    // Check if this is the brand tagline that needs individual word colors
+    const subtitleText = typeof subtitle === 'string' ? subtitle : '';
+    const isBrandTagline = subtitleText.includes('colour') && 
+                          subtitleText.includes('energy') && 
+                          subtitleText.includes('connection');
+    
+    if (isBrandTagline) {
+      // Render with individual colored words matching HeroSection pattern
+      return (
+        <h2 className={`text-section-h2 font-heading font-bold leading-tight mb-fluid-md transition-colors duration-300 ${subtitleGradientClass}`}>
+          Makeup that shines with{" "}
+          <em className="italic text-gradient-pink-purple-blue not-italic">
+            colour
+          </em>
+          ,{" "}
+          <em className="italic text-gradient-pink-purple-blue not-italic">
+            energy
+          </em>
+          , and{" "}
+          <em className="italic text-gradient-blue-teal-green not-italic">
+            connection
+          </em>
+          .
+        </h2>
+      );
+    }
+    
+    // Default rendering for non-tagline subtitles
+    return (
+      <h2 className={`text-section-h2 font-heading font-bold leading-tight mb-fluid-md transition-colors duration-300 ${subtitleGradientClass}`}>
+        {subtitle}
+      </h2>
+    );
+  };
+
   // Prepare hero images for lightbox
   const lightboxImages =
     heroImages?.map((img) => ({
@@ -318,7 +357,7 @@ export function HeroLayout({
 
   return (
     <section
-      className={`relative overflow-x-hidden flex flex-col px-4 sm:px-8 transition-colors duration-300 ${backgroundClass} ${containerClasses} ${className}`}
+      className={`relative overflow-x-hidden flex flex-col px-4 sm:px-8 bg-hero-section transition-colors duration-300 ${containerClasses} ${className}`}
     >
       {/* Decorative Floating Circles - Light Mode Only */}
       <div className="absolute inset-0 pointer-events-none dark:opacity-0 opacity-100 transition-opacity duration-300" aria-hidden="true">
@@ -356,11 +395,7 @@ export function HeroLayout({
             </h1>
 
             {subtitle && (
-              <h2
-                className={`text-section-h2 font-heading font-bold leading-tight mb-fluid-md transition-colors duration-300 ${subtitleGradientClass}`}
-              >
-                {subtitle}
-              </h2>
+              renderSubtitle()
             )}
 
             {description && (
