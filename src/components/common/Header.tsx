@@ -172,15 +172,15 @@ export function Header({
 
 
       <nav
-        className="sticky top-0 bg-header-light backdrop-blur-sm h-[108px] w-full relative flex items-center justify-between px-8 shadow-header-light dark:shadow-lg border-b border-header z-40 transition-colors duration-200"
+        className="header-nav"
         role="navigation"
         aria-label="Main navigation"
       >
         {/* Logo - clickable to home */}
-        <div className="flex items-center flex-shrink-0">
+        <div className="header-logo-container">
           <button
             onClick={() => handleNavigation("home")}
-            className="flex items-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-300"
+            className="header-logo-button"
             aria-label="Go to home page"
           >
             <Logo size="header" />
@@ -189,12 +189,12 @@ export function Header({
 
         {/* Desktop Navigation */}
         <div
-          className="hidden md:flex items-center gap-spacing-20 lg:gap-spacing-30"
+          className="header-nav-desktop gap-8"
           role="menubar"
         >
           <button
             onClick={() => handleNavigation("home")}
-            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-20 py-spacing-10 ${
+            className={`nav-link ${
               currentPage === "home"
                 ? "nav-link-active"
                 : "nav-link-inactive"
@@ -208,7 +208,7 @@ export function Header({
           </button>
           <button
             onClick={() => handleNavigation("about")}
-            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-20 py-spacing-10 ${
+            className={`nav-link ${
               currentPage === "about"
                 ? "nav-link-active"
                 : "nav-link-inactive"
@@ -222,7 +222,7 @@ export function Header({
           </button>
           <button
             onClick={() => handleNavigation("portfolio")}
-            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-20 py-spacing-10 ${
+            className={`nav-link ${
               currentPage === "portfolio"
                 ? "nav-link-active"
                 : "nav-link-inactive"
@@ -236,7 +236,7 @@ export function Header({
           </button>
           <button
             onClick={() => handleNavigation("blog")}
-            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-20 py-spacing-10 ${
+            className={`nav-link ${
               currentPage === "blog"
                 ? "nav-link-active"
                 : "nav-link-inactive"
@@ -250,7 +250,7 @@ export function Header({
           </button>
           <button
             onClick={() => handleNavigation("contact")}
-            className={`text-nav-link font-body font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-20 py-spacing-10 ${
+            className={`nav-link ${
               currentPage === "contact"
                 ? "nav-link-active"
                 : "nav-link-inactive"
@@ -268,7 +268,7 @@ export function Header({
         </div>
 
         {/* Mobile Controls: Theme Toggle + Burger Menu */}
-        <div className="md:hidden flex items-center gap-spacing-20">
+        <div className="header-nav-mobile">
           {/* Theme Toggle - Mobile */}
           <ThemeToggle />
           

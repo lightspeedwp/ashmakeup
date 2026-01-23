@@ -559,9 +559,7 @@ sequenceDiagram
     participant U as User
     participant F as Footer
     participant CF as ContactForm
-    participant E as emailService
-    participant S as Supabase
-    participant SG as SendGrid
+    participant E as emailService (Demo Mode)
     
     U->>F: Scroll to footer
     Note over F: Footer visible<br/>Contact form loaded
@@ -574,16 +572,13 @@ sequenceDiagram
     alt Validation Failed
         CF->>U: Show field errors
     else Validation Passed
-        CF->>E: sendContactFormEmail()
+        CF->>E: sendContactForm()
         
-        E->>S: POST to Edge Function
-        S->>SG: Send notification email
-        S->>SG: Send auto-reply email
+        E->>E: Simulate email sending
+        Note over E: Demo mode<br/>1-3s delay<br/>Logs to console
         
-        alt Email Success
-            SG-->>S: 202 Accepted
-            S-->>E: 200 OK
-            E-->>CF: { success: true }
+        alt Demo Success
+            E-->>CF: { success: true, mode: 'demo' }
             
             CF->>F: Trigger success state
             F->>F: Show confetti 🎉

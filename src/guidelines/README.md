@@ -37,7 +37,6 @@ Follow this **exact reading order** to understand the design system:
 
 #### Step 5: Backend Integrations (REQUIRED for Features)
 13. **[contentful-integration.md](./contentful-integration.md)** - CMS integration guide
-14. **[supabase-integration.md](./supabase-integration.md)** - Email service and backend guide
 
 #### Step 6: Read Component Guidelines BEFORE Using
 15. Before using ANY component, read its specific file in **[components/](./components/)**
@@ -68,7 +67,6 @@ guidelines/
 │
 ├── 📄 mock-data.md                   💾 Mock data system guide (NEW in v4.0)
 ├── 📄 contentful-integration.md      🌐 Contentful CMS guide (NEW in v4.0)
-├── 📄 supabase-integration.md        ⚡ Supabase backend guide (NEW in v4.0)
 │
 ├── 📁 components/                    📦 Component-specific guides (24 files)
 │   ├── Logo.md
@@ -145,14 +143,14 @@ guidelines/
 - Error handling and fallback strategies
 - Setup and configuration guide
 
-#### 3. Supabase Integration 🆕
-- **[supabase-integration.md](./supabase-integration.md)** - Backend services guide
-- SendGrid email integration via Edge Functions
-- Contact form implementation
-- Security and validation
-- Demo mode for development
+#### 2. Contentful Integration 🆕
+- **[contentful-integration.md](./contentful-integration.md)** - CMS setup guide
+- Portfolio, blog, and page content management
+- Content model alignment
+- Static fallbacks for development
+- Image optimization
 
-#### 4. Updated Project Structure
+#### 3. Updated Project Structure
 - Added `/data/` directory documentation
 - Centralized mock data architecture
 - TypeScript type definitions
@@ -188,7 +186,6 @@ guidelines/
 |------|---------|---------|--------|
 | **[mock-data.md](./mock-data.md)** | Mock data system guide | v1.0.0 | ✅ Current |
 | **[contentful-integration.md](./contentful-integration.md)** | CMS integration | v1.0.0 | ✅ Current |
-| **[supabase-integration.md](./supabase-integration.md)** | Backend services | v1.0.0 | ✅ Current |
 
 ### Design Tokens
 
@@ -214,9 +211,9 @@ guidelines/
 → Check [mock-data.md](./mock-data.md) for data alignment
 → Review specific component guides for usage
 
-**Setting up Email?**
-→ Read [supabase-integration.md](./supabase-integration.md)
+**Setting up Contact Form?**
 → Check [ContactForm.md](./components/ContactForm.md)
+→ Contact form works in demo mode (ready for backend integration)
 → Review [Guidelines.md](./Guidelines.md) Section 5 for overview
 
 **Using a Specific Component?**
@@ -313,21 +310,24 @@ const content = data || mockData; // Automatic fallback
 
 ---
 
-### Backend Services (Supabase)
+### Backend Services
 
-**Services:**
-- Email delivery (SendGrid integration)
-- Edge Functions (serverless API)
-- Future: Database, Auth, Storage
+**Contact Form Service:**
+- Demo mode contact form with full validation
+- Ready for backend integration (Netlify, Vercel, AWS Lambda, etc.)
+- Honeypot protection and client-side validation
 
 **Usage:**
 ```typescript
-import { sendContactFormEmail } from '@/utils/emailService';
+import { sendContactForm } from '@/utils/emailService';
 
-await sendContactFormEmail(formData);
+// Works in demo mode - ready for backend integration
+const result = await sendContactForm(formData);
 ```
 
-**Documentation:** [supabase-integration.md](./supabase-integration.md)
+**CMS Integration:**
+- Contentful for dynamic content management
+- Static fallbacks for development
 
 ---
 
@@ -370,7 +370,6 @@ await sendContactFormEmail(formData);
 
 ### Integration Guides
 - [contentful-integration.md](./contentful-integration.md) - CMS setup
-- [supabase-integration.md](./supabase-integration.md) - Backend services
 
 ### Design System
 - [design-tokens/colors.md](./design-tokens/colors.md) - Colors
@@ -385,10 +384,15 @@ await sendContactFormEmail(formData);
 
 ## 🔄 Version History
 
-### v4.0.0 (Current - January 2025)
+### v4.1.0 (Current - January 2025)
+- ✅ Removed Supabase backend integration
+- ✅ Contact form now operates in demo mode
+- ✅ Ready for backend integration (Netlify/Vercel/AWS Lambda)
+- ✅ Updated documentation to reflect changes
+
+### v4.0.0 (January 2025)
 - ✅ Added mock data system documentation
 - ✅ Added Contentful integration guide
-- ✅ Added Supabase integration guide
 - ✅ Updated project structure with /data/ directory
 - ✅ Enhanced reading order and navigation
 - ✅ Added AUDIT_REPORT.md for maintenance
@@ -447,8 +451,8 @@ A: See [mock-data.md](./mock-data.md) - All content in `/data/mock/`
 **Q: How do I integrate with Contentful?**  
 A: See [contentful-integration.md](./contentful-integration.md)
 
-**Q: How do I setup email service?**  
-A: See [supabase-integration.md](./supabase-integration.md)
+**Q: How does the contact form work?**  
+A: Contact form operates in demo mode. See [ContactForm.md](./components/ContactForm.md) for integration options
 
 **Q: Which component should I use?**  
 A: See [overview-components.md](./overview-components.md) for architecture

@@ -327,19 +327,19 @@ export function MobileMenu({
         {/* Decorative Elements - positioned to avoid interference */}
         <div className="absolute bottom-20 left-8">
           <div
-            className="w-16 h-16 sm:w-24 sm:h-24 mobile-menu-orb-1 rounded-900 animate-pulse"
+            className="mobile-menu-orb-sm mobile-menu-orb-1 rounded-900 animate-pulse"
             aria-hidden="true"
           />
         </div>
         <div className="absolute bottom-32 right-8">
           <div
-            className="w-12 h-12 sm:w-20 sm:h-20 mobile-menu-orb-2 rounded-900 animate-pulse delay-1000"
+            className="mobile-menu-orb-md mobile-menu-orb-2 rounded-900 animate-pulse delay-1000"
             aria-hidden="true"
           />
         </div>
         <div className="absolute top-1/3 right-12">
           <div
-            className="w-8 h-8 sm:w-12 sm:h-12 mobile-menu-orb-3 rounded-900 animate-pulse delay-2000"
+            className="mobile-menu-orb-xs mobile-menu-orb-3 rounded-900 animate-pulse delay-2000"
             aria-hidden="true"
           />
         </div>

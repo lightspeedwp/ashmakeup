@@ -386,7 +386,7 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
           <h1 className="text-hero-h1 font-heading font-bold text-gradient-pink-purple-blue mb-fluid-lg leading-tight tracking-tight">
             Portfolio
           </h1>
-          <p className="text-quote-large font-body font-normal text-gray-700 leading-relaxed max-w-4xl mx-auto">
+          <p className="text-quote-large font-body font-normal text-gray-700 dark:text-gray-100 leading-relaxed max-w-4xl mx-auto">
             Discover the artistry and passion behind each creation — from vibrant festival face art to stunning UV-reactive designs that bring joy and connection to every celebration.
           </p>
         </div>

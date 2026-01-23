@@ -56,7 +56,7 @@ interface Circle {
  */
 interface BlurredCirclesProps {
   /** Preset variant for common layouts */
-  variant?: 'hero' | 'section' | 'minimal' | 'vibrant' | 'festival' | 'nightlife' | 'why' | 'featured' | 'blog';
+  variant?: 'hero' | 'section' | 'minimal' | 'vibrant' | 'festival' | 'nightlife' | 'why' | 'featured' | 'blog' | 'uv';
   /** Custom circle configurations (overrides variant) */
   circles?: Circle[];
   /** Additional CSS classes */
@@ -112,6 +112,11 @@ const presets: Record<string, Circle[]> = {
     { color: 'purple-lavender', size: 'xl', position: 'top-right', opacity: 60 },
     { color: 'pink-purple', size: 'lg', position: 'bottom-left', opacity: 50 },
     { color: 'peach-coral', size: 'md', position: 'bottom-right', opacity: 40 },
+  ],
+  uv: [
+    // Electric/neon UV theme
+    { color: 'blue-teal', size: 'xl', position: 'top-left', opacity: 45 },
+    { color: 'purple-lavender', size: 'lg', position: 'bottom-right', opacity: 50 },
   ],
 };
 

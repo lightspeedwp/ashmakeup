@@ -150,11 +150,10 @@ ash-shaw-makeup-portfolio/
 │   └── 📄 globals.css                 # Tailwind V4 + brand system
 │
 ├── 📁 utils/
-│   ├── 📄 emailService.ts             # SendGrid integration
+│   ├── 📄 emailService.ts             # Email service (demo mode)
 │   └── 📄 contentfulService.ts        # CMS integration
 │
 ├── 📁 hooks/                          # React hooks
-├── 📁 supabase/                       # Backend functions
 │
 ├── 📁 guidelines/                     # THIS DIRECTORY
 │   ├── 📄 Guidelines.md               # This file (start here)
@@ -203,7 +202,6 @@ App.tsx (Router + Global State)
 - **TypeScript** - Type safety and developer experience
 
 ### Backend Integration
-- **Supabase Edge Functions** - SendGrid email integration
 - **Contentful CMS** - Dynamic content management
 - **Netlify** - Production deployment and CDN
 
@@ -211,19 +209,163 @@ App.tsx (Router + Global State)
 
 **📖 Complete Integration Guides:**
 - **[Contentful Integration](./contentful-integration.md)** - Complete CMS integration guide with content model alignment
-- **[Supabase Integration](./supabase-integration.md)** - Email service, Edge Functions, and backend setup
 
 ### Key Features
 - ✅ Variable Font System (73% fewer requests)
-- ✅ SendGrid Professional Email (dual system)
 - ✅ Contentful CMS Integration (with static fallbacks)
 - ✅ WordPress-Inspired Fluid Typography
 - ✅ WCAG 2.1 AA Accessibility Compliance
 - ✅ Advanced Blog System (search, filtering, pagination)
+- ✅ Demo Mode Contact Form (ready for backend integration)
 
 ---
 
 ## 3. 🎨 Brand Identity & Design System
+
+### Responsive Breakpoints
+
+**Fluid Width System:**
+```css
+/* Desktop (large screens) */
+@media (min-width: 1440px) { /* Desktop > 1440px */ }
+
+/* Desktop (standard) */
+@media (min-width: 1024px) { /* Tablet landscape > 1024px */ }
+
+/* Tablet Portrait */
+@media (min-width: 768px) { /* Tablet portrait > 768px */ }
+
+/* Mobile */
+@media (min-width: 420px) { /* Mobile > 420px */ }
+
+/* Mobile Compact */
+@media (min-width: 320px) { /* Mobile compact > 320px */ }
+```
+
+**Fluid Horizontal Padding:**
+- **Range:** 16px (min) to 32px (max)
+- **CSS Variable:** `--wp--custom--spacing--horizontal` or `--px-horizontal-section`
+- **Implementation:** `padding-left: clamp(1rem, 2vw, 2rem);` and `padding-right: clamp(1rem, 2vw, 2rem);`
+- **CSS Class:** `.px-horizontal-section` for consistent horizontal padding
+- **Applied to:** All major sections, page containers, and layout wrappers
+
+```tsx
+// ✅ CORRECT - Using the global CSS class
+<section className="px-horizontal-section py-section">
+  Content with consistent horizontal padding
+</section>
+
+// ✅ CORRECT - Using the CSS variable
+<div style={{ paddingLeft: 'var(--wp--custom--spacing--horizontal)', paddingRight: 'var(--wp--custom--spacing--horizontal)' }}>
+  Custom element with fluid padding
+</div>
+```
+
+### Fluid Typography Scale
+
+**Heading Sizes (H1-H6) with Fluid Min/Max:**
+
+```css
+/* H1 - Hero Title */
+.text-hero-h1 {
+  font-size: clamp(2.25rem, 6vw, 7.5rem); /* 36px → 120px */
+}
+
+/* H2 - Section Headings */
+.text-section-h2 {
+  font-size: clamp(1.5rem, 4vw, 3rem); /* 24px → 48px */
+}
+
+/* H3 - Subsection Headings */
+.text-subsection-h3 {
+  font-size: clamp(1.25rem, 3vw, 2rem); /* 20px → 32px */
+}
+
+/* H4 - Card Titles */
+.text-card-h4 {
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem); /* 18px → 24px */
+}
+
+/* H5 - Small Headings */
+.text-small-h5 {
+  font-size: clamp(1rem, 2vw, 1.25rem); /* 16px → 20px */
+}
+
+/* H6 - Micro Headings */
+.text-micro-h6 {
+  font-size: clamp(0.875rem, 1.5vw, 1rem); /* 14px → 16px */
+}
+
+/* P - Body Text */
+.text-body-p {
+  font-size: clamp(1rem, 1.5vw, 1.25rem); /* 16px → 20px */
+}
+
+/* P - Small Body Text */
+.text-body-small-p {
+  font-size: clamp(0.875rem, 1.25vw, 1rem); /* 14px → 16px */
+}
+
+/* P - Large Body Text */
+.text-body-large-p {
+  font-size: clamp(1.125rem, 1.75vw, 1.375rem); /* 18px → 22px */
+}
+```
+
+**Typography Implementation Notes:**
+- All headings use `font-heading` (Playfair Display) for elegance
+- Body text uses `font-body` (Inter) for readability
+- Line heights are automatically calculated based on font size
+- Letter spacing adjusts proportionally with fluid sizing
+- Always use semantic HTML (`<h1>`, `<h2>`, `<p>`) with these CSS classes
+
+### Complete Fluid Typography & Spacing Reference
+
+**Quick Reference Table:**
+
+| Element | CSS Class | Min Size | Max Size | CSS Variable |
+|---------|-----------|----------|----------|--------------|
+| **Hero Title (H1)** | `.text-hero-h1` | 36px (2.25rem) | 120px (7.5rem) | `--text-hero-h1` |
+| **Section Heading (H2)** | `.text-section-h2` | 24px (1.5rem) | 48px (3rem) | `--text-section-h2` |
+| **Subsection (H3)** | `.text-subsection-h3` | 20px (1.25rem) | 32px (2rem) | N/A |
+| **Card Title (H4)** | `.text-card-h4` | 18px (1.125rem) | 24px (1.5rem) | N/A |
+| **Small Heading (H5)** | `.text-small-h5` | 16px (1rem) | 20px (1.25rem) | N/A |
+| **Micro Heading (H6)** | `.text-micro-h6` | 14px (0.875rem) | 16px (1rem) | N/A |
+| **Body Text (P)** | `.text-body-p` | 16px (1rem) | 20px (1.25rem) | `--text-body-guideline` |
+| **Small Body (P)** | `.text-body-small-p` | 14px (0.875rem) | 16px (1rem) | N/A |
+| **Large Body (P)** | `.text-body-large-p` | 18px (1.125rem) | 22px (1.375rem) | N/A |
+| **Horizontal Padding** | `.px-horizontal-section` | 16px (1rem) | 32px (2rem) | `--wp--custom--spacing--horizontal` |
+
+**Usage Examples:**
+
+```tsx
+// Hero Section with fluid typography
+<section className="px-horizontal-section py-section">
+  <h1 className="text-hero-h1 font-title">
+    Ash Shaw Makeup Artist
+  </h1>
+  <p className="text-body-large-p font-body">
+    Makeup that shines with colour, energy, and connection.
+  </p>
+</section>
+
+// Card with responsive typography
+<div className="bg-card p-card-responsive">
+  <h4 className="text-card-h4 font-heading">Card Title</h4>
+  <p className="text-body-p font-body">Card content description</p>
+</div>
+
+// Section with consistent padding
+<section className="px-horizontal-section py-section-md">
+  <h2 className="text-section-h2 font-heading">Section Title</h2>
+  <h3 className="text-subsection-h3 font-heading">Subsection</h3>
+  <p className="text-body-p font-body">Section content</p>
+</section>
+```
+
+**Mobile Menu Visibility:**
+- Mobile menu is visible at breakpoints: **768px and below** (tablet portrait, mobile, mobile compact)
+- Desktop menu is visible at breakpoints: **1024px and above** (tablet landscape, desktop)
 
 ### Logo & Brand Mark
 - **Fonts:** Playfair Display (serif) + Inter (sans-serif)
@@ -242,6 +384,291 @@ Comprehensive design system with semantic tokens for:
 - **Colors** - See **[design-tokens/colors.md](./design-tokens/colors.md)**
 - **Typography** - See **[design-tokens/typography.md](./design-tokens/typography.md)**
 - **Spacing** - See **[design-tokens/spacing.md](./design-tokens/spacing.md)**
+
+---
+
+## 3.5. 📐 Fluid & Responsive Implementation Guide
+
+### Overview
+
+This project uses a **comprehensive fluid design system** that automatically adapts to all screen sizes (320px → 1440px) using CSS `clamp()` functions and viewport-based calculations. All values are pre-defined in `/styles/globals.css` as WordPress-aligned CSS variables and helper classes.
+
+### ✅ System Status: FULLY IMPLEMENTED
+
+**All fluid systems are complete and production-ready:**
+- ✅ **5 Responsive Breakpoints** - Mobile compact → Desktop large
+- ✅ **Fluid Horizontal Padding** - 16px → 32px across all screen sizes
+- ✅ **9 Fluid Typography Classes** - H1-H6 + 3 P variants with min/max values
+- ✅ **7 Vertical Spacing Classes** - Section padding variants
+- ✅ **150+ Helper Classes** - Complete WordPress-aligned utility system
+
+### Responsive Breakpoints (Media Queries)
+
+**Use these breakpoints for custom responsive behavior:**
+
+```css
+/* Mobile Compact - 320px and up */
+@media (min-width: 320px) {
+  /* Base mobile styles - smallest phones */
+}
+
+/* Mobile Standard - 420px and up */
+@media (min-width: 420px) {
+  /* Enhanced mobile experience */
+}
+
+/* Tablet Portrait - 768px and up */
+@media (min-width: 768px) {
+  /* Tablet vertical orientation */
+  /* Mobile menu switches to desktop menu at 1024px */
+}
+
+/* Tablet Landscape - 1024px and up */
+@media (min-width: 1024px) {
+  /* Tablet horizontal + small desktop */
+  /* Desktop navigation becomes visible */
+}
+
+/* Desktop Large - 1440px and up */
+@media (min-width: 1440px) {
+  /* Large desktop screens and up */
+}
+```
+
+**Navigation Behavior:**
+- **Mobile Menu Visible:** 320px - 1023px (mobile compact, mobile, tablet portrait)
+- **Desktop Menu Visible:** 1024px and above (tablet landscape, desktop)
+
+### Fluid Horizontal Padding (16px → 32px)
+
+**Automatically applied horizontal padding that scales with viewport:**
+
+```tsx
+// ✅ Method 1: Use the helper class (RECOMMENDED)
+<section className="px-horizontal-section">
+  Content with automatic 16px → 32px horizontal padding
+</section>
+
+// ✅ Method 2: Use the CSS variable
+<div style={{ 
+  paddingLeft: 'var(--wp--custom--spacing--horizontal)',
+  paddingRight: 'var(--wp--custom--spacing--horizontal)'
+}}>
+  Custom element with fluid padding
+</div>
+```
+
+**CSS Variable:** `--wp--custom--spacing--horizontal`  
+**CSS Class:** `.px-horizontal-section`  
+**Implementation:** `clamp(1rem, 2vw, 2rem)` (16px → 32px)
+
+### Complete Fluid Typography System
+
+**All typography classes include proper font family, line height, and letter spacing:**
+
+| Element | CSS Class | Min | Max | Font Family |
+|---------|-----------|-----|-----|-------------|
+| **Hero Title (H1)** | `.text-hero-h1` | 36px | 120px | Righteous (title font) |
+| **Section Heading (H2)** | `.text-section-h2` | 24px | 48px | Playfair Display (heading) |
+| **Subsection (H3)** | `.text-subsection-h3` | 20px | 32px | Playfair Display (heading) |
+| **Card Title (H4)** | `.text-card-h4` | 18px | 24px | Playfair Display (heading) |
+| **Small Heading (H5)** | `.text-small-h5` | 16px | 20px | Playfair Display (heading) |
+| **Micro Heading (H6)** | `.text-micro-h6` | 14px | 16px | Playfair Display (heading) |
+| **Body Text (P)** | `.text-body-p` | 16px | 20px | Inter (body) |
+| **Small Body (P)** | `.text-body-small-p` | 14px | 16px | Inter (body) |
+| **Large Body (P)** | `.text-body-large-p` | 18px | 22px | Inter (body) |
+
+**Usage Examples:**
+
+```tsx
+// ✅ Hero section with proper fluid typography
+<section className="px-horizontal-section py-section-lg">
+  <h1 className="text-hero-h1 font-title text-gradient-pink-purple-blue">
+    Ash Shaw Makeup Artist
+  </h1>
+  <p className="text-body-large-p font-body text-center">
+    Makeup that shines with colour, energy, and connection.
+  </p>
+</section>
+
+// ✅ Standard section with heading hierarchy
+<section className="px-horizontal-section py-section-md">
+  <h2 className="text-section-h2 font-heading text-center mb-fluid-lg">
+    My Journey
+  </h2>
+  <h3 className="text-subsection-h3 font-heading mb-fluid-md">
+    Getting Started
+  </h3>
+  <p className="text-body-p font-body">
+    Section content with responsive body text.
+  </p>
+</section>
+
+// ✅ Card component with appropriate sizing
+<div className="bg-card p-card-responsive rounded-card-default">
+  <h4 className="text-card-h4 font-heading mb-spacing-20">
+    Card Title
+  </h4>
+  <p className="text-body-small-p font-body">
+    Card description text.
+  </p>
+</div>
+```
+
+### Vertical Section Spacing Classes
+
+**Pre-defined classes for consistent vertical rhythm:**
+
+| CSS Class | Min Padding | Max Padding | Use Case |
+|-----------|-------------|-------------|----------|
+| `.py-section-xs` | 16px | 16px | Minimal spacing (fixed) |
+| `.py-section-sm` | 16px | 32px | Small sections |
+| `.py-section-md` | 24px | 48px | **Default** - Most sections |
+| `.py-section-md-plus` | 27.6px | 55.2px | Enhanced spacing (+15%) |
+| `.py-section-lg` | 32px | 64px | Large sections |
+| `.py-section-xl` | 48px | 96px | Hero sections |
+| `.py-section` | 48px | 128px | Maximum spacing |
+
+**Usage:**
+
+```tsx
+// ✅ Standard section with medium padding
+<section className="px-horizontal-section py-section-md bg-hero-light">
+  <h2 className="text-section-h2">Section Title</h2>
+  {/* Content */}
+</section>
+
+// ✅ Hero section with extra large padding
+<section className="px-horizontal-section py-section-xl">
+  <h1 className="text-hero-h1">Hero Title</h1>
+  {/* Hero content */}
+</section>
+
+// ✅ Compact section with small padding
+<section className="px-horizontal-section py-section-sm">
+  {/* Compact content */}
+</section>
+```
+
+### Complete Layout Pattern
+
+**Standard page section with all fluid values applied:**
+
+```tsx
+export function MyPageSection() {
+  return (
+    <section className="px-horizontal-section py-section-md bg-section-light dark:bg-section-dark">
+      <div className="max-w-screen-xl mx-auto">
+        {/* Hero Title */}
+        <h1 className="text-hero-h1 font-title text-gradient-pink-purple-blue text-center mb-fluid-xl">
+          Page Title
+        </h1>
+        
+        {/* Section Heading */}
+        <h2 className="text-section-h2 font-heading text-center mb-fluid-lg">
+          Section Heading
+        </h2>
+        
+        {/* Subsection */}
+        <h3 className="text-subsection-h3 font-heading mb-fluid-md">
+          Subsection Title
+        </h3>
+        
+        {/* Body Content */}
+        <p className="text-body-p font-body mb-fluid-md">
+          This is body text that automatically scales from 16px to 20px
+          based on viewport width. All spacing is fluid and responsive.
+        </p>
+        
+        {/* Card Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-fluid-lg">
+          <div className="bg-card p-card-responsive rounded-card-default shadow-card hover:shadow-card-hover transition-shadow-300">
+            <h4 className="text-card-h4 font-heading mb-spacing-20">
+              Card Title
+            </h4>
+            <p className="text-body-small-p font-body">
+              Card description
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+```
+
+### Best Practices
+
+**✅ DO:**
+1. Always use `.px-horizontal-section` for horizontal padding
+2. Use semantic heading classes (`.text-hero-h1`, `.text-section-h2`, etc.)
+3. Apply appropriate vertical spacing classes (`.py-section-md`, `.py-section-lg`)
+4. Combine fluid typography with proper font families (`.font-heading`, `.font-body`, `.font-title`)
+5. Use spacing helper classes for margins (`.mb-fluid-lg`, `.mt-fluid-md`)
+
+**❌ DON'T:**
+1. Don't hardcode pixel values for padding or font sizes
+2. Don't use inline styles for responsive values
+3. Don't override fluid classes with fixed values
+4. Don't mix Tailwind spacing classes with WordPress-aligned classes
+5. Don't forget to add proper font family classes
+
+### Quick Reference: Common Patterns
+
+```tsx
+// Hero Section
+<section className="px-horizontal-section py-section-xl bg-hero-light dark:bg-section-dark">
+  <h1 className="text-hero-h1 font-title">Title</h1>
+</section>
+
+// Standard Section
+<section className="px-horizontal-section py-section-md">
+  <h2 className="text-section-h2 font-heading">Heading</h2>
+  <p className="text-body-p font-body">Content</p>
+</section>
+
+// Card Component
+<div className="bg-card p-card-responsive">
+  <h4 className="text-card-h4 font-heading">Title</h4>
+  <p className="text-body-small-p font-body">Description</p>
+</div>
+
+// Horizontal Padding Only
+<div className="px-horizontal-section">
+  Content with fluid horizontal padding
+</div>
+```
+
+### CSS Variables Reference
+
+**For custom implementations, use these CSS variables:**
+
+```css
+/* Horizontal Padding */
+--wp--custom--spacing--horizontal: clamp(1rem, 2vw, 2rem);
+
+/* Typography */
+--text-hero-h1: clamp(2.25rem, 6vw, 7.5rem);
+--text-section-h2: clamp(1.5rem, 4vw, 3rem);
+--text-body-guideline: clamp(1rem, 1.5vw, 1.25rem);
+
+/* Spacing Scale */
+--wp--preset--spacing--fluid-md: clamp(1rem, 0.6rem + 2vw, 2rem);
+--wp--preset--spacing--fluid-lg: clamp(1.5rem, 1rem + 2.5vw, 3rem);
+--wp--preset--spacing--section: clamp(3rem, 6vw + 1rem, 8rem);
+```
+
+### Migration Checklist
+
+**When updating existing components:**
+
+- [ ] Replace hardcoded horizontal padding with `.px-horizontal-section`
+- [ ] Replace fixed font sizes with fluid typography classes
+- [ ] Replace fixed vertical padding with `.py-section-*` classes
+- [ ] Ensure all headings have proper font family classes
+- [ ] Test across all breakpoints (320px, 768px, 1024px, 1440px)
+- [ ] Verify mobile menu visibility at 768px breakpoint
+- [ ] Confirm desktop menu visibility at 1024px breakpoint
 
 ---
 
@@ -284,13 +711,19 @@ const handleKeyDown = (e: React.KeyboardEvent) => {
 
 ## 5. 📧 Backend Integrations
 
-### SendGrid Email System
-- **Professional dual email system** (notification + auto-reply)
-- **Integration:** Supabase Edge Functions
-- **Features:** Honeypot protection, validation, branded templates
-- **Demo Mode:** Full functionality without SendGrid setup
+## 5. 📧 Backend Integrations
 
-**📖 Detailed Documentation:** See **[Supabase Integration Guide](./supabase-integration.md)** for complete email service setup, Edge Functions deployment, and troubleshooting.
+### Contact Form Email Service
+- **Demo Mode:** Fully functional contact form with validation and UX
+- **Features:** Honeypot protection, client-side validation, error handling
+- **Ready for Integration:** Can be connected to any backend service (Netlify Functions, Vercel, AWS Lambda, etc.)
+
+**Implementation Details:**
+- Contact form validates all inputs client-side
+- Simulates realistic email delivery with success/error states
+- Provides user-friendly feedback messages
+- Includes comprehensive logging for debugging
+- No backend required for testing and development
 
 ### Contentful CMS
 - **Dynamic content management** for portfolio, blog, and pages
@@ -302,15 +735,16 @@ const handleKeyDown = (e: React.KeyboardEvent) => {
 
 ### Environment Variables Required
 ```bash
-# SendGrid (Production)
-SENDGRID_API_KEY=your_key_here
-TO_EMAIL=ashley@ashshaw.makeup
-FROM_EMAIL=noreply@ashshaw.makeup
-
 # Contentful (Optional - works without)
 VITE_CONTENTFUL_SPACE_ID=your_space_id
 VITE_CONTENTFUL_ACCESS_TOKEN=your_token
 ```
+
+**Note:** Email backend integration has been removed. To enable real email delivery, integrate with your preferred backend service:
+- Netlify Functions
+- Vercel Serverless Functions
+- AWS Lambda
+- Custom API server
 
 ---
 

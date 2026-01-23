@@ -314,7 +314,7 @@ export function PortfolioCard({
 
   return (
     <article
-      className="group portfolio-card cursor-pointer bg-white dark:bg-black backdrop-blur-sm rounded-600 border border-gray-200 dark:border-gray-800 shadow-400 hover:shadow-500 transition-all duration-200 overflow-hidden relative"
+      className="group portfolio-card cursor-pointer bg-portfolio-card backdrop-blur-sm rounded-600 border border-portfolio-card shadow-400 hover:shadow-500 transition-all duration-200 overflow-hidden relative"
       onClick={() => onImageClick(currentImageIndex)}
       onKeyDown={handleKeyDown}
       tabIndex={0}
@@ -345,25 +345,25 @@ export function PortfolioCard({
               <div className="hidden sm:block">
                 <button
                   onClick={goToPrevious}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-900 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-black/20 z-10"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-nav-button hover:bg-nav-button rounded-900 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-black/20 z-10"
                   aria-label="Previous image"
                   tabIndex={-1}
                 >
-                  <ChevronLeft className="w-6 h-6 text-gray-700" />
+                  <ChevronLeft className="w-6 h-6 text-portfolio-icon" />
                 </button>
                 
                 <button
                   onClick={goToNext}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-900 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-black/20 z-10"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-nav-button hover:bg-nav-button rounded-900 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-black/20 z-10"
                   aria-label="Next image"
                   tabIndex={-1}
                 >
-                  <ChevronRight className="w-6 h-6 text-gray-700" />
+                  <ChevronRight className="w-6 h-6 text-portfolio-icon" />
                 </button>
               </div>
 
               {/* Mobile Swipe Indicator */}
-              <div className="sm:hidden absolute top-3 left-3 bg-black/70 text-white text-xs px-3 py-1.5 rounded-900 opacity-90 backdrop-blur-sm">
+              <div className="sm:hidden absolute top-3 left-3 bg-overlay-badge-strong text-white text-xs px-3 py-1.5 rounded-900 opacity-90 backdrop-blur-sm">
                 <span className="flex items-center gap-1">
                   <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
@@ -393,7 +393,7 @@ export function PortfolioCard({
               </div>
 
               {/* Image Counter */}
-              <div className="absolute top-3 left-3 bg-black/60 text-white text-xs px-2 py-1 rounded-900 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              <div className="absolute top-3 left-3 bg-overlay-badge text-white text-xs px-2 py-1 rounded-900 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                 {currentImageIndex + 1}/{allImages.length}
               </div>
             </>
@@ -402,24 +402,24 @@ export function PortfolioCard({
 
       {/* Entry Information */}
       <div className="p-fluid-md">
-        <h3 className="text-body-guideline font-heading font-semibold text-gray-900 dark:text-white mb-fluid-sm group-hover:text-gradient-pink-purple-blue transition-colors duration-300 line-clamp-2">
+        <h3 className="text-body-guideline font-heading font-semibold text-portfolio-title mb-fluid-sm group-hover:text-gradient-pink-purple-blue transition-colors duration-300 line-clamp-2">
           {entry.title}
         </h3>
         {entry.subtitle && (
-          <p className="text-body-guideline font-body font-medium text-gray-700 dark:text-cyan-300 mb-fluid-sm">
+          <p className="text-body-guideline font-body font-medium text-portfolio-subtitle mb-fluid-sm">
             {entry.subtitle}
           </p>
         )}
-        <p className="text-body-guideline font-body font-normal text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-3">
+        <p className="text-body-guideline font-body font-normal text-portfolio-description leading-relaxed line-clamp-3">
           {entry.description}
         </p>
         
         {/* Action Links */}
-        <div className="mt-fluid-sm pt-fluid-sm border-t border-gray-200 dark:border-gray-800">
+        <div className="mt-fluid-sm pt-fluid-sm border-t border-portfolio-divider">
           <div className="flex items-center justify-between">
             {/* Gallery Info */}
             {hasMultipleImages && (
-              <p className="text-body-guideline font-body font-medium text-gray-500 dark:text-gray-400 flex items-center gap-fluid-sm">
+              <p className="text-body-guideline font-body font-medium text-portfolio-muted flex items-center gap-fluid-sm">
                 <span className="w-2 h-2 bg-gradient-pink-purple-blue rounded-full"></span>
                 {allImages.length} images • Click to view gallery
               </p>

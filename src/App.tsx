@@ -320,9 +320,9 @@ export default function App() {
 
   const scrollToPortfolioSection = (sectionId?: string) => {
     setTimeout(() => {
-      if (sectionId === "fusion-nails") {
+      if (sectionId === "uv-makeup") {
         const element = document.querySelector(
-          '[data-section="fusion-nails"]',
+          '[data-section="uv-makeup"]',
         );
         if (element) {
           element.scrollIntoView({ behavior: "smooth" });
@@ -354,7 +354,7 @@ export default function App() {
       }}
     >
       <ModalProvider>
-        <div className="min-h-screen bg-white dark:bg-gradient-to-br dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 transition-colors duration-300">
+        <div className="min-h-screen bg-app-container transition-colors duration-300">
         {/* Live region for screen reader announcements - Enhanced for contact form */}
         <div
           aria-live="polite"

@@ -1,41 +1,49 @@
 # ContactForm Component
 
-**Version:** 4.0.0  
+**Version:** 5.0.0  
 **Last Updated:** January 2025
 
-SendGrid-integrated contact form with validation, honeypot protection, and professional dual email system.
+Fully functional contact form with validation, honeypot protection, and demo mode.
 
 ## Purpose
 
 Provide secure contact functionality with:
-- SendGrid email integration via Supabase Edge Functions
 - Client-side validation
 - Honeypot spam protection
-- Professional dual email system (notification + auto-reply)
 - Success/error feedback
 - Accessibility compliance
-- Demo mode (works without SendGrid setup)
+- **Demo mode** (fully functional without backend)
+- **Ready for backend integration** (Netlify Functions, Vercel, AWS Lambda, etc.)
 
 ---
 
-## 🔗 Backend Integration
+## 🔗 Backend Integration Status
 
-This component uses **Supabase Edge Functions** for email delivery via **SendGrid**.
+This component currently operates in **demo mode** and is ready for backend integration.
 
 ### Features
 
-- ✅ **Dual Email System:** Notification email to Ash + auto-reply to user
+- ✅ **Client-Side Validation:** Comprehensive input validation
 - ✅ **Bot Protection:** Honeypot field detection
-- ✅ **Email Validation:** Client-side and server-side validation
-- ✅ **Demo Mode:** Full functionality without SendGrid API keys
-- ✅ **Error Handling:** Circuit breaker with timeout protection
-- ✅ **Professional Templates:** Branded HTML email templates
+- ✅ **Email Format Validation:** RFC-compliant email validation
+- ✅ **Demo Mode:** Simulates email sending with realistic delays
+- ✅ **Error Handling:** Comprehensive error states and user feedback
+- ✅ **Accessibility:** WCAG 2.1 AA compliant
+
+### Integration Options
+
+**Ready to integrate with:**
+- Netlify Functions
+- Vercel Serverless Functions
+- AWS Lambda
+- Custom API server
+- SendGrid (direct integration)
+- Any email service provider
 
 ### Complete Documentation
 
-For complete setup and configuration:
+For project guidelines:
 
-- **[Supabase Integration Guide](../supabase-integration.md)** - Complete Edge Functions setup
 - **[Guidelines.md](../Guidelines.md)** - Main project guidelines
 
 ### Backend Architecture
@@ -109,107 +117,37 @@ For complete setup and configuration:
                                              └──────────┬──────────┘
                                                         │
                                              ┌──────────▼──────────┐
-                                             │ Check Supabase URL  │
+                                             │  DEMO MODE ACTIVE   │
                                              └──────────┬──────────┘
                                                         │
-                                          ┌─────────────┼─────────────┐
-                                          │                           │
-                                          ▼                           ▼
-                                  ┌───────────────┐       ┌──────────────────┐
-                                  │  DEMO MODE    │       │ PRODUCTION MODE  │
-                                  │               │       │                  │
-                                  │ No Supabase   │       │ Supabase URL set │
-                                  │ URL set       │       │                  │
-                                  │               │       │ POST to:         │
-                                  │ Simulate:     │       │ /functions/v1/   │
-                                  │ • Wait 1s     │       │ server           │
-                                  │ • Return 200  │       └────────┬─────────┘
-                                  │ • Success msg │                │
-                                  └───────┬───────┘                │
-                                          │                        │
-┌─────────────────────────────────────────┼────────────────────────┼────┐
-│                  SUPABASE EDGE FUNCTION (Server-side)                 │
-└─────────────────────────────────────────┼────────────────────────┼────┘
-                                          │                        │
-                                          │         ┌──────────────▼──────────┐
-                                          │         │ Edge Function Receives  │
-                                          │         │ POST request            │
-                                          │         └──────────────┬──────────┘
-                                          │                        │
-                                          │             ┌──────────▼──────────┐
-                                          │             │ Validate Payload    │
-                                          │             │ • Check fields      │
-                                          │             │ • Sanitize input    │
-                                          │             └──────────┬──────────┘
-                                          │                        │
-                                          │             ┌──────────▼──────────┐
-                                          │             │ Check Environment   │
-                                          │             │ • SENDGRID_API_KEY  │
-                                          │             │ • TO_EMAIL          │
-                                          │             │ • FROM_EMAIL        │
-                                          │             └──────────┬──────────┘
-                                          │                        │
-┌─────────────────────────────────────────┼────────────────────────┼────┐
-│                     SENDGRID INTEGRATION                              │
-└─────────────────────────────────────────┼────────────────────────┼────┘
-                                          │                        │
-                                          │         ┌──────────────▼──────────┐
-                                          │         │ Build Email #1          │
-                                          │         │ (Notification to Ash)   │
-                                          │         │                         │
-                                          │         │ To: ashley@ashshaw.com  │
-                                          │         │ From: noreply@...       │
-                                          │         │ Subject: "New Contact"  │
-                                          │         │                         │
-                                          │         │ Body (HTML):            │
-                                          │         │ • Name: {name}          │
-                                          │         │ • Email: {email}        │
-                                          │         │ • Message: {message}    │
-                                          │         │ • Timestamp             │
-                                          │         │ • Branding              │
-                                          │         └──────────┬──────────────┘
-                                          │                    │
-                                          │         ┌──────────▼──────────┐
-                                          │         │ POST to SendGrid    │
-                                          │         │ /v3/mail/send       │
-                                          │         └──────────┬──────────┘
-                                          │                    │
-                                          │         ┌──────────▼──────────┐
-                                          │         │ Build Email #2      │
-                                          │         │ (Auto-Reply to User)│
-                                          │         │                     │
-                                          │         │ To: {user email}    │
-                                          │         │ From: noreply@...   │
-                                          │         │ Subject: "Thank you"│
-                                          │         │                     │
-                                          │         │ Body (HTML):        │
-                                          │         │ • Greeting          │
-                                          │         │ • Acknowledgment    │
-                                          │         │ • Next steps        │
-                                          │         │ • Branding/Social   │
-                                          │         └──────────┬──────────┘
-                                          │                    │
-                                          │         ┌──────────▼──────────┐
-                                          │         │ POST to SendGrid    │
-                                          │         │ /v3/mail/send       │
-                                          │         └──────────┬──────────┘
-                                          │                    │
-                                          │         ┌──────────▼──────────┐
-                                          │         │ Both Emails Sent?   │
-                                          │         └──────────┬──────────┘
-                                          │                    │
-                                          │         ┌──────────┼────────┐
-                                          │         │ YES              NO│
-                                          │         ▼                    ▼
-                                          │  ┌──────────┐      ┌──────────┐
-                                          │  │ Return   │      │ Throw    │
-                                          │  │ 200 OK   │      │ Error    │
-                                          │  └────┬─────┘      └────┬─────┘
-                                          │       │                 │
-┌─────────────────────────────────────────┼───────┼─────────────────┼────┐
-│                   FRONTEND RESPONSE HANDLING                            │
-└─────────────────────────────────────────┼───────┼─────────────────┼────┘
-                                          │       │                 │
+                                                        ▼
+                                             ┌─────────────────────┐
+                                             │  Simulate Email     │
+                                             │                     │
+                                             │  • Validate data    │
+                                             │  • Wait 1-3s        │
+                                             │  • Return success   │
+                                             │  • Log to console   │
+                                             └──────────┬──────────┘
+                                                        │
+┌───────────────────────────────────────────────────────┼────────────┐
+│                  DEMO MODE (No Backend Required)                   │
+└───────────────────────────────────────────────────────┼────────────┘
+                                          │
+                                          │
+                                          ▼
+                               ┌──────────────────────┐
+                               │   Return Success     │
+                               │                      │
+                               │   • success: true    │
+                               │   • message          │
+                               │   • timestamp        │
+                               └──────────┬───────────┘
+                                          │
+┌─────────────────────────────────────────┼────────────────────────┐
+│                   FRONTEND RESPONSE HANDLING                      │
+└─────────────────────────────────────────┼────────────────────────┘
+                                          │
                                           └───────┼─────────────────┘
                                                   │
                                        ┌──────────▼──────────┐
@@ -272,33 +210,46 @@ State Transitions:
 ### File Locations
 
 - **Component:** `/components/common/ContactForm.tsx`
-- **Email Service:** `/utils/emailService.ts`
-- **Edge Function:** `/supabase/functions/server/index.tsx`
-- **Integration Guide:** `/guidelines/supabase-integration.md`
+- **Email Service:** `/utils/emailService.ts` (demo mode)
 
-### Environment Variables
+### Current Status: Demo Mode
 
-```bash
-# Required for production email delivery
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_ANON_KEY=your_anon_key
+The component currently operates in **demo mode**:
 
-# SendGrid Configuration (set in Supabase Edge Functions)
-SENDGRID_API_KEY=your_sendgrid_api_key
-TO_EMAIL=ashley@ashshaw.makeup
-FROM_EMAIL=noreply@ashshaw.makeup
+- ✅ **Full validation** - All client-side validation active
+- ✅ **Simulates email sending** - Realistic delays and responses
+- ✅ **Success feedback** - User-friendly success messages
+- ✅ **Error handling** - Comprehensive error states
+- ✅ **Console logging** - Detailed logs for debugging
+
+**No environment variables required** - Works out of the box in demo mode.
+
+### Backend Integration Guide
+
+To enable real email delivery, integrate with a backend service:
+
+**Option 1: Netlify Functions**
+```typescript
+// netlify/functions/send-email.ts
+export const handler = async (event) => {
+  const formData = JSON.parse(event.body);
+  // Send email via SendGrid, AWS SES, etc.
+  return { statusCode: 200, body: JSON.stringify({ success: true }) };
+};
 ```
 
-### Demo Mode
+**Option 2: Vercel Serverless**
+```typescript
+// api/send-email.ts
+export default async function handler(req, res) {
+  const formData = req.body;
+  // Send email via your service
+  res.status(200).json({ success: true });
+}
+```
 
-The component works **without Supabase configuration**:
-
-- ✅ Validates form data
-- ✅ Simulates email sending
-- ✅ Returns success response
-- ✅ Logs to console in development
-
-**To enable demo mode:** Simply don't set Supabase environment variables. The component will automatically use mock responses.
+**Option 3: Custom API**
+Update `/utils/emailService.ts` to point to your API endpoint.
 
 ### Usage Pattern
 
@@ -341,7 +292,7 @@ The system sends **two branded emails**:
 - Professional signature
 - Branded styling
 
-**Template location:** `/supabase/functions/server/index.tsx` (email generation functions)
+**Note:** Email templates would be implemented in your backend service when you integrate real email delivery.
 
 ---
 
@@ -404,8 +355,8 @@ interface ContactFormProps {
   className?: string;
   
   /**
-   * Enable demo mode (no actual email sent)
-   * @default false
+   * Note: Component always operates in demo mode
+   * @deprecated No longer used - always in demo mode
    */
   demoMode?: boolean;
 }
@@ -422,29 +373,26 @@ interface ContactFormData {
 
 ## Features
 
-### SendGrid Integration
+### Demo Mode Email Service
 
 ```typescript
-// Supabase Edge Function call
+// Demo mode email service
+import { sendContactForm } from '@/utils/emailService';
+
 const sendEmail = async (formData: ContactFormData) => {
-  const response = await fetch(
-    `${SUPABASE_URL}/functions/v1/server`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-      },
-      body: JSON.stringify({
-        action: 'send-email',
-        ...formData
-      })
-    }
-  );
+  // Validates form data and simulates email sending
+  const result = await sendContactForm(formData);
   
-  return response.json();
+  return result; // { success: boolean, message: string, metadata: { mode: 'demo' } }
 };
 ```
+
+**Current Behavior:**
+- Validates all form fields
+- Simulates realistic network delay (1-3 seconds)
+- Returns success/error responses
+- Logs submission details to console
+- No backend required
 
 ### Validation
 
@@ -574,30 +522,20 @@ export function ContactForm({
     setErrorMessage('');
     
     try {
-      // Send email via Supabase Edge Function
-      const response = await fetch(
-        `${process.env.VITE_SUPABASE_URL}/functions/v1/server`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${process.env.VITE_SUPABASE_ANON_KEY}`
-          },
-          body: JSON.stringify({
-            action: 'send-email',
-            ...formData
-          })
-        }
-      );
-      
-      const result = await response.json();
+      // Send email via demo mode service
+      const result = await sendContactForm({
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        website: honeypot // Honeypot field
+      });
       
       if (result.success) {
         setSubmitStatus('success');
         setFormData({ name: '', email: '', subject: '', message: '' });
         onSuccess?.();
       } else {
-        throw new Error(result.error || 'Failed to send email');
+        throw new Error(result.error || 'Failed to send message');
       }
     } catch (error) {
       setSubmitStatus('error');
@@ -857,11 +795,10 @@ const handleSubmit = (e) => {
 ## Related Documentation
 
 - **[Guidelines.md](../Guidelines.md)** - Main project guidelines
-- **[Supabase Integration Guide](../supabase-integration.md)** - Complete backend setup
 - **[overview-components.md](../overview-components.md)** - Component architecture
 - **[FILE_STRUCTURE.md](../FILE_STRUCTURE.md)** - File organization
 
 ---
 
 **Last Updated:** January 2025  
-**Version:** 4.0.0
+**Version:** 5.0.0

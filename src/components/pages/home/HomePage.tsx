@@ -12,7 +12,7 @@ import { HeroSection } from "../../sections/HeroSection";
 import { WhySection } from "../../sections/WhySection";
 import { FeaturedSection } from "../../sections/FeaturedSection";
 import { BlogPreviewSection } from "../../sections/BlogPreviewSection";
-import { FusionNailsSection } from "../../sections/FusionNailsSection";
+import { UVMakeupSection } from "../../sections/UVMakeupSection";
 import { TestimonialsSection } from "../../sections/TestimonialsSection";
 import { FestivalCountdown } from "../../sections/FestivalCountdown";
 import { InstagramFeed } from "../../sections/InstagramFeed";
@@ -54,7 +54,7 @@ interface HomePageProps {
  * - Why I Do Makeup section with custom icons
  * - Featured Work showcase (dynamic from Contentful)
  * - Blog Preview section with latest posts
- * - Fusion Nails preview
+ * - UV Makeup Art preview
  * - Footer with contact form
  *
  * @param {HomePageProps} props - Component properties
@@ -82,14 +82,14 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
 
   // Loading state component
   const LoadingState = () => (
-    <main id="main-content" role="main" className="min-h-screen bg-white dark:bg-gradient-to-br dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 transition-colors duration-300">
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center">
-          <div className="animate-pulse">
-            <div className="h-16 bg-gray-200 dark:bg-purple-800/50 rounded-lg w-80 mx-auto mb-6"></div>
-            <div className="h-8 bg-gray-200 dark:bg-purple-800/50 rounded w-96 mx-auto mb-4"></div>
-            <div className="h-6 bg-gray-200 dark:bg-purple-800/50 rounded w-64 mx-auto mb-8"></div>
-            <div className="h-12 bg-gray-200 dark:bg-purple-800/50 rounded-lg w-48 mx-auto"></div>
+    <main id="main-content" role="main" className="homepage-loading-container">
+      <div className="homepage-container-inner">
+        <div className="homepage-loading-content">
+          <div className="skeleton-animate">
+            <div className="skeleton-title"></div>
+            <div className="skeleton-subtitle"></div>
+            <div className="skeleton-text"></div>
+            <div className="skeleton-button"></div>
           </div>
         </div>
       </div>
@@ -98,27 +98,27 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
 
   // Error state component with retry functionality
   const ErrorState = () => (
-    <main id="main-content" role="main" className="min-h-screen bg-white dark:bg-gradient-to-br dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 flex items-center justify-center transition-colors duration-300">
-      <div className="text-center p-8">
-        <div className="mb-6">
-          <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-red-500 dark:text-red-400 text-2xl">⚠️</span>
+    <main id="main-content" role="main" className="homepage-error-container">
+      <div className="homepage-error-content">
+        <div className="homepage-error-icon-wrapper">
+          <div className="homepage-error-icon">
+            <span className="homepage-error-emoji">⚠️</span>
           </div>
-          <h1 className="text-3xl font-semibold text-gray-800 dark:text-purple-100 mb-2">Content Temporarily Unavailable</h1>
-          <p className="text-gray-600 dark:text-purple-300 mb-6">
+          <h1 className="homepage-error-title">Content Temporarily Unavailable</h1>
+          <p className="homepage-error-message">
             {contentError || "There was an issue loading the homepage content. Please try again."}
           </p>
         </div>
-        <div className="space-x-4">
+        <div className="homepage-error-actions">
           <button
             onClick={refreshContent}
-            className="px-6 py-3 bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-600 text-white rounded-lg transition-colors"
+            className="homepage-retry-button"
           >
             Try Again
           </button>
           <button
             onClick={() => window.location.reload()}
-            className="px-6 py-3 bg-gray-600 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-colors"
+            className="homepage-refresh-button"
           >
             Refresh Page
           </button>
@@ -155,10 +155,10 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
     <main id="main-content" role="main">
       {/* Content loading indicator */}
       {contentLoading && homepageContent && (
-        <div className="fixed top-4 right-4 z-50">
-          <div className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg text-sm">
-            <div className="flex items-center space-x-2">
-              <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
+        <div className="loading-toast">
+          <div className="loading-toast-inner">
+            <div className="loading-toast-content">
+              <div className="loading-spinner"></div>
               <span>Updating content...</span>
             </div>
           </div>
@@ -178,7 +178,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
         actions={
           <button
             onClick={() => setCurrentPage("portfolio")}
-            className="inline-flex items-center justify-center px-button py-button bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 text-white font-body font-medium text-fluid-base rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-pink-500/50"
+            className="inline-flex items-center justify-center px-button py-button bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 text-white font-body font-medium text-fluid-base rounded-500 duration-300 transform hover:scale-105 shadow-400 focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-pink-500/50"
             aria-label="Navigate to Portfolio page to explore makeup artistry collection"
           >
             Explore My Portfolio
@@ -204,7 +204,7 @@ export function HomePage({ setCurrentPage }: HomePageProps) {
       {/* Instagram Feed - @feedmymedia */}
       <InstagramFeed />
       
-      <FusionNailsSection setCurrentPage={setCurrentPage} />
+      <UVMakeupSection setCurrentPage={setCurrentPage} />
       <Footer setCurrentPage={setCurrentPage} />
       
       {/* Scroll to top button */}

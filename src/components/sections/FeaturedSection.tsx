@@ -125,10 +125,10 @@ export function FeaturedSection({
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Section Header */}
           <div className="text-center mb-fluid-2xl">
-            <h2 className="text-section-h2 font-heading font-semibold text-gradient-pink-purple-blue mb-fluid-md">
+            <h2 className="text-section-h2 font-heading font-semibold text-gradient-pink-purple-blue-dark mb-fluid-md">
               Featured Work
             </h2>
-            <p className="text-body-guideline font-body font-normal leading-relaxed max-w-3xl mx-auto mb-fluid-lg bg-gradient-to-r from-purple-500 to-violet-500 bg-clip-text text-transparent">
+            <p className="text-body-guideline font-body font-normal leading-relaxed max-w-3xl mx-auto mb-fluid-lg bg-gradient-to-r from-purple-500 to-violet-500 dark:from-purple-200 dark:to-violet-200 bg-clip-text text-transparent">
               Discover the artistry and passion behind each creation — from vibrant festival face art to stunning UV-reactive designs that bring joy and connection to every celebration.
             </p>
           </div>
@@ -137,11 +137,11 @@ export function FeaturedSection({
           <div className="mb-fluid-xl max-w-7xl mx-auto">
             {/* Mobile: Horizontal slider with snap scrolling */}
             <div className="md:hidden overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-fluid-md px-fluid-md pb-4">
-              <div className="flex gap-fluid-md" style={{ scrollSnapType: 'x mandatory' }}>
+              <div className="featured-slider-mobile" style={{ scrollSnapType: 'x mandatory' }}>
                 {displayData && displayData.length > 0 ? displayData.slice(0, 6).map((work, index) => (
                   <div
                     key={work.id || index}
-                    className="flex-none w-[85vw] snap-center"
+                    className="featured-slide-mobile"
                     style={{ scrollSnapAlign: 'center' }}
                   >
                     <SliderCard
@@ -158,7 +158,7 @@ export function FeaturedSection({
                     />
                   </div>
                 )) : (
-                  <div className="w-full text-center py-8">
+                  <div className="w-full text-center py-section-sm">
                     <p className="text-slider-card-subtext">No featured work available</p>
                   </div>
                 )}
@@ -166,7 +166,7 @@ export function FeaturedSection({
             </div>
 
             {/* Desktop: 2-column grid */}
-            <div className="hidden md:grid md:grid-cols-2 gap-fluid-lg">
+            <div className="featured-grid-desktop">
               {displayData && displayData.length > 0 ? displayData.slice(0, 6).map((work, index) => (
                 <SliderCard
                   key={work.id || index}
@@ -182,7 +182,7 @@ export function FeaturedSection({
                   className="w-full p-fluid-sm"
                 />
               )) : (
-                <div className="col-span-2 text-center py-8">
+                <div className="col-span-2 text-center py-section-sm">
                   <p className="text-slider-card-subtext">No featured work available</p>
                 </div>
               )}

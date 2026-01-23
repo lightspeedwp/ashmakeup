@@ -47,7 +47,7 @@ export function TestimonialsSection() {
             onClick={prevSlide}
             disabled={currentIndex === 0}
             aria-label="Previous testimonial"
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-8 z-10 bg-gradient-pink-purple-blue p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-4 focus-ring-primary disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-8 z-10 bg-gradient-pink-purple-blue p-testimonial-nav-button rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-4 focus-ring-primary disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
             <ChevronLeft className="w-6 h-6 text-white" />
           </button>
@@ -56,15 +56,15 @@ export function TestimonialsSection() {
             onClick={nextSlide}
             disabled={currentIndex >= maxIndex}
             aria-label="Next testimonial"
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-8 z-10 bg-gradient-pink-purple-blue p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-4 focus-ring-primary disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-8 z-10 bg-gradient-pink-purple-blue p-testimonial-nav-button rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-4 focus-ring-primary disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
             <ChevronRight className="w-6 h-6 text-white" />
           </button>
           
           {/* Slider Container */}
-          <div className="overflow-hidden px-8 md:px-16">
+          <div className="overflow-hidden px-testimonial-slider">
             <div 
-              className="flex transition-transform duration-500 ease-out gap-6 testimonial-slider-transform"
+              className="flex transition-transform duration-500 ease-out gap-testimonial-slides testimonial-slider-transform"
               style={{ '--testimonial-index': currentIndex } as React.CSSProperties}
             >
               {testimonials.map((testimonial) => (
@@ -96,7 +96,7 @@ export function TestimonialsSection() {
           </div>
           
           {/* Dots Navigation */}
-          <div className="flex items-center justify-center gap-2 mt-fluid-lg">
+          <div className="flex items-center justify-center gap-testimonial-dots mt-fluid-lg">
             {Array.from({ length: maxIndex + 1 }).map((_, index) => (
               <button
                 key={index}

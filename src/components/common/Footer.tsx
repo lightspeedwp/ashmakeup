@@ -67,34 +67,34 @@ export function Footer({ setCurrentPage }: FooterProps) {
 
   return (
     <footer
-      className="relative bg-footer-section px-fluid-md py-footer transition-colors duration-200"
+      className="relative bg-footer-section px-fluid-md py-footer duration-200"
     >
       {/* Background decoration - responsive */}
       <div
-        className="absolute top-1/4 right-1/4 w-24 h-24 sm:w-48 sm:h-48 bg-footer-decoration-1 rounded-900 opacity-10 dark:opacity-20 blur-3xl transition-opacity duration-200"
+        className="absolute top-1/4 right-1/4 footer-decoration-orb-sm bg-footer-decoration-1 rounded-900 opacity-10 dark:opacity-20 blur-3xl duration-200"
         aria-hidden="true"
       />
       <div
-        className="absolute bottom-1/4 left-1/4 w-32 h-32 sm:w-64 sm:h-64 bg-footer-decoration-2 rounded-900 opacity-10 dark:opacity-20 blur-3xl transition-opacity duration-200"
+        className="absolute bottom-1/4 left-1/4 footer-decoration-orb-md bg-footer-decoration-2 rounded-900 opacity-10 dark:opacity-20 blur-3xl duration-200"
         aria-hidden="true"
       />
 
-      <div className="max-w-5xl mx-auto relative z-10 text-center">
+      <div className="footer-container">
         {/* About Section */}
         <div className="mb-fluid-xl">
           <h2 className="text-section-h2 font-heading font-bold text-gradient-blue-teal-green mb-fluid-sm">
             About Ash
           </h2>
-          <p className="text-body-guideline font-body font-normal text-footer-description leading-relaxed mb-fluid-md transition-colors duration-300 max-w-2xl mx-auto">
+          <p className="text-body-guideline font-body font-normal text-footer-description leading-relaxed mb-fluid-md duration-300 max-w-2xl mx-auto">
             I'm Ash Shaw, a makeup artist who started this journey in 2019. 
             Over the years, my work has grown from festival artistry to UV 
-            explorations, mousse palettes, and Fusion Nails.
+            explorations, mousse palettes, and blacklight reactive designs.
           </p>
         </div>
 
         {/* Separator line */}
         <div className="mb-fluid-lg">
-          <div className="w-full h-px bg-footer-separator transition-colors duration-200" />
+          <div className="w-full h-px bg-footer-separator duration-200" />
         </div>
 
         {/* Social Links and Logo - Stacked and Centered */}
@@ -104,7 +104,7 @@ export function Footer({ setCurrentPage }: FooterProps) {
 
           {/* Logo - Centered Below */}
           <div
-            className="cursor-pointer transform hover:scale-105 transition-transform duration-200 focus-ring-footer-logo"
+            className="cursor-pointer transform hover:scale-105 duration-200 focus-ring-footer-logo"
             onClick={handleLogoClick}
             role="button"
             tabIndex={0}

@@ -93,7 +93,7 @@ export function PortfolioPage({
   // Loading state component
   const LoadingState = () => (
     <div className="min-h-screen bg-white dark:bg-gradient-to-br dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 transition-colors duration-300">
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-horizontal-section py-section-md">
         <div className="text-center">
           <div className="animate-pulse">
             <div className="h-12 bg-gray-200 dark:bg-purple-800/50 rounded-lg w-64 mx-auto mb-4"></div>
@@ -218,7 +218,7 @@ export function PortfolioPage({
 
       {/* No Content Message */}
       {!portfolioLoading && (!allPortfolioEntries || allPortfolioEntries.length === 0) && (
-        <div className="container mx-auto px-4 py-16 text-center">
+        <div className="container mx-auto px-horizontal-section py-section-md text-center">
           <div className="bg-white rounded-xl p-12 shadow-sm max-w-2xl mx-auto">
             <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <span className="text-purple-500 text-2xl">🎨</span>

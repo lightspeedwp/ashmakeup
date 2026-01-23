@@ -59,14 +59,14 @@ export function ContactPage({ setCurrentPage }: ContactPageProps) {
   };
 
   return (
-    <div className="relative bg-gradient-to-br from-gray-50 via-purple-50 to-pink-50 dark:from-purple-950 dark:via-purple-900 dark:to-purple-950 min-h-screen transition-colors duration-300">
+    <div className="relative bg-gradient-to-br from-gray-50 via-purple-50 to-pink-50 dark:from-purple-950 dark:via-purple-900 dark:to-purple-950 min-h-screen duration-300">
       {/* Background decoration - responsive */}
       <div
-        className="absolute top-1/4 right-1/4 w-24 h-24 sm:w-48 sm:h-48 bg-gradient-to-br from-pink-200 to-purple-300 dark:from-pink-900 dark:to-purple-800 rounded-full opacity-10 dark:opacity-20 blur-3xl transition-opacity duration-300"
+        className="contact-decoration-1"
         aria-hidden="true"
       />
       <div
-        className="absolute bottom-1/4 left-1/4 w-32 h-32 sm:w-64 sm:h-64 bg-gradient-to-br from-purple-200 to-blue-300 dark:from-purple-800 dark:to-blue-900 rounded-full opacity-10 dark:opacity-20 blur-3xl transition-opacity duration-300"
+        className="contact-decoration-2"
         aria-hidden="true"
       />
 
@@ -79,7 +79,7 @@ export function ContactPage({ setCurrentPage }: ContactPageProps) {
           <h1 className="text-section-h2 sm:text-hero-h1 font-heading font-bold text-gradient-pink-purple-blue mb-fluid-md">
             Get in Touch
           </h1>
-          <p className="text-body-guideline font-body font-normal text-contact-body leading-relaxed max-w-2xl mx-auto transition-colors duration-300">
+          <p className="text-body-guideline font-body font-normal text-contact-body leading-relaxed max-w-2xl mx-auto duration-300">
             I'd love to hear from you — whether you want to collaborate, connect, or just share some love.
           </p>
         </div>
@@ -91,10 +91,10 @@ export function ContactPage({ setCurrentPage }: ContactPageProps) {
             <h2 className="text-section-h2 font-heading font-bold text-gradient-blue-teal-green mb-fluid-sm">
               About Ash
             </h2>
-            <p className="text-body-guideline font-body font-normal text-contact-body leading-relaxed mb-fluid-sm transition-colors duration-300">
+            <p className="text-body-guideline font-body font-normal text-contact-body leading-relaxed mb-fluid-sm duration-300">
               I'm Ash Shaw, a makeup artist who started this journey in 2019. 
               Over the years, my work has grown from festival artistry to UV 
-              explorations, mousse palettes, and Fusion Nails.
+              explorations, mousse palettes, and blacklight reactive designs.
             </p>
             <p className="text-quote-large font-body font-medium text-gradient-pink-purple-blue mb-fluid-lg">
               Makeup that shines with colour, energy, and connection.
@@ -102,7 +102,7 @@ export function ContactPage({ setCurrentPage }: ContactPageProps) {
 
             {/* Social Links */}
             <div className="mb-fluid-lg">
-              <h3 className="text-fluid-2xl font-heading font-semibold text-contact-heading mb-fluid-sm transition-colors duration-300">
+              <h3 className="text-fluid-2xl font-heading font-semibold text-contact-heading mb-fluid-sm duration-300">
                 Connect With Me
               </h3>
               <SocialLinks className="justify-start" />
@@ -111,7 +111,7 @@ export function ContactPage({ setCurrentPage }: ContactPageProps) {
             {/* Logo */}
             <div className="mt-fluid-xl pt-fluid-lg border-t border-contact-divider">
               <div
-                className="inline-block cursor-pointer transform hover:scale-105 transition-transform duration-300 focus:outline-none focus:ring-2 focus-ring-contact-logo rounded-md"
+                className="inline-block cursor-pointer transform hover:scale-105 duration-300 focus:outline-none focus:ring-2 focus-ring-contact-logo rounded-md"
                 onClick={handleLogoClick}
                 role="button"
                 tabIndex={0}

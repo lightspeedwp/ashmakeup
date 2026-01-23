@@ -221,18 +221,18 @@ export function HeroLayout({
     }
 
     return (
-      <div className="flex-1 max-w-2xl relative w-full">
+      <div className="hero-media-column">
         <div className="relative w-full h-[50vh] sm:h-[55vh] md:h-[60vh] lg:h-[65vh] xl:h-[70vh] min-h-[400px] max-h-[800px]">
           {/* Render hero images with lightbox functionality */}
           {heroImages.map((image, index) => {
             // Mosaic tile configurations for random layered effect
             const mosaicStyles = [
               // Image 0: Left side, rotate left, middle layer
-              "absolute top-8 left-4 sm:top-16 sm:left-8 md:top-12 md:left-12 w-44 h-52 sm:w-64 sm:h-72 md:w-72 md:h-80 lg:w-80 lg:h-96 rounded-700 bg-cover bg-center shadow-600 transform -rotate-6 z-20 border-w-400 border-white ring-4 ring-pink-200/50 dark:ring-pink-400/30 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-600 hover:z-40",
+              "absolute top-8 left-4 sm:top-16 sm:left-8 md:top-12 md:left-12 w-44 h-52 sm:w-64 sm:h-72 md:w-72 md:h-80 lg:w-80 lg:h-96 rounded-700 bg-cover bg-center bg-no-repeat shadow-600 transform -rotate-6 z-20 border-w-400 border-white ring-4 ring-pink-200/50 dark:ring-pink-400/30 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-600 hover:z-40",
               // Image 1: Right side, rotate right, top layer
-              "absolute top-4 right-8 sm:top-8 sm:right-16 md:top-6 md:right-20 lg:right-24 w-48 h-56 sm:w-72 sm:h-80 md:w-80 md:h-96 lg:w-88 lg:h-[26rem] rounded-700 bg-cover bg-center shadow-600 transform rotate-3 z-30 border-w-400 border-white ring-4 ring-purple-200/50 dark:ring-purple-400/30 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-600 hover:z-40",
+              "absolute top-4 right-8 sm:top-8 sm:right-16 md:top-6 md:right-20 lg:right-24 w-48 h-56 sm:w-72 sm:h-80 md:w-80 md:h-96 lg:w-88 lg:h-[26rem] rounded-700 bg-cover bg-center bg-no-repeat shadow-600 transform rotate-3 z-30 border-w-400 border-white ring-4 ring-purple-200/50 dark:ring-purple-400/30 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-600 hover:z-40",
               // Image 2: Bottom center, slight rotation, back layer
-              "absolute bottom-8 left-1/4 sm:bottom-12 sm:left-1/3 md:bottom-10 md:left-[35%] lg:left-[38%] w-40 h-48 sm:w-56 sm:h-64 md:w-64 md:h-72 lg:w-72 lg:h-80 rounded-700 bg-cover bg-center shadow-600 transform rotate-6 z-10 border-w-400 border-white ring-4 ring-blue-200/50 dark:ring-blue-400/30 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-600 hover:z-40"
+              "absolute bottom-8 left-1/4 sm:bottom-12 sm:left-1/3 md:bottom-10 md:left-[35%] lg:left-[38%] w-40 h-48 sm:w-56 sm:h-64 md:w-64 md:h-72 lg:w-72 lg:h-80 rounded-700 bg-cover bg-center bg-no-repeat shadow-600 transform rotate-6 z-10 border-w-400 border-white ring-4 ring-blue-200/50 dark:ring-blue-400/30 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-600 hover:z-40"
             ];
 
             return (
@@ -306,15 +306,15 @@ export function HeroLayout({
     );
   };
   const sizeClasses = {
-    sm: "py-section-sm px-section-sm",
-    md: "py-section-md px-section-md",
-    lg: "py-section-lg px-section-lg",
-    xl: "py-section-lg px-section-lg",
+    sm: "py-section-sm px-horizontal-section",
+    md: "py-section-md px-horizontal-section",
+    lg: "py-section-lg px-horizontal-section",
+    xl: "py-section-lg px-horizontal-section",
   };
 
   // Fullscreen mode overrides size classes
   const containerClasses = fullscreen
-    ? "min-h-screen flex items-center justify-center px-section-md py-0"
+    ? "min-h-screen flex items-center justify-center px-horizontal-section py-0"
     : sizeClasses[size];
 
   // Default background: Soft pastel gradient in light mode, dark purple in dark mode
@@ -357,7 +357,7 @@ export function HeroLayout({
 
   return (
     <section
-      className={`relative overflow-x-hidden flex flex-col px-4 sm:px-8 bg-hero-section transition-colors duration-300 ${containerClasses} ${className}`}
+      className={`relative overflow-x-hidden flex flex-col bg-hero-section transition-colors duration-300 ${containerClasses} ${className}`}
     >
       {/* Decorative Floating Circles - Light Mode Only */}
       <div className="absolute inset-0 pointer-events-none dark:opacity-0 opacity-100 transition-opacity duration-300" aria-hidden="true">
@@ -407,7 +407,7 @@ export function HeroLayout({
             )}
 
             {actions && (
-              <div className="flex flex-wrap gap-4 justify-start">
+              <div className="hero-actions-container">
                 {actions}
               </div>
             )}
@@ -415,7 +415,7 @@ export function HeroLayout({
 
           {/* Enhanced Media Content for Split Layout with Mosaic Optimization */}
           {layout === "split" && (
-            <div className="relative flex items-center justify-center lg:justify-end">
+            <div className="hero-media-column-split">
               <div className="w-full max-w-lg lg:max-w-2xl transform lg:translate-x-8 xl:translate-x-16">
                 <HeroMediaWithLightbox />
               </div>
@@ -425,7 +425,7 @@ export function HeroLayout({
 
         {/* Media Content for non-split layouts */}
         {layout !== "split" && (
-          <div className="mt-fluid-2xl relative flex justify-center">
+          <div className="hero-media-below">
             <div className="w-full max-w-4xl">
               <HeroMediaWithLightbox />
             </div>

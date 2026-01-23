@@ -408,7 +408,7 @@ export function ContactForm({
   if (isSubmitted) {
     return (
       <div className={`flex flex-col gap-spacing-30 ${className}`}>
-        <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 border-w-200 border-green-200 dark:border-green-700 rounded-600 p-fluid-xl text-center transition-colors duration-200">
+        <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 border-w-200 border-green-200 dark:border-green-700 rounded-600 p-fluid-xl text-center duration-200">
           <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-900 flex items-center justify-center mx-auto mb-fluid-lg">
             <svg
               className="w-8 h-8 text-white"
@@ -427,7 +427,7 @@ export function ContactForm({
           <h3 className="text-fluid-lg font-heading font-semibold text-gradient-blue-teal-green mb-fluid-lg">
             Thank You!
           </h3>
-          <p className="text-body-guideline font-body font-normal text-green-800 dark:text-green-100 leading-relaxed mb-fluid-lg transition-colors duration-300">
+          <p className="text-body-guideline font-body font-normal text-green-800 dark:text-green-100 leading-relaxed mb-fluid-lg duration-300">
             Thank you for getting in touch! I will get back to
             you within the next 24 to 48 hours.
           </p>
@@ -436,14 +436,14 @@ export function ContactForm({
             <br />
             Ash ✨
           </p>
-          <p className="text-fluid-sm font-body font-normal text-green-700 dark:text-green-200 mt-fluid-lg italic transition-colors duration-300">
+          <p className="text-fluid-sm font-body font-normal text-green-700 dark:text-green-200 mt-fluid-lg italic duration-300">
             {isEmailServiceConfigured 
               ? `A confirmation email will be sent to ${formData.email}`
               : `Demo mode: All functionality works perfectly for development and testing`
             }
           </p>
           {!isEmailServiceConfigured && import.meta?.env?.DEV && (
-            <p className="text-fluid-xs font-body font-normal text-green-600 dark:text-green-300 mt-fluid-sm transition-colors duration-300">
+            <p className="text-fluid-xs font-body font-normal text-green-600 dark:text-green-300 mt-fluid-sm duration-300">
               💡 In production, this will send real emails via SendGrid
             </p>
           )}
@@ -462,7 +462,7 @@ export function ContactForm({
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-w-200 border-blue-200 rounded-500 p-fluid-md text-center mb-fluid-md">
           <div className="flex items-center justify-center gap-fluid-xs">
             <svg
-              className="w-5 h-5 text-blue-600"
+              className="w-6 h-6 text-blue-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -490,7 +490,7 @@ export function ContactForm({
         >
           <div className="flex items-center justify-center gap-fluid-xs">
             <svg
-              className="w-5 h-5 text-red-600"
+              className="w-6 h-6 text-red-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -590,14 +590,14 @@ export function ContactForm({
       <button
         type="submit"
         disabled={isSubmitting || !serviceCheckComplete}
-        className="w-full justify-center text-center bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 disabled:from-purple-400 disabled:to-pink-400 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-200 rounded-500 shadow-400 hover:shadow-500 transform hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed flex items-center gap-fluid-xs focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50"
+        className="w-full justify-center text-center bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 disabled:from-purple-400 disabled:to-pink-400 text-white px-button py-button font-body font-medium text-button-fluid duration-200 rounded-500 shadow-400 hover:shadow-500 transform hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed flex items-center gap-fluid-xs focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50"
         aria-label={isSubmitting ? "Sending your message, please wait" : "Submit contact form to send message to Ash Shaw"}
         aria-describedby="submit-help"
       >
         {isSubmitting ? (
           <>
             <svg
-              className="animate-spin w-5 h-5"
+              className="animate-spin w-6 h-6"
               fill="none"
               viewBox="0 0 24 24"
               aria-hidden="true"
@@ -621,7 +621,7 @@ export function ContactForm({
         ) : !serviceCheckComplete ? (
           <>
             <svg
-              className="animate-pulse w-5 h-5"
+              className="animate-pulse w-6 h-6"
               fill="none"
               viewBox="0 0 24 24"
               aria-hidden="true"
@@ -634,7 +634,7 @@ export function ContactForm({
         ) : (
           <>
             <svg
-              className="w-5 h-5"
+              className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

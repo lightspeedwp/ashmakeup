@@ -18,7 +18,7 @@ import { PageContent, HeroContent, WhyReason } from '../../types';
 export const homepageHero: HeroContent = {
   title: "Hi, I'm Ash Shaw",
   subtitle: "Makeup that shines with colour, energy, and connection",
-  description: "Makeup is my art, my joy, and my way of bringing people together. From festivals to the dance floor, I use colour and light to create looks that make people feel radiant, confident, and alive. ✨ This portfolio is a growing collection of that journey.",
+  description: "Makeup is my art, my joy, and my way of bringing people together. From festivals to the dance floor, I use colour and light to create looks that make people feel radiant, confident, and alive.",
   ctaText: "Explore My Portfolio",
   ctaLink: "/portfolio"
 };

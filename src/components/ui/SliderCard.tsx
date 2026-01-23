@@ -42,7 +42,7 @@ interface SliderCardProps {
   onImageClick: (imageIndex: number) => void;
   className?: string;
   /** Optional variant for themed subtitle styling */
-  variant?: 'default' | 'fusion';
+  variant?: 'default' | 'uv';
 }
 
 /**
@@ -242,7 +242,7 @@ export function SliderCard({
     >
       {/* Image Container with Slider */}
       <div
-        className="slider-image-container relative w-full aspect-square rounded-lg shadow-lg transition-transform duration-500 group-hover:scale-105 mb-fluid-md ring-4 ring-white/50 overflow-hidden touch-manipulation select-none"
+        className="slider-image-container relative w-full aspect-square rounded-500 shadow-500 transition-transform duration-500 group-hover:scale-105 mb-fluid-md ring-4 ring-white/50 overflow-hidden touch-manipulation select-none"
         style={{
           backgroundImage: `url('${resolvedImageUrl}')`,
         }}
@@ -252,7 +252,7 @@ export function SliderCard({
       >
         {/* Category Chip - Top right corner (always visible when category exists) */}
         {data.category && (
-          <div className="absolute top-3 right-3 bg-gradient-pink-purple-blue text-white text-xs px-3 py-1.5 rounded-full font-medium shadow-lg backdrop-blur-sm z-20">
+          <div className="absolute top-3 right-3 bg-gradient-pink-purple-blue text-white text-xs px-3 py-1.5 rounded-full font-medium shadow-500 backdrop-blur-sm z-20">
             {data.category}
           </div>
         )}
@@ -264,25 +264,25 @@ export function SliderCard({
             <div className="hidden sm:block">
               <button
                 onClick={goToPrevious}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 hover:bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-60 hover:opacity-80 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-black/20 shadow-md hover:shadow-lg z-10"
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-nav-button hover:bg-nav-button rounded-full flex items-center justify-center opacity-0 group-hover:opacity-60 hover:opacity-80 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-black/20 shadow-400 hover:shadow-500 z-10"
                 aria-label="Previous image"
                 tabIndex={-1}
               >
-                <ChevronLeft className="w-5 h-5 text-gray-700" />
+                <ChevronLeft className="w-5 h-5 text-portfolio-icon" />
               </button>
 
               <button
                 onClick={goToNext}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 hover:bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-60 hover:opacity-80 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-black/20 shadow-md hover:shadow-lg z-10"
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-nav-button hover:bg-nav-button rounded-full flex items-center justify-center opacity-0 group-hover:opacity-60 hover:opacity-80 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-black/20 shadow-400 hover:shadow-500 z-10"
                 aria-label="Next image"
                 tabIndex={-1}
               >
-                <ChevronRight className="w-5 h-5 text-gray-700" />
+                <ChevronRight className="w-5 h-5 text-portfolio-icon" />
               </button>
             </div>
 
             {/* Mobile Indicator - Swipe text or Counter based on swiping state */}
-            <div className="sm:hidden absolute top-3 left-3 bg-black/70 text-white text-xs px-3 py-1.5 rounded-full opacity-90 backdrop-blur-sm transition-all duration-300">
+            <div className="sm:hidden absolute top-3 left-3 bg-overlay-badge-strong text-white text-xs px-3 py-1.5 rounded-full opacity-90 backdrop-blur-sm transition-all duration-300">
               {isSwiping ? (
                 // Show counter when swiping
                 <span>{currentImageIndex + 1}/{images.length}</span>
@@ -332,7 +332,7 @@ export function SliderCard({
         </h3>
 
         {subtitleText && (
-          <p className={`text-fluid-lg font-body font-medium ${variant === 'fusion' ? 'text-card-subtitle-fusion' : 'text-card-subtitle'}`}>
+          <p className={`text-fluid-lg font-body font-medium ${variant === 'uv' ? 'text-card-subtitle-uv' : 'text-card-subtitle'}`}>
             {subtitleText}
           </p>
         )}

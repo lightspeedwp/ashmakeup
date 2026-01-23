@@ -101,10 +101,10 @@ export function WhySection({
         return (
           <div
             key={index}
-            className="why-card-container group bg-why-card backdrop-blur-sm rounded-why-card shadow-why-card hover:shadow-xl border border-why-card"
+            className="why-card-container group bg-why-card backdrop-blur-sm rounded-why-card shadow-why-card hover:shadow-xl border border-why-card p-card-responsive"
             onClick={() => setCurrentPage("about")}
           >
-            <div className="why-card-icon-container">
+            <div className="why-card-icon-container scale-[2.5]">
               <IconComponent
                 size="lg"
                 className="why-card-icon icon-why-card"

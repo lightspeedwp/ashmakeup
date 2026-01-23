@@ -297,7 +297,7 @@ export function MultipleCountdowns() {
         <div className="text-center mt-fluid-2xl">
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 bg-gradient-pink-purple-blue text-white px-8 py-4 font-body font-bold text-xl rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-purple-500/50"
+            className="inline-flex items-center gap-2 bg-gradient-pink-purple-blue text-white px-button py-button font-body font-bold text-button-fluid rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-purple-500/50"
           >
             Book Your Festival Makeup
             <Sparkles className="w-6 h-6" />

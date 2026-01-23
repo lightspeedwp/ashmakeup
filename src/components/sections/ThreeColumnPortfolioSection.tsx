@@ -2,8 +2,18 @@
  * @fileoverview Enhanced Three Column Portfolio Section with Multi-Image Support
  * Reusable layout component for displaying portfolio entries with image sliders and professional lightbox
  *
+ * Styling System:
+ * - WordPress-aligned global CSS classes (Batch 4)
+ * - Fluid typography and spacing following guidelines
+ * - Responsive grid layout with mobile-first approach
+ * - Dark mode compatible with proper contrast
+ *
  * @author Ash Shaw Portfolio Team
- * @version 2.0.0
+ * @version 3.0.0
+ * @since 1.0.0 - Initial three column portfolio section
+ * @since 2.0.0 - Added multi-image support with slider cards
+ * @since 3.0.0 - Migrated to WordPress-aligned CSS classes (Batch 4)
+ * @lastModified 2025-01-29
  */
 
 import React, { useState } from "react";
@@ -150,25 +160,25 @@ export function ThreeColumnPortfolioSection({
       <section
         id={section.id}
         data-section={section.id}
-        className={`relative bg-gradient-to-br ${section.backgroundGradient} py-fluid-3xl px-fluid-md w-full`}
+        className={`relative bg-gradient-to-br ${section.backgroundGradient} portfolio-section-padding w-full`}
       >
         {/* Background decorations - varies by section */}
         <div
-          className="absolute top-20 left-1/4 w-20 h-20 sm:w-40 sm:h-40 rounded-full opacity-15 animate-pulse"
+          className="portfolio-decorative-circle-1"
           style={{
             background: `linear-gradient(135deg, ${section.decorativeColors[0]}, ${section.decorativeColors[1]})`,
           }}
           aria-hidden="true"
         />
         <div
-          className="absolute bottom-20 right-1/4 w-16 h-16 sm:w-32 sm:h-32 rounded-full opacity-20 animate-pulse delay-1000"
+          className="portfolio-decorative-circle-2"
           style={{
             background: `linear-gradient(135deg, ${section.decorativeColors[2]}, ${section.decorativeColors[3]})`,
           }}
           aria-hidden="true"
         />
 
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="container-7xl relative z-10">
           {/* Section Header */}
           <div className="text-center mb-fluid-2xl">
             <h2
@@ -177,13 +187,13 @@ export function ThreeColumnPortfolioSection({
             >
               {section.title}
             </h2>
-            <p className="text-body-guideline font-body font-normal text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-body-guideline font-body font-normal text-gray-600 dark:text-purple-100 container-3xl leading-relaxed">
               {section.description}
             </p>
           </div>
 
           {/* Portfolio Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-fluid-lg mb-fluid-xl max-w-5xl mx-auto">
+          <div className="grid-portfolio-three-col mb-fluid-xl container-5xl">
             {portfolioEntries.map((entry, entryIndex) => (
               <SliderCard
                 key={entry.id}
@@ -215,7 +225,7 @@ export function ThreeColumnPortfolioSection({
           {section.cta && (
             <div className="text-center">
               <button
-                className="w-full sm:w-auto inline-flex items-center justify-center text-center px-button py-button font-body font-medium rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg focus:outline-none focus:ring-4 focus:ring-opacity-50 text-white"
+                className="w-full sm:w-auto inline-flex-center justify-center text-center px-button py-button font-body font-medium rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg focus:outline-none focus:ring-4 focus:ring-opacity-50 text-white"
                 style={{
                   background: `linear-gradient(135deg, ${section.gradientFrom}, ${section.gradientTo})`,
                   focusRingColor: section.gradientFrom,

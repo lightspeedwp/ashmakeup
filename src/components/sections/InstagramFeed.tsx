@@ -155,7 +155,7 @@ export function InstagramFeed() {
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-fluid-2xl">
-          <div className="flex items-center justify-center gap-3 mb-fluid-sm">
+          <div className="flex items-center justify-center gap-instagram-header mb-fluid-sm">
             <Instagram className="w-10 h-10 text-instagram-icon" />
             <h2 className="text-section-h2 font-heading font-bold text-gradient-pink-purple-blue">
               Follow My Journey
@@ -168,7 +168,7 @@ export function InstagramFeed() {
             href="https://instagram.com/feedmymedia"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-xl font-body font-semibold text-instagram-link hover:text-instagram-link transition-colors"
+            className="inline-flex items-center gap-instagram-stat-items text-xl font-body font-semibold text-instagram-link hover:text-instagram-link transition-colors"
           >
             @feedmymedia
             <ExternalLink className="w-5 h-5" />
@@ -177,7 +177,7 @@ export function InstagramFeed() {
           {/* API Status Badge */}
           {isUsingMockData && (
             <div className="mt-fluid-md">
-              <div className="inline-flex items-center gap-2 bg-instagram-api-badge border rounded-full px-4 py-2">
+              <div className="inline-flex items-center gap-instagram-stat-items bg-instagram-api-badge border rounded-full px-instagram-badge py-instagram-badge">
                 <AlertCircle className="w-4 h-4 text-instagram-api-icon" />
                 <span className="text-sm font-body text-instagram-api-text">
                   Demo Mode - Configure Instagram API for live feed
@@ -196,7 +196,7 @@ export function InstagramFeed() {
         
         {/* Loading State */}
         {isLoading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-instagram-grid">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="aspect-square bg-instagram-skeleton rounded-lg animate-pulse" />
             ))}
@@ -204,7 +204,7 @@ export function InstagramFeed() {
         ) : (
           <>
             {/* Instagram Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-instagram-grid">
               {posts.map((post) => (
                 <a
                   key={post.id}
@@ -222,24 +222,24 @@ export function InstagramFeed() {
                   
                   {/* Video Badge */}
                   {post.media_type === 'VIDEO' && (
-                    <div className="absolute top-2 left-2 bg-instagram-video-badge px-2 py-1 rounded text-white text-xs font-semibold">
+                    <div className="absolute top-2 left-2 bg-instagram-video-badge px-instagram-video-badge py-instagram-video-badge rounded text-white text-xs font-semibold">
                       VIDEO
                     </div>
                   )}
                   
                   {/* Overlay on Hover */}
-                  <div className="absolute inset-0 bg-instagram-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                  <div className="absolute inset-0 bg-instagram-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-fluid-md">
                     {/* Stats */}
                     {(post.like_count !== undefined || post.comments_count !== undefined) && (
-                      <div className="flex items-center gap-4 text-white text-sm mb-2">
+                      <div className="flex items-center gap-instagram-stats text-white text-sm mb-fluid-xs">
                         {post.like_count !== undefined && (
-                          <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-instagram-stat-items">
                             <Heart className="w-4 h-4 fill-white" />
                             <span>{post.like_count}</span>
                           </div>
                         )}
                         {post.comments_count !== undefined && (
-                          <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-instagram-stat-items">
                             <MessageCircle className="w-4 h-4" />
                             <span>{post.comments_count}</span>
                           </div>
@@ -269,13 +269,13 @@ export function InstagramFeed() {
             </div>
             
             {/* Actions */}
-            <div className="flex flex-col items-center gap-4 mt-fluid-xl">
+            <div className="flex flex-col items-center gap-instagram-actions mt-fluid-xl">
               {/* Follow Button */}
               <a
                 href="https://instagram.com/feedmymedia"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus-ring-instagram"
+                className="inline-flex items-center gap-instagram-header bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus-ring-instagram"
               >
                 <Instagram className="w-6 h-6" />
                 Follow @feedmymedia on Instagram
@@ -287,7 +287,7 @@ export function InstagramFeed() {
                 <button
                   onClick={handleRefresh}
                   disabled={isRefreshing}
-                  className="inline-flex items-center gap-2 text-sm font-body font-semibold text-instagram-link hover:text-instagram-link transition-colors disabled:opacity-50"
+                  className="inline-flex items-center gap-instagram-stat-items text-sm font-body font-semibold text-instagram-link hover:text-instagram-link transition-colors disabled:opacity-50"
                 >
                   <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
                   {isRefreshing ? 'Refreshing...' : 'Refresh Feed'}

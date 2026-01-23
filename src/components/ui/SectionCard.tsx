@@ -109,7 +109,7 @@ export function SectionCard({
             
             {/* Pull Quote - WCAG AA Compliant */}
             {quote && (
-              <blockquote className="section-quote text-fluid-2xl sm:text-fluid-3xl font-heading font-medium italic text-center py-fluid-xl relative bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
+              <blockquote className="section-quote text-fluid-2xl sm:text-fluid-3xl font-heading font-medium italic text-center py-fluid-xl relative text-section-quote-gradient">
                 {/* Decorative Quote Marks */}
                 <div 
                   className="section-quote-accent absolute top-4 left-1/2 transform -translate-x-1/2 w-8 h-1 rounded-full"

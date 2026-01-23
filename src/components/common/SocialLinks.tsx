@@ -81,11 +81,11 @@ export function SocialLinks({
               ? undefined
               : "noopener noreferrer"
           }
-          className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-pink-400/50 focus:ring-offset-2 dark:focus:ring-offset-purple-900 ${getGradientClassForPlatform(social.platform)}`}
+          className={`social-link-button focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-pink-400/50 focus:ring-offset-2 dark:focus:ring-offset-purple-900 ${getGradientClassForPlatform(social.platform)}`}
           aria-label={`Visit Ash Shaw on ${social.platform}`}
         >
           <svg
-            className="w-6 h-6 text-white"
+            className="social-link-icon"
             fill={
               social.platform === "Email"
                 ? "none"

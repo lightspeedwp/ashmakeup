@@ -142,7 +142,7 @@ export function ThreeColumnLayout({
   return (
     <section
       id={id}
-      className={`relative overflow-hidden px-4 md:px-8 ${paddingClasses[padding]} ${className} bg-three-column-layout transition-colors duration-300`}
+      className={`relative overflow-hidden px-horizontal-section ${paddingClasses[padding]} ${className} bg-three-column-layout transition-colors duration-300`}
     >
       {/* Decorative Elements */}
       {decorativeElements && (

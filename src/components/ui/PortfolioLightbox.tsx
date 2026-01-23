@@ -295,7 +295,7 @@ export function PortfolioLightbox({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Enhanced Mobile-Friendly Header - Hide title and counter */}
-        <div className="flex items-center justify-end p-4 sm:p-6 text-white">
+        <div className="flex items-center justify-end p-spacing-20 sm:p-spacing-30 text-white">
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Zoom Toggle - Mobile Optimized */}
             <button
@@ -351,7 +351,7 @@ export function PortfolioLightbox({
             <>
               <button
                 onClick={goToPrevious}
-                className="hidden sm:flex absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 bg-white/30 hover:bg-white/40 backdrop-blur-sm rounded-full items-center justify-center text-white transition-all duration-200 z-20 focus:outline-none focus:ring-4 focus:ring-white/50 shadow-xl border border-white/20 min-touch-target-xl"
+                className="hidden sm:flex absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 bg-lightbox-nav hover:bg-lightbox-nav backdrop-blur-sm rounded-full items-center justify-center text-white transition-all duration-200 z-20 focus:outline-none focus:ring-4 focus:ring-white/50 shadow-600 border border-white/20 min-touch-target-xl"
                 aria-label="Previous image"
               >
                 <ChevronLeft className="w-8 h-8 sm:w-10 sm:h-10" strokeWidth={2.5} />
@@ -359,7 +359,7 @@ export function PortfolioLightbox({
               
               <button
                 onClick={goToNext}
-                className="hidden sm:flex absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 bg-white/30 hover:bg-white/40 backdrop-blur-sm rounded-full items-center justify-center text-white transition-all duration-200 z-20 focus:outline-none focus:ring-4 focus:ring-white/50 shadow-xl border border-white/20 min-touch-target-xl"
+                className="hidden sm:flex absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 bg-lightbox-nav hover:bg-lightbox-nav backdrop-blur-sm rounded-full items-center justify-center text-white transition-all duration-200 z-20 focus:outline-none focus:ring-4 focus:ring-white/50 shadow-600 border border-white/20 min-touch-target-xl"
                 aria-label="Next image"
               >
                 <ChevronRight className="w-8 h-8 sm:w-10 sm:h-10" strokeWidth={2.5} />
@@ -420,7 +420,7 @@ export function PortfolioLightbox({
 
           {/* Image Caption - Now below the image */}
           {(currentImage.caption || currentImage.description) && (
-            <div className="mt-4 text-white text-center max-w-2xl">
+            <div className="mt-spacing-20 text-white text-center max-w-2xl">
               {currentImage.caption && (
                 <h3 className="text-lg md:text-xl font-heading font-semibold mb-2">
                   {currentImage.caption}
@@ -462,7 +462,7 @@ export function PortfolioLightbox({
         )}
 
         {/* Enhanced Navigation hints */}
-        <div className="text-center text-white/70 text-xs sm:text-sm pb-4 px-4">
+        <div className="text-center text-white/70 text-xs sm:text-sm pb-spacing-20 px-spacing-20">
           <p className="flex items-center justify-center gap-2 flex-wrap">
             {hasMultipleImages && (
               <>

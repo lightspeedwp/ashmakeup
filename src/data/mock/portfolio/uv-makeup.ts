@@ -23,19 +23,19 @@ export const uvMakeupWork: PortfolioEntry[] = [
     category: 'UV Makeup',
     images: [
       {
-        src: 'figma:asset/3f84a682c620ba9434e114f1bed5c08d6f9573d6.png',
-        alt: 'Neon Warrior - dramatic green mohawk with UV reactive face paint at Berlin Club',
+        src: 'figma:asset/74b708f3be9c02b929444ed900d4217477ac45ad.png',
+        alt: 'Neon Warrior - UV face paint with vibrant rainbow streaks at festival',
         title: 'Neon Warrior',
         caption: 'Under UV Light',
-        description: 'Dramatic green mohawk with bold UV reactive face paint',
+        description: 'Beautiful woman with rainbow UV face paint streaks and bright smile',
         position: 'center',
         aspectRatio: '4:3'
       }
     ],
-    location: 'Berlin Club',
-    description: 'Bold geometric UV reactive makeup creating a futuristic warrior aesthetic with dramatic green mohawk.',
-    excerpt: 'Futuristic UV warrior with geometric patterns',
-    tags: ['UV', 'Neon', 'Geometric', 'Warrior', 'Futuristic', 'Mohawk'],
+    location: 'Festival',
+    description: 'Bold UV reactive makeup creating vibrant rainbow streaks with festival energy.',
+    excerpt: 'Vibrant UV rainbow warrior',
+    tags: ['UV', 'Neon', 'Rainbow', 'Warrior', 'Festival'],
     featured: true,
     order: 1
   },
@@ -46,18 +46,18 @@ export const uvMakeupWork: PortfolioEntry[] = [
     category: 'UV Makeup',
     images: [
       {
-        src: 'figma:asset/4b2d7308e93886e4e6b5b4aecedbcb86af31a46b.png',
-        alt: 'Rainbow Lightning - vibrant rainbow face stripe with glowing accessories at UV Party',
+        src: 'figma:asset/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png',
+        alt: 'Rainbow Lightning - UV dots under eyes with rainbow body paint',
         title: 'Rainbow Lightning',
-        caption: 'Rainbow Stripe',
-        description: 'Vibrant rainbow face stripe with glowing accessories',
+        caption: 'Rainbow Dots',
+        description: 'Redhead with UV dots under eyes and rainbow body paint',
         position: 'center',
         aspectRatio: '3:4'
       }
     ],
     location: 'UV Party',
-    description: 'Vibrant neon rainbow face stripe with glowing accessories creating electric energy.',
-    excerpt: 'Electric rainbow neon stripe',
+    description: 'Vibrant UV dots and rainbow body paint creating electric festival energy.',
+    excerpt: 'Electric rainbow UV art',
     tags: ['UV', 'Rainbow', 'Neon', 'Electric', 'Vibrant'],
     featured: false,
     order: 2
@@ -69,19 +69,19 @@ export const uvMakeupWork: PortfolioEntry[] = [
     category: 'UV Makeup',
     images: [
       {
-        src: 'figma:asset/f37bfd287073fd5c8012c4b921e6919bf6b4bbcc.png',
-        alt: 'Electric Blue - bold blue UV face paint with geometric patterns at Underground Rave',
+        src: 'figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png',
+        alt: 'Electric Blue - rainbow UV face paint with jellyfish ear accessory',
         title: 'Electric Blue',
-        caption: 'Geometric Blue',
-        description: 'Bold blue UV face paint with geometric patterns',
+        caption: 'Rainbow UV',
+        description: 'Man with rainbow UV face paint and jellyfish ear accessory',
         position: 'center',
         aspectRatio: '4:3'
       }
     ],
     location: 'Underground Rave',
-    description: 'Bold blue UV reactive face paint with precise geometric patterns for underground rave energy.',
-    excerpt: 'Geometric blue UV patterns',
-    tags: ['UV', 'Blue', 'Geometric', 'Rave', 'Bold'],
+    description: 'Bold rainbow UV face paint with unique accessories for underground rave energy.',
+    excerpt: 'Playful rainbow UV patterns',
+    tags: ['UV', 'Rainbow', 'Creative', 'Rave', 'Bold'],
     featured: false,
     order: 3
   }

@@ -259,7 +259,6 @@ class CircuitBreaker {
 
 // Global circuit breakers for different services
 export const contentfulBreaker = new CircuitBreaker(3, 30000);
-export const supabaseBreaker = new CircuitBreaker(3, 20000);
 export const unsplashBreaker = new CircuitBreaker(2, 15000);
 
 /**

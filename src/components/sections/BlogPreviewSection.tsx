@@ -14,15 +14,16 @@
  * - Integration with blog page navigation
  * 
  * Styling System:
- * - Tailwind V4 with brand-compliant utility classes
+ * - WordPress-aligned global CSS classes (Batch 4)
  * - Fluid typography and spacing following guidelines
  * - Gradient effects and hover animations per brand standards
  * - Mobile-first responsive design with fluid scaling
  * 
  * @author Ash Shaw Portfolio Team
- * @version 1.1.0
+ * @version 2.0.0
  * @since 1.0.0 - Initial blog preview section for homepage integration
  * @since 1.1.0 - Updated to use same BlogPostCard as main blog page for individual post routing
+ * @since 2.0.0 - Migrated to WordPress-aligned CSS classes (Batch 4)
  * @lastModified 2025-01-29
  */
 
@@ -142,24 +143,24 @@ export function BlogPreviewSection({ setCurrentPage }: BlogPreviewSectionProps) 
       {/* Decorative Blurred Circles */}
       <BlurredCircles variant="blog" />
       
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="container-7xl relative z-10">
         {/* Section header */}
         <div className="text-center mb-fluid-2xl">
           <h2 className="text-section-h2 font-heading font-semibold text-gradient-pink-purple-blue mb-fluid-md">
             Latest from the Blog
           </h2>
-          <p className="text-body-guideline font-body font-normal leading-relaxed max-w-2xl mx-auto bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
+          <p className="text-body-guideline font-body font-normal leading-relaxed container-3xl bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
             Discover tutorials, behind-the-scenes insights, and creative inspiration from the world of festival and UV makeup artistry.
           </p>
         </div>
 
         {/* Loading state */}
         {loading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-fluid-lg mb-fluid-xl">
+          <div className="grid-blog-preview mb-fluid-xl">
             {[...Array(2)].map((_, i) => (
               <div key={i} className="animate-pulse">
                 <div className="bg-blog-preview-loading-card rounded-xl overflow-hidden transition-colors duration-300">
-                  <div className="aspect-w-16 aspect-h-9 bg-blog-preview-loading-skeleton"></div>
+                  <div className="aspect-video bg-blog-preview-loading-skeleton"></div>
                   <div className="p-fluid-lg">
                     <div className="h-4 bg-blog-preview-loading-skeleton rounded mb-fluid-sm w-1/4"></div>
                     <div className="h-6 bg-blog-preview-loading-skeleton rounded mb-fluid-sm"></div>
@@ -190,7 +191,7 @@ export function BlogPreviewSection({ setCurrentPage }: BlogPreviewSectionProps) 
         {/* Blog posts grid */}
         {!loading && !error && blogData?.posts && blogData.posts.length > 0 && (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-fluid-lg mb-fluid-xl">
+            <div className="grid-blog-preview mb-fluid-xl">
               {blogData.posts.map(post => (
                 <BlogPostCard 
                   key={post.id} 
@@ -205,7 +206,7 @@ export function BlogPreviewSection({ setCurrentPage }: BlogPreviewSectionProps) 
             <div className="text-center">
               <button
                 onClick={goToBlog}
-                className="inline-flex items-center gap-fluid-sm bg-gradient-blue-teal-green hover:from-blue-700 hover:to-teal-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus-ring-secondary"
+                className="inline-flex-center gap-fluid-sm bg-gradient-blue-teal-green hover:from-blue-700 hover:to-teal-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus-ring-secondary"
                 aria-label="View all blog posts"
               >
                 <span>View All Blog Posts</span>
@@ -239,11 +240,11 @@ interface BlogPostCardProps {
  */
 function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
   return (
-    <article className="bg-white/80 dark:bg-purple-900/40 backdrop-blur-sm rounded-xl border border-white/50 dark:border-purple-700/50 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer overflow-hidden relative">
+    <article className="bg-white/80 dark:bg-purple-900/40 backdrop-blur-sm rounded-xl border-blog-card shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer overflow-hidden relative">
       {/* Featured image */}
       {post.featuredImage && (
         <div 
-          className="aspect-w-16 aspect-h-9 overflow-hidden cursor-pointer"
+          className="aspect-video overflow-hidden cursor-pointer"
           onClick={() => onViewPost(post.slug)}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -267,7 +268,7 @@ function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
       <div className="p-fluid-md bg-blog-card transition-colors duration-300">
         {/* Category */}
         <div className="mb-fluid-sm">
-          <span className="absolute top-2 right-2 z-10 inline-flex items-center px-fluid-sm py-fluid-xs bg-gradient-blue-teal-green text-white text-fluid-xs font-body font-medium rounded-full shadow-lg">
+          <span className="badge-position-top-right inline-flex-center px-fluid-sm py-fluid-xs bg-gradient-blue-teal-green text-white text-fluid-xs font-body font-medium rounded-full shadow-lg">
             {post.category}
           </span>
         </div>
@@ -291,8 +292,8 @@ function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
         </p>
 
         {/* Footer with date and Read more */}
-        <div className="flex items-center justify-between pt-fluid-md border-t border-gray-100 dark:border-purple-700">
-          <div className="flex items-center gap-fluid-xs">
+        <div className="flex-between pt-fluid-md border-t-blog">
+          <div className="flex-center gap-fluid-xs text-blog-card-meta">
             <Calendar className="w-4 h-4" />
             <time className="text-fluid-sm font-body" dateTime={post.publishedDate}>
               {formatDate(post.publishedDate)}

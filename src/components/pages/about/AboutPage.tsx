@@ -8,6 +8,7 @@
  */
 
 import React from "react";
+import "../../../styles/globals.css";
 import { HeroLayout } from "../../sections/HeroLayout";
 import { Footer } from "../../common/Footer";
 import { ScrollToTop } from "../../ui/ScrollToTop";
@@ -53,7 +54,7 @@ interface AboutPageProps {
  * - Berlin nightclub scene exploration
  * - UV makeup experimentation and mastery
  * - Professional mousse eyeshadow work
- * - Fusion Nails artistry expansion
+ * - UV reactive artistry expansion
  * - Creative process insights
  * - Future aspirations and goals
  *
@@ -110,11 +111,11 @@ export function AboutPage({
     }
   };
 
-  const handleFusionNailsClick = () => {
+  const handleUVMakeupClick = () => {
     if (setCurrentPage && scrollToPortfolioSection) {
       setCurrentPage("portfolio");
       setTimeout(
-        () => scrollToPortfolioSection("fusion-nails"),
+        () => scrollToPortfolioSection("uv-makeup"),
         100,
       );
     }
@@ -122,18 +123,18 @@ export function AboutPage({
 
   // Loading state component
   const LoadingState = () => (
-    <div className="bg-white dark:bg-purple-900 min-h-screen transition-colors duration-300">
-      <div className="container mx-auto px-4 py-16">
+    <div className="about-loading-container min-h-screen duration-300">
+      <div className="about-loading-inner">
         <div className="text-center">
-          <div className="animate-pulse">
-            <div className="h-16 bg-gray-200 dark:bg-purple-800/50 rounded-lg w-80 mx-auto mb-6"></div>
-            <div className="h-8 bg-gray-200 dark:bg-purple-800/50 rounded w-96 mx-auto mb-4"></div>
-            <div className="h-6 bg-gray-200 dark:bg-purple-800/50 rounded w-64 mx-auto mb-8"></div>
+          <div className="skeleton-animate">
+            <div className="skeleton-title"></div>
+            <div className="skeleton-subtitle"></div>
+            <div className="skeleton-text"></div>
             <div className="space-y-8">
               {[...Array(4)].map((_, i) => (
                 <div
                   key={i}
-                  className="bg-white dark:bg-purple-900/30 rounded-xl p-8 shadow-sm"
+                  className="about-skeleton-card"
                 >
                   <div className="h-6 bg-gray-200 dark:bg-purple-800/50 rounded w-48 mb-4"></div>
                   <div className="space-y-3">
@@ -152,30 +153,30 @@ export function AboutPage({
 
   // Error state component with retry functionality
   const ErrorState = () => (
-    <div className="bg-gradient-to-br from-white via-pink-50 to-purple-50 dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 min-h-screen flex items-center justify-center transition-colors duration-300">
-      <div className="text-center p-8">
-        <div className="mb-6">
-          <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-red-500 dark:text-red-400 text-2xl">⚠️</span>
+    <div className="homepage-error-container">
+      <div className="homepage-error-content">
+        <div className="homepage-error-icon-wrapper">
+          <div className="homepage-error-icon">
+            <span className="homepage-error-emoji">⚠️</span>
           </div>
-          <h1 className="text-3xl font-semibold text-gray-800 dark:text-purple-100 mb-2">
+          <h1 className="homepage-error-title">
             About Content Unavailable
           </h1>
-          <p className="text-gray-600 dark:text-purple-300 mb-6">
+          <p className="homepage-error-message">
             {contentError ||
               "There was an issue loading the about page content. Please try again."}
           </p>
         </div>
-        <div className="space-x-4">
+        <div className="homepage-error-actions">
           <button
             onClick={refreshContent}
-            className="px-6 py-3 bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-600 text-white rounded-lg transition-colors"
+            className="homepage-retry-button"
           >
             Try Again
           </button>
           <button
             onClick={() => window.location.reload()}
-            className="px-6 py-3 bg-gray-600 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg transition-colors"
+            className="homepage-refresh-button"
           >
             Refresh Page
           </button>
@@ -212,13 +213,13 @@ export function AboutPage({
     : null;
 
   return (
-    <div className="bg-white dark:bg-gradient-to-br dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 min-h-screen transition-colors duration-300">
+    <div className="bg-white dark:bg-gradient-to-br dark:from-purple-950 dark:via-purple-900/50 dark:to-purple-950 min-h-screen duration-300">
       {/* Content loading indicator */}
       {contentLoading && aboutContent && (
-        <div className="fixed top-4 right-4 z-50">
-          <div className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg text-sm">
-            <div className="flex items-center space-x-2">
-              <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
+        <div className="loading-toast">
+          <div className="loading-toast-inner">
+            <div className="loading-toast-content">
+              <div className="loading-spinner"></div>
               <span>Updating content...</span>
             </div>
           </div>
@@ -230,15 +231,15 @@ export function AboutPage({
         title={heroTitle}
         subtitle={
           <>
-            <em className="italic bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
+            <em className="text-gradient-pink-rose">
               colour
             </em>
             ,{" "}
-            <em className="italic bg-gradient-to-r from-purple-500 to-violet-500 bg-clip-text text-transparent">
+            <em className="text-gradient-purple-violet">
               creativity
             </em>
             , and{" "}
-            <em className="italic bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
+            <em className="text-gradient-blue-cyan">
               connection
             </em>{" "}
             since 2019.
@@ -259,7 +260,7 @@ export function AboutPage({
           setCurrentPage && (
             <button
               onClick={handlePortfolioClick}
-              className="inline-flex items-center justify-center px-button py-button bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 text-white font-body font-medium text-fluid-base rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-pink-500/50"
+              className="inline-flex items-center justify-center px-button py-button bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 text-white font-body font-medium text-fluid-base rounded-500 duration-300 transform hover:scale-105 shadow-400 focus:outline-none focus:ring-4 focus:ring-pink-200 dark:focus:ring-pink-500/50"
               aria-label="Navigate to Portfolio page to explore makeup artistry collection"
             >
               Explore My Portfolio
@@ -269,15 +270,15 @@ export function AboutPage({
         decorativeElements={
           <>
             <div
-              className="absolute top-10 left-4 sm:left-10 w-16 h-16 sm:w-32 sm:h-32 bg-gradient-to-br from-pink-300 to-purple-400 rounded-full opacity-20 animate-pulse dark:opacity-10"
+              className="about-hero-orb-1"
               aria-hidden="true"
             ></div>
             <div
-              className="absolute top-20 right-8 sm:right-20 w-12 h-12 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-300 to-teal-400 rounded-full opacity-25 animate-pulse delay-1000 dark:opacity-10"
+              className="about-hero-orb-2"
               aria-hidden="true"
             ></div>
             <div
-              className="absolute bottom-32 left-1/4 w-20 h-20 sm:w-40 sm:h-40 bg-gradient-to-br from-yellow-300 to-pink-400 rounded-full opacity-15 animate-pulse delay-2000 dark:opacity-10"
+              className="about-hero-orb-3"
               aria-hidden="true"
             ></div>
           </>
@@ -301,7 +302,7 @@ export function AboutPage({
         title="Festival Magic"
         theme={ABOUT_SECTION_THEMES.festival}
       >
-        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed">
+        <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-white leading-relaxed">
           Festivals became my laboratory. There's something about the outdoor energy, the music, the freedom that brings out the most creative sides of people. Festival makeup isn't just about looking good – it's about embodying the spirit of celebration.
         </p>
         <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed mt-fluid-md">
@@ -378,29 +379,29 @@ export function AboutPage({
         </div>
       </SectionCard>
 
-      {/* Fusion Nails Section */}
+      {/* UV Makeup Section */}
       <SectionCard
-        title="Fusion Nails Artistry"
+        title="UV Makeup Artistry"
         theme={ABOUT_SECTION_THEMES.nails}
         actions={
           setCurrentPage && (
             <div className="text-center">
               <button
-                onClick={handleFusionNailsClick}
+                onClick={handleUVMakeupClick}
                 className="inline-flex items-center justify-center px-button py-button bg-gradient-to-r from-cyan-500 via-teal-500 to-green-500 hover:from-cyan-600 hover:via-teal-600 hover:to-green-600 text-white font-body font-medium text-fluid-base rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg focus:outline-none focus:ring-4 focus:ring-teal-200 dark:focus:ring-teal-500/50"
-                aria-label="Navigate to Portfolio page Fusion Nails section"
+                aria-label="Navigate to Portfolio page UV Makeup section"
               >
-                View Fusion Nails Gallery
+                View UV Makeup Gallery
               </button>
             </div>
           )
         }
       >
         <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed">
-          Expanding into nail art was a natural progression that allowed me to explore color and design on an entirely different canvas. Fusion Nails became an opportunity to push creative boundaries while mastering precision techniques.
+          UV-reactive makeup opened up an electrifying new dimension to my artistry. Working with neon pigments and blacklight-reactive products allowed me to create bold, geometric designs that transform under different lighting conditions.
         </p>
         <p className="text-fluid-lg font-body font-normal text-gray-700 dark:text-purple-100 leading-relaxed mt-fluid-md">
-          The detailed work required for nail artistry improved my precision in all areas of my makeup work. Working on such a small scale taught me patience, steady-hand techniques, and the importance of planning complex designs before execution.
+          The challenge of creating designs that work both in natural light and under UV blacklight pushed my creativity to new levels. Each piece must be vibrant and striking on its own, then transform into something even more dramatic when the lights go down.
         </p>
       </SectionCard>
 

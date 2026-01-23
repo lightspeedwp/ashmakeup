@@ -585,16 +585,16 @@ export const UV_MAKEUP_DATA = [
   {
     id: "neon-warrior",
     title: "Neon Warrior",
-    subtitle: "Berlin Club",
+    subtitle: "Festival",
     description:
-      "Dramatic green mohawk with UV reactive face paint creating electric energy under blacklight.",
+      "Beautiful UV reactive makeup with rainbow streaks creating vibrant festival energy.",
     images: [
       {
-        src: "figma:asset/3f84a682c620ba9434e114f1bed5c08d6f9573d6.png",
-        alt: "Neon Warrior - dramatic green mohawk with UV reactive face paint at Berlin Club",
+        src: "figma:asset/74b708f3be9c02b929444ed900d4217477ac45ad.png",
+        alt: "Neon Warrior - UV face paint with vibrant rainbow streaks at festival",
         caption: "Under UV Light",
         description:
-          "The complete neon warrior look under UV blacklight",
+          "Beautiful woman with rainbow UV face paint streaks and bright smile",
       },
       {
         src: "https://images.unsplash.com/photo-1602494518965-195c6ec1c980?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxVViUyMG1ha2V1cCUyMGJsYWNrbGlnaHQlMjBuZW9uJTIwZ2xvd2luZ3xlbnwxfHx8fDE3NTc1OTAzMjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
@@ -618,13 +618,13 @@ export const UV_MAKEUP_DATA = [
     title: "Rainbow Lightning",
     subtitle: "UV Party",
     description:
-      "Vibrant rainbow face stripe with glowing accessories creating magical festival vibes.",
+      "Vibrant UV dots under eyes with rainbow body paint creating magical festival vibes.",
     images: [
       {
-        src: "figma:asset/4b2d7308e93886e4e6b5b4aecedbcb86af31a46b.png",
-        alt: "Rainbow Lightning - vibrant rainbow face stripe with glowing accessories at UV Party",
-        caption: "Rainbow Stripe",
-        description: "The vibrant rainbow face stripe design",
+        src: "figma:asset/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png",
+        alt: "Rainbow Lightning - UV dots under eyes with rainbow body paint",
+        caption: "Rainbow Dots",
+        description: "Redhead with UV dots under eyes and rainbow body paint",
       },
       {
         src: "https://images.unsplash.com/photo-1603300382284-72ddf4985216?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHxyYWluYm93JTIwZmFjZSUyMHBhaW50JTIwYXJ0aXN0aWMlMjBtYWtldXB8ZW58MXx8fHwxNzU3NTkwMzIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
@@ -641,14 +641,14 @@ export const UV_MAKEUP_DATA = [
     title: "Electric Blue",
     subtitle: "Underground Rave",
     description:
-      "Bold blue UV face paint with geometric patterns and infectious smile radiating joy.",
+      "Bold rainbow UV face paint with unique accessories radiating joy and creativity.",
     images: [
       {
-        src: "figma:asset/f37bfd287073fd5c8012c4b921e6919bf6b4bbcc.png",
-        alt: "Electric Blue - bold blue UV face paint with geometric patterns at Underground Rave",
-        caption: "Geometric Blue",
+        src: "figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png",
+        alt: "Electric Blue - rainbow UV face paint with jellyfish ear accessory",
+        caption: "Rainbow UV",
         description:
-          "Bold blue UV face paint with geometric patterns",
+          "Man with rainbow UV face paint and jellyfish ear accessory",
       },
     ],
     category: "UV Makeup",

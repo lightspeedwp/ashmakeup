@@ -59,8 +59,8 @@ export function HeroSection() {
         <div className="absolute bottom-16 left-1/4 w-20 h-20 sm:w-40 sm:h-40 bg-gradient-to-br from-yellow-300 to-pink-400 dark:from-yellow-500/30 dark:to-pink-500/30 rounded-full opacity-15 dark:opacity-30 animate-pulse delay-2000"></div>
 
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-fluid-2xl lg:gap-20">
-            <div className="flex-1 max-w-2xl text-center lg:text-left">
+          <div className="hero-layout-container">
+            <div className="hero-content-column">
               <p className="text-fluid-xl font-body font-medium text-gradient-pink-purple-blue mb-fluid-xl">
                 Hi, I'm Ash Shaw.
               </p>
@@ -93,7 +93,7 @@ export function HeroSection() {
             </div>
 
             {/* Artistic Image Mosaic - Mobile optimized */}
-            <div className="flex-1 max-w-2xl relative w-full">
+            <div className="hero-media-column">
               <div className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px]">
                 {/* Main large image - center - responsive positioning */}
                 <div
