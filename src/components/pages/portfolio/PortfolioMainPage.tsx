@@ -31,6 +31,7 @@ import {
   PORTFOLIO_CATEGORIES,
   type UnifiedPortfolioEntry 
 } from '../../../utils/portfolioService';
+import { getPortfolioCategoryCount } from '../../../utils/contentCounts';
 import { useAppNavigate } from '../../../hooks/useAppNavigate';
 import "@/styles/blocks/portfolio-main-page.css";
 
@@ -260,9 +261,12 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
                         ? `${category.gradient} category-btn--active`
                         : `category-btn--inactive ${getGradientVariant(category.gradient)}`
                     } ${category.id === 'all' ? 'category-btn--all' : ''}`}
-                    aria-label={`Filter portfolio by ${category.name}`}
+                    aria-label={`Filter portfolio by ${category.name} (${getPortfolioCategoryCount(category.id)})`}
                   >
                     {category.name}
+                    <span className="category-btn__count">
+                      {getPortfolioCategoryCount(category.id)}
+                    </span>
                   </button>
                 );
               })}

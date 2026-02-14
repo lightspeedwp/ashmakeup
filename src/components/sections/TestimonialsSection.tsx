@@ -50,7 +50,7 @@ export function TestimonialsSection() {
                 </p>
                 
                 {/* Client */}
-                <div className="testimonial-card__footer p-[0px]">
+                <div className="testimonial-card__footer">
                   <p className="testimonial-card__author">
                     {testimonial.name}
                   </p>

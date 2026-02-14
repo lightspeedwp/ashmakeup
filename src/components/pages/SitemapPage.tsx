@@ -30,6 +30,7 @@ import {
   FileText,
   Scale,
   Newspaper,
+  Palette,
 } from "lucide-react";
 import { sitemapContent, tagDescriptors } from "../../data/mock/ui/sitemap";
 import { navigationItems } from "../../data/mock/ui/navigation";
@@ -37,6 +38,11 @@ import { formatDate } from "../../utils/formatDate";
 import { blogCategories } from "../../data/mock/blog/categories";
 import { blogPosts } from "../../data/mock/blog/posts";
 import { PORTFOLIO_CATEGORIES } from "../../utils/portfolioService";
+import {
+  getBlogCategoryCount,
+  getBlogTagCount,
+  getPortfolioCategoryCount,
+} from "../../utils/contentCounts";
 import "@/styles/blocks/sitemap-page.css";
 
 /** Neon colours cycled across tag dots for visual variety */
@@ -154,7 +160,12 @@ export function SitemapPage() {
                 onClick={() => go(`/portfolio/${cat.slug}`)}
               >
                 <div className="sitemap__link-content">
-                  <span className="sitemap__link-title">{cat.name}</span>
+                  <span className="sitemap__link-title">
+                    {cat.name}
+                    <span className="sitemap__link-meta">
+                      {" "}({getPortfolioCategoryCount(cat.id)})
+                    </span>
+                  </span>
                   {cat.description && (
                     <span className="sitemap__link-desc">
                       {cat.description}
@@ -197,12 +208,9 @@ export function SitemapPage() {
                 <div className="sitemap__link-content">
                   <span className="sitemap__link-title">
                     {cat.name}
-                    {cat.count != null && (
-                      <span className="sitemap__link-meta">
-                        {" "}
-                        ({cat.count})
-                      </span>
-                    )}
+                    <span className="sitemap__link-meta">
+                      {" "}({getBlogCategoryCount(cat.name)})
+                    </span>
                   </span>
                   {cat.description && (
                     <span className="sitemap__link-desc">
@@ -281,7 +289,15 @@ export function SitemapPage() {
                   aria-hidden="true"
                 />
                 <div className="sitemap__link-content">
-                  <span className="sitemap__link-title">{tag.name}</span>
+                  <span className="sitemap__link-title">
+                    {tag.name}
+                    {(() => {
+                      const tagCount = getBlogTagCount(tag.name);
+                      return tagCount > 0 ? (
+                        <span className="sitemap__link-meta"> ({tagCount})</span>
+                      ) : null;
+                    })()}
+                  </span>
                   <span className="sitemap__link-desc">
                     {tag.description}
                   </span>
@@ -339,6 +355,18 @@ export function SitemapPage() {
                   aria-hidden="true"
                 />
                 <span className="sitemap__link-title">Sitemap</span>
+              </button>
+            </li>
+            <li>
+              <button
+                className="sitemap__link"
+                onClick={() => go("/style-guide")}
+              >
+                <Palette
+                  className="sitemap__link-icon"
+                  aria-hidden="true"
+                />
+                <span className="sitemap__link-title">Style Guide</span>
               </button>
             </li>
           </ul>

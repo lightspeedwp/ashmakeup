@@ -200,13 +200,6 @@ export function Footer() {
             >
               {footerContent.links.sitemap}
             </button>
-            <span className="footer__legal-dot" aria-hidden="true" />
-            <button
-              onClick={() => navigateTo("/style-guide")}
-              className="footer__legal-link"
-            >
-              {footerContent.links.styleGuide}
-            </button>
           </div>
         </div>
       </div>

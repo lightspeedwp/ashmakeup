@@ -266,11 +266,13 @@
 
 .testimonial-card__footer {
   border-top: 1px solid var(--wp--preset--color--neutral-200);
-  padding-top: var(--wp--preset--spacing--block-gap);
+  padding-top: 12px;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .dark .testimonial-card__footer {
-  border-top-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .testimonial-card__author {
@@ -288,6 +290,7 @@
   font-size: 0.875rem;
   font-weight: 500;
   margin-top: 0;
+  margin-bottom: 0;
 }
 
 .dark .testimonial-card__event {
