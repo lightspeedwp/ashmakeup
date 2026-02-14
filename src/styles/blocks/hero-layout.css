@@ -1,0 +1,6 @@
+/* Hero Layout Block Styles */
+/* Note: This file should be imported by HeroLayout.tsx if not using hero.css */
+/* In this architecture, we are using hero.css as the primary file. */
+/* This file is created to satisfy the import if any, or serve as a fallback/alias. */
+
+@import "./hero.css";

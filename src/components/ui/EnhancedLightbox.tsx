@@ -1,25 +1,29 @@
 /**
- * @fileoverview Simple Lightbox component for Ash Shaw Makeup Portfolio
- * Clean, centered design matching the original site aesthetic
+ * @fileoverview Enhanced Mobile-Optimized Lightbox with Video Support
+ * Advanced lightbox modal featuring video support, prominent slider arrows, pagination dots, and mobile-first design
  * 
  * @author Ash Shaw Portfolio Team
- * @version 3.0.0
+ * @version 4.0.0 - Video Support & Semantic BEM
  */
 
-import React, { useEffect, useState } from 'react';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Grid, Play } from 'lucide-react';
 import { PortfolioImage } from './PortfolioImage';
-import { useIsMobile } from './use-mobile';
+import { VideoPlayer } from './VideoPlayer';
 import { useModal } from '../common/ModalContext';
+import { portfolioUI } from '../../data/mock/ui/portfolio';
+import "@/styles/blocks/enhanced-lightbox.css";
 
 /**
- * Portfolio image interface
+ * Lightbox media item interface
  */
-interface PortfolioImage {
+export interface LightboxItem {
   src: string;
   alt: string;
   caption?: string;
   description?: string;
+  type?: 'image' | 'video';
+  poster?: string; // For videos
 }
 
 /**
@@ -28,280 +32,387 @@ interface PortfolioImage {
 interface EnhancedLightboxProps {
   isOpen: boolean;
   onClose: () => void;
-  images: PortfolioImage[];
+  images: LightboxItem[];
   currentIndex: number;
+  title: string;
   onNavigate?: (index: number) => void;
-  title?: string;
-  description?: string;
 }
 
 /**
- * Simple Lightbox component with clean, centered design
- * 
- * Features:
- * - Clean white card layout centered on screen
- * - Close button positioned above and to the right
- * - Large image with object-contain to maintain aspect ratio  
- * - Bottom gradient overlay with title text
- * - Simple instruction text below the card
- * - Keyboard navigation (Escape to close)
- * - Click outside to close
- * - Responsive design
- * - Comprehensive accessibility
- * 
- * @param {EnhancedLightboxProps} props - Component properties
- * @returns {JSX.Element|null} Simple lightbox modal or null when closed
+ * Enhanced Lightbox component with professional gallery and video features
  */
 export function EnhancedLightbox({
   isOpen,
   onClose,
   images,
-  currentIndex,
-  onNavigate,
+  currentIndex: initialIndex,
   title,
-  description
+  onNavigate
 }: EnhancedLightboxProps) {
-  const [localCurrentIndex, setLocalCurrentIndex] = useState(currentIndex);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-  const [isSwiping, setIsSwiping] = useState(false);
-  const isMobile = useIsMobile();
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [showThumbnails, setShowThumbnails] = useState(false);
   
-  // Modal context for managing global modal state
   const { registerModal, updateModal, unregisterModal } = useModal();
-  
-  // Register modal with context on mount
+
+  const hasMultipleItems = images.length > 1;
+  const safeCurrentIndex = Math.max(0, Math.min(currentIndex, images.length - 1));
+  const currentItem = images[safeCurrentIndex];
+
   useEffect(() => {
-    registerModal('enhanced-lightbox', 'lightbox', { title, description, images });
-    
-    return () => {
-      unregisterModal('enhanced-lightbox');
-    };
-  }, [registerModal, unregisterModal, title, description, images]);
+    if (!isOpen || images.length === 0) return;
+    registerModal('enhanced-lightbox', 'lightbox', { title, images });
+    return () => unregisterModal('enhanced-lightbox');
+  }, [registerModal, unregisterModal, title, images, isOpen]);
 
-  // Update modal state when isOpen changes
   useEffect(() => {
-    updateModal('enhanced-lightbox', isOpen, { title, description, images, currentIndex: localCurrentIndex });
-  }, [updateModal, isOpen, title, description, images, localCurrentIndex]);
+    if (!isOpen || images.length === 0) return;
+    updateModal('enhanced-lightbox', isOpen, { title, images, currentIndex: safeCurrentIndex });
+  }, [updateModal, isOpen, title, images, safeCurrentIndex]);
 
-  // Update local index when prop changes
   useEffect(() => {
-    setLocalCurrentIndex(currentIndex);
-  }, [currentIndex]);
-  
-  const hasMultipleImages = images.length > 1;
-  
-  // Navigation functions
-  const goToPrevious = () => {
-    if (!hasMultipleImages) return;
-    const newIndex = localCurrentIndex === 0 ? images.length - 1 : localCurrentIndex - 1;
-    setLocalCurrentIndex(newIndex);
-    onNavigate?.(newIndex);
-  };
-  
-  const goToNext = () => {
-    if (!hasMultipleImages) return;
-    const newIndex = localCurrentIndex === images.length - 1 ? 0 : localCurrentIndex + 1;
-    setLocalCurrentIndex(newIndex);
-    onNavigate?.(newIndex);
-  };
-  
-  const goToImage = (index: number) => {
-    setLocalCurrentIndex(index);
-    onNavigate?.(index);
-  };
+    if (images.length === 0) return;
+    const validIndex = Math.max(0, Math.min(initialIndex, images.length - 1));
+    setCurrentIndex(validIndex);
+  }, [initialIndex, images.length]);
 
-  // Touch handlers for swipe detection
-  const minSwipeDistance = 50;
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-    setIsSwiping(false);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    if (!touchStart) return;
-    
-    const currentTouch = e.targetTouches[0].clientX;
-    setTouchEnd(currentTouch);
-    
-    const distance = Math.abs(touchStart - currentTouch);
-    
-    if (distance > 10) {
-      setIsSwiping(true);
-    }
-  };
-
-  const onTouchEnd = () => {
-    setTimeout(() => {
-      setIsSwiping(false);
-    }, 300);
-    
-    if (!touchStart || !touchEnd) return;
-
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe && hasMultipleImages) {
-      goToNext();
-    }
-    if (isRightSwipe && hasMultipleImages) {
-      goToPrevious();
-    }
-  };
-  /**
-   * Effect to manage body scroll when lightbox is open
-   */
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
+    if (!isOpen) {
+      setIsZoomed(false);
+      setShowThumbnails(false);
     }
-    
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
   }, [isOpen]);
 
-  /**
-   * Keyboard navigation handler
-   */
+  const updateIndex = useCallback((newIndex: number) => {
+    setCurrentIndex(newIndex);
+    if (onNavigate) {
+      onNavigate(newIndex);
+    }
+    setIsZoomed(false);
+  }, [onNavigate]);
+
+  const goToPrevious = useCallback(() => {
+    const newIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
+    updateIndex(newIndex);
+  }, [currentIndex, images.length, updateIndex]);
+
+  const goToNext = useCallback(() => {
+    const newIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
+    updateIndex(newIndex);
+  }, [currentIndex, images.length, updateIndex]);
+
+  const goToItem = useCallback((index: number) => {
+    updateIndex(index);
+  }, [updateIndex]);
+
+  const toggleZoom = useCallback(() => {
+    // Only allow zooming on images
+    if (currentItem?.type !== 'video') {
+      setIsZoomed(!isZoomed);
+    }
+  }, [isZoomed, currentItem]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isOpen) return;
 
-      if (e.key === 'Escape') {
-        onClose();
-      } else if (e.key === 'ArrowLeft' && hasMultipleImages) {
-        e.preventDefault();
-        goToPrevious();
-      } else if (e.key === 'ArrowRight' && hasMultipleImages) {
-        e.preventDefault();
-        goToNext();
+      switch (e.key) {
+        case 'Escape': onClose(); break;
+        case 'ArrowLeft': e.preventDefault(); goToPrevious(); break;
+        case 'ArrowRight': e.preventDefault(); goToNext(); break;
+        case 'z': case 'Z': e.preventDefault(); toggleZoom(); break;
+        case 't': case 'T': e.preventDefault(); setShowThumbnails(!showThumbnails); break;
       }
     };
 
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
+    if (isOpen) document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, goToPrevious, goToNext, toggleZoom, showThumbnails, onClose]);
+
+  // Touch handlers for swipe
+  useEffect(() => {
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let touchStartY = 0;
+    let touchEndY = 0;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const currentX = e.changedTouches[0].screenX;
+      const currentY = e.changedTouches[0].screenY;
+      const deltaX = Math.abs(currentX - touchStartX);
+      const deltaY = Math.abs(currentY - touchStartY);
+      
+      if (deltaX > deltaY && deltaX > 20 && !isZoomed) {
+        e.preventDefault();
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (isZoomed) return; // Disable swipe when zoomed
+      
+      touchEndX = e.changedTouches[0].screenX;
+      touchEndY = e.changedTouches[0].screenY;
+      
+      const deltaX = touchStartX - touchEndX;
+      const deltaY = Math.abs(touchStartY - touchEndY);
+      const swipeThreshold = 30;
+      
+      if (Math.abs(deltaX) > swipeThreshold && Math.abs(deltaX) > deltaY) {
+        if (deltaX > 0) {
+          goToNext();
+          if ('vibrate' in navigator) navigator.vibrate(50);
+        } else {
+          goToPrevious();
+          if ('vibrate' in navigator) navigator.vibrate(50);
+        }
+      }
+    };
+
+    if (isOpen && hasMultipleItems) {
+      document.addEventListener('touchstart', handleTouchStart, { passive: true });
+      document.addEventListener('touchmove', handleTouchMove, { passive: false });
+      document.addEventListener('touchend', handleTouchEnd, { passive: true });
     }
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [isOpen, onClose, hasMultipleImages, localCurrentIndex]);
+  }, [isOpen, hasMultipleItems, goToPrevious, goToNext, isZoomed]);
 
-  if (!isOpen || images.length === 0) return null;
+  if (!isOpen || images.length === 0 || !currentItem) {
+    return null;
+  }
 
-  const currentImage = images[localCurrentIndex];
+  const isVideo = currentItem.type === 'video' || 
+                  currentItem.src.includes('youtube') || 
+                  currentItem.src.includes('vimeo') || 
+                  currentItem.src.endsWith('.mp4');
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md"
+      className="lightbox-overlay"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="lightbox-title"
     >
       <div 
-        className="relative w-full h-full flex flex-col items-center justify-start overflow-y-auto scrollbar-hide py-4 px-4 scroll-smooth"
+        className="lightbox-container"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-12 h-12 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
-          aria-label="Close lightbox"
-        >
-          <X className="w-6 h-6" />
-        </button>
+        {/* Header */}
+        <div className="lightbox-header">
+          <div className="lightbox-controls">
+            {/* Zoom Toggle - Only for images */}
+            {!isVideo && (
+              <button
+                onClick={toggleZoom}
+                className="lightbox-btn"
+                aria-label={isZoomed ? portfolioUI.lightbox.zoomOut : portfolioUI.lightbox.zoomIn}
+              >
+                {isZoomed ? <ZoomOut className="icon-md" /> : <ZoomIn className="icon-md" />}
+              </button>
+            )}
 
-        {/* Large Centered Image with Navigation and Overlaid Pagination */}
-        <div 
-          className="flex-shrink-0 flex items-center justify-center w-full relative group my-auto"
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-        >
-          <PortfolioImage
-            src={currentImage.src}
-            alt={currentImage.alt}
-            className="max-w-[90vw] max-h-[70vh] w-auto h-auto object-contain shadow-2xl rounded-lg"
-          />
-          
-          {/* Desktop Navigation Arrows - Only show for multiple images and desktop */}
-          {hasMultipleImages && !isMobile && (
+            {/* Thumbnails Toggle */}
+            {hasMultipleItems && (
+              <button
+                onClick={() => setShowThumbnails(!showThumbnails)}
+                className="lightbox-btn-text"
+                aria-label={showThumbnails ? portfolioUI.lightbox.thumbnails.hide : portfolioUI.lightbox.thumbnails.show}
+              >
+                <Grid className="icon-sm" />
+                {showThumbnails ? portfolioUI.lightbox.hide : portfolioUI.lightbox.gallery}
+              </button>
+            )}
+
+            {/* Mobile Gallery Toggle */}
+            {hasMultipleItems && (
+              <button
+                onClick={() => setShowThumbnails(!showThumbnails)}
+                className="lightbox-btn lightbox-btn--mobile-toggle"
+                aria-label={showThumbnails ? portfolioUI.lightbox.thumbnails.hide : portfolioUI.lightbox.thumbnails.show}
+              >
+                <Grid className="icon-md" />
+              </button>
+            )}
+
+            {/* Close Button */}
+            <button
+              onClick={onClose}
+              className="lightbox-btn"
+              aria-label={portfolioUI.lightbox.close}
+            >
+              <X className="icon-lg" />
+            </button>
+          </div>
+        </div>
+
+        {/* Main Content Container */}
+        <div className="lightbox-content">
+          {/* Navigation Arrows */}
+          {hasMultipleItems && (
             <>
               <button
                 onClick={goToPrevious}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center opacity-60 hover:opacity-80 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black z-10"
-                aria-label="Previous image"
+                className="lightbox-nav-arrow lightbox-nav-arrow--prev"
+                aria-label={portfolioUI.lightbox.navigation.previous}
               >
-                <ChevronLeft className="w-6 h-6 text-white" />
+                <ChevronLeft className="icon-2xl" strokeWidth={2.5} />
               </button>
-
+              
               <button
                 onClick={goToNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center opacity-60 hover:opacity-80 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black z-10"
-                aria-label="Next image"
+                className="lightbox-nav-arrow lightbox-nav-arrow--next"
+                aria-label={portfolioUI.lightbox.navigation.next}
               >
-                <ChevronRight className="w-6 h-6 text-white" />
+                <ChevronRight className="icon-2xl" strokeWidth={2.5} />
               </button>
             </>
           )}
-          
-          {/* Pagination Dots - Overlaid on bottom center of image */}
-          {hasMultipleImages && (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+
+          {/* Media Content (Image or Video) */}
+          <div className={`lightbox-image-wrapper ${isZoomed ? 'lightbox-image-wrapper--zoomed' : ''}`}>
+            {isVideo ? (
+              <div className="lightbox-video-wrapper">
+                <VideoPlayer
+                  src={currentItem.src}
+                  poster={currentItem.poster}
+                  title={currentItem.caption || currentItem.alt}
+                  autoPlay={false}
+                  className="lightbox-video"
+                />
+              </div>
+            ) : (
+              <PortfolioImage
+                src={currentItem.src}
+                alt={currentItem.alt}
+                className={`lightbox-image ${isZoomed ? 'lightbox-image--zoomed' : ''}`}
+                style={{ cursor: isZoomed ? 'zoom-out' : 'zoom-in' }}
+                onClick={toggleZoom}
+              />
+            )}
+            
+            {/* Mobile Pagination Dots */}
+            {hasMultipleItems && (
+              <div className="lightbox-dots-mobile">
+                {images.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToItem(index)}
+                    className={`lightbox-dot ${index === currentIndex ? 'lightbox-dot--active' : 'lightbox-dot--inactive'}`}
+                    aria-label={`Go to item ${index + 1} of ${images.length}`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Desktop Pagination Dots */}
+          {hasMultipleItems && (
+            <div className="lightbox-dots-desktop">
               {images.map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => goToImage(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-1 focus:ring-offset-black ${
-                    index === localCurrentIndex
-                      ? "bg-white/80"
-                      : "bg-white/40 hover:bg-white/60"
-                  }`}
-                  aria-label={`Go to image ${index + 1} of ${images.length}`}
+                  onClick={() => goToItem(index)}
+                  className={`lightbox-dot ${index === currentIndex ? 'lightbox-dot--active' : 'lightbox-dot--inactive'}`}
+                  aria-label={`Go to item ${index + 1} of ${images.length}`}
                 />
               ))}
             </div>
           )}
+
+          {/* Caption */}
+          {(currentItem.caption || currentItem.description) && (
+            <div className="lightbox-caption">
+              {currentItem.caption && (
+                <h3 className="lightbox-text-title">
+                  {currentItem.caption}
+                </h3>
+              )}
+              {currentItem.description && (
+                <p className="lightbox-text-description">
+                  {currentItem.description}
+                </p>
+              )}
+            </div>
+          )}
         </div>
 
-        {/* Mobile Swipe Indicator - Top right corner of image, hidden when swiping */}
-        {hasMultipleImages && isMobile && !isSwiping && (
-          <div className="absolute top-4 right-4 z-10">
-            <div className="flex items-center gap-2">
-              <ChevronLeft className="w-4 h-4 text-white/80" />
-              <span className="text-white/80 text-sm font-body font-medium">Swipe</span>
-              <ChevronRight className="w-4 h-4 text-white/80" />
+        {/* Thumbnail Strip */}
+        {hasMultipleItems && showThumbnails && (
+          <div className="lightbox-thumbnails-container">
+            <div className="lightbox-thumbnails-strip">
+              {images.map((item, index) => {
+                const isItemVideo = item.type === 'video' || 
+                                  item.src.includes('youtube') || 
+                                  item.src.includes('vimeo') || 
+                                  item.src.endsWith('.mp4');
+                return (
+                  <button
+                    key={index}
+                    onClick={() => goToItem(index)}
+                    className={`lightbox-thumbnail-btn ${index === currentIndex ? 'lightbox-thumbnail-btn--active' : 'lightbox-thumbnail-btn--inactive'}`}
+                    aria-label={`Go to item ${index + 1}: ${item.caption || item.alt}`}
+                  >
+                    {isItemVideo ? (
+                      <div className="lightbox-thumbnail-video">
+                        <Play className="lightbox-thumbnail-play-icon" />
+                        {item.poster && (
+                          <img 
+                            src={item.poster} 
+                            alt={item.alt} 
+                            className="lightbox-thumbnail-img"
+                          />
+                        )}
+                      </div>
+                    ) : (
+                      <PortfolioImage
+                        src={item.src}
+                        alt={item.alt}
+                        className="lightbox-thumbnail-img"
+                      />
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
 
-        {/* Text Content Below Image - Expandable and Naturally Scrollable */}
-        <div className="w-full max-w-3xl text-center text-white mt-6 mb-8 px-4 flex-shrink-0">
-          <h3 id="lightbox-title" className="text-lg md:text-xl font-heading font-medium mb-3">
-            {currentImage.caption || title || "Portfolio Image"}
-          </h3>
-          {(currentImage.description || description) && (
-            <div className="text-sm md:text-base font-body opacity-80 leading-relaxed mb-4">
-              {(currentImage.description || description)?.split('\n').map((paragraph, index) => (
-                <p key={index} className="mb-2 last:mb-0">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          )}
-          
-          {/* Simple instruction text */}
-          <p className="text-white/50 text-xs mt-4">
-            {hasMultipleImages && !isMobile ? "Use arrow keys or click arrows to navigate • " : ""}
-            {hasMultipleImages && isMobile ? "Swipe left or right to navigate • " : ""}
-            Press Esc or click outside to close
+        {/* Footer */}
+        <div className="lightbox-footer">
+          <p className="lightbox-footer-content">
+            {hasMultipleItems && (
+              <>
+                <span className="lightbox-nav-hint-wrapper">
+                  <svg className="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ width: '1rem', height: '1rem' }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                  </svg>
+                  <span className="lightbox-hint-desktop">{portfolioUI.lightbox.navigation.hintDesktop}</span>
+                  <span className="lightbox-hint-mobile">{portfolioUI.lightbox.navigation.hintMobile}</span>
+                  <svg className="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ width: '1rem', height: '1rem' }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </span>
+                <span className="lightbox-separator">•</span>
+              </>
+            )}
+            {!isVideo && (
+              <>
+                <span>{portfolioUI.lightbox.navigation.hintZoom}</span>
+                <span className="lightbox-separator">•</span>
+              </>
+            )}
+            <span className="lightbox-hint-desktop">{portfolioUI.lightbox.navigation.hintKeyboard}</span>
+            <span>{portfolioUI.lightbox.navigation.hintClose}</span>
           </p>
         </div>
       </div>

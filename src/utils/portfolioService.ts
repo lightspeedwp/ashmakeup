@@ -12,27 +12,20 @@
  * - Featured item selection and ordering
  * 
  * Architecture:
- * - Single source of truth for portfolio data
+ * - Single source of truth for portfolio data (sourcing from @/data/mock/portfolio)
  * - Seamless integration between homepage and portfolio page
  * - Proper TypeScript interfaces for data consistency
  * - Performance optimized with caching and lazy loading
  * 
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
- * @since 1.0.0 - Initial unified portfolio service implementation
+ * @version 2.0.0 - Refactor to use centralized mock data
  */
 
-import { 
-  THAILAND_WORK_DATA, 
-  FESTIVAL_WORK_DATA, 
-  SHANKRA_WORK_DATA, 
-  FEATURED_NAILS_DATA 
-} from '../components/common/Constants';
+import { allPortfolioWork } from '../data/mock/portfolio/index';
+import { PortfolioEntry } from '../data/types/portfolio';
 
-// Modem Festival portfolio images
-import modemImage1 from 'figma:asset/21372d3f219fd74d2e3cf146d9b1111cd6736b6d.png';
-import modemImage2 from 'figma:asset/a7af693fc872d71d588da4e937939b615aa77796.png';
-import modemImage3 from 'figma:asset/67d17491919b3e8d50187f4923b8bbbdc1f03c5e.png';
+// Re-export types for consumers
+export type { PortfolioEntry };
 
 /**
  * Portfolio category configuration matching PortfolioMainPage structure
@@ -42,36 +35,42 @@ export const PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
   {
     id: 'all',
     name: 'All Work',
+    slug: 'all',
     description: 'Complete portfolio showcasing diverse makeup artistry',
     gradient: 'bg-gradient-pink-purple-blue',
   },
   {
     id: 'Festival Makeup',
     name: 'Festival',
+    slug: 'festival',
     description: 'Vibrant festival artistry and celebration makeup',
     gradient: 'bg-gradient-blue-teal-green',
   },
   {
     id: 'UV Makeup',
     name: 'UV & Blacklight',
+    slug: 'uv-blacklight',
     description: 'Electric nightlife artistry with UV-reactive paints',
     gradient: 'bg-gradient-gold-peach-coral',
   },
   {
     id: 'Swiss Festivals',
     name: 'Swiss Festivals',
+    slug: 'swiss-festivals',
     description: 'Alpine festival experiences and mountain celebrations',
     gradient: 'bg-gradient-blue-teal-green',
   },
   {
     id: 'Fusion Nails',
     name: 'Fusion Nails',
+    slug: 'fusion-nails',
     description: 'Creative nail artistry with vibrant designs',
     gradient: 'bg-gradient-pink-purple-blue',
   },
   {
     id: 'Thailand Adventures',
     name: 'Thailand',
+    slug: 'thailand',
     description: 'Tropical festival experiences and cultural immersion',
     gradient: 'bg-gradient-gold-peach-coral',
   },
@@ -93,6 +92,7 @@ export interface PortfolioImage {
 export interface PortfolioCategory {
   id: string;
   name: string;
+  slug: string;
   description: string;
   gradient?: string; // Optional gradient class for UI
 }
@@ -108,6 +108,7 @@ export interface UnifiedPortfolioEntry {
   description: string;
   images: PortfolioImage[];
   category: string; // Must match PORTFOLIO_CATEGORIES id
+  date?: string;
   featured?: boolean; // For homepage featured section
   displayOrder?: number; // For consistent ordering
   tags?: string[]; // For additional filtering
@@ -121,8 +122,8 @@ function hasValidImageURLs(entry: any): boolean {
   const hasValidImages = entry.images && entry.images.length > 0 && 
     entry.images.some((img: any) => {
       if (!img.src) return false;
-      // Allow https:// URLs and data URLs (known to work)
-      if (img.src.startsWith('https://') || img.src.startsWith('data:')) {
+      // Allow https:// URLs, data URLs, and local paths (imported assets)
+      if (img.src.startsWith('https://') || img.src.startsWith('data:') || img.src.startsWith('/')) {
         return true;
       }
       // For figma:asset/ URLs, only allow ones that are mapped in PortfolioImage.tsx
@@ -135,7 +136,12 @@ function hasValidImageURLs(entry: any): boolean {
           'figma:asset/74b708f3be9c02b929444ed900d4217477ac45ad.png',
           'figma:asset/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png',
           'figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png',
-          // Note: figma:asset/2fed1a57607a8fc1db766165f6ef2f1aad000d8f.png is missing and excluded
+          'figma:asset/e46fceb6809b8f1b7ef5c578d40578eadf301207.png',
+          'figma:asset/2678f2e48d60b8ccd6855469149ffc2cd8877e1c.png',
+          'figma:asset/04aa88bd7a81e3f14ceb68f980492bf374b041db.png',
+          'figma:asset/21372d3f219fd74d2e3cf146d9b1111cd6736b6d.png',
+          'figma:asset/a7af693fc872d71d588da4e937939b615aa77796.png',
+          'figma:asset/67d17491919b3e8d50187f4923b8bbbdc1f03c5e.png'
         ];
         return knownWorkingAssets.includes(img.src);
       }
@@ -153,218 +159,61 @@ function hasValidImageURLs(entry: any): boolean {
 }
 
 /**
- * Comprehensive portfolio data combining all existing data sources
- * Properly categorized to match the 6 portfolio categories
+ * Maps the mock data category to the UI category
+ */
+function mapCategory(category: string, tags: string[] = []): string {
+  const lowerTags = tags.map(t => t.toLowerCase());
+  const lowerCategory = category.toLowerCase();
+
+  if (lowerCategory.includes('nail')) return 'Fusion Nails';
+  if (lowerCategory.includes('uv') || lowerTags.includes('uv') || lowerTags.includes('blacklight')) return 'UV Makeup';
+  if (lowerTags.includes('thailand') || lowerTags.includes('jungle')) return 'Thailand Adventures';
+  if (lowerTags.includes('swiss') || lowerTags.includes('switzerland') || lowerTags.includes('shankra') || lowerTags.includes('reiserfieber')) return 'Swiss Festivals';
+  
+  // Default fallback map
+  if (category === 'Body Art') return 'Festival Makeup';
+  if (category === 'Nail Art') return 'Fusion Nails';
+  
+  return 'Festival Makeup';
+}
+
+/**
+ * Transforms a Mock PortfolioEntry to a UnifiedPortfolioEntry
+ */
+function transformEntry(entry: PortfolioEntry): UnifiedPortfolioEntry {
+  // Determine the correct category
+  const uiCategory = mapCategory(entry.category, entry.tags);
+
+  return {
+    id: entry.id,
+    title: entry.title,
+    subtitle: entry.excerpt || entry.location || entry.event || entry.date || uiCategory,
+    description: entry.description,
+    images: entry.images.map(img => ({
+      src: img.src,
+      alt: img.alt,
+      caption: img.title || img.caption || entry.title,
+      description: img.description || img.caption || entry.title,
+    })),
+    category: uiCategory,
+    date: entry.date,
+    featured: entry.featured,
+    displayOrder: entry.order,
+    tags: entry.tags,
+  };
+}
+
+/**
+ * Comprehensive portfolio data sourced from centralized mock data
  * Filters out entries with invalid figma:asset/ URLs for browser compatibility
  */
-export const UNIFIED_PORTFOLIO_DATA: UnifiedPortfolioEntry[] = [
-  // NEWEST: Modem Festival Post-Event Reflections (November 24, 2025)
-  {
-    id: "modem-festival-post-event",
-    title: "Modem Festival: Post-Event Reflections",
-    subtitle: "November 24, 2025",
-    description: "After Modem Festival I took a few pictures of my new suit and the makeup that I put on last at the event. I was very happy with the outcome of the suit and I thought I would just do a little photo shoot at home to capture what it looked like. The rainbow gradient eye makeup features a stunning transition from electric blue to vibrant magenta and pink, accented with carefully placed glitter that catches the light beautifully. Paired with the metallic blue sleeveless suit, the look embodies the perfect fusion of festival energy and futuristic fashion.",
-    images: [
-      {
-        src: modemImage1,
-        alt: "Rainbow gradient eye makeup with metallic blue suit at Modem Festival - side profile view",
-        caption: "Rainbow Gradient Artistry",
-        description: "Stunning rainbow gradient eye makeup transitioning from electric blue to vibrant magenta and pink",
-      },
-      {
-        src: modemImage2,
-        alt: "Modem Festival makeup and metallic suit - full body portrait with dramatic lighting",
-        caption: "Futuristic Festival Fashion",
-        description: "Metallic blue suit paired with creative makeup showcasing the fusion of festival energy and fashion",
-      },
-      {
-        src: modemImage3,
-        alt: "Modem Festival creative makeup look with futuristic styling and confident pose",
-        caption: "Post-Event Documentation",
-        description: "Home photo shoot capturing the artistry and craftsmanship of both makeup and costume design",
-      },
-    ],
-    category: "Festival Makeup",
-    featured: true,
-    displayOrder: 0, // FIRST in featured section
-    tags: ["festival", "rainbow-gradient", "creative", "metallic", "glitter", "modem", "november-2025"],
-  },
-
-  // Featured entries with unique content not in Constants.ts
-  {
-    id: "nation-of-gondwana-festival",
-    title: "Nation of Gondwana Festival",
-    subtitle: "19 July 2025",
-    description: "The Irish crew, having some UV fun with beautiful people. Electric festival artistry featuring vibrant rainbow streaks, creative UV designs, and glowing accents that celebrate connection and joy at one of the most vibrant festival experiences.",
-    images: [
-      {
-        src: "figma:asset/74b708f3be9c02b929444ed900d4217477ac45ad.png",
-        alt: "Nation of Gondwana Festival - beautiful woman with rainbow UV face paint streaks and bright smile",
-        caption: "Rainbow Festival Magic",
-        description: "Stunning rainbow UV face streaks creating a vibrant festival look with infectious joy",
-      },
-      {
-        src: "figma:asset/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png",
-        alt: "Nation of Gondwana Festival - redhead with UV dots under eyes and rainbow body paint",
-        caption: "Electric UV Artistry", 
-        description: "Creative UV dot patterns and rainbow accents perfect for festival nighttime glow",
-      },
-      {
-        src: "figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png",
-        alt: "Nation of Gondwana Festival - man with rainbow UV face paint and jellyfish ear accessory",
-        caption: "Cosmic Festival Warrior",
-        description: "Bold rainbow UV design with creative accessories celebrating festival spirit and artistic expression",
-      },
-    ],
-    category: "Festival Makeup",
-    featured: true,
-    displayOrder: 1,
-    tags: ["festival", "uv", "rainbow", "gondwana", "irish-crew", "electric", "july-2025"],
-  },
-  
-  // UV Makeup Category
-  {
-    id: "electric-nights-uv",
-    title: "Electric Nights",
-    subtitle: "UV Blacklight Session 2024",
-    description: "Mesmerizing UV-reactive artistry that transforms under blacklight, creating an otherworldly glow perfect for nightlife events.",
-    images: [
-      {
-        src: "https://images.unsplash.com/photo-1602494518965-195c6ec1c980?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxVViUyMG1ha2V1cCUyMGJsYWNrbGlnaHQlMjBuZW9uJTIwZ2xvd3xlbnwxfHx8fDE3NTc2NjQ0ODl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-        alt: "Electric Nights - UV reactive makeup glowing under blacklight",
-        caption: "UV Glow",
-        description: "Electric UV makeup creating stunning blacklight effects",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1609021622596-1883cb66e2c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnbG93JTIwcGFpbnQlMjBibGFja2xpZ2h0JTIwbWFrZXVwfGVufDF8fHx8MTc1OTIzNzgxOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-        alt: "Electric Nights - neon paint creating electric atmosphere",
-        caption: "Neon Dreams",
-        description: "Vibrant neon artistry perfect for underground club scenes",
-      },
-    ],
-    category: "UV Makeup",
-    featured: true,
-    displayOrder: 4,
-    tags: ["uv", "blacklight", "neon", "nightlife", "electric"],
-  },
-
-  // Switzerland/Swiss Festivals Category
-  {
-    id: "new-year-magic",
-    title: "New Year Magic",
-    subtitle: "Little Forest NYE 2023/2024",
-    description: "Contemplative face art with golden and blue tones, welcoming the new year with peaceful forest energy.",
-    images: [
-      {
-        src: "https://images.unsplash.com/photo-1572176079325-8d8674afe124?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpc3RpYyUyMG1ha2V1cCUyMGVkaXRvcmlhbCUyMGZhbnRhc3l8ZW58MXx8fHwxNzU3NTkwMzM0fDA&ixlib=rb-4.1.0&q=80&w=1080",
-        alt: "New Year Magic - golden and blue face art at Little Forest NYE 2023/2024",
-        caption: "Peaceful Energy",
-        description: "Contemplative face art with golden and blue tones",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800",
-        alt: "New Year Magic - celebratory moment with friends",
-        caption: "Celebration",
-        description: "Capturing the joy and connection of New Year's celebration",
-      },
-    ],
-    category: "Swiss Festivals",
-    featured: true,
-    displayOrder: 5,
-    tags: ["new-year", "golden", "blue", "peaceful", "celebration"],
-  },
-
-  // Fusion Nails Category
-  {
-    id: "galaxy-nails-fusion",
-    title: "Galaxy Fusion",
-    subtitle: "Cosmic Nail Art Collection",
-    description: "Iridescent cosmic nail designs featuring galaxy effects, holographic finishes, and stellar color combinations.",
-    images: [
-      {
-        src: "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYWlsJTIwYXJ0JTIwZ2FsYXh5JTIwaG9sb2dyYXBoaWN8ZW58MXx8fHwxNzU5MjM3ODI3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-        alt: "Galaxy Fusion - cosmic nail art with iridescent effects",
-        caption: "Cosmic Design",
-        description: "Stellar nail art featuring galaxy effects and holographic finishes",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1594736797933-d0c6c8c3e0b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYWlsJTIwYXJ0JTIwbWV0YWxsaWMlMjBnbGl0dGVyfGVufDF8fHx8MTc1OTIzNzgzMnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-        alt: "Galaxy Fusion - metallic glitter nail design",
-        caption: "Metallic Stars",
-        description: "Shimmering metallic designs that catch light like distant stars",
-      },
-    ],
-    category: "Fusion Nails",
-    featured: true,
-    displayOrder: 6,
-    tags: ["nails", "galaxy", "cosmic", "holographic", "metallic"],
-  },
-
-  // Thailand Adventures Category  
-  {
-    id: "thailand-jungle-festival-adventures",
-    title: "Jungle Festival Magic",
-    subtitle: "Koh Phangan, Friday 26 September",
-    description: "Tropical UV artistry in the heart of Thailand's jungle paradise, blending neon glow with natural island energy.",
-    images: [
-      {
-        src: "https://images.unsplash.com/photo-1533408944756-4950754f3ebc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqdW5nbGUlMjBmZXN0aXZhbCUyMG1ha2V1cCUyMFVWJTIwbmVvbnxlbnwxfHx8fDE3NTkyMzc4MDV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-        alt: "Jungle Festival Magic - neon UV makeup glowing in tropical jungle setting",
-        caption: "Jungle Glow",
-        description: "Vibrant UV reactive makeup creating magical glow effects in the jungle paradise",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1611253291108-bca55a6dfadc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0cm9waWNhbCUyMGZhY2UlMjBwYWludCUyMGZlc3RpdmFsfGVufDF8fHx8MTc1OTIzNzgxM3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-        alt: "Jungle Festival Magic - tropical face paint with nature-inspired designs",
-        caption: "Tropical Artistry",
-        description: "Nature-inspired tropical face paint celebrating the connection between art and jungle environment",
-      },
-    ],
-    category: "Thailand Adventures",
-    featured: true,
-    displayOrder: 7,
-    tags: ["thailand", "jungle", "tropical", "uv", "nature"],
-  },
-
-  // Add existing data from Constants.ts (converted to new format)
-  // Note: Constants.ts data uses figma:asset/ paths that need to be properly imported
-  // Filter out entries with invalid figma:asset/ URLs and set featured status appropriately
-  ...THAILAND_WORK_DATA
-    .filter(hasValidImageURLs)
-    .map((entry, index) => ({
-      ...entry,
-      featured: entry.id === 'jungle-festival-koh-phangan', // Mark this as featured
-      displayOrder: entry.id === 'jungle-festival-koh-phangan' ? 2 : 100 + index, // Featured items get lower order
-    })),
-  
-  ...FESTIVAL_WORK_DATA
-    .filter(hasValidImageURLs)
-    .map((entry, index) => ({
-      ...entry,
-      featured: entry.id === 'forest-warrior', // Mark this as featured
-      displayOrder: entry.id === 'forest-warrior' ? 3 : 200 + index, // Featured items get lower order
-    })),
-  
-  ...SHANKRA_WORK_DATA
-    .filter(hasValidImageURLs)
-    .map((entry, index) => ({
-      ...entry,
-      featured: false, // No featured items in this dataset currently
-      displayOrder: 300 + index,
-    })),
-  
-  ...FEATURED_NAILS_DATA
-    .filter(hasValidImageURLs)
-    .map((entry, index) => ({
-      ...entry,
-      featured: index < 2, // Mark first 2 nails entries as featured
-      displayOrder: index < 2 ? 10 + index : 400 + index, // Featured items get lower order
-    })),
-];
+export const UNIFIED_PORTFOLIO_DATA: UnifiedPortfolioEntry[] = allPortfolioWork
+  .filter(hasValidImageURLs)
+  .map(transformEntry);
 
 // Development analytics to verify data structure
 if (import.meta?.env?.DEV) {
-  console.log('📊 UNIFIED_PORTFOLIO_DATA Analytics:');
+  console.log('📊 UNIFIED_PORTFOLIO_DATA Analytics (New Service):');
   console.log('  - Total entries:', UNIFIED_PORTFOLIO_DATA.length);
   console.log('  - Featured entries:', UNIFIED_PORTFOLIO_DATA.filter(e => e.featured === true).length);
   console.log('  - Categories breakdown:');
@@ -382,7 +231,7 @@ if (import.meta?.env?.DEV) {
   UNIFIED_PORTFOLIO_DATA
     .filter(e => e.featured === true)
     .forEach(entry => {
-      console.log(`    - "${entry.title}" (${entry.category}) - ${entry.images?.length || 0} images`);
+      console.log(`    - "${entry.title}" (${entry.category}) - Order: ${entry.displayOrder}`);
     });
 }
 
@@ -401,30 +250,14 @@ export function getPortfolioByCategory(
 ): UnifiedPortfolioEntry[] {
   let filteredEntries = UNIFIED_PORTFOLIO_DATA;
 
-  // Debug logging for development
-  if (import.meta?.env?.DEV) {
-    console.log('🔍 getPortfolioByCategory called:');
-    console.log('  - categoryId:', categoryId);
-    console.log('  - featuredOnly:', featuredOnly);
-    console.log('  - limit:', limit);
-    console.log('  - total entries in UNIFIED_PORTFOLIO_DATA:', UNIFIED_PORTFOLIO_DATA.length);
-    console.log('  - entries with featured=true:', UNIFIED_PORTFOLIO_DATA.filter(e => e.featured === true).length);
-  }
-
   // Filter by category
   if (categoryId !== 'all') {
     filteredEntries = filteredEntries.filter(entry => entry.category === categoryId);
-    if (import.meta?.env?.DEV) {
-      console.log('  - after category filter:', filteredEntries.length);
-    }
   }
 
   // Filter by featured status
   if (featuredOnly) {
     filteredEntries = filteredEntries.filter(entry => entry.featured === true);
-    if (import.meta?.env?.DEV) {
-      console.log('  - after featured filter:', filteredEntries.length);
-    }
   }
 
   // Sort by display order
@@ -437,13 +270,6 @@ export function getPortfolioByCategory(
   // Apply limit if specified
   if (limit && limit > 0) {
     filteredEntries = filteredEntries.slice(0, limit);
-    if (import.meta?.env?.DEV) {
-      console.log('  - after limit applied:', filteredEntries.length);
-    }
-  }
-
-  if (import.meta?.env?.DEV) {
-    console.log('  - final filtered entries:', filteredEntries.map(e => ({ id: e.id, title: e.title, featured: e.featured })));
   }
 
   return filteredEntries;
@@ -455,20 +281,6 @@ export function getPortfolioByCategory(
  */
 export function getFeaturedPortfolioEntries(limit: number = 6): UnifiedPortfolioEntry[] {
   const featuredEntries = getPortfolioByCategory('all', true, limit);
-  
-  // Debug logging to help troubleshoot featured entries
-  if (import.meta?.env?.DEV) {
-    console.log('🎯 getFeaturedPortfolioEntries called with limit:', limit);
-    console.log('🎯 Total featured entries found:', featuredEntries.length);
-    console.log('🎯 Featured entries:', featuredEntries.map(entry => ({
-      id: entry.id,
-      title: entry.title,
-      featured: entry.featured,
-      images: entry.images.length,
-      firstImageSrc: entry.images[0]?.src?.substring(0, 100) + '...'
-    })));
-  }
-  
   return featuredEntries;
 }
 

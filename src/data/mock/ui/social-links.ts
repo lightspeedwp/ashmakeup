@@ -38,6 +38,12 @@ export const socialLinks: SocialLink[] = [
     label: 'Follow Ash Shaw on Instagram'
   },
   {
+    platform: 'WhatsApp',
+    url: 'https://wa.me/27845656767',
+    icon: 'message-circle',
+    label: 'Message Ash Shaw on WhatsApp'
+  },
+  {
     platform: 'Facebook',
     url: 'https://facebook.com/ashshaw',
     icon: 'facebook',
@@ -48,6 +54,12 @@ export const socialLinks: SocialLink[] = [
     url: 'https://linkedin.com/in/ashshaw',
     icon: 'linkedin',
     label: 'Professional network with Ash Shaw on LinkedIn'
+  },
+  {
+    platform: 'YouTube',
+    url: 'https://youtube.com/@ashshaw.makeup',
+    icon: 'youtube',
+    label: 'Watch Ash Shaw on YouTube'
   },
   {
     platform: 'Email',

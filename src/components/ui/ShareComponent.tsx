@@ -1,28 +1,8 @@
 /**
  * @fileoverview Reusable social sharing component for Ash Shaw Makeup Portfolio
  * 
- * A comprehensive social sharing component with multiple platform options and fallbacks.
- * Designed to be reusable across blog posts, portfolio entries, and any shareable content
- * throughout the website with consistent brand styling and accessibility compliance.
- * 
- * Core Features:
- * - Multiple sharing platforms: Facebook, Instagram, WhatsApp, Email, Copy Link
- * - Progressive enhancement with Web Share API and robust fallbacks
- * - Accessible dropdown interface with keyboard navigation
- * - Brand-compliant styling with gradient effects and hover animations
- * - Touch-optimized for mobile devices with proper target sizes
- * - Screen reader compatibility with descriptive ARIA labels
- * 
- * Styling System:
- * - Tailwind V4 with brand-compliant utility classes
- * - Fluid typography and spacing following guidelines
- * - Gradient effects and hover animations per brand standards
- * - Mobile-first responsive design with touch targets
- * 
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
- * @since 1.0.0 - Initial reusable share component implementation
- * @lastModified 2025-01-29
+ * @version 1.2.1 - Semantic BEM Refactor
  */
 
 import React, { useState, useRef, useEffect } from 'react';
@@ -37,9 +17,10 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { useModal } from '../common/ModalContext';
+import "@/styles/blocks/share-component.css";
 
 // Custom X.com logo SVG component
-const XIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+const XIcon = ({ className = "share-component__icon" }: { className?: string }) => (
   <svg
     className={className}
     viewBox="0 0 24 24"
@@ -50,134 +31,29 @@ const XIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   </svg>
 );
 
-/**
- * Props interface for ShareComponent
- * 
- * @interface ShareComponentProps
- */
+// Custom Pinterest logo SVG component
+const PinterestIcon = ({ className = "share-component__icon" }: { className?: string }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    fill="currentColor"
+  >
+    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.399.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.951-7.252 4.173 0 7.41 2.967 7.41 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.367 18.62 0 12.017 0z"/>
+  </svg>
+);
+
 interface ShareComponentProps {
-  /** 
-   * Title of the content being shared
-   * @example "Festival Makeup Guide 2024"
-   */
   title: string;
-  
-  /** 
-   * Brief description or excerpt for social sharing
-   * @example "Learn advanced UV makeup techniques for festivals"
-   */
   description: string;
-  
-  /** 
-   * Full URL to be shared
-   * @example "https://ashshaw.makeup/blog/festival-makeup-guide-2024"
-   */
   url: string;
-  
-  /** 
-   * Optional featured image URL for social sharing
-   * @example "https://images.contentful.com/xyz/featured-image.jpg"
-   */
   imageUrl?: string;
-  
-  /** 
-   * Display mode for the share component
-   * @default "dropdown"
-   */
   variant?: 'dropdown' | 'inline' | 'compact';
-  
-  /** 
-   * Text label to display next to share icon
-   * @default "Share this"
-   */
   label?: string;
-  
-  /** 
-   * Additional CSS classes for customization
-   * @default ""
-   */
   className?: string;
-  
-  /** 
-   * Alignment of the share component
-   * @default "left"
-   */
   align?: 'left' | 'center' | 'right';
 }
 
-/**
- * ShareComponent - Reusable social sharing component
- * 
- * A comprehensive sharing solution supporting multiple platforms with progressive
- * enhancement and accessibility. Uses Web Share API when available and provides
- * platform-specific fallbacks for broader compatibility.
- * 
- * Features:
- * - Facebook: Opens Facebook share dialog with title and URL
- * - Instagram: Provides URL for manual sharing (platform limitation)
- * - WhatsApp: Opens WhatsApp share with formatted message
- * - Email: Opens default email client with subject and body
- * - Copy Link: Copies URL to clipboard with visual feedback
- * - Web Share API: Native sharing when supported by browser
- * 
- * Accessibility Features:
- * - Full keyboard navigation with arrow keys and escape
- * - Screen reader announcements for all actions
- * - Descriptive ARIA labels for each sharing option
- * - Focus management and proper tab order
- * - High contrast support and reduced motion preferences
- * 
- * Usage Examples:
- * ```tsx
- * // Blog post sharing
- * <ShareComponent 
- *   title="Festival Makeup Guide"
- *   description="Learn UV techniques for festivals"
- *   url="https://ashshaw.makeup/blog/festival-guide"
- *   imageUrl="https://example.com/featured.jpg"
- * />
- * 
- * // Portfolio entry sharing
- * <ShareComponent 
- *   title="UV Makeup Artistry"
- *   description="Vibrant festival makeup showcase"
- *   url="https://ashshaw.makeup/portfolio/uv-makeup"
- *   variant="inline"
- *   align="center"
- * />
- * 
- * // Compact version for cards
- * <ShareComponent 
- *   title="Nail Art Collection"
- *   description="Fusion nail art designs"
- *   url="https://ashshaw.makeup/portfolio/nails"
- *   variant="compact"
- *   label="Share"
- * />
- * ```
- * 
- * @component
- * @param {ShareComponentProps} props - Component properties
- * @returns {JSX.Element} Complete social sharing interface
- * 
- * @accessibility WCAG 2.1 AA Compliance
- * - Keyboard navigation with arrow keys, Enter, and Escape
- * - Screen reader compatibility with ARIA labels and live regions
- * - Focus management during dropdown interactions
- * - Touch targets meeting minimum 44px requirement
- * - High contrast mode support for all visual elements
- * 
- * @responsive Breakpoint Behavior
- * - Mobile: Touch-optimized with larger targets and simplified layout
- * - Tablet: Enhanced spacing with hover states
- * - Desktop: Full feature set with advanced hover animations
- * 
- * @performance Optimization Details
- * - Lazy loading of share APIs only when needed
- * - Efficient event handlers with proper cleanup
- * - Minimal re-renders with stable references
- * - Progressive enhancement for better perceived performance
- */
 export function ShareComponent({
   title,
   description,
@@ -194,75 +70,45 @@ export function ShareComponent({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   
-  // Modal context for managing dropdown state
   const { registerModal, updateModal, unregisterModal } = useModal();
 
-  // Register modal with context on mount
   useEffect(() => {
     registerModal('share-dropdown', 'dropdown', { title, url });
-    
-    return () => {
-      unregisterModal('share-dropdown');
-    };
+    return () => unregisterModal('share-dropdown');
   }, [registerModal, unregisterModal, title, url]);
 
-  // Update modal state when dropdown opens/closes
   useEffect(() => {
     updateModal('share-dropdown', isOpen, { title, url });
   }, [updateModal, isOpen, title, url]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Keyboard navigation for dropdown
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (!isOpen) return;
-
-      switch (event.key) {
-        case 'Escape':
-          event.preventDefault();
-          setIsOpen(false);
-          triggerRef.current?.focus();
-          break;
-        case 'ArrowDown':
-          event.preventDefault();
-          const firstOption = dropdownRef.current?.querySelector('button:not([disabled])') as HTMLElement;
-          firstOption?.focus();
-          break;
-        case 'ArrowUp':
-          event.preventDefault();
-          const options = dropdownRef.current?.querySelectorAll('button:not([disabled])');
-          const lastOption = options?.[options.length - 1] as HTMLElement;
-          lastOption?.focus();
-          break;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setIsOpen(false);
+        triggerRef.current?.focus();
       }
     };
-
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
-  /**
-   * Announce action to screen readers
-   */
   const announceAction = (message: string) => {
     setAnnouncements(message);
     setTimeout(() => setAnnouncements(''), 3000);
   };
 
-  /**
-   * Share to Facebook
-   */
   const shareToFacebook = () => {
     const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(title)}`;
     window.open(facebookUrl, '_blank', 'width=600,height=400');
@@ -270,9 +116,6 @@ export function ShareComponent({
     announceAction('Opened Facebook sharing dialog');
   };
 
-  /**
-   * Share to X (formerly Twitter)
-   */
   const shareToX = () => {
     const twitterText = `${title}\n\n${description}`;
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterText)}&url=${encodeURIComponent(url)}`;
@@ -281,9 +124,6 @@ export function ShareComponent({
     announceAction('Opened X sharing dialog');
   };
 
-  /**
-   * Share to Instagram (with URL copy)
-   */
   const shareToInstagram = async () => {
     try {
       await navigator.clipboard.writeText(url);
@@ -292,14 +132,17 @@ export function ShareComponent({
       setIsOpen(false);
       announceAction('URL copied to clipboard. Instagram opened in new tab for manual sharing.');
     } catch (error) {
-      console.error('Failed to copy URL for Instagram sharing:', error);
       announceAction('Please copy the URL manually for Instagram sharing');
     }
   };
 
-  /**
-   * Share to WhatsApp
-   */
+  const shareToPinterest = () => {
+    const pinterestUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&media=${encodeURIComponent(imageUrl || '')}&description=${encodeURIComponent(title)}`;
+    window.open(pinterestUrl, '_blank', 'width=600,height=400');
+    setIsOpen(false);
+    announceAction('Opened Pinterest sharing dialog');
+  };
+
   const shareToWhatsApp = () => {
     const whatsappText = `${title}\n\n${description}\n\n${url}`;
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(whatsappText)}`;
@@ -308,9 +151,6 @@ export function ShareComponent({
     announceAction('Opened WhatsApp sharing');
   };
 
-  /**
-   * Share via email
-   */
   const shareViaEmail = () => {
     const emailSubject = `Check out: ${title}`;
     const emailBody = `I thought you might be interested in this:\n\n${title}\n\n${description}\n\n${url}`;
@@ -320,9 +160,6 @@ export function ShareComponent({
     announceAction('Opened email client for sharing');
   };
 
-  /**
-   * Copy link to clipboard
-   */
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(url);
@@ -331,27 +168,18 @@ export function ShareComponent({
       setIsOpen(false);
       announceAction('URL copied to clipboard successfully');
     } catch (error) {
-      console.error('Failed to copy URL to clipboard:', error);
-      // Fallback for older browsers
       const textArea = document.createElement('textarea');
       textArea.value = url;
       textArea.style.position = 'fixed';
       textArea.style.left = '-999999px';
-      textArea.style.top = '-999999px';
       document.body.appendChild(textArea);
-      textArea.focus();
       textArea.select();
-      
       try {
-        const successful = document.execCommand('copy');
-        if (successful) {
-          setCopySuccess(true);
-          setTimeout(() => setCopySuccess(false), 2000);
-          announceAction('URL copied to clipboard using fallback method');
-        } else {
-          announceAction('Please copy the URL manually');
-        }
-      } catch (fallbackError) {
+        document.execCommand('copy');
+        setCopySuccess(true);
+        setTimeout(() => setCopySuccess(false), 2000);
+        announceAction('URL copied using fallback');
+      } catch (e) {
         announceAction('Please copy the URL manually');
       } finally {
         document.body.removeChild(textArea);
@@ -360,234 +188,138 @@ export function ShareComponent({
     }
   };
 
-  /**
-   * Native Web Share API (when supported)
-   */
   const shareNative = async () => {
-    const shareData = {
-      title,
-      text: description,
-      url,
-    };
-
+    const shareData = { title, text: description, url };
     try {
       if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
         await navigator.share(shareData);
         announceAction('Content shared successfully');
       } else {
-        // Fallback to dropdown
         setIsOpen(!isOpen);
       }
     } catch (error) {
       if ((error as Error).name !== 'AbortError') {
-        console.error('Error sharing:', error);
-        // Fallback to dropdown
         setIsOpen(!isOpen);
       }
     }
   };
 
-  // Alignment classes
-  const alignmentClasses = {
-    left: 'justify-start text-left',
-    center: 'justify-center text-center',
-    right: 'justify-end text-right'
-  };
+  const alignClass = `share-component__container--${align}`;
 
-  // Render compact version
   if (variant === 'compact') {
     return (
-      <div className={`relative ${className}`}>
+      <div className={`share-component ${className}`}>
         <button
           ref={triggerRef}
           onClick={shareNative}
-          className="flex items-center gap-fluid-xs text-gray-600 hover:text-pink-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-pink-200 rounded-lg px-2 py-1"
+          className="share-component__btn"
           aria-label={`Share ${title}`}
         >
-          <Share2 className="w-4 h-4" />
-          {label && <span className="font-body text-fluid-sm sr-only sm:not-sr-only">{label}</span>}
+          <Share2 className="share-component__icon" />
+          {label && <span className="share-component__label--responsive">{label}</span>}
         </button>
-        
-        {/* Announcements for screen readers */}
-        {announcements && (
-          <div aria-live="polite" className="sr-only">
-            {announcements}
-          </div>
-        )}
+        {announcements && <div aria-live="polite" className="sr-only">{announcements}</div>}
       </div>
     );
   }
 
-  // Render inline version
   if (variant === 'inline') {
     return (
-      <div className={`flex ${alignmentClasses[align]} items-center gap-fluid-sm ${className}`}>
-        {label && (
-          <span className="font-body font-medium text-body-guideline text-gray-700">
-            {label}
-          </span>
-        )}
-        
-        <div className="flex items-center gap-fluid-sm">
-          <button
-            onClick={shareToX}
-            className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-x-twitter transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50"
-            aria-label={`Share ${title} on X`}
-          >
-            <XIcon className="w-5 h-5 text-white" />
-          </button>
-          
-          <button
-            onClick={shareToFacebook}
-            className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-facebook transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-opacity-50"
-            aria-label={`Share ${title} on Facebook`}
-          >
-            <Facebook className="w-5 h-5 text-white" />
-          </button>
-          
-          <button
-            onClick={shareToInstagram}
-            className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-instagram transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-200 focus:ring-opacity-50"
-            aria-label={`Share ${title} on Instagram`}
-          >
-            <Instagram className="w-5 h-5 text-white" />
-          </button>
-          
-          <button
-            onClick={shareToWhatsApp}
-            className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-whatsapp transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-opacity-50"
-            aria-label={`Share ${title} on WhatsApp`}
-          >
-            <MessageCircle className="w-5 h-5 text-white" />
-          </button>
-          
-          <button
-            onClick={shareViaEmail}
-            className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-email transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-opacity-50"
-            aria-label={`Share ${title} via email`}
-          >
-            <Mail className="w-5 h-5 text-white" />
-          </button>
-          
-          <button
-            onClick={copyToClipboard}
-            className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-200 focus:ring-opacity-50 ${
-              copySuccess ? 'bg-gradient-copy-success' : 'bg-gradient-copy'
-            }`}
-            aria-label={`Copy ${title} link to clipboard`}
-          >
-            {copySuccess ? <Check className="w-5 h-5 text-white" /> : <Copy className="w-5 h-5 text-white" />}
-          </button>
-        </div>
-        
-        {/* Announcements for screen readers */}
-        {announcements && (
-          <div aria-live="polite" className="sr-only">
-            {announcements}
+      <div className={`share-component ${className}`}>
+        <div className={`share-component__inline-container ${alignClass}`}>
+          {label && <span className="share-component__label">{label}</span>}
+          <div className="share-component__inline-container">
+            <button onClick={shareToX} className="share-component__btn-icon share-component__btn-icon--x" aria-label="Share on X">
+              <XIcon className="share-component__social-icon" />
+            </button>
+            <button onClick={shareToFacebook} className="share-component__btn-icon share-component__btn-icon--facebook" aria-label="Share on Facebook">
+              <Facebook className="share-component__social-icon" />
+            </button>
+            <button onClick={shareToInstagram} className="share-component__btn-icon share-component__btn-icon--instagram" aria-label="Share on Instagram">
+              <Instagram className="share-component__social-icon" />
+            </button>
+            <button onClick={shareToPinterest} className="share-component__btn-icon share-component__btn-icon--pinterest" aria-label="Share on Pinterest">
+              <PinterestIcon className="share-component__social-icon" />
+            </button>
+            <button onClick={shareToWhatsApp} className="share-component__btn-icon share-component__btn-icon--whatsapp" aria-label="Share on WhatsApp">
+              <MessageCircle className="share-component__social-icon" />
+            </button>
+            <button onClick={shareViaEmail} className="share-component__btn-icon share-component__btn-icon--email" aria-label="Share via Email">
+              <Mail className="share-component__social-icon" />
+            </button>
+            <button onClick={copyToClipboard} className={`share-component__btn-icon ${copySuccess ? 'share-component__btn-icon--success' : 'share-component__btn-icon--copy'}`} aria-label="Copy Link">
+              {copySuccess ? <Check className="share-component__social-icon" /> : <Copy className="share-component__social-icon" />}
+            </button>
           </div>
-        )}
+          {announcements && <div aria-live="polite" className="sr-only">{announcements}</div>}
+        </div>
       </div>
     );
   }
 
-  // Render dropdown version (default)
   return (
-    <div className={`relative ${className}`} ref={dropdownRef}>
-      <div className={`flex ${alignmentClasses[align]} items-center gap-fluid-sm`}>
-        {label && (
-          <span className="font-body font-medium text-body-guideline text-gray-700">
-            {label}
-          </span>
-        )}
-        
+    <div className={`share-component ${className}`} ref={dropdownRef}>
+      <div className={`share-component__container ${alignClass}`}>
+        {label && <span className="share-component__label">{label}</span>}
         <button
           ref={triggerRef}
           onClick={shareNative}
-          className="flex items-center gap-fluid-xs text-gray-600 hover:text-pink-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-pink-200 rounded-lg px-2 py-1"
+          className="share-component__btn"
           aria-label={`Share ${title}`}
           aria-expanded={isOpen}
           aria-haspopup="true"
         >
-          <Share2 className="w-4 h-4" />
+          <Share2 className="share-component__icon" />
         </button>
       </div>
 
-      {/* Dropdown menu */}
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg z-50 py-2">
-          <button
-            onClick={shareToX}
-            className="w-full flex items-center gap-fluid-sm px-fluid-md py-fluid-sm text-left text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:bg-gray-50 focus:text-gray-900"
-          >
-            <XIcon className="w-5 h-5" />
-            <span className="font-body font-medium text-body-guideline">X</span>
+        <div className="share-component__dropdown">
+          <button onClick={shareToX} className="share-component__dropdown-item">
+            <XIcon className="share-component__dropdown-icon" />
+            <span className="share-component__dropdown-text">X</span>
           </button>
-          
-          <button
-            onClick={shareToFacebook}
-            className="w-full flex items-center gap-fluid-sm px-fluid-md py-fluid-sm text-left text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200 focus:outline-none focus:bg-blue-50 focus:text-blue-700"
-          >
-            <Facebook className="w-5 h-5" />
-            <span className="font-body font-medium text-body-guideline">Facebook</span>
+          <button onClick={shareToFacebook} className="share-component__dropdown-item">
+            <Facebook className="share-component__dropdown-icon" />
+            <span className="share-component__dropdown-text">Facebook</span>
           </button>
-          
-          <button
-            onClick={shareToInstagram}
-            className="w-full flex items-center gap-fluid-sm px-fluid-md py-fluid-sm text-left text-gray-700 hover:bg-pink-50 hover:text-pink-700 transition-colors duration-200 focus:outline-none focus:bg-pink-50 focus:text-pink-700"
-          >
-            <Instagram className="w-5 h-5" />
-            <span className="font-body font-medium text-body-guideline">Instagram</span>
-            <ExternalLink className="w-4 h-4 ml-auto text-gray-400" />
+          <button onClick={shareToInstagram} className="share-component__dropdown-item">
+            <Instagram className="share-component__dropdown-icon" />
+            <span className="share-component__dropdown-text">Instagram</span>
+            <ExternalLink className="share-component__external-icon" />
           </button>
-          
-          <button
-            onClick={shareToWhatsApp}
-            className="w-full flex items-center gap-fluid-sm px-fluid-md py-fluid-sm text-left text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 focus:outline-none focus:bg-green-50 focus:text-green-700"
-          >
-            <MessageCircle className="w-5 h-5" />
-            <span className="font-body font-medium text-body-guideline">WhatsApp</span>
+          <button onClick={shareToPinterest} className="share-component__dropdown-item">
+            <PinterestIcon className="share-component__dropdown-icon" />
+            <span className="share-component__dropdown-text">Pinterest</span>
           </button>
-          
-          <button
-            onClick={shareViaEmail}
-            className="w-full flex items-center gap-fluid-sm px-fluid-md py-fluid-sm text-left text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:bg-gray-50 focus:text-gray-900"
-          >
-            <Mail className="w-5 h-5" />
-            <span className="font-body font-medium text-body-guideline">Email</span>
+          <button onClick={shareToWhatsApp} className="share-component__dropdown-item">
+            <MessageCircle className="share-component__dropdown-icon" />
+            <span className="share-component__dropdown-text">WhatsApp</span>
           </button>
-          
-          <hr className="my-2 border-gray-100" />
-          
-          <button
-            onClick={copyToClipboard}
-            className="w-full flex items-center gap-fluid-sm px-fluid-md py-fluid-sm text-left text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition-colors duration-200 focus:outline-none focus:bg-purple-50 focus:text-purple-700"
-          >
+          <button onClick={shareViaEmail} className="share-component__dropdown-item">
+            <Mail className="share-component__dropdown-icon" />
+            <span className="share-component__dropdown-text">Email</span>
+          </button>
+          <hr className="share-component__dropdown-divider" />
+          <button onClick={copyToClipboard} className="share-component__dropdown-item">
             {copySuccess ? (
               <>
-                <Check className="w-5 h-5 text-green-600" />
-                <span className="font-body font-medium text-body-guideline text-green-600">Copied!</span>
+                <Check className="share-component__dropdown-icon share-component__text--success" />
+                <span className="share-component__dropdown-text share-component__text--success">Copied!</span>
               </>
             ) : (
               <>
-                <Copy className="w-5 h-5" />
-                <span className="font-body font-medium text-body-guideline">Copy Link</span>
+                <Copy className="share-component__dropdown-icon" />
+                <span className="share-component__dropdown-text">Copy Link</span>
               </>
             )}
           </button>
         </div>
       )}
       
-      {/* Announcements for screen readers */}
-      {announcements && (
-        <div aria-live="polite" className="sr-only">
-          {announcements}
-        </div>
-      )}
+      {announcements && <div aria-live="polite" className="sr-only">{announcements}</div>}
     </div>
   );
 }
 
-/**
- * Export type for external usage
- */
 export type { ShareComponentProps };

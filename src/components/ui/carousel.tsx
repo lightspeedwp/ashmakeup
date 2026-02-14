@@ -3,11 +3,12 @@
 import * as React from "react";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
-} from "embla-carousel-react@8.6.0";
-import { ArrowLeft, ArrowRight } from "lucide-react@0.487.0";
+} from "embla-carousel-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { cn } from "./utils";
 import { Button } from "./button";
+import "@/styles/blocks/misc-ui.css";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<
@@ -128,7 +129,7 @@ function Carousel({
     >
       <div
         onKeyDownCapture={handleKeyDown}
-        className={cn("relative", className)}
+        className={cn("carousel", className)}
         role="region"
         aria-roledescription="carousel"
         data-slot="carousel"
@@ -149,15 +150,14 @@ function CarouselContent({
   return (
     <div
       ref={carouselRef}
-      className="overflow-hidden"
+      className="carousel-content"
       data-slot="carousel-content"
     >
       <div
         className={cn(
-          "flex",
           orientation === "horizontal"
-            ? "-ml-4"
-            : "-mt-4 flex-col",
+            ? "carousel-viewport-horizontal"
+            : "carousel-viewport-vertical",
           className,
         )}
         {...props}
@@ -178,8 +178,8 @@ function CarouselItem({
       aria-roledescription="slide"
       data-slot="carousel-item"
       className={cn(
-        "min-w-0 shrink-0 grow-0 basis-full",
-        orientation === "horizontal" ? "pl-4" : "pt-4",
+        "carousel-item",
+        orientation === "horizontal" ? "carousel-item-horizontal" : "carousel-item-vertical",
         className,
       )}
       {...props}
@@ -202,10 +202,10 @@ function CarouselPrevious({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-8 rounded-full",
+        "carousel-btn",
         orientation === "horizontal"
-          ? "top-1/2 -left-12 -translate-y-1/2"
-          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+          ? "carousel-prev-horizontal"
+          : "carousel-prev-vertical",
         className,
       )}
       disabled={!canScrollPrev}
@@ -233,10 +233,10 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-8 rounded-full",
+        "carousel-btn",
         orientation === "horizontal"
-          ? "top-1/2 -right-12 -translate-y-1/2"
-          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+          ? "carousel-next-horizontal"
+          : "carousel-next-vertical",
         className,
       )}
       disabled={!canScrollNext}

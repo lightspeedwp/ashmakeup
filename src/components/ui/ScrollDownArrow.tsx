@@ -3,50 +3,25 @@
  * Animated arrow with circle background that scrolls to next section on click
  * 
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
+ * @version 1.1.2 - Semantic BEM Refactor
  */
 
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
+import "@/styles/blocks/scroll-controls.css";
 
 /**
  * Props interface for ScrollDownArrow component
  */
 interface ScrollDownArrowProps {
-  /** Optional target section ID to scroll to. If not provided, scrolls to next section */
   targetSectionId?: string;
-  /** Optional aria label for accessibility */
   ariaLabel?: string;
-  /** Optional additional CSS classes */
   className?: string;
-  /** Optional click handler */
   onClick?: () => void;
 }
 
 /**
  * Animated scroll-down arrow component for hero sections
- * 
- * Features:
- * - Circular background with gradient border
- * - Smooth bounce animation
- * - Hover and focus states with scale effects
- * - Accessibility compliant with proper ARIA labels
- * - Smooth scrolling to target section
- * 
- * @param {ScrollDownArrowProps} props - Component properties
- * @param {string} [props.targetSectionId] - ID of section to scroll to
- * @param {string} [props.ariaLabel] - Custom aria label for accessibility
- * @param {string} [props.className] - Additional CSS classes
- * 
- * @returns {JSX.Element} Animated scroll down arrow button
- * 
- * @accessibility
- * - Keyboard accessible with proper focus states
- * - Screen reader friendly with descriptive labels
- * - High contrast support
- * 
- * @example
- * <ScrollDownArrow targetSectionId="why-section" />
  */
 export function ScrollDownArrow({ 
   targetSectionId, 
@@ -56,7 +31,6 @@ export function ScrollDownArrow({
 }: ScrollDownArrowProps) {
   
   const handleClick = () => {
-    // Use custom onClick if provided
     if (onClick) {
       onClick();
       return;
@@ -65,13 +39,11 @@ export function ScrollDownArrow({
     let targetElement: Element | null = null;
     
     if (targetSectionId) {
-      // Scroll to specific section
       targetElement = document.getElementById(targetSectionId);
     } else {
-      // Find the next section after current hero
       const heroSections = document.querySelectorAll('section');
       if (heroSections.length > 1) {
-        targetElement = heroSections[1]; // Second section (after hero)
+        targetElement = heroSections[1];
       }
     }
     
@@ -81,7 +53,6 @@ export function ScrollDownArrow({
         block: 'start'
       });
       
-      // Announce to screen readers
       const announcement = `Scrolled to ${targetSectionId || 'next section'}`;
       const ariaLive = document.createElement('div');
       ariaLive.setAttribute('aria-live', 'polite');
@@ -92,45 +63,21 @@ export function ScrollDownArrow({
     }
   };
 
-  const baseClasses = `
-    group absolute bottom-32 md:bottom-40 left-1/2
-    w-14 h-14 md:w-16 md:h-16
-    bg-white backdrop-blur-sm
-    border-2 border-pink-500
-    rounded-full
-    shadow-md shadow-pink-200/20
-    flex items-center justify-center
-    transition-all duration-500 ease-out
-    hover:scale-105 hover:shadow-lg hover:shadow-pink-200/30
-    focus:outline-none focus:ring-4 focus:ring-pink-300/50 focus:ring-offset-2
-    animate-scroll-down-arrow
-    z-50
-  `;
-
   return (
     <button
       onClick={handleClick}
-      className={`
-        ${baseClasses}
-        transform-center-x
-        ${className}
-      `}
+      className={`scroll-down-arrow ${className}`}
       aria-label={ariaLabel}
       type="button"
     >
-      {/* Subtle gradient border effect */}
-      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
-      
-      {/* Inner circle */}
-      <div className="relative w-full h-full rounded-full bg-white/98 flex items-center justify-center">
+      <div className="scroll-down-arrow__border" />
+      <div className="scroll-down-arrow__inner">
         <ChevronDown 
-          className="w-5 h-5 md:w-6 md:h-6 text-gray-600 group-hover:text-pink-500 transition-colors duration-500" 
+          className="scroll-down-arrow__icon" 
           strokeWidth={2}
         />
       </div>
-      
-      {/* Subtle pulsing ring animation */}
-      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-pink-300 via-purple-300 to-blue-300 opacity-10 animate-pulse-slow" />
+      <div className="scroll-down-arrow__pulse" />
     </button>
   );
 }

@@ -1,0 +1,20 @@
+/* Label Block Styles */
+.label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--wp--preset--font-size--100); /* sm */
+  line-height: 1;
+  font-weight: 500;
+  user-select: none;
+}
+
+.label[data-disabled="true"],
+.label:has([disabled]) {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.label--error {
+  color: var(--wp--preset--color--neon-red);
+}

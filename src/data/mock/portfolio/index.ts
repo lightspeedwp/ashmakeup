@@ -4,7 +4,7 @@
  * 
  * @module data/mock/portfolio
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
+ * @version 1.1.0
  * 
  * @example
  * // Import specific portfolio collections
@@ -56,32 +56,32 @@ export const allPortfolioWork: PortfolioEntry[] = [
 export const portfolioSections: PortfolioSection[] = [
   {
     id: 'featured-work',
-    title: 'Featured Work',
-    description: 'Standout pieces that capture the essence of festival artistry and creative expression.',
+    title: 'Featured Psytrance Art',
+    description: 'Standout UV and neon pieces that capture the high-energy essence of global psytrance festivals.',
     entries: featuredWork,
     order: 1,
     decorativeColors: ['#ec4899', '#a855f7', '#3b82f6', '#6366f1']
   },
   {
     id: 'festivals',
-    title: 'Festival Adventures',
-    description: 'From explosive energy to peaceful celebrations — capturing the diverse spirit of festival culture through bold face art and vibrant self-expression.',
+    title: 'Global Festival Circuit',
+    description: 'From explosive main stages to intimate chill-out zones — capturing the diverse spirit of international psytrance culture through bold face art.',
     entries: festivalWork,
     order: 2,
     decorativeColors: ['#fb923c', '#fbbf24', '#22c55e', '#10b981']
   },
   {
     id: 'thailand',
-    title: 'Thailand Adventures',
-    description: 'Tropical makeup exploration during travels through Thailand, blending local culture with artistic expression.',
+    title: 'Thailand Psytrance Season',
+    description: 'Neon jungle vibes and island moon parties. Tropical makeup exploration during the Southeast Asian psytrance season.',
     entries: thailandWork,
     order: 3,
     decorativeColors: ['#fbbf24', '#f97316', '#ef4444', '#dc2626']
   },
   {
     id: 'shankra-2023',
-    title: 'Shankra Festival 2023',
-    description: 'Swiss mountain festival experiences with alpine-inspired makeup artistry in breathtaking natural settings.',
+    title: 'Shankra Festival Switzerland',
+    description: 'Alpine psytrance magic. Mountain celebration makeup showcasing the vibrant energy of Swiss outdoor festival culture.',
     entries: shankraWork,
     order: 4,
     decorativeColors: ['#22c55e', '#10b981', '#14b8a6', '#0d9488']
@@ -89,7 +89,7 @@ export const portfolioSections: PortfolioSection[] = [
   {
     id: 'reiserfieber',
     title: 'Reiserfieber Switzerland',
-    description: 'Mountain celebration makeup showcasing the vibrant energy of Swiss outdoor festival culture.',
+    description: 'Deep woods gatherings. Mountain celebration makeup showcasing the vibrant energy of Swiss outdoor festival culture.',
     entries: reiserfieberWork,
     order: 5,
     decorativeColors: ['#a855f7', '#8b5cf6', '#7c3aed', '#6d28d9']
@@ -97,15 +97,15 @@ export const portfolioSections: PortfolioSection[] = [
   {
     id: 'uv-makeup',
     title: 'UV & Blacklight',
-    description: 'Neon and glow-in-the-dark makeup for club and rave environments, designed to shine under UV lights.',
+    description: 'Neon and glow-in-the-dark makeup for club and rave environments, designed to come alive under the UV lights of the trance floor.',
     entries: uvMakeupWork,
     order: 6,
     decorativeColors: ['#06b6d4', '#0891b2', '#0e7490', '#155e75']
   },
   {
     id: 'nail-art',
-    title: 'Fusion Nails',
-    description: 'Creative nail designs and fusion nail artistry showcasing color, texture, and artistic expression.',
+    title: 'Psychedelic Fusion Nails',
+    description: 'Creative nail designs and fusion nail artistry showcasing color, texture, and trippy artistic expression.',
     entries: nailArtWork,
     order: 7,
     decorativeColors: ['#ec4899', '#d946ef', '#c026d3', '#a21caf']

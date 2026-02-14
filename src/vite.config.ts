@@ -1,6 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { resolve } from "path";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -8,10 +12,12 @@ export default defineConfig({
   base: "./",
   resolve: {
     alias: {
-      "@": resolve(__dirname, "./src"),
+      "@": resolve(__dirname, "./"),
       "@/components": resolve(__dirname, "./components"),
-      "@/styles": resolve(__dirname, "./src/styles"),
+      "@/styles": resolve(__dirname, "./styles"),
       "@/utils": resolve(__dirname, "./utils"),
+      "@/data": resolve(__dirname, "./data"),
+      "@/hooks": resolve(__dirname, "./hooks"),
     },
   },
   build: {
@@ -25,29 +31,6 @@ export default defineConfig({
         main: resolve(__dirname, "index.html"),
       },
       output: {
-        // Manual chunking for optimal code splitting
-        manualChunks: {
-          // Vendor chunk for large third-party libraries
-          'vendor-react': ['react', 'react-dom'],
-          'vendor-icons': ['lucide-react'],
-          
-          // Component chunks by feature
-          'pages-blog': [
-            './components/pages/blog/BlogPage.tsx',
-            './components/pages/blog/BlogPostPage.tsx'
-          ],
-          'pages-portfolio': [
-            './components/pages/portfolio/PortfolioPage.tsx',
-            './components/pages/portfolio/PortfolioMainPage.tsx',
-            './components/pages/portfolio/PortfolioDetailPage.tsx'
-          ],
-          'ui-components': [
-            './components/ui/PortfolioCard.tsx',
-            './components/ui/PortfolioLightbox.tsx',
-            './components/ui/SliderCard.tsx'
-          ],
-        },
-        
         // Optimize chunk naming
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
@@ -76,7 +59,6 @@ export default defineConfig({
       compress: {
         drop_console: true, // Remove console.log in production
         drop_debugger: true,
-        pure_funcs: ['console.info', 'console.debug'], // Remove specific console methods
       },
       format: {
         comments: false, // Remove all comments

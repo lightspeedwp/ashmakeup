@@ -25,6 +25,7 @@ const suppressExtensionErrors = () => {
   console.error = (...args: any[]) => {
     const message = args.join(' ');
     if (
+      message.includes('beholdReplaceChildren') ||
       message.includes('Message getPage (id: 3) response timed out after 30000ms') ||
       message.includes('getPage') && message.includes('timed out') ||
       message.includes('response timed out after 30000ms')
@@ -37,6 +38,7 @@ const suppressExtensionErrors = () => {
   console.warn = (...args: any[]) => {
     const message = args.join(' ');
     if (
+      message.includes('beholdReplaceChildren') ||
       message.includes('Message getPage (id: 3) response timed out after 30000ms') ||
       message.includes('getPage') && message.includes('timed out') ||
       message.includes('response timed out after 30000ms')
@@ -86,6 +88,8 @@ export function SafetyWrapper({ children, debug = false }: SafetyWrapperProps) {
       
       // AGGRESSIVE: Check for the exact error pattern and similar ones
       if (
+        errorMessage.includes('beholdReplaceChildren') ||
+        error?.stack?.includes('beholdReplaceChildren') ||
         errorMessage.includes('Message getPage (id: 3) response timed out after 30000ms') ||
         errorMessage.includes('response timed out after 30000ms') ||
         errorMessage.includes('getPage') && errorMessage.includes('timed out') ||
@@ -99,7 +103,7 @@ export function SafetyWrapper({ children, debug = false }: SafetyWrapperProps) {
         error?.name === 'TimeoutError' ||
         error?.name === 'ExtensionError'
       ) {
-        if (debug) {
+        if (debug && import.meta.env.DEV) {
           console.log('🛡️ SafetyWrapper: Aggressively filtered extension error:', errorMessage);
         }
         
@@ -110,7 +114,7 @@ export function SafetyWrapper({ children, debug = false }: SafetyWrapperProps) {
       }
       
       // Let other errors through for proper handling
-      if (debug) {
+      if (debug && import.meta.env.DEV) {
         console.warn('SafetyWrapper: Unhandled promise rejection:', error);
       }
     };
@@ -123,6 +127,8 @@ export function SafetyWrapper({ children, debug = false }: SafetyWrapperProps) {
       
       // AGGRESSIVE: Filter out browser extension errors with comprehensive patterns
       if (
+        message.includes('beholdReplaceChildren') ||
+        error?.stack?.includes('beholdReplaceChildren') ||
         message.includes('Message getPage (id: 3) response timed out after 30000ms') ||
         message.includes('response timed out after 30000ms') ||
         message.includes('getPage') && message.includes('timed out') ||
@@ -140,7 +146,7 @@ export function SafetyWrapper({ children, debug = false }: SafetyWrapperProps) {
         error?.name === 'TimeoutError' ||
         error?.name === 'ExtensionError'
       ) {
-        if (debug) {
+        if (debug && import.meta.env.DEV) {
           console.log('🛡️ SafetyWrapper: Aggressively filtered global extension error:', message);
         }
         
@@ -151,7 +157,7 @@ export function SafetyWrapper({ children, debug = false }: SafetyWrapperProps) {
       }
       
       // Let application errors through
-      if (debug) {
+      if (debug && import.meta.env.DEV) {
         console.warn('SafetyWrapper: Global error:', { message, error, filename });
       }
     };
@@ -191,7 +197,7 @@ export function SafetyWrapper({ children, debug = false }: SafetyWrapperProps) {
             return originalListener(event);
           }
           
-          if (debug) {
+          if (debug && import.meta.env.DEV) {
             console.log('SafetyWrapper: Filtered out external message event:', event);
           }
         };

@@ -5,10 +5,12 @@
  * 
  * @component
  * @returns {JSX.Element} Video player with controls
+ * @version 1.1.1 - Semantic BEM Refactor
  */
 
 import React, { useRef, useState, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
+import "@/styles/blocks/video-player.css";
 
 interface VideoPlayerProps {
   src: string;
@@ -109,13 +111,13 @@ export function VideoPlayer({
   };
   
   return (
-    <div className={`relative group ${className}`}>
+    <div className={`video-player group ${className}`}>
       {/* Video Element */}
       <video
         ref={videoRef}
         src={src}
         poster={poster}
-        className="w-full h-full rounded-lg"
+        className="video-player__element"
         autoPlay={autoPlay}
         loop={loop}
         muted={muted}
@@ -127,54 +129,50 @@ export function VideoPlayer({
       </video>
       
       {/* Custom Controls */}
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-b-lg">
+      <div className="video-player__controls">
         {/* Progress Bar */}
-        <div className="mb-3">
+        <div className="video-player__progress-container">
           <input
             type="range"
             min="0"
             max={duration || 0}
             value={currentTime}
             onChange={handleSeek}
-            className="w-full h-1 bg-white/30 rounded-full appearance-none cursor-pointer
-                     [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 
-                     [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-pink-500
-                     [&::-moz-range-thumb]:w-3 [&::-moz-range-thumb]:h-3 
-                     [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-pink-500 [&::-moz-range-thumb]:border-0"
+            className="video-player__progress"
             aria-label="Video progress"
           />
-          <div className="flex justify-between text-xs text-white mt-1">
+          <div className="video-player__time">
             <span>{formatTime(currentTime)}</span>
             <span>{formatTime(duration)}</span>
           </div>
         </div>
         
         {/* Control Buttons */}
-        <div className="flex items-center gap-3">
+        <div className="video-player__buttons">
           {/* Play/Pause */}
           <button
             onClick={togglePlay}
-            className="p-2 hover:bg-white/20 rounded-full transition-colors"
+            className="video-player__btn"
             aria-label={isPlaying ? 'Pause video' : 'Play video'}
           >
             {isPlaying ? (
-              <Pause className="w-5 h-5 text-white" />
+              <Pause />
             ) : (
-              <Play className="w-5 h-5 text-white" />
+              <Play />
             )}
           </button>
           
           {/* Volume */}
-          <div className="flex items-center gap-2">
+          <div className="video-player__volume-controls">
             <button
               onClick={toggleMute}
-              className="p-2 hover:bg-white/20 rounded-full transition-colors"
+              className="video-player__btn"
               aria-label={isMuted ? 'Unmute video' : 'Mute video'}
             >
               {isMuted ? (
-                <VolumeX className="w-5 h-5 text-white" />
+                <VolumeX />
               ) : (
-                <Volume2 className="w-5 h-5 text-white" />
+                <Volume2 />
               )}
             </button>
             <input
@@ -184,25 +182,21 @@ export function VideoPlayer({
               step="0.1"
               value={isMuted ? 0 : volume}
               onChange={handleVolumeChange}
-              className="w-20 h-1 bg-white/30 rounded-full appearance-none cursor-pointer
-                       [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-2 
-                       [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white
-                       [&::-moz-range-thumb]:w-2 [&::-moz-range-thumb]:h-2 
-                       [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-0"
+              className="video-player__volume"
               aria-label="Volume control"
             />
           </div>
           
           {/* Spacer */}
-          <div className="flex-1" />
+          <div className="video-player__spacer" />
           
           {/* Fullscreen */}
           <button
             onClick={toggleFullscreen}
-            className="p-2 hover:bg-white/20 rounded-full transition-colors"
+            className="video-player__btn"
             aria-label="Toggle fullscreen"
           >
-            <Maximize className="w-5 h-5 text-white" />
+            <Maximize />
           </button>
         </div>
       </div>
@@ -211,19 +205,19 @@ export function VideoPlayer({
       {!isPlaying && (
         <button
           onClick={togglePlay}
-          className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-lg transition-opacity hover:bg-black/40"
+          className="video-player__overlay-btn"
           aria-label="Play video"
         >
-          <div className="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center hover:bg-pink-600 transition-colors shadow-lg">
-            <Play className="w-8 h-8 text-white ml-1" />
+          <div className="video-player__play-icon">
+            <Play />
           </div>
         </button>
       )}
       
       {/* Title Overlay */}
       {title && !isPlaying && (
-        <div className="absolute top-4 left-4 right-4">
-          <h3 className="text-white font-heading font-bold text-xl bg-black/50 backdrop-blur-sm rounded-lg px-4 py-2">
+        <div className="video-player__title-overlay">
+          <h3 className="video-player__title">
             {title}
           </h3>
         </div>

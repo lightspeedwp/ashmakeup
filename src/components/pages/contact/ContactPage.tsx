@@ -1,139 +1,94 @@
 /**
  * @fileoverview Contact page component for Ash Shaw Makeup Portfolio
  * 
- * Dedicated contact page featuring the contact form, social links, and about information
+ * Dedicated contact page featuring Typeform embed, social links, and about information
  * with comprehensive dark mode support and WCAG AAA accessibility compliance.
  * 
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
+ * @version 1.3.0 - Typeform Integration
  * @since 2025-01-03
  */
 
 import React from "react";
-import { ContactForm } from "../../common/ContactForm";
+import { TypeformEmbed } from "../../common/TypeformEmbed";
 import { SocialLinks } from "../../common/SocialLinks";
-import { Logo } from "../../common/Logo";
-
-/**
- * Props interface for ContactPage component
- * 
- * @interface ContactPageProps
- * @property {Function} [setCurrentPage] - Optional function to handle page navigation
- */
-interface ContactPageProps {
-  setCurrentPage?: (page: string) => void;
-}
+import { FaqSection } from "../../sections/FaqSection";
+import { contactUI } from "../../../data/mock/ui/contact";
+import contactGraphic from "figma:asset/6095d8818a83e64a063161f9df091d561fde7105.png";
+import "@/styles/blocks/contact-page.css";
 
 /**
  * ContactPage - Dedicated contact page with form and social links
- * 
- * Features:
- * - Centered contact form with validation
- * - About Ash content section
- * - Social media links
- * - Gradient background with decorative elements
- * - Full dark mode support with WCAG AAA compliance
- * - Responsive layout for all screen sizes
- * 
- * @param {ContactPageProps} props - Component properties
- * @returns {JSX.Element} Complete contact page
- * 
- * @accessibility
- * - WCAG AAA compliant color contrast (7:1 for normal text)
- * - Semantic HTML structure with proper landmarks
- * - Keyboard navigation support
- * - Screen reader compatible form labels
- * 
- * @example
- * <ContactPage setCurrentPage={setCurrentPage} />
+ * Uses the shared global Footer from RootLayout (no inline footer)
  */
-export function ContactPage({ setCurrentPage }: ContactPageProps) {
-  /**
-   * Handles logo click to navigate to home page with smooth scroll to top
-   */
-  const handleLogoClick = () => {
-    if (setCurrentPage) {
-      setCurrentPage("home");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-
+export function ContactPage() {
   return (
-    <div className="relative bg-gradient-to-br from-gray-50 via-purple-50 to-pink-50 dark:from-purple-950 dark:via-purple-900 dark:to-purple-950 min-h-screen duration-300">
-      {/* Background decoration - responsive */}
-      <div
-        className="contact-decoration-1"
-        aria-hidden="true"
-      />
-      <div
-        className="contact-decoration-2"
-        aria-hidden="true"
-      />
+    <div className="contact-page-container">
+      {/* Background decoration — noise texture now handled via ::before in CSS */}
+      <div className="contact-page-bg-noise" aria-hidden="true" />
+      <div className="contact-decoration-1" aria-hidden="true" />
+      <div className="contact-decoration-2" aria-hidden="true" />
 
       <main
         id="main-content"
-        className="contact-page-main relative z-10 max-w-7xl mx-auto px-fluid-md"
+        className="contact-page-main"
       >
         {/* Page Header */}
-        <div className="text-center mb-fluid-2xl">
-          <h1 className="text-section-h2 sm:text-hero-h1 font-heading font-bold text-gradient-pink-purple-blue mb-fluid-md">
-            Get in Touch
+        <div className="contact-page-header">
+          <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-fluid-md">
+            {contactUI.header.title}
           </h1>
-          <p className="text-body-guideline font-body font-normal text-contact-body leading-relaxed max-w-2xl mx-auto duration-300">
-            I'd love to hear from you — whether you want to collaborate, connect, or just share some love.
+          <p className="text-body-guideline text-contact-body">
+            {contactUI.header.description}
           </p>
         </div>
 
         {/* Two Column Layout */}
-        <div className="flex flex-col lg:flex-row gap-fluid-xl items-start">
-          {/* Left Column - About */}
-          <div className="flex-1 lg:sticky lg:top-24">
-            <h2 className="text-section-h2 font-heading font-bold text-gradient-blue-teal-green mb-fluid-sm">
-              About Ash
+        <div className="contact-page-grid">
+          {/* Left Column - About, Social, FAQ */}
+          <div className="contact-page-about">
+            <h2 className="text-section-h2 text-gradient-blue-teal-green mb-fluid-sm">
+              {contactUI.about.title}
             </h2>
-            <p className="text-body-guideline font-body font-normal text-contact-body leading-relaxed mb-fluid-sm duration-300">
-              I'm Ash Shaw, a makeup artist who started this journey in 2019. 
-              Over the years, my work has grown from festival artistry to UV 
-              explorations, mousse palettes, and blacklight reactive designs.
+            <p className="text-body-guideline text-contact-body mb-fluid-sm">
+              {contactUI.about.description}
             </p>
-            <p className="text-quote-large font-body font-medium text-gradient-pink-purple-blue mb-fluid-lg">
-              Makeup that shines with colour, energy, and connection.
+            <p className="contact-page-quote text-gradient-pink-purple-blue">
+              {contactUI.about.quote}
             </p>
 
             {/* Social Links */}
-            <div className="mb-fluid-lg">
-              <h3 className="text-fluid-2xl font-heading font-semibold text-contact-heading mb-fluid-sm duration-300">
-                Connect With Me
+            <div>
+              <h3 className="contact-page-connect-title text-contact-heading">
+                {contactUI.connect.title}
               </h3>
-              <SocialLinks className="justify-start" />
+              <SocialLinks className="contact-page-social-links" />
             </div>
 
-            {/* Logo */}
-            <div className="mt-fluid-xl pt-fluid-lg border-t border-contact-divider">
-              <div
-                className="inline-block cursor-pointer transform hover:scale-105 duration-300 focus:outline-none focus:ring-2 focus-ring-contact-logo rounded-md"
-                onClick={handleLogoClick}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleLogoClick();
-                  }
-                }}
-                aria-label="Return to home page"
-              >
-                <Logo size="lg" />
-              </div>
+            {/* FAQ Section */}
+            <div className="contact-page-faq-inline">
+              <FaqSection />
             </div>
           </div>
 
-          {/* Right Column - Contact Form */}
-          <div className="flex-1 max-w-md lg:max-w-lg w-full contact-form-container">
-            <h2 className="text-section-h2 font-heading font-bold text-gradient-gold-peach-coral mb-fluid-sm">
-              Contact Form
+          {/* Right Column - Contact Form & Graphic */}
+          <div className="contact-page-form">
+            <h2 className="text-section-h2 text-gradient-gold-peach-coral mb-fluid-sm">
+              {contactUI.form.title}
             </h2>
-            <ContactForm />
+            <TypeformEmbed 
+              formId="01KGP965M86E2TCRWEVS0WJX57"
+              height="600px"
+            />
+            
+            {/* Contact Graphic */}
+            <div className="contact-page-graphic">
+              <img 
+                src={contactGraphic} 
+                alt="Ash Shaw makeup artist illustration"
+                className="contact-page-graphic-image"
+              />
+            </div>
           </div>
         </div>
       </main>

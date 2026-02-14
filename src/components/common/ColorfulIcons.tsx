@@ -3,10 +3,11 @@
  * Purpose-built icons representing core brand values with sophisticated gradients and animations
  *
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
+ * @version 1.1.0 - Semantic BEM Refactor
  */
 
 import React from "react";
+import "@/styles/blocks/colorful-icons.css";
 
 /**
  * Icon component props interface for consistent styling across all custom icons
@@ -45,23 +46,16 @@ export function ShineIcon({
   size = "md",
   className = "",
 }: IconProps) {
-  const sizeMap = {
-    sm: "w-4 h-4",
-    md: "w-6 h-6",
-    lg: "w-8 h-8",
-  };
-
-  // Use className if it contains size classes, otherwise use sizeMap
-  const sizeClass = className.includes("w-")
-    ? ""
-    : sizeMap[size];
+  const sizeClass = `colorful-icon--${size}`;
 
   return (
     <svg
-      className={`${sizeClass} ${className}`}
+      className={`colorful-icon ${sizeClass} ${className}`}
       viewBox="0 0 144 144"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-hidden="true"
     >
       <defs>
         <radialGradient id="paint0_radial_1_95" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(2448 2448) scale(24)">
@@ -188,23 +182,16 @@ export function JoyIcon({
   size = "md",
   className = "",
 }: IconProps) {
-  const sizeMap = {
-    sm: "w-4 h-4",
-    md: "w-6 h-6",
-    lg: "w-8 h-8",
-  };
-
-  // Use className if it contains size classes, otherwise use sizeMap
-  const sizeClass = className.includes("w-")
-    ? ""
-    : sizeMap[size];
+  const sizeClass = `colorful-icon--${size}`;
 
   return (
     <svg
-      className={`${sizeClass} ${className}`}
+      className={`colorful-icon ${sizeClass} ${className}`}
       viewBox="0 0 144 144"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-hidden="true"
     >
       <defs>
         <clipPath id="clip0_1_116">
@@ -301,23 +288,16 @@ export function GrowthIcon({
   size = "md",
   className = "",
 }: IconProps) {
-  const sizeMap = {
-    sm: "w-4 h-4",
-    md: "w-6 h-6",
-    lg: "w-8 h-8",
-  };
-
-  // Use className if it contains size classes, otherwise use sizeMap
-  const sizeClass = className.includes("w-")
-    ? ""
-    : sizeMap[size];
+  const sizeClass = `colorful-icon--${size}`;
 
   return (
     <svg
-      className={`${sizeClass} ${className}`}
+      className={`colorful-icon ${sizeClass} ${className}`}
       viewBox="0 0 144 144"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-hidden="true"
     >
       <defs>
         <linearGradient id="paint0_linear_1_141" x1="66" y1="5472" x2="1480.85" y2="5283.35" gradientUnits="userSpaceOnUse">

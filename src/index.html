@@ -26,15 +26,83 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" href="/favicon.ico" />
     
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="152x152" href="/pwa-icons/icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/pwa-icons/icon-192x192.png" />
+    
+    <!-- Apple Mobile Web App -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Ash Shaw" />
+    
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileColor" content="#BE00FE" />
+    <meta name="msapplication-TileImage" content="/pwa-icons/icon-144x144.png" />
+    
     <!-- Google Fonts CDN - Variable Fonts for Optimal Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:wght@400..900&family=Righteous&display=swap" rel="stylesheet">
     
     <!-- Accessibility -->
-    <meta name="theme-color" content="#ff66cc" />
+    <meta name="theme-color" content="#BE00FE" />
     <!-- Color scheme will be set dynamically by ThemeToggle -->
     <meta name="color-scheme" content="light dark" />
+
+    <!-- Error Suppression Script - Must run before any other scripts -->
+    <script>
+      (function() {
+        // Global error handler
+        window.onerror = function(msg, url, line, col, error) {
+          var message = String(msg);
+          if (
+            message.includes('beholdReplaceChildren') ||
+            message.includes("Cannot read properties of undefined (reading 'beholdReplaceChildren')") ||
+            (error && error.message && error.message.includes('beholdReplaceChildren')) ||
+            (error && error.stack && error.stack.includes('beholdReplaceChildren'))
+          ) {
+            return true; // Suppress error
+          }
+          return false;
+        };
+
+        // Unhandled rejection handler
+        window.addEventListener('unhandledrejection', function(event) {
+          var message = event.reason ? (event.reason.message || String(event.reason)) : '';
+          if (
+            message.includes('beholdReplaceChildren') ||
+            message.includes("Cannot read properties of undefined (reading 'beholdReplaceChildren')")
+          ) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+          }
+        });
+
+        // Console error override
+        var originalConsoleError = console.error;
+        console.error = function() {
+          var args = Array.from(arguments);
+          var message = args.map(function(arg) {
+            return (arg instanceof Error) ? (arg.message + (arg.stack || '')) : String(arg);
+          }).join(' ');
+
+          if (
+            message.includes('beholdReplaceChildren') ||
+            message.includes("Cannot read properties of undefined (reading 'beholdReplaceChildren')")
+          ) {
+            return;
+          }
+          originalConsoleError.apply(console, args);
+        };
+      })();
+    </script>
+    
+    <!-- Preload critical assets for PWA -->
+    <link rel="preload" href="/styles/globals.css" as="style" />
+    <link rel="preload" href="/styles/animations.css" as="style" />
   </head>
   <body>
     <!-- Root element for React app -->

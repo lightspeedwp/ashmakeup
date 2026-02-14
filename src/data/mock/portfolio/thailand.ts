@@ -22,6 +22,7 @@ export const thailandWork: PortfolioEntry[] = [
     title: 'Lost Paradise',
     category: 'Festival Makeup',
     subcategory: 'Thailand Adventures',
+    date: '2024-09-12',
     images: [
       {
         src: 'figma:asset/e7ee10c85c112ab4acfc9e54087974a5faae5966.png',
@@ -47,6 +48,7 @@ export const thailandWork: PortfolioEntry[] = [
     title: 'Eden Paradise',
     category: 'Festival Makeup',
     subcategory: 'Thailand Adventures',
+    date: '2024-09-18',
     images: [
       {
         src: 'figma:asset/3c496f3b8a5671dd00830f80a9a061ddf687e849.png',
@@ -72,6 +74,7 @@ export const thailandWork: PortfolioEntry[] = [
     title: 'Eden Paradise - Shishi',
     category: 'Festival Makeup',
     subcategory: 'Thailand Adventures',
+    date: '2024-09-19',
     images: [
       {
         src: 'figma:asset/2d37a7cd55fe518f7eb8124fa25a2382be67f948.png',
@@ -97,6 +100,7 @@ export const thailandWork: PortfolioEntry[] = [
     title: 'Jungle Festival Magic',
     category: 'Festival Makeup',
     subcategory: 'Thailand Adventures',
+    date: '2024-09-26',
     images: [
       {
         src: 'figma:asset/7afa71c7ec4457a1c1983db257703a6c92a9cce7.png',
@@ -128,7 +132,6 @@ export const thailandWork: PortfolioEntry[] = [
     ],
     location: 'Koh Phangan, Thailand',
     event: 'Jungle Festival',
-    date: 'Friday 26 September',
     description: 'Tropical UV artistry in the heart of Thailand\'s jungle paradise, blending neon glow with natural island energy.',
     excerpt: 'Wild jungle festival energy with UV artistry',
     tags: ['Koh Phangan', 'Jungle', 'UV', 'Festival', 'Thailand', 'Tropical'],

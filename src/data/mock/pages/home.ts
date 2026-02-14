@@ -4,7 +4,7 @@
  * 
  * @module data/mock/pages/home
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
+ * @version 1.5.0
  */
 
 import { PageContent, HeroContent, WhyReason } from '../../types';
@@ -17,9 +17,9 @@ import { PageContent, HeroContent, WhyReason } from '../../types';
  */
 export const homepageHero: HeroContent = {
   title: "Hi, I'm Ash Shaw",
-  subtitle: "Makeup that shines with colour, energy, and connection",
-  description: "Makeup is my art, my joy, and my way of bringing people together. From festivals to the dance floor, I use colour and light to create looks that make people feel radiant, confident, and alive.",
-  ctaText: "Explore My Portfolio",
+  subtitle: "Makeup that shines with colour, energy, and connection.",
+  description: "Makeup is my joy and my way of bringing people together. From festivals to the dance floor, I use colour and light to create looks that make people feel radiant, confident, and alive.",
+  ctaText: "Explore UV Portfolio",
   ctaLink: "/portfolio"
 };
 
@@ -33,25 +33,34 @@ export const whyReasons: WhyReason[] = [
   {
     id: 'spread-joy',
     icon: 'shine',
-    title: 'Spread Joy',
-    description: 'When I do makeup for others, it lights them up. They feel special, happy, and confident — and seeing that sparkle in their eyes inspires me to keep creating.',
+    title: 'Psytrance Energy',
+    description: 'My art is fueled by the music. I channel the high-energy vibrations of psytrance into neon designs that flow with your movement and glow under the UV lights.',
     order: 1
   },
   {
     id: 'brings-joy',
     icon: 'joy',
-    title: 'Brings Me Joy',
-    description: 'Makeup is my creative playground. Whether it\'s festival glitter, glowing UV paints, or bold eyeshadow blends, I love the process of experimenting and expressing.',
+    title: 'Global Connection',
+    description: 'Traveling between Cape Town, Berlin, and Thailand, I connect with souls on dancefloors worldwide. Makeup is my language of connection in the global trance community.',
     order: 2
   },
   {
     id: 'keep-growing',
     icon: 'growth',
-    title: 'To Keep Growing',
-    description: 'Every face, every colour, every night out is a chance to evolve. Makeup is a journey — and I treat each session as an opportunity to learn and expand my artistry.',
+    title: 'Ambidextrous Skill',
+    description: 'Adapting to the chaos of festivals, I\'ve mastered ambidextrous application to work fast and precisely from any angle, ensuring you don\'t miss a beat.',
     order: 3
   }
 ];
+
+export const whySectionContent = {
+  title: "The Art of UV",
+  subtitle: "Why I paint the dancefloor",
+  ctaText: "Read my journey",
+  ctaLink: "/about",
+  ctaAriaLabel: "Navigate to About page to read full story",
+  items: whyReasons
+};
 
 /**
  * Complete Homepage Content
@@ -61,8 +70,8 @@ export const whyReasons: WhyReason[] = [
  */
 export const homepageContent: PageContent = {
   id: 'home',
-  title: 'Ash Shaw - Makeup Artist Portfolio',
-  metaDescription: 'Festival makeup artist specializing in creative, colorful looks. Based in Thailand, creating joy through makeup artistry.',
+  title: 'Ash Shaw - Global Psytrance & UV Makeup Artist',
+  metaDescription: 'Global psytrance and UV makeup artist based in Cape Town, Berlin, and Thailand. Creating neon festival looks and blacklight artistry for the trance community.',
   hero: homepageHero,
   sections: {
     why: whyReasons

@@ -22,3 +22,6 @@ export * from './blog';
 
 // Page content types
 export * from './page';
+
+// Video types
+export * from './videos';

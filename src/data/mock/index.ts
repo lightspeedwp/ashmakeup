@@ -34,5 +34,11 @@ export * from './blog';
 // Testimonials Data
 export * from './testimonials';
 
+// Section Data
+export * from './sections';
+
+// Video Data
+export * from './videos';
+
 // Re-export types for convenience
 export * from '../types';

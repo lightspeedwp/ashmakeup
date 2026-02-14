@@ -27,8 +27,8 @@ This document provides a comprehensive overview of all components available in t
          │               │               │
          ▼               │               ▼
   ┌──────────┐           │        ┌──────────┐
-  │   Logo   │           │        │ Contact  │
-  │MobileMenu│           │        │   Form   │
+  │   Logo   │           │        │ Connect  │
+  │MobileMenu│           │        │  Button  │
   │  NavLink │           │        │  Social  │
   └──────────┘           │        │  Links   │
                          │        └──────────┘
@@ -250,7 +250,7 @@ Every component must be styled explicitly with guidelines-compliant classes:
 | 11 | **TestimonialCard** | Content Display | [TestimonialCard.md](./components/TestimonialCard.md) | ✅ Complete |
 | 12 | **ImageGallery** | Media & Display | [ImageGallery.md](./components/ImageGallery.md) | ✅ Complete |
 | 13 | **Lightbox** | Media & Display | [Lightbox.md](./components/Lightbox.md) | ✅ Complete |
-| 14 | **ContactForm** | Forms & Input | [ContactForm.md](./components/ContactForm.md) | ✅ Complete |
+| 14 | **TypeformEmbed** | Forms & Input | [TypeformEmbed.md](./components/TypeformEmbed.md) | ✅ Complete |
 | 15 | **SearchBar** | Forms & Input | [SearchBar.md](./components/SearchBar.md) | ✅ Complete |
 | 16 | **CategoryFilter** | Interactive | [CategoryFilter.md](./components/CategoryFilter.md) | ✅ Complete |
 | 17 | **ReadMoreButton** | Interactive | [ReadMoreButton.md](./components/ReadMoreButton.md) | ✅ Complete |
@@ -315,7 +315,7 @@ Form and search input components.
 
 | Component | Purpose | Guidelines File |
 |-----------|---------|----------------|
-| **ContactForm** | SendGrid-integrated contact form with validation | [ContactForm.md](./components/ContactForm.md) |
+| **TypeformEmbed** | Typeform integration with light/dark mode support | [TypeformEmbed.md](./components/TypeformEmbed.md) |
 | **SearchBar** | Search input with icon and clear button | [SearchBar.md](./components/SearchBar.md) |
 
 ### 6. Interactive Controls (4 components)
@@ -364,7 +364,7 @@ Modal dialogs, loading indicators, and tag components.
 - Include **ShareComponent** on post pages
 
 ### Need User Interaction?
-- Use **ContactForm** for inquiries
+- Use **TypeformEmbed** for contact forms and inquiries
 - Use **ReadMoreButton** for expandable content
 - Add **ShareComponent** for social sharing
 - Use **Modal** for dialogs and confirmations

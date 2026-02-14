@@ -4,7 +4,7 @@
  * 
  * @module data/mock/portfolio/festivals
  * @author Ash Shaw Portfolio Team
- * @version 2.0.0 - Updated with actual Figma assets
+ * @version 2.1.0 - Updated with Origin Festival 2025
  */
 
 import { PortfolioEntry } from '../../types';
@@ -21,6 +21,7 @@ export const festivalWork: PortfolioEntry[] = [
     slug: 'nation-of-gondwana-festival',
     title: 'Nation of Gondwana Festival',
     category: 'Festival Makeup',
+    date: '2024-07-19',
     images: [
       {
         src: 'figma:asset/74b708f3be9c02b929444ed900d4217477ac45ad.png',
@@ -58,72 +59,45 @@ export const festivalWork: PortfolioEntry[] = [
     order: 1
   },
   {
-    id: 'jungle-festival-koh-phangan',
-    slug: 'jungle-festival-koh-phangan',
-    title: 'Jungle Festival Magic',
+    id: 'origin-festival-2025',
+    slug: 'origin-festival-2025',
+    title: 'Origin Festival 2026: Birthday Adventure',
     category: 'Festival Makeup',
+    date: '2026-02-06',
     images: [
       {
-        src: 'https://images.unsplash.com/photo-1533408944756-4950754f3ebc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqdW5nbGUlMjBmZXN0aXZhbCUyMG1ha2V1cCUyMFVWJTIwbmVvbnxlbnwxfHx8fDE3NTkyMzc4MDV8MA&ixlib=rb-4.1.0&q=80&w=1080',
-        alt: 'Jungle Festival makeup with tropical and vibrant elements',
-        title: 'Jungle Festival Magic',
-        caption: 'Jungle Vibes',
+        src: 'figma:asset/e46fceb6809b8f1b7ef5c578d40578eadf301207.png',
+        alt: 'Origin Festival Birthday - Pink Mohawk and Neon Eyes',
+        title: 'Festival Birthday Joy',
+        caption: 'Celebrating life and color',
+        description: 'Vibrant birthday celebration look with neon accents',
         position: 'center',
-        aspectRatio: '16:9'
-      }
-    ],
-    location: 'Koh Phangan',
-    event: 'Jungle Festival',
-    date: 'Friday 26 September',
-    description: 'Capturing the wild energy and natural beauty of jungle festival celebrations.',
-    excerpt: 'Wild jungle festival energy',
-    tags: ['Jungle', 'Festival', 'Tropical', 'Nature', 'Wild'],
-    featured: false,
-    order: 2
-  },
-  {
-    id: 'origin-festival-explosive',
-    slug: 'origin-festival-explosive',
-    title: 'Origin Festival Explosive Energy',
-    category: 'Festival Makeup',
-    images: [
+        aspectRatio: '3:4'
+      },
       {
-        src: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1080',
-        alt: 'Origin Festival makeup with bold and explosive colors',
-        title: 'Origin Festival Explosive Energy',
-        caption: 'Explosive Energy',
-        position: 'center',
-        aspectRatio: '4:3'
+        src: 'figma:asset/2678f2e48d60b8ccd6855469149ffc2cd8877e1c.png',
+        alt: 'Origin Festival - Geometric Face Paint Profile',
+        title: 'Geometric Neon Art',
+        caption: 'Precision lines and vibrant colors',
+        description: 'Intricate geometric face paint design',
+        position: 'left',
+        aspectRatio: '3:4'
+      },
+      {
+        src: 'figma:asset/04aa88bd7a81e3f14ceb68f980492bf374b041db.png',
+        alt: 'Origin Festival - Neon Grid Makeup',
+        title: 'Neon Night Vibes',
+        caption: 'Glowing in the festival lights',
+        description: 'Neon grid patterns coming alive at night',
+        position: 'right',
+        aspectRatio: '9:16'
       }
     ],
     event: 'Origin Festival',
-    description: 'Bold and explosive makeup capturing the high-energy atmosphere of Origin Festival.',
-    excerpt: 'Explosive festival energy and bold colors',
-    tags: ['Origin', 'Festival', 'Explosive', 'Bold', 'High Energy'],
-    featured: false,
-    order: 3
-  },
-  {
-    id: 'little-forest-new-year',
-    slug: 'little-forest-new-year',
-    title: 'Little Forest New Year',
-    category: 'Festival Makeup',
-    images: [
-      {
-        src: 'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=1080',
-        alt: 'Little Forest New Year celebration makeup with peaceful and natural elements',
-        title: 'Little Forest New Year',
-        caption: 'Peaceful Celebration',
-        position: 'center',
-        aspectRatio: '3:4'
-      }
-    ],
-    event: 'Little Forest',
-    date: 'New Year',
-    description: 'Peaceful New Year celebrations blending forest aesthetics with festival spirit.',
-    excerpt: 'Peaceful forest New Year celebration',
-    tags: ['Little Forest', 'New Year', 'Peaceful', 'Nature', 'Celebration'],
-    featured: false,
-    order: 4
+    description: 'It was my birthday weekend, I cycled to the event over two days and then cycled home, I brought all my clothes, hammock gear and makeup bags in panniers on my gravel bike. I danced, celebrated and spread the joy of my makeup. I also had some stickers made.',
+    excerpt: 'Birthday cycle adventure to Origin Festival',
+    tags: ['Origin Festival', 'Birthday', 'Cycling', 'Neon Makeup', 'Stickers'],
+    featured: true,
+    order: 2
   }
 ];

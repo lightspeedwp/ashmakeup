@@ -1,0 +1,125 @@
+/* Feedback Styles (Atomic Black System) */
+
+/* --- ALERT --- */
+.alert {
+  position: relative;
+  width: 100%;
+  border-radius: var(--wp--preset--border-radius--lg);
+  border: 1px solid transparent;
+  padding: 1rem;
+  font-size: 0.875rem;
+}
+
+.alert svg {
+  color: currentColor;
+}
+
+.alert--default {
+  background-color: var(--wp--preset--color--base);
+  color: var(--wp--preset--color--contrast);
+  border-color: var(--wp--preset--color--neutral-200);
+}
+
+.dark .alert--default {
+  background-color: var(--wp--preset--color--neutral-900);
+  border-color: var(--wp--preset--color--neutral-800);
+  color: #fff;
+}
+
+.alert--destructive {
+  border-color: var(--wp--preset--color--neon-red);
+  color: var(--wp--preset--color--neon-red);
+  background-color: rgba(255, 49, 49, 0.1);
+}
+
+.dark .alert--destructive {
+  background-color: rgba(255, 49, 49, 0.2);
+}
+
+.alert-title {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  line-height: 1;
+}
+
+.alert-description {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.alert-description p {
+  margin-bottom: 0;
+}
+
+/* --- ALERT DIALOG --- */
+.alert-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+}
+
+.alert-dialog-content {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 50;
+  display: grid;
+  width: 100%;
+  max-width: 32rem; /* max-w-lg */
+  transform: translate(-50%, -50%);
+  gap: 1rem;
+  border: 1px solid var(--wp--preset--color--neutral-200);
+  background-color: var(--wp--preset--color--base);
+  padding: 1.5rem;
+  box-shadow: var(--wp--preset--shadow--card-hover);
+  border-radius: var(--wp--preset--border-radius--lg);
+}
+
+.dark .alert-dialog-content {
+  background-color: var(--wp--preset--color--neutral-900);
+  border-color: var(--wp--preset--color--neutral-800);
+}
+
+.alert-dialog-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .alert-dialog-header {
+    text-align: left;
+  }
+}
+
+.alert-dialog-footer {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .alert-dialog-footer {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+.alert-dialog-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.alert-dialog-description {
+  font-size: 0.875rem;
+  color: var(--wp--preset--color--neutral-500);
+}
+
+/* --- SONNER (TOAST) --- */
+.toaster {
+  /* Inherits styles from sonner library, custom overrides here if needed */
+  font-family: var(--wp--preset--font-family--brand-body);
+}

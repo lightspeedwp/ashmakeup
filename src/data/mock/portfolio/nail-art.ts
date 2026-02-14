@@ -22,6 +22,7 @@ export const nailArtWork: PortfolioEntry[] = [
     title: 'Rainbow Fusion',
     category: 'Nail Art',
     subcategory: 'Sticker Art Collection',
+    date: '2025-01-10',
     images: [
       {
         src: 'figma:asset/7c570c5291977a816c8152a098cd6693cff22dbd.png',
@@ -45,6 +46,7 @@ export const nailArtWork: PortfolioEntry[] = [
     title: 'Galaxy Nails',
     category: 'Nail Art',
     subcategory: 'Fusion Nails',
+    date: '2025-02-14',
     images: [
       {
         src: 'figma:asset/1ec0ba217cad06e2cff662a25a050b0401d1092a.png',
@@ -68,6 +70,7 @@ export const nailArtWork: PortfolioEntry[] = [
     title: 'Gradient Dreams',
     category: 'Nail Art',
     subcategory: 'Fusion Nails',
+    date: '2025-03-08',
     images: [
       {
         src: 'figma:asset/deb2b4ab4cb25c5e47b960708fce6ea552ee6039.png',
@@ -84,28 +87,5 @@ export const nailArtWork: PortfolioEntry[] = [
     tags: ['Nail Art', 'Gradient', 'Ombre', 'Metallic', 'Color Shift'],
     featured: true,
     order: 3
-  },
-  {
-    id: 'neon-pop',
-    slug: 'neon-pop-nails',
-    title: 'Neon Pop',
-    category: 'Nail Art',
-    subcategory: 'Fusion Nails',
-    images: [
-      {
-        src: 'https://images.unsplash.com/photo-1701626772688-909f2a0712bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZW9uJTIwbmFpbCUyMGFydCUyMHZpYnJhbnQlMjBjb2xvcnN8ZW58MXx8fHwxNzU5Mjk3MTY1fDA&ixlib=rb-4.1.0&q=80&w=1080',
-        alt: 'Neon Pop nails - vibrant red and green with metallic accents',
-        title: 'Neon Pop - Main',
-        caption: 'Neon Pop',
-        description: 'Bold festival-inspired nail art perfect for celebrations',
-        position: 'center',
-        aspectRatio: '4:3'
-      }
-    ],
-    description: 'Vibrant red and green festival vibes with metallic accents. Bold festival-inspired nail art perfect for celebrations.',
-    excerpt: 'Vibrant neon nails with metallic accents',
-    tags: ['Nail Art', 'Neon', 'Metallic', 'Festival', 'Vibrant'],
-    featured: false,
-    order: 4
   }
 ];

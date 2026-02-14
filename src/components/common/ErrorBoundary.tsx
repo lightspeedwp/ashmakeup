@@ -4,31 +4,21 @@
  * Provides comprehensive error catching and user-friendly error display with recovery options.
  * Includes timeout error handling, API error recovery, and accessibility support.
  * 
- * Features:
- * - Catches JavaScript errors anywhere in the child component tree
- * - Logs error details for debugging while showing user-friendly messages
- * - Provides retry functionality for recoverable errors
- * - Handles timeout errors and API failures gracefully
- * - WCAG 2.1 AA compliant error messaging
- * - Automatic error reporting (can be extended with error tracking services)
- * 
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
- * @since 1.0.0 - Initial error boundary implementation
+ * @version 1.2.0 - Semantic BEM Refactor
  */
 
 import React, { Component, ReactNode } from 'react';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
+import { errorMessages } from '../../data/mock/ui/error';
+import "@/styles/blocks/button.css";
 
 /**
  * Error boundary props interface
  */
 interface ErrorBoundaryProps {
-  /** Child components to wrap with error boundary */
   children: ReactNode;
-  /** Optional fallback component to render instead of default error UI */
   fallback?: ReactNode;
-  /** Optional error callback for custom error handling */
   onError?: (error: Error, errorInfo: React.ErrorInfo) => void;
 }
 
@@ -36,35 +26,14 @@ interface ErrorBoundaryProps {
  * Error boundary state interface
  */
 interface ErrorBoundaryState {
-  /** Whether an error has occurred */
   hasError: boolean;
-  /** The error object if available */
   error: Error | null;
-  /** Error info from React */
   errorInfo: React.ErrorInfo | null;
-  /** Number of retry attempts */
   retryCount: number;
 }
 
 /**
  * Error Boundary component for catching and handling React errors
- * 
- * Wraps child components and catches any JavaScript errors that occur during rendering,
- * in lifecycle methods, or in constructors. Provides user-friendly error display with
- * recovery options and accessibility support.
- * 
- * @component
- * @example
- * ```tsx
- * <ErrorBoundary onError={handleError}>
- *   <App />
- * </ErrorBoundary>
- * 
- * // With custom fallback
- * <ErrorBoundary fallback={<CustomErrorComponent />}>
- *   <PortfolioSection />
- * </ErrorBoundary>
- * ```
  */
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
@@ -77,9 +46,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     };
   }
 
-  /**
-   * Static method to update state when an error occurs
-   */
   static getDerivedStateFromError(error: Error): Partial<ErrorBoundaryState> {
     return {
       hasError: true,
@@ -87,18 +53,15 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     };
   }
 
-  /**
-   * Lifecycle method called when an error occurs
-   */
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     const errorMessage = error?.message || error?.toString() || '';
     
-    // AGGRESSIVE: Filter out browser extension errors
     if (
       errorMessage.includes('Message getPage (id: 3) response timed out after 30000ms') ||
       errorMessage.includes('response timed out after 30000ms') ||
       errorMessage.includes('getPage') && errorMessage.includes('timed out') ||
       errorMessage.includes('Message getPage') ||
+      errorMessage.includes('beholdReplaceChildren') ||
       errorMessage.includes('extension://') ||
       errorMessage.includes('chrome-extension://') ||
       errorMessage.includes('moz-extension://') ||
@@ -106,9 +69,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       error?.name === 'TimeoutError' ||
       error?.name === 'ExtensionError'
     ) {
-      console.log('🛡️ Error Boundary: Filtered browser extension error:', errorMessage);
-      
-      // Reset error state to prevent showing error UI for extension errors
       this.setState({
         hasError: false,
         error: null,
@@ -117,28 +77,21 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       return;
     }
 
-    // Update state with error info for legitimate application errors
     this.setState({
       error,
       errorInfo,
     });
 
-    // Call custom error handler if provided
     if (this.props.onError) {
       this.props.onError(error, errorInfo);
     }
 
-    // Log error details for debugging
-    console.error('Error Boundary caught an error:', error);
-    console.error('Error Info:', errorInfo);
-
-    // Here you could send the error to an error reporting service
-    // Example: Sentry.captureException(error, { extra: errorInfo });
+    if (import.meta?.env?.DEV) {
+      console.error('Error Boundary caught an error:', error);
+      console.error('Error Info:', errorInfo);
+    }
   }
 
-  /**
-   * Retry handler to attempt recovery
-   */
   handleRetry = () => {
     this.setState(prevState => ({
       hasError: false,
@@ -148,9 +101,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     }));
   };
 
-  /**
-   * Reload the page as last resort
-   */
   handleReload = () => {
     window.location.reload();
   };
@@ -160,95 +110,70 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     const { children, fallback } = this.props;
 
     if (hasError) {
-      // Use custom fallback if provided
       if (fallback) {
         return fallback;
       }
 
-      // Determine error type for better messaging
       const isTimeoutError = error?.message?.includes('timed out') || 
-                            error?.message?.includes('timeout') ||
-                            error?.message?.includes('30000ms') ||
-                            error?.message?.includes('Message getPage');
+                            error?.message?.includes('timeout');
       const isNetworkError = error?.message?.includes('network') || 
-                            error?.message?.includes('fetch') ||
-                            error?.message?.includes('Failed to fetch');
+                            error?.message?.includes('fetch');
       const isContentError = error?.message?.includes('Contentful') || 
-                            error?.message?.includes('CMS') ||
-                            error?.message?.includes('content');
-      const isBrowserExtensionError = error?.message?.includes('extension') ||
-                                     error?.message?.includes('getPage') ||
-                                     error?.message?.includes('id:');
+                            error?.message?.includes('CMS');
+      const isBrowserExtensionError = error?.message?.includes('extension');
 
-      let errorTitle = 'Something went wrong';
-      let errorMessage = 'An unexpected error occurred. Please try again.';
+      let errorTitle = errorMessages.default.title;
+      let errorMessage = errorMessages.default.message;
       let suggestions: string[] = [];
 
       if (isBrowserExtensionError) {
-        errorTitle = 'Browser Extension Interference';
-        errorMessage = 'A browser extension may be interfering with the page. This is a common issue with ad blockers or privacy extensions.';
-        suggestions = [
-          'Try disabling browser extensions temporarily',
-          'Use an incognito/private browsing window',
-          'Refresh the page and try again',
-          'The page should still function normally',
-        ];
+        errorTitle = errorMessages.browserExtension.title;
+        errorMessage = errorMessages.browserExtension.message;
+        suggestions = errorMessages.browserExtension.suggestions;
       } else if (isTimeoutError) {
-        errorTitle = 'Request Timeout';
-        errorMessage = 'The request took too long to complete. This might be due to a slow connection or server issues.';
-        suggestions = [
-          'Check your internet connection',
-          'Try refreshing the page',
-          'Wait a moment and try again',
-        ];
+        errorTitle = errorMessages.timeout.title;
+        errorMessage = errorMessages.timeout.message;
+        suggestions = errorMessages.timeout.suggestions;
       } else if (isNetworkError) {
-        errorTitle = 'Network Error';
-        errorMessage = 'Unable to connect to the server. Please check your internet connection.';
-        suggestions = [
-          'Check your internet connection',
-          'Try refreshing the page',
-          'Check if other websites are working',
-        ];
+        errorTitle = errorMessages.network.title;
+        errorMessage = errorMessages.network.message;
+        suggestions = errorMessages.network.suggestions;
       } else if (isContentError) {
-        errorTitle = 'Content Loading Error';
-        errorMessage = 'Unable to load content from the content management system. The site will use static content instead.';
-        suggestions = [
-          'The page should still function with static content',
-          'Try refreshing to reconnect to the CMS',
-          'Content may be temporarily unavailable',
-        ];
+        errorTitle = errorMessages.content.title;
+        errorMessage = errorMessages.content.message;
+        suggestions = errorMessages.content.suggestions;
       }
 
       return (
         <div 
-          className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 flex items-center justify-center p-fluid-md"
+          className="error-boundary"
           role="alert"
           aria-live="assertive"
         >
-          <div className="max-w-2xl w-full bg-white/90 backdrop-blur-sm rounded-2xl p-fluid-xl border border-white/50 shadow-xl text-center">
+          <div className="error-boundary__content">
             {/* Error Icon */}
-            <div className="mb-fluid-lg">
-              <div className="w-16 h-16 mx-auto bg-gradient-pink-purple-blue rounded-full flex items-center justify-center mb-fluid-md">
-                <AlertTriangle className="w-8 h-8 text-white" />
+            <div className="error-boundary__header">
+              <div className="error-boundary__icon-wrapper">
+                <AlertTriangle className="error-boundary__icon" />
               </div>
-              <h1 className="text-fluid-2xl font-heading font-bold text-gray-800 mb-fluid-sm">
+              <h1 className="error-boundary__title">
                 {errorTitle}
               </h1>
-              <p className="text-body-guideline font-body font-normal text-gray-700 leading-relaxed">
+              <p className="error-boundary__message">
                 {errorMessage}
               </p>
             </div>
 
             {/* Suggestions */}
             {suggestions.length > 0 && (
-              <div className="mb-fluid-lg">
-                <h2 className="text-fluid-lg font-heading font-semibold text-gray-800 mb-fluid-sm">
+              <div className="error-boundary__suggestions">
+                <h2 className="error-boundary__suggestions-title">
                   What you can try:
                 </h2>
-                <ul className="text-left space-y-2">
+                <ul className="error-boundary__suggestions-list">
                   {suggestions.map((suggestion, index) => (
-                    <li key={index} className="text-body-guideline font-body text-gray-700 flex items-start">
-                      <span className="text-pink-600 mr-2">•</span>
+                    <li key={index} className="error-boundary__suggestion-item">
+                      <span className="error-boundary__bullet">•</span>
                       {suggestion}
                     </li>
                   ))}
@@ -257,20 +182,20 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             )}
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-fluid-sm justify-center items-center">
+            <div className="error-boundary__actions">
               <button
                 onClick={this.handleRetry}
-                className="w-full sm:w-auto justify-center text-center bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50 flex items-center gap-2"
+                className="btn btn--neon-primary error-boundary__btn"
                 aria-label={`Try again (attempt ${retryCount + 1})`}
               >
-                <RefreshCw className="w-5 h-5" />
+                <RefreshCw className="btn__icon" />
                 Try Again
               </button>
 
               {retryCount > 1 && (
                 <button
                   onClick={this.handleReload}
-                  className="w-full sm:w-auto justify-center text-center bg-gradient-blue-teal-green hover:from-blue-700 hover:to-teal-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-teal-200 focus:ring-opacity-50"
+                  className="btn btn--neon-secondary error-boundary__btn"
                   aria-label="Reload the entire page"
                 >
                   Reload Page
@@ -280,18 +205,18 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
             {/* Debug Info (Development Only) */}
             {import.meta?.env?.DEV && error && (
-              <details className="mt-fluid-lg text-left">
-                <summary className="cursor-pointer text-fluid-sm font-body font-medium text-gray-600 hover:text-gray-800">
+              <details className="error-boundary__debug">
+                <summary className="error-boundary__debug-summary">
                   Debug Information (Development Only)
                 </summary>
-                <div className="mt-fluid-sm p-fluid-md bg-gray-100 rounded-lg text-fluid-xs font-mono text-gray-800 overflow-auto">
+                <div className="error-boundary__debug-content">
                   <p><strong>Error:</strong> {error.toString()}</p>
                   <p><strong>Stack:</strong></p>
-                  <pre className="whitespace-pre-wrap">{error.stack}</pre>
+                  <pre className="error-boundary__pre">{error.stack}</pre>
                   {this.state.errorInfo && (
                     <>
                       <p><strong>Component Stack:</strong></p>
-                      <pre className="whitespace-pre-wrap">{this.state.errorInfo.componentStack}</pre>
+                      <pre className="error-boundary__pre">{this.state.errorInfo.componentStack}</pre>
                     </>
                   )}
                 </div>
@@ -300,7 +225,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
             {/* Retry Count Display */}
             {retryCount > 0 && (
-              <p className="mt-fluid-md text-fluid-sm font-body text-gray-600">
+              <p className="error-boundary__retry-count">
                 Retry attempts: {retryCount}
               </p>
             )}
@@ -313,20 +238,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 }
 
-/**
- * Higher-order component for wrapping components with error boundary
- * 
- * @param Component - The component to wrap
- * @param errorBoundaryProps - Props for the error boundary
- * @returns Wrapped component with error boundary
- * 
- * @example
- * ```tsx
- * const SafePortfolioPage = withErrorBoundary(PortfolioPage, {
- *   onError: (error) => console.error('Portfolio error:', error)
- * });
- * ```
- */
 export function withErrorBoundary<P extends object>(
   Component: React.ComponentType<P>,
   errorBoundaryProps?: Omit<ErrorBoundaryProps, 'children'>

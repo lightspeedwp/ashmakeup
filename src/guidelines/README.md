@@ -74,7 +74,6 @@ guidelines/
 │   ├── Footer.md
 │   ├── ScrollDownArrow.md
 │   ├── ScrollBackToTop.md
-│   ├── ContactForm.md
 │   ├── SocialLinks.md
 │   ├── LayoutSwitcher.md
 │   ├── PortfolioCard.md
@@ -211,11 +210,6 @@ guidelines/
 → Check [mock-data.md](./mock-data.md) for data alignment
 → Review specific component guides for usage
 
-**Setting up Contact Form?**
-→ Check [ContactForm.md](./components/ContactForm.md)
-→ Contact form works in demo mode (ready for backend integration)
-→ Review [Guidelines.md](./Guidelines.md) Section 5 for overview
-
 **Using a Specific Component?**
 → Find component in [components/](./components/) directory
 → Read full component guide before implementing
@@ -312,19 +306,6 @@ const content = data || mockData; // Automatic fallback
 
 ### Backend Services
 
-**Contact Form Service:**
-- Demo mode contact form with full validation
-- Ready for backend integration (Netlify, Vercel, AWS Lambda, etc.)
-- Honeypot protection and client-side validation
-
-**Usage:**
-```typescript
-import { sendContactForm } from '@/utils/emailService';
-
-// Works in demo mode - ready for backend integration
-const result = await sendContactForm(formData);
-```
-
 **CMS Integration:**
 - Contentful for dynamic content management
 - Static fallbacks for development
@@ -340,7 +321,6 @@ const result = await sendContactForm(formData);
 - **SectionCard** - Content sections with themes
 
 ### Interactive Components
-- **ContactForm** - Email integration with validation
 - **SearchBar** - Blog search with highlighting
 - **CategoryFilter** - Blog category filtering
 - **Pagination** - Blog pagination with keyboard nav
@@ -385,7 +365,7 @@ const result = await sendContactForm(formData);
 ## 🔄 Version History
 
 ### v4.1.0 (Current - January 2025)
-- ✅ Removed Supabase backend integration
+- ✅ Removed backend integration
 - ✅ Contact form now operates in demo mode
 - ✅ Ready for backend integration (Netlify/Vercel/AWS Lambda)
 - ✅ Updated documentation to reflect changes
@@ -450,9 +430,6 @@ A: See [mock-data.md](./mock-data.md) - All content in `/data/mock/`
 
 **Q: How do I integrate with Contentful?**  
 A: See [contentful-integration.md](./contentful-integration.md)
-
-**Q: How does the contact form work?**  
-A: Contact form operates in demo mode. See [ContactForm.md](./components/ContactForm.md) for integration options
 
 **Q: Which component should I use?**  
 A: See [overview-components.md](./overview-components.md) for architecture

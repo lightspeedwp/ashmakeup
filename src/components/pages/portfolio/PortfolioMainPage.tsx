@@ -5,40 +5,17 @@
  * Features category filtering, pagination, and responsive design following the complete brand 
  * guidelines and accessibility standards.
  * 
- * Core Features:
- * - Hero section showcasing portfolio breadth and expertise
- * - Category-based filtering (Festival, UV, Editorial, Nails, Swiss Festivals)
- * - Responsive 2-column grid with portfolio cards
- * - Pagination after 6 posts for optimal loading performance
- * - Lightbox integration for detailed portfolio viewing
- * - WCAG 2.1 AA compliant accessibility implementation
- * 
- * Styling System:
- * - Tailwind V4 with brand-compliant utility classes
- * - Fluid typography and spacing following guidelines
- * - Gradient effects and hover animations per brand standards
- * - Mobile-first responsive design with fluid scaling
- * 
- * Performance Optimizations:
- * - Lazy loading for portfolio images and content
- * - Efficient state management with React hooks
- * - Progressive enhancement with graceful fallbacks
- * 
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
- * @since 1.0.0 - Initial portfolio main page implementation
- * @lastModified 2025-01-29
+ * @version 1.3.1 - Semantic BEM Refactor
  */
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 
 import { PortfolioCard } from '../../ui/PortfolioCard';
-import { PortfolioLightbox } from '../../ui/PortfolioLightbox';
-import { Footer } from '../../common/Footer';
+import { EnhancedLightbox } from '../../ui/EnhancedLightbox';
 import { useIsMobile } from '../../ui/use-mobile';
 import { ScrollToTop } from '../../ui/ScrollToTop';
 
-import { Filter, Grid, ArrowLeft, ArrowRight, Settings } from 'lucide-react';
 import { 
   Pagination,
   PaginationContent,
@@ -54,16 +31,14 @@ import {
   PORTFOLIO_CATEGORIES,
   type UnifiedPortfolioEntry 
 } from '../../../utils/portfolioService';
+import { useAppNavigate } from '../../../hooks/useAppNavigate';
+import "@/styles/blocks/portfolio-main-page.css";
 
-/**
- * Portfolio entry interface that matches PortfolioCard's expected format
- * 
- * @interface PortfolioCardEntry
- */
 interface PortfolioCardEntry {
   id: string;
   title: string;
   subtitle?: string;
+  date?: string;
   description: string;
   featuredImage: {
     src: string;
@@ -83,110 +58,47 @@ interface PortfolioCardEntry {
   tags?: string[];
 }
 
-/**
- * Portfolio main page props interface
- * 
- * @interface PortfolioMainPageProps
- */
 interface PortfolioMainPageProps {
-  /** Enhanced navigation function supporting portfolio routing */
-  setCurrentPage: (page: string, slug?: string) => void;
+  initialCategory?: string;
 }
 
-/**
- * Portfolio page state interface for comprehensive state management
- * 
- * @interface PortfolioPageState
- */
 interface PortfolioPageState {
-  /** Current page number for pagination */
   page: number;
-  /** Selected category filter */
   category: string | undefined;
-  /** Number of items per page */
   limit: number;
 }
 
-/**
- * Portfolio pagination interface
- * 
- * @interface PortfolioPagination
- */
 interface PortfolioPagination {
-  /** Current page number */
   page: number;
-  /** Total number of items */
   total: number;
-  /** Items per page */
   limit: number;
-  /** Whether there's a next page */
   hasNext: boolean;
-  /** Whether there's a previous page */
   hasPrevious: boolean;
-  /** Total number of pages */
   totalPages: number;
 }
 
-/**
- * Portfolio categories with metadata for filtering - now using unified service
- */
-const PORTFOLIO_CATEGORIES = getPortfolioCategories();
+const PORTFOLIO_CATEGORIES_DATA = getPortfolioCategories();
 
-/**
- * Portfolio main page component with hero, filtering, and grid display
- * 
- * Provides a comprehensive view of all portfolio work with advanced filtering capabilities,
- * responsive design, and accessibility features.
- * 
- * Features:
- * - Hero section with inspiring title and description
- * - Category filtering with visual indicators and smooth transitions
- * - Responsive 2-column grid layout optimized for portfolio display
- * - Pagination for performance with 6 items per page
- * - Lightbox integration for detailed portfolio viewing
- * - Loading states and error handling with graceful fallbacks
- * - Complete accessibility with keyboard navigation and screen reader support
- * 
- * @component
- * @param {PortfolioMainPageProps} props - Component properties
- * @returns {JSX.Element} Portfolio main page with filtering and grid display
- * 
- * @accessibility WCAG 2.1 AA Compliance Details
- * - Semantic HTML structure with proper article and section landmarks
- * - Keyboard navigation for all interactive elements (Tab, Enter, Space, Arrow keys)
- * - Screen reader compatibility with ARIA labels and live regions
- * - Focus management during state changes and navigation
- * - High contrast mode support and reduced motion preferences
- * 
- * @responsive Breakpoint Behavior
- * - Mobile (320px-767px): Single column layout with full-width cards and touch-optimized filters
- * - Tablet (768px-1023px): Two column grid with enhanced touch targets and optimized spacing
- * - Desktop (1024px+): Two column layout with hover effects and enhanced visual hierarchy
- * 
- * @performance Optimization Details
- * - Lazy loading for portfolio images with progressive enhancement
- * - Efficient pagination to limit DOM nodes and improve rendering performance
- * - Memoized filter functions to prevent unnecessary re-renders
- * - Debounced state updates for smooth user interactions
- * 
- * @example
- * ```tsx
- * <PortfolioMainPage setCurrentPage={navigateToPage} />
- * ```
- */
-export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
+export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
+  const setCurrentPage = useAppNavigate();
   
-  // Mobile detection for responsive pagination
   const isMobile = useIsMobile();
   
-  // Portfolio page state management
   const [portfolioState, setPortfolioState] = useState<PortfolioPageState>({
     page: 1,
-    category: undefined,
-    limit: 6,
+    category: initialCategory,
+    limit: 10,
   });
+
+  // Update state when initialCategory changes
+  React.useEffect(() => {
+    setPortfolioState(prev => ({
+      ...prev,
+      category: initialCategory,
+      page: 1
+    }));
+  }, [initialCategory]);
   
-  // Lightbox state management
   const [lightbox, setLightbox] = useState<{
     isOpen: boolean;
     currentIndex: number;
@@ -199,81 +111,40 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
     title: '',
   });
   
-  // Simple scroll to top helper for pagination
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Use static data only for portfolio entries
   const entriesLoading = false;
   const entriesError = null;
-  const refreshEntries = useCallback(() => {
-    console.log('Portfolio entries refreshed');
-  }, []);
+  const refreshEntries = useCallback(() => {}, []);
 
-  // Get unified portfolio data from portfolioService
   const staticPortfolioEntries = useMemo(() => {
-    const entries = getPortfolioByCategory(portfolioState.category || 'all');
-    
-    // Debug logging for portfolio main page
-    console.log('🎨 PortfolioMainPage debug info:');
-    console.log('  - category filter:', portfolioState.category || 'all');
-    console.log('  - total entries returned:', entries.length);
-    console.log('  - first entry sample:', entries[0] && {
-      id: entries[0].id,
-      title: entries[0].title,
-      category: entries[0].category,
-      images: entries[0].images?.length || 0,
-      firstImageSrc: entries[0].images?.[0]?.src?.substring(0, 100) + '...'
-    });
-    
-    return entries;
+    return getPortfolioByCategory(portfolioState.category || 'all');
   }, [portfolioState.category]);
 
-
-
-  // Transform UnifiedPortfolioEntry to PortfolioCard's expected format
   const transformUnifiedToPortfolioCard = useCallback((entries: UnifiedPortfolioEntry[]): PortfolioCardEntry[] => {
     return entries.map(entry => ({
       ...entry,
-      subtitle: entry.subtitle || `${entry.category}`,
+      date: entry.date,
+      subtitle: entry.subtitle || entry.category,
       featuredImage: entry.images?.[0] || {
         src: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800',
         alt: 'Default portfolio image',
         caption: 'Portfolio Image',
         description: 'Portfolio artwork'
       },
-      // Keep all images in the images array for gallery functionality
       images: entry.images || []
     }));
   }, []);
 
-  // Use static portfolio data only
   const portfolioEntries = useMemo((): PortfolioCardEntry[] => {
-    console.log('📝 Using unified static data for portfolio');
-    const transformedEntries = transformUnifiedToPortfolioCard(staticPortfolioEntries);
-    
-    if (import.meta?.env?.DEV) {
-      console.log('🔄 Transformed entries for PortfolioCard:');
-      console.log('  - total static entries:', staticPortfolioEntries.length);
-      console.log('  - total transformed:', transformedEntries.length);
-      console.log('  - sample entry structure:', transformedEntries[0] && {
-        id: transformedEntries[0].id,
-        title: transformedEntries[0].title,
-        hasFeaturedImage: !!transformedEntries[0].featuredImage,
-        featuredImageSrc: transformedEntries[0].featuredImage?.src?.substring(0, 50) + '...',
-        totalImages: transformedEntries[0].images?.length,
-        category: transformedEntries[0].category
-      });
-    }
-    
-    return transformedEntries;
+    return transformUnifiedToPortfolioCard(staticPortfolioEntries);
   }, [staticPortfolioEntries, transformUnifiedToPortfolioCard]);
 
-  // Calculate pagination data
   const pagination = useMemo((): PortfolioPagination => {
     const total = portfolioEntries?.length || 0;
-    const totalItems = total; // In real implementation, this would come from API
+    const totalItems = total;
     const totalPages = Math.ceil(totalItems / portfolioState.limit);
     
     return {
@@ -286,7 +157,6 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
     };
   }, [portfolioEntries, portfolioState.page, portfolioState.limit]);
 
-  // Get current page entries
   const currentPageEntries = useMemo(() => {
     if (!portfolioEntries) return [];
     
@@ -296,53 +166,28 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
     return portfolioEntries.slice(startIndex, endIndex);
   }, [portfolioEntries, portfolioState.page, portfolioState.limit]);
 
-  /**
-   * Handle category filter change
-   */
   const handleCategoryChange = useCallback((categoryId: string) => {
-    setPortfolioState(prev => ({
-      ...prev,
-      category: categoryId === 'all' ? undefined : categoryId,
-      page: 1, // Reset to first page when changing category
-    }));
+    setCurrentPage('portfolio', undefined, categoryId === 'all' ? undefined : categoryId);
+  }, [setCurrentPage]);
 
-    // Announce filter change to screen readers
-    const announcement = document.getElementById('announcements');
-    if (announcement) {
-      const categoryName = PORTFOLIO_CATEGORIES.find(cat => cat.id === categoryId)?.name || 'All Work';
-      announcement.textContent = `Portfolio filtered by ${categoryName}`;
-    }
-  }, []);
-
-  /**
-   * Handle page change for pagination
-   */
   const handlePageChange = useCallback((newPage: number) => {
     setPortfolioState(prev => ({
       ...prev,
       page: newPage,
     }));
 
-    // Scroll to top when changing pages
     scrollToTop();
 
-    // Announce page change to screen readers
     const announcement = document.getElementById('announcements');
     if (announcement) {
       announcement.textContent = `Navigated to page ${newPage} of portfolio`;
     }
   }, []);
 
-  /**
-   * Handle navigation to portfolio detail page
-   */
   const handleNavigateToDetail = useCallback((portfolioId: string) => {
     setCurrentPage('portfolio-detail', portfolioId);
   }, [setCurrentPage]);
 
-  /**
-   * Handle portfolio card click to open lightbox
-   */
   const handlePortfolioClick = useCallback((entry: PortfolioCardEntry, imageIndex: number = 0) => {
     const images = entry.images.map(img => ({
       src: img.src,
@@ -358,20 +203,15 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
       title: entry.title,
     });
 
-    // Announce lightbox opening to screen readers
     const announcement = document.getElementById('announcements');
     if (announcement) {
       announcement.textContent = `Opened ${entry.title} portfolio gallery`;
     }
   }, []);
 
-  /**
-   * Close lightbox
-   */
   const closeLightbox = useCallback(() => {
     setLightbox(prev => ({ ...prev, isOpen: false }));
 
-    // Announce lightbox closing to screen readers
     const announcement = document.getElementById('announcements');
     if (announcement) {
       announcement.textContent = 'Closed portfolio gallery';
@@ -379,40 +219,35 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
   }, []);
 
   return (
-    <main id="main-content" role="main" tabIndex={-1}>
+    <main id="main-content" role="main" tabIndex={-1} className="portfolio-main-page">
       {/* Portfolio page header */}
       <section className="portfolio-page-header">
-        <div className="max-w-7xl mx-auto px-fluid-md text-center">
-          <h1 className="text-hero-h1 font-heading font-bold text-gradient-pink-purple-blue mb-fluid-lg leading-tight tracking-tight">
+        <div className="portfolio-page-header__content">
+          <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-fluid-lg">
             Portfolio
           </h1>
-          <p className="text-quote-large font-body font-normal text-gray-700 dark:text-gray-100 leading-relaxed max-w-4xl mx-auto">
+          <p className="text-body-guideline container-4xl">
             Discover the artistry and passion behind each creation — from vibrant festival face art to stunning UV-reactive designs that bring joy and connection to every celebration.
           </p>
         </div>
       </section>
 
       {/* Category Filters */}
-      <section className="py-fluid-lg bg-category-filters-section transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-fluid-md">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-fluid-md justify-center">
-            <label className="text-fluid-lg font-body font-semibold text-category-label whitespace-nowrap">
+      <section className="category-filters-section">
+        <div className="container-7xl">
+          <div className="category-filters-container">
+            <label className="text-category-label category-label">
               Categories:
             </label>
-            <div className="flex flex-wrap gap-fluid-sm justify-center">
-              {PORTFOLIO_CATEGORIES.map((category) => {
+            <div className="category-buttons">
+              {PORTFOLIO_CATEGORIES_DATA.map((category) => {
                 const isActive = (portfolioState.category === category.id) || 
                                (portfolioState.category === undefined && category.id === 'all');
                 
-                // Map gradient class to hover variant
                 const getGradientVariant = (gradientClass: string) => {
-                  if (gradientClass === 'bg-gradient-pink-purple-blue') {
-                    return 'gradient-pink-purple';
-                  } else if (gradientClass === 'bg-gradient-blue-teal-green') {
-                    return 'gradient-blue-teal';
-                  } else if (gradientClass === 'bg-gradient-gold-peach-coral') {
-                    return 'gradient-gold-peach';
-                  }
+                  if (gradientClass === 'bg-gradient-pink-purple-blue') return 'gradient-pink-purple';
+                  if (gradientClass === 'bg-gradient-blue-teal-green') return 'gradient-blue-teal';
+                  if (gradientClass === 'bg-gradient-gold-peach-coral') return 'gradient-gold-peach';
                   return '';
                 };
 
@@ -420,11 +255,11 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
                   <button
                     key={category.id}
                     onClick={() => handleCategoryChange(category.id)}
-                    className={`px-fluid-sm py-fluid-xs rounded-full border backdrop-blur-sm transition-all duration-300 font-body font-medium text-fluid-xs transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-opacity-50 ${
+                    className={`category-btn ${
                       isActive
-                        ? `${category.gradient} category-btn-active focus:ring-white`
-                        : `category-btn-inactive ${getGradientVariant(category.gradient)} shadow-sm hover:shadow-md focus:ring-gray-200 dark:focus:ring-purple-500/50`
-                    }`}
+                        ? `${category.gradient} category-btn--active`
+                        : `category-btn--inactive ${getGradientVariant(category.gradient)}`
+                    } ${category.id === 'all' ? 'category-btn--all' : ''}`}
                     aria-label={`Filter portfolio by ${category.name}`}
                   >
                     {category.name}
@@ -434,19 +269,18 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
             </div>
           </div>
 
-          {/* Active filters summary */}
           {portfolioState.category && (
-            <div className="mt-fluid-md p-fluid-sm bg-active-filters rounded-lg transition-colors duration-300">
-              <div className="flex flex-wrap items-center gap-fluid-sm text-fluid-sm">
-                <span className="font-body font-medium text-active-filters-label">Active filters:</span>
+            <div className="active-filters px-horizontal-section">
+              <div className="active-filters__content">
+                <span className="active-filters__label">Active filters:</span>
                 {portfolioState.category && (
-                  <span className="inline-flex items-center px-2 py-1 bg-active-filter-badge rounded transition-colors duration-300">
-                    Category: {PORTFOLIO_CATEGORIES.find(cat => cat.id === portfolioState.category)?.name || portfolioState.category}
+                  <span className="bg-active-filter-badge active-filters__badge">
+                    Category: {PORTFOLIO_CATEGORIES_DATA.find(cat => cat.id === portfolioState.category)?.name || portfolioState.category}
                   </span>
                 )}
                 <button
                   onClick={() => handleCategoryChange('all')}
-                  className="text-clear-filters font-medium transition-colors duration-300"
+                  className="text-clear-filters active-filters__clear"
                 >
                   Clear all
                 </button>
@@ -457,44 +291,39 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
       </section>
 
       {/* Portfolio Content */}
-      <section className="pt-fluid-md pb-fluid-2xl bg-portfolio-section transition-colors duration-300">
-        <div className="portfolio-page-content">
+      <section className="portfolio-content-section">
+        <div className="portfolio-content-container">
 
-          {/* Loading State */}
           {entriesLoading && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-fluid-lg mb-fluid-xl">
+            <div className="layout-grid layout-grid--desktop-2 rgs-grid">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="animate-pulse">
-                  <div className="bg-white/80 rounded-xl overflow-hidden">
-                    <div className="aspect-w-16 aspect-h-9 bg-gray-200"></div>
-                    <div className="p-fluid-md">
-                      <div className="h-4 bg-gray-200 rounded mb-fluid-sm w-1/4"></div>
-                      <div className="h-6 bg-gray-200 rounded mb-fluid-sm"></div>
-                      <div className="h-4 bg-gray-200 rounded mb-fluid-sm w-5/6"></div>
-                      <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                    </div>
+                <div key={i} className="portfolio-card-skeleton">
+                  <div className="portfolio-card-skeleton__image"></div>
+                  <div className="portfolio-card-skeleton__content">
+                    <div className="skeleton-bar skeleton-bar--subtitle mb-fluid-sm skeleton-bar--w-25"></div>
+                    <div className="skeleton-bar skeleton-bar--title mb-fluid-sm"></div>
+                    <div className="skeleton-bar skeleton-bar--text mb-fluid-sm skeleton-bar--w-85"></div>
+                    <div className="skeleton-bar skeleton-bar--text skeleton-bar--w-75"></div>
                   </div>
                 </div>
               ))}
             </div>
           )}
 
-          {/* Error State */}
           {entriesError && !entriesLoading && (
-            <div className="text-center py-fluid-xl">
+            <div className="portfolio-error">
               <button
                 onClick={refreshEntries}
-                className="bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-200 focus:ring-opacity-50"
+                className="btn btn--neon-primary"
               >
                 Try Again
               </button>
             </div>
           )}
 
-          {/* Portfolio Grid */}
           {!entriesLoading && !entriesError && currentPageEntries && currentPageEntries.length > 0 && (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-fluid-lg mb-fluid-xl">
+              <div className="layout-grid layout-grid--desktop-2 rgs-grid">
                 {currentPageEntries.map((entry, index) => (
                   <PortfolioCard
                     key={entry.id}
@@ -505,30 +334,24 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
                 ))}
               </div>
 
-              {/* Mobile-Optimized Pagination */}
               {pagination.totalPages > 1 && (
-                <div className="flex flex-col items-center space-y-4 pb-fluid-2xl">
-
-                  
-                  {/* Pagination Controls */}
+                <div className="pagination-wrapper">
                   <Pagination className="mb-fluid-2xl">
                     <PaginationContent>
                       <PaginationItem>
                         <PaginationPrevious 
                           onClick={() => handlePageChange(Math.max(1, portfolioState.page - 1))}
                           disabled={portfolioState.page <= 1}
-                          className="!px-3"
+                          className="pagination-nav-button"
                         />
                       </PaginationItem>
                       
-                      {/* Smart pagination - show max 5 pages on mobile, 7 on desktop */}
                       {(() => {
                         const totalPages = pagination.totalPages;
                         const currentPage = portfolioState.page;
-                        const maxVisible = isMobile ? 3 : 5; // Even more mobile-friendly
+                        const maxVisible = isMobile ? 3 : 5;
                         
                         if (totalPages <= maxVisible) {
-                          // Show all pages if few enough
                           return [...Array(totalPages)].map((_, index) => {
                             const pageNumber = index + 1;
                             const isCurrentPage = pageNumber === currentPage;
@@ -538,7 +361,7 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
                                 <PaginationLink
                                   onClick={() => handlePageChange(pageNumber)}
                                   isActive={isCurrentPage}
-                                  className="!px-3 !w-auto"
+                                  className="pagination-btn"
                                 >
                                   {pageNumber}
                                 </PaginationLink>
@@ -546,32 +369,28 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
                             );
                           });
                         } else {
-                          // Smart ellipsis pagination
                           const pages = [];
                           
-                          // Always show first page
                           pages.push(
                             <PaginationItem key={1}>
                               <PaginationLink
                                 onClick={() => handlePageChange(1)}
                                 isActive={currentPage === 1}
-                                className="!px-3 !w-auto"
+                                className="pagination-btn"
                               >
                                 1
                               </PaginationLink>
                             </PaginationItem>
                           );
                           
-                          // Show ellipsis if needed
                           if (currentPage > 3) {
                             pages.push(
                               <PaginationItem key="ellipsis-1">
-                                <PaginationEllipsis className="px-3" />
+                                <PaginationEllipsis className="pagination-ellipsis" />
                               </PaginationItem>
                             );
                           }
                           
-                          // Show pages around current page
                           const start = Math.max(2, currentPage - 1);
                           const end = Math.min(totalPages - 1, currentPage + 1);
                           
@@ -581,7 +400,7 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
                                 <PaginationLink
                                   onClick={() => handlePageChange(i)}
                                   isActive={currentPage === i}
-                                  className="!px-3 !w-auto"
+                                  className="pagination-btn"
                                 >
                                   {i}
                                 </PaginationLink>
@@ -589,23 +408,21 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
                             );
                           }
                           
-                          // Show ellipsis if needed
                           if (currentPage < totalPages - 2) {
                             pages.push(
                               <PaginationItem key="ellipsis-2">
-                                <PaginationEllipsis className="px-3" />
+                                <PaginationEllipsis className="pagination-ellipsis" />
                               </PaginationItem>
                             );
                           }
                           
-                          // Always show last page if more than 1 page
                           if (totalPages > 1) {
                             pages.push(
                               <PaginationItem key={totalPages}>
                                 <PaginationLink
                                   onClick={() => handlePageChange(totalPages)}
                                   isActive={currentPage === totalPages}
-                                  className="!px-3 !w-auto"
+                                  className="pagination-btn"
                                 >
                                   {totalPages}
                                 </PaginationLink>
@@ -621,41 +438,39 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
                         <PaginationNext 
                           onClick={() => handlePageChange(Math.min(pagination.totalPages, portfolioState.page + 1))}
                           disabled={portfolioState.page >= pagination.totalPages}
-                          className="!px-3"
+                          className="pagination-nav-button"
                         />
                       </PaginationItem>
                     </PaginationContent>
                   </Pagination>
                   
-                  {/* Mobile Quick Navigation - Jump to first/last with better touch targets */}
                   {pagination.totalPages > 3 && isMobile && (
-                    <div className="flex items-center gap-3">
+                    <div className="mobile-quick-nav">
                       <button
                         onClick={() => handlePageChange(1)}
                         disabled={portfolioState.page === 1}
-                        className="flex-1 px-4 py-3 min-h-[44px] text-sm font-body font-medium bg-white/80 hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed border border-white/50 rounded-lg text-gray-700 transition-all duration-200 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-pink-500 touch-manipulation"
+                        className="mobile-nav-btn"
                       >
                         ← First Page
                       </button>
                       <button
                         onClick={() => handlePageChange(pagination.totalPages)}
                         disabled={portfolioState.page === pagination.totalPages}
-                        className="flex-1 px-4 py-3 min-h-[44px] text-sm font-body font-medium bg-white/80 hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed border border-white/50 rounded-lg text-gray-700 transition-all duration-200 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-pink-500 touch-manipulation"
+                        className="mobile-nav-btn"
                       >
                         Last Page →
                       </button>
                     </div>
                   )}
                   
-                  {/* Mobile Swipe Hint */}
                   {isMobile && (
-                    <div className="text-center">
-                      <p className="text-xs font-body text-gray-500 flex items-center justify-center gap-2">
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="mobile-swipe-hint">
+                      <p className="mobile-swipe-hint__text">
+                        <svg className="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
                         </svg>
                         Swipe images to see more
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
                       </p>
@@ -666,22 +481,21 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
             </>
           )}
 
-          {/* Empty State */}
           {!entriesLoading && !entriesError && (!currentPageEntries || currentPageEntries.length === 0) && (
-            <div className="text-center py-fluid-xl">
-              <p className="text-fluid-xl font-body font-medium text-gray-600 mb-fluid-md">
+            <div className="portfolio-empty">
+              <p className="portfolio-empty__title">
                 No portfolio entries found
               </p>
-              <p className="text-fluid-base font-body text-gray-500 mb-fluid-lg">
+              <p className="portfolio-empty__message">
                 {portfolioState.category 
-                  ? `No entries in the ${PORTFOLIO_CATEGORIES.find(cat => cat.id === portfolioState.category)?.name} category.`
+                  ? `No entries in the ${PORTFOLIO_CATEGORIES_DATA.find(cat => cat.id === portfolioState.category)?.name} category.`
                   : 'No portfolio entries available at the moment.'
                 }
               </p>
               {portfolioState.category && (
                 <button
                   onClick={() => handleCategoryChange('all')}
-                  className="bg-gradient-blue-teal-green hover:from-blue-700 hover:to-teal-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-teal-200 focus:ring-opacity-50"
+                  className="btn btn--neon-secondary"
                 >
                   View All Work
                 </button>
@@ -691,20 +505,16 @@ export function PortfolioMainPage({ setCurrentPage }: PortfolioMainPageProps) {
         </div>
       </section>
 
-      {/* Portfolio Lightbox */}
-      <PortfolioLightbox
+      <EnhancedLightbox
         isOpen={lightbox.isOpen}
         onClose={closeLightbox}
         currentIndex={lightbox.currentIndex}
         images={lightbox.images}
         title={lightbox.title}
+        onNavigate={(index) => setLightbox(prev => ({ ...prev, currentIndex: index }))}
       />
 
-      {/* Scroll to top button */}
-      <ScrollToTop ariaLabel="Scroll to top of portfolio page" />
-
-      {/* Footer */}
-      <Footer setCurrentPage={setCurrentPage} />
+      <ScrollToTop ariaLabel="Scroll to top of portfolio" />
     </main>
   );
 }

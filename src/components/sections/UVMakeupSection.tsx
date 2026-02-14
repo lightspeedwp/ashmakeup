@@ -1,53 +1,27 @@
 /**
  * @fileoverview UV Makeup Art section showcasing neon and blacklight artistry
- * Displays UV reactive makeup portfolio with lightbox functionality and responsive design
+ * Displays UV reactive makeup portfolio with lightbox functionality
+ * Uses a Responsive Hybrid Layout: Grid on Desktop, Slider on Tablet/Mobile
  *
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
+ * @version 3.1.0 - Responsive Grid/Slider Hybrid
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { uvMakeupWork } from "../../data/mock/portfolio/uv-makeup";
 import { EnhancedLightbox } from "../ui/EnhancedLightbox";
 import { SliderCard } from "../ui/SliderCard";
-import { BlurredCircles } from "../ui/BlurredCircles";
+import { homeUI } from "../../data/mock/ui/home";
+import { useAppNavigate } from "../../hooks/useAppNavigate";
+import "@/styles/blocks/column-layouts.css";
+import "@/styles/blocks/uv-makeup.css";
 
 /**
  * UV Makeup Art section component displaying neon and blacklight artistry portfolio
- *
- * Visual Design:
- * - Electric blue to purple to cyan gradient background creating vibrant energy
- * - Responsive decorative orbs with pulse animations for visual interest
- * - Consistent card styling matching other homepage sections
- * - Professional typography hierarchy with gradient text effects
- *
- * Layout Strategy:
- * - Desktop: 3-column grid matching Featured Work section alignment
- * - Mobile: Horizontal scrollable slider with snap-scroll behavior
- * - Square aspect ratio images for consistent visual rhythm
- * - Responsive spacing and typography throughout
- *
- * Interactive Features:
- * - Click to open UV makeup images in full-screen lightbox modal
- * - Smooth hover effects with subtle scale transforms
- * - Focus management for accessibility compliance
- * - Navigation to portfolio UV section on CTA button
- *
- * @param {Object} props - Component properties
- * @param {Function} props.setCurrentPage - Navigation function to switch to Portfolio page
- *
- * @returns {JSX.Element} UV makeup section with responsive gallery and lightbox
- *
- * @design
- * - Uses `max-w-5xl` and `gap-fluid-lg` per Guidelines.md specifications
- * - Maintains visual consistency with Featured Work section styling
- * - Implements responsive mobile slider with scrollbar hiding
  */
-export function UVMakeupSection({
-  setCurrentPage,
-}: {
-  setCurrentPage: (page: string) => void;
-}) {
+export function UVMakeupSection() {
+  const setCurrentPage = useAppNavigate();
   const [lightbox, setLightbox] = useState<{
     isOpen: boolean;
     images: Array<{
@@ -66,6 +40,62 @@ export function UVMakeupSection({
     title: "",
     description: "",
   });
+
+  // Responsive State
+  const [isDesktop, setIsDesktop] = useState(true);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [slidesPerView, setSlidesPerView] = useState(3);
+
+  // Handle Resize Logic for Hybrid Layout
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setSlidesPerView(1);
+        setIsDesktop(false);
+      } else if (width < 1280) {
+        setSlidesPerView(2);
+        setIsDesktop(false);
+      } else {
+        setSlidesPerView(3);
+        setIsDesktop(true);
+      }
+    };
+
+    // Initial check
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Swipe Logic
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextSlide();
+    }
+    if (isRightSwipe) {
+      prevSlide();
+    }
+  };
 
   const openLightbox = (
     images: Array<{
@@ -88,13 +118,7 @@ export function UVMakeupSection({
   };
 
   const closeLightbox = () => {
-    setLightbox({
-      isOpen: false,
-      images: [],
-      currentIndex: 0,
-      title: "",
-      description: "",
-    });
+    setLightbox((prev) => ({ ...prev, isOpen: false }));
   };
 
   const navigateLightbox = (newIndex: number) => {
@@ -110,91 +134,148 @@ export function UVMakeupSection({
     category: entry.category,
   }));
 
+  const maxIndex = Math.max(0, uvMakeupCards.length - slidesPerView);
+
+  // Correct index if it goes out of bounds after resize
+  useEffect(() => {
+    if (currentSlideIndex > maxIndex) {
+      setCurrentSlideIndex(maxIndex);
+    }
+  }, [maxIndex, currentSlideIndex]);
+
+  const nextSlide = () => {
+    setCurrentSlideIndex((prev) => Math.min(prev + 1, maxIndex));
+  };
+
+  const prevSlide = () => {
+    setCurrentSlideIndex((prev) => Math.max(prev - 1, 0));
+  };
+
   return (
     <>
-      <section
-        id="uv-makeup"
-        className="relative bg-uv-makeup-section py-section-md px-section-md w-full transition-colors duration-300"
-      >
-        {/* Background decoration - responsive */}
-        <BlurredCircles variant="uv" />
-
-        <div className="max-w-7xl mx-auto relative z-10">
+      <section id="uv-makeup" className="uv-makeup-section">
+        <div className="container-wide uv-makeup-section__content">
           {/* Section Header */}
-          <div className="text-center mb-fluid-2xl">
+          <div className="uv-makeup-section__header">
             <h2
               id="uv-makeup"
-              className="text-section-h2 font-heading font-bold text-gradient-pink-purple-blue mb-fluid-lg"
+              className="text-section-h2 text-gradient-pink-purple-blue mb-fluid-lg"
             >
-              UV Makeup Art
+              {homeUI.sections.uvMakeup.title}
             </h2>
-            <p className="text-body-guideline font-body font-normal max-w-3xl mx-auto leading-relaxed text-white dark:text-white">
-              Electrifying UV-reactive makeup designs that glow under blacklight,
-              perfect for festivals, raves, and nightlife events with bold neon colors
-              and geometric patterns.
+            <p className="text-body-guideline uv-makeup-section__description">
+              {homeUI.sections.uvMakeup.description}
             </p>
           </div>
 
-          {/* Desktop Grid / Mobile Slider */}
-          <div className="mb-fluid-xl max-w-6xl mx-auto">
-            {/* Mobile: Horizontal slider with snap scrolling */}
-            <div className="md:hidden overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-fluid-md px-fluid-md pb-4">
-              <div className="flex gap-fluid-md" style={{ scrollSnapType: 'x mandatory' }}>
-                {uvMakeupCards.map((makeup, index) => (
-                  <div
-                    key={makeup.id || index}
-                    className="flex-none w-[85vw] snap-center"
-                    style={{ scrollSnapAlign: 'center' }}
-                  >
-                    <SliderCard
-                      data={makeup}
-                      onImageClick={(imageIndex) => {
-                        const images = makeup.images || [];
-                        openLightbox(
-                          images,
-                          imageIndex,
-                          makeup.title,
-                          makeup.description,
-                        );
-                      }}
-                      variant="uv"
-                      className="w-full h-full"
-                    />
-                  </div>
+          {/* Hybrid Content Layout: Grid on Desktop, Slider on Mobile/Tablet */}
+          {isDesktop ? (
+            /* Desktop Grid View */
+            <div className="layout-grid layout-grid--desktop-3 rgs-grid">
+              {uvMakeupCards.map((makeup, index) => (
+                <div key={makeup.id || index} className="uv-makeup-card-wrapper">
+                  <SliderCard
+                    data={makeup}
+                    onImageClick={(imageIndex) => {
+                      const images = makeup.images || [];
+                      openLightbox(
+                        images,
+                        imageIndex,
+                        makeup.title,
+                        makeup.description,
+                      );
+                    }}
+                    variant="uv"
+                    className="uv-makeup-card"
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            /* Mobile/Tablet Slider View */
+            <div className="uv-makeup-section__slider-wrapper">
+               {/* Navigation Buttons (Hidden on mobile via CSS) */}
+               <button
+                onClick={prevSlide}
+                disabled={currentSlideIndex === 0}
+                aria-label="Previous slide"
+                className="uv-makeup-section__nav-button uv-makeup-section__nav-button--prev"
+              >
+                <ChevronLeft className="uv-makeup-section__nav-icon" />
+              </button>
+
+              <button
+                onClick={nextSlide}
+                disabled={currentSlideIndex >= maxIndex}
+                aria-label="Next slide"
+                className="uv-makeup-section__nav-button uv-makeup-section__nav-button--next"
+              >
+                <ChevronRight className="uv-makeup-section__nav-icon" />
+              </button>
+
+              {/* Viewport & Track */}
+              <div 
+                className="uv-makeup-section__slider-viewport"
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+              >
+                <div 
+                  className="uv-makeup-section__track"
+                  style={{
+                    transform: `translateX(calc(${currentSlideIndex} * -${100 / slidesPerView}%))`
+                  }}
+                >
+                  {uvMakeupCards.map((makeup, index) => (
+                    <div
+                      key={makeup.id || index}
+                      className="uv-makeup-section__slide"
+                    >
+                      <SliderCard
+                        data={makeup}
+                        onImageClick={(imageIndex) => {
+                          const images = makeup.images || [];
+                          openLightbox(
+                            images,
+                            imageIndex,
+                            makeup.title,
+                            makeup.description,
+                          );
+                        }}
+                        variant="uv"
+                        className="uv-makeup-card-wrapper"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Dots Navigation */}
+              <div className="uv-makeup-section__dots">
+                {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentSlideIndex(index)}
+                    aria-label={`Go to slide group ${index + 1}`}
+                    className={`uv-makeup-section__dot ${
+                      index === currentSlideIndex
+                        ? "uv-makeup-section__dot--active"
+                        : "uv-makeup-section__dot--inactive"
+                    }`}
+                  />
                 ))}
               </div>
             </div>
-
-            {/* Tablet/Desktop: Grid layout */}
-            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-fluid-lg">
-              {uvMakeupCards.map((makeup, index) => (
-                <SliderCard
-                  key={makeup.id || index}
-                  data={makeup}
-                  onImageClick={(imageIndex) => {
-                    const images = makeup.images || [];
-                    openLightbox(
-                      images,
-                      imageIndex,
-                      makeup.title,
-                      makeup.description,
-                    );
-                  }}
-                  variant="uv"
-                  className="w-full p-fluid-sm"
-                />
-              ))}
-            </div>
-          </div>
+          )}
 
           {/* Call to Action */}
-          <div className="text-center">
+          <div className="uv-makeup-section__cta">
             <button
               onClick={() => setCurrentPage("portfolio")}
-              className="w-full sm:w-auto justify-center text-center bg-gradient-blue-teal-green text-white px-button py-button rounded-lg font-body font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus-ring-uv-button text-button-fluid"
-              aria-label="Navigate to Portfolio page to view UV makeup gallery"
+              className="btn btn--neon-secondary uv-makeup-cta-btn"
+              aria-label={homeUI.sections.uvMakeup.ctaAriaLabel}
             >
-              See More UV Makeup
+              {homeUI.sections.uvMakeup.cta}
             </button>
           </div>
         </div>

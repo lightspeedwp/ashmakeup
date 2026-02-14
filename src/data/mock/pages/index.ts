@@ -15,3 +15,12 @@ export * from './about';
 
 // Portfolio page content
 export * from './portfolio';
+
+// Contact page content
+export * from './contact';
+
+// Legal pages content
+export * from './legal';
+
+// Blog page content
+export * from './blog';

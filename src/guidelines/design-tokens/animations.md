@@ -1,849 +1,870 @@
-# Animation Design Tokens
+# Animation System
 
-**Version:** 5.0.0  
-**Last Updated:** January 2025  
-**WordPress Theme.json Compatible:** ✅
+**Version:** 1.0.0  
+**Last Updated:** February 2025  
+**Design System:** Neon vs Atomic Black
 
-Complete animation system for the Ash Shaw Makeup Portfolio, aligned with WordPress block theme standards using numeric duration scale with accessibility-first design.
+---
 
-## ✅ WordPress Theme.json Alignment
+## 🎬 Overview
 
-This animation system follows WordPress 6.9+ standards with:
-- ✅ **Numeric duration scale (100-400)** for predictable timing
-- ✅ **CSS custom properties** for theme integration
-- ✅ **Accessibility-first** with `prefers-reduced-motion` support
-- ✅ **Performance optimized** using `transform` and `opacity`
+The Ash Shaw Makeup Portfolio uses a comprehensive animation system with 32 keyframe animations across the application. Animations enhance user experience, provide visual feedback, and create energy that reflects the vibrant makeup artistry brand.
+
+**Animation Philosophy:**
+- **Purposeful:** Every animation serves a function
+- **Performant:** Hardware-accelerated transforms and opacity
+- **Accessible:** Respects `prefers-reduced-motion`
+- **Branded:** Neon glow effects and smooth transitions
+
+---
 
 ## 📋 Table of Contents
 
-1. [Animation Duration Scale](#animation-duration-scale)
-2. [Easing Functions](#easing-functions)
-3. [Animation Categories](#animation-categories)
-4. [Device-Specific Considerations](#device-specific-considerations)
-5. [Accessibility Requirements](#accessibility-requirements)
-6. [Common Animation Patterns](#common-animation-patterns)
+1. [Global Animations](#global-animations)
+2. [Component Animations](#component-animations)
+3. [Neon Effects](#neon-effects)
+4. [Loading States](#loading-states)
+5. [Transition Patterns](#transition-patterns)
+6. [Performance Guidelines](#performance-guidelines)
+7. [Accessibility](#accessibility)
 
 ---
 
-## Animation Duration Scale
+## 🌐 Global Animations
 
-### Numeric Duration Scale (WordPress-Aligned)
+### 1. Gradient Shift (Hyperpop Background)
 
-All animations use **numeric slugs (100-400)** for predictable timing:
+**Location:** `/styles/globals.css` (lines 441-445)
 
 ```css
-/* WordPress Animation Duration Scale */
---animation-100: 150ms;   /* Fast - Microinteractions */
---animation-200: 300ms;   /* Normal - Transitions */
---animation-300: 500ms;   /* Slow - Modals, overlays */
---animation-400: 800ms;   /* Very Slow - Hero effects, page loads */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-neon-glow-bg {
+  background: var(--wp--preset--gradient--hyperpop);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  will-change: background-position;
+}
 ```
 
-### Visual Duration Scale
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│              WORDPRESS ANIMATION DURATION SCALE                      │
-└─────────────────────────────────────────────────────────────────────┘
-
---animation-100 (Fast)
-▓                                    150ms - Button hover, ripple
-
---animation-200 (Normal)
-▓▓                                   300ms - Color change, scale
-
---animation-300 (Slow)
-▓▓▓▓                                 500ms - Modal fade, slide
-
---animation-400 (Very Slow)
-▓▓▓▓▓▓▓                              800ms - Hero reveal, page transition
+**Usage:**
+```tsx
+// ✅ CORRECT - Animated gradient background
+<section className="animate-neon-glow-bg py-section">
+  Dynamic section with animated multi-color gradient
+</section>
 ```
 
-### Duration Usage Guidelines
-
-| Duration | Slug | Use Case | Examples |
-|----------|------|----------|----------|
-| **150ms** | `100` | Microinteractions | Button hover, ripple, icon changes |
-| **300ms** | `200` | Standard transitions | Color changes, scale transforms, fades |
-| **500ms** | `300` | Complex animations | Modal open/close, slide panels, accordions |
-| **800ms** | `400` | Hero animations | Page transitions, hero reveals, loading states |
+**Performance:** Uses `background-position` animation with `will-change` hint for GPU acceleration.
 
 ---
 
-## Easing Functions
+### 2. Neon Pulse
 
-### Standard Easing Curves
+**Location:** `/styles/globals.css` (lines 447-450)
 
 ```css
-/* Easing Function Variables */
---ease-standard: cubic-bezier(0.4, 0, 0.2, 1);      /* Material Design standard */
---ease-decelerate: cubic-bezier(0, 0, 0.2, 1);     /* Fast start, slow end */
---ease-accelerate: cubic-bezier(0.4, 0, 1, 1);     /* Slow start, fast end */
---ease-sharp: cubic-bezier(0.4, 0, 0.6, 1);        /* Snappy, energetic */
---ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Playful bounce */
+@keyframes neonPulse {
+  from { box-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color); }
+  to { box-shadow: 0 0 10px var(--glow-color), 0 0 20px var(--glow-color); }
+}
+
+.animate-neon-pulse-green {
+  --glow-color: var(--wp--preset--color--neon-green);
+  animation: neonPulse 2s infinite alternate;
+  will-change: box-shadow;
+}
+
+.animate-neon-pulse-pink {
+  --glow-color: var(--wp--preset--color--neon-pink);
+  animation: neonPulse 2s infinite alternate;
+  will-change: box-shadow;
+}
+
+.animate-neon-pulse-blue {
+  --glow-color: var(--wp--preset--color--neon-blue);
+  animation: neonPulse 2s infinite alternate;
+  will-change: box-shadow;
+}
 ```
 
-### Easing Visualization
+**Usage:**
+```tsx
+// ✅ CORRECT - Pulsing neon button
+<button className="btn btn--neon-primary animate-neon-pulse-pink">
+  Live Now
+</button>
 
-```
-Standard (ease-standard)
-────────────────────────────────
-    ╱╱╱╱╱╱╱╱╱╱╱╱╱────────
-   ╱
-  ╱
- ╱
-Start                         End
-
-Decelerate (ease-decelerate)
-────────────────────────────────
- ╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱──────────
-╱
-Start                         End
-
-Accelerate (ease-accelerate)
-────────────────────────────────
-          ────────╱╱╱╱╱╱╱╱╱╱╱╱
-                 ╱
-                ╱
-               ╱
-Start                         End
+// ✅ CORRECT - Notification indicator
+<span className="notification-badge animate-neon-pulse-green">
+  •
+</span>
 ```
 
-### When to Use Each Easing
-
-| Easing | Use Case |
-|--------|----------|
-| **standard** | General purpose, most animations |
-| **decelerate** | Elements entering the screen |
-| **accelerate** | Elements leaving the screen |
-| **sharp** | Quick, snappy interactions |
-| **bounce** | Playful, attention-grabbing effects |
+**Duration:** 2 seconds  
+**Easing:** Infinite alternate (smooth ping-pong)  
+**Performance:** Animates `box-shadow` (moderate GPU usage)
 
 ---
 
-## Animation Categories
+### 3. Float
 
-### 1. Microinteractions (100ms)
-
-**Definition:** Small, immediate feedback for user actions
+**Location:** `/styles/globals.css` (lines 452-456)
 
 ```css
-/* Button Hover */
-.button {
-  transition: transform var(--animation-100) var(--ease-standard),
-              box-shadow var(--animation-100) var(--ease-standard);
-}
-
-.button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-
-/* Icon Rotation */
-.icon-chevron {
-  transition: transform var(--animation-100) var(--ease-sharp);
-}
-
-.icon-chevron.rotated {
-  transform: rotate(180deg);
-}
-
-/* Ripple Effect */
-.ripple {
-  animation: ripple var(--animation-100) var(--ease-decelerate);
-}
-
-@keyframes ripple {
-  from {
-    transform: scale(0);
-    opacity: 1;
-  }
-  to {
-    transform: scale(4);
-    opacity: 0;
-  }
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
 }
 ```
 
-**Examples:**
-- Button hover states
-- Icon changes
-- Toggle switches
-- Checkbox checks
-- Radio button selections
+**Usage:**
+```tsx
+// Custom implementation - add class in component CSS
+<div className="floating-element">
+  Gently floating element
+</div>
+```
+
+```css
+/* In component CSS */
+.floating-element {
+  animation: float 3s ease-in-out infinite;
+}
+```
+
+**Duration:** 3-6 seconds (customizable)  
+**Easing:** `ease-in-out`  
+**Performance:** Hardware-accelerated `transform`
 
 ---
 
-### 2. Standard Transitions (200ms)
+## 🧩 Component Animations
 
-**Definition:** Common UI state changes and property transitions
+### 4. Slide In (Mobile Menu, Modals)
+
+**Locations:**
+- `/styles/blocks/mobile-menu.css` (line 92)
+- `/styles/blocks/home-page.css` (line 88)
+- `/styles/blocks/contentful-admin.css` (line 131)
 
 ```css
-/* Color Transition */
-.link {
-  color: var(--wp--preset--color--primary);
-  transition: color var(--animation-200) var(--ease-standard);
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.link:hover {
-  color: var(--wp--preset--color--secondary);
-}
-
-/* Background Fade */
-.card {
-  background: white;
-  transition: background-color var(--animation-200) var(--ease-standard);
-}
-
-.card:hover {
-  background: var(--color-pink-50);
-}
-
-/* Scale Transform */
-.image-hover {
-  transition: transform var(--animation-200) var(--ease-standard);
-}
-
-.image-hover:hover {
-  transform: scale(1.1);
-}
-
-/* Opacity Fade */
-.fade-element {
-  opacity: 0;
-  transition: opacity var(--animation-200) var(--ease-decelerate);
-}
-
-.fade-element.visible {
-  opacity: 1;
+/* Mobile Menu Implementation */
+.mobile-menu__nav-item {
+  animation: slideIn 0.4s ease-out forwards;
+  animation-delay: calc(var(--item-index) * 0.05s);
 }
 ```
 
-**Examples:**
-- Link color changes
-- Card hover effects
-- Image scaling
-- Dropdown arrows
-- Tab switching
+**Usage:**
+```tsx
+// ✅ CORRECT - Staggered menu items
+{menuItems.map((item, index) => (
+  <div 
+    key={item.id}
+    className="mobile-menu__nav-item"
+    style={{ '--item-index': index } as React.CSSProperties}
+  >
+    {item.label}
+  </div>
+))}
+```
+
+**Duration:** 0.4 seconds  
+**Easing:** `ease-out`  
+**Stagger:** 50ms per item
 
 ---
 
-### 3. Complex Animations (300ms)
+### 5. Bounce
 
-**Definition:** Multi-property animations for modals, panels, overlays
+**Locations:**
+- `/styles/blocks/scroll-controls.css` (line 102)
+- `/styles/blocks/countdown.css` (line 351)
 
 ```css
-/* Modal Fade In */
-.modal-overlay {
-  opacity: 0;
-  transition: opacity var(--animation-300) var(--ease-decelerate);
+/* Scroll Down Arrow Bounce */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-12px); }
+  60% { transform: translateY(-6px); }
 }
 
-.modal-overlay.open {
-  opacity: 1;
-}
-
-.modal-content {
-  transform: scale(0.9) translateY(20px);
-  opacity: 0;
-  transition: 
-    transform var(--animation-300) var(--ease-decelerate),
-    opacity var(--animation-300) var(--ease-decelerate);
-}
-
-.modal-content.open {
-  transform: scale(1) translateY(0);
-  opacity: 1;
-}
-
-/* Slide Panel */
-.slide-panel {
-  transform: translateX(100%);
-  transition: transform var(--animation-300) var(--ease-standard);
-}
-
-.slide-panel.open {
-  transform: translateX(0);
-}
-
-/* Accordion */
-.accordion-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height var(--animation-300) var(--ease-standard);
-}
-
-.accordion-content.expanded {
-  max-height: 500px; /* Set appropriate max-height */
+/* Countdown Bounce (simpler) */
+@keyframes bounce {
+  0%, 100% { transform: translateY(-5%); }
+  50% { transform: translateY(5%); }
 }
 ```
 
-**Examples:**
-- Modal open/close
-- Side drawer navigation
-- Accordion expand/collapse
-- Lightbox gallery
-- Mobile menu slide
+**Usage:**
+```tsx
+// ✅ CORRECT - Scroll indicator
+<div className="scroll-down-arrow">
+  <ChevronDown className="animate-bounce" />
+</div>
+```
+
+**Duration:** 2 seconds  
+**Easing:** Eased timing for natural bounce  
+**Loop:** Infinite
 
 ---
 
-### 4. Hero Animations (400ms)
+### 6. Pulse (Loading, Skeleton States)
 
-**Definition:** Large, impactful animations for page loads and hero sections
+**Locations:**
+- `/styles/blocks/blog-preview.css` (line 218)
+- `/styles/blocks/about-page.css` (line 169)
+- `/styles/blocks/data-display.css` (line 195)
 
 ```css
-/* Hero Fade In */
-.hero-content {
-  opacity: 0;
-  transform: translateY(30px);
-  animation: heroFadeIn var(--animation-400) var(--ease-decelerate) forwards;
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
-@keyframes heroFadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Staggered Fade In */
-.hero-title {
-  animation: fadeInUp var(--animation-400) var(--ease-decelerate);
-  animation-delay: 0ms;
-}
-
-.hero-subtitle {
-  animation: fadeInUp var(--animation-400) var(--ease-decelerate);
-  animation-delay: 100ms;
-}
-
-.hero-description {
-  animation: fadeInUp var(--animation-400) var(--ease-decelerate);
-  animation-delay: 200ms;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Page Transition */
-.page-transition-enter {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: 
-    opacity var(--animation-400) var(--ease-decelerate),
-    transform var(--animation-400) var(--ease-decelerate);
-}
-
-.page-transition-enter-active {
-  opacity: 1;
-  transform: translateY(0);
+/* Skeleton Implementation */
+.skeleton {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 ```
 
-**Examples:**
-- Hero section reveals
-- Page transitions
-- Loading animations
-- Image gallery reveals
-- Scroll-triggered animations
+**Usage:**
+```tsx
+// ✅ CORRECT - Loading skeleton
+<div className="skeleton skeleton--text">
+  <div className="skeleton__line"></div>
+  <div className="skeleton__line"></div>
+</div>
+```
+
+**Duration:** 2 seconds  
+**Easing:** `cubic-bezier(0.4, 0, 0.6, 1)` (smooth pulse)  
+**Loop:** Infinite
 
 ---
 
-## Device-Specific Considerations
+### 7. Spin (Loading Indicators)
 
-### Mobile (< 768px)
-
-**Touch Feedback:** Immediate visual response (100ms)
-
-```css
-/* Mobile Button Active State */
-.button-mobile {
-  transition: 
-    transform var(--animation-100) var(--ease-sharp),
-    background-color var(--animation-100) var(--ease-standard);
-}
-
-.button-mobile:active {
-  transform: scale(0.95);
-  background-color: var(--color-pink-600);
-}
-
-/* Swipe Gesture */
-.swipeable {
-  transition: transform var(--animation-200) var(--ease-standard);
-}
-
-.swipeable.swiping {
-  transition: none; /* Disable during swipe */
-}
-```
-
-**Guidelines:**
-- ✅ Use faster animations (100-200ms)
-- ✅ Immediate touch feedback
-- ✅ Simple, performant animations
-- ❌ Avoid complex multi-property animations
-- ❌ Don't rely on hover states
-
----
-
-### Tablet (768px - 1023px)
-
-**Hybrid Interactions:** Support both touch and hover
+**Locations:**
+- `/styles/blocks/countdown.css` (line 346)
+- `/styles/blocks/home-page.css` (line 99)
+- `/styles/blocks/skeleton.css` (line 62)
+- `/styles/blocks/contact-form.css` (line 110)
 
 ```css
-/* Tablet-Optimized Card */
-.card-tablet {
-  transition: 
-    transform var(--animation-200) var(--ease-standard),
-    box-shadow var(--animation-200) var(--ease-standard);
-}
-
-@media (hover: hover) {
-  .card-tablet:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-  }
-}
-
-.card-tablet:active {
-  transform: scale(0.98);
-}
-```
-
-**Guidelines:**
-- ✅ Detect hover capability (`@media (hover: hover)`)
-- ✅ Provide touch AND hover states
-- ✅ Use medium durations (200-300ms)
-- ✅ Test on both iPad and Surface devices
-
----
-
-### Desktop (1024px+)
-
-**Hover Interactions:** Rich, detailed animations
-
-```css
-/* Desktop Card Hover */
-.card-desktop {
-  transition: 
-    transform var(--animation-200) var(--ease-standard),
-    box-shadow var(--animation-200) var(--ease-standard);
-}
-
-.card-desktop:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-}
-
-.card-desktop:hover .card-image {
-  transform: scale(1.1);
-}
-
-/* Desktop Navigation Underline */
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--wp--preset--color--primary);
-  transition: width var(--animation-200) var(--ease-standard);
-}
-
-.nav-link:hover::after {
-  width: 100%;
-}
-```
-
-**Guidelines:**
-- ✅ Rich hover effects allowed
-- ✅ Multi-property animations work well
-- ✅ Use standard durations (200-300ms)
-- ✅ Can layer multiple animations
-
----
-
-## Accessibility Requirements
-
-### Reduced Motion Support
-
-**CRITICAL:** Always respect `prefers-reduced-motion` user preference
-
-```css
-/* Default: Animations enabled */
-.animated-element {
-  transition: transform var(--animation-200) var(--ease-standard);
-}
-
-.animated-element:hover {
-  transform: scale(1.1);
-}
-
-/* Reduced Motion: Instant or subtle */
-@media (prefers-reduced-motion: reduce) {
-  .animated-element {
-    transition: none; /* Instant change */
-  }
-  
-  /* OR provide subtle alternative */
-  .animated-element {
-    transition: opacity var(--animation-100) linear;
-  }
-}
-```
-
-### Reduced Motion Alternatives
-
-Instead of removing all animation, provide subtle alternatives:
-
-```css
-/* Full animation */
-.hero-title {
-  animation: slideInFade var(--animation-400) var(--ease-decelerate);
-}
-
-/* Reduced motion alternative */
-@media (prefers-reduced-motion: reduce) {
-  .hero-title {
-    animation: subtleFade var(--animation-200) linear;
-  }
-}
-
-@keyframes slideInFade {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes subtleFade {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-```
-
-### Accessibility Checklist
-
-- [ ] All animations have `prefers-reduced-motion` alternatives
-- [ ] No auto-playing animations longer than 5 seconds
-- [ ] Users can pause, stop, or hide animations
-- [ ] No flashing or strobing effects (seizure risk)
-- [ ] Focus indicators are clearly visible during transitions
-- [ ] Screen reader users not disrupted by animations
-
----
-
-## Common Animation Patterns
-
-### Button Animations
-
-```css
-/* Primary Button */
-.button-primary {
-  transition: 
-    transform var(--animation-100) var(--ease-standard),
-    box-shadow var(--animation-100) var(--ease-standard),
-    background-color var(--animation-200) var(--ease-standard);
-}
-
-.button-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
-}
-
-.button-primary:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 8px rgba(236, 72, 153, 0.2);
-}
-
-/* Icon Button */
-.icon-button {
-  transition: 
-    transform var(--animation-100) var(--ease-sharp),
-    background-color var(--animation-200) var(--ease-standard);
-}
-
-.icon-button:hover {
-  transform: rotate(90deg);
-}
-```
-
----
-
-### Card Animations
-
-```css
-/* Portfolio Card */
-.portfolio-card {
-  transition: 
-    transform var(--animation-200) var(--ease-standard),
-    box-shadow var(--animation-200) var(--ease-standard);
-}
-
-.portfolio-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.portfolio-card:hover .card-image {
-  transform: scale(1.1);
-  transition: transform var(--animation-300) var(--ease-standard);
-}
-
-.portfolio-card:hover .card-overlay {
-  opacity: 1;
-  transition: opacity var(--animation-200) var(--ease-decelerate);
-}
-```
-
----
-
-### Navigation Animations
-
-```css
-/* Mobile Menu Slide */
-.mobile-menu {
-  transform: translateX(100%);
-  transition: transform var(--animation-300) var(--ease-standard);
-}
-
-.mobile-menu.open {
-  transform: translateX(0);
-}
-
-/* Desktop Nav Hover Underline */
-.nav-link {
-  position: relative;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #EC4899, #A855F7, #3B82F6);
-  transition: width var(--animation-200) var(--ease-standard);
-}
-
-.nav-link:hover::after,
-.nav-link.active::after {
-  width: 100%;
-}
-```
-
----
-
-### Loading States
-
-```css
-/* Spinner */
-.spinner {
-  animation: spin var(--animation-400) linear infinite;
-}
-
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-/* Skeleton Loading */
-.skeleton {
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 25%,
-    #e0e0e0 50%,
-    #f0f0f0 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer var(--animation-400) linear infinite;
-}
-
-@keyframes shimmer {
-  from { background-position: 200% 0; }
-  to { background-position: -200% 0; }
-}
-
-/* Progress Bar */
-.progress-bar {
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--animation-300) var(--ease-decelerate);
-}
-
-.progress-bar[data-progress="50"] {
-  transform: scaleX(0.5);
+/* Loading Spinner Implementation */
+.spinner {
+  animation: spin 1s linear infinite;
 }
 ```
 
+**Usage:**
+```tsx
+// ✅ CORRECT - Loading spinner
+<div className="loading-spinner">
+  <Loader2 className="animate-spin" />
+</div>
+```
+
+**Duration:** 1 second  
+**Easing:** `linear` (constant speed)  
+**Loop:** Infinite
+
 ---
 
-### Modal/Overlay Animations
+### 8. Pulse Ring (Scroll to Top)
+
+**Location:** `/styles/blocks/scroll-controls.css` (line 108)
 
 ```css
-/* Modal Backdrop */
-.modal-backdrop {
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.scroll-to-top::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--wp--preset--color--neon-pink);
+  border-radius: 50%;
+  animation: pulse-ring 2s infinite;
+}
+```
+
+**Usage:**
+```tsx
+// ✅ CORRECT - Pulsing ring effect
+<button className="scroll-to-top">
+  <ArrowUp />
+</button>
+```
+
+**Duration:** 2 seconds  
+**Easing:** Default ease  
+**Loop:** Infinite
+
+---
+
+### 9. Slide Up Fade
+
+**Location:** `/styles/blocks/scroll-controls.css` (line 113)
+
+```css
+@keyframes slideUpFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scroll-to-top {
   opacity: 0;
-  transition: opacity var(--animation-300) var(--ease-decelerate);
-  pointer-events: none;
+  transform: translateY(10px);
+  animation: slideUpFade 0.3s ease-out forwards;
+}
+```
+
+**Usage:**
+```tsx
+// ✅ CORRECT - Fade in from bottom
+{showScrollTop && (
+  <button className="scroll-to-top">
+    <ArrowUp />
+  </button>
+)}
+```
+
+**Duration:** 0.3 seconds  
+**Easing:** `ease-out`  
+**Mode:** `forwards` (maintains end state)
+
+---
+
+### 10. Shine (Blog Post Hover)
+
+**Location:** `/styles/blocks/blog-page.css` (line 322)
+
+```css
+@keyframes shine {
+  100% {
+    left: 150%;
+  }
 }
 
-.modal-backdrop.open {
-  opacity: 1;
-  pointer-events: auto;
+.blog-card__image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shine 0.75s;
+}
+```
+
+**Usage:**
+```tsx
+// Automatically applied on hover
+<div className="blog-card">
+  <div className="blog-card__image">
+    {/* Shine effect on hover */}
+  </div>
+</div>
+```
+
+**Duration:** 0.75 seconds  
+**Trigger:** On hover  
+**Effect:** Glossy sweep across image
+
+---
+
+### 11. Accordion Animations
+
+**Location:** `/styles/blocks/ui-components.css` (lines 607-615)
+
+```css
+@keyframes accordionDown {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
 }
 
-/* Modal Content */
-.modal-content {
-  transform: scale(0.9) translateY(20px);
-  opacity: 0;
-  transition: 
-    transform var(--animation-300) var(--ease-decelerate),
-    opacity var(--animation-300) var(--ease-decelerate);
+@keyframes accordionUp {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
 }
 
-.modal-content.open {
-  transform: scale(1) translateY(0);
-  opacity: 1;
+.accordion-content {
+  overflow: hidden;
 }
 
-/* Lightbox Gallery */
-.lightbox {
-  opacity: 0;
-  transition: opacity var(--animation-200) var(--ease-decelerate);
+.accordion-content[data-state="open"] {
+  animation: accordionDown 0.2s ease-out;
 }
 
-.lightbox.open {
-  opacity: 1;
+.accordion-content[data-state="closed"] {
+  animation: accordionUp 0.2s ease-out;
+}
+```
+
+**Usage:**
+```tsx
+// ✅ CORRECT - Radix UI Accordion
+<Accordion.Root>
+  <Accordion.Item>
+    <Accordion.Trigger>Click to expand</Accordion.Trigger>
+    <Accordion.Content className="accordion-content">
+      Smoothly animated content
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>
+```
+
+**Duration:** 0.2 seconds  
+**Easing:** `ease-out`  
+**Library:** Radix UI
+
+---
+
+### 12. Collapsible Animations
+
+**Location:** `/styles/blocks/misc-ui.css` (lines 454-462)
+
+```css
+@keyframes collapsible-down {
+  from { height: 0; opacity: 0; }
+  to { height: var(--radix-collapsible-content-height); opacity: 1; }
 }
 
-.lightbox-image {
-  transform: scale(0.8);
-  opacity: 0;
-  transition: 
-    transform var(--animation-300) var(--ease-decelerate),
-    opacity var(--animation-300) var(--ease-decelerate);
+@keyframes collapsible-up {
+  from { height: var(--radix-collapsible-content-height); opacity: 1; }
+  to { height: 0; opacity: 0; }
+}
+```
+
+**Duration:** 0.2 seconds  
+**Easing:** Default ease  
+**Library:** Radix UI
+
+---
+
+### 13. Caret Blink (Input Cursor)
+
+**Location:** `/styles/blocks/misc-ui.css` (line 537)
+
+```css
+@keyframes caret-blink {
+  0%, 70%, 100% { opacity: 1; }
+  20%, 50% { opacity: 0; }
 }
 
-.lightbox-image.visible {
-  transform: scale(1);
-  opacity: 1;
+.input-cursor {
+  animation: caret-blink 1.2s ease-out infinite;
 }
+```
+
+**Duration:** 1.2 seconds  
+**Loop:** Infinite  
+**Effect:** Typing cursor blink
+
+---
+
+### 14. Neon Pulse (Videos Page)
+
+**Location:** `/styles/blocks/videos-page.css` (lines 56-59, 171-174)
+
+```css
+/* Purple Neon Pulse */
+@keyframes neonPulsePurple {
+  from { 
+    box-shadow: 0 0 20px rgba(190, 0, 254, 0.3); 
+    border-color: rgba(190, 0, 254, 0.5); 
+  }
+  to { 
+    box-shadow: 0 0 40px rgba(190, 0, 254, 0.6); 
+    border-color: var(--wp--preset--color--neon-purple); 
+  }
+}
+
+/* Pink Neon Pulse */
+@keyframes neonPulsePink {
+  from { box-shadow: 0 0 10px var(--wp--preset--color--neon-pink); }
+  to { box-shadow: 0 0 25px var(--wp--preset--color--neon-pink); }
+}
+```
+
+**Usage:**
+```tsx
+// ✅ CORRECT - Video card with neon glow
+<div className="video-card video-card--featured">
+  Video content
+</div>
+```
+
+```css
+.video-card--featured {
+  animation: neonPulsePurple 3s infinite alternate;
+}
+```
+
+**Duration:** 1.5-3 seconds  
+**Easing:** `infinite alternate`  
+**Colors:** Purple, Pink
+
+---
+
+### 15. Fade In / Scale In (Videos Page)
+
+**Location:** `/styles/blocks/videos-page.css` (lines 302-310)
+
+```css
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+```
+
+**Usage:**
+```tsx
+// ✅ CORRECT - Modal entrance
+<div className="video-modal">
+  <div className="video-modal__content">
+    Animated modal content
+  </div>
+</div>
+```
+
+```css
+.video-modal {
+  animation: fadeIn 0.3s ease;
+}
+
+.video-modal__content {
+  animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+```
+
+**Duration:** 0.3 seconds  
+**Easing:** `cubic-bezier(0.16, 1, 0.3, 1)` (spring-like)
+
+---
+
+### 16. Slide Up (Share Component)
+
+**Location:** `/styles/blocks/share-component.css` (line 236)
+
+```css
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.share-dropdown {
+  animation: slideUp 0.2s ease-out;
+}
+```
+
+**Usage:**
+```tsx
+// ✅ CORRECT - Share dropdown
+{isOpen && (
+  <div className="share-dropdown">
+    Share options
+  </div>
+)}
+```
+
+**Duration:** 0.2 seconds  
+**Easing:** `ease-out`
+
+---
+
+### 17. Skeleton Pulse
+
+**Location:** `/styles/blocks/skeleton.css` (line 12)
+
+```css
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeleton {
+  animation: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+```
+
+**Usage:**
+```tsx
+// ✅ CORRECT - Loading skeleton
+<div className="skeleton skeleton--card">
+  <div className="skeleton__header"></div>
+  <div className="skeleton__body"></div>
+</div>
+```
+
+**Duration:** 2 seconds  
+**Loop:** Infinite  
+**Easing:** Smooth cubic bezier
+
+---
+
+### 18. Typeform Spin
+
+**Location:** `/styles/components/typeform-embed.css` (line 66)
+
+```css
+@keyframes typeform-spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.typeform-spinner {
+  animation: typeform-spin 1s linear infinite;
+}
+```
+
+**Duration:** 1 second  
+**Loop:** Infinite  
+**Position:** Centered with `translate(-50%, -50%)`
+
+---
+
+## ⚡ Neon Effects
+
+### Glow Intensity Levels
+
+```css
+/* Small Glow */
+box-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color);
+
+/* Medium Glow */
+box-shadow: 0 0 10px var(--glow-color), 0 0 20px var(--glow-color);
+
+/* Large Glow */
+box-shadow: 0 0 15px var(--glow-color), 0 0 30px var(--glow-color);
+
+/* Extra Large Glow */
+box-shadow: 0 0 20px var(--glow-color), 0 0 40px var(--glow-color);
+```
+
+### Neon Color Variables
+
+```css
+--glow-color-green: var(--wp--preset--color--neon-green);
+--glow-color-pink: var(--wp--preset--color--neon-pink);
+--glow-color-blue: var(--wp--preset--color--neon-blue);
+--glow-color-purple: var(--wp--preset--color--neon-purple);
 ```
 
 ---
 
-## Performance Best Practices
+## 🔄 Transition Patterns
 
-### ✅ DO
+### Standard Transitions
 
-1. **Animate transform and opacity only**
-   ```css
-   /* ✅ GOOD - GPU accelerated */
-   .element {
-     transition: transform var(--animation-200), opacity var(--animation-200);
-   }
-   ```
+```css
+/* Color Transitions */
+transition: color 0.3s ease, background-color 0.3s ease;
 
-2. **Use `will-change` sparingly**
-   ```css
-   /* ✅ GOOD - Only on hover */
-   .card:hover {
-     will-change: transform;
-   }
-   ```
+/* Transform Transitions */
+transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-3. **Batch animations together**
-   ```css
-   /* ✅ GOOD - Single transition property */
-   .element {
-     transition: 
-       transform var(--animation-200) var(--ease-standard),
-       opacity var(--animation-200) var(--ease-standard);
-   }
-   ```
+/* Shadow Transitions */
+transition: box-shadow 0.3s ease;
 
-### ❌ DON'T
+/* All Properties */
+transition: all 0.3s ease;
+```
 
-1. **Don't animate expensive properties**
-   ```css
-   /* ❌ BAD - Causes layout recalculation */
-   .element {
-     transition: width 300ms, height 300ms, top 300ms, left 300ms;
-   }
-   
-   /* ✅ GOOD - Use transform instead */
-   .element {
-     transition: transform 300ms;
-     transform: scale(1.5) translate(10px, 20px);
-   }
-   ```
+### Duration Guidelines
 
-2. **Don't overuse will-change**
-   ```css
-   /* ❌ BAD - Always on */
-   .element {
-     will-change: transform, opacity;
-   }
-   ```
+| Duration | Use Case |
+|----------|----------|
+| **0.15s** | Micro-interactions (hover, focus) |
+| **0.2-0.3s** | Standard transitions (buttons, cards) |
+| **0.4-0.5s** | Modal entrances, menu animations |
+| **0.75-1s** | Page transitions, hero animations |
+| **2-3s** | Ambient animations (pulse, float) |
+| **15s** | Background gradient shifts |
 
-3. **Don't animate too many elements simultaneously**
-   ```css
-   /* ❌ BAD - 50 elements animating */
-   .grid-item {
-     animation: fadeIn 300ms;
-   }
-   
-   /* ✅ GOOD - Stagger animations */
-   .grid-item:nth-child(1) { animation-delay: 0ms; }
-   .grid-item:nth-child(2) { animation-delay: 50ms; }
-   .grid-item:nth-child(3) { animation-delay: 100ms; }
-   ```
+### Easing Functions
+
+```css
+/* Standard Easings */
+--wp--custom--ease--bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+ease-in-out   /* Smooth acceleration and deceleration */
+ease-out      /* Fast start, slow end */
+ease-in       /* Slow start, fast end */
+linear        /* Constant speed */
+
+/* Custom Cubic Beziers */
+cubic-bezier(0.4, 0, 0.2, 1)    /* Material Design standard */
+cubic-bezier(0.16, 1, 0.3, 1)   /* Spring-like bounce */
+cubic-bezier(0.4, 0, 0.6, 1)    /* Smooth pulse */
+```
 
 ---
 
-## Summary
+## 🚀 Performance Guidelines
 
-### Key Takeaways
+### Hardware-Accelerated Properties
 
-- ✅ **Numeric duration scale (100-400)** for predictable timing
-- ✅ **Always support prefers-reduced-motion** for accessibility
-- ✅ **Animate transform and opacity** for best performance
-- ✅ **Device-specific considerations** (touch vs hover)
-- ✅ **WordPress CSS variables** for consistency
+**✅ Animate These (GPU-Accelerated):**
+- `transform: translate()`, `scale()`, `rotate()`
+- `opacity`
+- `filter` (use sparingly)
 
-### Quick Reference
+**❌ Avoid Animating (CPU-Intensive):**
+- `width`, `height`
+- `top`, `left`, `right`, `bottom`
+- `margin`, `padding`
+- `border-width`
 
-| Duration | Slug | Use Case | Easing |
-|----------|------|----------|--------|
-| 150ms | `100` | Microinteractions | `ease-sharp` |
-| 300ms | `200` | Standard transitions | `ease-standard` |
-| 500ms | `300` | Complex animations | `ease-decelerate` |
-| 800ms | `400` | Hero effects | `ease-decelerate` |
+### Will-Change Optimization
+
+```css
+/* Add will-change for complex animations */
+.animate-neon-glow-bg {
+  will-change: background-position;
+}
+
+.animate-neon-pulse-pink {
+  will-change: box-shadow;
+}
+
+/* Remove will-change after animation completes */
+.element.animation-complete {
+  will-change: auto;
+}
+```
+
+### Animation Budget
+
+- **Maximum 3-5 simultaneous animations** per viewport
+- **Limit neon pulse effects** to 2-3 elements maximum
+- **Use `animation-delay`** for staggered effects instead of multiple keyframes
 
 ---
 
-**Version:** 5.0.0 (WordPress Animation System)  
-**Last Updated:** January 2025  
-**Maintained By:** Ash Shaw Portfolio Team
+## ♿ Accessibility
 
-**Related Documentation:**
-- [Spacing Design Tokens](./spacing.md) - Spacing system
-- [Typography Design Tokens](./typography.md) - Font system
-- [Colors Design Tokens](./colors.md) - Color palette
-- [Interactions & Accessibility](../interactions-accessibility.md) - Functional patterns
+### Prefers Reduced Motion
+
+**All animations must respect user preferences:**
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+### Implementation Pattern
+
+```tsx
+// ✅ CORRECT - Check for reduced motion
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+<div className={prefersReducedMotion ? '' : 'animate-neon-pulse-pink'}>
+  Content
+</div>
+```
+
+### Testing Checklist
+
+- [ ] All animations disabled with `prefers-reduced-motion`
+- [ ] Page remains functional without animations
+- [ ] Focus indicators still visible
+- [ ] Loading states still communicate status
+
+---
+
+## 📖 Quick Reference
+
+### Animation Duration Scale
+
+```
+0.15s - Micro (hover, focus)
+0.2s  - Fast (dropdown, tooltip)
+0.3s  - Standard (button, card)
+0.4s  - Medium (modal open)
+0.5s  - Slow (page transition)
+0.75s - Shine effect
+1s    - Spinner rotation
+2s    - Pulse, bounce
+3s    - Float, ambient
+15s   - Gradient shift
+```
+
+### Common Patterns
+
+```tsx
+// Fade In
+<div className="opacity-0 animate-fadeIn">Content</div>
+
+// Slide In from Bottom
+<div className="translate-y-4 opacity-0 animate-slideUp">Content</div>
+
+// Bounce
+<div className="animate-bounce">Arrow</div>
+
+// Spin
+<Loader2 className="animate-spin" />
+
+// Neon Pulse
+<button className="animate-neon-pulse-pink">CTA</button>
+
+// Gradient Background
+<section className="animate-neon-glow-bg">Hero</section>
+```
+
+---
+
+## 🔗 Related Documentation
+
+- **[neon-colors.md](./neon-colors.md)** - Neon color system
+- **[colors.md](./colors.md)** - Color tokens
+- **[Guidelines.md](../Guidelines.md)** - Main guidelines
+
+---
+
+**Last Updated:** February 2025  
+**Version:** 1.0.0  
+**Maintained by:** Ash Shaw Portfolio Team

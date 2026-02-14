@@ -21,8 +21,17 @@ export interface PortfolioImage {
   /** Display title for lightbox and captions */
   title: string;
   
+  /** Media type: 'image' or 'video' (defaults to 'image') */
+  type?: 'image' | 'video';
+
+  /** Poster image URL (for videos) */
+  poster?: string;
+  
   /** Optional short caption for card displays */
   caption?: string;
+
+  /** Detailed description for accessibility and lightbox overlay */
+  description?: string;
   
   /** Layout position hint (semantic, not CSS class) */
   position?: 'left' | 'center' | 'right' | 'top' | 'bottom';

@@ -1,0 +1,50 @@
+/* Textarea Block Styles */
+.textarea {
+  display: flex;
+  width: 100%;
+  min-height: 4rem; /* 64px */
+  border-radius: var(--wp--preset--border-radius--md);
+  border: 1px solid var(--border);
+  background-color: var(--background);
+  padding: 0.5rem 0.75rem;
+  font-size: var(--wp--preset--font-size--200); /* base size */
+  transition: box-shadow 0.2s, color 0.2s;
+  outline: none;
+  resize: vertical;
+}
+
+@media (min-width: 768px) {
+  .textarea {
+    font-size: var(--wp--preset--font-size--100); /* sm size on desktop if preferred, or keep consistent */
+  }
+}
+
+.textarea::placeholder {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.textarea:focus-visible {
+  outline: none;
+  border-color: var(--wp--preset--color--neon-purple);
+  box-shadow: 0 0 0 3px rgba(190, 0, 254, 0.3); /* ring-ring/50 approx */
+}
+
+.textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Invalid State */
+.textarea[aria-invalid="true"] {
+  border-color: var(--wp--preset--color--neon-red);
+  box-shadow: 0 0 0 1px var(--wp--preset--color--neon-red);
+}
+
+.dark .textarea[aria-invalid="true"] {
+  /* adjust for dark mode if needed */
+}
+
+/* Field Sizing (if supported by browser) */
+.textarea--field-sizing {
+  field-sizing: content;
+}

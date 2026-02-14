@@ -4,28 +4,19 @@
  * Enhanced pagination with proper mobile touch support, accessibility,
  * and brand-compliant styling following guidelines.
  * 
- * Features:
- * - Mobile-first touch targets (44px minimum)
- * - Proper button elements instead of anchor tags
- * - Brand gradient styling for active states
- * - Keyboard navigation support
- * - Screen reader compatibility
- * - Responsive design with mobile/desktop variants
- * - WCAG AAA compliant dark mode support
- * - All styling via semantic CSS classes (no inline Tailwind)
- * 
  * @author Ash Shaw Portfolio Team
- * @version 3.0.0 - Full dark mode support with semantic CSS classes
+ * @version 3.2.0 - Semantic BEM Refactor
  */
 
 import * as React from "react";
 import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  MoreHorizontalIcon,
+  ChevronLeft,
+  ChevronRight,
+  MoreHorizontal,
 } from "lucide-react";
 
 import { cn } from "./utils";
+import "@/styles/blocks/pagination.css";
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
@@ -33,7 +24,7 @@ function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
       role="navigation"
       aria-label="pagination"
       data-slot="pagination"
-      className={cn("mx-auto flex w-full justify-center", className)}
+      className={cn("pagination", className)}
       {...props}
     />
   );
@@ -46,14 +37,14 @@ function PaginationContent({
   return (
     <ul
       data-slot="pagination-content"
-      className={cn("flex flex-row items-center gap-1 sm:gap-2", className)}
+      className={cn("pagination__content", className)}
       {...props}
     />
   );
 }
 
 function PaginationItem({ ...props }: React.ComponentProps<"li">) {
-  return <li data-slot="pagination-item" {...props} />;
+  return <li data-slot="pagination-item" className="pagination__item" {...props} />;
 }
 
 type PaginationLinkProps = {
@@ -81,14 +72,8 @@ function PaginationLink({
       data-slot="pagination-link"
       data-active={isActive}
       className={cn(
-        // Base mobile-first styling with proper touch targets
-        "inline-flex items-center justify-center rounded-lg text-sm font-medium font-body transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 pagination-focus-ring",
-        // Mobile touch targets (44px minimum)
-        "h-11 w-11 min-w-[44px] min-h-[44px]",
-        // Desktop sizing
-        "sm:h-10 sm:w-10 sm:min-w-[40px] sm:min-h-[40px]",
-        // Active state with brand gradient or base styles
-        isActive ? "pagination-link-active" : "pagination-link",
+        "pagination__link",
+        isActive && "pagination__link--active",
         className,
       )}
       {...props}
@@ -109,11 +94,11 @@ function PaginationPrevious({
       onClick={onClick}
       disabled={disabled}
       aria-label="Go to previous page"
-      className={cn("pagination-nav-button", className)}
+      className={cn("pagination__nav-button", className)}
       {...props}
     >
-      <ChevronLeftIcon className="h-4 w-4" />
-      <span className="hidden sm:block">Previous</span>
+      <ChevronLeft className="pagination__nav-icon" />
+      <span className="pagination__label">Previous</span>
     </PaginationLink>
   );
 }
@@ -129,11 +114,11 @@ function PaginationNext({
       onClick={onClick}
       disabled={disabled}
       aria-label="Go to next page"
-      className={cn("pagination-nav-button", className)}
+      className={cn("pagination__nav-button", className)}
       {...props}
     >
-      <span className="hidden sm:block">Next</span>
-      <ChevronRightIcon className="h-4 w-4" />
+      <span className="pagination__label">Next</span>
+      <ChevronRight className="pagination__nav-icon" />
     </PaginationLink>
   );
 }
@@ -146,13 +131,10 @@ function PaginationEllipsis({
     <span
       aria-hidden
       data-slot="pagination-ellipsis"
-      className={cn(
-        "flex h-11 w-11 items-center justify-center sm:h-10 sm:w-10",
-        className
-      )}
+      className={cn("pagination__ellipsis", className)}
       {...props}
     >
-      <MoreHorizontalIcon className="h-4 w-4 pagination-ellipsis-icon" />
+      <MoreHorizontal className="pagination__ellipsis-icon" />
       <span className="sr-only">More pages</span>
     </span>
   );

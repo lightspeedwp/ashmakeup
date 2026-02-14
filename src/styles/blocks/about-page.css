@@ -1,0 +1,363 @@
+/* About Page Styles */
+
+.about-page-container {
+  min-height: 100vh;
+  background-color: var(--wp--preset--color--base);
+  color: var(--wp--preset--color--contrast);
+  position: relative;
+  overflow: hidden;
+}
+
+.dark .about-page-container {
+  background-color: var(--wp--preset--color--atomic-black);
+  color: #fff;
+}
+
+/* About Content — wrapper for all SectionCards between Hero and Footer */
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--fluid-sm);
+  padding: var(--wp--preset--spacing--section-horizontal);
+  max-width: var(--wp--preset--layout--wide);
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+/* Section-scoped noise texture overlay for about content area */
+.about-content__noise {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+  opacity: var(--noise-texture-opacity);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dark .about-content__noise {
+  opacity: var(--noise-texture-opacity-dark);
+}
+
+/* Ensure section cards sit above the noise layer */
+.about-content > .section-card {
+  position: relative;
+  z-index: 1;
+}
+
+/* Tighter section card spacing scoped to the About page */
+.about-content .section-card__content {
+  padding: var(--wp--preset--spacing--fluid-xl);
+}
+
+.about-content .section-card__inner {
+  gap: var(--wp--preset--spacing--fluid-md);
+}
+
+/* About Loading State */
+.about-loading-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding-top: calc(var(--wp--preset--spacing--section-vertical) + 5rem);
+  padding-bottom: var(--wp--preset--spacing--section-vertical);
+  padding-left: var(--wp--preset--spacing--section-horizontal);
+  padding-right: var(--wp--preset--spacing--section-horizontal);
+}
+
+.about-loading-wrapper {
+  width: 100%;
+  max-width: var(--wp--preset--layout--wide);
+}
+
+.about-loading-content {
+  margin: 0 auto;
+}
+
+.about-skeleton-stack {
+  display: grid;
+  gap: var(--wp--preset--spacing--fluid-lg);
+  margin-top: var(--wp--preset--spacing--fluid-xl);
+}
+
+.about-skeleton-card {
+  height: 200px;
+  background-color: var(--wp--preset--color--neutral-100);
+  border-radius: var(--wp--preset--border-radius--lg);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.dark .about-skeleton-card {
+  background-color: var(--wp--preset--color--neutral-800);
+}
+
+/* Technical Card */
+.about-technical-card {
+  margin-top: var(--wp--preset--spacing--fluid-lg);
+  padding: var(--wp--preset--spacing--fluid-md);
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: var(--wp--preset--border-radius--lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.about-technical-title {
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-size: var(--wp--preset--font-size--300);
+  font-weight: 600;
+  color: var(--wp--preset--color--neon-cyan);
+  margin-bottom: var(--wp--preset--spacing--fluid-sm);
+}
+
+.about-technical-divider {
+  height: 2px;
+  width: 3rem;
+  background: var(--wp--preset--gradient--toxic-lime);
+  margin-bottom: var(--wp--preset--spacing--fluid-sm);
+}
+
+.about-technical-description {
+  font-size: var(--wp--preset--font-size--200);
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* Skills Responsive Grid — 1 col mobile, 2 col tablet portrait, 3 col tablet landscape, 4 col desktop */
+.about-skills-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--wp--preset--spacing--block-gap);
+  margin-top: var(--wp--preset--spacing--fluid-lg);
+}
+
+@media (min-width: 768px) {
+  .about-skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-skills-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1440px) {
+  .about-skills-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.about-skill-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--wp--preset--spacing--fluid-md);
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--md);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+}
+
+.dark .about-skill-item {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-color: var(--wp--preset--color--neutral-800);
+}
+
+.about-skill-item:hover {
+  transform: translateY(-5px);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ──────────────────────────────────────────────
+   Gradient Icon Wrappers
+   ────────────────────────────────────────────── */
+.about-skill-icon-wrap {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: var(--wp--preset--border-radius--lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--wp--preset--spacing--fluid-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-skill-item:hover .about-skill-icon-wrap {
+  transform: scale(1.15);
+}
+
+.about-skill-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: #fff;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+/* Gradient Variants — each complements its skill title */
+
+/* Color Theory: Pink → Purple */
+.about-skill-icon-wrap--pink-purple {
+  background: linear-gradient(135deg, var(--wp--preset--color--neon-pink), var(--wp--preset--color--neon-purple));
+  box-shadow: 0 4px 15px rgba(255, 16, 240, 0.3);
+}
+
+.about-skill-item:hover .about-skill-icon-wrap--pink-purple {
+  box-shadow: 0 6px 25px rgba(255, 16, 240, 0.5);
+}
+
+/* Blending Mastery: Cyan → Blue */
+.about-skill-icon-wrap--cyan-blue {
+  background: linear-gradient(135deg, var(--wp--preset--color--neon-cyan), var(--wp--preset--color--neon-blue));
+  box-shadow: 0 4px 15px rgba(0, 247, 255, 0.3);
+}
+
+.about-skill-item:hover .about-skill-icon-wrap--cyan-blue {
+  box-shadow: 0 6px 25px rgba(0, 247, 255, 0.5);
+}
+
+/* Texture Work: Green → Yellow */
+.about-skill-icon-wrap--green-yellow {
+  background: linear-gradient(135deg, var(--wp--preset--color--neon-green), var(--wp--preset--color--neon-yellow));
+  box-shadow: 0 4px 15px rgba(57, 255, 20, 0.3);
+}
+
+.about-skill-item:hover .about-skill-icon-wrap--green-yellow {
+  box-shadow: 0 6px 25px rgba(57, 255, 20, 0.5);
+}
+
+/* UV Techniques: Purple → Pink */
+.about-skill-icon-wrap--purple-pink {
+  background: linear-gradient(135deg, var(--wp--preset--color--neon-purple), var(--wp--preset--color--neon-pink));
+  box-shadow: 0 4px 15px rgba(190, 0, 254, 0.3);
+}
+
+.about-skill-item:hover .about-skill-icon-wrap--purple-pink {
+  box-shadow: 0 6px 25px rgba(190, 0, 254, 0.5);
+}
+
+/* Pigment Knowledge: Orange → Red */
+.about-skill-icon-wrap--orange-red {
+  background: linear-gradient(135deg, var(--wp--preset--color--neon-orange), var(--wp--preset--color--neon-red));
+  box-shadow: 0 4px 15px rgba(255, 95, 31, 0.3);
+}
+
+.about-skill-item:hover .about-skill-icon-wrap--orange-red {
+  box-shadow: 0 6px 25px rgba(255, 95, 31, 0.5);
+}
+
+/* Creative Design: Blue → Green */
+.about-skill-icon-wrap--blue-green {
+  background: linear-gradient(135deg, var(--wp--preset--color--neon-blue), var(--wp--preset--color--neon-green));
+  box-shadow: 0 4px 15px rgba(31, 81, 255, 0.3);
+}
+
+.about-skill-item:hover .about-skill-icon-wrap--blue-green {
+  box-shadow: 0 6px 25px rgba(31, 81, 255, 0.5);
+}
+
+/* Reduced motion: disable hover transforms */
+@media (prefers-reduced-motion: reduce) {
+  .about-skill-item:hover,
+  .about-skill-item:hover .about-skill-icon-wrap {
+    transform: none;
+  }
+}
+
+.about-skill-title {
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-size: var(--wp--preset--font-size--200);
+  font-weight: 600;
+}
+
+/* CTA Center */
+.about-cta-center {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--wp--preset--spacing--fluid-lg);
+}
+
+/* Decorative Orbs */
+.about-hero-orb-1,
+.about-hero-orb-2,
+.about-hero-orb-3 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.about-hero-orb-1 {
+  top: 10%;
+  right: 10%;
+  width: 300px;
+  height: 300px;
+  background: var(--wp--preset--color--neon-pink);
+  animation: float 8s ease-in-out infinite;
+}
+
+.about-hero-orb-2 {
+  bottom: 20%;
+  left: 5%;
+  width: 250px;
+  height: 250px;
+  background: var(--wp--preset--color--neon-blue);
+  animation: float 10s ease-in-out infinite reverse;
+}
+
+.about-hero-orb-3 {
+  top: 40%;
+  left: 40%;
+  width: 200px;
+  height: 200px;
+  background: var(--wp--preset--color--neon-purple);
+  animation: pulse 6s ease-in-out infinite;
+}
+
+/* Animations moved to /styles/animations.css */
+
+/* Text Gradient Classes */
+.text-gradient-pink-rose {
+  background: linear-gradient(to right, rgb(236, 72, 153), rgb(244, 63, 94));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic;
+}
+
+.text-gradient-purple-violet {
+  background: linear-gradient(to right, rgb(168, 85, 247), rgb(139, 92, 246));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic;
+}
+
+.text-gradient-blue-cyan {
+  background: linear-gradient(to right, rgb(59, 130, 246), rgb(6, 182, 212));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic;
+}
+
+/* About Page Text Colors */
+.text-about-body {
+  color: var(--wp--preset--color--neutral-700);
+}
+
+.dark .text-about-body {
+  color: var(--wp--preset--color--neutral-200);
+}
+
+.text-about-body-alt {
+  color: var(--wp--preset--color--neutral-700);
+}
+
+.dark .text-about-body-alt {
+  color: #fff;
+}

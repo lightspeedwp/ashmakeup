@@ -88,3 +88,29 @@ export interface AboutSection {
   /** Display order */
   order: number;
 }
+
+/**
+ * Hero content interface
+ */
+export interface HeroContent {
+  title: string;
+  subtitle: string;
+  description: string;
+  ctaText: string;
+  ctaLink: string;
+  backgroundImages?: HeroImage[];
+}
+
+/**
+ * Page content interface
+ */
+export interface PageContent {
+  id: string;
+  title: string;
+  metaDescription: string;
+  hero: HeroContent;
+  sections?: {
+    why?: WhyReason[];
+    [key: string]: any;
+  };
+}

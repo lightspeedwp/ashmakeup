@@ -3,12 +3,14 @@
  * Universal card component for all portfolio sections with advanced slider functionality
  *
  * @author Ash Shaw Portfolio Team
- * @version 3.1.0
+ * @version 3.3.0 - Semantic BEM Refactor
  */
 
 import React, { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Play, Calendar } from "lucide-react";
 import { usePortfolioImageUrl } from "./PortfolioImage";
+import { formatDate } from "../../utils/formatDate";
+import "@/styles/blocks/slider-card.css";
 
 /**
  * Image interface for slider functionality
@@ -18,6 +20,8 @@ interface SliderImage {
   alt: string;
   caption?: string;
   description?: string;
+  type?: 'image' | 'video';
+  poster?: string;
 }
 
 /**
@@ -32,6 +36,7 @@ interface CardData {
   image?: string; // Legacy single image support
   images?: SliderImage[]; // New multi-image support
   category?: string;
+  date?: string;
 }
 
 /**
@@ -40,6 +45,7 @@ interface CardData {
 interface SliderCardProps {
   data: CardData;
   onImageClick: (imageIndex: number) => void;
+  onReadMore?: () => void;
   className?: string;
   /** Optional variant for themed subtitle styling */
   variant?: 'default' | 'uv';
@@ -47,40 +53,11 @@ interface SliderCardProps {
 
 /**
  * Enhanced SliderCard component with multi-image carousel functionality
- *
- * Features:
- * - Seamless single/multi-image support
- * - Touch-friendly navigation with swipe gestures
- * - Keyboard accessibility (arrow keys, enter, space)
- * - Smooth transitions and hover effects
- * - Progressive image loading
- * - Mobile-optimized controls
- * - Screen reader support
- * - Semantic CSS classes for light/dark mode
- *
- * @param {SliderCardProps} props - Component properties
- * @param {CardData} props.data - Card content with image(s) and metadata
- * @param {Function} props.onImageClick - Callback when image is clicked for lightbox
- * @param {string} props.className - Additional CSS classes
- *
- * @returns {JSX.Element} Enhanced card with slider functionality
- *
- * @accessibility
- * - WCAG 2.1 AA compliant
- * - Keyboard navigation support
- * - Screen reader optimized
- * - High contrast mode compatible
- * - Focus management
- *
- * @mobile
- * - Touch gesture support
- * - Swipe navigation
- * - Responsive controls
- * - Optimized for thumb interaction
  */
 export function SliderCard({
   data,
   onImageClick,
+  onReadMore,
   className = "",
   variant = 'default',
 }: SliderCardProps) {
@@ -111,12 +88,15 @@ export function SliderCard({
     alt: data.title,
     caption: data.title,
     description: data.description,
+    type: 'image',
+    poster: ''
   };
 
-
+  const isVideo = currentImage.type === 'video';
+  const displayImageSrc = isVideo && currentImage.poster ? currentImage.poster : currentImage.src;
 
   // Resolve image URL for CSS background usage
-  const resolvedImageUrl = usePortfolioImageUrl(currentImage.src);
+  const resolvedImageUrl = usePortfolioImageUrl(displayImageSrc);
 
   // Minimum swipe distance for touch navigation - reduced for better mobile responsiveness
   const minSwipeDistance = 30;
@@ -233,7 +213,7 @@ export function SliderCard({
 
   return (
     <div
-      className={`group cursor-pointer bg-card hover:bg-gray-50 dark:hover:bg-black backdrop-blur-sm rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-white/50 dark:border-purple-700/50 ${className}`}
+      className={`slider-card group ${className}`}
       onClick={() => onImageClick(currentImageIndex)}
       onKeyDown={handleKeyDown}
       tabIndex={0}
@@ -242,7 +222,7 @@ export function SliderCard({
     >
       {/* Image Container with Slider */}
       <div
-        className="slider-image-container relative w-full aspect-square rounded-500 shadow-500 transition-transform duration-500 group-hover:scale-105 mb-fluid-md ring-4 ring-white/50 overflow-hidden touch-manipulation select-none"
+        className="slider-card__image-container"
         style={{
           backgroundImage: `url('${resolvedImageUrl}')`,
         }}
@@ -250,9 +230,17 @@ export function SliderCard({
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
+        {isVideo && (
+          <div className="slider-card__video-overlay">
+            <div className="slider-card__play-button">
+              <Play className="slider-card__play-icon" fill="currentColor" />
+            </div>
+          </div>
+        )}
+
         {/* Category Chip - Top right corner (always visible when category exists) */}
         {data.category && (
-          <div className="absolute top-3 right-3 bg-gradient-pink-purple-blue text-white text-xs px-3 py-1.5 rounded-full font-medium shadow-500 backdrop-blur-sm z-20">
+          <div className="slider-card__category">
             {data.category}
           </div>
         )}
@@ -261,39 +249,39 @@ export function SliderCard({
         {hasMultipleImages && (
           <>
             {/* Desktop Navigation Arrows - Hover only with reduced opacity */}
-            <div className="hidden sm:block">
+            <div className="slider-card__nav-btn-container">
               <button
                 onClick={goToPrevious}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-nav-button hover:bg-nav-button rounded-full flex items-center justify-center opacity-0 group-hover:opacity-60 hover:opacity-80 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-black/20 shadow-400 hover:shadow-500 z-10"
+                className="slider-card__nav-btn slider-card__nav-btn--prev"
                 aria-label="Previous image"
                 tabIndex={-1}
               >
-                <ChevronLeft className="w-5 h-5 text-portfolio-icon" />
+                <ChevronLeft className="slider-card__nav-icon" />
               </button>
 
               <button
                 onClick={goToNext}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-nav-button hover:bg-nav-button rounded-full flex items-center justify-center opacity-0 group-hover:opacity-60 hover:opacity-80 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-black/20 shadow-400 hover:shadow-500 z-10"
+                className="slider-card__nav-btn slider-card__nav-btn--next"
                 aria-label="Next image"
                 tabIndex={-1}
               >
-                <ChevronRight className="w-5 h-5 text-portfolio-icon" />
+                <ChevronRight className="slider-card__nav-icon" />
               </button>
             </div>
 
             {/* Mobile Indicator - Swipe text or Counter based on swiping state */}
-            <div className="sm:hidden absolute top-3 left-3 bg-overlay-badge-strong text-white text-xs px-3 py-1.5 rounded-full opacity-90 backdrop-blur-sm transition-all duration-300">
+            <div className="slider-card__swipe-indicator">
               {isSwiping ? (
                 // Show counter when swiping
                 <span>{currentImageIndex + 1}/{images.length}</span>
               ) : (
                 // Show swipe indicator when not swiping
-                <span className="flex items-center gap-1">
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className="slider-card__swipe-text">
+                  <svg className="slider-card__swipe-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
                   </svg>
                   Swipe
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="slider-card__swipe-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </span>
@@ -301,15 +289,15 @@ export function SliderCard({
             </div>
 
             {/* Simple Pagination Dots - Smaller with reduced opacity */}
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1 z-10">
+            <div className="slider-card__pagination">
               {images.map((_, index) => (
                 <button
                   key={index}
                   onClick={(e) => goToImage(index, e)}
-                  className={`slider-pagination-dot transition-all duration-300 focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-1 focus:ring-offset-black/20 touch-manipulation rounded-full ${
+                  className={`slider-card__dot ${
                     index === currentImageIndex
-                      ? "w-2 h-2 bg-white/80 shadow-sm"
-                      : "w-2 h-2 bg-white/40 hover:bg-white/60"
+                      ? "slider-card__dot--active"
+                      : "slider-card__dot--inactive"
                   }`}
                   aria-label={`Go to image ${index + 1} of ${images.length}`}
                   tabIndex={-1}
@@ -318,7 +306,7 @@ export function SliderCard({
             </div>
 
             {/* Desktop Image Counter - Hover only with reduced opacity */}
-            <div className="hidden sm:block absolute top-3 left-3 bg-black/60 text-white text-xs px-2 py-1 rounded-full opacity-0 group-hover:opacity-70 transition-opacity duration-300">
+            <div className="slider-card__counter">
               {currentImageIndex + 1}/{images.length}
             </div>
           </>
@@ -326,20 +314,47 @@ export function SliderCard({
       </div>
 
       {/* Card Content */}
-      <div className="space-y-fluid-xs">
-        <h3 className="text-fluid-xl font-heading font-semibold text-card-title">
+      <div className="slider-card__content">
+        <h3 className="slider-card__title">
           {data.title}
         </h3>
 
         {subtitleText && (
-          <p className={`text-fluid-lg font-body font-medium ${variant === 'uv' ? 'text-card-subtitle-uv' : 'text-card-subtitle'}`}>
+          <p className={`slider-card__subtitle ${variant === 'uv' ? 'slider-card__subtitle--uv' : ''}`}>
             {subtitleText}
           </p>
         )}
 
-        <p className="text-body-guideline font-body font-normal text-card-description leading-relaxed">
+        <p className="slider-card__description">
           {data.description}
         </p>
+
+        <div className="slider-card__footer">
+          <div className="slider-card__footer-content">
+            {data.date && (
+              <div className="slider-card__date">
+                <Calendar className="slider-card__date-icon" aria-hidden="true" />
+                <time dateTime={data.date}>{formatDate(data.date)}</time>
+              </div>
+            )}
+
+            {onReadMore && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onReadMore();
+                }}
+                className="slider-card__action-btn"
+                aria-label={`Read more about ${data.title}`}
+              >
+                Read More
+                <svg className="slider-card__action-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

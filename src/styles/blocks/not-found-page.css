@@ -1,0 +1,107 @@
+/* 404 Page Styles */
+
+.not-found-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--wp--preset--spacing--fluid-xl) var(--wp--preset--spacing--section-horizontal);
+  background-color: var(--wp--preset--color--base);
+  /* Use Atomic Noise texture */
+  background-image: radial-gradient(circle at center, rgba(30, 30, 30, 0.05) 0%, transparent 70%);
+}
+
+.dark .not-found-page {
+  background-color: var(--wp--preset--color--atomic-black);
+  background-image: radial-gradient(circle at center, rgba(50, 50, 50, 0.2) 0%, transparent 70%);
+}
+
+.not-found-content {
+  max-width: var(--wp--preset--layout--content);
+  width: 100%;
+}
+
+.not-found-glitch-text {
+  font-family: var(--wp--preset--font-family--brand-title);
+  font-size: clamp(6rem, 15vw, 12rem);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--wp--preset--color--contrast);
+  position: relative;
+  margin-bottom: var(--wp--preset--spacing--fluid-md);
+  /* Neon Gradient Text */
+  background: var(--wp--preset--gradient--hyperpop);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: glitch 3s infinite alternate;
+}
+
+.not-found-title {
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-size: var(--wp--preset--font-size--600);
+  font-weight: 700;
+  margin-bottom: var(--wp--preset--spacing--fluid-md);
+  color: var(--wp--preset--color--contrast);
+}
+
+.dark .not-found-title {
+  color: #fff;
+}
+
+.not-found-description {
+  font-size: var(--wp--preset--font-size--300);
+  color: var(--wp--preset--color--neutral-600);
+  margin-bottom: var(--wp--preset--spacing--fluid-xl);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dark .not-found-description {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.not-found-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--fluid-md);
+  align-items: center;
+}
+
+@media (min-width: 640px) {
+  .not-found-actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+/* Glitch Animation Keyframes */
+@keyframes glitch {
+  0% {
+    text-shadow: 2px 2px 0px var(--wp--preset--color--neon-pink), -2px -2px 0px var(--wp--preset--color--neon-blue);
+    transform: skew(0deg);
+  }
+  20% {
+    text-shadow: 2px -2px 0px var(--wp--preset--color--neon-pink), -2px 2px 0px var(--wp--preset--color--neon-blue);
+    transform: skew(-2deg);
+  }
+  40% {
+    text-shadow: -2px 2px 0px var(--wp--preset--color--neon-pink), 2px -2px 0px var(--wp--preset--color--neon-blue);
+    transform: skew(2deg);
+  }
+  60% {
+    text-shadow: 2px 2px 0px var(--wp--preset--color--neon-pink), -2px -2px 0px var(--wp--preset--color--neon-blue);
+    transform: skew(0deg);
+  }
+  80% {
+    text-shadow: 0px 0px 0px var(--wp--preset--color--neon-pink), 0px 0px 0px var(--wp--preset--color--neon-blue);
+    transform: skew(0deg);
+  }
+  100% {
+    text-shadow: 2px 2px 0px var(--wp--preset--color--neon-pink), -2px -2px 0px var(--wp--preset--color--neon-blue);
+    transform: skew(0deg);
+  }
+}

@@ -22,6 +22,11 @@ import gondwanaImage1 from 'figma:asset/74b708f3be9c02b929444ed900d4217477ac45ad
 import gondwanaImage2 from 'figma:asset/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png';
 import gondwanaImage3 from 'figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png';
 
+// Import Origin Festival 2025 images
+import originImage1 from 'figma:asset/e46fceb6809b8f1b7ef5c578d40578eadf301207.png';
+import originImage2 from 'figma:asset/2678f2e48d60b8ccd6855469149ffc2cd8877e1c.png';
+import originImage3 from 'figma:asset/04aa88bd7a81e3f14ceb68f980492bf374b041db.png';
+
 /**
  * Map of figma:asset URLs to imported assets
  */
@@ -35,6 +40,11 @@ const FIGMA_ASSET_MAP: Record<string, string> = {
   'figma:asset/74b708f3be9c02b929444ed900d4217477ac45ad.png': gondwanaImage1,
   'figma:asset/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png': gondwanaImage2,
   'figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png': gondwanaImage3,
+
+  // Origin Festival 2025 images
+  'figma:asset/e46fceb6809b8f1b7ef5c578d40578eadf301207.png': originImage1,
+  'figma:asset/2678f2e48d60b8ccd6855469149ffc2cd8877e1c.png': originImage2,
+  'figma:asset/04aa88bd7a81e3f14ceb68f980492bf374b041db.png': originImage3,
 };
 
 /**
@@ -72,7 +82,7 @@ export function PortfolioImage({
         return mapped;
       } else {
         // Figma asset not found, provide a contextual fallback based on filename
-        console.warn(`🖼️ PortfolioImage: Figma asset not found: ${src}`);
+        // In development we log this in the debug section below
         
         // Provide different fallbacks based on likely content type
         if (alt.toLowerCase().includes('nail') || alt.toLowerCase().includes('fusion')) {
@@ -93,11 +103,9 @@ export function PortfolioImage({
   // Debug logging in development
   if (import.meta?.env?.DEV && src.startsWith('figma:asset/')) {
     const resolved = FIGMA_ASSET_MAP[src];
-    console.log(`🖼️ PortfolioImage resolving:`, {
-      original: src,
-      resolved: resolved ? 'Found in map' : 'Not found - using fallback',
-      finalSrc: resolvedSrc.substring(0, 100) + '...'
-    });
+    if (!resolved) {
+      console.warn(`🖼️ PortfolioImage: Figma asset not found: ${src}`);
+    }
   }
   
   return (
@@ -128,7 +136,7 @@ export function usePortfolioImageUrl(src: string): string {
         return mapped;
       } else {
         // Figma asset not found, provide a contextual fallback
-        console.warn(`🎨 usePortfolioImageUrl: Figma asset not found: ${src}`);
+        // In development we log this in the debug section below
         
         // Provide different fallbacks based on likely content type (simple heuristics)
         const srcLower = src.toLowerCase();
@@ -150,11 +158,9 @@ export function usePortfolioImageUrl(src: string): string {
   // Debug logging in development
   if (import.meta?.env?.DEV && src.startsWith('figma:asset/')) {
     const resolved = FIGMA_ASSET_MAP[src];
-    console.log(`🎨 usePortfolioImageUrl resolving:`, {
-      original: src,
-      resolved: resolved ? 'Found in map' : 'Not found - using fallback',
-      finalSrc: resolvedSrc.substring(0, 100) + '...'
-    });
+    if (!resolved) {
+      console.warn(`🎨 usePortfolioImageUrl: Figma asset not found: ${src}`);
+    }
   }
   
   return resolvedSrc;

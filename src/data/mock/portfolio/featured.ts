@@ -4,7 +4,7 @@
  * 
  * @module data/mock/portfolio/featured
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 import { PortfolioEntry } from '../../types';
@@ -24,23 +24,24 @@ export const featuredWork: PortfolioEntry[] = [
   {
     id: 'festival-eye-art',
     slug: 'festival-eye-art',
-    title: 'Festival Eye Art',
+    title: 'Psytrance Eye Art',
     category: 'Festival Makeup',
     images: [
       {
         src: festivalEyeArt,
         alt: 'Close-up artistic eye makeup with vibrant purple stripe, red metallic lashes and colorful crystal gems',
-        title: 'Festival Eye Art - Main',
+        title: 'Psytrance Eye Art - Main',
         caption: 'Festival Eye Art',
         position: 'center',
         aspectRatio: '4:3'
       }
     ],
     location: 'Koh Phangan, Thailand',
-    event: 'Jungle Festival',
-    description: 'Intricate eye makeup featuring a bold purple stripe design, metallic red lashes, and decorative crystal gems showcasing precision and creativity in festival artistry.',
+    event: 'Psytrance Jungle Festival',
+    date: '2024-10-15',
+    description: 'Intricate eye makeup featuring a bold purple stripe design, metallic red lashes, and decorative crystal gems. Designed to catch the light on the psytrance dancefloor.',
     excerpt: 'Bold festival eye art with purple stripes and metallic red lashes',
-    tags: ['Eye Art', 'Festival', 'Gems', 'Colorful', 'Creative'],
+    tags: ['Eye Art', 'Psytrance', 'Gems', 'Colorful', 'Creative'],
     featured: true,
     order: 1
   },
@@ -60,8 +61,9 @@ export const featuredWork: PortfolioEntry[] = [
       }
     ],
     location: 'Thailand',
-    event: 'Festival',
-    description: 'Beautiful expression of festival joy and connection with rainbow heart body art, capturing the loving and inclusive spirit of festival culture and community celebration.',
+    event: 'Full Moon Psytrance',
+    date: '2024-09-20',
+    description: 'Beautiful expression of festival joy and connection with rainbow heart body art, capturing the loving and inclusive spirit of the global trance community.',
     excerpt: 'Rainbow heart body art celebrating festival love and connection',
     tags: ['Body Art', 'Rainbow', 'Festival', 'Love', 'Community'],
     featured: true,
@@ -70,22 +72,24 @@ export const featuredWork: PortfolioEntry[] = [
   {
     id: 'vibrant-face-art',
     slug: 'vibrant-face-art',
-    title: 'Vibrant Face Art',
+    title: 'Neon Tribal Geometry',
     category: 'Festival Makeup',
     images: [
       {
         src: vibrantFaceArt,
         alt: 'Portrait of person with blonde hair and colorful face paint featuring blue and pink stripes in outdoor festival setting',
-        title: 'Vibrant Face Art - Main',
+        title: 'Neon Tribal Geometry - Main',
         caption: 'Vibrant Face Art',
         position: 'center',
         aspectRatio: '3:4'
       }
     ],
     location: 'Outdoor Festival',
-    description: 'Striking portrait showcasing colorful face paint with blue and pink geometric stripes, demonstrating bold artistic expression and the transformative power of festival makeup.',
+    event: 'Open Air Festival',
+    date: '2024-08-12',
+    description: 'Striking portrait showcasing colorful face paint with blue and pink geometric stripes. A modern take on tribal markings for the electronic music generation.',
     excerpt: 'Geometric face paint with blue and pink stripes',
-    tags: ['Face Paint', 'Geometric', 'Festival', 'Colorful', 'Bold'],
+    tags: ['Face Paint', 'Geometric', 'Psytrance', 'Colorful', 'Bold'],
     featured: true,
     order: 3
   }

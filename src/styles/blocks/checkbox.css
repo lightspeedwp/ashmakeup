@@ -1,0 +1,53 @@
+/* Checkbox Block Styles */
+.checkbox {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  border-radius: 4px;
+  border: 1px solid var(--border); /* border-primary in tailwind usually, but let's stick to theme */
+  background-color: var(--background);
+  color: #fff; /* text-primary-foreground */
+  outline: none;
+  cursor: pointer;
+  transition: box-shadow 0.2s, background-color 0.2s, border-color 0.2s;
+}
+
+.checkbox:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.checkbox[data-state="checked"] {
+  background-color: var(--wp--preset--color--primary);
+  border-color: var(--wp--preset--color--primary);
+  color: #fff;
+}
+
+.checkbox:focus-visible {
+  border-color: var(--wp--preset--color--neon-purple);
+  box-shadow: 0 0 0 3px rgba(190, 0, 254, 0.3);
+}
+
+.dark .checkbox {
+  background-color: rgba(255, 255, 255, 0.05); /* bg-input/30 */
+  border-color: var(--wp--preset--color--neutral-700);
+}
+
+.dark .checkbox[data-state="checked"] {
+  background-color: var(--wp--preset--color--primary);
+  border-color: var(--wp--preset--color--primary);
+}
+
+.checkbox__indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: currentColor;
+}
+
+.checkbox__indicator svg {
+  width: 0.875rem; /* size-3.5 */
+  height: 0.875rem;
+}

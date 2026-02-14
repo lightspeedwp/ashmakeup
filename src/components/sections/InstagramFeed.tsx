@@ -1,302 +1,134 @@
 /**
- * Instagram Feed Component
+ * @fileoverview Instagram Feed Component
  * 
- * Displays recent Instagram posts from @feedmymedia
- * Uses Instagram Graph API with 24-hour caching and fallback to mock data
+ * Displays recent Instagram posts from @feedmymedia via the Behold.so
+ * embeddable widget. The widget script is loaded dynamically and the
+ * `<behold-widget>` custom element is imperatively inserted via a ref
+ * to keep it outside React's DOM reconciliation (prevents the
+ * `beholdReplaceChildren` TypeError).
+ * 
+ * Implements a responsive 2-column layout:
+ * - Left column (25%): Title, Subheading, Follow Button
+ * - Right column (75%): Behold.so Instagram Widget
+ * 
+ * Error suppression for Behold's `beholdReplaceChildren` quirks is handled
+ * globally in index.html, extensionErrorSuppressor.ts, ErrorBoundary.tsx,
+ * and SafetyWrapper.tsx.
  * 
  * @component
  * @returns {JSX.Element} Instagram feed section
  */
 
-import React, { useState, useEffect } from 'react';
-import { Instagram, ExternalLink, Heart, MessageCircle, RefreshCw, AlertCircle } from 'lucide-react';
-import { 
-  fetchInstagramPosts, 
-  isInstagramConfigured, 
-  clearInstagramCache,
-  getCacheAge,
-  type InstagramPost
-} from '../../utils/instagramService';
+import React, { useEffect, useRef } from 'react';
+import { Instagram } from 'lucide-react';
+import { ErrorBoundary } from '../common/ErrorBoundary';
+import { instagramUI, instagramConfig } from '../../data/mock/ui/instagram';
+import "@/styles/blocks/instagram-feed.css";
 
-// Mock Instagram posts for fallback
-const mockInstagramPosts = [
-  {
-    id: '1',
-    media_type: 'IMAGE' as const,
-    media_url: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=800&q=80',
-    permalink: 'https://instagram.com/feedmymedia',
-    caption: 'Festival glam ready! ✨ Glitter placement on point 💕',
-    timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    like_count: 234,
-    comments_count: 18,
-    username: 'feedmymedia'
-  },
-  {
-    id: '2',
-    media_type: 'IMAGE' as const,
-    media_url: 'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80',
-    permalink: 'https://instagram.com/feedmymedia',
-    caption: 'Bridal glow for this stunning bride 👰 Natural beauty enhanced',
-    timestamp: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
-    like_count: 456,
-    comments_count: 32,
-    username: 'feedmymedia'
-  },
-  {
-    id: '3',
-    media_type: 'IMAGE' as const,
-    media_url: 'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=800&q=80',
-    permalink: 'https://instagram.com/feedmymedia',
-    caption: 'Bold colorful makeup for photoshoot 🎨 Loving these vibes!',
-    timestamp: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    like_count: 189,
-    comments_count: 12,
-    username: 'feedmymedia'
-  },
-  {
-    id: '4',
-    media_type: 'IMAGE' as const,
-    media_url: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&q=80',
-    permalink: 'https://instagram.com/feedmymedia',
-    caption: 'Sunset gradient eyes 🌅 Perfect for summer events',
-    timestamp: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    like_count: 312,
-    comments_count: 24,
-    username: 'feedmymedia'
-  },
-  {
-    id: '5',
-    media_type: 'IMAGE' as const,
-    media_url: 'https://images.unsplash.com/photo-1523264766116-5e732b55cc03?w=800&q=80',
-    permalink: 'https://instagram.com/feedmymedia',
-    caption: 'Getting ready for Origin Festival! Who else is going? 🎪',
-    timestamp: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-    like_count: 567,
-    comments_count: 45,
-    username: 'feedmymedia'
-  },
-  {
-    id: '6',
-    media_type: 'IMAGE' as const,
-    media_url: 'https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?w=800&q=80',
-    permalink: 'https://instagram.com/feedmymedia',
-    caption: 'Glowy skin prep routine 💧 Hydration is key!',
-    timestamp: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-    like_count: 423,
-    comments_count: 28,
-    username: 'feedmymedia'
-  }
-];
+/**
+ * Loads the Behold.so widget script once and imperatively inserts the
+ * <behold-widget> custom element into a ref-managed container so that
+ * React never reconciles the widget's internal DOM.
+ */
+function InstagramFeedContent() {
+  const scriptLoaded = useRef(false);
+  const widgetContainerRef = useRef<HTMLDivElement>(null);
+  const widgetInserted = useRef(false);
 
-export function InstagramFeed() {
-  const [posts, setPosts] = useState<InstagramPost[]>(mockInstagramPosts);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [isUsingMockData, setIsUsingMockData] = useState(true);
-  const cacheAge = getCacheAge();
-  
-  // Load Instagram posts
+  // Imperatively insert the <behold-widget> custom element once
   useEffect(() => {
-    loadPosts();
-  }, []);
-  
-  const loadPosts = async () => {
-    setIsLoading(true);
-    
+    if (widgetInserted.current || !widgetContainerRef.current) return;
+
     try {
-      if (!isInstagramConfigured()) {
-        console.log('📱 Instagram API not configured - using mock data');
-        setPosts(mockInstagramPosts);
-        setIsUsingMockData(true);
-        setIsLoading(false);
-        return;
+      const widget = document.createElement('behold-widget');
+      widget.setAttribute('feed-id', instagramConfig.beholdFeedId);
+      widgetContainerRef.current.appendChild(widget);
+      widgetInserted.current = true;
+    } catch (err) {
+      if (import.meta?.env?.DEV) {
+        console.warn('⚠️ Failed to insert behold-widget:', err);
       }
-      
-      const fetchedPosts = await fetchInstagramPosts(6);
-      setPosts(fetchedPosts);
-      setIsUsingMockData(false);
-      console.log('✅ Loaded real Instagram posts');
-    } catch (error) {
-      if (error instanceof Error && error.message === 'INSTAGRAM_NOT_CONFIGURED') {
-        console.log('📱 Using mock Instagram data');
-      } else {
-        console.warn('⚠️ Instagram API unavailable, using mock data');
-      }
-      setPosts(mockInstagramPosts);
-      setIsUsingMockData(true);
-    } finally {
-      setIsLoading(false);
     }
-  };
-  
-  const handleRefresh = async () => {
-    setIsRefreshing(true);
-    clearInstagramCache();
-    await loadPosts();
-    setIsRefreshing(false);
-  };
-  
-  // Format relative time
-  const formatTimestamp = (timestamp: string): string => {
-    const date = new Date(timestamp);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    
-    if (diffDays === 0) return 'Today';
-    if (diffDays === 1) return 'Yesterday';
-    if (diffDays < 7) return `${diffDays} days ago`;
-    if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-    return `${Math.floor(diffDays / 30)} months ago`;
-  };
-  
+  }, []);
+
+  // Load the Behold script
+  useEffect(() => {
+    if (scriptLoaded.current) return;
+
+    // Avoid duplicate script tags
+    const existing = document.querySelector(
+      `script[src="${instagramConfig.scriptUrl}"]`
+    );
+    if (existing) {
+      scriptLoaded.current = true;
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = instagramConfig.scriptUrl;
+    script.type = 'module';
+    script.async = true;
+
+    script.onerror = (error) => {
+      if (import.meta?.env?.DEV) {
+        console.warn('⚠️ Behold widget script failed to load:', error);
+      }
+    };
+
+    script.onload = () => {
+      if (import.meta?.env?.DEV) {
+        console.log('✅ Behold widget script loaded');
+      }
+    };
+
+    document.head.appendChild(script);
+    scriptLoaded.current = true;
+
+    return () => {
+      // Script stays in <head> for the lifetime of the app — intentional
+    };
+  }, []);
+
   return (
-    <section className="py-section-md px-section-md bg-instagram-section transition-colors duration-300">
-      <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="text-center mb-fluid-2xl">
-          <div className="flex items-center justify-center gap-instagram-header mb-fluid-sm">
-            <Instagram className="w-10 h-10 text-instagram-icon" />
-            <h2 className="text-section-h2 font-heading font-bold text-gradient-pink-purple-blue">
-              Follow My Journey
+    <section className="instagram-feed">
+      <div className="container-wide">
+        <div className="instagram-feed__grid">
+
+          {/* Left Column - Header Info */}
+          <div className="instagram-feed__header-col">
+            <h2 className="instagram-feed__title text-section-h2 text-gradient-pink-purple-blue">
+              {instagramUI.header.title}
             </h2>
+
+            <p className="instagram-feed__description">
+              {instagramUI.header.subtitle}
+            </p>
+
+            <a
+              href={instagramConfig.profileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="instagram-feed__btn"
+              aria-label={instagramUI.actions.follow}
+            >
+              <Instagram className="instagram-feed__btn-icon" />
+              <span>{instagramUI.header.handle}</span>
+            </a>
           </div>
-          <p className="text-body-guideline font-body mb-fluid-md bg-gradient-to-r from-purple-500 to-violet-500 bg-clip-text text-transparent">
-            See my latest work and behind-the-scenes moments
-          </p>
-          <a
-            href="https://instagram.com/feedmymedia"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-instagram-stat-items text-xl font-body font-semibold text-instagram-link hover:text-instagram-link transition-colors"
-          >
-            @feedmymedia
-            <ExternalLink className="w-5 h-5" />
-          </a>
-          
-          {/* API Status Badge */}
-          {isUsingMockData && (
-            <div className="mt-fluid-md">
-              <div className="inline-flex items-center gap-instagram-stat-items bg-instagram-api-badge border rounded-full px-instagram-badge py-instagram-badge">
-                <AlertCircle className="w-4 h-4 text-instagram-api-icon" />
-                <span className="text-sm font-body text-instagram-api-text">
-                  Demo Mode - Configure Instagram API for live feed
-                </span>
-              </div>
-            </div>
-          )}
-          
-          {/* Cache Info */}
-          {!isUsingMockData && cacheAge !== null && (
-            <div className="mt-fluid-sm text-sm text-instagram-cache">
-              Last updated: {cacheAge < 1 ? 'Just now' : `${Math.round(cacheAge)} hours ago`}
-            </div>
-          )}
+
+          {/* Right Column - Behold.so Widget (ref-managed, outside React reconciliation) */}
+          <div className="instagram-feed__widget-col" ref={widgetContainerRef}></div>
+
         </div>
-        
-        {/* Loading State */}
-        {isLoading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-instagram-grid">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="aspect-square bg-instagram-skeleton rounded-lg animate-pulse" />
-            ))}
-          </div>
-        ) : (
-          <>
-            {/* Instagram Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-instagram-grid">
-              {posts.map((post) => (
-                <a
-                  key={post.id}
-                  href={post.permalink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
-                >
-                  {/* Image */}
-                  <img
-                    src={post.media_type === 'VIDEO' ? (post.thumbnail_url || post.media_url) : post.media_url}
-                    alt={post.caption || 'Instagram post'}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  
-                  {/* Video Badge */}
-                  {post.media_type === 'VIDEO' && (
-                    <div className="absolute top-2 left-2 bg-instagram-video-badge px-instagram-video-badge py-instagram-video-badge rounded text-white text-xs font-semibold">
-                      VIDEO
-                    </div>
-                  )}
-                  
-                  {/* Overlay on Hover */}
-                  <div className="absolute inset-0 bg-instagram-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-fluid-md">
-                    {/* Stats */}
-                    {(post.like_count !== undefined || post.comments_count !== undefined) && (
-                      <div className="flex items-center gap-instagram-stats text-white text-sm mb-fluid-xs">
-                        {post.like_count !== undefined && (
-                          <div className="flex items-center gap-instagram-stat-items">
-                            <Heart className="w-4 h-4 fill-white" />
-                            <span>{post.like_count}</span>
-                          </div>
-                        )}
-                        {post.comments_count !== undefined && (
-                          <div className="flex items-center gap-instagram-stat-items">
-                            <MessageCircle className="w-4 h-4" />
-                            <span>{post.comments_count}</span>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    
-                    {/* Caption Preview */}
-                    {post.caption && (
-                      <p className="text-white text-xs line-clamp-2">
-                        {post.caption}
-                      </p>
-                    )}
-                    
-                    {/* Timestamp */}
-                    <p className="text-white/70 text-xs mt-1">
-                      {formatTimestamp(post.timestamp)}
-                    </p>
-                  </div>
-                  
-                  {/* Instagram Icon Badge */}
-                  <div className="absolute top-2 right-2 bg-instagram-icon-badge p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Instagram className="w-4 h-4 text-white" />
-                  </div>
-                </a>
-              ))}
-            </div>
-            
-            {/* Actions */}
-            <div className="flex flex-col items-center gap-instagram-actions mt-fluid-xl">
-              {/* Follow Button */}
-              <a
-                href="https://instagram.com/feedmymedia"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-instagram-header bg-gradient-pink-purple-blue hover:from-purple-700 hover:to-pink-700 text-white px-button py-button font-body font-medium text-button-fluid transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 focus-ring-instagram"
-              >
-                <Instagram className="w-6 h-6" />
-                Follow @feedmymedia on Instagram
-                <ExternalLink className="w-5 h-5" />
-              </a>
-              
-              {/* Refresh Button */}
-              {!isUsingMockData && (
-                <button
-                  onClick={handleRefresh}
-                  disabled={isRefreshing}
-                  className="inline-flex items-center gap-instagram-stat-items text-sm font-body font-semibold text-instagram-link hover:text-instagram-link transition-colors disabled:opacity-50"
-                >
-                  <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-                  {isRefreshing ? 'Refreshing...' : 'Refresh Feed'}
-                </button>
-              )}
-            </div>
-          </>
-        )}
       </div>
     </section>
+  );
+}
+
+export function InstagramFeed() {
+  return (
+    <ErrorBoundary>
+      <InstagramFeedContent />
+    </ErrorBoundary>
   );
 }

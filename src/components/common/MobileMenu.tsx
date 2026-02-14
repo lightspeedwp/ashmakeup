@@ -3,140 +3,48 @@
  * 
  * Core Features:
  * - Full-screen mobile overlay with blur backdrop
+ * - React Router integration with useNavigate and useLocation
  * - Focus trapping with proper keyboard navigation
- * - Logo display with half the previous size for better layout
- * - Fixed layout to prevent X button overlap with logo
  * - Screen reader announcements for state changes
  * - Smooth animations and brand-consistent styling
  * 
- * Dependencies:
- * - React 18+ for concurrent features and proper focus management
- * - Logo component for brand consistency
- * - Modal context for state management
- * 
- * Accessibility:
- * - WCAG 2.1 AA compliant with focus trapping
- * - Keyboard navigation support with Tab, Enter, Escape
- * - Screen reader compatibility with ARIA labels and live regions
- * - Focus management with proper tabindex control
- * 
- * Performance:
- * - Efficient state management with minimal re-renders
- * - Smooth transitions with hardware-accelerated CSS transforms
- * - Event delegation for keyboard handling
- * - Optimized focus management with useRef hooks
- * 
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
- * @since 1.0.0 - Initial mobile menu component extraction from Header
- * @lastModified 2025-01-29
+ * @version 2.0.0 - React Router Migration
  */
 
 import React, { useEffect, useRef } from "react";
-import { Logo } from "./Logo";
+import { useLocation, useNavigate } from "react-router";
+import { navigationItems } from "../../data/mock/ui/navigation";
+import { SocialLinks } from "./SocialLinks";
+import { getPageIdFromPath } from "../../hooks/useAppNavigate";
+import "@/styles/blocks/mobile-menu.css";
 
 /**
- * Props interface for MobileMenu component with comprehensive type safety
- * 
- * @interface MobileMenuProps
- * @description Defines all properties for mobile menu functionality
+ * Props interface for MobileMenu component
  */
 interface MobileMenuProps {
-  /** 
-   * Controls whether the mobile menu is open or closed
-   * @example true | false
-   */
   isOpen: boolean;
-  
-  /** 
-   * Function to close the mobile menu
-   * Called when user clicks close button, backdrop, or presses escape
-   */
   onClose: () => void;
-  
-  /** 
-   * Currently active page identifier for navigation state management
-   * Controls which navigation item displays as active with visual indicators
-   * @example "home" | "about" | "portfolio" | "blog"
-   */
-  currentPage: string;
-  
-  /** 
-   * Navigation handler function for page changes and smooth scrolling
-   * @param page - Target page identifier to navigate to
-   * @param sectionId - Optional section ID for smooth scrolling within pages
-   */
-  onNavigation: (page: string, sectionId?: string) => void;
 }
 
 /**
  * MobileMenu - Full-screen mobile navigation overlay with accessibility and performance
- * 
- * A comprehensive mobile menu component extracted from Header.tsx that provides
- * full-screen navigation with focus trapping, keyboard support, and brand styling.
- * 
- * Features:
- * - Fixed layout preventing close button overlap with logo
- * - Half-size logo (mobile-sm) for better visual balance
- * - Full focus trapping with keyboard navigation support
- * - Smooth backdrop blur and gradient styling
- * - Screen reader announcements for state changes
- * - Touch-optimized button sizes and spacing
- * - Brand-consistent gradient text effects
- * 
- * Layout Improvements:
- * - Logo positioned with proper spacing from close button
- * - Close button positioned in top-right with adequate margin
- * - Navigation items centered with optimal touch targets
- * - Decorative elements positioned to avoid interference
- * 
- * @component
- * @param {MobileMenuProps} props - Component properties with type safety
- * @returns {JSX.Element | null} Rendered mobile menu overlay or null when closed
- * 
- * @accessibility WCAG 2.1 AA Compliance Details
- * - Focus trapping within menu when open
- * - Keyboard navigation with Tab, Enter, Space, Escape
- * - Screen reader announcements for menu state changes
- * - ARIA labels and dialog role for proper semantics
- * - High contrast support for users with visual impairments
- * 
- * @performance Optimization Details
- * - Conditional rendering prevents unnecessary DOM when closed
- * - Event listeners only attached when menu is open
- * - Focus management optimized with useRef hooks
- * - Smooth CSS transitions without JavaScript animations
- * 
- * @example Basic Usage
- * ```tsx
- * const [isMenuOpen, setIsMenuOpen] = useState(false);
- * 
- * <MobileMenu
- *   isOpen={isMenuOpen}
- *   onClose={() => setIsMenuOpen(false)}
- *   currentPage="home"
- *   onNavigation={handleNavigation}
- * />
- * ```
  */
 export function MobileMenu({
   isOpen,
   onClose,
-  currentPage,
-  onNavigation,
 }: MobileMenuProps) {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const firstFocusableRef = useRef<HTMLButtonElement>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const currentPage = getPageIdFromPath(location.pathname);
 
   // Focus management for mobile menu
   useEffect(() => {
     if (isOpen) {
-      // Focus the first focusable element when menu opens
-      firstFocusableRef.current?.focus();
-      // Prevent body scroll
       document.body.style.overflow = "hidden";
     } else {
-      // Restore body scroll when menu closes
       document.body.style.overflow = "unset";
     }
 
@@ -145,204 +53,56 @@ export function MobileMenu({
     };
   }, [isOpen]);
 
-  // Handle keyboard events for mobile menu
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (!isOpen) return;
-
-      if (event.key === "Escape") {
-        onClose();
-      }
-
-      // Focus trapping
-      if (event.key === "Tab" && mobileMenuRef.current) {
-        const focusableElements =
-          mobileMenuRef.current.querySelectorAll(
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-          );
-
-        if (focusableElements.length === 0) return;
-
-        const firstElement =
-          focusableElements[0] as HTMLElement;
-        const lastElement = focusableElements[
-          focusableElements.length - 1
-        ] as HTMLElement;
-
-        if (
-          event.shiftKey &&
-          document.activeElement === firstElement
-        ) {
-          event.preventDefault();
-          lastElement.focus();
-        } else if (
-          !event.shiftKey &&
-          document.activeElement === lastElement
-        ) {
-          event.preventDefault();
-          firstElement.focus();
-        }
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () =>
-      document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+  const handleNavigation = (path: string) => {
+    onClose();
+    navigate(path);
+  };
 
   // Don't render anything if menu is closed
   if (!isOpen) return null;
 
   return (
     <div
-      className="fixed inset-0 z-50 md:hidden"
+      className="mobile-menu"
       id="mobile-menu"
       role="dialog"
       aria-modal="true"
       aria-labelledby="mobile-menu-title"
+      ref={mobileMenuRef}
     >
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 mobile-menu-backdrop backdrop-blur-sm transition-colors duration-200"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      {/* Decorative Orbs */}
+      <div className="mobile-menu__orb mobile-menu__orb--1" aria-hidden="true" />
+      <div className="mobile-menu__orb mobile-menu__orb--2" aria-hidden="true" />
+      <div className="mobile-menu__orb mobile-menu__orb--3" aria-hidden="true" />
 
-      {/* Menu Content */}
-      <div
-        ref={mobileMenuRef}
-        className="relative w-full h-full mobile-menu-content flex flex-col transition-colors duration-200"
+      {/* Hidden title for screen readers */}
+      <h2 id="mobile-menu-title" className="sr-only">
+        Mobile Navigation Menu
+      </h2>
+
+      {/* Nav Items - Centered */}
+      <nav 
+        className="mobile-menu__nav"
+        role="menu"
+        aria-label="Mobile navigation"
       >
-        {/* Hidden title for screen readers */}
-        <h2 id="mobile-menu-title" className="sr-only">
-          Mobile Navigation Menu
-        </h2>
-
-        {/* Header Section with Centered Logo and Absolute Close Button */}
-        <div className="relative p-spacing-30 pt-spacing-40">
-          {/* Close Button positioned absolutely in top-right corner */}
+        {navigationItems.map((item) => (
           <button
-            ref={firstFocusableRef}
-            className="absolute top-spacing-30 right-spacing-30 mobile-menu-close-btn focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-300 p-spacing-10"
-            onClick={onClose}
-            aria-label="Close mobile menu"
+            key={item.id}
+            onClick={() => handleNavigation(item.path)}
+            className="mobile-menu__nav-link"
+            role="menuitem"
+            aria-current={currentPage === item.id ? "page" : undefined}
           >
-            <span
-              className="mobile-menu-close-line rotate-45 translate-y-[0.375rem]"
-              aria-hidden="true"
-            />
-            <span
-              className="mobile-menu-close-line opacity-0"
-              aria-hidden="true"
-            />
-            <span
-              className="mobile-menu-close-line -rotate-45 -translate-y-[0.375rem]"
-              aria-hidden="true"
-            />
+            <item.icon className="mobile-menu__nav-icon" aria-hidden="true" />
+            {item.label}
           </button>
+        ))}
+      </nav>
 
-          {/* Logo centered with proper spacing from close button */}
-          <div className="flex justify-center pt-spacing-40">
-            <button
-              onClick={() => onNavigation("home")}
-              className="focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-2 dark:focus:ring-offset-purple-900 rounded-300 p-spacing-10"
-              aria-label="Go to home page"
-            >
-              <Logo size="mobile-sm" />
-            </button>
-          </div>
-        </div>
-
-        {/* Navigation Items - Centered in remaining space */}
-        <div className="flex-1 flex items-center justify-center">
-          <nav
-            className="flex flex-col items-center gap-spacing-40"
-            role="menu"
-            aria-label="Mobile navigation"
-          >
-            <button
-              onClick={() => onNavigation("about")}
-              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-200 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-4 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-30 py-spacing-10 ${
-                currentPage === "about"
-                  ? "mobile-menu-link-active"
-                  : "mobile-menu-link-inactive"
-              }`}
-              role="menuitem"
-              aria-current={
-                currentPage === "about" ? "page" : undefined
-              }
-            >
-              About
-            </button>
-
-            <button
-              onClick={() => onNavigation("portfolio")}
-              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-200 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-4 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-30 py-spacing-10 ${
-                currentPage === "portfolio"
-                  ? "mobile-menu-link-active"
-                  : "mobile-menu-link-inactive"
-              }`}
-              role="menuitem"
-              aria-current={
-                currentPage === "portfolio"
-                  ? "page"
-                  : undefined
-              }
-            >
-              Portfolio
-            </button>
-
-            <button
-              onClick={() => onNavigation("blog")}
-              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-200 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-4 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-30 py-spacing-10 ${
-                currentPage === "blog"
-                  ? "mobile-menu-link-active"
-                  : "mobile-menu-link-inactive"
-              }`}
-              role="menuitem"
-              aria-current={
-                currentPage === "blog" ? "page" : undefined
-              }
-            >
-              Blog
-            </button>
-
-            <button
-              onClick={() => onNavigation("contact")}
-              className={`text-fluid-3xl sm:text-fluid-4xl font-heading font-semibold transition-all duration-200 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400 focus:ring-offset-4 dark:focus:ring-offset-purple-900 rounded-300 px-spacing-30 py-spacing-10 ${
-                currentPage === "contact"
-                  ? "mobile-menu-link-active"
-                  : "mobile-menu-link-inactive"
-              }`}
-              role="menuitem"
-              aria-current={
-                currentPage === "contact" ? "page" : undefined
-              }
-            >
-              Contact
-            </button>
-          </nav>
-        </div>
-
-        {/* Decorative Elements - positioned to avoid interference */}
-        <div className="absolute bottom-20 left-8">
-          <div
-            className="mobile-menu-orb-sm mobile-menu-orb-1 rounded-900 animate-pulse"
-            aria-hidden="true"
-          />
-        </div>
-        <div className="absolute bottom-32 right-8">
-          <div
-            className="mobile-menu-orb-md mobile-menu-orb-2 rounded-900 animate-pulse delay-1000"
-            aria-hidden="true"
-          />
-        </div>
-        <div className="absolute top-1/3 right-12">
-          <div
-            className="mobile-menu-orb-xs mobile-menu-orb-3 rounded-900 animate-pulse delay-2000"
-            aria-hidden="true"
-          />
-        </div>
+      {/* Social Icons */}
+      <div className="mobile-menu__social">
+        <SocialLinks variant="clean" />
       </div>
     </div>
   );

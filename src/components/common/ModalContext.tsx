@@ -156,7 +156,9 @@ export function ModalProvider({ children }: ModalProviderProps) {
     setModals(prev => {
       const index = prev.findIndex(modal => modal.id === id);
       if (index === -1) {
-        console.warn(`Modal with id "${id}" not found. Register it first.`);
+        if (import.meta.env.DEV) {
+          console.warn(`Modal with id "${id}" not found. Register it first.`);
+        }
         return prev;
       }
       

@@ -8,7 +8,6 @@ Site-wide footer with contact form, social links, copyright information, and bra
 ## Purpose
 
 Provide consistent footer across all pages with:
-- SendGrid-integrated contact form
 - Social media links
 - Brand tagline and logo
 - Copyright and legal information
@@ -27,33 +26,12 @@ import { Footer } from './components/common/Footer';
 <Footer />
 ```
 
-### With Custom Contact Handler
-
-```tsx
-<Footer 
-  onContactSubmit={handleCustomSubmit}
-  showContactForm={true}
-/>
-```
-
 ---
 
 ## Props
 
 ```typescript
 interface FooterProps {
-  /**
-   * Whether to show the contact form section
-   * @default true
-   */
-  showContactForm?: boolean;
-  
-  /**
-   * Custom contact form submission handler
-   * @optional (uses SendGrid by default)
-   */
-  onContactSubmit?: (data: ContactFormData) => Promise<void>;
-  
   /**
    * Additional CSS classes
    * @default ""
@@ -71,22 +49,6 @@ interface FooterProps {
 ---
 
 ## Features
-
-### Contact Form Integration
-
-```tsx
-import { ContactForm } from './ContactForm';
-
-<section className="py-section bg-gray-50">
-  <div className="max-w-7xl mx-auto px-6">
-    <h2 className="text-section-h2 font-heading font-semibold text-center mb-fluid-lg">
-      Get in Touch
-    </h2>
-    
-    <ContactForm onSuccess={handleSuccess} />
-  </div>
-</section>
-```
 
 ### Social Links
 
@@ -122,39 +84,19 @@ Complete footer implementation:
 ```tsx
 import React from 'react';
 import { Logo } from './Logo';
-import { ContactForm } from './ContactForm';
 import { SocialLinks } from './SocialLinks';
 
 interface FooterProps {
-  showContactForm?: boolean;
   className?: string;
 }
 
 export function Footer({ 
-  showContactForm = true,
   className = '' 
 }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className={`bg-gray-900 text-white ${className}`}>
-      {/* Contact Form Section */}
-      {showContactForm && (
-        <section className="py-section bg-gray-800">
-          <div className="max-w-4xl mx-auto px-6">
-            <h2 className="text-section-h2 font-heading font-semibold text-white text-center mb-fluid-md">
-              Let's Create Together
-            </h2>
-            
-            <p className="text-body-guideline font-body text-gray-300 text-center mb-fluid-lg max-w-2xl mx-auto">
-              Ready to bring your makeup vision to life? Get in touch and let's discuss your next project.
-            </p>
-            
-            <ContactForm />
-          </div>
-        </section>
-      )}
-
       {/* Main Footer Content */}
       <div className="py-fluid-xl px-6">
         <div className="max-w-7xl mx-auto">
@@ -380,10 +322,6 @@ export function Footer({
 
 ```tsx
 <footer aria-label="Site footer">
-  <section aria-label="Contact form">
-    <ContactForm />
-  </section>
-  
   <nav aria-label="Footer navigation">
     {/* Navigation links */}
   </nav>
@@ -462,7 +400,6 @@ export function Footer({
 ```tsx
 // ✅ CORRECT - Clear contact options
 <footer>
-  <ContactForm />
   <SocialLinks />
   <a href="mailto:ashley@ashshaw.makeup">Email</a>
 </footer>
@@ -514,20 +451,8 @@ export function Footer({
 
 ```mermaid
 flowchart TD
-    A[Footer Component] --> B[Contact Section]
-    A --> C[Quick Links Section]
+    A[Footer Component] --> C[Quick Links Section]
     A --> D[Copyright Bar]
-    
-    B --> E[ContactForm]
-    B --> F[Section Title]
-    B --> G[Section Description]
-    
-    E --> H{Form Submission}
-    H -->|Success| I[Show Success Toast]
-    H -->|Error| J[Show Error Message]
-    
-    I --> K[Clear Form]
-    I --> L[Confetti Animation]
     
     C --> M[Navigation Links]
     C --> N[Services List]
@@ -546,53 +471,6 @@ flowchart TD
     V --> X[Privacy Policy, Terms of Service]
     
     style A fill:#e1f5ff,stroke:#01c3cc,stroke-width:3px
-    style E fill:#dcfce7,stroke:#22c55e,stroke-width:2px
-    style H fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
-    style I fill:#dcfce7,stroke:#22c55e,stroke-width:2px
-    style J fill:#fecaca,stroke:#ef4444,stroke-width:2px
-```
-
-### Mermaid Sequence Diagram (Contact Form in Footer)
-
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant F as Footer
-    participant CF as ContactForm
-    participant E as emailService (Demo Mode)
-    
-    U->>F: Scroll to footer
-    Note over F: Footer visible<br/>Contact form loaded
-    
-    U->>CF: Fill form fields
-    U->>CF: Click Submit
-    
-    CF->>CF: Validate inputs
-    
-    alt Validation Failed
-        CF->>U: Show field errors
-    else Validation Passed
-        CF->>E: sendContactForm()
-        
-        E->>E: Simulate email sending
-        Note over E: Demo mode<br/>1-3s delay<br/>Logs to console
-        
-        alt Demo Success
-            E-->>CF: { success: true, mode: 'demo' }
-            
-            CF->>F: Trigger success state
-            F->>F: Show confetti 🎉
-            F->>U: Success toast
-            CF->>CF: Clear form
-        else Email Error
-            SG--xS: Error
-            S-->>E: 500 Error
-            E-->>CF: { success: false }
-            
-            CF->>U: Show error message
-            CF->>U: Retry button
-        end
-    end
 ```
 
 ### Mermaid State Diagram (Footer Interaction States)
@@ -603,20 +481,8 @@ stateDiagram-v2
     
     Idle --> Visible: User scrolls to footer
     
-    Visible --> FormInteraction: User clicks form field
     Visible --> LinkHover: User hovers link
     Visible --> SocialClick: User clicks social icon
-    
-    FormInteraction --> FormFilling: User types
-    FormFilling --> FormSubmitting: Submit clicked
-    
-    FormSubmitting --> FormSuccess: Email sent
-    FormSubmitting --> FormError: Email failed
-    
-    FormSuccess --> ShowingConfetti: Display animation
-    ShowingConfetti --> Visible: Animation complete
-    
-    FormError --> FormFilling: User retries
     
     LinkHover --> Visible: Mouse out
     
@@ -626,13 +492,6 @@ stateDiagram-v2
     note right of Visible
         Footer fully rendered
         All sections displayed
-        Contact form ready
-    end note
-    
-    note right of FormSuccess
-        Confetti animation
-        Success toast
-        Form cleared
     end note
     
     note right of SocialClick
@@ -646,7 +505,6 @@ stateDiagram-v2
 
 ## Related Components
 
-- **[ContactForm](./ContactForm.md)** - Contact form with SendGrid
 - **[SocialLinks](./SocialLinks.md)** - Social media links
 - **[Logo](./Logo.md)** - Brand logo
 - **[Header](./Header.md)** - Site header

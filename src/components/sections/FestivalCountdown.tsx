@@ -13,14 +13,13 @@
  * @component
  * @returns {JSX.Element} Countdown timer with call-to-action
  * 
- * @version 2.0.0
- * @since 1.0.0 - Initial festival countdown component
- * @since 2.0.0 - Migrated to WordPress-aligned CSS classes (Batch 4)
- * @lastModified 2025-01-29
+ * @version 2.1.2 - Semantic BEM Refactor
  */
 
 import React, { useState, useEffect } from 'react';
 import { Calendar, Clock, MapPin, Sparkles, ArrowRight } from 'lucide-react';
+import { nextFestival } from '../../data/mock/sections/countdown';
+import "@/styles/blocks/countdown.css";
 
 interface TimeLeft {
   days: number;
@@ -39,11 +38,9 @@ export function FestivalCountdown() {
   
   const [isExpired, setIsExpired] = useState(false);
   
-  // Origin Festival dates
-  const festivalStart = new Date('2026-01-30T00:00:00');
-  const festivalEnd = new Date('2026-02-01T23:59:59');
-  const festivalName = "Origin Festival";
-  const festivalLocation = "Byron Bay, NSW";
+  // Festival dates from mock data
+  const festivalStart = new Date(nextFestival.startDate);
+  const festivalEnd = new Date(nextFestival.endDate);
   
   useEffect(() => {
     const calculateTimeLeft = () => {
@@ -97,41 +94,38 @@ export function FestivalCountdown() {
   const isFestivalHappening = timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0;
   
   return (
-    <section className="py-section-md px-section-md bg-festival-countdown-section relative overflow-hidden transition-colors duration-300">
+    <section className="festival-countdown">
       {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden festival-decorative-padding">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-festival-countdown-circle rounded-full blur-3xl animate-pulse transition-colors duration-300" />
-        <div className="absolute bottom-10 right-10 w-40 h-40 bg-festival-countdown-circle rounded-full blur-3xl animate-pulse delay-1000 transition-colors duration-300" />
-        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-festival-countdown-circle rounded-full blur-2xl animate-pulse delay-500 transition-colors duration-300" />
+      <div className="festival-countdown__bg">
+        <div className="festival-countdown__bg-effect festival-countdown__bg-effect--1" />
+        <div className="festival-countdown__bg-effect festival-countdown__bg-effect--2" />
       </div>
       
-      <div className="container-6xl relative z-10">
+      <div className="container-6xl festival-countdown__inner">
         {isFestivalHappening ? (
           // Festival is happening NOW!
-          <div className="text-center">
-            <div className="badge-festival-lg mb-fluid-lg animate-bounce">
-              <Sparkles className="w-6 h-6 text-yellow-300 animate-spin" />
-              <span className="text-xl font-body font-bold text-festival-badge transition-colors duration-300">
-                HAPPENING NOW!
-              </span>
-              <Sparkles className="w-6 h-6 text-yellow-300 animate-spin" />
+          <div className="festival-countdown__content">
+            <div className="festival-countdown__badge festival-countdown__badge-animate mb-fluid-lg">
+              <Sparkles className="icon-md text-neon-yellow festival-countdown__icon-spin" />
+              <span>HAPPENING NOW!</span>
+              <Sparkles className="icon-md text-neon-yellow festival-countdown__icon-spin" />
             </div>
             
-            <h2 className="text-section-h2 font-heading font-bold text-festival-heading mb-fluid-md transition-colors duration-300">
-              {festivalName} is Here! 🎉
+            <h2 className="text-section-h2 mb-fluid-md">
+              {nextFestival.name} is Here! 🎉
             </h2>
             
-            <p className="text-xl md:text-2xl font-body text-festival-body mb-fluid-lg transition-colors duration-300">
-              The festival is happening right now in {festivalLocation}!
+            <p className="text-body-p mb-fluid-lg">
+              {nextFestival.happeningText}
             </p>
             
-            <div className="flex-col-sm-row flex-center-gap gap-4">
+            <div className="festival-countdown__actions">
               <a
                 href="#contact"
-                className="btn-festival-primary"
+                className="btn btn--neon-primary inline-flex-center gap-fluid-sm"
               >
                 Book Next Festival
-                <ArrowRight className="w-6 h-6" />
+                <ArrowRight className="icon-md" />
               </a>
             </div>
           </div>
@@ -139,103 +133,79 @@ export function FestivalCountdown() {
           // Countdown to festival
           <>
             {/* Festival Info */}
-            <div className="text-center mb-fluid-xl">
-              <div className="badge-festival mb-fluid-md">
-                <Sparkles className="w-5 h-5 text-yellow-300" />
-                <span className="text-sm font-body font-semibold text-festival-badge uppercase tracking-wide transition-colors duration-300">
-                  Coming Soon
-                </span>
+            <div className="festival-countdown__header">
+              <div className="festival-countdown__subtitle">
+                <div className="festival-countdown__badge">
+                  <Sparkles className="icon-sm text-neon-yellow" />
+                  <span>Coming Soon</span>
+                </div>
               </div>
               
-              <h2 className="text-section-h2 font-heading font-bold text-gradient-pink-purple-blue mb-fluid-sm leading-tight transition-colors duration-300">
-                {festivalName}
+              <h2 className="text-section-h2 text-gradient-pink-purple-blue mb-fluid-sm">
+                {nextFestival.name}
               </h2>
               
-              <div className="flex-col-sm-row flex-center-content gap-4 text-festival-body text-lg font-body transition-colors duration-300">
-                <div className="flex-center gap-2">
-                  <Calendar className="w-5 h-5" />
-                  <span>Jan 30 - Feb 1, 2026</span>
+              <div className="festival-countdown__meta">
+                <div className="festival-countdown__meta-item">
+                  <Calendar className="icon-md" />
+                  <span>{nextFestival.dateText}</span>
                 </div>
-                <div className="hidden sm:block w-1 h-1 bg-gray-400 dark:bg-white/50 rounded-full" />
-                <div className="flex-center gap-2">
-                  <MapPin className="w-5 h-5" />
-                  <span>{festivalLocation}</span>
+                <div className="festival-countdown__meta-divider" />
+                <div className="festival-countdown__meta-item">
+                  <MapPin className="icon-md" />
+                  <span>{nextFestival.location}</span>
                 </div>
               </div>
             </div>
             
             {/* Countdown Timer */}
-            <div className="grid-festival-countdown mb-fluid-xl">
-              {/* Days */}
-              <div className="card-festival-timer">
-                <div className="text-5xl md:text-7xl font-title font-bold text-festival-timer-number mb-2 transition-colors duration-300">
-                  {timeLeft.days}
+            <div className="festival-countdown__grid">
+              {[
+                { label: "Days", value: timeLeft.days },
+                { label: "Hours", value: timeLeft.hours },
+                { label: "Minutes", value: timeLeft.minutes },
+                { label: "Seconds", value: timeLeft.seconds },
+              ].map((item) => (
+                <div key={item.label} className="festival-timer-card">
+                  <div className="festival-timer-card__number">
+                    {item.value}
+                  </div>
+                  <div className="festival-timer-card__label">
+                    {item.label}
+                  </div>
                 </div>
-                <div className="text-lg md:text-xl font-body font-medium text-festival-timer-label uppercase tracking-wide transition-colors duration-300">
-                  Days
-                </div>
-              </div>
-              
-              {/* Hours */}
-              <div className="card-festival-timer">
-                <div className="text-5xl md:text-7xl font-title font-bold text-festival-timer-number mb-2 transition-colors duration-300">
-                  {timeLeft.hours}
-                </div>
-                <div className="text-lg md:text-xl font-body font-medium text-festival-timer-label uppercase tracking-wide transition-colors duration-300">
-                  Hours
-                </div>
-              </div>
-              
-              {/* Minutes */}
-              <div className="card-festival-timer">
-                <div className="text-5xl md:text-7xl font-title font-bold text-festival-timer-number mb-2 transition-colors duration-300">
-                  {timeLeft.minutes}
-                </div>
-                <div className="text-lg md:text-xl font-body font-medium text-festival-timer-label uppercase tracking-wide transition-colors duration-300">
-                  Minutes
-                </div>
-              </div>
-              
-              {/* Seconds */}
-              <div className="card-festival-timer">
-                <div className="text-5xl md:text-7xl font-title font-bold text-festival-timer-number mb-2 transition-colors duration-300">
-                  {timeLeft.seconds}
-                </div>
-                <div className="text-lg md:text-xl font-body font-medium text-festival-timer-label uppercase tracking-wide transition-colors duration-300">
-                  Seconds
-                </div>
-              </div>
+              ))}
             </div>
             
             {/* Call to Action */}
-            <div className="text-center">
-              <p className="text-xl md:text-2xl font-body text-festival-body mb-fluid-lg transition-colors duration-300">
-                Don't miss out! Book your festival makeup now for a radiant look that lasts all weekend ✨
+            <div className="festival-countdown__cta-section">
+              <p className="text-body-p festival-countdown__description">
+                {nextFestival.description}
               </p>
               
-              <div className="flex-col-sm-row flex-center-content gap-4">
+              <div className="festival-countdown__buttons">
                 <a
                   href="#contact"
-                  className="btn-festival-primary"
+                  className="btn btn--neon-primary inline-flex-center gap-fluid-sm btn--full-mobile"
                 >
-                  Book Your Spot Now
-                  <ArrowRight className="w-6 h-6" />
+                  {nextFestival.ctaBook}
+                  <ArrowRight className="icon-md" />
                 </a>
                 
                 <a
                   href="#portfolio"
-                  className="btn-festival-secondary"
+                  className="btn btn--neon-secondary inline-flex-center gap-fluid-sm btn--full-mobile"
                 >
-                  <Sparkles className="w-6 h-6" />
-                  View Festival Looks
+                  <Sparkles className="icon-md" />
+                  {nextFestival.ctaView}
                 </a>
               </div>
               
               {/* Urgency Message */}
               {timeLeft.days < 14 && (
-                <div className="mt-fluid-lg">
-                  <div className="badge-festival-urgency">
-                    <Clock className="w-5 h-5" />
+                <div className="festival-countdown__urgency">
+                  <div className="festival-countdown__urgency-badge">
+                    <Clock className="icon-sm" />
                     Limited availability - Book soon!
                   </div>
                 </div>

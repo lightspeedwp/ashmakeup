@@ -38,8 +38,13 @@ export const SOCIAL_LINKS = [
     icon: "linkedin",
   },
   {
+    platform: "YouTube",
+    url: "https://youtube.com/@ashshaw.makeup",
+    icon: "youtube",
+  },
+  {
     platform: "Email",
-    url: "mailto:ashley@ashshaw.makeup",
+    url: "mailto:hello@ahshaw.makeup",
     icon: "email",
   },
 ];
@@ -60,27 +65,27 @@ export const HOMEPAGE_HERO_IMAGES = [
   {
     src: heroImage1,
     alt: "Close-up artistic eye makeup with vibrant purple stripe, red metallic lashes and colorful crystal gems",
-    caption: "Festival Eye Art",
+    caption: "Electric Eye Art",
     description:
-      "Intricate eye makeup featuring a bold purple stripe design, metallic red lashes, and decorative crystal gems showcasing precision and creativity in festival artistry",
+      "Electric eye artistry featuring a neon purple stripe design, metallic red lashes, and radiant crystal gems that capture the pulse of festival energy",
     className:
       "absolute top-6 left-4 sm:top-12 sm:left-8 w-48 h-56 sm:w-72 sm:h-80 md:w-80 md:h-96 rounded-2xl bg-cover bg-center shadow-2xl transform rotate-3 z-20 border-4 border-white ring-4 ring-pink-200/50 cursor-pointer transition-transform hover:scale-105",
   },
   {
     src: heroImage2,
     alt: "Joyful festival participant with rainbow heart body paint on chest, smiling radiantly in colorful festival environment",
-    caption: "Rainbow Heart Love",
+    caption: "Neon Heart Pulse",
     description:
-      "Beautiful expression of festival joy and connection with rainbow heart body art, capturing the loving and inclusive spirit of festival culture and community celebration",
+      "Radiant festival energy with a neon rainbow heart body art, celebrating connection and the vibrant pulse of the dancefloor",
     className:
       "absolute top-0 right-0 w-40 h-48 sm:w-64 sm:h-72 md:w-72 md:h-80 rounded-2xl bg-cover bg-center shadow-xl transform -rotate-6 z-10 border-4 border-white ring-4 ring-purple-200/50 cursor-pointer transition-transform hover:scale-105",
   },
   {
     src: heroImage3,
     alt: "Portrait of person with blonde hair and colorful face paint featuring blue and pink stripes in outdoor festival setting",
-    caption: "Vibrant Face Art",
+    caption: "Electric Geometric",
     description:
-      "Striking portrait showcasing colorful face paint with blue and pink geometric stripes, demonstrating bold artistic expression and the transformative power of festival makeup",
+      "Bold, high-contrast face art featuring electric blue and pink geometric stripes, embodying the transformative power of neon makeup",
     className:
       "absolute bottom-0 left-0 w-36 h-40 sm:w-60 sm:h-64 md:w-68 md:h-72 rounded-2xl bg-cover bg-center shadow-xl transform rotate-12 z-10 border-4 border-white ring-4 ring-blue-200/50 cursor-pointer transition-transform hover:scale-105",
   },
@@ -333,11 +338,38 @@ export const THAILAND_WORK_DATA = [
  */
 export const FESTIVAL_WORK_DATA = [
   {
+    id: 'origin-festival-2025',
+    title: 'Origin Festival 2025: Birthday Adventure',
+    subtitle: 'Birthday cycle adventure to Origin Festival',
+    description: 'It was my birthday weekend, I cycled to the event over two days and then cycled home, I brought all my clothes, hammock gear and makeup bags in panniers on my gravel bike. I danced, celebrated and spread the joy of my makeup. I also had some stickers made.',
+    images: [
+      {
+        src: 'figma:asset/e46fceb6809b8f1b7ef5c578d40578eadf301207.png',
+        alt: 'Origin Festival Birthday - Pink Mohawk and Neon Eyes',
+        caption: 'Festival Birthday Joy',
+        description: 'Vibrant birthday celebration look with neon accents'
+      },
+      {
+        src: 'figma:asset/2678f2e48d60b8ccd6855469149ffc2cd8877e1c.png',
+        alt: 'Origin Festival - Geometric Face Paint Profile',
+        caption: 'Geometric Neon Art',
+        description: 'Intricate geometric face paint design'
+      },
+      {
+        src: 'figma:asset/04aa88bd7a81e3f14ceb68f980492bf374b041db.png',
+        alt: 'Origin Festival - Neon Grid Makeup',
+        caption: 'Neon Night Vibes',
+        description: 'Neon grid patterns coming alive at night'
+      }
+    ],
+    category: 'Festival Makeup',
+  },
+  {
     id: "jungle-festival-koh-phangan",
     title: "Jungle Festival Magic",
     subtitle: "Koh Phangan, Friday 26 September",
     description:
-      "Tropical UV artistry in the heart of Thailand's jungle paradise, blending neon glow with natural island energy.",
+      "Neon-charged UV artistry in the heart of Thailand's jungle, where blacklight meets natural island energy.",
     images: [
       {
         src: "https://images.unsplash.com/photo-1533408944756-4950754f3ebc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqdW5nbGUlMjBmZXN0aXZhbCUyMG1ha2V1cCUyMFVWJTIwbmVvbnxlbnwxfHx8fDE3NTkyMzc4MDV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
@@ -368,7 +400,7 @@ export const FESTIVAL_WORK_DATA = [
     title: "Festival Euphoria",
     subtitle: "Origin Festival 2024",
     description:
-      "Explosive joy and vibrant rainbow face art with purple mohawk capturing the pure ecstasy of festival life.",
+      "Explosive joy and electric rainbow face art with a purple mohawk, capturing the pure ecstasy of the festival beat.",
     images: [
       {
         src: "https://images.unsplash.com/photo-1530626334789-069de2d8f9b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmZXN0aXZhbCUyMG1ha2V1cCUyMGNvbG9yZnVsJTIwZmFjZSUyMGFydCUyMG1vdW50YWlufGVufDF8fHx8MTc1NzU5MTYzOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
@@ -752,17 +784,17 @@ export const PORTFOLIO_SECTIONS = [
       "Standout pieces that capture the essence of festival artistry and creative expression.",
     contentfulTags: ["featured", "portfolio-highlight", "showcase"],
     fallbackCategory: "featured",
-    gradientFrom: "#FF66CC",
-    gradientTo: "#9933FF",
+    gradientFrom: "#FF10F0",
+    gradientTo: "#B026FF",
     backgroundGradient:
-      "from-pink-100 via-purple-100 to-blue-100",
-    titleGradient: "from-pink-600 via-purple-600 to-blue-500",
-    subtitleGradient: "from-pink-700 to-purple-600",
+      "from-fuchsia-900/40 via-purple-900/40 to-blue-900/40",
+    titleGradient: "from-fuchsia-400 via-purple-400 to-cyan-400",
+    subtitleGradient: "from-fuchsia-500 to-purple-500",
     decorativeColors: [
-      "#ec4899",
-      "#a855f7",
-      "#3b82f6",
-      "#6366f1",
+      "#FF10F0",
+      "#B026FF",
+      "#00FFFF",
+      "#39FF14",
     ],
     entries: [], // Now handled by unified portfolio service
   },
@@ -773,18 +805,18 @@ export const PORTFOLIO_SECTIONS = [
       "From Origin Festival's explosive energy to Little Forest's peaceful New Year celebrations — capturing the diverse spirit of festival culture through bold face art and vibrant self-expression.",
     contentfulTags: ["festival", "music-festival", "face-paint", "celebration"],
     fallbackCategory: "festival",
-    gradientFrom: "#ff9500", // Orange
-    gradientTo: "#32cd32", // Green
+    gradientFrom: "#FF5E00", // Neon Orange
+    gradientTo: "#39FF14", // Neon Green
     backgroundGradient:
-      "from-orange-100 via-yellow-100 to-green-100",
+      "from-orange-900/40 via-yellow-900/40 to-green-900/40",
     titleGradient:
-      "from-orange-600 via-yellow-600 to-green-500",
-    subtitleGradient: "from-orange-700 to-green-600",
+      "from-orange-400 via-yellow-400 to-green-400",
+    subtitleGradient: "from-orange-500 to-green-500",
     decorativeColors: [
-      "#fb923c",
-      "#fbbf24",
-      "#22c55e",
-      "#10b981",
+      "#FF5E00",
+      "#FFE600",
+      "#39FF14",
+      "#00FF99",
     ],
     entries: FESTIVAL_WORK_DATA,
   },
@@ -796,16 +828,16 @@ export const PORTFOLIO_SECTIONS = [
     contentfulTags: ["thailand", "travel", "tropical", "culture"],
     fallbackCategory: "travel",
     gradientFrom: "#FFD700",
-    gradientTo: "#FF9966",
+    gradientTo: "#FF5E00",
     backgroundGradient:
-      "from-yellow-100 via-orange-100 to-red-100",
-    titleGradient: "from-yellow-600 via-orange-600 to-red-500",
-    subtitleGradient: "from-yellow-700 to-red-600",
+      "from-yellow-900/40 via-orange-900/40 to-red-900/40",
+    titleGradient: "from-yellow-400 via-orange-400 to-red-400",
+    subtitleGradient: "from-yellow-500 to-red-500",
     decorativeColors: [
-      "#fbbf24",
-      "#f97316",
-      "#ef4444",
-      "#dc2626",
+      "#FFD700",
+      "#FF5E00",
+      "#FF10F0",
+      "#FF0000",
     ],
     entries: THAILAND_WORK_DATA,
   },
@@ -816,17 +848,17 @@ export const PORTFOLIO_SECTIONS = [
       "Swiss mountain festival experiences with alpine-inspired makeup artistry in breathtaking natural settings.",
     contentfulTags: ["shankra", "switzerland", "mountain-festival", "alpine"],
     fallbackCategory: "swiss-festivals",
-    gradientFrom: "#32CD32",
-    gradientTo: "#20C997",
+    gradientFrom: "#39FF14",
+    gradientTo: "#00FFFF",
     backgroundGradient:
-      "from-green-100 via-emerald-100 to-teal-100",
-    titleGradient: "from-green-600 via-emerald-600 to-teal-500",
-    subtitleGradient: "from-green-700 to-teal-600",
+      "from-green-900/40 via-emerald-900/40 to-teal-900/40",
+    titleGradient: "from-green-400 via-emerald-400 to-cyan-400",
+    subtitleGradient: "from-green-500 to-cyan-500",
     decorativeColors: [
-      "#22c55e",
-      "#10b981",
-      "#14b8a6",
-      "#0d9488",
+      "#39FF14",
+      "#00FFFF",
+      "#00FF99",
+      "#B026FF",
     ],
     entries: SHANKRA_WORK_DATA,
   },
@@ -837,15 +869,15 @@ export const PORTFOLIO_SECTIONS = [
       "Mountain celebration makeup showcasing the vibrant energy of Swiss outdoor festival culture.",
     contentfulTags: ["reiserfieber", "switzerland", "outdoor-festival", "mountain"],
     fallbackCategory: "swiss-festivals",
-    gradientFrom: "#9933FF",
-    gradientTo: "#3399FF",
+    gradientFrom: "#B026FF",
+    gradientTo: "#1F51FF",
     backgroundGradient:
-      "from-blue-100 via-indigo-100 to-purple-100",
-    titleGradient: "from-blue-600 via-indigo-600 to-purple-500",
-    subtitleGradient: "from-blue-700 to-purple-600",
+      "from-blue-900/40 via-indigo-900/40 to-purple-900/40",
+    titleGradient: "from-blue-400 via-indigo-400 to-purple-400",
+    subtitleGradient: "from-blue-500 to-purple-500",
     decorativeColors: [
-      "#3b82f6",
-      "#6366f1",
+      "#1F51FF",
+      "#B026FF",
       "#8b5cf6",
       "#a855f7",
     ],
@@ -858,17 +890,17 @@ export const PORTFOLIO_SECTIONS = [
       "Electric nightlife artistry using UV-reactive paints that come alive under blacklight, perfect for clubs and raves.",
     contentfulTags: ["uv", "blacklight", "nightlife", "rave", "club"],
     fallbackCategory: "uv-makeup",
-    gradientFrom: "#FF5E62",
-    gradientTo: "#FF66CC",
+    gradientFrom: "#00FFFF",
+    gradientTo: "#FF10F0",
     backgroundGradient:
-      "from-cyan-100 via-pink-100 to-purple-100",
-    titleGradient: "from-cyan-600 via-pink-600 to-purple-500",
-    subtitleGradient: "from-cyan-700 to-purple-600",
+      "from-cyan-900/40 via-pink-900/40 to-purple-900/40",
+    titleGradient: "from-cyan-400 via-pink-400 to-purple-400",
+    subtitleGradient: "from-cyan-500 to-purple-500",
     decorativeColors: [
-      "#06b6d4",
-      "#ec4899",
-      "#a855f7",
-      "#8b5cf6",
+      "#00FFFF",
+      "#FF10F0",
+      "#B026FF",
+      "#39FF14",
     ],
     entries: UV_MAKEUP_DATA,
   },
@@ -879,14 +911,14 @@ export const PORTFOLIO_SECTIONS = [
       "Creative nail artistry combining colors, textures, and innovative techniques for unique finger-focused designs.",
     contentfulTags: ["nails", "nail-art", "fusion-nails", "manicure"],
     fallbackCategory: "nail-art",
-    gradientFrom: "#FF9966",
-    gradientTo: "#FF5E62",
+    gradientFrom: "#FF10F0",
+    gradientTo: "#FF5E00",
     backgroundGradient:
-      "from-rose-100 via-pink-100 to-orange-100",
-    titleGradient: "from-rose-600 via-pink-600 to-orange-500",
-    subtitleGradient: "from-rose-700 to-orange-600",
+      "from-rose-900/40 via-pink-900/40 to-orange-900/40",
+    titleGradient: "from-rose-400 via-pink-400 to-orange-400",
+    subtitleGradient: "from-rose-500 to-orange-500",
     decorativeColors: [
-      "#f43f5e",
+      "#FF10F0",
       "#ec4899",
       "#f97316",
       "#ea580c",
@@ -910,106 +942,106 @@ export const PORTFOLIO_SECTIONS = [
 export const ABOUT_SECTION_THEMES = {
   journey: {
     backgroundGradient: {
-      from: "orange-100",
-      via: "yellow-100",
-      to: "amber-100",
+      from: "neon-orange",
+      via: "neon-yellow",
+      to: "neon-orange",
     },
-    titleColor: "text-orange-800", // WCAG AAA compliant
-    cardBorder: { from: "orange-200", to: "amber-200" },
-    decorativeColor: "from-orange-300 to-amber-400",
-    quoteColor: "text-amber-700", // WCAG AA compliant
-    accentGradient: { from: "orange-500", to: "amber-500" }, // For decorative use only
+    titleColor: "text-neon-orange",
+    cardBorder: { from: "neon-orange", to: "neon-yellow" },
+    decorativeColor: "neon-orange neon-yellow",
+    quoteColor: "text-neon-yellow",
+    accentGradient: { from: "neon-orange", to: "neon-yellow" },
     name: "journey",
   },
   festival: {
     backgroundGradient: {
-      from: "green-100",
-      via: "emerald-100",
-      to: "teal-100",
+      from: "neon-green",
+      via: "neon-cyan",
+      to: "neon-green",
     },
-    titleColor: "text-emerald-800", // WCAG AAA compliant
-    cardBorder: { from: "green-200", to: "teal-200" },
-    decorativeColor: "from-green-300 to-teal-400",
-    quoteColor: "text-teal-700", // WCAG AA compliant
-    accentGradient: { from: "green-500", to: "teal-500" }, // For decorative use only
+    titleColor: "text-neon-green",
+    cardBorder: { from: "neon-green", to: "neon-cyan" },
+    decorativeColor: "neon-green neon-cyan",
+    quoteColor: "text-neon-cyan",
+    accentGradient: { from: "neon-green", to: "neon-cyan" },
     name: "festival",
   },
   berlin: {
     backgroundGradient: {
-      from: "purple-100",
-      via: "violet-100",
-      to: "pink-100",
+      from: "neon-purple",
+      via: "neon-pink",
+      to: "neon-purple",
     },
-    titleColor: "text-purple-900", // WCAG AAA compliant
-    cardBorder: { from: "purple-200", to: "pink-200" },
-    decorativeColor: "from-purple-400 to-pink-500",
-    quoteColor: "text-violet-700", // WCAG AA compliant
-    accentGradient: { from: "purple-500", to: "pink-500" }, // For decorative use only
+    titleColor: "text-neon-purple",
+    cardBorder: { from: "neon-purple", to: "neon-pink" },
+    decorativeColor: "neon-purple neon-pink",
+    quoteColor: "text-neon-pink",
+    accentGradient: { from: "neon-purple", to: "neon-pink" },
     name: "berlin",
   },
   uv: {
     backgroundGradient: {
-      from: "cyan-100",
-      via: "blue-100",
-      to: "indigo-100",
+      from: "neon-cyan",
+      via: "neon-blue",
+      to: "neon-cyan",
     },
-    titleColor: "text-indigo-900", // WCAG AAA compliant
-    cardBorder: { from: "cyan-200", to: "indigo-200" },
-    decorativeColor: "from-cyan-300 to-indigo-400",
-    quoteColor: "text-blue-700", // WCAG AA compliant
-    accentGradient: { from: "cyan-500", to: "indigo-500" }, // For decorative use only
+    titleColor: "text-neon-blue",
+    cardBorder: { from: "neon-cyan", to: "neon-blue" },
+    decorativeColor: "neon-cyan neon-blue",
+    quoteColor: "text-neon-cyan",
+    accentGradient: { from: "neon-cyan", to: "neon-blue" },
     name: "uv",
   },
   mousse: {
     backgroundGradient: {
-      from: "rose-100",
-      via: "pink-100",
-      to: "red-100",
+      from: "neon-pink",
+      via: "neon-red",
+      to: "neon-pink",
     },
-    titleColor: "text-rose-900", // WCAG AAA compliant
-    cardBorder: { from: "rose-200", to: "red-200" },
-    decorativeColor: "from-rose-300 to-red-400",
-    quoteColor: "text-red-700", // WCAG AA compliant
-    accentGradient: { from: "rose-500", to: "red-500" }, // For decorative use only
+    titleColor: "text-neon-red",
+    cardBorder: { from: "neon-pink", to: "neon-red" },
+    decorativeColor: "neon-pink neon-red",
+    quoteColor: "text-neon-pink",
+    accentGradient: { from: "neon-pink", to: "neon-red" },
     name: "mousse",
   },
   nails: {
     backgroundGradient: {
-      from: "teal-100",
-      via: "emerald-100",
-      to: "green-100",
+      from: "neon-cyan",
+      via: "neon-green",
+      to: "neon-cyan",
     },
-    titleColor: "text-teal-900", // WCAG AAA compliant
-    cardBorder: { from: "teal-200", to: "green-200" },
-    decorativeColor: "from-teal-300 to-green-400",
-    quoteColor: "text-green-700", // WCAG AA compliant
-    accentGradient: { from: "teal-500", to: "green-500" }, // For decorative use only
+    titleColor: "text-neon-cyan",
+    cardBorder: { from: "neon-cyan", to: "neon-green" },
+    decorativeColor: "neon-cyan neon-green",
+    quoteColor: "text-neon-green",
+    accentGradient: { from: "neon-cyan", to: "neon-green" },
     name: "nails",
   },
   creative: {
     backgroundGradient: {
-      from: "indigo-100",
-      via: "purple-100",
-      to: "violet-100",
+      from: "neon-blue",
+      via: "neon-purple",
+      to: "neon-blue",
     },
-    titleColor: "text-indigo-900", // WCAG AAA compliant
-    cardBorder: { from: "indigo-200", to: "violet-200" },
-    decorativeColor: "from-indigo-300 to-violet-400",
-    quoteColor: "text-violet-700", // WCAG AA compliant
-    accentGradient: { from: "indigo-500", to: "violet-500" }, // For decorative use only
+    titleColor: "text-neon-blue",
+    cardBorder: { from: "neon-blue", to: "neon-purple" },
+    decorativeColor: "neon-blue neon-purple",
+    quoteColor: "text-neon-purple",
+    accentGradient: { from: "neon-blue", to: "neon-purple" },
     name: "creative",
   },
   future: {
     backgroundGradient: {
-      from: "violet-100",
-      via: "purple-100",
-      to: "pink-100",
+      from: "neon-purple",
+      via: "neon-pink",
+      to: "neon-purple",
     },
-    titleColor: "text-violet-900", // WCAG AAA compliant
-    cardBorder: { from: "violet-200", to: "pink-200" },
-    decorativeColor: "from-violet-300 to-pink-400",
-    quoteColor: "text-pink-700", // WCAG AA compliant
-    accentGradient: { from: "violet-500", to: "pink-500" }, // For decorative use only
+    titleColor: "text-neon-purple",
+    cardBorder: { from: "neon-purple", to: "neon-pink" },
+    decorativeColor: "neon-purple neon-pink",
+    quoteColor: "text-neon-pink",
+    accentGradient: { from: "neon-purple", to: "neon-pink" },
     name: "future",
   },
 };

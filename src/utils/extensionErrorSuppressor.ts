@@ -1,355 +1,100 @@
 /**
- * @fileoverview Aggressive browser extension error suppression system
- * 
- * This module provides comprehensive protection against browser extension
- * interference by implementing multiple layers of error filtering and suppression.
- * 
- * Target Issues:
- * - "Message getPage (id: 3) response timed out after 30000ms"
- * - Extension script conflicts and messaging errors
- * - Content script injection interference
- * - Background page communication timeouts
- * 
- * @author Ash Shaw Portfolio Team
- * @version 1.0.0
- * @since 1.0.0 - Aggressive extension error suppression
+ * @fileoverview Utility to suppress annoying 3rd party script and extension errors
+ * that clutter the console but don't affect application functionality.
  */
 
-interface ErrorPattern {
-  message?: string;
-  source?: string;
-  stack?: string;
-  name?: string;
-}
+export function initializeExtensionErrorSuppression() {
+  if (typeof window === 'undefined') return;
 
-/**
- * Comprehensive list of browser extension error patterns to suppress
- */
-const EXTENSION_ERROR_PATTERNS: ErrorPattern[] = [
-  // Primary timeout error pattern
-  { message: 'Message getPage (id: 3) response timed out after 30000ms' },
-  { message: 'response timed out after 30000ms' },
-  { message: 'Message getPage' },
-  { message: 'getPage (id: 3)' },
-  
-  // General extension messaging errors
-  { message: 'getPage' },
-  { message: 'response timed out' },
-  { message: 'Extension' },
-  { message: 'extension://' },
-  { message: 'chrome-extension://' },
-  { message: 'moz-extension://' },
-  { message: 'safari-web-extension://' },
-  
-  // Content script errors
-  { source: 'extension://' },
-  { source: 'chrome-extension://' },
-  { source: 'moz-extension://' },
-  { source: 'safari-web-extension://' },
-  
-  // Background page communication
-  { message: 'Script error' },
-  { message: 'Non-Error promise rejection captured' },
-  { message: 'AbortError' },
-  { message: 'NetworkError' },
-  
-  // Ad blocker and privacy extension patterns
-  { message: 'uBlock' },
-  { message: 'AdBlock' },
-  { message: 'Ghostery' },
-  { message: 'Privacy Badger' },
-  { message: 'DuckDuckGo' },
-  { message: 'Disconnect' },
-  
-  // Generic extension patterns
-  { stack: 'extension://' },
-  { stack: 'chrome-extension://' },
-  { stack: 'moz-extension://' },
-  { name: 'ExtensionError' },
-  { name: 'TimeoutError' },
-];
+  // 1. Suppress Console Errors
+  const originalConsoleError = console.error;
+  const originalConsoleWarn = console.warn;
+  const originalConsoleLog = console.log;
 
-/**
- * Check if an error matches extension error patterns
- */
-function isExtensionError(error: any): boolean {
-  if (!error) return false;
-  
-  const errorStr = error.toString?.() || '';
-  const messageStr = error.message || '';
-  const stackStr = error.stack || '';
-  const sourceStr = error.source || error.filename || '';
-  const nameStr = error.name || '';
-  
-  return EXTENSION_ERROR_PATTERNS.some(pattern => {
-    if (pattern.message && (messageStr.includes(pattern.message) || errorStr.includes(pattern.message))) {
-      return true;
-    }
-    if (pattern.source && sourceStr.includes(pattern.source)) {
-      return true;
-    }
-    if (pattern.stack && stackStr.includes(pattern.stack)) {
-      return true;
-    }
-    if (pattern.name && nameStr.includes(pattern.name)) {
-      return true;
-    }
-    return false;
-  });
-}
+  const shouldSuppress = (args: any[]) => {
+    const message = args.map(arg => 
+      typeof arg === 'string' ? arg : 
+      arg instanceof Error ? arg.message + (arg.stack || '') : 
+      JSON.stringify(arg)
+    ).join(' ');
 
-/**
- * Track suppressed errors for statistics
- */
-let suppressedErrorCount = 0;
-let lastSuppressionTime = 0;
+    return (
+      message.includes('beholdReplaceChildren') ||
+      message.includes("Cannot read properties of undefined (reading 'beholdReplaceChildren')") ||
+      message.includes('Message getPage (id: 3) response timed out') ||
+      message.includes('response timed out after 30000ms') ||
+      (message.includes('getPage') && message.includes('timed out')) ||
+      message.includes('chrome-extension://') ||
+      message.includes('extension://')
+    );
+  };
 
-/**
- * Log suppressed errors in development mode with tracking
- */
-function logSuppressedError(error: any, type: string): void {
-  suppressedErrorCount++;
-  lastSuppressionTime = Date.now();
-  
-  if (import.meta?.env?.DEV) {
-    console.log(`🛡️ [Extension Error Suppressor] Filtered ${type}:`, {
-      message: error.message || error.toString(),
-      source: error.source || error.filename,
-      stack: error.stack?.substring(0, 200),
-      type: typeof error,
-      count: suppressedErrorCount
-    });
-  }
-}
+  console.error = (...args: any[]) => {
+    if (shouldSuppress(args)) return;
+    originalConsoleError.apply(console, args);
+  };
 
-/**
- * Global error handler for window.onerror
- */
-const originalErrorHandler = window.onerror;
+  console.warn = (...args: any[]) => {
+    if (shouldSuppress(args)) return;
+    originalConsoleWarn.apply(console, args);
+  };
 
-/**
- * Global unhandled rejection handler
- */
-const originalRejectionHandler = window.onunhandledrejection;
+  console.log = (...args: any[]) => {
+    if (shouldSuppress(args)) return;
+    originalConsoleLog.apply(console, args);
+  };
 
-/**
- * Enhanced console.error override
- */
-const originalConsoleError = console.error;
-const originalConsoleWarn = console.warn;
-
-/**
- * Initialize aggressive extension error suppression
- */
-export function initializeExtensionErrorSuppression(): void {
-  console.log('🛡️ Initializing aggressive browser extension error suppression');
-
-  // 1. Global error handler override
-  window.onerror = function(message, source, lineno, colno, error) {
-    if (isExtensionError({ message, source, stack: error?.stack, name: error?.name })) {
-      logSuppressedError({ message, source, error }, 'window.onerror');
-      return true; // Prevent default error handling
-    }
+  // 2. Suppress Window Errors (Uncaught Exceptions) - Event Listener
+  const handleWindowError = (event: ErrorEvent) => {
+    const message = event.message || '';
+    const errorObj = event.error;
+    const stack = errorObj?.stack || '';
     
-    // Let application errors through to original handler
-    if (originalErrorHandler) {
-      return originalErrorHandler.call(this, message, source, lineno, colno, error);
+    if (
+      message.includes('beholdReplaceChildren') ||
+      stack.includes('beholdReplaceChildren') ||
+      message.includes('Message getPage') || 
+      message.includes('timed out')
+    ) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+  };
+
+  // 3. Suppress Unhandled Rejections (Promises)
+  const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+    const message = event.reason?.message || event.reason?.toString() || '';
+    const stack = event.reason?.stack || '';
+    
+    if (
+      message.includes('beholdReplaceChildren') ||
+      stack.includes('beholdReplaceChildren') ||
+      message.includes('Message getPage') ||
+      message.includes('timed out')
+    ) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+  };
+
+  window.addEventListener('error', handleWindowError, true);
+  window.addEventListener('unhandledrejection', handleUnhandledRejection, true);
+
+  // 4. Suppress Window Errors - Old School Handler (for broader compatibility)
+  const originalOnerror = window.onerror;
+  window.onerror = function(msg, url, line, col, error) {
+    const message = String(msg);
+    if (
+      message.includes('beholdReplaceChildren') ||
+      (error && error.stack && error.stack.includes('beholdReplaceChildren')) ||
+      message.includes('Message getPage')
+    ) {
+      return true; // Return true to suppress the error
+    }
+    if (originalOnerror) {
+      // @ts-ignore
+      return originalOnerror.apply(this, arguments);
     }
     return false;
   };
-
-  // 2. Unhandled promise rejection override
-  window.onunhandledrejection = function(event) {
-    const error = event.reason;
-    
-    if (isExtensionError(error)) {
-      logSuppressedError(error, 'unhandledrejection');
-      event.preventDefault(); // Prevent logging
-      return;
-    }
-    
-    // Let application promise rejections through
-    if (originalRejectionHandler) {
-      return originalRejectionHandler.call(this, event);
-    }
-  };
-
-  // 3. Console.error override for aggressive filtering
-  console.error = function(...args: any[]) {
-    const message = args.join(' ');
-    
-    if (isExtensionError({ message })) {
-      logSuppressedError({ message }, 'console.error');
-      return; // Suppress the log
-    }
-    
-    return originalConsoleError.apply(this, args);
-  };
-
-  // 4. Console.warn override for extension warnings
-  console.warn = function(...args: any[]) {
-    const message = args.join(' ');
-    
-    if (isExtensionError({ message })) {
-      logSuppressedError({ message }, 'console.warn');
-      return; // Suppress the log
-    }
-    
-    return originalConsoleWarn.apply(this, args);
-  };
-
-  // 5. Add event listeners for additional error capture
-  window.addEventListener('error', (event) => {
-    if (isExtensionError({
-      message: event.message,
-      source: event.filename,
-      stack: event.error?.stack,
-      name: event.error?.name
-    })) {
-      logSuppressedError(event.error || event, 'error event');
-      event.stopImmediatePropagation();
-      event.preventDefault();
-    }
-  }, true); // Use capture phase
-
-  window.addEventListener('unhandledrejection', (event) => {
-    if (isExtensionError(event.reason)) {
-      logSuppressedError(event.reason, 'unhandledrejection event');
-      event.stopImmediatePropagation();
-      event.preventDefault();
-    }
-  }, true); // Use capture phase
-
-  // 6. Override Promise.prototype.catch for additional protection
-  const originalPromiseCatch = Promise.prototype.catch;
-  Promise.prototype.catch = function(onRejected) {
-    return originalPromiseCatch.call(this, (reason) => {
-      if (isExtensionError(reason)) {
-        logSuppressedError(reason, 'Promise.catch');
-        return; // Suppress the error
-      }
-      
-      if (onRejected) {
-        return onRejected(reason);
-      }
-      throw reason;
-    });
-  };
-
-  // 7. Override addEventListener for message events
-  const originalAddEventListener = EventTarget.prototype.addEventListener;
-  EventTarget.prototype.addEventListener = function(type, listener, options) {
-    if (type === 'message' && this === window) {
-      const wrappedListener = (event: MessageEvent) => {
-        // Filter out extension messages
-        if (
-          event.data &&
-          (event.data.action === 'getPage' ||
-           event.data.id === 3 ||
-           event.data.source?.includes('extension') ||
-           event.origin?.includes('extension://'))
-        ) {
-          logSuppressedError(event.data, 'message event');
-          return; // Don't call the original listener
-        }
-        
-        if (typeof listener === 'function') {
-          return listener(event);
-        }
-      };
-      
-      return originalAddEventListener.call(this, type, wrappedListener, options);
-    }
-    
-    return originalAddEventListener.call(this, type, listener, options);
-  };
-
-  // 8. Create a safety net for any missed errors
-  setInterval(() => {
-    try {
-      // Clear any pending extension-related timeouts
-      const highestTimeoutId = setTimeout(() => {}, 0);
-      for (let i = Math.max(1, highestTimeoutId - 100); i < highestTimeoutId; i++) {
-        try {
-          clearTimeout(i);
-        } catch (e) {
-          // Ignore cleanup errors
-        }
-      }
-    } catch (e) {
-      // Ignore cleanup errors
-    }
-  }, 30000); // Every 30 seconds
-
-  console.log('✅ Extension error suppression system active');
 }
-
-/**
- * Emergency cleanup function for severe extension interference
- */
-export function emergencyExtensionCleanup(): void {
-  console.warn('🚨 Emergency extension cleanup initiated');
-
-  try {
-    // Clear all timers that might be from extensions
-    const highestTimeoutId = setTimeout(() => {}, 0);
-    const highestIntervalId = setInterval(() => {}, 0);
-
-    for (let i = 1; i < highestTimeoutId; i++) {
-      try { clearTimeout(i); } catch (e) { /* ignore */ }
-    }
-
-    for (let i = 1; i < highestIntervalId; i++) {
-      try { clearInterval(i); } catch (e) { /* ignore */ }
-    }
-
-    // Remove any extension-added event listeners
-    ['message', 'storage', 'connect'].forEach(eventType => {
-      try {
-        window.removeEventListener(eventType, () => {});
-      } catch (e) { /* ignore */ }
-    });
-
-    // Force garbage collection if available
-    if ((window as any).gc) {
-      (window as any).gc();
-    }
-
-    console.log('✅ Emergency cleanup completed');
-  } catch (error) {
-    console.log('⚠️ Emergency cleanup had issues:', error);
-  }
-}
-
-/**
- * Restore original error handlers (for cleanup)
- */
-export function restoreOriginalErrorHandlers(): void {
-  console.log('🔄 Restoring original error handlers');
-
-  window.onerror = originalErrorHandler;
-  window.onunhandledrejection = originalRejectionHandler;
-  console.error = originalConsoleError;
-  console.warn = originalConsoleWarn;
-
-  console.log('✅ Original error handlers restored');
-}
-
-/**
- * Get statistics on suppressed errors
- */
-export function getSuppressionStats() {
-  return {
-    totalSuppressed: suppressedErrorCount,
-    lastSuppression: lastSuppressionTime,
-    isActive: window.onerror !== originalErrorHandler
-  };
-}
-
-export default {
-  initializeExtensionErrorSuppression,
-  emergencyExtensionCleanup,
-  restoreOriginalErrorHandlers,
-  getSuppressionStats,
-  isExtensionError
-};

@@ -23,10 +23,12 @@
     /* Path mapping */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./*"],
       "@/components/*": ["./components/*"],
-      "@/styles/*": ["./src/styles/*"],
-      "@/utils/*": ["./utils/*"]
+      "@/styles/*": ["./styles/*"],
+      "@/utils/*": ["./utils/*"],
+      "@/data/*": ["./data/*"],
+      "@/hooks/*": ["./hooks/*"]
     }
   },
   "include": [

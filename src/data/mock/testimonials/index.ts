@@ -1,7 +1,7 @@
 /**
  * Testimonials Data
  * 
- * Client testimonials and reviews for social proof
+ * Authentic feedback from friends at festivals, parties, and underground raves
  * 
  * @module data/mock/testimonials
  */
@@ -20,85 +20,64 @@ export interface Testimonial {
   videoPoster?: string; // Video thumbnail
 }
 
+export const testimonialsSectionContent = {
+  title: "Love from the Dance Floor",
+  description: "Real vibes from friends I've painted at festivals, parties, and underground raves across the globe"
+};
+
 export const testimonials: Testimonial[] = [
   {
     id: "test-001",
-    name: "Sarah Mitchell",
-    role: "Bride",
-    event: "Wedding - Byron Bay",
+    name: "Luna",
+    event: "Origin Festival 2026, South Africa",
     rating: 5,
-    text: "Ash completely transformed my vision into reality! Her attention to detail and ability to enhance natural beauty while creating that festival-inspired glow was absolutely perfect. I felt like the most beautiful version of myself on my wedding day.",
-    date: "2025-12-15",
-    featured: true,
-    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    videoPoster: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80"
+    text: "Spotted him cycling through the crowd with his makeup bag at Origin!! The UV geometric patterns he did right there on the dance floor were insaaaane. Everyone kept asking where I got painted and I'm like 'find the guy with the bike!' He's a legend!! 💜✨",
+    date: "2026-01-15",
+    featured: true
   },
   {
     id: "test-002",
-    name: "Emma Rodriguez",
-    event: "Music Festival",
+    name: "Mika",
+    event: "Sisyphos, Berlin",
     rating: 5,
-    text: "The glitter placement was PERFECTION! Ash understood exactly what I wanted - bold, colorful, and camera-ready. I got so many compliments and the makeup lasted the entire festival weekend!",
+    text: "We were both taking a dancing break and he just pulled out his backpack and transformed my whole vibe!! The neon pink gradient was chef's kiss. Danced til sunrise and it still looked fresh. Love the spontaneous magic 🌈💕",
     date: "2025-11-28",
     featured: true
   },
   {
     id: "test-003",
-    name: "Jessica Chen",
-    role: "Event Organizer",
-    event: "Corporate Gala",
+    name: "Sage",
+    event: "Little Forest Festival, South Africa",
     rating: 5,
-    text: "Ash handled makeup for our entire team of 12 people with grace and efficiency. Every look was tailored perfectly to each person while maintaining a cohesive elegant theme. Absolute professional!",
-    date: "2025-11-10",
-    featured: true,
-    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-    videoPoster: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80"
+    text: "He literally did my makeup near the dance floor while the bass was pumping! The glitter placement and color combos were so unique. Got a million compliments and so many people were searching for 'the guy with the bicycle' afterwards 🦋✨",
+    date: "2025-10-12",
+    featured: true
   },
   {
     id: "test-004",
-    name: "Mia Thompson",
-    event: "Splendour in the Grass",
+    name: "River",
+    event: "Modem Festival, Croatia",
     rating: 5,
-    text: "I've worked with many makeup artists at festivals, but Ash's creativity and use of color is unmatched. She created a unique look that was both wearable and absolutely stunning. Will book again!",
-    date: "2025-10-22",
-    featured: false
-  },
-  {
-    id: "test-005",
-    name: "Rachel Kim",
-    role: "Model",
-    event: "Fashion Photoshoot",
-    rating: 5,
-    text: "Ash's technical skill is incredible. She knows how makeup translates on camera and created looks that were editorial-quality. The photos came out better than I could have imagined!",
-    date: "2025-10-05",
+    text: "Ash you absolute artist!! Found him roaming with his makeup bag and the tribal-techno fusion look he gave me right there by the stage was EVERYTHING. Black light reactive paint that looked like it was moving when I danced. Peak festival magic 🖤🔥",
+    date: "2025-09-22",
     featured: false
   },
   {
     id: "test-006",
-    name: "Sophie Anderson",
-    event: "Birthday Party",
+    name: "Zara",
+    event: "Moov Festival, South Africa",
     rating: 5,
-    text: "For my 30th birthday, I wanted something special and vibrant. Ash delivered beyond expectations with a gorgeous gradient eye look and the perfect peachy glow. I felt absolutely radiant!",
-    date: "2025-09-18",
+    text: "Saw him cruising around the festival on his bike and knew I had to get painted! He did my makeup right by the psytrance stage - purple-blue gradient with gold accents was *chefs kiss* perfect. The energy of getting painted while the music plays hits different 💙✨",
+    date: "2025-07-30",
     featured: false
   },
   {
     id: "test-007",
-    name: "Lauren Davies",
-    role: "Bridesmaids Group",
-    event: "Wedding Party",
+    name: "Phoenix",
+    event: "Underground Rave, Berlin",
     rating: 5,
-    text: "Ash did makeup for all 6 bridesmaids and we each looked unique but cohesive. She was calm, professional, and made the whole morning so fun and relaxing. Highly recommend!",
-    date: "2025-09-01",
-    featured: false
-  },
-  {
-    id: "test-008",
-    name: "Olivia Martinez",
-    event: "Music Video Shoot",
-    rating: 5,
-    text: "Working with Ash on our music video was amazing. She brought creative ideas that elevated our concept and executed flawlessly under tight time constraints. True artist!",
-    date: "2025-08-12",
+    text: "Random warehouse party, we were both resting after dancing hard and he had his backpack! The cyberpunk look he created right there in the corner was straight fire. So many people asked if I was a professional model lol. He made my night!! 🤖⚡",
+    date: "2025-06-15",
     featured: false
   }
 ];

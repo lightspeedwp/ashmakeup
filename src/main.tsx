@@ -6,18 +6,19 @@
  * @version 1.0.0
  */
 
+import { initializeExtensionErrorSuppression } from './utils/extensionErrorSuppressor';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
+import App from './App';
 import './styles/globals.css';
+import './styles/blocks/pwa-install-prompt.css';
+import './styles/blocks/offline-indicator.css';
 import { SafetyWrapper } from './components/common/SafetyWrapper';
+import { ErrorBoundary } from './components/common/ErrorBoundary';
+import { registerServiceWorker } from './utils/pwaService';
 
 // Initialize aggressive extension error suppression immediately
-import('./utils/extensionErrorSuppressor').then(({ initializeExtensionErrorSuppression }) => {
-  initializeExtensionErrorSuppression();
-}).catch(() => {
-  // Silently fail if module not available
-});
+initializeExtensionErrorSuppression();
 
 // Ensure we have a root element
 const rootElement = document.getElementById('root');
@@ -32,30 +33,25 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <SafetyWrapper debug={import.meta.env.DEV}>
-      <App />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </SafetyWrapper>
   </React.StrictMode>
 );
 
 // Add performance monitoring in development
 if (import.meta.env.DEV) {
-  // @ts-ignore - reportWebVitals is optional
-  import('./reportWebVitals.ts').then(({ reportWebVitals }) => {
-    reportWebVitals(console.log);
-  }).catch(() => {
-    // reportWebVitals is optional, silently fail if not available
-  });
+  // Performance monitoring removed as reportWebVitals.ts is not present
 }
 
-// Register service worker for production caching (optional)
+// Register PWA service worker for offline functionality
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then((registration) => {
-        console.log('SW registered: ', registration);
-      })
-      .catch((registrationError) => {
-        console.log('SW registration failed: ', registrationError);
-      });
+    registerServiceWorker().catch((error) => {
+      if (import.meta.env.DEV) {
+        console.error('PWA Service Worker registration failed:', error);
+      }
+    });
   });
 }
