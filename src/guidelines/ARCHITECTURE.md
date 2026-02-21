@@ -1,7 +1,7 @@
 # Ash Shaw Portfolio - Component Architecture & Taxonomy
 
-**Version:** 3.2.0  
-**Last Updated:** January 2025  
+**Version:** 4.0.0  
+**Last Updated:** February 2026  
 **Purpose:** Clarify component organization, file locations, and taxonomy
 
 ---
@@ -515,8 +515,8 @@ See [Logo component](../../components/common/Logo.tsx) for details.
 
 ---
 
-**Last Updated:** January 2025  
-**Version:** 3.2.0  
+**Last Updated:** February 2026  
+**Version:** 4.0.0  
 **Maintained by:** Ash Shaw Portfolio Team
 
 For questions about component organization, refer to this document or the main [Guidelines.md](./Guidelines.md).

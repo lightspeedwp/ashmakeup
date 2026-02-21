@@ -1,18 +1,24 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { termsOfService } from "../../../data/mock/pages/legal";
+import { Breadcrumbs } from "../../ui/Breadcrumbs";
+import { termsBreadcrumbs } from "../../../data/mock/ui/breadcrumbs";
+import { setSEO } from '../../../utils/seo';
+import { pageSEO } from '../../../data/mock/seo';
 import "@/styles/blocks/legal-page.css";
 
 export function TermsAndConditions() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setSEO(pageSEO.terms);
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div className="legal-page-container">
+    <div className="legal-page-container bg-atomic-noise">
       <div className="legal-page-content">
+        <Breadcrumbs items={termsBreadcrumbs} />
         <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-fluid-lg">
           {termsOfService.title}
         </h1>

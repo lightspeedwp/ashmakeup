@@ -1,0 +1,89 @@
+/** Gear Page Styles */
+
+.gear-page__hero {
+    padding: var(--wp--preset--spacing--fluid-2xl) 0;
+    background-color: var(--wp--preset--color--atomic-black);
+    background-size: cover;
+    background-position: center;
+}
+
+.gear-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--wp--preset--spacing--fluid-xl);
+    padding: var(--wp--preset--spacing--fluid-xl);
+}
+
+.gear-category-card {
+    background: rgba(15, 15, 15, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--wp--preset--color--neutral-800);
+    border-radius: var(--wp--preset--border-radius--xl);
+    padding: var(--wp--preset--spacing--fluid-lg);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.gear-category-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--wp--preset--color--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+.gear-category-header {
+    margin-bottom: var(--wp--preset--spacing--fluid-lg);
+    text-align: center;
+}
+
+.gear-category-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+    background: rgba(0, 255, 255, 0.1);
+    border-radius: 50%;
+    margin-bottom: var(--wp--preset--spacing--fluid-sm);
+    color: var(--wp--preset--color--neon-cyan);
+}
+
+.gear-item-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.gear-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--wp--preset--spacing--fluid-sm) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gear-item:last-child {
+    border-bottom: none;
+}
+
+.gear-item__content {
+    display: flex;
+    flex-direction: column;
+}
+
+.gear-item__name {
+    font-weight: 600;
+    color: var(--wp--preset--color--white);
+}
+
+.gear-item__desc {
+    font-size: 0.85em;
+    color: var(--wp--preset--color--neutral-400);
+}
+
+.gear-item__usage {
+    font-size: 0.85em;
+    font-weight: 500;
+    color: var(--wp--preset--color--neon-green);
+    background: rgba(0, 255, 0, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+}

@@ -4,10 +4,18 @@
  * 
  * @module data/mock/portfolio/thailand
  * @author Ash Shaw Portfolio Team
- * @version 2.0.0 - Updated with actual Figma assets
+ * @version 2.1.0 - Fixed figma:asset imports
  */
 
 import { PortfolioEntry } from '../../types';
+
+// Import Figma assets
+import lostParadiseImg from 'figma:asset/e7ee10c85c112ab4acfc9e54087974a5faae5966.png';
+import edenParadiseImg from 'figma:asset/3c496f3b8a5671dd00830f80a9a061ddf687e849.png';
+import edenShishiImg from 'figma:asset/2d37a7cd55fe518f7eb8124fa25a2382be67f948.png';
+import jungleFestival1 from 'figma:asset/7afa71c7ec4457a1c1983db257703a6c92a9cce7.png';
+import jungleFestival2 from 'figma:asset/1cd08d3825ac7cc423a4672f8ed279139fc99d0a.png';
+import jungleFestival3 from 'figma:asset/3eb83eb2d4eb493b80283c1b75770d8893b2fc6a.png';
 
 /**
  * Thailand Portfolio Work
@@ -25,7 +33,7 @@ export const thailandWork: PortfolioEntry[] = [
     date: '2024-09-12',
     images: [
       {
-        src: 'figma:asset/e7ee10c85c112ab4acfc9e54087974a5faae5966.png',
+        src: lostParadiseImg,
         alt: 'Lost Paradise - makeup artistry in Thailand with friend Gabi',
         title: 'Lost Paradise - Main',
         caption: 'Lost Paradise',
@@ -51,7 +59,7 @@ export const thailandWork: PortfolioEntry[] = [
     date: '2024-09-18',
     images: [
       {
-        src: 'figma:asset/3c496f3b8a5671dd00830f80a9a061ddf687e849.png',
+        src: edenParadiseImg,
         alt: 'Eden Paradise - beautiful party makeup in Thailand',
         title: 'Eden Paradise - Main',
         caption: 'Party Look',
@@ -77,7 +85,7 @@ export const thailandWork: PortfolioEntry[] = [
     date: '2024-09-19',
     images: [
       {
-        src: 'figma:asset/2d37a7cd55fe518f7eb8124fa25a2382be67f948.png',
+        src: edenShishiImg,
         alt: 'Eden Paradise - Shishi with radiant makeup in Thailand',
         title: 'Radiant Smile',
         caption: 'Radiant Smile',
@@ -103,7 +111,7 @@ export const thailandWork: PortfolioEntry[] = [
     date: '2024-09-26',
     images: [
       {
-        src: 'figma:asset/7afa71c7ec4457a1c1983db257703a6c92a9cce7.png',
+        src: jungleFestival1,
         alt: 'Jungle Festival Magic - Koh Phangan makeup art',
         title: 'Jungle Festival Magic',
         caption: 'Jungle Vibes',
@@ -112,7 +120,7 @@ export const thailandWork: PortfolioEntry[] = [
         aspectRatio: '16:9'
       },
       {
-        src: 'figma:asset/1cd08d3825ac7cc423a4672f8ed279139fc99d0a.png',
+        src: jungleFestival2,
         alt: 'Jungle Festival Magic - Alternative angle',
         title: 'Jungle Energy',
         caption: 'Wild Energy',
@@ -121,7 +129,7 @@ export const thailandWork: PortfolioEntry[] = [
         aspectRatio: '4:3'
       },
       {
-        src: 'figma:asset/3eb83eb2d4eb493b80283c1b75770d8893b2fc6a.png',
+        src: jungleFestival3,
         alt: 'Jungle Festival Magic - Detail shot',
         title: 'Jungle Details',
         caption: 'Festival Details',

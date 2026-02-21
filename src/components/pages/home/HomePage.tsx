@@ -6,7 +6,7 @@
  * @version 3.3.0 - Semantic BEM Refactor
  */
 
-import React from "react";
+import React, { useEffect } from "react";
 import { HeroLayout } from "../../sections/HeroLayout";
 import { WhySection } from "../../sections/WhySection";
 import { FeaturedSection } from "../../sections/FeaturedSection";
@@ -16,18 +16,38 @@ import { TestimonialsSection } from "../../sections/TestimonialsSection";
 import { FestivalCountdown } from "../../sections/FestivalCountdown";
 import { InstagramFeed } from "../../sections/InstagramFeed";
 import { useHomepageContent } from "../../../hooks/useContentful";
-import { ScrollToTop } from "../../ui/ScrollToTop";
+import { FaqSection } from "../../sections/FaqSection";
 import { useAppNavigate } from "../../../hooks/useAppNavigate";
 
 import { homepageHero } from "../../../data/mock/pages/home";
 import { homepageHeroImages } from "../../../data/mock/images/hero-images";
 import { homeUI } from "../../../data/mock/ui/home";
+import { setSEO } from '../../../utils/seo';
+import { pageSEO } from '../../../data/mock/seo';
+import {
+  injectSchema,
+  removeSchema,
+  SCHEMA_IDS,
+  buildWebSiteSchema,
+  buildPersonSchema,
+} from '../../../utils/schemaService';
 import "@/styles/blocks/hero.css";
 import "@/styles/blocks/home-page.css";
 import "@/styles/blocks/rainbow-sections.css";
 
 export function HomePage() {
   const navigateTo = useAppNavigate();
+
+  useEffect(() => {
+    setSEO(pageSEO.home);
+    injectSchema(SCHEMA_IDS.website, buildWebSiteSchema());
+    injectSchema(SCHEMA_IDS.person, buildPersonSchema());
+    return () => {
+      removeSchema(SCHEMA_IDS.website);
+      removeSchema(SCHEMA_IDS.person);
+    };
+  }, []);
+
   const { 
     data: homepageContent, 
     loading: contentLoading, 
@@ -102,7 +122,7 @@ export function HomePage() {
   };
 
   return (
-    <main id="main-content" role="main" className="home-page-layout">
+    <main id="main-content" role="main" className="home-page-layout bg-atomic-noise">
       {contentLoading && homepageContent && (
         <div className="loading-toast">
           <div className="loading-toast__inner">
@@ -152,7 +172,7 @@ export function HomePage() {
       
       <UVMakeupSection />
       
-      <ScrollToTop />
+      <FaqSection pageId="home" variant="hero" />
     </main>
   );
 }

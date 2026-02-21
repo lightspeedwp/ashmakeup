@@ -1,73 +1,13 @@
-"use client";
+/**
+ * @fileoverview Accordion stub (unused – @radix-ui/react-accordion import removed
+ *               to prevent async_hooks runtime errors via esm.sh)
+ */
 
 import * as React from "react";
-import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { ChevronDown } from "lucide-react";
 
-import { cn } from "./utils";
-import "@/styles/blocks/misc-ui.css";
+function Accordion({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function AccordionItem({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function AccordionTrigger({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function AccordionContent({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
 
-function Accordion({
-  ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Root>) {
-  return (
-    <AccordionPrimitive.Root data-slot="accordion" {...props} />
-  );
-}
-
-function AccordionItem({
-  className,
-  ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Item>) {
-  return (
-    <AccordionPrimitive.Item
-      data-slot="accordion-item"
-      className={cn("accordion-item", className)}
-      {...props}
-    />
-  );
-}
-
-function AccordionTrigger({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
-  return (
-    <AccordionPrimitive.Header className="accordion-header">
-      <AccordionPrimitive.Trigger
-        data-slot="accordion-trigger"
-        className={cn("accordion-trigger", className)}
-        {...props}
-      >
-        {children}
-        <ChevronDown />
-      </AccordionPrimitive.Trigger>
-    </AccordionPrimitive.Header>
-  );
-}
-
-function AccordionContent({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Content>) {
-  return (
-    <AccordionPrimitive.Content
-      data-slot="accordion-content"
-      className={cn("accordion-content", className)}
-      {...props}
-    >
-      <div className="accordion-content-inner">
-        {children}
-      </div>
-    </AccordionPrimitive.Content>
-  );
-}
-
-export {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-};
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };

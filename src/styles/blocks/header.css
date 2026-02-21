@@ -58,7 +58,20 @@
     display: flex;
     align-items: center;
     gap: 2rem;
+    flex: 1;
+    justify-content: flex-end;
+    min-width: 0;
   }
+}
+
+/* Nav item wrapper (used for dropdown parents) */
+.header__nav-item {
+  position: relative;
+  display: inline-flex;
+}
+
+.header__nav-item--has-dropdown {
+  position: relative;
 }
 
 .header__nav-link {
@@ -97,6 +110,11 @@
 
 .header__nav-link:hover,
 .header__nav-link--active {
+  color: var(--wp--preset--color--neon-purple-text);
+}
+
+.dark .header__nav-link:hover,
+.dark .header__nav-link--active {
   color: var(--wp--preset--color--neon-purple);
 }
 
@@ -174,4 +192,88 @@
 
 .header__burger-button[aria-expanded="true"] .header__burger-line:nth-child(3) {
   transform: translateY(-9px) rotate(-45deg);
+}
+
+/* ══════════════════════════════════════
+   SEARCH OVERLAY — replaces nav links
+   ══════════════════════════════════════ */
+
+.header__search-overlay {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+/* The SearchInput wrapper stretches to fill available space */
+.header__search-overlay .search-input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Force the field expanded and full-width inside the overlay */
+.header__search-overlay .search-input__field {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  padding: 8px 36px 8px 16px;
+  border-color: var(--wp--preset--color--neon-pink);
+  background: var(--wp--preset--color--base);
+  box-shadow: 0 0 16px rgba(255, 16, 240, 0.2);
+  /* Override base width transition — input must appear at full width instantly */
+  transition: border-color 300ms ease, box-shadow 300ms ease;
+}
+
+.dark .header__search-overlay .search-input__field {
+  border-color: var(--wp--preset--color--neon-pink);
+  background: rgba(20, 20, 20, 0.8);
+  box-shadow: 0 0 20px rgba(255, 16, 240, 0.3);
+}
+
+/* Close button */
+.header__search-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border: 1px solid var(--wp--preset--color--neutral-300);
+  border-radius: var(--wp--preset--border-radius--full);
+  background: transparent;
+  color: var(--wp--preset--color--neutral-500);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.header__search-close:hover {
+  border-color: var(--wp--preset--color--neon-pink-text);
+  color: var(--wp--preset--color--neon-pink-text);
+}
+
+.dark .header__search-close {
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.dark .header__search-close:hover {
+  border-color: var(--wp--preset--color--neon-pink);
+  color: var(--wp--preset--color--neon-pink);
+}
+
+.header__search-close:focus-visible {
+  outline: 2px solid var(--wp--preset--color--neon-pink);
+  outline-offset: 2px;
+  box-shadow: var(--wp--preset--shadow--focus-ring-strong);
+}
+
+.header__search-close-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header__search-close {
+    transition: none;
+  }
 }

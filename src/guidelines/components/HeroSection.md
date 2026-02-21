@@ -573,20 +573,16 @@ function HomePage() {
 
 ### With Animated Entrance
 
-```tsx
-import { motion } from 'motion/react';
+> **Note:** This project uses pure CSS animations (never `motion/react`).
+> The `animate-fade-in-up` class is defined in `/styles/globals.css`.
 
-<section className="min-h-screen flex items-center justify-center">
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.8 }}
-    className="text-center"
-  >
-    <h1 className="text-hero-h1 font-title font-bold text-gradient-pink-purple-blue">
+```tsx
+<section className="hero">
+  <div className="hero__content animate-fade-in-up">
+    <h1 className="text-hero-h1 font-title text-gradient-pink-purple-blue">
       {title}
     </h1>
-  </motion.div>
+  </div>
 </section>
 ```
 

@@ -1,0 +1,333 @@
+/* ==========================================================================
+   Shared Design-System Specimen Page Styles
+   Used by all /dev-tools/* sub-tool pages (typography, spacing, shadows, etc.)
+   ========================================================================== */
+
+/* ── Page Shell ── */
+.specimen-page {
+  min-height: 100vh;
+  background: var(--wp--preset--color--neutral-50);
+}
+
+.dark .specimen-page {
+  background: var(--wp--preset--color--atomic-black);
+}
+
+/* ── Hero ── */
+.specimen-page__hero {
+  padding-top: calc(5rem + clamp(1.5rem, 1.35rem + 0.714vw, 2rem));
+  padding-bottom: var(--wp--preset--spacing--fluid-lg);
+  text-align: center;
+  background: linear-gradient(180deg, rgba(190, 0, 254, 0.03) 0%, transparent 100%);
+}
+
+.dark .specimen-page__hero {
+  background: linear-gradient(180deg, rgba(190, 0, 254, 0.06) 0%, transparent 100%);
+}
+
+.specimen-page__hero-content {
+  max-width: var(--wp--preset--layout--content);
+  margin: 0 auto;
+  padding: 0 var(--wp--preset--spacing--section-horizontal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--wp--preset--spacing--fluid-sm);
+}
+
+.specimen-page__hero-badge {
+  display: inline-block;
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.25rem 1rem;
+  border-radius: var(--wp--preset--border-radius--full);
+  color: var(--wp--preset--color--neon-purple-text);
+  background: rgba(190, 0, 254, 0.08);
+  border: 1px solid rgba(190, 0, 254, 0.15);
+}
+
+.dark .specimen-page__hero-badge {
+  color: var(--wp--preset--color--neon-purple);
+  background: rgba(190, 0, 254, 0.12);
+  border-color: rgba(190, 0, 254, 0.3);
+}
+
+.specimen-page__hero-desc {
+  max-width: 38rem;
+  color: var(--wp--preset--color--neutral-600);
+}
+
+.dark .specimen-page__hero-desc {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+/* ── Section ── */
+.specimen-section {
+  padding: var(--wp--preset--spacing--fluid-lg) var(--wp--preset--spacing--section-horizontal);
+}
+
+.specimen-section:nth-child(even) {
+  background: var(--wp--preset--color--neutral-100);
+}
+
+.dark .specimen-section:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.specimen-section__inner {
+  max-width: var(--wp--preset--layout--wide);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--fluid-md);
+}
+
+.specimen-section__title {
+  font-family: var(--wp--preset--font-family--brand-heading);
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dark .specimen-section__title {
+  color: #fff;
+}
+
+.specimen-section__title-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--wp--preset--color--neon-purple-text);
+}
+
+.dark .specimen-section__title-icon {
+  color: var(--wp--preset--color--neon-purple);
+}
+
+.specimen-section__subtitle {
+  color: var(--wp--preset--color--neutral-500);
+  margin: 0;
+}
+
+.dark .specimen-section__subtitle {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+/* ── Grid ── */
+.specimen-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--wp--preset--spacing--fluid-sm);
+}
+
+@media (min-width: 768px) {
+  .specimen-grid--2 { grid-template-columns: repeat(2, 1fr); }
+  .specimen-grid--3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .specimen-grid--3 { grid-template-columns: repeat(3, 1fr); }
+  .specimen-grid--4 { grid-template-columns: repeat(4, 1fr); }
+  .specimen-grid--5 { grid-template-columns: repeat(5, 1fr); }
+  .specimen-grid--6 { grid-template-columns: repeat(6, 1fr); }
+}
+
+/* ── Card ── */
+.specimen-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: var(--wp--preset--spacing--fluid-sm);
+  background: var(--wp--preset--color--base);
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--md);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dark .specimen-card {
+  background: rgba(20, 20, 20, 0.6);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.specimen-card:hover {
+  border-color: rgba(190, 0, 254, 0.3);
+}
+
+.dark .specimen-card:hover {
+  border-color: rgba(190, 0, 254, 0.5);
+  box-shadow: 0 0 12px rgba(190, 0, 254, 0.1);
+}
+
+.specimen-card__label {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-weight: 600;
+  color: var(--foreground);
+  margin: 0;
+}
+
+.dark .specimen-card__label {
+  color: #fff;
+}
+
+.specimen-card__meta {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  color: var(--wp--preset--color--neutral-500);
+}
+
+.dark .specimen-card__meta {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.specimen-card__code {
+  font-size: var(--wp--preset--font-size--100);
+  background: var(--wp--preset--color--neutral-100);
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--wp--preset--border-radius--sm);
+  color: var(--wp--preset--color--neon-purple-text);
+  word-break: break-all;
+}
+
+.dark .specimen-card__code {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--wp--preset--color--neon-purple);
+}
+
+/* ── Row (for linear specimens) ── */
+.specimen-row {
+  display: flex;
+  align-items: center;
+  gap: var(--wp--preset--spacing--fluid-sm);
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.dark .specimen-row {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.specimen-row:last-child {
+  border-bottom: none;
+}
+
+.specimen-row__label {
+  min-width: 200px;
+  font-family: var(--wp--preset--font-family--brand-body);
+  color: var(--wp--preset--color--neutral-600);
+}
+
+.dark .specimen-row__label {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.specimen-row__value {
+  font-family: var(--wp--preset--font-family--brand-heading);
+  color: var(--foreground);
+}
+
+.dark .specimen-row__value {
+  color: #fff;
+}
+
+/* ── Swatch (for colour/shadow/radius previews) ── */
+.specimen-swatch {
+  width: 100%;
+  height: 80px;
+  border-radius: var(--wp--preset--border-radius--md);
+  border: 1px solid var(--border);
+}
+
+.dark .specimen-swatch {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ── Bar (for spacing scale) ── */
+.specimen-bar {
+  height: 24px;
+  border-radius: var(--wp--preset--border-radius--sm);
+  background: linear-gradient(90deg, var(--wp--preset--color--neon-cyan), var(--wp--preset--color--neon-blue));
+  transition: width 0.3s ease;
+}
+
+.dark .specimen-bar {
+  background: linear-gradient(90deg, var(--wp--preset--color--neon-cyan), var(--wp--preset--color--neon-purple));
+}
+
+/* ── Animation preview box ── */
+.specimen-anim-box {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--wp--preset--border-radius--md);
+  background: var(--wp--preset--gradient--cyberpunk);
+  flex-shrink: 0;
+}
+
+.specimen-anim-box--paused {
+  animation-play-state: paused !important;
+}
+
+/* ── Play/Pause toggle ── */
+.specimen-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--wp--preset--border-radius--full);
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  color: var(--wp--preset--color--neutral-600);
+  transition: all 0.15s ease;
+}
+
+.dark .specimen-toggle {
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.specimen-toggle:hover {
+  border-color: var(--wp--preset--color--neon-pink);
+  color: var(--wp--preset--color--neon-pink-text);
+}
+
+.dark .specimen-toggle:hover {
+  border-color: var(--wp--preset--color--neon-pink);
+  color: var(--wp--preset--color--neon-pink);
+}
+
+.specimen-toggle:focus-visible {
+  outline: 3px solid var(--wp--preset--color--neon-pink);
+  outline-offset: 2px;
+}
+
+.specimen-toggle__icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+/* ── Button specimen variants ── */
+.specimen-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--wp--preset--spacing--fluid-sm);
+  align-items: center;
+}
+
+/* ══════════════════════════════════════
+   REDUCED MOTION
+   ══════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .specimen-card {
+    transition: none;
+  }
+
+  .specimen-bar {
+    transition: none;
+  }
+}

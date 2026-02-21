@@ -9,10 +9,13 @@
  * @version 1.2.1 - Semantic BEM Refactor
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { useModal } from '../common/ModalContext';
 import "@/styles/blocks/scroll-controls.css";
+
+/** Module-level counter to enforce singleton rendering */
+let mountedInstances = 0;
 
 /**
  * Props interface for ScrollToTop component
@@ -33,6 +36,28 @@ export function ScrollToTop({
 }: ScrollToTopProps) {
   const [isVisible, setIsVisible] = useState(false);
   const { hasOpenModals } = useModal();
+  const isMounted = useRef(false);
+  const isPrimary = useRef(false);
+
+  /**
+   * Singleton enforcement: only the first mounted instance renders
+   */
+  useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true;
+      mountedInstances += 1;
+      if (mountedInstances === 1) {
+        isPrimary.current = true;
+      }
+    }
+    return () => {
+      if (isMounted.current) {
+        mountedInstances -= 1;
+        isMounted.current = false;
+        isPrimary.current = false;
+      }
+    };
+  }, []);
 
   /**
    * Handle smooth scroll to top with fallback for older browsers
@@ -101,7 +126,8 @@ export function ScrollToTop({
   }, [handleScroll, showAfter]);
 
   // Don't render if not visible or if any modals are open
-  if (!isVisible || hasOpenModals) {
+  // Also don't render if another instance is already the primary
+  if (!isVisible || hasOpenModals || !isPrimary.current) {
     return null;
   }
 

@@ -23,6 +23,8 @@ export * from './festivals';
 export * from './uv-makeup';
 export * from './nail-art';
 export * from './swiss-festivals';
+export * from './categories';
+export * from './tags';
 
 // Re-import for aggregation
 import { featuredWork } from './featured';

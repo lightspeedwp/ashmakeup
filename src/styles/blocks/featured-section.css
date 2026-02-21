@@ -67,7 +67,7 @@
 }
 
 .dark .featured-section__nav-button:hover:not(:disabled) {
-  box-shadow: 0 0 15px rgba(190, 0, 254, 0.5);
+  box-shadow: var(--wp--preset--shadow--neon-purple-hover);
 }
 
 .featured-section__nav-button:disabled {
@@ -192,7 +192,7 @@
 }
 
 .dark .featured-section__dot--active {
-  box-shadow: 0 0 10px rgba(255, 16, 240, 0.5);
+  box-shadow: var(--wp--preset--shadow--neon-pink-dot);
 }
 
 .featured-section__dot--inactive:hover {

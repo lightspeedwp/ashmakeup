@@ -125,7 +125,7 @@ export function ResponsiveGridSlider<T extends { id?: string }>({
     return (
       <div className={`layout-grid ${getGridClass()} rgs-grid ${className}`}>
         {items.map((item, index) => (
-          <div key={keyExtractor(item)} style={{ display: 'contents' }}>
+          <div key={keyExtractor(item)} className="rgs-grid-item">
             {renderItem(item, index)}
           </div>
         ))}

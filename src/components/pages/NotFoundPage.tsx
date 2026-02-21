@@ -9,48 +9,51 @@ import { useNavigate } from "react-router";
 import { Home, ArrowLeft } from "lucide-react";
 import "@/styles/blocks/not-found-page.css";
 
+import { setSEO } from '../../utils/seo';
+import { pageSEO } from '../../data/mock/seo';
+import { notFoundUI } from '../../data/mock/ui/error';
+
 export function NotFoundPage() {
   const navigate = useNavigate();
 
   // Update document title on mount
   useEffect(() => {
-    document.title = "Page Not Found | Ash Shaw - Makeup Artist";
+    setSEO(pageSEO.notFound);
   }, []);
 
   return (
-    <main className="not-found-page" role="main">
+    <main className="not-found-page bg-atomic-noise" role="main">
       <div className="not-found-content">
         {/* Glitch Effect 404 Text */}
-        <div className="not-found-glitch-text" data-text="404">
-          404
+        <div className="not-found-glitch-text" data-text={notFoundUI.code}>
+          {notFoundUI.code}
         </div>
 
         <h1 className="not-found-title">
-          Page Not Found
+          {notFoundUI.title}
         </h1>
 
         <p className="not-found-description">
-          The page you are looking for might have been removed, had its name changed,
-          or is temporarily unavailable. Let's get you back to the colorful world of makeup.
+          {notFoundUI.description}
         </p>
 
         <div className="not-found-actions">
           <button
             onClick={() => navigate("/")}
             className="btn btn--neon-primary btn--lg"
-            aria-label="Return to homepage"
+            aria-label={notFoundUI.aria.homeButton}
           >
             <Home className="icon-md" />
-            Back to Home
+            {notFoundUI.actions.home}
           </button>
 
           <button
             onClick={() => window.history.back()}
             className="btn btn--outline btn--lg"
-            aria-label="Go back to previous page"
+            aria-label={notFoundUI.aria.backButton}
           >
             <ArrowLeft className="icon-md" />
-            Go Back
+            {notFoundUI.actions.back}
           </button>
         </div>
       </div>

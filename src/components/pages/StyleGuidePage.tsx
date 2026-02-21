@@ -7,10 +7,10 @@
  *
  * @component StyleGuidePage
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
+ * @version 5.0.0 - Expanded animation previews to 26 keyframes (full coverage)
  */
 
-import React from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import {
   Home,
   User,
@@ -74,7 +74,9 @@ import type { LucideIcon } from "lucide-react";
 import { Logo } from "../common/Logo";
 import { SocialLinks } from "../common/SocialLinks";
 import { ShineIcon, JoyIcon, GrowthIcon } from "../common/ColorfulIcons";
-import { ScrollToTop } from "../ui/ScrollToTop";
+import { Breadcrumbs } from "../ui/Breadcrumbs";
+import type { BreadcrumbItem } from "../ui/Breadcrumbs";
+import { ArchiveFilters } from "../ui/ArchiveFilters";
 
 import {
   styleGuideContent,
@@ -89,10 +91,23 @@ import {
   borderRadiusTokens,
   shadowTokens,
   iconCategories,
+  animationPreviews,
+  chipBadgeVariants,
+  cardVariants,
+  formElements,
+  archiveFiltersDemoCategories,
+  archiveFiltersDemoSortOptions,
+  themeComparisonElements,
 } from "../../data/mock/ui/style-guide";
 
 import "@/styles/blocks/style-guide-page.css";
 import "@/styles/blocks/button.css";
+import "@/styles/blocks/badge.css";
+import "@/styles/blocks/archive-filters.css";
+import "@/styles/blocks/blog-page.css";
+
+import { setSEO } from '../../utils/seo';
+import { pageSEO } from '../../data/mock/seo';
 
 /** Lookup map from icon name string to Lucide component */
 const ICON_MAP: Record<string, LucideIcon> = {
@@ -170,11 +185,61 @@ const SPACING_BAR_WIDTHS: Record<string, string> = {
  * StyleGuidePage — comprehensive design-system reference
  */
 export function StyleGuidePage() {
+  useEffect(() => {
+    setSEO(pageSEO.styleGuide);
+  }, []);
+
+  /** Tracks which animation cards are actively playing */
+  const [activeAnimations, setActiveAnimations] = useState<Set<string>>(new Set());
+
+  /** ArchiveFilters demo state */
+  const [demoActiveCategories, setDemoActiveCategories] = useState<string[]>([]);
+  const [demoSortBy, setDemoSortBy] = useState("recent");
+
+  const demoResultCount = demoActiveCategories.length === 0
+    ? 42
+    : archiveFiltersDemoCategories
+        .filter((cat) => demoActiveCategories.includes(cat.slug))
+        .reduce((sum, cat) => sum + (cat.count ?? 0), 0);
+
+  const handleDemoCategoryToggle = (slug: string) => {
+    setDemoActiveCategories((prev) =>
+      prev.includes(slug)
+        ? prev.filter((s) => s !== slug)
+        : [...prev, slug]
+    );
+  };
+
+  const handleDemoClearAll = () => {
+    setDemoActiveCategories([]);
+    setDemoSortBy("recent");
+  };
+
+  const toggleAnimation = (keyframe: string) => {
+    setActiveAnimations((prev) => {
+      const next = new Set(prev);
+      if (next.has(keyframe)) {
+        next.delete(keyframe);
+      } else {
+        next.add(keyframe);
+      }
+      return next;
+    });
+  };
+
+  const breadcrumbs: BreadcrumbItem[] = useMemo(() => [
+    { label: 'Home', href: '/' },
+    { label: 'Developer Tools', href: '/dev-tools' },
+    { label: 'Style Guide' },
+  ], []);
+
   return (
-    <article className="style-guide" aria-label="Style Guide">
+    <article className="style-guide bg-atomic-noise" aria-label="Style Guide">
       {/* ── Hero ── */}
       <header className="style-guide__hero">
         <div className="style-guide__hero-content">
+          <Breadcrumbs items={breadcrumbs} centered />
+
           <span className="style-guide__hero-badge">
             {styleGuideContent.hero.subtitle}
           </span>
@@ -231,6 +296,8 @@ export function StyleGuidePage() {
                   width="64"
                   height="64"
                   className="style-guide__favicon-img"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <span className="style-guide__favicon-label">SVG 64px</span>
               </div>
@@ -241,6 +308,8 @@ export function StyleGuidePage() {
                   width="32"
                   height="32"
                   className="style-guide__favicon-img"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <span className="style-guide__favicon-label">SVG 32px</span>
               </div>
@@ -251,6 +320,8 @@ export function StyleGuidePage() {
                   width="32"
                   height="32"
                   className="style-guide__favicon-img"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <span className="style-guide__favicon-label">ICO 32px</span>
               </div>
@@ -301,6 +372,24 @@ export function StyleGuidePage() {
               <div className="style-guide__swatch-info">
                 <span className="style-guide__swatch-name">{swatch.name}</span>
                 <span className="style-guide__swatch-hex">{swatch.hex}</span>
+                <div className="style-guide__swatch-contrast">
+                  <span
+                    className={`style-guide__swatch-ratio style-guide__swatch-ratio--${swatch.contrastOnWhite.level === 'Fail' ? 'fail' : 'pass'}`}
+                    title={`vs White: ${swatch.contrastOnWhite.ratio}`}
+                  >
+                    <Sun className="style-guide__swatch-ratio-icon" aria-hidden="true" />
+                    <span className="style-guide__swatch-ratio-value">{swatch.contrastOnWhite.ratio}</span>
+                    {swatch.contrastOnWhite.level}
+                  </span>
+                  <span
+                    className={`style-guide__swatch-ratio style-guide__swatch-ratio--${swatch.contrastOnBlack.level === 'Fail' ? 'fail' : 'pass'}`}
+                    title={`vs Atomic Black: ${swatch.contrastOnBlack.ratio}`}
+                  >
+                    <Moon className="style-guide__swatch-ratio-icon" aria-hidden="true" />
+                    <span className="style-guide__swatch-ratio-value">{swatch.contrastOnBlack.ratio}</span>
+                    {swatch.contrastOnBlack.level}
+                  </span>
+                </div>
               </div>
             </div>
           ))}
@@ -647,7 +736,85 @@ export function StyleGuidePage() {
       </section>
 
       {/* ═══════════════════════════════════════════
-          11. SOCIAL LINKS
+          11. ANIMATIONS
+          ═══════════════════════════════════════════ */}
+      <section
+        className="style-guide__section"
+        aria-labelledby="sg-animations"
+      >
+        <div className="style-guide__section-header">
+          <h2 id="sg-animations" className="style-guide__section-title text-section-h2">
+            {styleGuideContent.sections.animations.title}
+          </h2>
+          <p className="style-guide__section-desc text-body-p">
+            {styleGuideContent.sections.animations.description}
+          </p>
+        </div>
+
+        <div className="style-guide__anim-grid">
+          {animationPreviews.map((anim) => {
+            const isActive = activeAnimations.has(anim.keyframe);
+            return (
+              <div key={anim.keyframe} className="style-guide__anim-card">
+                <div
+                  className={`style-guide__anim-preview ${isActive ? 'style-guide__anim-preview--playing' : ''}`}
+                  style={isActive ? { animation: `${anim.keyframe} ${anim.duration} ${anim.timing}` } : undefined}
+                  aria-label={`${anim.name} animation preview`}
+                />
+                <div className="style-guide__anim-info">
+                  <p className="style-guide__anim-name">{anim.name}</p>
+                  <p className="style-guide__anim-desc">{anim.description}</p>
+                  <p className="style-guide__anim-token">
+                    {anim.keyframe} &middot; {anim.duration}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className={`style-guide__anim-toggle ${isActive ? 'style-guide__anim-toggle--active' : ''}`}
+                  onClick={() => toggleAnimation(anim.keyframe)}
+                  aria-pressed={isActive}
+                >
+                  {isActive ? 'Stop' : 'Play'}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          12. CHIPS & BADGES
+          ═══════════════════════════════════════════ */}
+      <section
+        className="style-guide__section"
+        aria-labelledby="sg-chips"
+      >
+        <div className="style-guide__section-header">
+          <h2 id="sg-chips" className="style-guide__section-title text-section-h2">
+            {styleGuideContent.sections.chips.title}
+          </h2>
+          <p className="style-guide__section-desc text-body-p">
+            {styleGuideContent.sections.chips.description}
+          </p>
+        </div>
+
+        {chipBadgeVariants.map((group) => (
+          <div key={group.group} className="style-guide__chip-group">
+            <h3 className="style-guide__chip-group-title">{group.group}</h3>
+            <div className="style-guide__chip-row">
+              {group.items.map((item) => (
+                <div key={`${group.group}-${item.label}`} className="style-guide__chip-item">
+                  <span className={item.classes}>{item.label}</span>
+                  <span className="style-guide__chip-variant-label">{item.variant}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          13. SOCIAL LINKS
           ═══════════════════════════════════════════ */}
       <section
         className="style-guide__section"
@@ -678,7 +845,317 @@ export function StyleGuidePage() {
         </div>
       </section>
 
-      <ScrollToTop />
+      {/* ═══════════════════════════════════════════
+          14. CARD VARIANTS
+          ═══════════════════════════════════════════ */}
+      <section
+        className="style-guide__section"
+        aria-labelledby="sg-cards"
+      >
+        <div className="style-guide__section-header">
+          <h2 id="sg-cards" className="style-guide__section-title text-section-h2">
+            {styleGuideContent.sections.cards.title}
+          </h2>
+          <p className="style-guide__section-desc text-body-p">
+            {styleGuideContent.sections.cards.description}
+          </p>
+        </div>
+
+        <div className="style-guide__card-grid">
+          {cardVariants.map((card) => (
+            <div key={card.cssBlock} className="style-guide__card-showcase">
+              <div className="style-guide__card-preview">
+                <div className="style-guide__card-mock">
+                  <div className="style-guide__card-mock-image" aria-hidden="true" />
+                  <div className="style-guide__card-mock-body">
+                    <span className="style-guide__card-mock-badge">Category</span>
+                    <span className="style-guide__card-mock-title">Card Title</span>
+                    <span className="style-guide__card-mock-excerpt">
+                      Brief description text…
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="style-guide__card-info">
+                <p className="style-guide__card-info-name">{card.name}</p>
+                <p className="style-guide__card-info-desc">{card.description}</p>
+                <p className="style-guide__card-info-token">
+                  <code>.{card.cssBlock}</code>
+                </p>
+                <p className="style-guide__card-info-usage">
+                  Used in: {card.usage}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          15. FORM ELEMENTS
+          ═══════════════════════════════════════════ */}
+      <section
+        className="style-guide__section"
+        aria-labelledby="sg-forms"
+      >
+        <div className="style-guide__section-header">
+          <h2 id="sg-forms" className="style-guide__section-title text-section-h2">
+            {styleGuideContent.sections.forms.title}
+          </h2>
+          <p className="style-guide__section-desc text-body-p">
+            {styleGuideContent.sections.forms.description}
+          </p>
+        </div>
+
+        <div className="style-guide__form-grid">
+          {formElements.map((el) => (
+            <div key={el.name} className="style-guide__form-item">
+              <label className="style-guide__form-label">{el.name}</label>
+              <div className="style-guide__form-control">
+                {el.element === 'textarea' ? (
+                  <textarea
+                    className="form-control"
+                    placeholder={el.placeholder}
+                    rows={3}
+                    aria-label={el.name}
+                  />
+                ) : el.element === 'select' ? (
+                  <div className="form-control--select-wrapper">
+                    <select className="form-control form-control--select" aria-label={el.name}>
+                      {(el.options ?? []).map((opt) => (
+                        <option key={opt} value={opt}>{opt}</option>
+                      ))}
+                    </select>
+                  </div>
+                ) : el.element === 'checkbox' ? (
+                  <label className="form-checkbox">
+                    <input type="checkbox" className="form-checkbox__input" />
+                    <span className="form-checkbox__label">{el.placeholder}</span>
+                  </label>
+                ) : (
+                  <input
+                    type={el.type}
+                    className="form-control"
+                    placeholder={el.placeholder}
+                    aria-label={el.name}
+                  />
+                )}
+              </div>
+              <p className="style-guide__form-desc">{el.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          16. ARCHIVE FILTERS DEMO
+          ═══════════════════════════════════════════ */}
+      <section
+        className="style-guide__section"
+        aria-labelledby="sg-archive-filters"
+      >
+        <div className="style-guide__section-header">
+          <h2 id="sg-archive-filters" className="style-guide__section-title text-section-h2">
+            {styleGuideContent.sections.archiveFilters.title}
+          </h2>
+          <p className="style-guide__section-desc text-body-p">
+            {styleGuideContent.sections.archiveFilters.description}
+          </p>
+        </div>
+
+        {/* Live interactive demo */}
+        <div className="style-guide__filters-demo">
+          <p className="style-guide__filters-demo-label">Interactive Demo</p>
+          <ArchiveFilters
+            contentType="style-guide-demo"
+            categories={archiveFiltersDemoCategories}
+            activeCategories={demoActiveCategories}
+            sortBy={demoSortBy}
+            sortOptions={archiveFiltersDemoSortOptions}
+            resultCount={demoResultCount}
+            onCategoryToggle={handleDemoCategoryToggle}
+            onSortChange={setDemoSortBy}
+            onClearAll={handleDemoClearAll}
+          />
+          <p className="style-guide__filters-demo-note">
+            Click chips and sort options above to see multi-select, active filter pills, and live result count in action.
+          </p>
+        </div>
+
+        {/* Props reference */}
+        <h3 className="text-card-h3 style-guide__subsection-title">Component Props</h3>
+        <div className="style-guide__filters-demo-props">
+          <div className="style-guide__filters-demo-prop">
+            <span className="style-guide__filters-demo-prop-name">contentType</span>
+            <span className="style-guide__filters-demo-prop-value">string — unique ID for the filter instance</span>
+          </div>
+          <div className="style-guide__filters-demo-prop">
+            <span className="style-guide__filters-demo-prop-name">categories</span>
+            <span className="style-guide__filters-demo-prop-value">{'FilterCategory[] — { id, name, slug, count? }'}</span>
+          </div>
+          <div className="style-guide__filters-demo-prop">
+            <span className="style-guide__filters-demo-prop-name">activeCategories</span>
+            <span className="style-guide__filters-demo-prop-value">string[] — currently selected category slugs</span>
+          </div>
+          <div className="style-guide__filters-demo-prop">
+            <span className="style-guide__filters-demo-prop-name">sortBy</span>
+            <span className="style-guide__filters-demo-prop-value">string — active sort option value</span>
+          </div>
+          <div className="style-guide__filters-demo-prop">
+            <span className="style-guide__filters-demo-prop-name">sortOptions</span>
+            <span className="style-guide__filters-demo-prop-value">{'SortOption[] — { value, label }'}</span>
+          </div>
+          <div className="style-guide__filters-demo-prop">
+            <span className="style-guide__filters-demo-prop-name">resultCount</span>
+            <span className="style-guide__filters-demo-prop-value">number — filtered result count</span>
+          </div>
+          <div className="style-guide__filters-demo-prop">
+            <span className="style-guide__filters-demo-prop-name">onCategoryToggle</span>
+            <span className="style-guide__filters-demo-prop-value">{'(slug: string) => void'}</span>
+          </div>
+          <div className="style-guide__filters-demo-prop">
+            <span className="style-guide__filters-demo-prop-name">onSortChange</span>
+            <span className="style-guide__filters-demo-prop-value">{'(sortBy: string) => void'}</span>
+          </div>
+          <div className="style-guide__filters-demo-prop">
+            <span className="style-guide__filters-demo-prop-name">onClearAll</span>
+            <span className="style-guide__filters-demo-prop-value">{'() => void'}</span>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          17. DARK / LIGHT MODE COMPARISON
+          ═══════════════════════════════════════════ */}
+      <section
+        className="style-guide__section"
+        aria-labelledby="sg-theme"
+      >
+        <div className="style-guide__section-header">
+          <h2 id="sg-theme" className="style-guide__section-title text-section-h2">
+            {styleGuideContent.sections.themeComparison.title}
+          </h2>
+          <p className="style-guide__section-desc text-body-p">
+            {styleGuideContent.sections.themeComparison.description}
+          </p>
+        </div>
+
+        <div className="style-guide__theme-grid">
+          {/* Light panel */}
+          <div className="style-guide__theme-panel style-guide__theme-panel--light">
+            <div className="style-guide__theme-panel-header">
+              <Sun aria-hidden="true" />
+              <span className="style-guide__theme-panel-label">Light Mode</span>
+            </div>
+            <div className="style-guide__theme-panel-body">
+              {/* Card */}
+              <div>
+                <p className="style-guide__theme-element-label">Content Card</p>
+                <div className="style-guide__theme-card">
+                  <div className="style-guide__theme-card-image" aria-hidden="true" />
+                  <div className="style-guide__theme-card-body">
+                    <span className="style-guide__theme-card-badge">Festival</span>
+                    <span className="style-guide__theme-card-title">Neon Dreams</span>
+                    <span className="style-guide__theme-card-excerpt">
+                      UV reactive body art under blacklight at Fusion Festival…
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Buttons */}
+              <div>
+                <p className="style-guide__theme-element-label">Buttons</p>
+                <div className="style-guide__theme-buttons">
+                  <span className="style-guide__theme-btn style-guide__theme-btn--primary">Primary</span>
+                  <span className="style-guide__theme-btn style-guide__theme-btn--outline">Outline</span>
+                  <span className="style-guide__theme-btn style-guide__theme-btn--ghost">Ghost</span>
+                </div>
+              </div>
+
+              {/* Chips */}
+              <div>
+                <p className="style-guide__theme-element-label">Filter Chips</p>
+                <div className="style-guide__theme-chips">
+                  <span className="style-guide__theme-chip style-guide__theme-chip--active">UV &amp; Glow</span>
+                  <span className="style-guide__theme-chip style-guide__theme-chip--inactive">Editorial</span>
+                  <span className="style-guide__theme-chip style-guide__theme-chip--inactive">Festival</span>
+                </div>
+              </div>
+
+              {/* Input */}
+              <div>
+                <p className="style-guide__theme-element-label">Form Input</p>
+                <input
+                  type="text"
+                  className="style-guide__theme-input"
+                  placeholder="Search the portfolio…"
+                  readOnly
+                  tabIndex={-1}
+                  aria-label="Light mode input demo"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Dark panel */}
+          <div className="style-guide__theme-panel style-guide__theme-panel--dark">
+            <div className="style-guide__theme-panel-header">
+              <Moon aria-hidden="true" />
+              <span className="style-guide__theme-panel-label">Dark Mode</span>
+            </div>
+            <div className="style-guide__theme-panel-body">
+              {/* Card */}
+              <div>
+                <p className="style-guide__theme-element-label">Content Card</p>
+                <div className="style-guide__theme-card">
+                  <div className="style-guide__theme-card-image" aria-hidden="true" />
+                  <div className="style-guide__theme-card-body">
+                    <span className="style-guide__theme-card-badge">Festival</span>
+                    <span className="style-guide__theme-card-title">Neon Dreams</span>
+                    <span className="style-guide__theme-card-excerpt">
+                      UV reactive body art under blacklight at Fusion Festival…
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Buttons */}
+              <div>
+                <p className="style-guide__theme-element-label">Buttons</p>
+                <div className="style-guide__theme-buttons">
+                  <span className="style-guide__theme-btn style-guide__theme-btn--primary">Primary</span>
+                  <span className="style-guide__theme-btn style-guide__theme-btn--outline">Outline</span>
+                  <span className="style-guide__theme-btn style-guide__theme-btn--ghost">Ghost</span>
+                </div>
+              </div>
+
+              {/* Chips */}
+              <div>
+                <p className="style-guide__theme-element-label">Filter Chips</p>
+                <div className="style-guide__theme-chips">
+                  <span className="style-guide__theme-chip style-guide__theme-chip--active">UV &amp; Glow</span>
+                  <span className="style-guide__theme-chip style-guide__theme-chip--inactive">Editorial</span>
+                  <span className="style-guide__theme-chip style-guide__theme-chip--inactive">Festival</span>
+                </div>
+              </div>
+
+              {/* Input */}
+              <div>
+                <p className="style-guide__theme-element-label">Form Input</p>
+                <input
+                  type="text"
+                  className="style-guide__theme-input"
+                  placeholder="Search the portfolio…"
+                  readOnly
+                  tabIndex={-1}
+                  aria-label="Dark mode input demo"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </article>
   );
 }

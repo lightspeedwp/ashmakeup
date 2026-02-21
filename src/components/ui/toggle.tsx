@@ -1,47 +1,13 @@
-"use client";
+/**
+ * @fileoverview Toggle stub (unused – @radix-ui/react-toggle import removed
+ *               to prevent async_hooks runtime errors via esm.sh)
+ */
 
 import * as React from "react";
-import * as TogglePrimitive from "@radix-ui/react-toggle";
-import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "./utils";
-import "@/styles/blocks/data-display.css";
-
-const toggleVariants = cva(
-  "toggle",
-  {
-    variants: {
-      variant: {
-        default: "toggle--default",
-        outline: "toggle--outline",
-      },
-      size: {
-        default: "toggle--size-default",
-        sm: "toggle--size-sm",
-        lg: "toggle--size-lg",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  },
-);
-
-function Toggle({
-  className,
-  variant,
-  size,
-  ...props
-}: React.ComponentProps<typeof TogglePrimitive.Root> &
-  VariantProps<typeof toggleVariants>) {
-  return (
-    <TogglePrimitive.Root
-      data-slot="toggle"
-      className={cn(toggleVariants({ variant, size, className }))}
-      {...props}
-    />
-  );
+function Toggle({ children, ...props }: React.ComponentProps<"button">) {
+  return <button {...props}>{children}</button>;
 }
+const toggleVariants = () => "";
 
 export { Toggle, toggleVariants };

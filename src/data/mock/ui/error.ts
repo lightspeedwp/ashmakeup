@@ -51,3 +51,62 @@ export const errorMessages = {
     debug: 'Debug Information (Development Only)'
   }
 };
+
+/**
+ * Empty-state / "no results" messages used across archive, tag, and
+ * category pages.  Keyed by content type.
+ */
+export const emptyStateMessages = {
+  blog: {
+    title: 'No posts found',
+    message: 'Try adjusting your search or filters',
+    categoryMessage: 'No posts in this category yet.',
+    tagMessage: 'No posts with this tag yet.',
+  },
+  portfolio: {
+    title: 'No entries found',
+    message: 'No portfolio entries match the current filters.',
+    categoryMessage: 'No entries in this category yet.',
+    tagMessage: 'No entries with this tag yet.',
+  },
+  videos: {
+    title: 'No videos found',
+    message: 'No videos match the current filters.',
+    categoryMessage: 'No videos in this category yet.',
+    tagMessage: 'No videos with this tag yet.',
+  },
+  podcasts: {
+    title: 'No episodes found',
+    message: 'No episodes match the current filters.',
+    categoryMessage: 'No episodes in this category yet.',
+    tagMessage: 'No episodes with this tag yet.',
+  },
+  events: {
+    title: 'No events found',
+    message: 'No events match the current filters.',
+    categoryMessage: 'No events in this category yet.',
+    tagMessage: 'No events with this tag yet.',
+  },
+  search: {
+    title: 'No results found',
+    message: 'Try a different search term or browse our content.',
+  },
+};
+
+/**
+ * 404 Not Found page UI strings.
+ */
+export const notFoundUI = {
+  code: '404',
+  title: 'Page Not Found',
+  description:
+    'The page you are looking for might have been removed, had its name changed, or is temporarily unavailable. Let\u2019s get you back to the colorful world of makeup.',
+  actions: {
+    home: 'Back to Home',
+    back: 'Go Back',
+  },
+  aria: {
+    homeButton: 'Return to homepage',
+    backButton: 'Go back to previous page',
+  },
+};

@@ -156,37 +156,30 @@ function Header() {
 
 ### Reduce Motion for Accessibility
 
-```css
-/* Respect user preferences */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+> **Note:** This project uses pure CSS animations (never `motion/react`).
+> Reduced motion is handled entirely in CSS via `@media (prefers-reduced-motion: reduce)`.
+
+```tsx
+// React implementation — uses CSS classes, not motion/react
+function AnimatedComponent() {
+  return (
+    <div className="animate-fade-in-up">
+      Content
+    </div>
+  );
 }
 ```
 
-```tsx
-// React implementation
-function AnimatedComponent() {
-  const prefersReducedMotion = window.matchMedia(
-    '(prefers-reduced-motion: reduce)'
-  ).matches;
-  
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ 
-        duration: prefersReducedMotion ? 0 : 0.5 
-      }}
-    >
-      Content
-    </motion.div>
-  );
+```css
+/* CSS handles reduced motion automatically */
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up {
+    animation: none;
+  }
 }
 ```
 
@@ -414,17 +407,21 @@ function AnimatedComponent() {
   const isLowBattery = batteryLevel < 0.2;
   
   return (
-    <motion.div
-      animate={isLowBattery ? {} : { y: [0, -10, 0] }}
-      transition={{ 
-        repeat: Infinity, 
-        duration: 2,
-        ease: 'easeInOut'
-      }}
-    >
+    <div className={isLowBattery ? '' : 'animate-float'}>
       Content
-    </motion.div>
+    </div>
   );
+}
+```
+
+```css
+/* Pure CSS float animation — disabled at low battery via JS class toggle */
+.animate-float {
+  animation: float 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float { animation: none; }
 }
 ```
 

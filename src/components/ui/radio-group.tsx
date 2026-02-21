@@ -1,43 +1,13 @@
-"use client";
+/**
+ * @fileoverview RadioGroup stub (unused – @radix-ui/react-radio-group import removed
+ *               to prevent async_hooks runtime errors via esm.sh)
+ */
 
 import * as React from "react";
-import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
-import { Circle } from "lucide-react";
 
-import { cn } from "./utils";
-import "@/styles/blocks/form-elements.css";
+const noop = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
 
-function RadioGroup({
-  className,
-  ...props
-}: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {
-  return (
-    <RadioGroupPrimitive.Root
-      data-slot="radio-group"
-      className={cn("radio-group", className)}
-      {...props}
-    />
-  );
-}
-
-function RadioGroupItem({
-  className,
-  ...props
-}: React.ComponentProps<typeof RadioGroupPrimitive.Item>) {
-  return (
-    <RadioGroupPrimitive.Item
-      data-slot="radio-group-item"
-      className={cn("radio-group-item", className)}
-      {...props}
-    >
-      <RadioGroupPrimitive.Indicator
-        data-slot="radio-group-indicator"
-        className="radio-group-indicator"
-      >
-        <Circle />
-      </RadioGroupPrimitive.Indicator>
-    </RadioGroupPrimitive.Item>
-  );
-}
+const RadioGroup = noop;
+const RadioGroupItem = noop;
 
 export { RadioGroup, RadioGroupItem };

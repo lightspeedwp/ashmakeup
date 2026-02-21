@@ -1,0 +1,257 @@
+/* ==========================================================================
+   Design System Playground Styles
+   Controls panel + live preview, side-by-side on desktop
+   ========================================================================== */
+
+/* ── Layout ── */
+.playground__layout {
+  display: flex;
+  flex-direction: column;
+  max-width: var(--wp--preset--layout--wide);
+  margin: 0 auto;
+  padding: 0 var(--wp--preset--spacing--section-horizontal);
+  gap: var(--wp--preset--spacing--fluid-md);
+  padding-bottom: var(--wp--preset--spacing--fluid-xl);
+}
+
+@media (min-width: 1024px) {
+  .playground__layout {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+/* ── Controls Panel ── */
+.playground__controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--fluid-sm);
+  background: var(--wp--preset--color--base);
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--md);
+  padding: var(--wp--preset--spacing--fluid-md);
+}
+
+.dark .playground__controls {
+  background: rgba(20, 20, 20, 0.5);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+@media (min-width: 1024px) {
+  .playground__controls {
+    width: 360px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 6rem;
+  }
+}
+
+.playground__controls-title {
+  font-family: var(--wp--preset--font-family--brand-heading);
+  color: var(--foreground);
+}
+
+.dark .playground__controls-title {
+  color: #fff;
+}
+
+/* ── Control Group ── */
+.playground__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.playground__label {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  font-weight: 600;
+  color: var(--wp--preset--color--neutral-600);
+}
+
+.dark .playground__label {
+  color: var(--wp--preset--color--neutral-300);
+}
+
+.playground__select,
+.playground__range {
+  width: 100%;
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  padding: 0.375rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--sm);
+  background: var(--wp--preset--color--base);
+  color: var(--foreground);
+}
+
+.dark .playground__select {
+  background: rgba(30, 30, 30, 0.8);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.playground__select:focus,
+.playground__range:focus {
+  outline: none;
+  border-color: var(--wp--preset--color--neon-pink);
+}
+
+.playground__range {
+  border: none;
+  padding: 0.5rem 0;
+  background: transparent;
+  accent-color: var(--wp--preset--color--neon-purple);
+}
+
+.playground__value {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: 0.6875rem;
+  color: var(--wp--preset--color--neutral-500);
+}
+
+.dark .playground__value {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+/* ── Actions ── */
+.playground__actions {
+  display: flex;
+  gap: var(--wp--preset--spacing--fluid-xs);
+  flex-wrap: wrap;
+}
+
+.playground__btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--md);
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: transparent;
+  color: var(--foreground);
+}
+
+.dark .playground__btn {
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.playground__btn:hover {
+  border-color: var(--wp--preset--color--neon-purple-text);
+  color: var(--wp--preset--color--neon-purple-text);
+}
+
+.dark .playground__btn:hover {
+  border-color: var(--wp--preset--color--neon-purple);
+  color: var(--wp--preset--color--neon-purple);
+}
+
+.playground__btn--primary {
+  background: var(--wp--preset--gradient--cyberpunk);
+  color: #fff;
+  border: none;
+}
+
+.playground__btn--primary:hover {
+  color: #fff;
+  opacity: 0.9;
+}
+
+.playground__btn:focus-visible {
+  outline: 2px solid var(--wp--preset--color--neon-pink);
+  outline-offset: 2px;
+}
+
+/* ── Preview Panel ── */
+.playground__preview {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--wp--preset--spacing--fluid-xl);
+  border: 1px dashed var(--border);
+  border-radius: var(--wp--preset--border-radius--md);
+  min-height: 400px;
+  background: var(--wp--preset--color--neutral-50);
+}
+
+.dark .playground__preview {
+  background: rgba(15, 15, 15, 0.6);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Preview Card ── */
+.playground__card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, border-radius 0.2s ease;
+}
+
+.playground__card-header {
+  padding: var(--wp--preset--spacing--fluid-sm) var(--wp--preset--spacing--fluid-md);
+  display: flex;
+  align-items: center;
+  gap: var(--wp--preset--spacing--fluid-xs);
+}
+
+.playground__card-badge {
+  display: inline-block;
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--wp--preset--border-radius--full);
+}
+
+.playground__card-body {
+  padding: 0 var(--wp--preset--spacing--fluid-md) var(--wp--preset--spacing--fluid-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--fluid-xs);
+}
+
+.playground__card-title {
+  line-height: 1.2;
+}
+
+.playground__card-text {
+  line-height: 1.6;
+}
+
+.playground__card-cta {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 0.5rem 1.25rem;
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-weight: 600;
+  font-size: var(--wp--preset--font-size--100);
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.playground__card-cta:hover {
+  opacity: 0.85;
+}
+
+/* ══════════════════════════════════════
+   REDUCED MOTION
+   ══════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .playground__btn,
+  .playground__card,
+  .playground__card-cta {
+    transition: none;
+  }
+}

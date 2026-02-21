@@ -66,10 +66,40 @@ export const styleGuideContent = {
       description:
         "Neon glow shadows and card elevation shadows for depth and emphasis.",
     },
+    animations: {
+      title: "Animations",
+      description:
+        "All 26 keyframe animations used across the site — neon effects, utility transitions, loading states, and UI interactions. Toggle each to preview.",
+    },
+    chips: {
+      title: "Chips & Badges",
+      description:
+        "Filter chips, category badges, and tag pills in every variant used across archive pages and content cards.",
+    },
     socialLinks: {
       title: "Social Links",
       description:
         "Platform-authentic social media icons rendered in three variant styles.",
+    },
+    cards: {
+      title: "Card Variants",
+      description:
+        "Content cards used across Blog, Portfolio, Videos, and Podcasts — each with hover lift, neon glow, and dark mode support.",
+    },
+    forms: {
+      title: "Form Elements",
+      description:
+        "Inputs, textareas, selects, and checkboxes styled with neon focus rings and consistent BEM architecture.",
+    },
+    archiveFilters: {
+      title: "Archive Filters",
+      description:
+        "Interactive filter bar used across Blog, Portfolio, Videos, and Podcasts archive pages. Supports multi-select categories, sort options, active filter pills, and result count display.",
+    },
+    themeComparison: {
+      title: "Dark / Light Mode",
+      description:
+        "Side-by-side comparison of key elements in both light and dark themes. The Neon vs Atomic Black system uses high-contrast neon colours on dark backgrounds and accessible text variants on light backgrounds.",
     },
   },
 };
@@ -81,48 +111,64 @@ export const neonColorSwatches = [
     token: "--wp--preset--color--neon-green",
     hex: "#39FF14",
     textClass: "text-neon-green",
+    contrastOnWhite: { ratio: "1.4:1", level: "Fail" },
+    contrastOnBlack: { ratio: "14.5:1", level: "AAA" },
   },
   {
     name: "Neon Pink",
     token: "--wp--preset--color--neon-pink",
     hex: "#FF10F0",
     textClass: "text-neon-pink",
+    contrastOnWhite: { ratio: "3.2:1", level: "AA Large" },
+    contrastOnBlack: { ratio: "6.2:1", level: "AA" },
   },
   {
     name: "Neon Blue",
     token: "--wp--preset--color--neon-blue",
     hex: "#1F51FF",
     textClass: "text-neon-blue",
+    contrastOnWhite: { ratio: "5.5:1", level: "AA" },
+    contrastOnBlack: { ratio: "3.8:1", level: "AA Large" },
   },
   {
     name: "Neon Yellow",
     token: "--wp--preset--color--neon-yellow",
     hex: "#FFFF00",
     textClass: "text-neon-yellow",
+    contrastOnWhite: { ratio: "1.1:1", level: "Fail" },
+    contrastOnBlack: { ratio: "19.6:1", level: "AAA" },
   },
   {
     name: "Neon Orange",
     token: "--wp--preset--color--neon-orange",
     hex: "#FF5F1F",
     textClass: "text-neon-orange",
+    contrastOnWhite: { ratio: "2.6:1", level: "Fail" },
+    contrastOnBlack: { ratio: "7.8:1", level: "AAA" },
   },
   {
     name: "Neon Purple",
     token: "--wp--preset--color--neon-purple",
     hex: "#BE00FE",
     textClass: "text-neon-purple",
+    contrastOnWhite: { ratio: "4.2:1", level: "AA Large" },
+    contrastOnBlack: { ratio: "5.0:1", level: "AA Large" },
   },
   {
     name: "Neon Cyan",
     token: "--wp--preset--color--neon-cyan",
     hex: "#00F7FF",
     textClass: "text-neon-cyan",
+    contrastOnWhite: { ratio: "1.3:1", level: "Fail" },
+    contrastOnBlack: { ratio: "15.8:1", level: "AAA" },
   },
   {
     name: "Neon Red",
     token: "--wp--preset--color--neon-red",
     hex: "#FF3131",
     textClass: "text-neon-red",
+    contrastOnWhite: { ratio: "3.9:1", level: "AA Large" },
+    contrastOnBlack: { ratio: "5.4:1", level: "AA" },
   },
 ];
 
@@ -249,11 +295,26 @@ export const borderRadiusTokens = [
 
 /** Shadow tokens */
 export const shadowTokens = [
+  { name: "SM", token: "--wp--preset--shadow--sm", description: "Subtle depth for inline elements" },
+  { name: "MD", token: "--wp--preset--shadow--md", description: "Standard card/component elevation" },
+  { name: "LG", token: "--wp--preset--shadow--lg", description: "Prominent elevation for modals" },
+  { name: "XL", token: "--wp--preset--shadow--xl", description: "Hero-level depth" },
   { name: "Card", token: "--wp--preset--shadow--card", description: "Default card elevation" },
   { name: "Card Hover", token: "--wp--preset--shadow--card-hover", description: "Elevated card on hover" },
+  { name: "Focus Ring", token: "--wp--preset--shadow--focus-ring", description: "Interactive focus indicator" },
+  { name: "Focus Ring Strong", token: "--wp--preset--shadow--focus-ring-strong", description: "High-contrast focus ring" },
+  { name: "Focus Ring Pink", token: "--wp--preset--shadow--focus-ring-pink", description: "Neon pink focus ring" },
   { name: "Neon SM", token: "--wp--preset--shadow--neon-sm", description: "Subtle neon glow" },
   { name: "Neon MD", token: "--wp--preset--shadow--neon-md", description: "Medium neon glow" },
   { name: "Neon LG", token: "--wp--preset--shadow--neon-lg", description: "Strong neon glow" },
+  { name: "Neon Pink", token: "--wp--preset--shadow--neon-pink", description: "Hot pink neon glow" },
+  { name: "Neon Purple", token: "--wp--preset--shadow--neon-purple", description: "Purple neon glow" },
+  { name: "Neon Purple Hover", token: "--wp--preset--shadow--neon-purple-hover", description: "Nav button hover glow" },
+  { name: "Neon Pink Dot", token: "--wp--preset--shadow--neon-pink-dot", description: "Carousel active dot glow" },
+  { name: "Neon Blue", token: "--wp--preset--shadow--neon-blue", description: "Cyan neon glow" },
+  { name: "Action Btn", token: "--wp--preset--shadow--action-btn", description: "Card action button base" },
+  { name: "Action Btn Hover", token: "--wp--preset--shadow--action-btn-hover", description: "Card action button hover" },
+  { name: "Action Btn Glow", token: "--wp--preset--shadow--action-btn-glow", description: "Card action button dark mode" },
 ];
 
 /** Icon categories with their Lucide icon names */
@@ -281,5 +342,349 @@ export const iconCategories = [
   {
     category: "Places & Concepts",
     icons: ["MapPin", "Compass", "Building2", "Music", "Brain", "Rocket", "Instagram", "Facebook", "MessageCircle"],
+  },
+];
+
+/** Animation previews — each maps to a @keyframes defined in globals.css */
+export const animationPreviews = [
+  {
+    name: "Gradient Shift",
+    keyframe: "gradientShift",
+    duration: "6s",
+    timing: "ease infinite",
+    description: "Animated multi-colour gradient cycling (Hyperpop background)",
+  },
+  {
+    name: "Neon Pulse",
+    keyframe: "neonPulse",
+    duration: "2s",
+    timing: "ease-in-out infinite",
+    description: "Green neon box-shadow fading in and out",
+  },
+  {
+    name: "Neon Pulse Purple",
+    keyframe: "neonPulsePurple",
+    duration: "2s",
+    timing: "ease-in-out infinite",
+    description: "Purple neon glow pulsing — nav buttons, active chips",
+  },
+  {
+    name: "Neon Pulse Pink",
+    keyframe: "neonPulsePink",
+    duration: "2s",
+    timing: "ease-in-out infinite",
+    description: "Hot pink neon glow pulsing — CTA highlights",
+  },
+  {
+    name: "Float",
+    keyframe: "float",
+    duration: "3s",
+    timing: "ease-in-out infinite",
+    description: "Gentle vertical float used on decorative elements",
+  },
+  {
+    name: "Bounce",
+    keyframe: "bounce",
+    duration: "1s",
+    timing: "ease infinite",
+    description: "Vertical bounce for scroll-down indicators",
+  },
+  {
+    name: "Spin",
+    keyframe: "spin",
+    duration: "1s",
+    timing: "linear infinite",
+    description: "360° rotation — loading spinners",
+  },
+  {
+    name: "Pulse",
+    keyframe: "pulse",
+    duration: "2s",
+    timing: "cubic-bezier(0.4, 0, 0.6, 1) infinite",
+    description: "Opacity pulse — skeleton loaders, attention draw",
+  },
+  {
+    name: "Fade In",
+    keyframe: "fadeIn",
+    duration: "0.4s",
+    timing: "ease-out forwards",
+    description: "Opacity 0→1 entrance animation",
+  },
+  {
+    name: "Slide Up",
+    keyframe: "slideUp",
+    duration: "0.4s",
+    timing: "ease-out forwards",
+    description: "Translate from below + fade in — card entrances",
+  },
+  {
+    name: "Scale In",
+    keyframe: "scaleIn",
+    duration: "0.3s",
+    timing: "ease-out forwards",
+    description: "Scale from 0.95→1 + fade — modal/lightbox entrances",
+  },
+  {
+    name: "Skeleton Pulse",
+    keyframe: "skeleton-pulse",
+    duration: "1.5s",
+    timing: "ease-in-out infinite",
+    description: "Loading skeleton shimmer effect",
+  },
+  {
+    name: "Slide In",
+    keyframe: "slideIn",
+    duration: "0.4s",
+    timing: "ease-out forwards",
+    description: "Slide up from below + fade — menus, notifications, panels",
+  },
+  {
+    name: "Slide Up Fade",
+    keyframe: "slideUpFade",
+    duration: "0.3s",
+    timing: "ease-out forwards",
+    description: "Vertical slide with fade — ScrollBackToTop entrance",
+  },
+  {
+    name: "Pulse Ring",
+    keyframe: "pulse-ring",
+    duration: "1.5s",
+    timing: "cubic-bezier(0.215, 0.61, 0.355, 1) infinite",
+    description: "Expanding ring that fades out — ScrollDownArrow indicator",
+  },
+  {
+    name: "Accordion Down",
+    keyframe: "accordionDown",
+    duration: "0.3s",
+    timing: "ease-out forwards",
+    description: "Height expand from 0 — FAQ accordion open",
+  },
+  {
+    name: "Accordion Up",
+    keyframe: "accordionUp",
+    duration: "0.3s",
+    timing: "ease-out forwards",
+    description: "Height collapse to 0 — FAQ accordion close",
+  },
+  {
+    name: "Shine",
+    keyframe: "shine",
+    duration: "0.75s",
+    timing: "ease-out forwards",
+    description: "Diagonal light sweep across element — category badge hover",
+  },
+  {
+    name: "Glitch",
+    keyframe: "glitch",
+    duration: "0.5s",
+    timing: "steps(5, end) infinite",
+    description: "Chromatic glitch distortion — 404 page title effect",
+  },
+  {
+    name: "Count Pop",
+    keyframe: "countPop",
+    duration: "0.35s",
+    timing: "ease-out forwards",
+    description: "Scale bump 1.35→1 — animated result count update",
+  },
+  {
+    name: "Slide In Right",
+    keyframe: "slideInRight",
+    duration: "0.3s",
+    timing: "ease-out forwards",
+    description: "Horizontal slide from right — offline indicator toast",
+  },
+  {
+    name: "Caret Blink",
+    keyframe: "caret-blink",
+    duration: "1.25s",
+    timing: "ease-out infinite",
+    description: "Blinking cursor — input focus indicator",
+  },
+  {
+    name: "Neon Button Gradient",
+    keyframe: "neon-btn-gradient-shift",
+    duration: "4s",
+    timing: "ease infinite",
+    description: "Shifting gradient background — neon CTA buttons",
+  },
+  {
+    name: "Typeform Spin",
+    keyframe: "typeform-spin",
+    duration: "1s",
+    timing: "linear infinite",
+    description: "Centred rotation — Typeform embed loading spinner",
+  },
+  {
+    name: "Collapsible Down",
+    keyframe: "collapsible-down",
+    duration: "0.3s",
+    timing: "ease-out forwards",
+    description: "Height expand with fade — collapsible panel open",
+  },
+  {
+    name: "Collapsible Up",
+    keyframe: "collapsible-up",
+    duration: "0.3s",
+    timing: "ease-out forwards",
+    description: "Height collapse with fade — collapsible panel close",
+  },
+];
+
+/** Chip and badge variant showcase items */
+export const chipBadgeVariants = [
+  {
+    group: "Filter Chips",
+    items: [
+      { label: "All", classes: "archive-filters__chip archive-filters__chip--active", variant: "Active" },
+      { label: "UV & Glow", classes: "archive-filters__chip", variant: "Inactive" },
+      { label: "Editorial", classes: "archive-filters__chip", variant: "Hover Preview" },
+    ],
+  },
+  {
+    group: "Badges",
+    items: [
+      { label: "Featured", classes: "badge badge--default", variant: "Default" },
+      { label: "Tutorial", classes: "badge badge--secondary", variant: "Secondary" },
+      { label: "Removed", classes: "badge badge--destructive", variant: "Destructive" },
+      { label: "Draft", classes: "badge badge--outline", variant: "Outline" },
+    ],
+  },
+  {
+    group: "Tag Pills",
+    items: [
+      { label: "neon-makeup", classes: "tag-badge", variant: "Default Tag" },
+      { label: "berlin", classes: "tag-badge", variant: "Default Tag" },
+      { label: "festival", classes: "tag-badge", variant: "Default Tag" },
+      { label: "uv-reactive", classes: "tag-badge", variant: "Default Tag" },
+    ],
+  },
+];
+
+/** Card variant showcase data */
+export const cardVariants = [
+  {
+    name: "Blog Card",
+    cssBlock: "blog-card",
+    description: "Used on the Blog archive page. Features thumbnail, category badge, title, excerpt, and metadata row.",
+    usage: "BlogPage.tsx, BlogPreviewSection",
+  },
+  {
+    name: "Portfolio Card",
+    cssBlock: "portfolio-card",
+    description: "Gallery card with full-bleed image, category overlay, and hover-reveal title bar.",
+    usage: "PortfolioMainPage.tsx, PortfolioGrid",
+  },
+  {
+    name: "Video Card",
+    cssBlock: "video-card",
+    description: "Thumbnail with play overlay, title, and duration/date metadata.",
+    usage: "VideosPage.tsx",
+  },
+  {
+    name: "Podcast Card",
+    cssBlock: "podcast-card",
+    description: "Episode card with cover art, title, duration badge, and description excerpt.",
+    usage: "PodcastsPage.tsx",
+  },
+  {
+    name: "Feedback Card",
+    cssBlock: "portfolio-feedback__card",
+    description: "Quote card with star rating, author name, and location metadata.",
+    usage: "PortfolioDetailPage.tsx, FeedbackPage.tsx",
+  },
+  {
+    name: "FAQ Card",
+    cssBlock: "faq-item",
+    description: "Accordion-style card with expand/collapse toggle and animated answer reveal.",
+    usage: "FaqSection.tsx, FaqPage.tsx",
+  },
+];
+
+/** Form element showcase data */
+export const formElements = [
+  {
+    name: "Text Input",
+    element: "input",
+    type: "text",
+    placeholder: "Enter your name…",
+    description: "Standard single-line text input with neon focus ring.",
+  },
+  {
+    name: "Email Input",
+    element: "input",
+    type: "email",
+    placeholder: "hello@example.com",
+    description: "Email field with built-in validation styling.",
+  },
+  {
+    name: "Search Input",
+    element: "input",
+    type: "search",
+    placeholder: "Search the portfolio…",
+    description: "Search field used in the global search and archive filters.",
+  },
+  {
+    name: "Textarea",
+    element: "textarea",
+    type: "textarea",
+    placeholder: "Write your message…",
+    description: "Multi-line text area for longer content input.",
+  },
+  {
+    name: "Select",
+    element: "select",
+    type: "select",
+    placeholder: "Choose a category",
+    description: "Dropdown select used in archive sort and filter controls.",
+    options: ["All Categories", "UV & Glow", "Editorial", "Festival", "Creative"],
+  },
+  {
+    name: "Checkbox",
+    element: "checkbox",
+    type: "checkbox",
+    placeholder: "Accept terms and conditions",
+    description: "Checkbox with custom neon styling and accessible label.",
+  },
+];
+
+/** Archive filters demo categories */
+export const archiveFiltersDemoCategories = [
+  { id: "all", name: "All Work", slug: "all", count: 42 },
+  { id: "uv-glow", name: "UV & Glow", slug: "uv-glow", count: 12 },
+  { id: "editorial", name: "Editorial", slug: "editorial", count: 8 },
+  { id: "festival", name: "Festival", slug: "festival", count: 15 },
+  { id: "creative", name: "Creative", slug: "creative", count: 7 },
+];
+
+/** Archive filters demo sort options */
+export const archiveFiltersDemoSortOptions = [
+  { value: "recent", label: "Most Recent" },
+  { value: "popular", label: "Popular" },
+  { value: "featured", label: "Featured" },
+  { value: "alphabetical", label: "A–Z" },
+];
+
+/** Theme comparison sample elements */
+export const themeComparisonElements = [
+  {
+    id: "card",
+    label: "Content Card",
+    description: "Card with image placeholder, badge, title, and excerpt",
+  },
+  {
+    id: "button-group",
+    label: "Button Group",
+    description: "Primary, outline, and ghost button variants",
+  },
+  {
+    id: "chip-group",
+    label: "Filter Chips",
+    description: "Active, inactive, and hover state chips",
+  },
+  {
+    id: "input",
+    label: "Form Input",
+    description: "Text input with placeholder styling",
   },
 ];

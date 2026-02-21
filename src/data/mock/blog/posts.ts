@@ -164,7 +164,19 @@ Now go out there, paint your face, and find me on the dancefloor! ✨
       caption: 'Festival-ready makeup that lasts'
     },
     featured: true,
-    readTime: 8
+    readTime: 8,
+    faqs: [
+      {
+        id: 'survival-faq-1',
+        question: 'Will these tips work for outdoor summer festivals in Europe?',
+        answer: 'Absolutely. I developed most of these techniques between Berlin open-air events and Cape Town outdoor parties. The heat and sweat challenges are similar — the sandwich technique and waterproof products are universal.'
+      },
+      {
+        id: 'survival-faq-2',
+        question: 'What setting spray do you recommend for 12+ hour wear?',
+        answer: 'I rotate between a few depending on climate, but the key is layering — two coats of spray between cream and powder layers. The specific brand matters less than the technique of building thin, locked-in layers.'
+      }
+    ]
   },
   {
     id: 'uv-makeup-guide',
@@ -251,7 +263,24 @@ If you see me in Thailand or on a dance floor in Berlin, come find me. I might j
       caption: 'Neon UV makeup under blacklight'
     },
     featured: true,
-    readTime: 10
+    readTime: 10,
+    faqs: [
+      {
+        id: 'uv-faq-1',
+        question: 'Is UV face paint safe for sensitive skin?',
+        answer: 'Most reputable UV paints are cosmetic-grade and safe for skin. However, not all neon pigments are eye-safe — always patch test on your inner wrist first, especially in the Thai heat where pores are more open. I avoid applying UV paint directly on the eyelids.'
+      },
+      {
+        id: 'uv-faq-2',
+        question: 'Do I need a UV torch or blacklight to check my look?',
+        answer: 'Yes! A small UV keyring torch is essential. What looks bright under normal light might appear dull under blacklight, and vice versa. I always do a final check with my torch before heading to the dancefloor.'
+      },
+      {
+        id: 'uv-faq-3',
+        question: 'How long does UV face paint typically last?',
+        answer: 'Water-activated UV paints last 4-8 hours depending on sweat and humidity. Alcohol-activated paints can last 12+ hours. Setting with translucent powder and a spray extends the wear time significantly.'
+      }
+    ]
   },
   {
     id: 'festival-packing-list',

@@ -32,13 +32,7 @@ export function Footer() {
   };
 
   const handleFaqClick = () => {
-    navigate("/contact");
-    setTimeout(() => {
-      const faqSection = document.getElementById("faq-section");
-      if (faqSection) {
-        faqSection.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 300);
+    navigateTo("/faq");
   };
 
   const handleCopyLink = async () => {
@@ -56,6 +50,11 @@ export function Footer() {
   /** Portfolio categories excluding "All Work" */
   const portfolioCategories = PORTFOLIO_CATEGORIES.filter(
     (cat) => cat.id !== "all"
+  );
+
+  /** Filter out Videos from main nav items for footer display */
+  const footerNavItems = navigationItems.filter(
+    (item) => item.id !== "videos"
   );
 
   return (
@@ -102,7 +101,7 @@ export function Footer() {
           <nav className="footer__nav" aria-label="Footer navigation">
             <h3 className="footer__heading">{footerContent.navHeading}</h3>
             <ul className="footer__nav-list">
-              {navigationItems.map((item) => (
+              {footerNavItems.map((item) => (
                 <li key={item.id}>
                   <button
                     onClick={() => navigateTo(item.path)}
@@ -126,7 +125,7 @@ export function Footer() {
               {blogCategories.map((cat) => (
                 <li key={cat.id}>
                   <button
-                    onClick={() => navigateTo(`/blog?category=${cat.slug}`)}
+                    onClick={() => navigateTo(`/blog/category/${cat.slug}`)}
                     className="footer__nav-link"
                   >
                     {cat.name}
@@ -143,7 +142,7 @@ export function Footer() {
               {portfolioCategories.map((cat) => (
                 <li key={cat.id}>
                   <button
-                    onClick={() => navigateTo(`/portfolio/${cat.slug}`)}
+                    onClick={() => navigateTo(`/portfolio/category/${cat.slug}`)}
                     className="footer__nav-link"
                   >
                     {cat.name}

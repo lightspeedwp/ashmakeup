@@ -106,4 +106,41 @@
   margin-top: 4rem;
 }
 
+/* Email text link */
+.mobile-menu__email-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: 1.125rem;
+  color: var(--foreground);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.mobile-menu__email-link:hover,
+.mobile-menu__email-link:focus-visible {
+  opacity: 1;
+  color: var(--wp--preset--color--neon-pink-text);
+}
+
+.dark .mobile-menu__email-link:hover,
+.dark .mobile-menu__email-link:focus-visible {
+  color: var(--wp--preset--color--neon-pink);
+}
+
+.mobile-menu__email-link:focus-visible {
+  outline: 2px solid var(--wp--preset--color--neon-pink);
+  outline-offset: 4px;
+  border-radius: var(--wp--preset--border-radius--sm);
+}
+
+.mobile-menu__email-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
 /* Animation moved to /styles/animations.css */

@@ -105,28 +105,7 @@ export interface BlogPost {
   
   /** Is this a featured post? */
   featured?: boolean;
-}
 
-/**
- * Blog category interface
- * Category classification for blog posts
- */
-export interface BlogCategory {
-  /** Unique identifier */
-  id: string;
-  
-  /** Category display name */
-  name: string;
-  
-  /** URL-friendly slug */
-  slug: string;
-  
-  /** Category description */
-  description?: string;
-  
-  /** Number of posts in this category */
-  count?: number;
-  
-  /** Category color (hex code) */
-  color?: string;
+  /** Optional per-item FAQ entries displayed on the single post page */
+  faqs?: { id: string; question: string; answer: string }[];
 }

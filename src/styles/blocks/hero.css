@@ -21,7 +21,7 @@
 }
 
 .dark .hero {
-  background-color: #050505;
+  background-color: var(--wp--preset--color--pure-black);
 }
 
 .hero--fullscreen {

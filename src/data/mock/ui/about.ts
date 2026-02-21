@@ -6,7 +6,11 @@
 export const aboutUI = {
   hero: {
     cta: "Explore My Portfolio",
-    lightboxTitle: "Ash Shaw's Creative Journey"
+    lightboxTitle: "Ash Shaw's Creative Journey",
+    subtitle: {
+      words: ["colour", "creativity", "connection"],
+      suffix: "since 2019."
+    }
   },
   sections: {
     journey: {

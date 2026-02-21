@@ -11,15 +11,26 @@
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useBlogPosts } from '../../../hooks/useContentful';
-import { ImageWithFallback } from '../../figma/ImageWithFallback';
+import { OptimizedImage } from '../../ui/OptimizedImage';
 import { InstagramFeed } from '../../sections/InstagramFeed';
 import { Calendar, Clock, BookOpen } from 'lucide-react';
-import { ScrollToTop } from '../../ui/ScrollToTop';
+import { FaqSection } from '../../sections/FaqSection';
+import { ArchiveFilters } from '../../ui/ArchiveFilters';
 import { blogUI } from '../../../data/mock/ui/blog';
 import { blogPageContent } from '../../../data/mock/pages/blog';
+import { blogCategories } from '../../../data/mock/blog/categories';
 import { useAppNavigate } from '../../../hooks/useAppNavigate';
 import { useSearchParams } from 'react-router';
 import { formatDate } from '../../../utils/formatDate';
+import { getBlogCategoryCount } from '../../../utils/contentCounts';
+import { setSEO } from '../../../utils/seo';
+import { pageSEO } from '../../../data/mock/seo';
+import {
+  injectSchema,
+  removeSchema,
+  SCHEMA_IDS,
+  buildCollectionSchema,
+} from '../../../utils/schemaService';
 import "@/styles/blocks/blog-page.css";
 
 interface BlogPageProps {
@@ -47,6 +58,11 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
     limit: 6,
   });
 
+  const [activeCategories, setActiveCategories] = useState<string[]>(
+    initialCategory ? [initialCategory] : []
+  );
+  const [sortBy, setSortBy] = useState('recent');
+
   useEffect(() => {
     if (initialCategory && initialCategory !== blogState.category) {
       setBlogState(prev => ({
@@ -54,8 +70,31 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
         category: initialCategory,
         page: 1,
       }));
+      setActiveCategories(initialCategory ? [initialCategory] : []);
     }
   }, [initialCategory]);
+
+  const blogFilterCategories = useMemo(() =>
+    blogCategories.map(c => ({
+      id: c.id,
+      name: c.name,
+      slug: c.slug,
+      count: getBlogCategoryCount(c.name),
+    })),
+    []
+  );
+
+  const BLOG_SORT_OPTIONS = useMemo(() => [
+    { value: 'recent', label: 'Most Recent' },
+    { value: 'alphabetical', label: 'A-Z' },
+    { value: 'featured', label: 'Featured' },
+  ], []);
+
+  const handleBlogCategoryToggle = useCallback((slug: string) => {
+    setActiveCategories(prev =>
+      prev.includes(slug) ? prev.filter(s => s !== slug) : [...prev, slug]
+    );
+  }, []);
 
   const [debouncedSearch, setDebouncedSearch] = useState(blogState.searchQuery);
 
@@ -68,7 +107,7 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
     tags: blogState.tags.length > 0 ? blogState.tags : undefined,
     page: blogState.page,
     limit: blogState.limit,
-    sortBy: 'publishedDate',
+    sortBy: sortBy === 'recent' ? 'publishedDate' : 'title',
     sortOrder: 'desc',
     publishedOnly: true,
     autoRefresh: true,
@@ -84,18 +123,54 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
   }, [blogState.searchQuery]);
 
   const filteredPosts = useMemo(() => {
-    if (!blogData?.posts || !debouncedSearch.trim()) {
-      return blogData?.posts || [];
+    let posts = blogData?.posts || [];
+
+    // Filter by search query
+    if (debouncedSearch.trim()) {
+      const query = debouncedSearch.toLowerCase();
+      posts = posts.filter(post =>
+        post.title.toLowerCase().includes(query) ||
+        post.excerpt.toLowerCase().includes(query) ||
+        post.tags.some(tag => tag.toLowerCase().includes(query)) ||
+        post.category.toLowerCase().includes(query)
+      );
     }
 
-    const query = debouncedSearch.toLowerCase();
-    return blogData.posts.filter(post => 
-      post.title.toLowerCase().includes(query) ||
-      post.excerpt.toLowerCase().includes(query) ||
-      post.tags.some(tag => tag.toLowerCase().includes(query)) ||
-      post.category.toLowerCase().includes(query)
-    );
-  }, [blogData?.posts, debouncedSearch]);
+    // Filter by active categories from ArchiveFilters
+    if (activeCategories.length > 0) {
+      posts = posts.filter(post => {
+        const postCatSlug = post.category
+          .toLowerCase()
+          .replace(/\s+/g, '-')
+          .replace(/[^a-z0-9-]/g, '');
+        return activeCategories.some(slug =>
+          postCatSlug.includes(slug) || post.category.toLowerCase().includes(slug)
+        );
+      });
+    }
+
+    // Sort by sortBy option
+    switch (sortBy) {
+      case 'alphabetical':
+        posts = [...posts].sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case 'featured':
+        posts = [...posts].sort((a, b) => {
+          if (a.featured && !b.featured) return -1;
+          if (!a.featured && b.featured) return 1;
+          return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+        });
+        break;
+      case 'recent':
+      default:
+        posts = [...posts].sort((a, b) =>
+          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+        );
+        break;
+    }
+
+    return posts;
+  }, [blogData?.posts, debouncedSearch, activeCategories, sortBy]);
 
   const updateBlogState = useCallback((updates: Partial<BlogPageState>) => {
     setBlogState(prev => ({
@@ -186,16 +261,20 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
   }, [setCurrentPage, goToPage, blogState.page, blogData?.pagination]);
 
   useEffect(() => {
-    document.title = blogPageContent.seo.title;
-    
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', blogPageContent.seo.description);
-    }
-  }, []);
+    setSEO(pageSEO.blog);
+    injectSchema(SCHEMA_IDS.collection, buildCollectionSchema(
+      'Insights | Makeup Tips, Festival Guides & Tutorials',
+      pageSEO.blog.description,
+      '/blog',
+      blogData?.pagination?.total || 0,
+    ));
+    return () => {
+      removeSchema(SCHEMA_IDS.collection);
+    };
+  }, [blogData?.pagination?.total]);
 
   return (
-    <main id="main-content" role="main" tabIndex={-1} className="blog-list-view">
+    <main id="main-content" role="main" tabIndex={-1} className="blog-list-view bg-atomic-noise">
       <div 
         className="blog-list-header" 
         data-blog-header
@@ -208,17 +287,28 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
             <p className="text-body-guideline mb-fluid-lg">
               {blogUI.listing.header.description}
             </p>
-            
-            {blogData?.pagination && (
-              <div className="mt-fluid-md">
-              </div>
-            )}
           </div>
         </div>
       </div>
 
       <div className="blog-list-content">
         <div className="container-7xl py-fluid-lg">
+          {/* Archive Filters */}
+          <ArchiveFilters
+            contentType="blog"
+            categories={blogFilterCategories}
+            activeCategories={activeCategories}
+            sortBy={sortBy}
+            sortOptions={BLOG_SORT_OPTIONS}
+            resultCount={filteredPosts.length}
+            onCategoryToggle={handleBlogCategoryToggle}
+            onSortChange={setSortBy}
+            onClearAll={() => {
+              setActiveCategories([]);
+              setSortBy('recent');
+            }}
+          />
+
           {postsLoading ? (
             <div className="blog-preview__grid">
               {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -238,28 +328,28 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
               {filteredPosts.map((post) => (
                 <article 
                   key={post.id} 
-                  className="blog-card group"
+                  className="blog-card"
                   onClick={() => viewBlogPost(post.slug)}
                 >
                   <div className="blog-card__image-container">
                     {post.featuredImage ? (
-                      <ImageWithFallback
+                      <OptimizedImage
                         src={post.featuredImage.url}
                         alt={post.featuredImage.alt}
                         className="blog-card__image"
+                        preset="thumbnail"
                       />
                     ) : (
                       <div className="blog-card__placeholder">
                         <BookOpen className="blog-card__placeholder-icon" />
                       </div>
                     )}
-                  </div>
-                  
-                  <div className="blog-card__content">
                     <div className="blog-card__category">
                       {post.category}
                     </div>
-                    
+                  </div>
+                  
+                  <div className="blog-card__content">
                     <h2 className="blog-card__title">
                       {post.title}
                     </h2>
@@ -289,8 +379,8 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
             </div>
           ) : (
             <div className="error-card">
-              <h3 className="error-title">No posts found</h3>
-              <p className="error-message">Try adjusting your search or filters</p>
+              <h3 className="error-title">{emptyStateMessages.blog.title}</h3>
+              <p className="error-message">{emptyStateMessages.blog.message}</p>
             </div>
           )}
           
@@ -333,12 +423,8 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
         </div>
       </div>
 
-      <ScrollToTop 
-        showAfter={300}
-        ariaLabel="Scroll to top of blog"
-      />
-
       <InstagramFeed />
+      <FaqSection pageId="blog" />
     </main>
   );
 }

@@ -12,6 +12,36 @@ import heroImage1 from "figma:asset/f4a28f747d49fc9d37311b17f513b62e2b95a73e.png
 import heroImage2 from "figma:asset/378acbf4a7518ca6c40b44540bd7a121a91375fe.png";
 import heroImage3 from "figma:asset/e82a7d901c5a28bf9313c7535228e647eaf06b75.png";
 
+// Import Origin Festival images
+import originPinkMohawk from "figma:asset/e46fceb6809b8f1b7ef5c578d40578eadf301207.png";
+import originGeometric from "figma:asset/2678f2e48d60b8ccd6855469149ffc2cd8877e1c.png";
+import originNeonGrid from "figma:asset/04aa88bd7a81e3f14ceb68f980492bf374b041db.png";
+
+// Import Thailand images
+import lostParadiseImg from "figma:asset/e7ee10c85c112ab4acfc9e54087974a5faae5966.png";
+import edenParadiseImg from "figma:asset/3c496f3b8a5671dd00830f80a9a061ddf687e849.png";
+import edenShishiImg from "figma:asset/2d37a7cd55fe518f7eb8124fa25a2382be67f948.png";
+
+// Import Shankra Festival images
+import festivalConnectionImg from "figma:asset/d35493e2be08017199b3d1523d516a996ec97a5d.png";
+import alpineBlissImg from "figma:asset/e43f2a86f8b38d1777428264c8c9126d07a9ef75.png";
+import mountainRainbowImg from "figma:asset/80d0d3af448e4969dc796d00e91c30d3648cd9c4.png";
+
+// Import Reiserfieber images
+import alpineGlowImg from "figma:asset/33024fb05609d4a4545be47508d2ad3595f143c4.png";
+import mountainSpiritImg from "figma:asset/280168cf45339af581c4065d1f6728ea2de6ff02.png";
+import festivalJoyImg from "figma:asset/71597fc19386bc69fb2144851d752977dfd3693e.png";
+
+// Import UV Makeup images
+import gondwanaRainbowImg from "figma:asset/74b708f3be9c02b929444ed900d4217477ac45ad.png";
+import rainbowLightningImg from "figma:asset/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png";
+import electricBlueImg from "figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png";
+
+// Import Nail Art images
+import rainbowFusionImg from "figma:asset/7c570c5291977a816c8152a098cd6693cff22dbd.png";
+import galaxyNailsImg from "figma:asset/1ec0ba217cad06e2cff662a25a050b0401d1092a.png";
+import gradientDreamsImg from "figma:asset/deb2b4ab4cb25c5e47b960708fce6ea552ee6039.png";
+
 /**
  * Social media platform configuration with URLs and metadata
  * Used by SocialLinks component for consistent platform representation
@@ -281,7 +311,7 @@ export const THAILAND_WORK_DATA = [
       "My dear friend Gabi & sista from another mista!",
     images: [
       {
-        src: "figma:asset/e7ee10c85c112ab4acfc9e54087974a5faae5966.png",
+        src: lostParadiseImg,
         alt: "Lost Paradise - makeup artistry in Thailand with friend Gabi",
         caption: "Lost Paradise",
         description:
@@ -298,7 +328,7 @@ export const THAILAND_WORK_DATA = [
       "Beautiful party person who kindly let me do her makeup.",
     images: [
       {
-        src: "figma:asset/3c496f3b8a5671dd00830f80a9a061ddf687e849.png",
+        src: edenParadiseImg,
         alt: "Eden Paradise - beautiful party makeup in Thailand",
         caption: "Party Look",
         description:
@@ -315,7 +345,7 @@ export const THAILAND_WORK_DATA = [
       "Beautiful Shishi smiling radiance and shining bright.",
     images: [
       {
-        src: "figma:asset/2d37a7cd55fe518f7eb8124fa25a2382be67f948.png",
+        src: edenShishiImg,
         alt: "Eden Paradise - Shishi with radiant makeup in Thailand",
         caption: "Radiant Smile",
         description:
@@ -344,19 +374,19 @@ export const FESTIVAL_WORK_DATA = [
     description: 'It was my birthday weekend, I cycled to the event over two days and then cycled home, I brought all my clothes, hammock gear and makeup bags in panniers on my gravel bike. I danced, celebrated and spread the joy of my makeup. I also had some stickers made.',
     images: [
       {
-        src: 'figma:asset/e46fceb6809b8f1b7ef5c578d40578eadf301207.png',
+        src: originPinkMohawk,
         alt: 'Origin Festival Birthday - Pink Mohawk and Neon Eyes',
         caption: 'Festival Birthday Joy',
         description: 'Vibrant birthday celebration look with neon accents'
       },
       {
-        src: 'figma:asset/2678f2e48d60b8ccd6855469149ffc2cd8877e1c.png',
+        src: originGeometric,
         alt: 'Origin Festival - Geometric Face Paint Profile',
         caption: 'Geometric Neon Art',
         description: 'Intricate geometric face paint design'
       },
       {
-        src: 'figma:asset/04aa88bd7a81e3f14ceb68f980492bf374b041db.png',
+        src: originNeonGrid,
         alt: 'Origin Festival - Neon Grid Makeup',
         caption: 'Neon Night Vibes',
         description: 'Neon grid patterns coming alive at night'
@@ -494,7 +524,7 @@ export const SHANKRA_WORK_DATA = [
       "Joyful festival moment with turquoise eye design and infectious energy in the Swiss mountains.",
     images: [
       {
-        src: "figma:asset/d35493e2be08017199b3d1523d516a996ec97a5d.png",
+        src: festivalConnectionImg,
         alt: "Festival Connection - turquoise eye design at Shankra Festival 2023, Switzerland",
         caption: "Turquoise Eyes",
         description:
@@ -511,7 +541,7 @@ export const SHANKRA_WORK_DATA = [
       "Serene golden face paint with turquoise accents, capturing the peaceful mountain festival atmosphere.",
     images: [
       {
-        src: "figma:asset/e43f2a86f8b38d1777428264c8c9126d07a9ef75.png",
+        src: alpineBlissImg,
         alt: "Alpine Bliss - golden face paint with turquoise accents at Shankra Festival 2023, Switzerland",
         caption: "Golden Serenity",
         description:
@@ -528,7 +558,7 @@ export const SHANKRA_WORK_DATA = [
       "Vibrant rainbow face art with intricate patterns celebrating the colorful spirit of Swiss festival culture.",
     images: [
       {
-        src: "figma:asset/80d0d3af448e4969dc796d00e91c30d3648cd9c4.png",
+        src: mountainRainbowImg,
         alt: "Mountain Rainbow - vibrant rainbow face art at Shankra Festival 2023, Switzerland",
         caption: "Rainbow Patterns",
         description:
@@ -558,7 +588,7 @@ export const REISERFIEBER_WORK_DATA = [
       "Delicate turquoise and purple face art with glitter accents creating magical festival vibes in the Swiss mountains.",
     images: [
       {
-        src: "figma:asset/33024fb05609d4a4545be47508d2ad3595f143c4.png",
+        src: alpineGlowImg,
         alt: "Alpine Glow - turquoise and purple face art at Reiserfieber, Switzerland",
         caption: "Delicate Glow",
         description:
@@ -575,7 +605,7 @@ export const REISERFIEBER_WORK_DATA = [
       "Bold rainbow face stripe with festival hat, capturing the joyful energy of Swiss outdoor celebrations.",
     images: [
       {
-        src: "figma:asset/280168cf45339af581c4065d1f6728ea2de6ff02.png",
+        src: mountainSpiritImg,
         alt: "Mountain Spirit - rainbow face stripe at Reiserfieber, Switzerland",
         caption: "Rainbow Stripe",
         description:
@@ -592,7 +622,7 @@ export const REISERFIEBER_WORK_DATA = [
       "Vibrant purple and turquoise eye design with infectious smile radiating pure festival happiness in the Alps.",
     images: [
       {
-        src: "figma:asset/71597fc19386bc69fb2144851d752977dfd3693e.png",
+        src: festivalJoyImg,
         alt: "Festival Joy - purple and turquoise eye design at Reiserfieber, Switzerland",
         caption: "Joyful Eyes",
         description:
@@ -622,7 +652,7 @@ export const UV_MAKEUP_DATA = [
       "Beautiful UV reactive makeup with rainbow streaks creating vibrant festival energy.",
     images: [
       {
-        src: "figma:asset/74b708f3be9c02b929444ed900d4217477ac45ad.png",
+        src: gondwanaRainbowImg,
         alt: "Neon Warrior - UV face paint with vibrant rainbow streaks at festival",
         caption: "Under UV Light",
         description:
@@ -653,7 +683,7 @@ export const UV_MAKEUP_DATA = [
       "Vibrant UV dots under eyes with rainbow body paint creating magical festival vibes.",
     images: [
       {
-        src: "figma:asset/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png",
+        src: rainbowLightningImg,
         alt: "Rainbow Lightning - UV dots under eyes with rainbow body paint",
         caption: "Rainbow Dots",
         description: "Redhead with UV dots under eyes and rainbow body paint",
@@ -676,7 +706,7 @@ export const UV_MAKEUP_DATA = [
       "Bold rainbow UV face paint with unique accessories radiating joy and creativity.",
     images: [
       {
-        src: "figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png",
+        src: electricBlueImg,
         alt: "Electric Blue - rainbow UV face paint with jellyfish ear accessory",
         caption: "Rainbow UV",
         description:
@@ -705,7 +735,7 @@ export const NAIL_ART_DATA = [
       "Colorful sticker art with holographic details creating a playful rainbow effect",
     images: [
       {
-        src: "figma:asset/7c570c5291977a816c8152a098cd6693cff22dbd.png",
+        src: rainbowFusionImg,
         alt: "Rainbow Fusion nail art with colorful sticker art and holographic details",
         caption: "Full Set",
         description: "Complete rainbow fusion nail art set",
@@ -728,7 +758,7 @@ export const NAIL_ART_DATA = [
       "Iridescent blues and greens with cosmic shimmer creating an otherworldly effect",
     images: [
       {
-        src: "figma:asset/1ec0ba217cad06e2cff662a25a050b0401d1092a.png",
+        src: galaxyNailsImg,
         alt: "Galaxy Nails with iridescent blues and greens with cosmic shimmer",
         caption: "Galaxy Effect",
         description:
@@ -745,7 +775,7 @@ export const NAIL_ART_DATA = [
       "Purple to green ombre with metallic finish creating a dreamy transition effect",
     images: [
       {
-        src: "figma:asset/deb2b4ab4cb25c5e47b960708fce6ea552ee6039.png",
+        src: gradientDreamsImg,
         alt: "Gradient Dreams nail art with purple to green ombre and metallic finish",
         caption: "Ombre Effect",
         description:

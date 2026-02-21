@@ -1,61 +1,15 @@
-"use client";
+/**
+ * @fileoverview Tabs stub (unused – @radix-ui/react-tabs import removed
+ *               to prevent async_hooks runtime errors via esm.sh)
+ */
 
 import * as React from "react";
-import * as TabsPrimitive from "@radix-ui/react-tabs";
 
-import { cn } from "./utils";
-import "@/styles/blocks/data-display.css";
+const noop = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
 
-function Tabs({
-  className,
-  ...props
-}: React.ComponentProps<typeof TabsPrimitive.Root>) {
-  return (
-    <TabsPrimitive.Root
-      data-slot="tabs"
-      className={cn("tabs-root", className)}
-      {...props}
-    />
-  );
-}
-
-function TabsList({
-  className,
-  ...props
-}: React.ComponentProps<typeof TabsPrimitive.List>) {
-  return (
-    <TabsPrimitive.List
-      data-slot="tabs-list"
-      className={cn("tabs-list", className)}
-      {...props}
-    />
-  );
-}
-
-function TabsTrigger({
-  className,
-  ...props
-}: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
-  return (
-    <TabsPrimitive.Trigger
-      data-slot="tabs-trigger"
-      className={cn("tabs-trigger", className)}
-      {...props}
-    />
-  );
-}
-
-function TabsContent({
-  className,
-  ...props
-}: React.ComponentProps<typeof TabsPrimitive.Content>) {
-  return (
-    <TabsPrimitive.Content
-      data-slot="tabs-content"
-      className={cn("tabs-content", className)}
-      {...props}
-    />
-  );
-}
+const Tabs = noop;
+const TabsList = noop;
+const TabsTrigger = noop;
+const TabsContent = noop;
 
 export { Tabs, TabsList, TabsTrigger, TabsContent };

@@ -23,6 +23,8 @@ import "@/styles/blocks/social-links.css";
 interface SocialLinksProps {
   className?: string;
   variant?: "default" | "clean" | "minimal";
+  /** Platform names to exclude from rendering */
+  exclude?: string[];
 }
 
 /**
@@ -32,6 +34,7 @@ interface SocialLinksProps {
 export function SocialLinks({
   className = "",
   variant = "default",
+  exclude = [],
 }: SocialLinksProps) {
   const variantClass =
     variant === "clean"
@@ -40,13 +43,19 @@ export function SocialLinks({
         ? "social-links__link--minimal"
         : "";
 
-  const iconFill = variant === "minimal" ? "currentColor" : "#ffffff";
+  /* clean + minimal both use foreground-aware currentColor;
+     default keeps white because the backgrounds are platform-colored */
+  const iconFill = variant === "default" ? "#ffffff" : "currentColor";
+
+  const filteredLinks = exclude.length > 0
+    ? socialLinks.filter((s) => !exclude.includes(s.platform))
+    : socialLinks;
 
   return (
     <div
       className={`social-links ${variant === "minimal" ? "social-links--minimal" : ""} ${className}`}
     >
-      {socialLinks.map((social, index) => (
+      {filteredLinks.map((social, index) => (
         <a
           key={index}
           href={social.url}
@@ -58,23 +67,12 @@ export function SocialLinks({
             variantClass || `bg-social-${social.platform.toLowerCase()}`
           }`}
           aria-label={social.label}
-          style={{
-            overflow: "hidden",
-            border: "none",
-            outline: "none",
-            backfaceVisibility: "hidden",
-            transform: "translateZ(0)",
-            WebkitFontSmoothing: "antialiased",
-          }}
         >
           <svg
             className="social-links__icon"
             viewBox="0 0 24 24"
             fill={iconFill}
             aria-hidden="true"
-            style={{
-              display: "block",
-            }}
             dangerouslySetInnerHTML={{
               __html: getSVGPathForPlatform(social.platform),
             }}

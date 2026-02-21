@@ -1,0 +1,401 @@
+/* ==========================================================================
+   Component API Reference Page Styles
+   Sidebar navigation + prop tables with alternating rows
+   ========================================================================== */
+
+/* ── Layout ── */
+.comp-api__layout {
+  display: flex;
+  max-width: var(--wp--preset--layout--wide);
+  margin: 0 auto;
+  padding: 0 var(--wp--preset--spacing--section-horizontal);
+  gap: var(--wp--preset--spacing--fluid-lg);
+}
+
+/* ── Sidebar ── */
+.comp-api__sidebar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .comp-api__sidebar {
+    display: block;
+    position: sticky;
+    top: 6rem;
+    width: 240px;
+    flex-shrink: 0;
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
+    padding: var(--wp--preset--spacing--fluid-md) 0;
+  }
+}
+
+.comp-api__sidebar-search {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--sm);
+  background: var(--wp--preset--color--base);
+  color: var(--foreground);
+  margin-bottom: var(--wp--preset--spacing--fluid-xs);
+}
+
+.dark .comp-api__sidebar-search {
+  background: rgba(20, 20, 20, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.comp-api__sidebar-search:focus {
+  outline: none;
+  border-color: var(--wp--preset--color--neon-pink);
+  box-shadow: 0 0 0 3px rgba(255, 16, 240, 0.15);
+}
+
+.comp-api__sidebar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.comp-api__sidebar-link {
+  display: block;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--wp--preset--border-radius--sm);
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  color: var(--wp--preset--color--neutral-600);
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.dark .comp-api__sidebar-link {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.comp-api__sidebar-link:hover {
+  color: var(--wp--preset--color--neon-purple-text);
+  background: rgba(190, 0, 254, 0.06);
+}
+
+.dark .comp-api__sidebar-link:hover {
+  color: var(--wp--preset--color--neon-purple);
+  background: rgba(190, 0, 254, 0.1);
+}
+
+.comp-api__sidebar-link:focus-visible {
+  outline: 2px solid var(--wp--preset--color--neon-pink);
+  outline-offset: 1px;
+}
+
+.comp-api__sidebar-cat {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-weight: 600;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--wp--preset--color--neutral-400);
+  padding: 0.75rem 0.75rem 0.25rem;
+}
+
+.dark .comp-api__sidebar-cat {
+  color: var(--wp--preset--color--neutral-500);
+}
+
+/* ── Main Content ── */
+.comp-api__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--fluid-lg);
+  padding: var(--wp--preset--spacing--fluid-lg) 0;
+}
+
+/* ── Mobile Search ── */
+.comp-api__mobile-search {
+  padding: 0 var(--wp--preset--spacing--section-horizontal);
+  max-width: var(--wp--preset--layout--wide);
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .comp-api__mobile-search {
+    display: none;
+  }
+}
+
+.comp-api__mobile-input {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--200);
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--md);
+  background: var(--wp--preset--color--base);
+  color: var(--foreground);
+}
+
+.dark .comp-api__mobile-input {
+  background: rgba(20, 20, 20, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.comp-api__mobile-input:focus {
+  outline: none;
+  border-color: var(--wp--preset--color--neon-pink);
+  box-shadow: 0 0 0 3px rgba(255, 16, 240, 0.15);
+}
+
+/* ── Component Card ── */
+.comp-api__component {
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--md);
+  background: var(--wp--preset--color--base);
+  overflow: hidden;
+}
+
+.dark .comp-api__component {
+  background: rgba(20, 20, 20, 0.5);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.comp-api__component-header {
+  display: flex;
+  align-items: center;
+  gap: var(--wp--preset--spacing--fluid-xs);
+  padding: var(--wp--preset--spacing--fluid-sm) var(--wp--preset--spacing--fluid-md);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.dark .comp-api__component-header {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.comp-api__component-name {
+  font-family: var(--wp--preset--font-family--brand-heading);
+  color: var(--foreground);
+}
+
+.dark .comp-api__component-name {
+  color: #fff;
+}
+
+.comp-api__component-cat {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--wp--preset--border-radius--full);
+  background: rgba(190, 0, 254, 0.08);
+  color: var(--wp--preset--color--neon-purple-text);
+}
+
+.dark .comp-api__component-cat {
+  background: rgba(190, 0, 254, 0.15);
+  color: var(--wp--preset--color--neon-purple);
+}
+
+.comp-api__component-path {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  color: var(--wp--preset--color--neutral-500);
+  margin-left: auto;
+}
+
+.dark .comp-api__component-path {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.comp-api__component-body {
+  padding: var(--wp--preset--spacing--fluid-sm) var(--wp--preset--spacing--fluid-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--fluid-sm);
+}
+
+.comp-api__component-desc {
+  font-family: var(--wp--preset--font-family--brand-body);
+  color: var(--wp--preset--color--neutral-600);
+}
+
+.dark .comp-api__component-desc {
+  color: var(--wp--preset--color--neutral-300);
+}
+
+/* ── Import Statement ── */
+.comp-api__import {
+  display: flex;
+  align-items: center;
+  gap: var(--wp--preset--spacing--fluid-xs);
+}
+
+.comp-api__import-code {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--wp--preset--font-size--100);
+  background: var(--wp--preset--color--neutral-100);
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--wp--preset--border-radius--sm);
+  color: var(--wp--preset--color--neon-purple-text);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.dark .comp-api__import-code {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--wp--preset--color--neon-purple);
+}
+
+.comp-api__copy-btn {
+  padding: 0.25rem 0.625rem;
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--sm);
+  background: transparent;
+  color: var(--wp--preset--color--neutral-500);
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.dark .comp-api__copy-btn {
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.comp-api__copy-btn:hover {
+  border-color: var(--wp--preset--color--neon-green-text);
+  color: var(--wp--preset--color--neon-green-text);
+}
+
+.dark .comp-api__copy-btn:hover {
+  border-color: var(--wp--preset--color--neon-green);
+  color: var(--wp--preset--color--neon-green);
+}
+
+.comp-api__copy-btn:focus-visible {
+  outline: 2px solid var(--wp--preset--color--neon-pink);
+  outline-offset: 1px;
+}
+
+/* ── Props Table ── */
+.comp-api__table-wrap {
+  overflow-x: auto;
+}
+
+.comp-api__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+}
+
+.comp-api__table th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  font-weight: 600;
+  color: var(--wp--preset--color--neutral-500);
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+.dark .comp-api__table th {
+  color: var(--wp--preset--color--neutral-400);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.comp-api__table td {
+  padding: 0.5rem 0.75rem;
+  color: var(--foreground);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.dark .comp-api__table td {
+  color: var(--wp--preset--color--neutral-200);
+  border-bottom-color: rgba(255, 255, 255, 0.04);
+}
+
+.comp-api__table tr:nth-child(even) td {
+  background: var(--wp--preset--color--neutral-50);
+}
+
+.dark .comp-api__table tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.comp-api__prop-name {
+  font-weight: 600;
+  color: var(--wp--preset--color--neon-purple-text);
+}
+
+.dark .comp-api__prop-name {
+  color: var(--wp--preset--color--neon-purple);
+}
+
+.comp-api__prop-type {
+  color: var(--wp--preset--color--neon-blue-text);
+  word-break: break-all;
+}
+
+.dark .comp-api__prop-type {
+  color: var(--wp--preset--color--neon-cyan);
+}
+
+.comp-api__prop-required {
+  font-weight: 600;
+  color: var(--wp--preset--color--neon-pink-text);
+}
+
+.dark .comp-api__prop-required {
+  color: var(--wp--preset--color--neon-pink);
+}
+
+.comp-api__no-props {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  color: var(--wp--preset--color--neutral-500);
+  padding: 0.5rem 0;
+}
+
+.dark .comp-api__no-props {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+/* ── Empty state ── */
+.comp-api__empty {
+  text-align: center;
+  padding: var(--wp--preset--spacing--fluid-xl);
+  color: var(--wp--preset--color--neutral-500);
+}
+
+.dark .comp-api__empty {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+/* ══════════════════════════════════════
+   REDUCED MOTION
+   ══════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .comp-api__sidebar-link,
+  .comp-api__copy-btn {
+    transition: none;
+  }
+}

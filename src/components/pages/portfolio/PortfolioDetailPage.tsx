@@ -6,19 +6,22 @@
  * responsive design, and brand-consistent styling following guidelines.
  * 
  * @author Ash Shaw Portfolio Team
- * @version 1.6.0 - Moved description below gallery
+ * @version 2.0.0 - Rich-text markdown content with Toxic Lime theme
  */
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { ArrowLeft, Calendar, MapPin, Eye, Tag, Share2 } from 'lucide-react';
+import { ArrowLeft, Calendar, MapPin, Eye, Tag, Share2, Star, Quote, MessageSquare } from 'lucide-react';
 
-import { ScrollToTop } from '../../ui/ScrollToTop';
 import { EnhancedLightbox } from '../../ui/EnhancedLightbox';
 import { ShareComponent } from '../../ui/ShareComponent';
+import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { SliderCard } from '../../ui/SliderCard';
 import { ResponsiveGridSlider } from '../../ui/ResponsiveGridSlider';
 import { usePortfolioImageUrl } from '../../ui/PortfolioImage';
+import { OptimizedImage } from '../../ui/OptimizedImage';
 import { BlogPreviewSection } from '../../sections/BlogPreviewSection';
+import { FaqSection } from '../../sections/FaqSection';
+import { getFeedbackForPortfolioEntry } from '../../../data/mock/feedback';
 
 import { 
   getPortfolioEntryById, 
@@ -29,8 +32,20 @@ import {
 } from '../../../utils/portfolioService';
 import { portfolioUI } from '../../../data/mock/ui/portfolio';
 import { useAppNavigate } from '../../../hooks/useAppNavigate';
+import { useNavigate } from 'react-router';
 import { formatDate } from '../../../utils/formatDate';
+import { markdownToHtml } from '../../../utils/simpleMarkdown';
+import { setSEO } from '../../../utils/seo';
+import { portfolioEntrySEO } from '../../../data/mock/seo';
+import {
+  injectSchema,
+  removeSchema,
+  SCHEMA_IDS,
+  buildPortfolioItemSchema,
+} from '../../../utils/schemaService';
 import "@/styles/blocks/portfolio-detail-page.css";
+
+import { portfolioDetailBreadcrumbs } from "../../../data/mock/ui/breadcrumbs";
 
 interface PortfolioDetailPageProps {
   portfolioId: string;
@@ -40,6 +55,7 @@ export function PortfolioDetailPage({
   portfolioId,
 }: PortfolioDetailPageProps) {
   const setCurrentPage = useAppNavigate();
+  const navigate = useNavigate();
 
   const portfolioEntry = useMemo(() => {
     return getPortfolioEntryById(portfolioId);
@@ -114,8 +130,9 @@ export function PortfolioDetailPage({
   }, [categories, setCurrentPage]);
   
   const handleTagClick = useCallback((tag: string) => {
-      setCurrentPage('portfolio');
-  }, [setCurrentPage]);
+    const tagSlug = tag.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    navigate(`/portfolio/tag/${tagSlug}`);
+  }, [navigate]);
 
   const eventDetails = useMemo(() => {
     if (!portfolioEntry) return null;
@@ -132,13 +149,12 @@ export function PortfolioDetailPage({
 
   useEffect(() => {
     if (portfolioEntry) {
-      document.title = `${portfolioEntry.title} | Portfolio | Ash Shaw - Makeup Artist`;
-      
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) {
-        metaDescription.setAttribute('content', portfolioEntry.description || `Portfolio details for ${portfolioEntry.title}`);
-      }
+      setSEO(portfolioEntrySEO(portfolioEntry.title, portfolioEntry.description || ''));
+      injectSchema(SCHEMA_IDS.portfolio, buildPortfolioItemSchema(portfolioEntry));
     }
+    return () => {
+      removeSchema(SCHEMA_IDS.portfolio);
+    };
   }, [portfolioEntry]);
 
   if (!portfolioEntry) {
@@ -149,7 +165,7 @@ export function PortfolioDetailPage({
           tabIndex={-1}
           className="container-wide text-center py-section-xl"
         >
-          <h1 className="text-hero-h1 font-bold mb-fluid-lg">
+          <h1 className="text-hero-h1 mb-fluid-lg">
             {portfolioUI.detail.notFound.title}
           </h1>
           <p className="text-body-p portfolio-detail__not-found-message mb-fluid-xl">
@@ -167,14 +183,23 @@ export function PortfolioDetailPage({
     );
   }
 
+  const [visibleFeedbackCount, setVisibleFeedbackCount] = useState(3);
+
+  // Reset visible count when portfolio entry changes
+  useEffect(() => {
+    setVisibleFeedbackCount(3);
+  }, [portfolioId]);
+
   return (
     <div className="portfolio-detail-page bg-atomic-noise">
       
       {/* Top Header Section with Back Button and Title */}
       <section className="portfolio-header-wide">
         <div className="container-wide">
+          <Breadcrumbs items={portfolioDetailBreadcrumbs(portfolioEntry.title)} centered />
+
           {/* Back Navigation */}
-          <nav className="portfolio-detail__breadcrumb mb-fluid-lg" aria-label="Breadcrumb">
+          <nav className="portfolio-detail__breadcrumb mb-fluid-lg" aria-label="Back navigation">
             <button
               onClick={handleBackClick}
               className="breadcrumb-btn"
@@ -210,7 +235,7 @@ export function PortfolioDetailPage({
               <a 
                 href={(() => {
                   const cat = categories.find(c => c.id === eventDetails.category);
-                  return cat && cat.slug ? `/portfolio/${cat.slug}` : '/portfolio';
+                  return cat && cat.slug ? `/portfolio/category/${cat.slug}` : '/portfolio';
                 })()}
                 className="chip chip--category clickable"
                 onClick={(e) => {
@@ -242,10 +267,11 @@ export function PortfolioDetailPage({
                 className="gallery-main-image"
                 aria-label={`View ${portfolioEntry.images[selectedImageIndex]?.alt} in full size`}
               >
-                <img
+                <OptimizedImage
                   src={usePortfolioImageUrl(portfolioEntry.images[selectedImageIndex]?.src || '')}
                   alt={portfolioEntry.images[selectedImageIndex]?.alt || ''}
                   className="gallery-main-image__img"
+                  preset="gallery"
                 />
                 <div className="gallery-main-image__overlay" />
                 <div className="gallery-main-image__icon">
@@ -266,10 +292,11 @@ export function PortfolioDetailPage({
                     className={`gallery-thumbnail ${selectedImageIndex === index ? 'gallery-thumbnail--active' : ''}`}
                     aria-label={`Select image ${index + 1}: ${image.alt}`}
                   >
-                    <img
+                    <OptimizedImage
                       src={usePortfolioImageUrl(image.src)}
                       alt={image.alt}
                       className="gallery-thumbnail__img"
+                      preset="thumbnail"
                     />
                     {selectedImageIndex !== index && (
                       <div className="gallery-thumbnail__overlay" />
@@ -310,6 +337,16 @@ export function PortfolioDetailPage({
             </div>
           </div>
         </section>
+
+        {/* Rich-Text Content — Toxic Lime theme (only shown when entry has markdown content) */}
+        {portfolioEntry.content && (
+          <section className="container-3xl">
+            <div
+              className="portfolio-rich-text"
+              dangerouslySetInnerHTML={{ __html: markdownToHtml(portfolioEntry.content) }}
+            />
+          </section>
+        )}
 
         {/* Tags and Share Row (Moved from separate sections) */}
         <section className="container-3xl portfolio-footer-row">
@@ -362,6 +399,11 @@ export function PortfolioDetailPage({
             </div>
         </section>
 
+        {/* Per-item FAQs — shown only if the portfolio entry has item-level FAQs */}
+        {portfolioEntry.faqs && portfolioEntry.faqs.length > 0 && (
+          <FaqSection items={portfolioEntry.faqs} />
+        )}
+
         {/* Related Portfolio Section */}
         {relatedPortfolioItems.length > 0 && (
           <section>
@@ -396,10 +438,83 @@ export function PortfolioDetailPage({
 
       </main>
 
+      {/* Dynamic Feedback from matching category/tags */}
+      {(() => {
+        const feedback = getFeedbackForPortfolioEntry(
+          portfolioEntry.category,
+          portfolioEntry.tags || []
+        );
+        if (feedback.length === 0) return null;
+        
+        const shown = feedback.slice(0, visibleFeedbackCount);
+        const hasMore = feedback.length > visibleFeedbackCount;
+
+        return (
+          <section className="portfolio-feedback-section">
+            <div className="container-7xl">
+              <h2 className="text-section-h2 text-center mb-fluid-lg">
+                What People Say
+              </h2>
+              <div className="portfolio-feedback__grid">
+                {shown.map(fb => (
+                  <article key={fb.id} className={`portfolio-feedback__card${fb.featured ? ' portfolio-feedback__card--featured' : ''}`}>
+                    <Quote className="portfolio-feedback__quote-icon" aria-hidden="true" />
+                    <blockquote className="portfolio-feedback__quote">
+                      {fb.quote}
+                    </blockquote>
+                    <div className="portfolio-feedback__rating" aria-label={`${fb.rating} out of 5 stars`}>
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`portfolio-feedback__star ${i < fb.rating ? 'portfolio-feedback__star--filled' : ''}`}
+                        />
+                      ))}
+                    </div>
+                    <div className="portfolio-feedback__author">
+                      <span className="portfolio-feedback__name">{fb.name}</span>
+                      <span className="portfolio-feedback__meta">
+                        {fb.location}
+                        {fb.event ? ` \u00B7 ${fb.event}` : ''}
+                      </span>
+                    </div>
+                  </article>
+                ))}
+              </div>
+              
+              <div className="portfolio-feedback__actions">
+                {hasMore && (
+                  <button
+                    onClick={() => setVisibleFeedbackCount(prev => prev + 3)}
+                    className="btn btn--neon-primary btn--outline inline-flex-center gap-fluid-sm"
+                  >
+                    Load More Feedback ({feedback.length - visibleFeedbackCount} remaining)
+                  </button>
+                )}
+                
+                <a
+                  href="/feedback"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate('/feedback');
+                  }}
+                  className="btn btn--ghost-neon inline-flex-center gap-fluid-sm"
+                  aria-label="View all feedback"
+                >
+                  <MessageSquare className="icon-sm" />
+                  View all feedback
+                </a>
+              </div>
+            </div>
+          </section>
+        );
+      })()}
+
       <BlogPreviewSection 
         limit={3}
         title="Recent Insights"
       />
+
+      <FaqSection pageId="portfolio" />
 
       <EnhancedLightbox
         isOpen={lightbox.isOpen}
@@ -408,11 +523,6 @@ export function PortfolioDetailPage({
         images={lightbox.images}
         title={lightbox.title}
         onNavigate={(index) => setLightbox(prev => ({ ...prev, currentIndex: index }))}
-      />
-
-      <ScrollToTop 
-        showAfter={300}
-        ariaLabel="Scroll to top of blog post"
       />
     </div>
   );

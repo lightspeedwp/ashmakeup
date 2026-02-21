@@ -1,27 +1,12 @@
-"use client";
+/**
+ * @fileoverview Switch stub (unused – @radix-ui/react-switch import removed
+ *               to prevent async_hooks runtime errors via esm.sh)
+ */
 
 import * as React from "react";
-import * as SwitchPrimitive from "@radix-ui/react-switch";
 
-import { cn } from "./utils";
-import "@/styles/blocks/form-elements.css";
-
-function Switch({
-  className,
-  ...props
-}: React.ComponentProps<typeof SwitchPrimitive.Root>) {
-  return (
-    <SwitchPrimitive.Root
-      data-slot="switch"
-      className={cn("switch-root", className)}
-      {...props}
-    >
-      <SwitchPrimitive.Thumb
-        data-slot="switch-thumb"
-        className="switch-thumb"
-      />
-    </SwitchPrimitive.Root>
-  );
+function Switch(props: React.ComponentProps<"input">) {
+  return <input type="checkbox" role="switch" {...props} />;
 }
 
 export { Switch };

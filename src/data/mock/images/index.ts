@@ -4,3 +4,4 @@
  */
 
 export * from './hero-images';
+export * from './sticker-graphics';

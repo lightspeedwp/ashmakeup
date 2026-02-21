@@ -4,25 +4,138 @@
  *
  * @module data/mock/ui/sitemap
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
+ * @version 3.0.0 - Full tag/category alignment with all blog post data
  */
+
+/**
+ * Taglines for all top-level pages shown in the Pages section of the sitemap.
+ * Keyed by navigation id or page slug.
+ */
+export const pageTaglines: Record<string, string> = {
+  home: "Where the neon journey begins",
+  about: "The full story behind the artist",
+  portfolio: "A gallery of glowing faces from dancefloors worldwide",
+  videos: "Tutorials, time-lapses, and festival footage",
+  events: "Festivals and creative gatherings across the globe",
+  blog: "Insights from the dancefloor and the desk",
+  contact: "Reach out for collaborations and creative conversations",
+  faq: "Frequently asked questions about Ash and UV art",
+  feedback: "What the community says about the neon experience",
+  podcasts: "Raw conversations from the neon underground",
+  search: "Find anything across the entire site",
+  stickers: "Collectible art prints from the neon universe",
+  "style-guide": "The design system powering the portfolio",
+};
+
+/**
+ * Extra pages listed in the Pages section that aren't in the main navigation.
+ * Each entry has an id, label, path, and icon name (Lucide component string).
+ */
+export interface SitemapPageEntry {
+  id: string;
+  label: string;
+  path: string;
+  icon: string;
+}
+
+export const sitemapExtraPages: SitemapPageEntry[] = [
+  { id: "faq", label: "FAQ", path: "/faq", icon: "HelpCircle" },
+  { id: "feedback", label: "Feedback", path: "/feedback", icon: "MessageSquare" },
+  { id: "podcasts", label: "Podcasts", path: "/podcasts", icon: "Mic" },
+  { id: "search", label: "Search", path: "/search", icon: "Search" },
+  { id: "stickers", label: "Sticker Gallery", path: "/stickers", icon: "Sticker" },
+  { id: "style-guide", label: "Style Guide", path: "/style-guide", icon: "Palette" },
+];
+
+/**
+ * Legal pages listed in the Legal section of the sitemap.
+ */
+export const sitemapLegalPages: SitemapPageEntry[] = [
+  { id: "terms", label: "Terms & Conditions", path: "/terms", icon: "FileText" },
+  { id: "privacy", label: "Privacy Policy", path: "/privacy", icon: "FileText" },
+  { id: "sitemap", label: "Sitemap", path: "/sitemap", icon: "Layers" },
+];
+
+/**
+ * Hub entry for the Developer Tools section.
+ * The remaining 23 tools are sourced from devToolsPageUI.tools.
+ */
+export const sitemapDevToolsHub: SitemapPageEntry = {
+  id: "hub",
+  label: "Developer Tools Hub",
+  path: "/dev-tools",
+  icon: "Wrench",
+};
+
+/**
+ * Taglines for all developer tools shown in the Developer Tools section.
+ * Keyed by tool id (last path segment).
+ */
+export const devToolTaglines: Record<string, string> = {
+  hub: "Central hub for all design system inspection tools",
+  "style-guide": "Visual reference for every design token and pattern",
+  typography: "Font scales, fluid sizing, and type specimens",
+  spacing: "The spacing scale from 4px to 128px",
+  shadows: "Shadow and neon glow effects at every elevation",
+  radius: "Border radius from subtle rounding to full pill shapes",
+  buttons: "Every button state, size, and variant in one view",
+  cards: "Card layouts, hover states, and interaction patterns",
+  neon: "All 26 neon keyframe animations in action",
+  tokens: "Complete design token reference with copy-paste values",
+  icons: "Browse and search the full Lucide icon library",
+  api: "Props, types, and usage for every component",
+  playground: "Interactive sandbox for design system experiments",
+  "code-quality": "Code health metrics, lint scores, and bundle analysis",
+  deployment: "Pre-launch checklist and deployment readiness",
+  analytics: "Content tracking and site usage insights",
+  components: "Live showcase of every reusable UI component",
+  snippets: "Generate copy-paste code for common patterns",
+  docs: "Auto-generated documentation from component source",
+  "visual-regression": "Pixel-level visual diff testing across themes",
+  integration: "End-to-end integration test runner",
+  stickers: "Design assets for the sticker art collection",
+  accessibility: "WCAG AA compliance testing and audit tools",
+  performance: "Lighthouse scores and performance benchmarks",
+};
+
+/**
+ * Taglines for legal pages shown in the Legal section.
+ * Keyed by page slug.
+ */
+export const legalTaglines: Record<string, string> = {
+  terms: "Usage guidelines for content and creative commons licensing",
+  privacy: "How your data is handled — spoiler: we keep it minimal",
+  sitemap: "You are here — the full map of every page and link",
+};
 
 export const sitemapContent = {
   title: "Sitemap",
   subtitle: "Everything on this site, all in one place.",
+  breadcrumbs: [
+    { label: "Home", href: "/" },
+    { label: "Sitemap" },
+  ],
+  subsections: {
+    aboutAsh: "About Ash",
+  },
   sections: {
     pages: "Pages",
     portfolioCategories: "Portfolio Categories",
     blogCategories: "Blog Categories",
     blogPosts: "Blog Posts",
+    podcasts: "Podcasts",
+    videos: "Videos",
+    events: "Events",
     tags: "Tags",
+    devTools: "Developer Tools",
     legal: "Legal",
   },
 };
 
 /**
  * Tag descriptions — short descriptions displayed under each tag title
- * on the sitemap page and on tag archive pages
+ * on the sitemap page and on tag archive pages.
+ * Only tags that are actually used in blog posts are listed.
  */
 export interface TagDescriptor {
   name: string;
@@ -32,12 +145,6 @@ export interface TagDescriptor {
 
 export const tagDescriptors: TagDescriptor[] = [
   // Makeup Types
-  {
-    name: "Festival Makeup",
-    slug: "festival-makeup",
-    description:
-      "Bold, expressive looks designed for outdoor festivals and multi-day raves.",
-  },
   {
     name: "UV Makeup",
     slug: "uv-makeup",
@@ -56,48 +163,6 @@ export const tagDescriptors: TagDescriptor[] = [
     description:
       "High-saturation neon colours that pop in daylight and glow at night.",
   },
-  {
-    name: "Natural Makeup",
-    slug: "natural-makeup",
-    description:
-      "Subtle, skin-first looks that enhance without overpowering.",
-  },
-  {
-    name: "Glam Makeup",
-    slug: "glam-makeup",
-    description:
-      "Full-coverage, high-impact glamour for special occasions and events.",
-  },
-  {
-    name: "Face Paint",
-    slug: "face-paint",
-    description:
-      "Artistic face painting using water-activated and cream-based paints.",
-  },
-  {
-    name: "Body Paint",
-    slug: "body-paint",
-    description:
-      "Large-scale body art across torso, arms, and beyond the face.",
-  },
-  {
-    name: "Eye Makeup",
-    slug: "eye-makeup",
-    description:
-      "Detailed eye-focused designs from graphic liner to smoky cut-creases.",
-  },
-  {
-    name: "Lip Art",
-    slug: "lip-art",
-    description:
-      "Creative lip designs using stains, pigments, and precise detailing.",
-  },
-  {
-    name: "Nail Art",
-    slug: "nail-art",
-    description:
-      "Fusion nail designs with neon accents, gems, and miniature artistry.",
-  },
 
   // Techniques
   {
@@ -112,36 +177,13 @@ export const tagDescriptors: TagDescriptor[] = [
     description: "Quick, actionable advice for improving your makeup game.",
   },
   {
-    name: "Guide",
-    slug: "guide",
-    description: "In-depth guides covering a topic from start to finish.",
-  },
-  {
-    name: "How-To",
-    slug: "how-to",
+    name: "Makeup Tips",
+    slug: "makeup-tips",
     description:
-      "Practical instructions for mastering individual techniques.",
-  },
-  {
-    name: "Step-by-Step",
-    slug: "step-by-step",
-    description:
-      "Detailed breakdowns with numbered steps and reference photos.",
+      "Expert makeup tips and product recommendations for all skill levels.",
   },
 
   // Products & Tools
-  {
-    name: "Product Review",
-    slug: "product-review",
-    description:
-      "Honest, field-tested reviews of paints, pigments, and tools.",
-  },
-  {
-    name: "Waterproof",
-    slug: "waterproof",
-    description:
-      "Products and methods that survive sweat, rain, and tropical humidity.",
-  },
   {
     name: "Long-Lasting",
     slug: "long-lasting",
@@ -149,22 +191,16 @@ export const tagDescriptors: TagDescriptor[] = [
       "Techniques for making looks survive 12+ hour festival sessions.",
   },
   {
-    name: "Cruelty-Free",
-    slug: "cruelty-free",
-    description:
-      "Products not tested on animals, certified cruelty-free brands.",
-  },
-  {
-    name: "Vegan",
-    slug: "vegan",
-    description:
-      "Makeup made without any animal-derived ingredients.",
-  },
-  {
     name: "Eco-Friendly",
     slug: "eco-friendly",
     description:
       "Sustainable products and practices, including biodegradable glitter.",
+  },
+  {
+    name: "Sustainability",
+    slug: "sustainability",
+    description:
+      "Eco-conscious approaches to makeup artistry and festival culture.",
   },
 
   // Events & Locations
@@ -175,16 +211,22 @@ export const tagDescriptors: TagDescriptor[] = [
       "Content related to music festivals, psytrance gatherings, and raves.",
   },
   {
+    name: "Psytrance",
+    slug: "psytrance",
+    description:
+      "Psytrance festival culture, music, and the community that inspires the art.",
+  },
+  {
     name: "Rave",
     slug: "rave",
     description:
       "Underground and electronic music events from Berlin to global scenes.",
   },
   {
-    name: "Club",
-    slug: "club",
+    name: "Berlin",
+    slug: "berlin",
     description:
-      "Nightlife-focused looks designed for indoor club lighting.",
+      "Art, culture, and club life in Ash's home city of Berlin.",
   },
   {
     name: "Thailand",
@@ -193,22 +235,36 @@ export const tagDescriptors: TagDescriptor[] = [
       "Festival season in Koh Phangan, jungle parties, and tropical artistry.",
   },
   {
-    name: "Switzerland",
-    slug: "switzerland",
+    name: "Origin Festival",
+    slug: "origin-festival",
     description:
-      "Alpine festivals like Shankra and Reiserfieber in the Swiss mountains.",
-  },
-  {
-    name: "Koh Phangan",
-    slug: "koh-phangan",
-    description:
-      "Full Moon parties and jungle raves on Thailand's island paradise.",
+      "Cape Town's beloved psytrance gathering in the Western Cape mountains.",
   },
   {
     name: "Travel",
     slug: "travel",
     description:
       "Adventures, cycling journeys, and global festival-hopping stories.",
+  },
+  {
+    name: "Tropical",
+    slug: "tropical",
+    description:
+      "Sun-drenched festival scenes and tropical makeup inspiration.",
+  },
+
+  // Activities
+  {
+    name: "Cycling",
+    slug: "cycling",
+    description:
+      "Adventure cycling journeys to festivals and beyond.",
+  },
+  {
+    name: "Adventure",
+    slug: "adventure",
+    description:
+      "Epic journeys, outdoor challenges, and festival pilgrimages.",
   },
 
   // Concepts
@@ -219,28 +275,16 @@ export const tagDescriptors: TagDescriptor[] = [
       "The science of complementary, analogous, and triadic colour harmony.",
   },
   {
-    name: "Skin Care",
-    slug: "skin-care",
+    name: "Education",
+    slug: "education",
     description:
-      "Pre-event prep and post-festival recovery for healthy skin.",
+      "Theory, workshops, and learning resources for aspiring artists.",
   },
   {
-    name: "Beauty",
-    slug: "beauty",
+    name: "Artistry",
+    slug: "artistry",
     description:
-      "Broader beauty culture, trends, and personal philosophy.",
-  },
-  {
-    name: "Creativity",
-    slug: "creativity",
-    description:
-      "Inspiration, artistic process, and pushing creative boundaries.",
-  },
-  {
-    name: "Self-Expression",
-    slug: "self-expression",
-    description:
-      "Using makeup as a form of identity, freedom, and personal art.",
+      "The craft and creative process behind standout makeup looks.",
   },
 
   // Specific Elements
@@ -251,33 +295,10 @@ export const tagDescriptors: TagDescriptor[] = [
       "Biodegradable glitter application, types, and eco-conscious sparkle.",
   },
   {
-    name: "Gems",
-    slug: "gems",
-    description: "Face gems, rhinestone placement, and adhesive techniques.",
-  },
-  {
-    name: "Rhinestones",
-    slug: "rhinestones",
+    name: "Green",
+    slug: "green",
     description:
-      "Precision rhinestone placement for editorial and festival looks.",
-  },
-  {
-    name: "Metallic",
-    slug: "metallic",
-    description:
-      "Chrome, gold, and silver metallic finishes for futuristic looks.",
-  },
-  {
-    name: "Holographic",
-    slug: "holographic",
-    description:
-      "Prismatic, rainbow-shift pigments and holographic effects.",
-  },
-  {
-    name: "Iridescent",
-    slug: "iridescent",
-    description:
-      "Colour-shifting duochrome pigments that change with the light.",
+      "Environmentally responsible products and green beauty practices.",
   },
 
   // Essentials
@@ -293,41 +314,24 @@ export const tagDescriptors: TagDescriptor[] = [
     description:
       "Must-have products and tools for any makeup artist's kit.",
   },
-  {
-    name: "Must-Haves",
-    slug: "must-haves",
-    description: "Top product picks that have earned a permanent spot in my bag.",
-  },
-  {
-    name: "Emergency Kit",
-    slug: "emergency-kit",
-    description:
-      "Quick-fix supplies for on-the-spot repairs and touch-ups.",
-  },
 
-  // Skills
+  // Personal
   {
-    name: "Education",
-    slug: "education",
+    name: "Birthday",
+    slug: "birthday",
     description:
-      "Theory, workshops, and learning resources for aspiring artists.",
+      "Birthday celebrations, personal milestones, and festive memories.",
   },
   {
-    name: "Theory",
-    slug: "theory",
+    name: "Survival",
+    slug: "survival",
     description:
-      "Foundational knowledge behind colour, light, and composition.",
+      "Tips for surviving multi-day festivals in comfort and style.",
   },
   {
-    name: "Technique",
-    slug: "technique",
+    name: "Experience",
+    slug: "experience",
     description:
-      "Specific application methods from blending to graphic precision.",
-  },
-  {
-    name: "Professional",
-    slug: "professional",
-    description:
-      "Industry insights, career advice, and working at professional events.",
+      "Personal stories and reflections from festival adventures.",
   },
 ];

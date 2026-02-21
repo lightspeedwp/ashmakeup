@@ -1,26 +1,12 @@
-"use client";
+/**
+ * @fileoverview Separator stub (unused – @radix-ui/react-separator import removed
+ *               to prevent async_hooks runtime errors via esm.sh)
+ */
 
 import * as React from "react";
-import * as SeparatorPrimitive from "@radix-ui/react-separator";
 
-import { cn } from "./utils";
-import "@/styles/blocks/data-display.css";
-
-function Separator({
-  className,
-  orientation = "horizontal",
-  decorative = true,
-  ...props
-}: React.ComponentProps<typeof SeparatorPrimitive.Root>) {
-  return (
-    <SeparatorPrimitive.Root
-      data-slot="separator-root"
-      decorative={decorative}
-      orientation={orientation}
-      className={cn("separator-root", className)}
-      {...props}
-    />
-  );
+function Separator(props: React.ComponentProps<"hr">) {
+  return <hr {...props} />;
 }
 
 export { Separator };

@@ -1,6 +1,6 @@
 {
   "name": "ash-shaw-makeup-portfolio",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Professional makeup artist portfolio showcasing festival artistry, UV makeup, and creative expression",
   "type": "module",
   "scripts": {
@@ -9,8 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "type-check": "tsc --noEmit",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "optimize-images": "ts-node scripts/optimize-images.ts"
   },
   "keywords": [
     "makeup",
@@ -27,48 +26,8 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "lucide-react": "0.475.0",
-    "clsx": "latest",
-    "web-vitals": "^3.5.0",
-    "@emailjs/browser": "^4.3.3",
-    "contentful": "^10.6.21",
-    "@contentful/rich-text-html-renderer": "^16.3.5",
-    "@contentful/rich-text-types": "^16.3.5",
-    "class-variance-authority": "latest",
-    "next-themes": "latest",
-    "embla-carousel-react": "latest",
-    "cmdk": "latest",
-    "sonner": "latest",
-    "input-otp": "latest",
-    "react-day-picker": "latest",
-    "react-resizable-panels": "latest",
-    "motion": "latest",
-    "@radix-ui/react-slot": "latest",
-    "@radix-ui/react-tabs": "latest",
-    "@radix-ui/react-separator": "latest",
-    "@radix-ui/react-hover-card": "latest",
-    "@radix-ui/react-dialog": "latest",
-    "@radix-ui/react-label": "latest",
-    "@radix-ui/react-progress": "latest",
-    "@radix-ui/react-aspect-ratio": "latest",
-    "@radix-ui/react-toggle": "latest",
-    "@radix-ui/react-popover": "latest",
-    "@radix-ui/react-toggle-group": "latest",
-    "@radix-ui/react-switch": "latest",
-    "@radix-ui/react-navigation-menu": "latest",
-    "@radix-ui/react-accordion": "latest",
-    "@radix-ui/react-tooltip": "latest",
-    "@radix-ui/react-avatar": "latest",
-    "@radix-ui/react-checkbox": "latest",
-    "@radix-ui/react-menubar": "latest",
-    "@radix-ui/react-radio-group": "latest",
-    "@radix-ui/react-slider": "latest",
-    "@radix-ui/react-scroll-area": "latest",
-    "@radix-ui/react-context-menu": "latest",
-    "@radix-ui/react-dropdown-menu": "latest",
-    "@radix-ui/react-alert-dialog": "latest",
-    "@radix-ui/react-collapsible": "latest",
-    "@radix-ui/react-select": "latest"
+    "react-router": "^7.0.0",
+    "lucide-react": "0.475.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
@@ -82,15 +41,6 @@
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "postcss": "^8.4.32",
-    "autoprefixer": "^10.4.16",
-    "@storybook/react": "^8.0.0",
-    "@storybook/react-vite": "^8.0.0",
-    "@storybook/addon-essentials": "^8.0.0",
-    "@storybook/addon-interactions": "^8.0.0",
-    "@storybook/addon-links": "^8.0.0",
-    "@storybook/addon-themes": "^8.0.0",
-    "@storybook/blocks": "^8.0.0",
-    "@storybook/test": "^8.0.0",
-    "storybook": "^8.0.0"
+    "autoprefixer": "^10.4.16"
   }
 }

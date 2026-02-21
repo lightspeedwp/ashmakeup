@@ -7,10 +7,11 @@
  * - Provides fallback support and error handling
  * 
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
+ * @version 2.0.0 - Optional image optimisation via preset prop
  */
 
 import React from 'react';
+import { OptimizedImage, type ImagePreset } from './OptimizedImage';
 
 // Import the Jungle Festival images
 import jungleImage1 from 'figma:asset/7afa71c7ec4457a1c1983db257703a6c92a9cce7.png';
@@ -26,6 +27,26 @@ import gondwanaImage3 from 'figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2
 import originImage1 from 'figma:asset/e46fceb6809b8f1b7ef5c578d40578eadf301207.png';
 import originImage2 from 'figma:asset/2678f2e48d60b8ccd6855469149ffc2cd8877e1c.png';
 import originImage3 from 'figma:asset/04aa88bd7a81e3f14ceb68f980492bf374b041db.png';
+
+// Import Thailand portfolio images
+import thailandLostParadise from 'figma:asset/e7ee10c85c112ab4acfc9e54087974a5faae5966.png';
+import thailandEdenParadise from 'figma:asset/3c496f3b8a5671dd00830f80a9a061ddf687e849.png';
+import thailandEdenShishi from 'figma:asset/2d37a7cd55fe518f7eb8124fa25a2382be67f948.png';
+
+// Import Nail Art portfolio images
+import nailRainbowFusion from 'figma:asset/7c570c5291977a816c8152a098cd6693cff22dbd.png';
+import nailGalaxy from 'figma:asset/1ec0ba217cad06e2cff662a25a050b0401d1092a.png';
+import nailGradientDreams from 'figma:asset/deb2b4ab4cb25c5e47b960708fce6ea552ee6039.png';
+
+// Import Shankra Festival (Swiss) images
+import shankraConnection from 'figma:asset/d35493e2be08017199b3d1523d516a996ec97a5d.png';
+import shankraAlpineBliss from 'figma:asset/e43f2a86f8b38d1777428264c8c9126d07a9ef75.png';
+import shankraMountainRainbow from 'figma:asset/80d0d3af448e4969dc796d00e91c30d3648cd9c4.png';
+
+// Import Reiserfieber (Swiss) images
+import reiserfieberAlpineGlow from 'figma:asset/33024fb05609d4a4545be47508d2ad3595f143c4.png';
+import reiserfieberMountainSpirit from 'figma:asset/280168cf45339af581c4065d1f6728ea2de6ff02.png';
+import reiserfieberFestivalJoy from 'figma:asset/71597fc19386bc69fb2144851d752977dfd3693e.png';
 
 /**
  * Map of figma:asset URLs to imported assets
@@ -45,6 +66,26 @@ const FIGMA_ASSET_MAP: Record<string, string> = {
   'figma:asset/e46fceb6809b8f1b7ef5c578d40578eadf301207.png': originImage1,
   'figma:asset/2678f2e48d60b8ccd6855469149ffc2cd8877e1c.png': originImage2,
   'figma:asset/04aa88bd7a81e3f14ceb68f980492bf374b041db.png': originImage3,
+
+  // Thailand portfolio images
+  'figma:asset/e7ee10c85c112ab4acfc9e54087974a5faae5966.png': thailandLostParadise,
+  'figma:asset/3c496f3b8a5671dd00830f80a9a061ddf687e849.png': thailandEdenParadise,
+  'figma:asset/2d37a7cd55fe518f7eb8124fa25a2382be67f948.png': thailandEdenShishi,
+
+  // Nail Art portfolio images
+  'figma:asset/7c570c5291977a816c8152a098cd6693cff22dbd.png': nailRainbowFusion,
+  'figma:asset/1ec0ba217cad06e2cff662a25a050b0401d1092a.png': nailGalaxy,
+  'figma:asset/deb2b4ab4cb25c5e47b960708fce6ea552ee6039.png': nailGradientDreams,
+
+  // Shankra Festival (Swiss) images
+  'figma:asset/d35493e2be08017199b3d1523d516a996ec97a5d.png': shankraConnection,
+  'figma:asset/e43f2a86f8b38d1777428264c8c9126d07a9ef75.png': shankraAlpineBliss,
+  'figma:asset/80d0d3af448e4969dc796d00e91c30d3648cd9c4.png': shankraMountainRainbow,
+
+  // Reiserfieber (Swiss) images
+  'figma:asset/33024fb05609d4a4545be47508d2ad3595f143c4.png': reiserfieberAlpineGlow,
+  'figma:asset/280168cf45339af581c4065d1f6728ea2de6ff02.png': reiserfieberMountainSpirit,
+  'figma:asset/71597fc19386bc69fb2144851d752977dfd3693e.png': reiserfieberFestivalJoy,
 };
 
 /**
@@ -57,10 +98,13 @@ interface PortfolioImageProps {
   style?: React.CSSProperties;
   onLoad?: () => void;
   onError?: () => void;
+  /** Optional optimisation preset — when set, the image is Canvas-optimised */
+  preset?: ImagePreset;
 }
 
 /**
- * Portfolio Image component that handles both regular URLs and Figma asset imports
+ * Portfolio Image component that handles both regular URLs and Figma asset imports.
+ * Optionally applies runtime Canvas optimisation when a `preset` prop is provided.
  * 
  * @param props - Component properties
  * @returns Image element with proper source resolution
@@ -71,7 +115,8 @@ export function PortfolioImage({
   className = "", 
   style, 
   onLoad, 
-  onError 
+  onError,
+  preset,
 }: PortfolioImageProps) {
   // Resolve the image source with comprehensive fallback handling
   const resolvedSrc = (() => {
@@ -107,6 +152,18 @@ export function PortfolioImage({
       console.warn(`🖼️ PortfolioImage: Figma asset not found: ${src}`);
     }
   }
+
+  // When a preset is specified, delegate to OptimizedImage for Canvas optimisation
+  if (preset) {
+    return (
+      <OptimizedImage
+        src={resolvedSrc}
+        alt={alt}
+        className={className}
+        preset={preset}
+      />
+    );
+  }
   
   return (
     <img
@@ -114,6 +171,8 @@ export function PortfolioImage({
       alt={alt}
       className={className}
       style={style}
+      loading="lazy"
+      decoding="async"
       onLoad={onLoad}
       onError={onError}
     />

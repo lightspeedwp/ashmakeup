@@ -1,0 +1,356 @@
+/* ==========================================================================
+   Design Tokens Reference Page Styles
+   Collapsible sections with live swatches and sticky sidebar
+   ========================================================================== */
+
+/* ── Layout ── */
+.tokens-ref__layout {
+  display: flex;
+  max-width: var(--wp--preset--layout--wide);
+  margin: 0 auto;
+  padding: 0 var(--wp--preset--spacing--section-horizontal);
+  gap: var(--wp--preset--spacing--fluid-lg);
+}
+
+/* ── Sidebar ── */
+.tokens-ref__sidebar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .tokens-ref__sidebar {
+    display: block;
+    position: sticky;
+    top: 6rem;
+    width: 220px;
+    flex-shrink: 0;
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
+    padding: var(--wp--preset--spacing--fluid-md) 0;
+  }
+}
+
+.tokens-ref__sidebar-title {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-weight: 600;
+  font-size: var(--wp--preset--font-size--100);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--wp--preset--color--neutral-400);
+  margin-bottom: var(--wp--preset--spacing--fluid-xs);
+}
+
+.dark .tokens-ref__sidebar-title {
+  color: var(--wp--preset--color--neutral-500);
+}
+
+.tokens-ref__sidebar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tokens-ref__sidebar-link {
+  display: block;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--wp--preset--border-radius--sm);
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  color: var(--wp--preset--color--neutral-600);
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.dark .tokens-ref__sidebar-link {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.tokens-ref__sidebar-link:hover {
+  color: var(--wp--preset--color--neon-purple-text);
+  background: rgba(190, 0, 254, 0.06);
+}
+
+.dark .tokens-ref__sidebar-link:hover {
+  color: var(--wp--preset--color--neon-purple);
+  background: rgba(190, 0, 254, 0.1);
+}
+
+.tokens-ref__sidebar-link:focus-visible {
+  outline: 2px solid var(--wp--preset--color--neon-pink);
+  outline-offset: 1px;
+}
+
+/* ── Main Content ── */
+.tokens-ref__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--fluid-md);
+  padding: var(--wp--preset--spacing--fluid-lg) 0;
+}
+
+/* ── Section (details/summary) ── */
+.tokens-ref__section {
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--md);
+  background: var(--wp--preset--color--base);
+  overflow: hidden;
+}
+
+.dark .tokens-ref__section {
+  background: rgba(20, 20, 20, 0.5);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.tokens-ref__section[open] .tokens-ref__section-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.dark .tokens-ref__section[open] .tokens-ref__section-header {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.tokens-ref__section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--wp--preset--spacing--fluid-xs);
+  padding: var(--wp--preset--spacing--fluid-sm) var(--wp--preset--spacing--fluid-md);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.tokens-ref__section-header::-webkit-details-marker {
+  display: none;
+}
+
+.tokens-ref__section-chevron {
+  width: 1rem;
+  height: 1rem;
+  color: var(--wp--preset--color--neutral-400);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.tokens-ref__section[open] .tokens-ref__section-chevron {
+  transform: rotate(90deg);
+}
+
+.tokens-ref__section-title {
+  font-family: var(--wp--preset--font-family--brand-heading);
+  color: var(--foreground);
+  flex: 1;
+}
+
+.dark .tokens-ref__section-title {
+  color: #fff;
+}
+
+.tokens-ref__section-count {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  color: var(--wp--preset--color--neutral-500);
+}
+
+.dark .tokens-ref__section-count {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.tokens-ref__section-desc {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  color: var(--wp--preset--color--neutral-500);
+  padding: 0 var(--wp--preset--spacing--fluid-md);
+  padding-top: var(--wp--preset--spacing--fluid-xs);
+}
+
+.dark .tokens-ref__section-desc {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+/* ── Token Grid ── */
+.tokens-ref__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  padding: var(--wp--preset--spacing--fluid-sm) var(--wp--preset--spacing--fluid-md);
+  padding-bottom: var(--wp--preset--spacing--fluid-md);
+}
+
+@media (min-width: 768px) {
+  .tokens-ref__grid--colors {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--wp--preset--spacing--fluid-xs);
+  }
+
+  .tokens-ref__grid--gradients {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--wp--preset--spacing--fluid-xs);
+  }
+}
+
+@media (min-width: 1024px) {
+  .tokens-ref__grid--colors {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ── Token Entry ── */
+.tokens-ref__entry {
+  display: flex;
+  align-items: center;
+  gap: var(--wp--preset--spacing--fluid-xs);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.dark .tokens-ref__entry {
+  border-bottom-color: rgba(255, 255, 255, 0.04);
+}
+
+.tokens-ref__entry:last-child {
+  border-bottom: none;
+}
+
+/* Colour entry (card layout) */
+.tokens-ref__entry--color {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.375rem;
+  padding: var(--wp--preset--spacing--fluid-xs);
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--sm);
+  background: var(--wp--preset--color--neutral-50);
+}
+
+.dark .tokens-ref__entry--color {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Gradient entry */
+.tokens-ref__entry--gradient {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.375rem;
+  padding: var(--wp--preset--spacing--fluid-xs);
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--sm);
+}
+
+.dark .tokens-ref__entry--gradient {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ── Swatches ── */
+.tokens-ref__swatch {
+  width: 100%;
+  height: 48px;
+  border-radius: var(--wp--preset--border-radius--sm);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dark .tokens-ref__swatch {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.tokens-ref__swatch--gradient {
+  height: 56px;
+}
+
+.tokens-ref__swatch--shadow {
+  width: 64px;
+  height: 48px;
+  border-radius: var(--wp--preset--border-radius--md);
+  background: var(--wp--preset--color--base);
+  flex-shrink: 0;
+}
+
+.dark .tokens-ref__swatch--shadow {
+  background: var(--wp--preset--color--neutral-800);
+}
+
+.tokens-ref__swatch--radius {
+  width: 48px;
+  height: 48px;
+  background: var(--wp--preset--gradient--cyberpunk);
+  flex-shrink: 0;
+}
+
+.tokens-ref__swatch--bar {
+  height: 20px;
+  border-radius: var(--wp--preset--border-radius--sm);
+  background: linear-gradient(90deg, var(--wp--preset--color--neon-cyan), var(--wp--preset--color--neon-blue));
+  min-width: 8px;
+}
+
+.dark .tokens-ref__swatch--bar {
+  background: linear-gradient(90deg, var(--wp--preset--color--neon-cyan), var(--wp--preset--color--neon-purple));
+}
+
+/* ── Token Info ── */
+.tokens-ref__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.tokens-ref__token-name {
+  font-size: var(--wp--preset--font-size--100);
+  background: var(--wp--preset--color--neutral-100);
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--wp--preset--border-radius--sm);
+  color: var(--wp--preset--color--neon-purple-text);
+  word-break: break-all;
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.dark .tokens-ref__token-name {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--wp--preset--color--neon-purple);
+}
+
+.tokens-ref__token-value {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  color: var(--wp--preset--color--neutral-500);
+}
+
+.dark .tokens-ref__token-value {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.tokens-ref__token-label {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.dark .tokens-ref__token-label {
+  color: #fff;
+}
+
+/* ══════════════════════════════════════
+   REDUCED MOTION
+   ══════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .tokens-ref__section-chevron {
+    transition: none;
+  }
+
+  .tokens-ref__sidebar-link {
+    transition: none;
+  }
+}

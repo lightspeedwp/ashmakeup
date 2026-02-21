@@ -9,6 +9,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Grid, Play } from 'lucide-react';
 import { PortfolioImage } from './PortfolioImage';
+import { OptimizedImage } from './OptimizedImage';
 import { VideoPlayer } from './VideoPlayer';
 import { useModal } from '../common/ModalContext';
 import { portfolioUI } from '../../data/mock/ui/portfolio';
@@ -295,7 +296,6 @@ export function EnhancedLightbox({
                 src={currentItem.src}
                 alt={currentItem.alt}
                 className={`lightbox-image ${isZoomed ? 'lightbox-image--zoomed' : ''}`}
-                style={{ cursor: isZoomed ? 'zoom-out' : 'zoom-in' }}
                 onClick={toggleZoom}
               />
             )}
@@ -366,10 +366,11 @@ export function EnhancedLightbox({
                       <div className="lightbox-thumbnail-video">
                         <Play className="lightbox-thumbnail-play-icon" />
                         {item.poster && (
-                          <img 
+                          <OptimizedImage 
                             src={item.poster} 
                             alt={item.alt} 
                             className="lightbox-thumbnail-img"
+                            preset="thumbnail"
                           />
                         )}
                       </div>
@@ -378,6 +379,7 @@ export function EnhancedLightbox({
                         src={item.src}
                         alt={item.alt}
                         className="lightbox-thumbnail-img"
+                        preset="thumbnail"
                       />
                     )}
                   </button>
@@ -393,12 +395,12 @@ export function EnhancedLightbox({
             {hasMultipleItems && (
               <>
                 <span className="lightbox-nav-hint-wrapper">
-                  <svg className="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ width: '1rem', height: '1rem' }}>
+                  <svg className="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
                   </svg>
                   <span className="lightbox-hint-desktop">{portfolioUI.lightbox.navigation.hintDesktop}</span>
                   <span className="lightbox-hint-mobile">{portfolioUI.lightbox.navigation.hintMobile}</span>
-                  <svg className="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ width: '1rem', height: '1rem' }}>
+                  <svg className="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </span>

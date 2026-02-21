@@ -14,9 +14,10 @@
 
 import React, { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { navigationItems } from "../../data/mock/ui/navigation";
+import { headerNavigationItems } from "../../data/mock/ui/navigation";
 import { SocialLinks } from "./SocialLinks";
 import { getPageIdFromPath } from "../../hooks/useAppNavigate";
+import { Mail } from "lucide-react";
 import "@/styles/blocks/mobile-menu.css";
 
 /**
@@ -86,7 +87,7 @@ export function MobileMenu({
         role="menu"
         aria-label="Mobile navigation"
       >
-        {navigationItems.map((item) => (
+        {headerNavigationItems.map((item) => (
           <button
             key={item.id}
             onClick={() => handleNavigation(item.path)}
@@ -98,11 +99,21 @@ export function MobileMenu({
             {item.label}
           </button>
         ))}
+
+        {/* Email text link — placed below Contact */}
+        <a
+          href="mailto:hello@ashshaw.makeup"
+          className="mobile-menu__email-link"
+          aria-label="Email Ash Shaw"
+        >
+          <Mail className="mobile-menu__email-icon" aria-hidden="true" />
+          hello@ashshaw.makeup
+        </a>
       </nav>
 
-      {/* Social Icons */}
+      {/* Social Icons (Email excluded — shown as text link above) */}
       <div className="mobile-menu__social">
-        <SocialLinks variant="clean" />
+        <SocialLinks variant="clean" exclude={["Email"]} />
       </div>
     </div>
   );

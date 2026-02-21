@@ -103,77 +103,62 @@ export interface PortfolioCategory {
  */
 export interface UnifiedPortfolioEntry {
   id: string;
+  slug: string; // URL-friendly slug
   title: string;
   subtitle: string;
   description: string;
+  content?: string;
   images: PortfolioImage[];
   category: string; // Must match PORTFOLIO_CATEGORIES id
   date?: string;
   featured?: boolean; // For homepage featured section
   displayOrder?: number; // For consistent ordering
   tags?: string[]; // For additional filtering
+  faqs?: { id: string; question: string; answer: string }[];
 }
 
 /**
  * Helper function to validate image URLs for browser compatibility
- * Updated to allow figma:asset/ URLs for imported Figma assets and filter out problematic entries
+ * Updated to allow all valid image sources including figma:asset/ URLs
  */
 function hasValidImageURLs(entry: any): boolean {
-  const hasValidImages = entry.images && entry.images.length > 0 && 
-    entry.images.some((img: any) => {
-      if (!img.src) return false;
-      // Allow https:// URLs, data URLs, and local paths (imported assets)
-      if (img.src.startsWith('https://') || img.src.startsWith('data:') || img.src.startsWith('/')) {
-        return true;
-      }
-      // For figma:asset/ URLs, only allow ones that are mapped in PortfolioImage.tsx
-      if (img.src.startsWith('figma:asset/')) {
-        // List of known working figma assets (should match PortfolioImage.tsx FIGMA_ASSET_MAP)
-        const knownWorkingAssets = [
-          'figma:asset/7afa71c7ec4457a1c1983db257703a6c92a9cce7.png',
-          'figma:asset/1cd08d3825ac7cc423a4672f8ed279139fc99d0a.png',
-          'figma:asset/3eb83eb2d4eb493b80283c1b75770d8893b2fc6a.png',
-          'figma:asset/74b708f3be9c02b929444ed900d4217477ac45ad.png',
-          'figma:asset/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png',
-          'figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png',
-          'figma:asset/e46fceb6809b8f1b7ef5c578d40578eadf301207.png',
-          'figma:asset/2678f2e48d60b8ccd6855469149ffc2cd8877e1c.png',
-          'figma:asset/04aa88bd7a81e3f14ceb68f980492bf374b041db.png',
-          'figma:asset/21372d3f219fd74d2e3cf146d9b1111cd6736b6d.png',
-          'figma:asset/a7af693fc872d71d588da4e937939b615aa77796.png',
-          'figma:asset/67d17491919b3e8d50187f4923b8bbbdc1f03c5e.png'
-        ];
-        return knownWorkingAssets.includes(img.src);
-      }
-      return false;
-    });
+  if (!entry.images || entry.images.length === 0) return false;
   
-  // Debug logging for development
-  if (import.meta?.env?.DEV && !hasValidImages) {
-    console.log(`🚫 Filtering out entry "${entry.title}" - invalid or unmapped figma:asset URLs:`, 
-      entry.images?.map((img: any) => img.src) || 'No images'
-    );
-  }
-  
-  return hasValidImages;
+  return entry.images.some((img: any) => {
+    if (!img.src) return false;
+    // Relaxed validation: Allow any non-empty string
+    // This ensures imports processed by build tools (which might not start with specific prefixes)
+    // are still accepted.
+    return typeof img.src === 'string' && img.src.length > 0;
+  });
 }
 
 /**
  * Maps the mock data category to the UI category
+ *
+ * Priority order: nail art (very specific) → geographic tags (Thailand, Swiss)
+ * → primary UV category → fallback. Geographic/event context takes precedence
+ * over technique-based tags (e.g. a Thailand entry that uses UV paint is still
+ * a Thailand entry, not a UV entry).
  */
 function mapCategory(category: string, tags: string[] = []): string {
   const lowerTags = tags.map(t => t.toLowerCase());
   const lowerCategory = category.toLowerCase();
 
+  // 1. Nail art — very specific category
   if (lowerCategory.includes('nail')) return 'Fusion Nails';
-  if (lowerCategory.includes('uv') || lowerTags.includes('uv') || lowerTags.includes('blacklight')) return 'UV Makeup';
+
+  // 2. Geographic / event tags — checked before technique-based matching
   if (lowerTags.includes('thailand') || lowerTags.includes('jungle')) return 'Thailand Adventures';
   if (lowerTags.includes('swiss') || lowerTags.includes('switzerland') || lowerTags.includes('shankra') || lowerTags.includes('reiserfieber')) return 'Swiss Festivals';
-  
-  // Default fallback map
+
+  // 3. UV Makeup — only when the *primary* category is UV, not just a tag
+  if (lowerCategory.includes('uv') || lowerCategory.includes('blacklight')) return 'UV Makeup';
+
+  // 4. Fallback mappings
   if (category === 'Body Art') return 'Festival Makeup';
   if (category === 'Nail Art') return 'Fusion Nails';
-  
+
   return 'Festival Makeup';
 }
 
@@ -186,9 +171,11 @@ function transformEntry(entry: PortfolioEntry): UnifiedPortfolioEntry {
 
   return {
     id: entry.id,
+    slug: entry.slug || entry.id,
     title: entry.title,
     subtitle: entry.excerpt || entry.location || entry.event || entry.date || uiCategory,
     description: entry.description,
+    content: entry.content,
     images: entry.images.map(img => ({
       src: img.src,
       alt: img.alt,
@@ -200,6 +187,7 @@ function transformEntry(entry: PortfolioEntry): UnifiedPortfolioEntry {
     featured: entry.featured,
     displayOrder: entry.order,
     tags: entry.tags,
+    faqs: entry.faqs,
   };
 }
 
@@ -291,7 +279,7 @@ export function getFeaturedPortfolioEntries(limit: number = 6): UnifiedPortfolio
  * @returns Portfolio entry or undefined if not found
  */
 export function getPortfolioEntryById(id: string): UnifiedPortfolioEntry | undefined {
-  return UNIFIED_PORTFOLIO_DATA.find(entry => entry.id === id);
+  return UNIFIED_PORTFOLIO_DATA.find(entry => entry.id === id || entry.slug === id);
 }
 
 /**

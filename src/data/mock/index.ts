@@ -40,5 +40,11 @@ export * from './sections';
 // Video Data
 export * from './videos';
 
+// Podcast Data
+export * from './podcasts';
+
+// Event Data
+export * from './events';
+
 // Re-export types for convenience
 export * from '../types';

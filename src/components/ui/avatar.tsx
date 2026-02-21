@@ -1,47 +1,12 @@
-"use client";
+/**
+ * @fileoverview Avatar stub (unused – @radix-ui/react-avatar import removed
+ *               to prevent async_hooks runtime errors via esm.sh)
+ */
 
 import * as React from "react";
-import * as AvatarPrimitive from "@radix-ui/react-avatar";
-import { cn } from "./utils";
-import "@/styles/blocks/data-display.css";
 
-function Avatar({
-  className,
-  ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Root>) {
-  return (
-    <AvatarPrimitive.Root
-      data-slot="avatar"
-      className={cn("avatar", className)}
-      {...props}
-    />
-  );
-}
-
-function AvatarImage({
-  className,
-  ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Image>) {
-  return (
-    <AvatarPrimitive.Image
-      data-slot="avatar-image"
-      className={cn("avatar__image", className)}
-      {...props}
-    />
-  );
-}
-
-function AvatarFallback({
-  className,
-  ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {
-  return (
-    <AvatarPrimitive.Fallback
-      data-slot="avatar-fallback"
-      className={cn("avatar__fallback", className)}
-      {...props}
-    />
-  );
-}
+function Avatar({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function AvatarImage() { return null; }
+function AvatarFallback({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
 
 export { Avatar, AvatarImage, AvatarFallback };

@@ -1,22 +1,12 @@
-"use client";
+/**
+ * @fileoverview Label stub (unused – @radix-ui/react-label import removed
+ *               to prevent async_hooks runtime errors via esm.sh)
+ */
 
 import * as React from "react";
-import * as LabelPrimitive from "@radix-ui/react-label";
 
-import { cn } from "./utils";
-import "@/styles/blocks/form-elements.css";
-
-function Label({
-  className,
-  ...props
-}: React.ComponentProps<typeof LabelPrimitive.Root>) {
-  return (
-    <LabelPrimitive.Root
-      data-slot="label"
-      className={cn("label", className)}
-      {...props}
-    />
-  );
+function Label({ children, ...props }: React.ComponentProps<"label">) {
+  return <label {...props}>{children}</label>;
 }
 
 export { Label };

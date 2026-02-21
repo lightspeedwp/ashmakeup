@@ -6,15 +6,16 @@
  * guidelines and accessibility standards.
  * 
  * @author Ash Shaw Portfolio Team
- * @version 1.3.1 - Semantic BEM Refactor
+ * @version 1.4.0 - Fix category filter matching via slug→id lookup
  */
 
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 
 import { PortfolioCard } from '../../ui/PortfolioCard';
 import { EnhancedLightbox } from '../../ui/EnhancedLightbox';
 import { useIsMobile } from '../../ui/use-mobile';
-import { ScrollToTop } from '../../ui/ScrollToTop';
+import { FaqSection } from '../../sections/FaqSection';
+import { ArchiveFilters } from '../../ui/ArchiveFilters';
 
 import { 
   Pagination,
@@ -32,7 +33,16 @@ import {
   type UnifiedPortfolioEntry 
 } from '../../../utils/portfolioService';
 import { getPortfolioCategoryCount } from '../../../utils/contentCounts';
+import { portfolioCategoryData } from '../../../data/mock/portfolio/categories';
 import { useAppNavigate } from '../../../hooks/useAppNavigate';
+import { setSEO } from '../../../utils/seo';
+import { pageSEO } from '../../../data/mock/seo';
+import {
+  injectSchema,
+  removeSchema,
+  SCHEMA_IDS,
+  buildImageGallerySchema,
+} from '../../../utils/schemaService';
 import "@/styles/blocks/portfolio-main-page.css";
 
 interface PortfolioCardEntry {
@@ -40,7 +50,6 @@ interface PortfolioCardEntry {
   title: string;
   subtitle?: string;
   date?: string;
-  description: string;
   featuredImage: {
     src: string;
     alt: string;
@@ -84,12 +93,62 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
   const setCurrentPage = useAppNavigate();
   
   const isMobile = useIsMobile();
-  
+
+  useEffect(() => {
+    setSEO(pageSEO.portfolio);
+  }, []);
+
+  // Inject ImageGallery schema once all entries are available
+  const allEntries = useMemo(() => getPortfolioByCategory('all'), []);
+
+  useEffect(() => {
+    injectSchema(SCHEMA_IDS.gallery, buildImageGallerySchema(allEntries as any));
+    return () => {
+      removeSchema(SCHEMA_IDS.gallery);
+    };
+  }, [allEntries]);
+
   const [portfolioState, setPortfolioState] = useState<PortfolioPageState>({
     page: 1,
     category: initialCategory,
     limit: 10,
   });
+
+  const [activeCategories, setActiveCategories] = useState<string[]>(
+    initialCategory ? [initialCategory] : []
+  );
+  const [sortBy, setSortBy] = useState('recent');
+
+  const archiveCategories = useMemo(() =>
+    portfolioCategoryData.map(c => ({
+      id: c.id,
+      name: c.name,
+      slug: c.slug,
+      count: getPortfolioCategoryCount(c.id),
+    })),
+    []
+  );
+
+  /** Lookup: slug → category id (e.g. 'uv-blacklight' → 'UV Makeup') */
+  const slugToCategoryId = useMemo(() => {
+    const map = new Map<string, string>();
+    portfolioCategoryData.forEach(c => map.set(c.slug, c.id));
+    return map;
+  }, []);
+
+  const PORTFOLIO_SORT_OPTIONS = useMemo(() => [
+    { value: 'recent', label: 'Most Recent' },
+    { value: 'alphabetical', label: 'A-Z' },
+    { value: 'featured', label: 'Featured' },
+  ], []);
+
+  const handleArchiveCategoryToggle = useCallback((slug: string) => {
+    setActiveCategories(prev =>
+      prev.includes(slug) ? prev.filter(s => s !== slug) : [...prev, slug]
+    );
+    // Reset to page 1 when filters change
+    setPortfolioState(prev => ({ ...prev, page: 1 }));
+  }, []);
 
   // Update state when initialCategory changes
   React.useEffect(() => {
@@ -140,8 +199,41 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
   }, []);
 
   const portfolioEntries = useMemo((): PortfolioCardEntry[] => {
-    return transformUnifiedToPortfolioCard(staticPortfolioEntries);
-  }, [staticPortfolioEntries, transformUnifiedToPortfolioCard]);
+    let entries = transformUnifiedToPortfolioCard(staticPortfolioEntries);
+
+    // Filter by active categories from ArchiveFilters
+    // Convert active slugs → category IDs via lookup map, then match entry.category
+    if (activeCategories.length > 0) {
+      const activeCategoryIds = new Set(
+        activeCategories
+          .map(slug => slugToCategoryId.get(slug))
+          .filter(Boolean) as string[]
+      );
+      entries = entries.filter(entry => activeCategoryIds.has(entry.category));
+    }
+
+    // Sort by sortBy option
+    switch (sortBy) {
+      case 'alphabetical':
+        entries = [...entries].sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case 'featured':
+        entries = [...entries].sort((a, b) => {
+          if (a.featured && !b.featured) return -1;
+          if (!a.featured && b.featured) return 1;
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        });
+        break;
+      case 'recent':
+      default:
+        entries = [...entries].sort((a, b) =>
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        break;
+    }
+
+    return entries;
+  }, [staticPortfolioEntries, transformUnifiedToPortfolioCard, activeCategories, sortBy, slugToCategoryId]);
 
   const pagination = useMemo((): PortfolioPagination => {
     const total = portfolioEntries?.length || 0;
@@ -220,77 +312,34 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
   }, []);
 
   return (
-    <main id="main-content" role="main" tabIndex={-1} className="portfolio-main-page">
+    <main id="main-content" role="main" tabIndex={-1} className="portfolio-main-page bg-atomic-noise">
       {/* Portfolio page header */}
       <section className="portfolio-page-header">
         <div className="portfolio-page-header__content">
           <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-fluid-lg">
             Portfolio
           </h1>
-          <p className="text-body-guideline container-4xl">
-            Discover the artistry and passion behind each creation — from vibrant festival face art to stunning UV-reactive designs that bring joy and connection to every celebration.
-          </p>
         </div>
       </section>
 
       {/* Category Filters */}
       <section className="category-filters-section">
         <div className="container-7xl">
-          <div className="category-filters-container">
-            <label className="text-category-label category-label">
-              Categories:
-            </label>
-            <div className="category-buttons">
-              {PORTFOLIO_CATEGORIES_DATA.map((category) => {
-                const isActive = (portfolioState.category === category.id) || 
-                               (portfolioState.category === undefined && category.id === 'all');
-                
-                const getGradientVariant = (gradientClass: string) => {
-                  if (gradientClass === 'bg-gradient-pink-purple-blue') return 'gradient-pink-purple';
-                  if (gradientClass === 'bg-gradient-blue-teal-green') return 'gradient-blue-teal';
-                  if (gradientClass === 'bg-gradient-gold-peach-coral') return 'gradient-gold-peach';
-                  return '';
-                };
-
-                return (
-                  <button
-                    key={category.id}
-                    onClick={() => handleCategoryChange(category.id)}
-                    className={`category-btn ${
-                      isActive
-                        ? `${category.gradient} category-btn--active`
-                        : `category-btn--inactive ${getGradientVariant(category.gradient)}`
-                    } ${category.id === 'all' ? 'category-btn--all' : ''}`}
-                    aria-label={`Filter portfolio by ${category.name} (${getPortfolioCategoryCount(category.id)})`}
-                  >
-                    {category.name}
-                    <span className="category-btn__count">
-                      {getPortfolioCategoryCount(category.id)}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {portfolioState.category && (
-            <div className="active-filters px-horizontal-section">
-              <div className="active-filters__content">
-                <span className="active-filters__label">Active filters:</span>
-                {portfolioState.category && (
-                  <span className="bg-active-filter-badge active-filters__badge">
-                    Category: {PORTFOLIO_CATEGORIES_DATA.find(cat => cat.id === portfolioState.category)?.name || portfolioState.category}
-                  </span>
-                )}
-                <button
-                  onClick={() => handleCategoryChange('all')}
-                  className="text-clear-filters active-filters__clear"
-                >
-                  Clear all
-                </button>
-              </div>
-            </div>
-          )}
+          <ArchiveFilters
+            contentType="portfolio"
+            categories={archiveCategories}
+            activeCategories={activeCategories}
+            sortBy={sortBy}
+            sortOptions={PORTFOLIO_SORT_OPTIONS}
+            resultCount={portfolioEntries.length}
+            onCategoryToggle={handleArchiveCategoryToggle}
+            onSortChange={setSortBy}
+            onClearAll={() => {
+              setActiveCategories([]);
+              setSortBy('recent');
+              handleCategoryChange('all');
+            }}
+          />
         </div>
       </section>
 
@@ -518,7 +567,7 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
         onNavigate={(index) => setLightbox(prev => ({ ...prev, currentIndex: index }))}
       />
 
-      <ScrollToTop ariaLabel="Scroll to top of portfolio" />
+      <FaqSection pageId="portfolio" />
     </main>
   );
 }

@@ -29,7 +29,7 @@
 
 .theme-toggle:focus {
   outline: none;
-  box-shadow: 0 0 0 2px var(--wp--preset--color--neon-pink);
+  box-shadow: var(--wp--preset--shadow--focus-ring-pink);
 }
 
 .theme-toggle__icon {

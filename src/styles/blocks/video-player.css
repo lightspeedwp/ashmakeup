@@ -180,3 +180,37 @@
 .video-player__spacer {
   flex: 1;
 }
+
+/* ============================================
+   EMBED VARIANT (YouTube / Vimeo)
+   ============================================ */
+
+.video-player--embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.video-player__iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: var(--wp--preset--border-radius--lg);
+}
+
+.dark .video-player--embed {
+  box-shadow: var(--wp--preset--shadow--neon-md);
+}
+
+/* Lightbox variant — maximise space */
+.lightbox-video-wrapper .video-player--embed {
+  border-radius: 0;
+  max-height: 80vh;
+}
+
+.lightbox-video-wrapper .video-player__iframe {
+  border-radius: 0;
+}

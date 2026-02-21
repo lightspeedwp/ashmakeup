@@ -1,29 +1,12 @@
-"use client";
+/**
+ * @fileoverview Progress stub (unused – @radix-ui/react-progress import removed
+ *               to prevent async_hooks runtime errors via esm.sh)
+ */
 
 import * as React from "react";
-import * as ProgressPrimitive from "@radix-ui/react-progress";
 
-import { cn } from "./utils";
-import "@/styles/blocks/data-viz.css";
-
-function Progress({
-  className,
-  value,
-  ...props
-}: React.ComponentProps<typeof ProgressPrimitive.Root>) {
-  return (
-    <ProgressPrimitive.Root
-      data-slot="progress"
-      className={cn("progress-root", className)}
-      {...props}
-    >
-      <ProgressPrimitive.Indicator
-        data-slot="progress-indicator"
-        className="progress-indicator"
-        style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
-      />
-    </ProgressPrimitive.Root>
-  );
+function Progress(props: React.ComponentProps<"div">) {
+  return <div {...props} />;
 }
 
 export { Progress };

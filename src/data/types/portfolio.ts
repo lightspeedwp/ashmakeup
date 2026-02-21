@@ -75,6 +75,9 @@ export interface PortfolioEntry {
   /** Detailed description of the work */
   description: string;
   
+  /** Optional long-form markdown content for the detail page (rendered with "Toxic Lime" theme) */
+  content?: string;
+  
   /** Short excerpt for card previews (auto-generated from description if not provided) */
   excerpt?: string;
   
@@ -89,28 +92,31 @@ export interface PortfolioEntry {
   
   /** Optional Contentful ID for CMS sync */
   contentfulId?: string;
+
+  /** Optional per-item FAQ entries displayed on the single detail page */
+  faqs?: { id: string; question: string; answer: string }[];
 }
 
 /**
- * Portfolio section grouping
- * Groups portfolio entries by theme, location, or event
+ * Portfolio category metadata
+ * Used for taxonomy archive pages and sitemap
  */
-export interface PortfolioSection {
-  /** Section identifier */
+export interface PortfolioCategoryData {
   id: string;
-  
-  /** Display title */
-  title: string;
-  
-  /** Section description */
+  name: string;
+  slug: string;
   description: string;
-  
-  /** Entries in this section */
-  entries: PortfolioEntry[];
-  
-  /** Display order */
-  order: number;
-  
-  /** Background gradient colors for decorative elements (hex codes) */
-  decorativeColors?: string[];
+  count: number;
+  neonColor: string;
+}
+
+/**
+ * Portfolio tag metadata
+ * Used for taxonomy archive pages and sitemap
+ */
+export interface PortfolioTagData {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
 }

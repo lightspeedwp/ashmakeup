@@ -4,10 +4,14 @@
  * 
  * @module data/mock/portfolio/uv-makeup
  * @author Ash Shaw Portfolio Team
- * @version 2.1.0 - Updated descriptions for Psytrance persona
+ * @version 2.2.0 - Fixed figma:asset imports
  */
 
 import { PortfolioEntry } from '../../types';
+
+// Import Figma assets
+import rainbowLightningImg from 'figma:asset/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png';
+import electricBlueImg from 'figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png';
 
 /**
  * UV Makeup Portfolio
@@ -24,7 +28,7 @@ export const uvMakeupWork: PortfolioEntry[] = [
     date: '2024-11-02',
     images: [
       {
-        src: 'figma:asset/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png',
+        src: rainbowLightningImg,
         alt: 'Rainbow Lightning - UV dots under eyes with rainbow body paint',
         title: 'Rainbow Lightning',
         caption: 'Rainbow Dots',
@@ -48,7 +52,7 @@ export const uvMakeupWork: PortfolioEntry[] = [
     date: '2024-11-15',
     images: [
       {
-        src: 'figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png',
+        src: electricBlueImg,
         alt: 'Electric Blue - rainbow UV face paint with jellyfish ear accessory',
         title: 'Electric Blue',
         caption: 'Rainbow UV',

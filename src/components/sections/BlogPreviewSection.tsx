@@ -11,7 +11,7 @@
 import React, { useCallback } from 'react';
 import { ArrowRight, Calendar } from 'lucide-react';
 import { useBlogPosts } from '../../hooks/useContentful';
-import { ImageWithFallback } from '../figma/ImageWithFallback';
+import { OptimizedImage } from '../ui/OptimizedImage';
 import { ReadMoreButton } from '../ui/ReadMoreButton';
 import { ResponsiveGridSlider } from '../ui/ResponsiveGridSlider';
 import type { BlogPost } from '../../data/types/blog';
@@ -169,10 +169,11 @@ function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
           role="button"
           aria-label={`View full blog post: ${post.title}`}
         >
-          <ImageWithFallback
+          <OptimizedImage
             src={post.featuredImage.url}
             alt={post.featuredImage.alt}
             className="blog-card__image"
+            preset="thumbnail"
           />
           {/* Category chip overlaid on image */}
           <span className="blog-card__category">

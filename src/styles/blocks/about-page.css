@@ -26,10 +26,11 @@
 }
 
 /* Section-scoped noise texture overlay for about content area */
+/* Uses an inline <svg> with feTurbulence in the DOM (AboutPage.tsx) */
+/* because url() in CSS triggers bundler module resolution via esm.sh. */
 .about-content__noise {
   position: absolute;
   inset: 0;
-  background-repeat: repeat;
   opacity: var(--noise-texture-opacity);
   z-index: 0;
   pointer-events: none;

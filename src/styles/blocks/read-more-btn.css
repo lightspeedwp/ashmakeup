@@ -14,7 +14,7 @@
   background: rgba(190, 0, 254, 0.05);
   border: 1px solid var(--wp--preset--color--neon-purple);
   padding: 0.75rem 1.25rem;
-  border-radius: 9999px;
+  border-radius: var(--wp--preset--border-radius--full);
   min-width: 120px;
 }
 

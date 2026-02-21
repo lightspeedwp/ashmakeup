@@ -6,6 +6,10 @@
   gap: var(--wp--preset--spacing--block-gap);
 }
 
+.rgs-grid-item {
+  display: contents;
+}
+
 .rgs-wrapper {
   position: relative;
   max-width: 100%;

@@ -1,118 +1,18 @@
+/**
+ * @fileoverview Breadcrumb stub (unused shadcn version – @radix-ui/react-slot import removed
+ *               to prevent async_hooks runtime errors via esm.sh)
+ *               Note: The app uses /components/ui/Breadcrumbs.tsx (custom component) instead.
+ */
+
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
-import {
-  ChevronRight,
-  MoreHorizontal,
-} from "lucide-react";
 
-import { cn } from "./utils";
-import "@/styles/blocks/misc-ui.css";
-
-function Breadcrumb({ ...props }: React.ComponentProps<"nav">) {
-  return (
-    <nav
-      aria-label="breadcrumb"
-      data-slot="breadcrumb"
-      {...props}
-    />
-  );
-}
-
-function BreadcrumbList({
-  className,
-  ...props
-}: React.ComponentProps<"ol">) {
-  return (
-    <ol
-      data-slot="breadcrumb-list"
-      className={cn("breadcrumb-list", className)}
-      {...props}
-    />
-  );
-}
-
-function BreadcrumbItem({
-  className,
-  ...props
-}: React.ComponentProps<"li">) {
-  return (
-    <li
-      data-slot="breadcrumb-item"
-      className={cn("breadcrumb-item", className)}
-      {...props}
-    />
-  );
-}
-
-function BreadcrumbLink({
-  asChild,
-  className,
-  ...props
-}: React.ComponentProps<"a"> & {
-  asChild?: boolean;
-}) {
-  const Comp = asChild ? Slot : "a";
-
-  return (
-    <Comp
-      data-slot="breadcrumb-link"
-      className={cn("breadcrumb-link", className)}
-      {...props}
-    />
-  );
-}
-
-function BreadcrumbPage({
-  className,
-  ...props
-}: React.ComponentProps<"span">) {
-  return (
-    <span
-      data-slot="breadcrumb-page"
-      role="link"
-      aria-disabled="true"
-      aria-current="page"
-      className={cn("breadcrumb-page", className)}
-      {...props}
-    />
-  );
-}
-
-function BreadcrumbSeparator({
-  children,
-  className,
-  ...props
-}: React.ComponentProps<"li">) {
-  return (
-    <li
-      data-slot="breadcrumb-separator"
-      role="presentation"
-      aria-hidden="true"
-      className={cn("breadcrumb-separator", className)}
-      {...props}
-    >
-      {children ?? <ChevronRight />}
-    </li>
-  );
-}
-
-function BreadcrumbEllipsis({
-  className,
-  ...props
-}: React.ComponentProps<"span">) {
-  return (
-    <span
-      data-slot="breadcrumb-ellipsis"
-      role="presentation"
-      aria-hidden="true"
-      className={cn("breadcrumb-ellipsis", className)}
-      {...props}
-    >
-      <MoreHorizontal />
-      <span className="sr-only">More</span>
-    </span>
-  );
-}
+function Breadcrumb({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function BreadcrumbList({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function BreadcrumbItem({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function BreadcrumbLink({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function BreadcrumbPage({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function BreadcrumbSeparator({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function BreadcrumbEllipsis() { return null; }
 
 export {
   Breadcrumb,

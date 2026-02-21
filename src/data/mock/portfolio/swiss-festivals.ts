@@ -4,10 +4,20 @@
  * 
  * @module data/mock/portfolio/swiss-festivals
  * @author Ash Shaw Portfolio Team
- * @version 2.0.0 - Updated with actual Figma assets
+ * @version 2.1.0 - Fixed figma:asset imports
  */
 
 import { PortfolioEntry } from '../../types';
+
+// Import Figma assets — Shankra
+import festivalConnectionImg from 'figma:asset/d35493e2be08017199b3d1523d516a996ec97a5d.png';
+import alpineBlissImg from 'figma:asset/e43f2a86f8b38d1777428264c8c9126d07a9ef75.png';
+import mountainRainbowImg from 'figma:asset/80d0d3af448e4969dc796d00e91c30d3648cd9c4.png';
+
+// Import Figma assets — Reiserfieber
+import alpineGlowImg from 'figma:asset/33024fb05609d4a4545be47508d2ad3595f143c4.png';
+import mountainSpiritImg from 'figma:asset/280168cf45339af581c4065d1f6728ea2de6ff02.png';
+import festivalJoyImg from 'figma:asset/71597fc19386bc69fb2144851d752977dfd3693e.png';
 
 /**
  * Shankra Festival 2023 Work
@@ -24,7 +34,7 @@ export const shankraWork: PortfolioEntry[] = [
     subcategory: 'Shankra Festival 2023',
     images: [
       {
-        src: 'figma:asset/d35493e2be08017199b3d1523d516a996ec97a5d.png',
+        src: festivalConnectionImg,
         alt: 'Festival Connection - turquoise eye design at Shankra Festival 2023, Switzerland',
         title: 'Festival Connection',
         caption: 'Turquoise Eyes',
@@ -50,7 +60,7 @@ export const shankraWork: PortfolioEntry[] = [
     subcategory: 'Shankra Festival 2023',
     images: [
       {
-        src: 'figma:asset/e43f2a86f8b38d1777428264c8c9126d07a9ef75.png',
+        src: alpineBlissImg,
         alt: 'Alpine Bliss - golden face paint with turquoise accents at Shankra Festival 2023, Switzerland',
         title: 'Alpine Bliss',
         caption: 'Golden Serenity',
@@ -76,7 +86,7 @@ export const shankraWork: PortfolioEntry[] = [
     subcategory: 'Shankra Festival 2023',
     images: [
       {
-        src: 'figma:asset/80d0d3af448e4969dc796d00e91c30d3648cd9c4.png',
+        src: mountainRainbowImg,
         alt: 'Mountain Rainbow - vibrant rainbow face art at Shankra Festival 2023, Switzerland',
         title: 'Mountain Rainbow',
         caption: 'Rainbow Patterns',
@@ -111,7 +121,7 @@ export const reiserfieberWork: PortfolioEntry[] = [
     subcategory: 'Reiserfieber Switzerland',
     images: [
       {
-        src: 'figma:asset/33024fb05609d4a4545be47508d2ad3595f143c4.png',
+        src: alpineGlowImg,
         alt: 'Alpine Glow - turquoise and purple face art at Reiserfieber, Switzerland',
         title: 'Alpine Glow',
         caption: 'Delicate Glow',
@@ -137,7 +147,7 @@ export const reiserfieberWork: PortfolioEntry[] = [
     subcategory: 'Reiserfieber Switzerland',
     images: [
       {
-        src: 'figma:asset/280168cf45339af581c4065d1f6728ea2de6ff02.png',
+        src: mountainSpiritImg,
         alt: 'Mountain Spirit - rainbow face stripe at Reiserfieber, Switzerland',
         title: 'Mountain Spirit',
         caption: 'Rainbow Stripe',
@@ -163,7 +173,7 @@ export const reiserfieberWork: PortfolioEntry[] = [
     subcategory: 'Reiserfieber Switzerland',
     images: [
       {
-        src: 'figma:asset/71597fc19386bc69fb2144851d752977dfd3693e.png',
+        src: festivalJoyImg,
         alt: 'Festival Joy - purple and turquoise eye design at Reiserfieber, Switzerland',
         title: 'Festival Joy',
         caption: 'Joyful Eyes',

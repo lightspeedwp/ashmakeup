@@ -78,7 +78,7 @@
 }
 
 .dark .uv-makeup-section__nav-button:hover:not(:disabled) {
-  box-shadow: 0 0 15px rgba(190, 0, 254, 0.5);
+  box-shadow: var(--wp--preset--shadow--neon-purple-hover);
 }
 
 .uv-makeup-section__nav-button:disabled {
@@ -190,7 +190,7 @@
 }
 
 .dark .uv-makeup-section__dot--active {
-  box-shadow: 0 0 10px rgba(255, 16, 240, 0.5);
+  box-shadow: var(--wp--preset--shadow--neon-pink-dot);
 }
 
 .uv-makeup-section__dot--inactive:hover {

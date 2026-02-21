@@ -1,0 +1,156 @@
+/* ==========================================================================
+   Animation Specimen Styles
+   Interactive animation previews for the dev-tools animations page
+   ========================================================================== */
+
+.anim-specimen__section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--wp--preset--spacing--fluid-sm);
+  flex-wrap: wrap;
+}
+
+.anim-specimen__card {
+  gap: var(--wp--preset--spacing--fluid-sm);
+}
+
+.anim-specimen__preview-row {
+  display: flex;
+  gap: var(--wp--preset--spacing--fluid-sm);
+  align-items: flex-start;
+}
+
+.anim-specimen__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Base preview box ── */
+.anim-specimen__box {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--wp--preset--border-radius--md);
+  flex-shrink: 0;
+}
+
+/* ── Utility animations ── */
+.anim-specimen__box--spin {
+  background: var(--wp--preset--gradient--cyberpunk);
+  animation: spin 1s linear infinite;
+}
+
+.anim-specimen__box--pulse {
+  background: var(--wp--preset--color--neon-pink);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.anim-specimen__box--bounce {
+  background: var(--wp--preset--gradient--solar-flare);
+  animation: bounce 2s ease infinite;
+}
+
+.anim-specimen__box--float {
+  background: var(--wp--preset--gradient--toxic-lime);
+  animation: float 3s ease-in-out infinite;
+}
+
+.anim-specimen__box--fadeIn {
+  background: var(--wp--preset--color--neon-blue);
+  animation: fadeIn 2s ease infinite alternate;
+}
+
+.anim-specimen__box--slideIn {
+  background: var(--wp--preset--color--neon-orange);
+  animation: slideIn 2s ease infinite alternate;
+}
+
+.anim-specimen__box--slideUp {
+  background: var(--wp--preset--color--neon-yellow);
+  animation: slideUp 2s ease infinite alternate;
+}
+
+.anim-specimen__box--scaleIn {
+  background: var(--wp--preset--gradient--cyberpunk);
+  animation: scaleIn 2s ease infinite alternate;
+}
+
+/* ── Neon animations ── */
+.anim-specimen__box--gradientShift {
+  background: var(--wp--preset--gradient--hyperpop);
+  background-size: 400% 400%;
+  animation: gradientShift 4s ease infinite;
+}
+
+.anim-specimen__box--neonPulse {
+  background: var(--wp--preset--color--atomic-black);
+  border: 2px solid var(--wp--preset--color--neon-green);
+  --glow-color: var(--wp--preset--color--neon-green);
+  animation: neonPulse 2s ease-in-out infinite alternate;
+}
+
+.anim-specimen__box--neonPulsePurple {
+  background: var(--wp--preset--color--atomic-black);
+  border: 2px solid var(--wp--preset--color--neon-purple);
+  animation: neonPulsePurple 2s ease-in-out infinite alternate;
+}
+
+.anim-specimen__box--neonPulsePink {
+  background: var(--wp--preset--color--atomic-black);
+  border: 2px solid var(--wp--preset--color--neon-pink);
+  animation: neonPulsePink 2s ease-in-out infinite alternate;
+}
+
+.anim-specimen__box--pulseRing {
+  background: transparent;
+  border: 3px solid var(--wp--preset--color--neon-pink);
+  border-radius: var(--wp--preset--border-radius--full);
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+/* ── UI animations ── */
+.anim-specimen__box--shine {
+  background: var(--wp--preset--color--neutral-200);
+  position: relative;
+  overflow: hidden;
+}
+
+.dark .anim-specimen__box--shine {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.anim-specimen__box--shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shine 1.5s ease infinite;
+}
+
+.anim-specimen__box--skeletonPulse {
+  background: var(--wp--preset--color--neutral-200);
+  animation: skeleton-pulse 2s ease-in-out infinite;
+}
+
+.dark .anim-specimen__box--skeletonPulse {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.anim-specimen__box--caretBlink {
+  width: 4px;
+  height: 56px;
+  border-radius: 2px;
+  background: var(--wp--preset--color--neon-cyan);
+  animation: caret-blink 1.25s ease infinite;
+}
+
+/* ══════════════════════════════════════
+   REDUCED MOTION — animations disabled globally
+   via animations.css prefers-reduced-motion rule
+   ══════════════════════════════════════ */

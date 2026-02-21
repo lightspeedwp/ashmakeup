@@ -4,13 +4,16 @@
  * navigation arrows, pagination dots, hover effects, and comprehensive accessibility
  * 
  * @author Ash Shaw Portfolio Team
- * @version 3.3.1 - Semantic BEM Refactor
+ * @version 3.5.0 - Clickable category tags linking to /portfolio/category/:slug
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, Play, Calendar } from 'lucide-react';
+import { useNavigate } from 'react-router';
 import { usePortfolioImageUrl } from './PortfolioImage';
+import { useOptimizedImage } from '../../hooks/useOptimizedImage';
 import { formatDate } from '../../utils/formatDate';
+import { PORTFOLIO_CATEGORIES } from '../../utils/portfolioService';
 import "@/styles/blocks/portfolio-card.css";
 
 /**
@@ -33,7 +36,6 @@ interface PortfolioEntry {
   title: string;
   subtitle?: string;
   date?: string;
-  description: string;
   featuredImage: PortfolioImage;
   images: PortfolioImage[];
   category: string;
@@ -56,6 +58,7 @@ export function PortfolioCard({
   onImageClick,
   onNavigateToDetail
 }: PortfolioCardProps) {
+  const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
@@ -69,6 +72,20 @@ export function PortfolioCard({
   }, [entry.featuredImage, entry.images]);
 
   const hasMultipleImages = allImages.length > 1;
+
+  const getCategorySlug = useCallback((category: string): string | null => {
+    const cat = PORTFOLIO_CATEGORIES.find(c => c.id === category);
+    return cat && cat.slug && cat.slug !== 'all' ? cat.slug : null;
+  }, []);
+
+  const handleCategoryClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const slug = getCategorySlug(entry.category);
+    if (slug) {
+      navigate(`/portfolio/category/${slug}`);
+    }
+  }, [entry.category, getCategorySlug, navigate]);
 
   const getCategoryTagClass = (category: string): string => {
     const categoryLower = category.toLowerCase();
@@ -147,6 +164,7 @@ export function PortfolioCard({
   const isVideo = currentImage.type === 'video';
   const displayImageSrc = isVideo && currentImage.poster ? currentImage.poster : currentImage.src;
   const resolvedImageUrl = usePortfolioImageUrl(displayImageSrc);
+  const { src: optimizedImageUrl } = useOptimizedImage(resolvedImageUrl, { preset: 'thumbnail' });
 
   return (
     <article
@@ -159,7 +177,7 @@ export function PortfolioCard({
     >
       <div 
         className="portfolio-card__image-container"
-        style={{ backgroundImage: `url('${resolvedImageUrl}')` }}
+        style={{ backgroundImage: `url('${optimizedImageUrl}')` }}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
@@ -172,9 +190,17 @@ export function PortfolioCard({
           </div>
         )}
 
-        <span className={getCategoryTagClass(entry.category)}>
+        <a
+          href={(() => {
+            const slug = getCategorySlug(entry.category);
+            return slug ? `/portfolio/category/${slug}` : '/portfolio';
+          })()}
+          className={`${getCategoryTagClass(entry.category)} clickable`}
+          onClick={handleCategoryClick}
+          aria-label={`View all ${entry.category} portfolio entries`}
+        >
           {entry.category}
-        </span>
+        </a>
           
           {hasMultipleImages && (
             <>
@@ -240,10 +266,6 @@ export function PortfolioCard({
           </p>
         )}
         
-        <p className="portfolio-card__description">
-          {entry.description}
-        </p>
-
         <div className="portfolio-card__footer">
           <div className="portfolio-card__footer-content">
             {entry.date && (

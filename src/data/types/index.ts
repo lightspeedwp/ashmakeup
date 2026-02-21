@@ -25,3 +25,12 @@ export * from './page';
 
 // Video types
 export * from './videos';
+
+// Podcast types
+export * from './podcast';
+
+// Search types
+export * from './search';
+
+// Event types
+export * from './events';

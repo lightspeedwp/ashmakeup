@@ -4,10 +4,15 @@
  * 
  * @module data/mock/portfolio/nail-art
  * @author Ash Shaw Portfolio Team
- * @version 2.0.0 - Updated with actual Figma assets
+ * @version 2.1.0 - Fixed figma:asset imports
  */
 
 import { PortfolioEntry } from '../../types';
+
+// Import Figma assets
+import rainbowFusionImg from 'figma:asset/7c570c5291977a816c8152a098cd6693cff22dbd.png';
+import galaxyNailsImg from 'figma:asset/1ec0ba217cad06e2cff662a25a050b0401d1092a.png';
+import gradientDreamsImg from 'figma:asset/deb2b4ab4cb25c5e47b960708fce6ea552ee6039.png';
 
 /**
  * Nail Art Portfolio
@@ -25,7 +30,7 @@ export const nailArtWork: PortfolioEntry[] = [
     date: '2025-01-10',
     images: [
       {
-        src: 'figma:asset/7c570c5291977a816c8152a098cd6693cff22dbd.png',
+        src: rainbowFusionImg,
         alt: 'Rainbow Fusion nail art with colorful sticker art and holographic details',
         title: 'Rainbow Fusion',
         caption: 'Full Set',
@@ -49,7 +54,7 @@ export const nailArtWork: PortfolioEntry[] = [
     date: '2025-02-14',
     images: [
       {
-        src: 'figma:asset/1ec0ba217cad06e2cff662a25a050b0401d1092a.png',
+        src: galaxyNailsImg,
         alt: 'Galaxy Nails with iridescent blues and greens with cosmic shimmer',
         title: 'Galaxy Nails',
         caption: 'Galaxy Effect',
@@ -73,7 +78,7 @@ export const nailArtWork: PortfolioEntry[] = [
     date: '2025-03-08',
     images: [
       {
-        src: 'figma:asset/deb2b4ab4cb25c5e47b960708fce6ea552ee6039.png',
+        src: gradientDreamsImg,
         alt: 'Gradient Dreams nail art with purple to green ombre and metallic finish',
         title: 'Gradient Dreams',
         caption: 'Ombre Effect',

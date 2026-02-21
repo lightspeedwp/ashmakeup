@@ -71,21 +71,22 @@ Define animation standards with:
 - Better for complex orchestration
 
 ```tsx
-// ✅ CORRECT - JavaScript for complex sequences
-import { motion } from 'motion/react';
-
-<motion.div
-  initial={{ opacity: 0, y: 50 }}
-  animate={{ opacity: 1, y: 0 }}
-  exit={{ opacity: 0, y: -50 }}
-  transition={{ 
-    type: 'spring',
-    stiffness: 100,
-    damping: 15
-  }}
->
+// ✅ CORRECT - CSS classes for complex sequences (never use motion/react)
+<div className="animate-slide-up">
   Content
-</motion.div>
+</div>
+```
+
+```css
+/* Define in /styles/globals.css */
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
 ```
 
 ---
@@ -140,26 +141,20 @@ These properties are GPU-accelerated and don't trigger layout or paint.
 
 ### 3. Limit Concurrent Animations
 
-```tsx
-// ❌ WRONG - Too many simultaneous animations
-{items.map((item, i) => (
-  <motion.div
-    key={i}
-    initial={{ opacity: 0, y: 50 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay: i * 0.1 }}  // All animate at once
-  />
-))}
+```css
+/* ✅ CORRECT - Stagger via CSS animation-delay, limit to first 6 */
+.stagger-item {
+  opacity: 0;
+  animation: fade-in-up 0.4s ease-out forwards;
+}
 
-// ✅ CORRECT - Limit to first 6 items, instant for rest
-{items.map((item, i) => (
-  <motion.div
-    key={i}
-    initial={{ opacity: 0, y: i < 6 ? 50 : 0 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay: i < 6 ? i * 0.1 : 0 }}
-  />
-))}
+.stagger-item:nth-child(1) { animation-delay: 0s; }
+.stagger-item:nth-child(2) { animation-delay: 0.1s; }
+.stagger-item:nth-child(3) { animation-delay: 0.2s; }
+.stagger-item:nth-child(4) { animation-delay: 0.3s; }
+.stagger-item:nth-child(5) { animation-delay: 0.4s; }
+.stagger-item:nth-child(6) { animation-delay: 0.5s; }
+.stagger-item:nth-child(n+7) { animation-delay: 0s; opacity: 1; }
 ```
 
 ---
@@ -354,67 +349,78 @@ useEffect(() => {
 }
 ```
 
-### 5. Stagger Animation (JavaScript)
+### 5. Stagger Animation (CSS)
 
-```tsx
-import { motion } from 'motion/react';
+> **Note:** This project uses pure CSS animations (never `motion/react`).
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1  // 100ms delay between children
-    }
-  }
-};
+```css
+/* Stagger children with CSS animation-delay */
+.stagger-container > * {
+  opacity: 0;
+  animation: stagger-fade-in 0.4s ease-out forwards;
+}
 
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
-};
+.stagger-container > *:nth-child(1) { animation-delay: 0s; }
+.stagger-container > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-container > *:nth-child(3) { animation-delay: 0.1s; }
+.stagger-container > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-container > *:nth-child(5) { animation-delay: 0.2s; }
+.stagger-container > *:nth-child(6) { animation-delay: 0.3s; }
 
-<motion.div variants={container} initial="hidden" animate="show">
-  {items.map((item, i) => (
-    <motion.div key={i} variants={item}>
-      {item.content}
-    </motion.div>
-  ))}
-</motion.div>
+@keyframes stagger-fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 ```
 
-### 6. Modal Enter/Exit (JavaScript)
+```tsx
+<div className="stagger-container">
+  {items.map((item, i) => (
+    <div key={i}>{item.content}</div>
+  ))}
+</div>
+```
+
+### 6. Modal Enter/Exit (CSS)
+
+> **Note:** This project uses pure CSS animations (never `motion/react`).
+
+```css
+/* Modal overlay */
+.modal-overlay {
+  animation: modal-fade-in 0.2s ease-out;
+}
+
+/* Modal content */
+.modal-content {
+  animation: modal-scale-in 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modal-scale-in {
+  from { opacity: 0; transform: scale(0.95) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+```
 
 ```tsx
-import { motion, AnimatePresence } from 'motion/react';
+{isOpen && (
+  <>
+    {/* Backdrop */}
+    <div className="modal-overlay" />
 
-<AnimatePresence>
-  {isOpen && (
-    <>
-      {/* Backdrop */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.2 }}
-        className="fixed inset-0 bg-black/50"
-      />
-      
-      {/* Modal */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-        className="fixed inset-0 flex items-center justify-center"
-      >
-        <div className="bg-white rounded-2xl p-6">
-          Modal content
-        </div>
-      </motion.div>
-    </>
-  )}
-</AnimatePresence>
+    {/* Modal */}
+    <div className="modal-content">
+      <div className="modal-card">
+        Modal content
+      </div>
+    </div>
+  </>
+)}
 ```
 
 ---
@@ -472,21 +478,30 @@ function AnimatedSection() {
 }
 ```
 
-### Parallax Scroll (JavaScript)
+### Parallax Scroll (CSS + JavaScript)
+
+> **Note:** This project uses pure CSS animations (never `motion/react`).
+> Parallax is achieved via scroll event listeners + CSS transforms.
 
 ```tsx
-import { useScroll, useTransform, motion } from 'motion/react';
-
 function ParallaxSection() {
-  const { scrollYProgress } = useScroll();
-  
-  // Move slower than scroll (parallax effect)
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
-  
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!ref.current) return;
+      const scrolled = window.scrollY;
+      ref.current.style.transform = `translateY(${scrolled * 0.3}px)`;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <motion.div style={{ y }}>
+    <div ref={ref} className="parallax-layer">
       Parallax content
-    </motion.div>
+    </div>
   );
 }
 ```
@@ -524,30 +539,38 @@ function ParallaxSection() {
 }
 ```
 
-### Swipe Gestures (JavaScript)
+### Swipe Gestures (JavaScript + Touch Events)
+
+> **Note:** This project uses pure CSS animations and native Touch Events
+> (never `motion/react`). Use `touchstart`/`touchmove`/`touchend` for swipe.
 
 ```tsx
-import { motion, useMotionValue, useTransform } from 'motion/react';
-
 function SwipeableCard() {
-  const x = useMotionValue(0);
-  const rotateZ = useTransform(x, [-200, 200], [-15, 15]);
-  const opacity = useTransform(x, [-200, 0, 200], [0.5, 1, 0.5]);
-  
+  const cardRef = useRef<HTMLDivElement>(null);
+  const startX = useRef(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    startX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const endX = e.changedTouches[0].clientX;
+    const diff = endX - startX.current;
+
+    if (Math.abs(diff) > 100) {
+      handleSwipe(diff > 0 ? 'right' : 'left');
+    }
+  };
+
   return (
-    <motion.div
-      drag="x"
-      dragConstraints={{ left: -200, right: 200 }}
-      style={{ x, rotateZ, opacity }}
-      onDragEnd={(e, { offset, velocity }) => {
-        if (Math.abs(offset.x) > 100) {
-          // Swiped away
-          handleSwipe(offset.x > 0 ? 'right' : 'left');
-        }
-      }}
+    <div
+      ref={cardRef}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      className="swipeable-card"
     >
       Swipe me!
-    </motion.div>
+    </div>
   );
 }
 ```
@@ -593,18 +616,14 @@ function useReducedMotion() {
   return prefersReducedMotion;
 }
 
-// Usage
+// Usage — toggle CSS animation class based on preference
 function AnimatedComponent() {
   const prefersReducedMotion = useReducedMotion();
   
   return (
-    <motion.div
-      initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: prefersReducedMotion ? 0 : 0.5 }}
-    >
+    <div className={prefersReducedMotion ? '' : 'animate-fade-in-up'}>
       Content
-    </motion.div>
+    </div>
   );
 }
 ```
@@ -675,14 +694,10 @@ function AnimatedElement() {
   const isLowBattery = useLowBattery();
   
   // Disable animations on low battery
-  if (isLowBattery) {
-    return <div>Static content</div>;
-  }
-  
   return (
-    <motion.div animate={{ y: [0, -10, 0] }}>
-      Animated content
-    </motion.div>
+    <div className={isLowBattery ? '' : 'animate-float'}>
+      {isLowBattery ? 'Static content' : 'Animated content'}
+    </div>
   );
 }
 ```
@@ -712,106 +727,50 @@ function AnimatedElement() {
 
 ### ❌ Mistake 2: No Reduced Motion Support
 
-```tsx
-// ❌ WRONG - Ignores user preferences
-<motion.div
-  animate={{ rotate: 360 }}
-  transition={{ duration: 2, repeat: Infinity }}
->
-  Always spinning
-</motion.div>
+```css
+/* ❌ WRONG - Ignores user preferences */
+.spinner {
+  animation: spin 2s linear infinite;
+}
 ```
 
 **Solution:**
-```tsx
-// ✅ CORRECT - Respects preferences
-const prefersReducedMotion = useReducedMotion();
+```css
+/* ✅ CORRECT - Respects preferences */
+.spinner {
+  animation: spin 2s linear infinite;
+}
 
-<motion.div
-  animate={{ rotate: prefersReducedMotion ? 0 : 360 }}
-  transition={{ 
-    duration: prefersReducedMotion ? 0 : 2,
-    repeat: prefersReducedMotion ? 0 : Infinity
-  }}
->
-  Conditionally spinning
-</motion.div>
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
 ```
 
 ### ❌ Mistake 3: Too Many Simultaneous Animations
 
-```tsx
-// ❌ WRONG - 100 elements animating at once
-{items.map((item, i) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-  >
-    {item}
-  </motion.div>
-))}
+```css
+/* ❌ WRONG - 100 elements animating at once */
+.grid-item {
+  animation: fade-in-up 0.4s ease-out;
+}
 ```
 
 **Solution:**
-```tsx
-// ✅ CORRECT - Limit to visible items
-{items.map((item, i) => (
-  <motion.div
-    initial={{ opacity: 0, y: i < 10 ? 20 : 0 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay: i < 10 ? i * 0.05 : 0 }}
-  >
-    {item}
-  </motion.div>
-))}
+```css
+/* ✅ CORRECT - Only first 10 items animate, rest appear instantly */
+.grid-item {
+  opacity: 1;
+}
+
+.grid-item:nth-child(-n+10) {
+  opacity: 0;
+  animation: fade-in-up 0.4s ease-out forwards;
+}
+
+.grid-item:nth-child(1) { animation-delay: 0s; }
+.grid-item:nth-child(2) { animation-delay: 0.05s; }
+.grid-item:nth-child(3) { animation-delay: 0.1s; }
+/* ... up to 10th child */
 ```
-
----
-
-## Decision Tree
-
-### Should I use CSS or JavaScript?
-
-```
-Is it a simple state change?
-├─ Yes → CSS
-│  └─ Examples: hover, focus, active, class toggle
-│
-└─ No → Is it based on user input/scroll?
-   ├─ Yes → JavaScript
-   │  └─ Examples: drag, scroll parallax, physics
-   │
-   └─ No → Is it a complex sequence?
-      ├─ Yes → JavaScript
-      │  └─ Examples: multi-step, coordinated, spring
-      │
-      └─ No → CSS is probably fine
-         └─ Examples: fade in, slide in, spin
-```
-
----
-
-## Performance Checklist
-
-- [ ] Animate only `transform` and `opacity`
-- [ ] Use `will-change` only during animation
-- [ ] Limit concurrent animations (< 10 at once)
-- [ ] Use CSS for simple transitions
-- [ ] Use JavaScript for complex sequences
-- [ ] Support `prefers-reduced-motion`
-- [ ] Pause animations when tab is hidden
-- [ ] Test on low-end mobile devices
-- [ ] Keep animations under 500ms (300ms ideal)
-- [ ] Use `ease-out` for most UI animations
-
----
-
-## Related Documentation
-
-- **[mobile/performance.md](./performance.md)** - Performance optimization
-- **[mobile/typography.md](./typography.md)** - Typography rules
-
----
-
-**Last Updated:** January 2025  
-**Version:** 3.2.0

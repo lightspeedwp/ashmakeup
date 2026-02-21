@@ -19,6 +19,7 @@ import { BlogPost } from '../../types';
 // Export all blog data
 export * from './posts';
 export * from './categories';
+export * from './tags';
 
 // Re-import for utility exports
 import { blogPosts } from './posts';

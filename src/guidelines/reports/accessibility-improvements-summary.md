@@ -9,7 +9,7 @@ Successfully brought the Ash Shaw Makeup Portfolio from **85% to 100% WCAG 2.1 L
 ## ✅ What Was Fixed
 
 ### 1. `prefers-reduced-motion` Support
-- Added comprehensive support for all 32 animations
+- Added comprehensive support for all 26 animations
 - Users with motion sensitivity preferences now see minimal animation
 - Meets WCAG 2.3.3 Animation from Interactions (Level AAA)
 

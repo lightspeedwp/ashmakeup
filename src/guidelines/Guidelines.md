@@ -2,7 +2,7 @@
 
 This document defines the core design, development, and technical guidelines for building and maintaining the Ash Shaw Makeup Portfolio in **Figma Make**. It serves as the entry point to a comprehensive design system with detailed documentation organized in separate files.
 
-**Version:** 5.4.0
+**Version:** 7.0.0
 **Last Updated:** February 2026
 
 ## 📋 Major Update (v5.3.0) - Personal Art Project
@@ -43,7 +43,7 @@ Read ALL overview files in this directory:
 ### Step 2: Read Design Tokens (REQUIRED)
 Read ALL files in the `design-tokens/` folder. Do NOT skip this step:
 - **[neon-colors.md](./design-tokens/neon-colors.md)** - 🆕 Neon vs Atomic Black color system (PRIMARY)
-- **[animations.md](./design-tokens/animations.md)** - 🆕 Complete animation system with 32 keyframes
+- **[animations.md](./design-tokens/animations.md)** - 🆕 Complete animation system with 26 keyframes
 - **[colors.md](./design-tokens/colors.md)** - Legacy color documentation (reference only)
 - **[typography.md](./design-tokens/typography.md)** - Typography scale and hierarchy
 - **[spacing.md](./design-tokens/spacing.md)** - Spacing system and responsive patterns
@@ -62,7 +62,7 @@ Read the mock data guidelines to understand centralized data management:
 BEFORE using ANY component, you MUST read its specific guideline file:
 - Using Logo? → Read **[components/Logo.md](./components/Logo.md)** FIRST
 - Using ScrollDownArrow? → Read **[components/ScrollDownArrow.md](./components/ScrollDownArrow.md)** FIRST
-- Using ScrollBackToTop? → Read **[components/ScrollBackToTop.md](./components/ScrollBackToTop.md)** FIRST
+- Using ScrollToTop? → Read **[components/ScrollToTop.md](./components/ScrollToTop.md)** FIRST
 
 ### Step 5: Verify Icons Before Using (REQUIRED)
 Before using ANY icon, check **[overview-icons.md](./overview-icons.md)** for the verification process. Never assume an icon exists.
@@ -194,6 +194,27 @@ App.tsx (Router + Global State)
 ├── BlogPage (Search + Filtering + Pagination)
 ├── BlogPostPage (Rich Content + Sharing)
 ├── VideosPage (Video showcase)
+├── PodcastsPage (Podcast archive)
+├── SearchResultsPage (Global search)
+├── FaqAggregatePage (FAQ system)
+├── FeedbackPage (Testimonials)
+├── StickersPage (Sticker art gallery)
+├── DevToolsPage (23 sub-tools hub)
+│   ├── DesignTokensRefPage (/dev-tools/tokens)
+│   ├── IconLibraryPage (/dev-tools/icons)
+│   ├── ComponentApiPage (/dev-tools/api)
+│   ├── PlaygroundPage (/dev-tools/playground)
+│   ├── CodeQualityPage (/dev-tools/code-quality)
+│   ├── DeploymentReadinessPage (/dev-tools/deployment)
+│   ├── AnalyticsDashboardPage (/dev-tools/analytics)
+│   ├── ComponentShowcasePage (/dev-tools/components)
+│   ├── SnippetGeneratorPage (/dev-tools/snippets)
+│   ├── DocumentationGeneratorPage (/dev-tools/docs)
+│   ├── VisualRegressionTesterPage (/dev-tools/visual-regression)
+│   ├── IntegrationTesterPage (/dev-tools/integration)
+│   ├── 7 specimen pages (typography, spacing, shadows, radius, buttons, cards, neon)
+│   ├── AccessibilityTesterPage (/dev-tools/accessibility)
+│   └── PerformanceTesterPage (/dev-tools/performance)
 └── Footer (Link to Contact Page + Social Links)
 ```
 
@@ -217,7 +238,21 @@ App.tsx (Router + Global State)
 - ✅ WordPress-Inspired Fluid Typography
 - ✅ WCAG 2.1 AA Accessibility Compliance
 - ✅ Advanced Blog System (search, filtering, pagination)
-- ✅ **Progressive Web App** (installable, offline support, service worker) 🆕
+- ✅ Progressive Web App (installable, offline support, service worker)
+- ✅ Developer Tools Hub (23 sub-tools for design system inspection)
+- ✅ Analytics Dashboard (localStorage-based content tracking)
+- ✅ Global search system with ArchiveFilters
+- ✅ FAQ system with Schema.org structured data
+- ✅ Stickers Gallery (26 entries)
+
+### SEO & Structured Data
+- ✅ Centralised `setSEO()` utility (`/utils/seo.ts`) — single call sets title, description, OG, Twitter Card
+- ✅ Centralised SEO data file (`/data/mock/seo.ts`) — all 46 page components wired
+- ✅ Schema.org JSON-LD structured data (`/utils/schemaService.ts`) — WebSite, Person, BlogPosting, VideoObject, PodcastEpisode, VisualArtwork, ImageGallery, CollectionPage, BreadcrumbList, FAQPage
+- ✅ Breadcrumbs component (`/components/ui/Breadcrumbs.tsx`) — single source, dedicated CSS, Schema.org BreadcrumbList JSON-LD
+
+### All Planned Features Complete
+All tasks from the v4.0.0 task list (Tasks 19–36) are now complete. The project is feature-complete.
 
 ---
 
@@ -232,13 +267,13 @@ The Ash Shaw Makeup Portfolio uses a bold **Neon vs Atomic Black** design system
 - **8 Neon Colors:** Electric green, hot pink, royal blue, pure yellow, blazing orange, violet purple, aqua cyan, hot red
 - **Atomic Black:** Deep #0F0F0F background for maximum neon contrast
 - **4 Signature Gradients:** Cyberpunk (pink→blue), Toxic Lime (green→cyan), Solar Flare (orange→yellow), Hyperpop (animated multi-color)
-- **32 Animations:** Neon pulse, gradient shift, float, bounce, and more
+- **26 Animations:** Neon pulse, gradient shift, float, bounce, and more
 - **Dual Theme:** Accessible text variants for light mode, full-brightness neon for dark mode
 - **SVG Grain Noise Texture:** Site-wide `feTurbulence` noise overlay on all major sections via `::before` pseudo-elements
 
 **📖 Complete Documentation:**
 - **[neon-colors.md](./design-tokens/neon-colors.md)** - Full neon color system
-- **[animations.md](./design-tokens/animations.md)** - All 32 animations documented
+- **[animations.md](./design-tokens/animations.md)** - All 26 animations documented
 
 ### Responsive Breakpoints & Fluid Typography
 (See [design-tokens/typography.md](./design-tokens/typography.md) for full details)
@@ -265,7 +300,7 @@ The Ash Shaw Makeup Portfolio uses a bold **Neon vs Atomic Black** design system
 
 All components meet the following standards:
 - **Color Contrast:** 4.5:1 minimum (body text), 7:1+ achieved in dark mode (AAA)
-- **Reduced Motion:** Full `prefers-reduced-motion` support for all 32 animations
+- **Reduced Motion:** Full `prefers-reduced-motion` support for all 26 animations
 - **Keyboard Navigation:** Full support (Tab, Enter, Space, Arrows, Escape)
 - **Screen Readers:** Proper ARIA labels and semantic HTML
 - **Focus Management:** Enhanced 3px neon pink focus indicators with glow effects
@@ -297,6 +332,44 @@ Every component must include JSDoc comments describing purpose, props, and acces
 - **Named Exports:** All components (for tree-shaking)
 - **Default Export:** Only App.tsx
 - **Type Exports:** Separate export for shared interfaces
+
+### Breadcrumbs (REQUIRED on all sub-pages)
+
+**Single Source Component:** All breadcrumbs MUST use `/components/ui/Breadcrumbs.tsx`. Never create inline breadcrumb markup.
+
+**CSS:** `/styles/blocks/breadcrumbs.css` (imported by the component itself — no need to import CSS separately).
+
+**Pattern:** `Home > Section > Page Name`
+
+```tsx
+import { Breadcrumbs } from '../../ui/Breadcrumbs';
+
+<Breadcrumbs items={[
+  { label: 'Home', href: '/' },
+  { label: 'Developer Tools', href: '/dev-tools' },
+  { label: 'Typography Specimens' },
+]} />
+```
+
+**Rules:**
+- Never render `<Breadcrumbs>` more than once per page
+- Last item has no `href` (renders as plain text with `aria-current="page"`)
+- Schema.org BreadcrumbList JSON-LD is injected automatically
+
+### SEO (REQUIRED on all pages)
+
+**Single Source Utility:** All SEO meta tags MUST use `setSEO()` from `/utils/seo.ts`. Never set `document.title` directly.
+
+```tsx
+import { setSEO } from '../../../utils/seo';
+import { pageSEO } from '../../../data/mock/seo';
+
+useEffect(() => {
+  setSEO(pageSEO.about);
+}, []);
+```
+
+**Dynamic content pages** use helper functions: `blogPostSEO()`, `videoSEO()`, `podcastSEO()`, `portfolioEntrySEO()`, etc.
 
 ---
 
@@ -366,7 +439,7 @@ The project uses a comprehensive centralized mock data system that serves as the
 Before using any component, read its specific guideline file:
 - **[Logo](./components/Logo.md)** - Brand logo usage and responsive behavior
 - **[ScrollDownArrow](./components/ScrollDownArrow.md)** - Animated scroll indicator
-- **[ScrollBackToTop](./components/ScrollBackToTop.md)** - Floating scroll button
+- **[ScrollToTop](./components/ScrollToTop.md)** - Floating scroll button
 - **[LayoutSwitcher](./components/LayoutSwitcher.md)** - Grid/list view toggle
 
 ---
@@ -375,14 +448,14 @@ Before using any component, read its specific guideline file:
 
 ### Current Foundation (Complete)
 - ✅ CSS system with fluid typography and variable fonts
-- ✅ Contentful CMS with blog system
+- ✅ Centralized mock data system with blog, portfolio, videos, podcasts
 - ✅ Full accessibility compliance (WCAG 2.1 AA)
 - ✅ PWA Implementation
-
-### Enhanced Features (In Progress)
-- 🔄 Advanced lightbox with video support
-- 🔄 Blog analytics and engagement tracking
-- 🔄 Performance optimizations
+- ✅ Developer Tools Hub (23 sub-tools for design system inspection)
+- ✅ Analytics Dashboard (localStorage-based content tracking)
+- ✅ Global search system with ArchiveFilters
+- ✅ FAQ system with Schema.org structured data
+- ✅ Stickers Gallery (26 entries)
 
 ---
 

@@ -92,7 +92,7 @@
 }
 
 .layout-section-bg-default {
-  background-color: #fff;
+  background-color: var(--wp--preset--color--base);
 }
 
 .dark .layout-section-bg-default {

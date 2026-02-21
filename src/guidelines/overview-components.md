@@ -2,8 +2,8 @@
 
 This document provides a comprehensive overview of all components available in the Ash Shaw Makeup Portfolio design system, including a **React Component Architecture Diagram** and **Data Layer Integration**. **Always prefer custom components over generic HTML elements.**
 
-**Version:** 4.0.0  
-**Last Updated:** January 2025
+**Version:** 5.0.0  
+**Last Updated:** February 2026
 
 ## 📊 React Component Architecture Diagram
 
@@ -731,5 +731,5 @@ Before using any component, read its specific guideline file:
 
 ---
 
-**Last Updated:** January 2025  
-**Version:** 4.0.0
+**Last Updated:** February 2026  
+**Version:** 5.0.0

@@ -111,7 +111,6 @@ export function TypeformEmbed({
     <div 
       ref={containerRef}
       className={`typeform-embed ${className}`}
-      style={{ height: '500px', minHeight: 'unset' }}
     >
       <div 
         data-tf-live={formId}
@@ -121,7 +120,7 @@ export function TypeformEmbed({
         data-tf-iframe-props="title=Contact Form"
         data-tf-medium="snippet"
         data-tf-hidden={hiddenFieldsString}
-        style={{ width: '100%', height: '500px', margin: 0, padding: 0 }}
+        className="typeform-embed__widget"
       />
     </div>
   );

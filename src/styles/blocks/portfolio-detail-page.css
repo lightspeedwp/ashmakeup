@@ -16,6 +16,13 @@
   text-align: center;
 }
 
+.portfolio-header-wide .container-wide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--wp--preset--spacing--fluid-sm);
+}
+
 .portfolio-title-wide {
   font-size: var(--wp--preset--font-size--hero);
   font-family: var(--wp--preset--font-family--brand-title);
@@ -132,14 +139,13 @@
   align-items: center;
   gap: var(--wp--preset--spacing--fluid-sm);
   background-color: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px);
-  padding: 0.5rem 1rem;
   border-radius: var(--wp--preset--border-radius--full);
+  padding: var(--wp--preset--spacing--fluid-md);
   font-size: var(--wp--preset--font-size--100);
   font-weight: 500;
   color: var(--wp--preset--color--neutral-900);
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--wp--preset--shadow--card);
   border: 1px solid var(--wp--preset--color--neutral-200);
   cursor: pointer;
 }
@@ -223,7 +229,7 @@
 
 .gallery-main-image__icon-wrapper {
   background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 9999px;
+  border-radius: var(--wp--preset--border-radius--full);
   padding: var(--wp--preset--spacing--fluid-md);
   color: var(--wp--preset--color--neutral-900);
 }
@@ -467,6 +473,7 @@
 
 .dark .portfolio-footer-row {
   border-color: var(--wp--preset--color--neutral-800);
+  border-image: linear-gradient(to right, var(--wp--preset--color--neon-green), var(--wp--preset--color--neon-purple), var(--wp--preset--color--neon-green)) 1;
 }
 
 .tags-share-container {
@@ -541,7 +548,446 @@
   line-height: 1.625;
 }
 
+/* Story Blockquote — Toxic Lime neon accent */
+.story-quote {
+  border-width: 0 0 0 4px;
+  border-style: solid;
+  border-image: linear-gradient(
+    to bottom,
+    var(--wp--preset--color--neon-green),
+    var(--wp--preset--color--neon-cyan)
+  ) 1;
+  padding: 1.5rem 2rem;
+  font-style: italic;
+  font-size: 1.25rem;
+  font-family: var(--wp--preset--font-family--brand-heading);
+  color: var(--wp--preset--color--neutral-600);
+  margin: 2rem 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 143, 0, 0.04),
+    transparent
+  );
+  border-radius: 0 1rem 1rem 0;
+  position: relative;
+}
+
+.story-quote::before {
+  content: '◆';
+  position: absolute;
+  top: -0.4rem;
+  left: 0.75rem;
+  font-size: 1.2rem;
+  color: var(--wp--preset--color--neon-green-text);
+  line-height: 1;
+}
+
+.dark .story-quote::before {
+  color: var(--wp--preset--color--neon-green);
+  text-shadow: 0 0 8px var(--wp--preset--color--neon-green);
+}
+
+.dark .story-quote {
+  color: var(--wp--preset--color--neutral-300);
+  background: linear-gradient(
+    to right,
+    rgba(0, 255, 0, 0.06),
+    rgba(0, 243, 255, 0.02),
+    transparent
+  );
+  box-shadow: -5px 0 15px -5px rgba(0, 255, 0, 0.15);
+}
+
+/* ============================================
+   PORTFOLIO RICH TEXT - "Toxic Lime" theme
+   Purple/green palette with diamond accents
+   ============================================ */
+
+.portfolio-rich-text h1 {
+  display: none;
+}
+
+.portfolio-rich-text p {
+  margin-bottom: 1.5rem;
+}
+
+.portfolio-rich-text strong {
+  color: var(--wp--preset--color--contrast);
+  font-weight: 700;
+}
+
+.dark .portfolio-rich-text strong {
+  color: #fff;
+  text-shadow: 0 0 8px rgba(0, 255, 0, 0.25);
+}
+
+.portfolio-rich-text em {
+  color: var(--wp--preset--color--neon-green-text);
+  font-style: italic;
+}
+
+.dark .portfolio-rich-text em {
+  color: var(--wp--preset--color--neon-green);
+}
+
+/* Headings — toxic lime gradient underline */
+.portfolio-rich-text h2 {
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-size: var(--wp--preset--font-size--600);
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  color: var(--wp--preset--color--contrast);
+  position: relative;
+  display: inline-block;
+}
+
+.dark .portfolio-rich-text h2 {
+  color: #fff;
+  background: linear-gradient(to right, var(--wp--preset--color--neon-green), var(--wp--preset--color--neon-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Diamond chain underline */
+.portfolio-rich-text h2::after {
+  content: '◆ ◇ ◆ ◇ ◆';
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  color: var(--wp--preset--color--neon-green-text);
+  line-height: 1;
+}
+
+.dark .portfolio-rich-text h2::after {
+  color: var(--wp--preset--color--neon-green);
+  text-shadow: 0 0 8px var(--wp--preset--color--neon-green);
+}
+
+.portfolio-rich-text h3 {
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-size: var(--wp--preset--font-size--500);
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+  color: var(--wp--preset--color--neon-purple-text);
+}
+
+.dark .portfolio-rich-text h3 {
+  color: var(--wp--preset--color--neon-purple);
+  text-shadow: 0 0 10px rgba(190, 0, 254, 0.4);
+}
+
+.portfolio-rich-text h4 {
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-size: var(--wp--preset--font-size--400);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--wp--preset--color--contrast);
+  font-weight: 600;
+}
+
+.dark .portfolio-rich-text h4 {
+  color: var(--wp--preset--color--neutral-200);
+}
+
+/* Lists — diamond bullet points */
+.portfolio-rich-text ul,
+.portfolio-rich-text ol {
+  margin-bottom: 1.5rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+.portfolio-rich-text li {
+  margin-bottom: 0.75rem;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.portfolio-rich-text ul li::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  color: var(--wp--preset--color--neon-green-text);
+  font-size: 0.6rem;
+  line-height: 2;
+}
+
+.dark .portfolio-rich-text ul li::before {
+  color: var(--wp--preset--color--neon-green);
+  text-shadow: 0 0 5px var(--wp--preset--color--neon-green);
+}
+
+.portfolio-rich-text ol {
+  counter-reset: portfolio-counter;
+}
+
+.portfolio-rich-text ol li {
+  counter-increment: portfolio-counter;
+}
+
+.portfolio-rich-text ol li::before {
+  content: counter(portfolio-counter) ".";
+  position: absolute;
+  left: 0;
+  color: var(--wp--preset--color--neon-purple-text);
+  font-weight: 700;
+  font-family: var(--wp--preset--font-family--brand-heading);
+}
+
+.dark .portfolio-rich-text ol li::before {
+  color: var(--wp--preset--color--neon-purple);
+  text-shadow: 0 0 5px var(--wp--preset--color--neon-purple);
+}
+
+/* Links */
+.portfolio-rich-text a {
+  color: var(--wp--preset--color--neon-green-text);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.portfolio-rich-text a:hover {
+  border-bottom-color: var(--wp--preset--color--neon-green-text);
+}
+
+.dark .portfolio-rich-text a {
+  color: var(--wp--preset--color--neon-green);
+}
+
+.dark .portfolio-rich-text a:hover {
+  border-bottom-color: var(--wp--preset--color--neon-green);
+  text-shadow: 0 0 8px var(--wp--preset--color--neon-green);
+}
+
+/* Blockquotes — toxic lime left border */
+.portfolio-rich-text blockquote {
+  border-width: 0 0 0 4px;
+  border-style: solid;
+  border-image: linear-gradient(
+    to bottom,
+    var(--wp--preset--color--neon-green),
+    var(--wp--preset--color--neon-cyan)
+  ) 1;
+  padding: 1.5rem 2rem;
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--wp--preset--color--neutral-600);
+  margin: 2.5rem 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 143, 0, 0.04),
+    transparent
+  );
+  border-radius: 0 1rem 1rem 0;
+  position: relative;
+}
+
+.portfolio-rich-text blockquote::before {
+  content: '◆';
+  position: absolute;
+  top: -0.4rem;
+  left: 0.75rem;
+  font-size: 1.2rem;
+  color: var(--wp--preset--color--neon-green-text);
+  line-height: 1;
+}
+
+.dark .portfolio-rich-text blockquote::before {
+  color: var(--wp--preset--color--neon-green);
+  text-shadow: 0 0 8px var(--wp--preset--color--neon-green);
+}
+
+.dark .portfolio-rich-text blockquote {
+  color: var(--wp--preset--color--neutral-300);
+  background: linear-gradient(
+    to right,
+    rgba(0, 255, 0, 0.06),
+    rgba(0, 243, 255, 0.02),
+    transparent
+  );
+  box-shadow: -5px 0 15px -5px rgba(0, 255, 0, 0.15);
+}
+
+/* Code */
+.portfolio-rich-text code {
+  background-color: var(--wp--preset--color--neutral-200);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.9em;
+  color: var(--wp--preset--color--neon-green-text);
+}
+
+.dark .portfolio-rich-text code {
+  background-color: var(--wp--preset--color--neutral-800);
+  color: var(--wp--preset--color--neon-green);
+  border: 1px solid var(--wp--preset--color--neutral-700);
+}
+
 /* Related Work Card Wrapper */
 .portfolio-detail__related-card-wrapper {
   height: 100%;
+}
+
+/* ── Portfolio Feedback Section ── */
+.portfolio-feedback-section {
+  padding: var(--wp--preset--spacing--fluid-lg) var(--wp--preset--spacing--section-horizontal);
+  background: linear-gradient(135deg,
+    rgba(255, 16, 240, 0.02) 0%,
+    rgba(190, 0, 254, 0.02) 50%,
+    transparent 100%
+  );
+}
+
+.dark .portfolio-feedback-section {
+  background: linear-gradient(135deg,
+    rgba(255, 16, 240, 0.05) 0%,
+    rgba(190, 0, 254, 0.04) 50%,
+    transparent 100%
+  );
+}
+
+.portfolio-feedback__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--wp--preset--spacing--fluid-md);
+}
+
+@media (min-width: 768px) {
+  .portfolio-feedback__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.portfolio-feedback__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--fluid-xs);
+  padding: var(--wp--preset--spacing--fluid-md);
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--lg);
+  box-shadow: var(--wp--preset--shadow--card);
+  transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+.portfolio-feedback__card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--wp--preset--shadow--card-hover);
+}
+
+.dark .portfolio-feedback__card {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: var(--wp--preset--color--neutral-800);
+}
+
+.dark .portfolio-feedback__card:hover {
+  border-color: var(--wp--preset--color--neon-pink);
+  box-shadow: 0 0 15px rgba(255, 16, 240, 0.1);
+}
+
+.portfolio-feedback__card--featured {
+  border-color: rgba(255, 16, 240, 0.2);
+}
+
+.dark .portfolio-feedback__card--featured {
+  border-color: rgba(255, 16, 240, 0.35);
+  box-shadow: 0 0 10px rgba(255, 16, 240, 0.06);
+}
+
+.portfolio-feedback__quote-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--wp--preset--color--neutral-300);
+}
+
+.dark .portfolio-feedback__quote-icon {
+  color: var(--wp--preset--color--neutral-700);
+}
+
+.portfolio-feedback__card--featured .portfolio-feedback__quote-icon {
+  color: var(--wp--preset--color--neon-pink-text);
+}
+
+.dark .portfolio-feedback__card--featured .portfolio-feedback__quote-icon {
+  color: var(--wp--preset--color--neon-pink);
+  filter: drop-shadow(0 0 4px rgba(255, 16, 240, 0.4));
+}
+
+.portfolio-feedback__quote {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--200);
+  line-height: 1.7;
+  color: var(--wp--preset--color--neutral-700);
+  flex: 1;
+}
+
+.dark .portfolio-feedback__quote {
+  color: var(--wp--preset--color--neutral-300);
+}
+
+.portfolio-feedback__rating {
+  display: flex;
+  gap: 2px;
+}
+
+.portfolio-feedback__star {
+  width: 14px;
+  height: 14px;
+  color: var(--wp--preset--color--neutral-300);
+}
+
+.portfolio-feedback__star--filled {
+  color: var(--wp--preset--color--neon-yellow, #FFE500);
+  fill: var(--wp--preset--color--neon-yellow, #FFE500);
+}
+
+.dark .portfolio-feedback__star {
+  color: var(--wp--preset--color--neutral-700);
+}
+
+.dark .portfolio-feedback__star--filled {
+  color: var(--wp--preset--color--neon-yellow, #FFE500);
+  fill: var(--wp--preset--color--neon-yellow, #FFE500);
+  filter: drop-shadow(0 0 3px rgba(255, 229, 0, 0.35));
+}
+
+.portfolio-feedback__author {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: var(--wp--preset--spacing--fluid-xs);
+  border-top: 1px solid var(--border);
+}
+
+.portfolio-feedback__name {
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-size: var(--wp--preset--font-size--200);
+  color: var(--foreground);
+}
+
+.portfolio-feedback__meta {
+  font-size: var(--wp--preset--font-size--100);
+  color: var(--wp--preset--color--neutral-500);
+}
+
+.dark .portfolio-feedback__meta {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.portfolio-feedback__view-all {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--wp--preset--spacing--fluid-md);
+}
+
+.portfolio-feedback__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--wp--preset--spacing--fluid-md);
+  margin-top: var(--wp--preset--spacing--fluid-lg);
 }

@@ -1,18 +1,24 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { privacyPolicy } from "../../../data/mock/pages/legal";
+import { privacyBreadcrumbs } from "../../../data/mock/ui/breadcrumbs";
+import { Breadcrumbs } from "../../ui/Breadcrumbs";
+import { setSEO } from '../../../utils/seo';
+import { pageSEO } from '../../../data/mock/seo';
 import "@/styles/blocks/legal-page.css";
 
 export function PrivacyPolicy() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setSEO(pageSEO.privacy);
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div className="legal-page-container">
+    <div className="legal-page-container bg-atomic-noise">
       <div className="legal-page-content">
+        <Breadcrumbs items={privacyBreadcrumbs} />
         <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-fluid-lg">
           {privacyPolicy.title}
         </h1>

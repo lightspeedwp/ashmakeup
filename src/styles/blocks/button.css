@@ -36,7 +36,12 @@
 /* Focus States */
 .btn:focus-visible {
   border-color: var(--wp--preset--color--neon-purple);
-  box-shadow: 0 0 0 3px rgba(190, 0, 254, 0.3);
+  box-shadow: var(--wp--preset--shadow--focus-ring);
+}
+
+.btn:hover {
+  border-color: var(--wp--preset--color--neon-purple);
+  box-shadow: var(--wp--preset--shadow--focus-ring);
 }
 
 /* Variants */
@@ -196,7 +201,7 @@
 
 .btn--neon-outline:focus-visible {
   border-color: var(--wp--preset--color--neon-purple);
-  box-shadow: 0 0 0 3px rgba(190, 0, 254, 0.3);
+  box-shadow: var(--wp--preset--shadow--focus-ring);
 }
 
 .btn--neon-secondary {

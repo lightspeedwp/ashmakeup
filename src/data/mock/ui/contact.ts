@@ -44,5 +44,8 @@ export const contactUI = {
   faq: {
     title: "Frequently Asked Questions",
     description: "Everything you need to know about my UV artistry and festival availability."
+  },
+  graphic: {
+    alt: "Ash Shaw makeup artist illustration"
   }
 };

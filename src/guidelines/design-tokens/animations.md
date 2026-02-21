@@ -1,14 +1,14 @@
 # Animation System
 
-**Version:** 1.0.0  
-**Last Updated:** February 2025  
+**Version:** 1.1.0  
+**Last Updated:** February 2026  
 **Design System:** Neon vs Atomic Black
 
 ---
 
 ## 🎬 Overview
 
-The Ash Shaw Makeup Portfolio uses a comprehensive animation system with 32 keyframe animations across the application. Animations enhance user experience, provide visual feedback, and create energy that reflects the vibrant makeup artistry brand.
+The Ash Shaw Makeup Portfolio uses a comprehensive animation system with 26 keyframe animations across the application. Animations enhance user experience, provide visual feedback, and create energy that reflects the vibrant makeup artistry brand.
 
 **Animation Philosophy:**
 - **Purposeful:** Every animation serves a function
@@ -865,6 +865,6 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 
 ---
 
-**Last Updated:** February 2025  
-**Version:** 1.0.0  
+**Last Updated:** February 2026  
+**Version:** 1.1.0  
 **Maintained by:** Ash Shaw Portfolio Team

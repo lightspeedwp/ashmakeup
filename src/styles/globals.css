@@ -127,7 +127,6 @@ button, [role="button"] {
   --wp--preset--font-size--section: clamp(2rem, 3vw + 1rem, 3.5rem);
 
   /* --- SPACING --- */
-  --wp--preset--spacing--fluid-sm: clamp(0.5rem, 0.3rem + 1vw, 1rem);
   --wp--preset--spacing--fluid-xs: clamp(0.5rem, 0.4rem + 0.5vw, 0.75rem);
   --wp--preset--spacing--fluid-sm: clamp(0.75rem, 0.5rem + 1vw, 1.25rem);
   --wp--preset--spacing--fluid-md: clamp(1rem, 0.6rem + 2vw, 2rem);
@@ -191,11 +190,27 @@ button, [role="button"] {
   --wp--preset--border-radius--900: var(--wp--preset--border-radius--full);
 
   /* --- SHADOWS --- */
+  --wp--preset--shadow--sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --wp--preset--shadow--md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --wp--preset--shadow--lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --wp--preset--shadow--xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 8px 10px rgba(0, 0, 0, 0.04);
+  --wp--preset--shadow--2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
   --wp--preset--shadow--neon-sm: 0 0 5px rgba(57, 255, 20, 0.3);
   --wp--preset--shadow--neon-md: 0 0 10px rgba(57, 255, 20, 0.4), 0 0 20px rgba(57, 255, 20, 0.2);
   --wp--preset--shadow--neon-lg: 0 0 15px rgba(57, 255, 20, 0.5), 0 0 30px rgba(57, 255, 20, 0.3);
+  --wp--preset--shadow--neon-pink: 0 0 20px rgba(255, 16, 240, 0.4);
+  --wp--preset--shadow--neon-purple: 0 0 20px rgba(190, 0, 254, 0.4);
+  --wp--preset--shadow--neon-blue: 0 0 20px rgba(0, 243, 255, 0.4);
   --wp--preset--shadow--card: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   --wp--preset--shadow--card-hover: 0 10px 30px -5px rgba(0, 0, 0, 0.2);
+  --wp--preset--shadow--focus-ring: 0 0 0 3px rgba(190, 0, 254, 0.3);
+  --wp--preset--shadow--focus-ring-strong: 0 0 0 3px rgba(190, 0, 254, 0.5);
+  --wp--preset--shadow--focus-ring-pink: 0 0 0 2px var(--wp--preset--color--neon-pink);
+  --wp--preset--shadow--neon-purple-hover: 0 0 15px rgba(190, 0, 254, 0.5);
+  --wp--preset--shadow--neon-pink-dot: 0 0 10px rgba(255, 16, 240, 0.5);
+  --wp--preset--shadow--action-btn: 0 0 10px rgba(190, 0, 254, 0.2);
+  --wp--preset--shadow--action-btn-hover: 0 4px 16px rgba(190, 0, 254, 0.35);
+  --wp--preset--shadow--action-btn-glow: 0 0 24px rgba(190, 0, 254, 0.5);
 
   /* --- ANIMATIONS --- */
   --wp--custom--animation--slow: 500ms;
@@ -203,8 +218,8 @@ button, [role="button"] {
   --wp--custom--ease--bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
   /* --- NOISE TEXTURE (Grain overlay — opacity tokens only) --- */
-  /* The noise SVG data URI is inlined directly in each section's ::before rule */
-  /* because url() inside custom properties triggers bundler module resolution. */
+  /* The noise SVG data URI lives on the .app-noise-overlay class directly */
+  /* (not in a custom property, which would break bundler module resolution). */
   --noise-texture-opacity: 0.03;
   --noise-texture-opacity-dark: 0.045;
 
@@ -226,10 +241,11 @@ button, [role="button"] {
 }
 
 /* Site-wide SVG Grain Noise Overlay */
+/* Uses an inline <svg> with feTurbulence in the DOM (RootLayout.tsx) */
+/* because url() in CSS triggers bundler module resolution via esm.sh. */
 .app-noise-overlay {
   position: fixed;
   inset: 0;
-  background-repeat: repeat;
   opacity: var(--noise-texture-opacity);
   z-index: 0;
   pointer-events: none;
@@ -362,7 +378,10 @@ small, .text-body-small-p { font-size: var(--wp--preset--font-size--100); }
 .py-section-sm { padding-top: var(--wp--preset--spacing--fluid-md); padding-bottom: var(--wp--preset--spacing--fluid-md); }
 .py-section-md { padding-top: var(--wp--preset--spacing--fluid-lg); padding-bottom: var(--wp--preset--spacing--fluid-lg); }
 .py-section-lg { padding-top: var(--wp--preset--spacing--fluid-xl); padding-bottom: var(--wp--preset--spacing--fluid-xl); }
+.py-section-xl { padding-top: var(--wp--preset--spacing--fluid-2xl); padding-bottom: var(--wp--preset--spacing--fluid-2xl); }
 .py-footer { padding-top: var(--wp--preset--spacing--fluid-xl); padding-bottom: var(--wp--preset--spacing--fluid-xl); }
+.py-fluid-lg { padding-top: var(--wp--preset--spacing--fluid-lg); padding-bottom: var(--wp--preset--spacing--fluid-lg); }
+.py-fluid-md { padding-top: var(--wp--preset--spacing--fluid-md); padding-bottom: var(--wp--preset--spacing--fluid-md); }
 
 .gap-fluid-sm { gap: var(--wp--preset--spacing--fluid-sm); }
 .gap-fluid-md { gap: var(--wp--preset--spacing--fluid-md); }
@@ -373,6 +392,12 @@ small, .text-body-small-p { font-size: var(--wp--preset--font-size--100); }
 .mb-fluid-md { margin-bottom: var(--wp--preset--spacing--fluid-md); }
 .mb-fluid-lg { margin-bottom: var(--wp--preset--spacing--fluid-lg); }
 .mb-fluid-xl { margin-bottom: var(--wp--preset--spacing--fluid-xl); }
+
+.mt-fluid-sm { margin-top: var(--wp--preset--spacing--fluid-sm); }
+.mt-fluid-md { margin-top: var(--wp--preset--spacing--fluid-md); }
+.mt-fluid-lg { margin-top: var(--wp--preset--spacing--fluid-lg); }
+
+.text-inherit { color: inherit; }
 
 /* Layout Helpers */
 .container-wide {
@@ -385,6 +410,14 @@ small, .text-body-small-p { font-size: var(--wp--preset--font-size--100); }
 
 .container-7xl {
   max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--wp--preset--spacing--fluid-md);
+  padding-right: var(--wp--preset--spacing--fluid-md);
+}
+
+.container-xl {
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   padding-left: var(--wp--preset--spacing--fluid-md);

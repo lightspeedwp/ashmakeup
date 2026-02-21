@@ -18,6 +18,12 @@
   position: relative;
   overflow: hidden;
   border: 1px solid transparent;
+  outline: none;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+  text-decoration: none;
 }
 
 .social-links__link:hover {
@@ -90,7 +96,7 @@
   height: 2.25rem;
   background: none;
   border: none;
-  border-radius: 0.375rem;
+  border-radius: var(--wp--preset--border-radius--sm);
   color: var(--wp--preset--color--neutral-500);
 }
 
@@ -99,7 +105,7 @@
 }
 
 .social-links__link--minimal:hover {
-  color: var(--wp--preset--color--neon-pink);
+  color: var(--wp--preset--color--neon-pink-text);
   background: none;
   box-shadow: none;
   filter: none;

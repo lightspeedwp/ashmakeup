@@ -67,7 +67,7 @@ This comprehensive accessibility audit addressed all major issues identified in 
 ```
 
 **Coverage:**
-- ✅ All 32 keyframe animations
+- ✅ All 26 keyframe animations
 - ✅ All transition properties
 - ✅ Smooth scroll disabled
 - ✅ Neon pulse effects removed

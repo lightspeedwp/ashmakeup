@@ -24,3 +24,12 @@ export * from './legal';
 
 // Blog page content
 export * from './blog';
+
+// Events page content
+export * from './events';
+
+// Hidden About page content
+export * from './hidden-about';
+
+// Six Cats Club page content
+export * from './six-cats';

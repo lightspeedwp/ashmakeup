@@ -464,7 +464,7 @@ export function ScrollDownArrow({
 
 ## Related Components
 
-- **[ScrollBackToTop](./ScrollBackToTop.md)** - Return to top of page
+- **[ScrollToTop](./ScrollToTop.md)** - Return to top of page
 - **[HeroLayout](../sections/HeroLayout.tsx)** - Hero section wrapper
 - **[HeroSection](../sections/HeroSection.tsx)** - Homepage hero
 

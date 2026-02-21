@@ -4,7 +4,7 @@
  * 
  * @module data/mock/blog/categories
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
+ * @version 2.0.0 - Removed empty categories and stale hardcoded counts
  */
 
 import { BlogCategory } from '../../types';
@@ -12,6 +12,8 @@ import { BlogCategory } from '../../types';
 /**
  * Blog Categories
  * Main categorization for blog posts
+ * Only categories with actual posts are listed.
+ * Dynamic counts are computed by /utils/contentCounts.ts
  * 
  * @constant {BlogCategory[]}
  */
@@ -21,7 +23,7 @@ export const blogCategories: BlogCategory[] = [
     name: 'Makeup Tips',
     slug: 'makeup-tips',
     description: 'Expert tips and tricks for creating stunning makeup looks',
-    count: 12,
+    count: 0,
     color: '#ec4899'
   },
   {
@@ -29,7 +31,7 @@ export const blogCategories: BlogCategory[] = [
     name: 'Tutorials',
     slug: 'tutorials',
     description: 'Step-by-step guides for mastering makeup techniques',
-    count: 8,
+    count: 0,
     color: '#a855f7'
   },
   {
@@ -37,7 +39,7 @@ export const blogCategories: BlogCategory[] = [
     name: 'Festival Tips',
     slug: 'festival-tips',
     description: 'Everything you need for festival makeup success',
-    count: 15,
+    count: 0,
     color: '#f97316'
   },
   {
@@ -45,7 +47,7 @@ export const blogCategories: BlogCategory[] = [
     name: 'Travel',
     slug: 'travel',
     description: 'Makeup adventures and experiences from around the world',
-    count: 6,
+    count: 0,
     color: '#14b8a6'
   },
   {
@@ -53,111 +55,83 @@ export const blogCategories: BlogCategory[] = [
     name: 'Education',
     slug: 'education',
     description: 'Learn the theory and science behind great makeup',
-    count: 4,
+    count: 0,
     color: '#3b82f6'
   },
-  {
-    id: 'product-reviews',
-    name: 'Product Reviews',
-    slug: 'product-reviews',
-    description: 'Honest reviews of makeup products and tools',
-    count: 10,
-    color: '#22c55e'
-  }
 ];
 
 /**
  * Popular Blog Tags
- * Commonly used tags across blog posts
+ * Tags that appear across multiple blog posts
  * 
  * @constant {string[]}
  */
 export const popularTags = [
-  'Festival Makeup',
-  'UV Makeup',
-  'Tutorial',
-  'Tips',
-  'Product Review',
+  'Psytrance',
+  'Festival',
   'Thailand',
-  'Switzerland',
-  'Waterproof',
+  'Travel',
+  'UV Makeup',
+  'Cycling',
+  'Tips',
+  'Makeup Tips',
   'Long-Lasting',
   'Color Theory',
   'Neon',
-  'Glitter',
-  'Eye Makeup',
-  'Face Paint',
-  'Nail Art'
+  'Eco-Friendly',
 ];
 
 /**
  * All Available Tags
- * Complete list of tags used in blog posts
+ * Tags actually used in blog posts
  * 
  * @constant {string[]}
  */
 export const allTags = [
   // Makeup Types
-  'Festival Makeup',
   'UV Makeup',
   'Blacklight',
   'Neon',
-  'Natural Makeup',
-  'Glam Makeup',
-  'Face Paint',
-  'Body Paint',
-  'Eye Makeup',
-  'Lip Art',
-  'Nail Art',
-  
+
   // Techniques
   'Tutorial',
   'Tips',
-  'Guide',
-  'How-To',
-  'Step-by-Step',
-  
+  'Makeup Tips',
+
   // Products & Tools
-  'Product Review',
-  'Waterproof',
   'Long-Lasting',
-  'Cruelty-Free',
-  'Vegan',
   'Eco-Friendly',
-  
+  'Sustainability',
+  'Green',
+
   // Events & Locations
   'Festival',
+  'Psytrance',
   'Rave',
-  'Club',
+  'Berlin',
   'Thailand',
-  'Switzerland',
-  'Koh Phangan',
+  'Origin Festival',
   'Travel',
-  
+  'Tropical',
+
+  // Activities
+  'Cycling',
+  'Adventure',
+
   // Concepts
   'Color Theory',
-  'Skin Care',
-  'Beauty',
-  'Creativity',
-  'Self-Expression',
-  
+  'Education',
+  'Artistry',
+
   // Specific Elements
   'Glitter',
-  'Gems',
-  'Rhinestones',
-  'Metallic',
-  'Holographic',
-  'Iridescent',
-  
+
   // Essentials
   'Packing List',
   'Essentials',
-  'Must-Haves',
-  'Emergency Kit',
-  
-  // Skills
-  'Education',
-  'Theory',
-  'Technique',
-  'Professional'
+
+  // Personal
+  'Birthday',
+  'Survival',
+  'Experience',
 ];

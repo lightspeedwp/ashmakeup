@@ -6,7 +6,7 @@
 
 export const blogPageContent = {
   seo: {
-    title: "Blog - Makeup Artistry Insights | Ash Shaw - Makeup Artist",
+    title: "Insights | Ash Shaw",
     description: "Explore tutorials, behind-the-scenes insights, and creative inspiration from the world of festival and UV makeup artistry."
   },
   hero: {

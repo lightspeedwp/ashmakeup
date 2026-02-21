@@ -40,6 +40,8 @@ export function Logo({
           src={logoImage}
           alt={branding.logo.alt}
           className="logo__image logo__image--light"
+          loading="eager"
+          decoding="async"
         />
       )}
 

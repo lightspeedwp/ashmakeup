@@ -6,23 +6,37 @@
  * CMS for dynamic content while providing static fallbacks for development.
  * 
  * @author Ash Shaw Portfolio Team
- * @version 1.5.0 - Clickable Tags
+ * @version 2.0.0 - Analytics hook integration
  */
 
 import React, { useEffect, useState } from 'react';
 import { useBlogPost } from '../../../hooks/useContentful';
 import { type BlogPost } from '../../../data/types/blog';
-import { ImageWithFallback } from '../../figma/ImageWithFallback';
-import { ScrollToTop } from '../../ui/ScrollToTop';
+import { OptimizedImage } from '../../ui/OptimizedImage';
 import { ShareComponent } from '../../ui/ShareComponent';
+import { Breadcrumbs } from '../../ui/Breadcrumbs';
+import { FaqSection } from '../../sections/FaqSection';
 import { Calendar, Clock, Tag, User, ArrowLeft, BookOpen, Eye, Share2, Instagram, Facebook, Heart } from 'lucide-react';
 import { blogUI } from '../../../data/mock/ui/blog';
 import { markdownToHtml } from '../../../utils/simpleMarkdown';
 import { useAppNavigate } from '../../../hooks/useAppNavigate';
-import { useParams } from 'react-router';
+import { useAnalytics } from '../../../hooks/useAnalytics';
+import { useThrottledCallback } from '../../../hooks/useDebounce';
+import { useParams, useNavigate } from 'react-router';
 import { formatDate } from '../../../utils/formatDate';
 import ashShawAvatar from 'figma:asset/e46fceb6809b8f1b7ef5c578d40578eadf301207.png';
 import "@/styles/blocks/blog-page.css";
+
+import { setSEO } from '../../../utils/seo';
+import { pageSEO, blogPostSEO } from '../../../data/mock/seo';
+import {
+  injectSchema,
+  removeSchema,
+  SCHEMA_IDS,
+  buildArticleSchema,
+} from '../../../utils/schemaService';
+
+import { blogPostBreadcrumbs } from "../../../data/mock/ui/breadcrumbs";
 
 interface BlogPostPageProps {
   slug?: string;
@@ -42,11 +56,31 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
   const params = useParams<{ slug: string }>();
   const slug = slugProp || params.slug || '';
   const setCurrentPage = useAppNavigate();
+  const navigate = useNavigate();
   const { data: post, loading, error } = useBlogPost(slug);
   const [readingProgress, setReadingProgress] = useState(0);
   const [likes, setLikes] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [views, setViews] = useState(0);
+
+  /* Analytics: reading time estimation + history tracking */
+  const { readingTime: estimatedReadTime } = useAnalytics('blog', slug, {
+    title: post?.title,
+    content: post?.content,
+    skip: !post,
+  });
+
+  useEffect(() => {
+    if (post) {
+      setSEO(blogPostSEO(post.title, post.excerpt));
+      injectSchema(SCHEMA_IDS.article, buildArticleSchema(post));
+    } else if (!loading) {
+      setSEO(pageSEO.notFound);
+    }
+    return () => {
+      removeSchema(SCHEMA_IDS.article);
+    };
+  }, [post, loading]);
 
   useEffect(() => {
     // Mock view count
@@ -92,17 +126,18 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
     localStorage.setItem(`blog-isliked-${slug}`, newIsLiked.toString());
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = (winScroll / height) * 100;
-      setReadingProgress(scrolled);
-    };
+  /* Throttled reading progress bar scroll handler */
+  const updateReadingProgress = useThrottledCallback(() => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+    setReadingProgress(scrolled);
+  }, 50);
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  useEffect(() => {
+    window.addEventListener('scroll', updateReadingProgress, { passive: true });
+    return () => window.removeEventListener('scroll', updateReadingProgress);
+  }, [updateReadingProgress]);
 
   const handleBackToBlog = () => {
     setCurrentPage('blog');
@@ -110,23 +145,13 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
 
   // Handle clickable tags
   const handleTagClick = (tag: string) => {
-    // Navigate to blog list filtered by tag (though our current blog list logic 
-    // primarily supports category filtering, we can pass it as a search query or implement tag support later.
-    // For now, let's reset to blog page. Ideally, we'd pass `tag` if `useBlogPosts` supported it directly 
-    // or through search params.)
-    // Since `setCurrentPage` signature is (page, slug, category), and doesn't explicitly have 'tag',
-    // we will simulate tag filtering by navigating to blog. 
-    // If the BlogPage supported tags, we'd pass it. 
-    // Looking at BlogPage.tsx, it has local state for tags but no direct props setter other than initialCategory.
-    // We'll just go to blog page for now, or if we want to be fancy, we could try to pass it as category if appropriate,
-    // but that might be confusing. 
-    // Best effort: Go to blog page.
-    setCurrentPage('blog');
+    const tagSlug = tag.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    navigate(`/blog/tag/${tagSlug}`);
   };
 
   if (loading) {
     return (
-      <div className="blog-post-view">
+      <div className="blog-post-view bg-atomic-noise">
         <main id="main-content" role="main" tabIndex={-1} className="container-wide py-fluid-lg">
           <div className="blog-post-skeleton">
             <div className="skeleton-bar skeleton-bar--title"></div>
@@ -140,7 +165,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
 
   if (error || !post) {
     return (
-      <div className="blog-post-view">
+      <div className="blog-post-view bg-atomic-noise">
         <main id="main-content" role="main" tabIndex={-1} className="container-wide py-fluid-lg">
           <div className="error-card">
             <button
@@ -215,7 +240,9 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
 
       <main id="main-content" role="main" tabIndex={-1} className="container-wide py-fluid-lg">
         <article className="blog-article">
-          <nav className="mb-fluid-lg" aria-label="Blog navigation">
+          <Breadcrumbs items={blogPostBreadcrumbs(post.title)} />
+
+          <nav aria-label="Blog navigation">
             <button
               onClick={handleBackToBlog}
               className="back-to-blog-btn"
@@ -227,13 +254,16 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
           </nav>
 
           <header className="blog-article__header">
-            <h2 className="text-section-h2 mb-fluid-md">
+            <h2 className="text-section-h2">
               {post.title}
             </h2>
 
-            <div className="mb-fluid-md">
+            <div>
               <button 
-                onClick={() => setCurrentPage('blog', undefined, post.category)}
+                onClick={() => {
+                  const catSlug = post.category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                  navigate(`/blog/category/${catSlug}`);
+                }}
                 className="category-badge"
                 aria-label={`View all posts in ${post.category}`}
               >
@@ -269,15 +299,16 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
 
           {post.featuredImage && (
             <div className="blog-article__image-container">
-              <ImageWithFallback
+              <OptimizedImage
                 src={post.featuredImage.url}
                 alt={post.featuredImage.alt || post.title}
                 className="blog-article__image"
+                preset="content"
               />
             </div>
           )}
 
-          <div className="blog-article__content py-section-md">
+          <div className="blog-article__content">
             {post.excerpt && (
               <div className="blog-article__excerpt">
                 {post.excerpt}
@@ -297,7 +328,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
               className={`engagement-btn ${isLiked ? 'engagement-btn--liked' : ''}`}
               aria-label={isLiked ? 'Unlike this post' : 'Like this post'}
             >
-              <Heart className={`icon-md ${isLiked ? 'fill-current' : ''}`} />
+              <Heart className={`icon-md ${isLiked ? 'engagement-btn__icon--filled' : ''}`} />
               <span>{likes}</span>
             </button>
           </div>
@@ -353,22 +384,28 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
             </div>
           </section>
 
+          {/* Per-item FAQs — shown only if the post has item-level FAQs */}
+          {post.faqs && post.faqs.length > 0 && (
+            <FaqSection items={post.faqs} />
+          )}
+
           {/* Author Section - Hardcoded as requested */}
           <section className="author-section">
-            <h2 className="text-section-h2 mb-fluid-md">
+            <h2 className="text-section-h2">
               {blogUI.post.sections.author.title}
             </h2>
             <div className="author-card">
-              <img
+              <OptimizedImage
                 src={AUTHOR_PROFILE.avatar}
                 alt={`${AUTHOR_PROFILE.name} profile photo`}
                 className="author-avatar"
+                preset="thumbnail"
               />
               <div className="author-info">
                 <h3 className="author-name">
                   {AUTHOR_PROFILE.name}
                 </h3>
-                <p className="author-bio mb-fluid-sm">
+                <p className="author-bio">
                   {AUTHOR_PROFILE.bio}
                 </p>
                 
@@ -392,7 +429,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
           </section>
 
           <section className="related-posts-section">
-            <h2 className="text-section-h2 mb-fluid-md text-center">
+            <h2 className="text-section-h2 text-center">
               {blogUI.post.sections.related.title}
             </h2>
             <div className="related-posts-container">
@@ -410,11 +447,6 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
           </section>
         </article>
       </main>
-
-      <ScrollToTop 
-        showAfter={300}
-        ariaLabel="Scroll to top of blog post"
-      />
     </div>
   );
 }

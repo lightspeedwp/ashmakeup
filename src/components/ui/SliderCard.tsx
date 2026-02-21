@@ -3,13 +3,16 @@
  * Universal card component for all portfolio sections with advanced slider functionality
  *
  * @author Ash Shaw Portfolio Team
- * @version 3.3.0 - Semantic BEM Refactor
+ * @version 3.6.0 - React.memo for render optimisation
  */
 
-import React, { useState } from "react";
+import React, { useState, useCallback, memo } from "react";
 import { ChevronLeft, ChevronRight, Play, Calendar } from "lucide-react";
+import { useNavigate } from "react-router";
 import { usePortfolioImageUrl } from "./PortfolioImage";
+import { useOptimizedImage } from "../../hooks/useOptimizedImage";
 import { formatDate } from "../../utils/formatDate";
+import { PORTFOLIO_CATEGORIES } from "../../utils/portfolioService";
 import "@/styles/blocks/slider-card.css";
 
 /**
@@ -32,7 +35,7 @@ interface CardData {
   title: string;
   subtitle?: string;
   location?: string;
-  description: string;
+  description?: string;
   image?: string; // Legacy single image support
   images?: SliderImage[]; // New multi-image support
   category?: string;
@@ -54,13 +57,14 @@ interface SliderCardProps {
 /**
  * Enhanced SliderCard component with multi-image carousel functionality
  */
-export function SliderCard({
+function SliderCardInner({
   data,
   onImageClick,
   onReadMore,
   className = "",
   variant = 'default',
 }: SliderCardProps) {
+  const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(
     null,
@@ -97,6 +101,7 @@ export function SliderCard({
 
   // Resolve image URL for CSS background usage
   const resolvedImageUrl = usePortfolioImageUrl(displayImageSrc);
+  const { src: optimizedImageUrl } = useOptimizedImage(resolvedImageUrl, { preset: 'thumbnail' });
 
   // Minimum swipe distance for touch navigation - reduced for better mobile responsiveness
   const minSwipeDistance = 30;
@@ -211,6 +216,21 @@ export function SliderCard({
 
   const subtitleText = data.subtitle || data.location;
 
+  const getCategorySlug = useCallback((): string | null => {
+    if (!data.category) return null;
+    const cat = PORTFOLIO_CATEGORIES.find(c => c.id === data.category || c.name === data.category);
+    return cat && cat.slug && cat.slug !== 'all' ? cat.slug : null;
+  }, [data.category]);
+
+  const handleCategoryClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const slug = getCategorySlug();
+    if (slug) {
+      navigate(`/portfolio/category/${slug}`);
+    }
+  }, [getCategorySlug, navigate]);
+
   return (
     <div
       className={`slider-card group ${className}`}
@@ -224,7 +244,7 @@ export function SliderCard({
       <div
         className="slider-card__image-container"
         style={{
-          backgroundImage: `url('${resolvedImageUrl}')`,
+          backgroundImage: `url('${optimizedImageUrl}')`,
         }}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
@@ -239,11 +259,19 @@ export function SliderCard({
         )}
 
         {/* Category Chip - Top right corner (always visible when category exists) */}
-        {data.category && (
-          <div className="slider-card__category">
-            {data.category}
-          </div>
-        )}
+        {data.category && (() => {
+          const slug = getCategorySlug();
+          return (
+            <a
+              href={slug ? `/portfolio/category/${slug}` : '/portfolio'}
+              className="slider-card__category clickable"
+              onClick={handleCategoryClick}
+              aria-label={`View all ${data.category} portfolio entries`}
+            >
+              {data.category}
+            </a>
+          );
+        })()}
 
         {/* Multi-image Navigation Controls */}
         {hasMultipleImages && (
@@ -325,10 +353,6 @@ export function SliderCard({
           </p>
         )}
 
-        <p className="slider-card__description">
-          {data.description}
-        </p>
-
         <div className="slider-card__footer">
           <div className="slider-card__footer-content">
             {data.date && (
@@ -359,3 +383,5 @@ export function SliderCard({
     </div>
   );
 }
+
+export const SliderCard = memo(SliderCardInner);

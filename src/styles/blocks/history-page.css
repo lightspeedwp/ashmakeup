@@ -1,0 +1,167 @@
+/** History Page Styles */
+
+.history-page {
+    min-height: 100vh;
+}
+
+.history-page__hero {
+    padding: var(--wp--preset--spacing--fluid-2xl) 0;
+    text-align: center;
+    background-color: var(--wp--preset--color--atomic-black);
+    background-size: cover;
+    background-position: center;
+}
+
+.history-page__hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--wp--preset--spacing--fluid-md);
+}
+
+.history-page__hero-badge {
+    display: inline-block;
+    padding: 0.5em 1em;
+    background: rgba(255, 16, 240, 0.1);
+    color: var(--wp--preset--color--neon-pink);
+    border: 1px solid var(--wp--preset--color--neon-pink);
+    border-radius: 20px;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--wp--preset--spacing--fluid-md);
+}
+
+.history-page__timeline {
+    padding: var(--wp--preset--spacing--fluid-3xl) 0;
+}
+
+.history-page__timeline-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    padding: 0 var(--wp--preset--spacing--fluid-md);
+}
+
+/* Vertical Line */
+.history-page__connector {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, 
+        rgba(255, 16, 240, 0) 0%,
+        var(--wp--preset--color--neon-pink) 20%, 
+        var(--wp--preset--color--neon-purple) 50%, 
+        var(--wp--preset--color--neon-cyan) 80%,
+        rgba(0, 243, 255, 0) 100%);
+    transform: translateX(-50%);
+    box-shadow: 0 0 15px var(--wp--preset--color--neon-purple);
+}
+
+.history-milestone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: var(--wp--preset--spacing--fluid-3xl);
+    position: relative;
+    width: 100%;
+}
+
+.history-milestone__dot {
+    position: absolute;
+    left: 50%;
+    width: 48px;
+    height: 48px;
+    background: var(--wp--preset--color--atomic-black);
+    border: 3px solid var(--wp--preset--color--neon-cyan);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+}
+
+.history-milestone__dot-icon {
+    color: var(--wp--preset--color--neon-cyan);
+    width: 24px;
+    height: 24px;
+}
+
+.history-milestone__body {
+    width: 45%;
+    padding: var(--wp--preset--spacing--fluid-lg);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--wp--preset--border-radius--lg);
+    backdrop-filter: blur(5px);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.history-milestone__body:hover {
+    transform: translateY(-5px);
+    border-color: var(--wp--preset--color--neon-pink);
+    box-shadow: 0 0 30px rgba(255, 16, 240, 0.1);
+}
+
+/* Alternate positioning */
+.history-milestone--left {
+    justify-content: flex-start;
+}
+
+.history-milestone--left .history-milestone__body {
+    margin-right: auto;
+    text-align: right;
+    border-right: 4px solid var(--wp--preset--color--neon-purple);
+}
+
+.history-milestone--right {
+    justify-content: flex-end;
+}
+
+.history-milestone--right .history-milestone__body {
+    margin-left: auto;
+    text-align: left;
+    border-left: 4px solid var(--wp--preset--color--neon-purple);
+}
+
+.history-milestone__date {
+    display: block;
+    font-family: var(--wp--preset--font-family--brand-mono);
+    color: var(--wp--preset--color--neon-yellow);
+    margin-bottom: var(--wp--preset--spacing--fluid-sm);
+    font-weight: bold;
+}
+
+.history-milestone__title {
+    font-family: var(--wp--preset--font-family--brand-heading);
+    font-size: var(--wp--preset--font-size--400);
+    color: var(--wp--preset--color--white);
+    margin-bottom: var(--wp--preset--spacing--fluid-sm);
+}
+
+.history-milestone__desc {
+    color: var(--wp--preset--color--neutral-300);
+    line-height: 1.6;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .history-page__connector {
+        left: 20px;
+    }
+
+    .history-milestone__dot {
+        left: 20px;
+    }
+
+    .history-milestone__body {
+        width: calc(100% - 60px);
+        margin-left: 60px !important;
+        text-align: left !important;
+        border-right: none !important;
+        border-left: 4px solid var(--wp--preset--color--neon-purple);
+    }
+}

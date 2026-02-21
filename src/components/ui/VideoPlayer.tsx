@@ -1,14 +1,17 @@
 /**
  * Video Player Component
  * 
- * Accessible video player with custom controls and responsive design
+ * Unified video player supporting:
+ * - Direct video files (MP4, WebM) with custom controls
+ * - YouTube embeds (detected by URL pattern)
+ * - Vimeo embeds (detected by URL pattern)
  * 
  * @component
- * @returns {JSX.Element} Video player with controls
- * @version 1.1.1 - Semantic BEM Refactor
+ * @author Ash Shaw Portfolio Team
+ * @version 2.0.0 - YouTube/Vimeo embed support
  */
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
 import "@/styles/blocks/video-player.css";
 
@@ -22,7 +25,103 @@ interface VideoPlayerProps {
   muted?: boolean;
 }
 
+/**
+ * Detects if a URL is a YouTube or Vimeo embed URL
+ */
+function detectPlatform(src: string): 'youtube' | 'vimeo' | 'direct' {
+  if (
+    src.includes('youtube.com/embed') ||
+    src.includes('youtube.com/watch') ||
+    src.includes('youtu.be/')
+  ) {
+    return 'youtube';
+  }
+  if (
+    src.includes('vimeo.com') ||
+    src.includes('player.vimeo.com')
+  ) {
+    return 'vimeo';
+  }
+  return 'direct';
+}
+
+/**
+ * Normalises a YouTube URL to an embed URL
+ */
+function getEmbedUrl(src: string, platform: 'youtube' | 'vimeo'): string {
+  if (platform === 'youtube') {
+    // Already an embed URL
+    if (src.includes('youtube.com/embed')) return src;
+    // Standard watch URL → embed
+    const watchMatch = src.match(/[?&]v=([a-zA-Z0-9_-]+)/);
+    if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`;
+    // youtu.be short URL
+    const shortMatch = src.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+    if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`;
+    return src;
+  }
+  if (platform === 'vimeo') {
+    if (src.includes('player.vimeo.com')) return src;
+    const vimeoMatch = src.match(/vimeo\.com\/(\d+)/);
+    if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+    return src;
+  }
+  return src;
+}
+
 export function VideoPlayer({
+  src,
+  poster,
+  title = 'Video',
+  className = '',
+  autoPlay = false,
+  loop = false,
+  muted = false
+}: VideoPlayerProps) {
+  const platform = useMemo(() => detectPlatform(src), [src]);
+
+  /* ── Embed player (YouTube / Vimeo) ── */
+  if (platform !== 'direct') {
+    const embedUrl = getEmbedUrl(src, platform);
+    const params = new URLSearchParams();
+    if (autoPlay) params.set('autoplay', '1');
+    if (loop) params.set('loop', '1');
+    if (muted) params.set('mute', '1');
+    const separator = embedUrl.includes('?') ? '&' : '?';
+    const fullUrl = params.toString()
+      ? `${embedUrl}${separator}${params.toString()}`
+      : embedUrl;
+
+    return (
+      <div className={`video-player video-player--embed ${className}`}>
+        <iframe
+          className="video-player__iframe"
+          src={fullUrl}
+          title={title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          loading="lazy"
+        />
+      </div>
+    );
+  }
+
+  /* ── Direct video player (MP4 / WebM) ── */
+  return <DirectVideoPlayer
+    src={src}
+    poster={poster}
+    title={title}
+    className={className}
+    autoPlay={autoPlay}
+    loop={loop}
+    muted={muted}
+  />;
+}
+
+/**
+ * Direct video player with custom controls (for non-embed video files)
+ */
+function DirectVideoPlayer({
   src,
   poster,
   title = 'Video',

@@ -9,23 +9,32 @@
  * @since 2025-01-03
  */
 
-import React from "react";
+import React, { useEffect } from "react";
 import { TypeformEmbed } from "../../common/TypeformEmbed";
 import { SocialLinks } from "../../common/SocialLinks";
+import { Breadcrumbs } from "../../ui/Breadcrumbs";
 import { FaqSection } from "../../sections/FaqSection";
+import { OptimizedImage } from "../../ui/OptimizedImage";
 import { contactUI } from "../../../data/mock/ui/contact";
+import { contactBreadcrumbs } from "../../../data/mock/ui/breadcrumbs";
 import contactGraphic from "figma:asset/6095d8818a83e64a063161f9df091d561fde7105.png";
 import "@/styles/blocks/contact-page.css";
+
+import { setSEO } from '../../../utils/seo';
+import { pageSEO } from '../../../data/mock/seo';
 
 /**
  * ContactPage - Dedicated contact page with form and social links
  * Uses the shared global Footer from RootLayout (no inline footer)
  */
 export function ContactPage() {
+  useEffect(() => {
+    setSEO(pageSEO.contact);
+  }, []);
+
   return (
-    <div className="contact-page-container">
-      {/* Background decoration — noise texture now handled via ::before in CSS */}
-      <div className="contact-page-bg-noise" aria-hidden="true" />
+    <div className="contact-page-container bg-atomic-noise">
+      {/* Background decoration */}
       <div className="contact-decoration-1" aria-hidden="true" />
       <div className="contact-decoration-2" aria-hidden="true" />
 
@@ -35,6 +44,7 @@ export function ContactPage() {
       >
         {/* Page Header */}
         <div className="contact-page-header">
+          <Breadcrumbs items={contactBreadcrumbs} centered />
           <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-fluid-md">
             {contactUI.header.title}
           </h1>
@@ -67,7 +77,7 @@ export function ContactPage() {
 
             {/* FAQ Section */}
             <div className="contact-page-faq-inline">
-              <FaqSection />
+              <FaqSection pageId="contact" />
             </div>
           </div>
 
@@ -83,10 +93,11 @@ export function ContactPage() {
             
             {/* Contact Graphic */}
             <div className="contact-page-graphic">
-              <img 
+              <OptimizedImage 
                 src={contactGraphic} 
-                alt="Ash Shaw makeup artist illustration"
+                alt={contactUI.graphic.alt}
                 className="contact-page-graphic-image"
+                preset="content"
               />
             </div>
           </div>

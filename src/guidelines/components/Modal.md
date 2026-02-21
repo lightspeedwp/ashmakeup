@@ -746,28 +746,33 @@ function MultiStepModal() {
 
 ### Animated Modal
 
-```tsx
-import { motion, AnimatePresence } from 'motion/react';
+> **Note:** This project uses pure CSS animations (never `motion/react`).
+> Use CSS keyframes and classes for modal entrance/exit transitions.
 
-<AnimatePresence>
-  {isOpen && (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50"
-    >
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-        className="bg-white rounded-2xl"
-      >
-        {/* Modal content */}
-      </motion.div>
-    </motion.div>
-  )}
-</AnimatePresence>
+```tsx
+{isOpen && (
+  <div className="modal-overlay animate-fade-in">
+    <div className="modal__content animate-scale-in">
+      {/* Modal content */}
+    </div>
+  </div>
+)}
+```
+
+```css
+/* In /styles/globals.css */
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modal-scale-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in { animation: modal-fade-in 0.2s ease-out; }
+.animate-scale-in { animation: modal-scale-in 0.3s ease-out; }
 ```
 
 ---

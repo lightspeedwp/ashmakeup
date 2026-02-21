@@ -8,12 +8,12 @@
  * @version 4.0.0 - Pure Responsive Grid Layout
  */
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Palette, Layers, Fingerprint, Zap, Droplets, Sparkles } from "lucide-react";
 import { Compass, Music, Building2, Flashlight, Paintbrush, Wand2, Brain, Rocket } from "lucide-react";
 import "../../../styles/globals.css";
 import { HeroLayout } from "../../sections/HeroLayout";
-import { ScrollToTop } from "../../ui/ScrollToTop";
+import { FaqSection } from "../../sections/FaqSection";
 
 import { SectionCard } from "../../ui/SectionCard";
 import { ABOUT_SECTION_THEMES } from "../../common/Constants";
@@ -24,11 +24,28 @@ import { useAboutPageContent } from "../../../hooks/useContentful";
 import { useAppNavigate } from "../../../hooks/useAppNavigate";
 import "@/styles/blocks/about-page.css";
 
+import { setSEO } from '../../../utils/seo';
+import { pageSEO } from '../../../data/mock/seo';
+import {
+  injectSchema,
+  removeSchema,
+  SCHEMA_IDS,
+  buildPersonSchema,
+} from '../../../utils/schemaService';
+
 /**
  * About page component providing Ash Shaw's complete makeup artistry story with Contentful CMS integration
  */
 export function AboutPage() {
   const setCurrentPage = useAppNavigate();
+
+  useEffect(() => {
+    setSEO(pageSEO.about);
+    injectSchema(SCHEMA_IDS.person, buildPersonSchema());
+    return () => {
+      removeSchema(SCHEMA_IDS.person);
+    };
+  }, []);
 
   // Fetch dynamic about page content from Contentful
   const {
@@ -154,13 +171,11 @@ export function AboutPage() {
 
   // Extract content with fallbacks to static content
   const heroTitle =
-    aboutContent?.hero.title || "My journey through";
+    aboutContent?.hero.title || aboutHero.title;
   const heroSubtitle =
-    aboutContent?.hero.subtitle ||
-    "colour, creativity, and connection since 2019.";
+    aboutContent?.hero.subtitle || aboutHero.subtitle;
   const heroDescription =
-    aboutContent?.hero.description ||
-    "What began as simple experimentation quickly turned into a passion that's taken me from intimate gatherings to massive festival stages, from underground Berlin clubs to innovative UV explorations. This is my story of colour, connection, and creative growth.";
+    aboutContent?.hero.description || aboutHero.description;
   const heroImage = aboutContent?.hero.image
     ? {
         src: aboutContent.hero.image.url,
@@ -189,17 +204,17 @@ export function AboutPage() {
         subtitle={
           <>
             <em className="text-gradient-pink-rose">
-              colour
+              {aboutUI.hero.subtitle.words[0]}
             </em>
             ,{" "}
             <em className="text-gradient-purple-violet">
-              creativity
+              {aboutUI.hero.subtitle.words[1]}
             </em>
             , and{" "}
             <em className="text-gradient-blue-cyan">
-              connection
+              {aboutUI.hero.subtitle.words[2]}
             </em>{" "}
-            since 2019.
+            {aboutUI.hero.subtitle.suffix}
           </>
         }
         description={heroDescription}
@@ -241,16 +256,7 @@ export function AboutPage() {
       />
 
       {/* Sections between Hero and Footer */}
-      <div className="about-content">
-        {/* Section-scoped noise texture (inline style bypasses CSS bundler) */}
-        <div
-          className="about-content__noise"
-          aria-hidden="true"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-          }}
-        ></div>
-
+      <div className="about-content bg-atomic-noise">
         {/* Journey Section */}
         <SectionCard
           id="journey-section"
@@ -266,6 +272,7 @@ export function AboutPage() {
 
         {/* Festival Section */}
         <SectionCard
+          id="festival-section"
           title={aboutUI.sections.festival.title}
           theme={ABOUT_SECTION_THEMES.festival}
           icon={Music}
@@ -280,6 +287,7 @@ export function AboutPage() {
 
         {/* Berlin Nights Section */}
         <SectionCard
+          id="berlin-section"
           title={aboutUI.sections.berlin.title}
           theme={ABOUT_SECTION_THEMES.berlin}
           quote={aboutUI.sections.berlin.quote}
@@ -295,6 +303,7 @@ export function AboutPage() {
 
         {/* UV Makeup Section */}
         <SectionCard
+          id="uv-section"
           title={aboutUI.sections.uv.title}
           theme={ABOUT_SECTION_THEMES.uv}
           icon={Flashlight}
@@ -318,6 +327,7 @@ export function AboutPage() {
 
         {/* Mousse Makeup Section */}
         <SectionCard
+          id="mousse-section"
           title={aboutUI.sections.mousse.title}
           theme={ABOUT_SECTION_THEMES.mousse}
           icon={Paintbrush}
@@ -346,6 +356,7 @@ export function AboutPage() {
 
         {/* UV Makeup Section (Nails theme) */}
         <SectionCard
+          id="uv-makeup-section"
           title={aboutUI.sections.uvMakeup.title}
           theme={ABOUT_SECTION_THEMES.nails}
           icon={Wand2}
@@ -371,6 +382,7 @@ export function AboutPage() {
 
         {/* Creative Process Section */}
         <SectionCard
+          id="creative-section"
           title={aboutUI.sections.creative.title}
           theme={ABOUT_SECTION_THEMES.creative}
           quote={aboutUI.sections.creative.quote}
@@ -386,6 +398,7 @@ export function AboutPage() {
 
         {/* Looking Forward Section */}
         <SectionCard
+          id="future-section"
           title={aboutUI.sections.future.title}
           theme={ABOUT_SECTION_THEMES.future}
           icon={Rocket}
@@ -408,13 +421,10 @@ export function AboutPage() {
             {aboutPageText.future[1]}
           </p>
         </SectionCard>
-      </div>
 
-      {/* Scroll to Top Button */}
-      <ScrollToTop
-        showAfter={300}
-        ariaLabel="Scroll to top of about page"
-      />
+        {/* FAQ Section */}
+        <FaqSection pageId="about" />
+      </div>
     </div>
   );
 }
