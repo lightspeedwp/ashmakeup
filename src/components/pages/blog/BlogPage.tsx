@@ -19,6 +19,7 @@ import { ArchiveFilters } from '../../ui/ArchiveFilters';
 import { blogUI } from '../../../data/mock/ui/blog';
 import { blogPageContent } from '../../../data/mock/pages/blog';
 import { blogCategories } from '../../../data/mock/blog/categories';
+import { emptyStateMessages } from '../../../data/mock/ui/error';
 import { useAppNavigate } from '../../../hooks/useAppNavigate';
 import { useSearchParams } from 'react-router';
 import { formatDate } from '../../../utils/formatDate';

@@ -22,6 +22,7 @@ export const historyPageData = {
     title: 'History',
     description:
       'A chronological look at the milestones that shaped Ash Shaw\u2019s makeup art journey \u2014 from a first brush stroke in Berlin to international festival stages.',
+    image: 'https://images.unsplash.com/photo-1528922087877-3f44f53a8f7d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZW9uJTIwbGlnaHQlMjB0cmFpbCUyMHRpbWVsaW5lJTIwYWJzdHJhY3QlMjBwYXRofGVufDF8fHx8MTc3MTY4NzEwNHww&ixlib=rb-4.1.0&q=80&w=1080'
   },
 
   breadcrumbs: [

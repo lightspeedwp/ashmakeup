@@ -7,6 +7,7 @@ export const pressKitData = {
     title: 'Press & Media Kit',
     subtitle: 'Resources for Organizers & Journalists',
     description: 'Download high-resolution assets, official biographies, and brand guidelines for features, interviews, and festival lineups.',
+    image: 'https://images.unsplash.com/photo-1652341483339-9ad5eef3ea74?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZW9uJTIwcHVycGxlJTIwcGluayUyMGJsdWUlMjBhYnN0cmFjdCUyMGJhY2tncm91bmR8ZW58MXx8fHwxNzcxNjg3MTA0fDA&ixlib=rb-4.1.0&q=80&w=1080'
   },
   
   bios: {

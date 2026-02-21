@@ -25,6 +25,10 @@ export const pageTaglines: Record<string, string> = {
   search: "Find anything across the entire site",
   stickers: "Collectible art prints from the neon universe",
   "style-guide": "The design system powering the portfolio",
+  press: "Official bios, photos, and brand assets for media use",
+  toolkit: "The gear, pigments, and tech in Ash's festival bag",
+  "next-festival": "Countdown to the next major event appearance",
+  accessibility: "Our commitment to inclusive digital experiences",
 };
 
 /**
@@ -39,6 +43,10 @@ export interface SitemapPageEntry {
 }
 
 export const sitemapExtraPages: SitemapPageEntry[] = [
+  { id: "press", label: "Press Kit", path: "/press", icon: "Newspaper" },
+  { id: "toolkit", label: "The Toolkit", path: "/toolkit", icon: "Wrench" },
+  { id: "next-festival", label: "Next Festival", path: "/next-festival", icon: "Calendar" },
+  { id: "accessibility", label: "Accessibility Statement", path: "/about/accessibility", icon: "UserCircle" },
   { id: "faq", label: "FAQ", path: "/faq", icon: "HelpCircle" },
   { id: "feedback", label: "Feedback", path: "/feedback", icon: "MessageSquare" },
   { id: "podcasts", label: "Podcasts", path: "/podcasts", icon: "Mic" },

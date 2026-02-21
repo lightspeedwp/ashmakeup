@@ -35,6 +35,8 @@ export const accessibilityPageData = {
   ],
 
   contact: {
+    title: 'Contact Us',
+    emailLabel: 'Email: ',
     email: 'accessibility@ashshaw.makeup',
     response_time: 'We aim to respond to accessibility feedback within 3 business days.'
   }

@@ -247,6 +247,14 @@ export const hiddenAboutData: HiddenAboutData = {
       icon: 'Activity',
     },
     {
+      id: 'manifesto',
+      label: 'Manifesto',
+      tagline: 'Neon vs Atomic Black — The Philosophy',
+      href: '/about/manifesto',
+      accent: 'red',
+      icon: 'BookOpenCheck',
+    },
+    {
       id: 'six-cats',
       label: 'Six Cats Club',
       tagline: 'Craft cannabis, consciously cultivated in Cape Town',

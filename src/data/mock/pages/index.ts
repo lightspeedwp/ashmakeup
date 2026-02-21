@@ -33,3 +33,21 @@ export * from './hidden-about';
 
 // Six Cats Club page content
 export * from './six-cats';
+
+// Press Kit
+export * from './press';
+
+// Gear Page
+export * from './gear';
+
+// History Page
+export * from './history';
+
+// Manifesto Page
+export * from './manifesto';
+
+// Festival Landing Page
+export * from './festival';
+
+// Accessibility Statement
+export * from './accessibility';

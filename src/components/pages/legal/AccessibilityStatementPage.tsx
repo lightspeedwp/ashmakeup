@@ -54,9 +54,9 @@ export function AccessibilityStatementPage() {
             ))}
 
             <section className="accessibility-contact bg-neutral-900 p-fluid-xl rounded-xl border border-neutral-800">
-                <h2 className="text-section-h3 text-white mb-fluid-md">Contact Us</h2>
+                <h2 className="text-section-h3 text-white mb-fluid-md">{accessibilityPageData.contact.title}</h2>
                 <p className="text-body-p text-neutral-400 mb-fluid-md">
-                    Email: <a href={`mailto:${accessibilityPageData.contact.email}`} className="text-neon-cyan hover:underline">{accessibilityPageData.contact.email}</a>
+                    {accessibilityPageData.contact.emailLabel}<a href={`mailto:${accessibilityPageData.contact.email}`} className="text-neon-cyan hover:underline">{accessibilityPageData.contact.email}</a>
                 </p>
                 <p className="text-body-sm text-neutral-500">
                     {accessibilityPageData.contact.response_time}

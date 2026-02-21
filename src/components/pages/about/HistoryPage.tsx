@@ -32,7 +32,7 @@ export function HistoryPage() {
       <header 
         className="history-page__hero"
         style={{
-            backgroundImage: `radial-gradient(circle at center, rgba(15, 15, 15, 0) 0%, rgba(15, 15, 15, 1) 80%), url('https://images.unsplash.com/photo-1528922087877-3f44f53a8f7d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZW9uJTIwbGlnaHQlMjB0cmFpbCUyMHRpbWVsaW5lJTIwYWJzdHJhY3QlMjBwYXRofGVufDF8fHx8MTc3MTY4NzEwNHww&ixlib=rb-4.1.0&q=80&w=1080')`
+            backgroundImage: `radial-gradient(circle at center, rgba(15, 15, 15, 0) 0%, rgba(15, 15, 15, 1) 80%), url('${historyPageData.hero.image}')`
         }}
       >
         <div className="history-page__hero-content">

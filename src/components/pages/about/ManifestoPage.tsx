@@ -22,7 +22,7 @@ export function ManifestoPage() {
       <header 
         className="manifesto-page__hero"
         style={{
-            backgroundImage: `radial-gradient(circle at center, rgba(15, 15, 15, 0) 0%, rgba(15, 15, 15, 1) 90%), url('https://images.unsplash.com/photo-1764268602042-88b05a211378?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMG5lb24lMjBhcnQlMjBzaGFwZXMlMjBkYXJrJTIwYmFja2dyb3VuZHxlbnwxfHx8fDE3NzE2ODcxMDR8MA&ixlib=rb-4.1.0&q=80&w=1080')`
+            backgroundImage: `radial-gradient(circle at center, rgba(15, 15, 15, 0) 0%, rgba(15, 15, 15, 1) 90%), url('${manifestoPageData.hero.image}')`
         }}
       >
         <div className="container-xl text-center">
@@ -49,7 +49,7 @@ export function ManifestoPage() {
       </div>
       
       <div className="manifesto-footer text-center py-fluid-3xl">
-          <p className="text-body-lg text-neutral-400 italic">"We paint to be seen, not by the sun, but by each other in the dark."</p>
+          <p className="text-body-lg text-neutral-400 italic">"{manifestoPageData.footerQuote}"</p>
       </div>
     </main>
   );

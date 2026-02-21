@@ -6,6 +6,7 @@ export const manifestoPageData = {
   hero: {
     title: 'Neon vs Atomic Black',
     description: 'A philosophy of light, darkness, and the art that exists between them.',
+    image: 'https://images.unsplash.com/photo-1764268602042-88b05a211378?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMG5lb24lMjBhcnQlMjBzaGFwZXMlMjBkYXJrJTIwYmFja2dyb3VuZHxlbnwxfHx8fDE3NzE2ODcxMDR8MA&ixlib=rb-4.1.0&q=80&w=1080'
   },
   
   sections: [
@@ -33,5 +34,6 @@ export const manifestoPageData = {
       content: 'This art does not exist in isolation. It lives on the dance floor, in the shared breath of the crowd, under the UV cannons. It is a communal ritual. We paint to be seen, not by the sun, but by each other in the dark.',
       theme: 'neon-pink'
     }
-  ]
+  ],
+  footerQuote: "We paint to be seen, not by the sun, but by each other in the dark."
 };

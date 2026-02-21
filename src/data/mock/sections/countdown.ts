@@ -13,9 +13,9 @@ export const nextFestival = {
   dateText: "Jan 30 - Feb 1, 2026",
   location: "Helderstroom, South Africa",
   description: "The ultimate psychedelic gathering in the Cape. I'll be there with my full UV kit ready to paint. Find me on the dancefloor or book a slot.",
-  upcomingDescription: "The psychedelic countdown has begun! Book your UV makeup slot now to ensure you glow on the main floor ✨",
+  upcomingDescription: "The psychedelic countdown has begun! Contact me to discuss UV concepts for the dancefloor ✨",
   happeningText: "The beat has dropped! I'm currently at Origin Festival in Helderstroom. Come find me for spontaneous UV art! ✨",
-  ctaBook: "Book Festival Slot",
+  ctaBook: "Contact for Collab",
   ctaView: "See UV Portfolio",
   ticketLink: "#contact",
   backgroundImage: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200"

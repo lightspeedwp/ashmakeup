@@ -81,6 +81,8 @@ import {
   Compass,
   Code,
   Building2,
+  Leaf,
+  BookOpenCheck,
 } from "lucide-react";
 import { sitemapContent, tagDescriptors, pageTaglines, devToolTaglines, legalTaglines, sitemapExtraPages, sitemapLegalPages, sitemapDevToolsHub } from "../../data/mock/ui/sitemap";
 import { devToolsPageUI } from "../../data/mock/ui/dev-tools";
@@ -157,6 +159,8 @@ const ABOUT_ICONS: Record<string, React.ElementType> = {
   GraduationCap,
   Heart,
   Activity,
+  Leaf,
+  BookOpenCheck,
 };
 
 /** Map icon string names (from mock data) to Lucide components */
@@ -168,7 +172,7 @@ const ICON_MAP: Record<string, React.ElementType> = {
   BarChart3, Component, Scissors, SplitSquareHorizontal, TestTube, Search,
   Sticker, MapPin, Book, UserCircle, Paintbrush, Diamond, Clock, Plane,
   Calendar, Headphones, Music, BookOpenCheck, Bike, Brain, Waves, Briefcase,
-  GraduationCap, Heart, Compass, Code, Building2,
+  GraduationCap, Heart, Compass, Code, Building2, Leaf, BookOpenCheck,
 };
 
 export function SitemapPage() {
