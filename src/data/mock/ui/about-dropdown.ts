@@ -76,7 +76,7 @@ export const aboutDropdownItems: AboutDropdownItem[] = [
   {
     id: 'uv-makeup',
     label: 'UV Makeup Artistry',
-    icon: 'Wand2',
+    icon: 'PenTool',
     accent: 'red',
     sectionId: 'uv-makeup-section',
     subtitle: 'Dual-lighting face art',

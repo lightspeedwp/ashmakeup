@@ -92,19 +92,13 @@
   height: 1rem;
 }
 
-/* Right Column — Behold.so Widget */
-.instagram-feed__widget-col {
-  width: 100%;
-}
-
-@media (min-width: 1024px) {
-  .instagram-feed__widget-col {
-    width: 75%;
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .instagram-feed__btn {
+    transition: none;
   }
-}
 
-/* Ensure the Behold widget respects the column width */
-.instagram-feed__widget-col behold-widget {
-  display: block;
-  width: 100%;
+  .instagram-feed__btn:hover {
+    transform: none;
+  }
 }

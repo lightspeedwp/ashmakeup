@@ -12,7 +12,7 @@ import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { MapPin } from 'lucide-react';
-import '@/styles/blocks/about-subpage.css';
+import '../../../styles/blocks/about-subpage.css';
 
 export function CyclingPage() {
   useEffect(() => {

@@ -10,9 +10,9 @@
  */
 
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from '../../lib/router';
 import { ArrowRight } from 'lucide-react';
-import "@/styles/blocks/read-more-btn.css";
+import "../../styles/blocks/read-more-btn.css";
 
 /**
  * Props interface for ReadMoreButton component

@@ -8,12 +8,12 @@
 
 import React, { useState, useCallback, memo } from "react";
 import { ChevronLeft, ChevronRight, Play, Calendar } from "lucide-react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "../../lib/router";
 import { usePortfolioImageUrl } from "./PortfolioImage";
 import { useOptimizedImage } from "../../hooks/useOptimizedImage";
 import { formatDate } from "../../utils/formatDate";
 import { PORTFOLIO_CATEGORIES } from "../../utils/portfolioService";
-import "@/styles/blocks/slider-card.css";
+import "../../styles/blocks/slider-card.css";
 
 /**
  * Image interface for slider functionality
@@ -279,6 +279,7 @@ function SliderCardInner({
             {/* Desktop Navigation Arrows - Hover only with reduced opacity */}
             <div className="slider-card__nav-btn-container">
               <button
+                type="button"
                 onClick={goToPrevious}
                 className="slider-card__nav-btn slider-card__nav-btn--prev"
                 aria-label="Previous image"
@@ -288,6 +289,7 @@ function SliderCardInner({
               </button>
 
               <button
+                type="button"
                 onClick={goToNext}
                 className="slider-card__nav-btn slider-card__nav-btn--next"
                 aria-label="Next image"
@@ -320,6 +322,7 @@ function SliderCardInner({
             <div className="slider-card__pagination">
               {images.map((_, index) => (
                 <button
+                  type="button"
                   key={index}
                   onClick={(e) => goToImage(index, e)}
                   className={`slider-card__dot ${
@@ -364,6 +367,7 @@ function SliderCardInner({
 
             {onReadMore && (
               <button
+                type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   onReadMore();

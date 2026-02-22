@@ -7,7 +7,7 @@
  */
 
 import React from "react";
-import "@/styles/blocks/colorful-icons.css";
+import "../../styles/blocks/colorful-icons.css";
 
 /**
  * Icon component props interface for consistent styling across all custom icons

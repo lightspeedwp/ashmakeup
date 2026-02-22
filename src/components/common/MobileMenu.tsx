@@ -12,13 +12,14 @@
  * @version 2.0.0 - React Router Migration
  */
 
-import React, { useEffect, useRef } from "react";
-import { useLocation, useNavigate } from "react-router";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "../../lib/router";
 import { headerNavigationItems } from "../../data/mock/ui/navigation";
 import { SocialLinks } from "./SocialLinks";
 import { getPageIdFromPath } from "../../hooks/useAppNavigate";
+import { useKeyboardTrap } from "../../hooks/useKeyboardTrap";
 import { Mail } from "lucide-react";
-import "@/styles/blocks/mobile-menu.css";
+import "../../styles/blocks/mobile-menu.css";
 
 /**
  * Props interface for MobileMenu component
@@ -35,7 +36,12 @@ export function MobileMenu({
   isOpen,
   onClose,
 }: MobileMenuProps) {
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const trapRef = useKeyboardTrap<HTMLDivElement>({
+    active: isOpen,
+    onEscape: onClose,
+    autoFocus: true,
+    restoreFocus: true,
+  });
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -69,7 +75,7 @@ export function MobileMenu({
       role="dialog"
       aria-modal="true"
       aria-labelledby="mobile-menu-title"
-      ref={mobileMenuRef}
+      ref={trapRef}
     >
       {/* Decorative Orbs */}
       <div className="mobile-menu__orb mobile-menu__orb--1" aria-hidden="true" />
@@ -89,6 +95,7 @@ export function MobileMenu({
       >
         {headerNavigationItems.map((item) => (
           <button
+            type="button"
             key={item.id}
             onClick={() => handleNavigation(item.path)}
             className="mobile-menu__nav-link"

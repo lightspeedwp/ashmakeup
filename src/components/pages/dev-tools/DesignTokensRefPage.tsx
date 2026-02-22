@@ -7,11 +7,11 @@
  */
 
 import React, { useEffect, useCallback } from 'react';
-import { ChevronRight, SwatchBook } from 'lucide-react';
+import { ChevronRight, Lightbulb } from 'lucide-react';
 import { designTokensRefUI } from '../../../data/mock/ui/design-tokens-ref';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
-import '@/styles/blocks/design-tokens-ref.css';
+import '../../../styles/blocks/specimen-page.css';
+import '../../../styles/blocks/design-tokens-ref.css';
 
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
@@ -89,9 +89,10 @@ export function DesignTokensRefPage() {
   }, []);
 
   const scrollTo = useCallback((id: string) => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const el = document.getElementById(`section-${id}`);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      el.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
       /* Open the details if closed */
       if (el instanceof HTMLDetailsElement && !el.open) {
         el.open = true;

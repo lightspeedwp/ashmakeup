@@ -11,7 +11,7 @@
 import React, { Component, ReactNode } from 'react';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
 import { errorMessages } from '../../data/mock/ui/error';
-import "@/styles/blocks/button.css";
+import "../../styles/blocks/button.css";
 
 /**
  * Error boundary props interface
@@ -65,6 +65,10 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       errorMessage.includes('extension://') ||
       errorMessage.includes('chrome-extension://') ||
       errorMessage.includes('moz-extension://') ||
+      errorMessage.includes('async_hooks') ||
+      errorMessage.includes('esm.sh/node/') ||
+      error?.stack?.includes('async_hooks') ||
+      error?.stack?.includes('esm.sh/node/') ||
       error?.stack?.includes('extension://') ||
       error?.name === 'TimeoutError' ||
       error?.name === 'ExtensionError'
@@ -184,6 +188,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             {/* Action Buttons */}
             <div className="error-boundary__actions">
               <button
+                type="button"
                 onClick={this.handleRetry}
                 className="btn btn--neon-primary error-boundary__btn"
                 aria-label={`Try again (attempt ${retryCount + 1})`}
@@ -194,6 +199,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
               {retryCount > 1 && (
                 <button
+                  type="button"
                   onClick={this.handleReload}
                   className="btn btn--neon-secondary error-boundary__btn"
                   aria-label="Reload the entire page"

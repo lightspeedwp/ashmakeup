@@ -12,7 +12,7 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import {
   AlertTriangle,
-  CheckCircle2,
+  CheckCircle,
   Info,
   XCircle,
   RefreshCw,
@@ -24,7 +24,7 @@ import {
 import { accessibilityTesterUI } from '../../../data/mock/ui/accessibility-tester';
 import type { A11yIssue } from '../../../data/mock/ui/accessibility-tester';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
-import '@/styles/blocks/a11y-tester.css';
+import '../../../styles/blocks/a11y-tester.css';
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
 
@@ -357,7 +357,7 @@ export function AccessibilityTesterPage() {
 
             <div className="a11y-tester__summary-stats">
               <div className="a11y-tester__stat">
-                <CheckCircle2 className="a11y-tester__stat-icon a11y-tester__stat-icon--pass" aria-hidden="true" />
+                <CheckCircle className="a11y-tester__stat-icon a11y-tester__stat-icon--pass" aria-hidden="true" />
                 <span className="a11y-tester__stat-value">{passedCount}</span>
                 <span className="a11y-tester__stat-label">{accessibilityTesterUI.summary.passed}</span>
               </div>
@@ -391,7 +391,7 @@ export function AccessibilityTesterPage() {
 
             {issueCount === 0 ? (
               <div className="a11y-tester__no-issues">
-                <CheckCircle2 className="a11y-tester__no-issues-icon" aria-hidden="true" />
+                <CheckCircle className="a11y-tester__no-issues-icon" aria-hidden="true" />
                 <p>{accessibilityTesterUI.summary.noIssues}</p>
               </div>
             ) : (

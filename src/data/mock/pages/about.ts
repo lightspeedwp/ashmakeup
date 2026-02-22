@@ -65,7 +65,7 @@ export const philosophySection: AboutSection = {
     },
     {
       type: 'paragraph',
-      text: 'The best art happens in the moment. While I take bookings for festivals, I live for the spontaneous connections on the dancefloor. I look for the radiant souls amplifying the energy. If the vibe matches, we create magic.'
+      text: 'The best art happens in the moment. While I love working with festivals, I live for the spontaneous connections on the dancefloor. I look for the radiant souls amplifying the energy. If the vibe matches, we create magic.'
     },
     {
       type: 'heading',
@@ -152,7 +152,7 @@ export const experienceHighlights = [
  */
 export const aboutCTA = {
   title: 'Meet Me On The Trance Floor',
-  description: 'I\'m always where the music is. Check my schedule or book a session for your next festival.',
+  description: 'I\'m always where the music is. Check my schedule or connect before your next festival.',
   buttonText: 'Check Schedule',
   buttonLink: '#contact'
 };
@@ -177,7 +177,7 @@ export const aboutPageText = {
     "Here, I experiment with tribal UV patterns and bioluminescent designs that mimic the nature around us, glowing intensely under the blacklights of the psytrance stage."
   ],
   mousse: [
-    "Cape Town is my origin and my anchor. But the world is my studio. I'm always open to discussing international bookings and creative collaborations.",
+    "Cape Town is my origin and my anchor. But the world is my studio. I'm always open to international creative collaborations.",
     "Whether I'm in South Africa, Europe, or Asia, the mission is the same: to elevate the party through the power of UV color."
   ],
   uvMakeup: [

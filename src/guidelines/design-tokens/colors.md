@@ -1,7 +1,8 @@
 # Color Design Tokens
 
 **Version:** 5.0.0  
-**Last Updated:** January 2025
+**Last Updated:** February 2026  
+**Last Reviewed:** February 21, 2026
 
 Complete color system for the Ash Shaw Makeup Portfolio, featuring semantic color tokens, brand gradients, light/dark mode theming, and accessibility-compliant contrast ratios.
 

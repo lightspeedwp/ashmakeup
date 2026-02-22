@@ -18,7 +18,7 @@
  */
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router';
+import { useSearchParams, useNavigate } from '../../../lib/router';
 import {
   Search,
   FileText,
@@ -26,8 +26,7 @@ import {
   Play,
   Mic,
   Layers,
-  Filter,
-  CalendarDays,
+  Calendar,
   HelpCircle,
   BookOpen,
 } from 'lucide-react';
@@ -43,8 +42,8 @@ import { videoCategories } from '../../../data/mock/videos';
 import { podcastCategories } from '../../../data/mock/podcasts/categories';
 import type { SearchResult, SearchFilters } from '../../../data/types/search';
 import type { BreadcrumbItem } from '../../ui/Breadcrumbs';
-import '@/styles/blocks/search.css';
-import '@/styles/blocks/breadcrumbs.css';
+import '../../../styles/blocks/search.css';
+import '../../../styles/blocks/breadcrumbs.css';
 
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
@@ -61,7 +60,7 @@ const TAB_CONFIG: Record<string, { icon: React.ElementType; modifier: string }> 
   portfolio: { icon: Image,        modifier: 'portfolio' },
   video:     { icon: Play,         modifier: 'video' },
   podcast:   { icon: Mic,          modifier: 'podcast' },
-  event:     { icon: CalendarDays, modifier: 'event' },
+  event:     { icon: Calendar,     modifier: 'event' },
   faq:       { icon: HelpCircle,   modifier: 'faq' },
 };
 
@@ -72,7 +71,7 @@ const TYPE_ICONS: Record<string, React.ElementType> = {
   video:     Play,
   podcast:   Mic,
   page:      FileText,
-  event:     CalendarDays,
+  event:     Calendar,
   faq:       HelpCircle,
 };
 
@@ -232,6 +231,7 @@ export function SearchResultsPage() {
       const typeModifier = result.type;
       return (
         <button
+          type="button"
           key={result.id}
           className={`search-result-card search-result-card--${typeModifier}`}
           onClick={() => goToResult(result.url)}
@@ -340,6 +340,7 @@ export function SearchResultsPage() {
               const Icon = cfg.icon;
               return (
                 <button
+                  type="button"
                   role="tab"
                   aria-selected={activeTab === 'all'}
                   className={`search-tabs__tab search-tabs__tab--${cfg.modifier}${activeTab === 'all' ? ' search-tabs__tab--active' : ''}`}
@@ -360,6 +361,7 @@ export function SearchResultsPage() {
               const Icon = cfg.icon;
               return (
                 <button
+                  type="button"
                   key={ct.value}
                   role="tab"
                   aria-selected={activeTab === ct.value}
@@ -401,11 +403,12 @@ export function SearchResultsPage() {
             aria-label={searchUI.filterLabels.category}
           >
             <span className="search-sub-filters__label">
-              <Filter className="search-sub-filters__label-icon" aria-hidden="true" /> {searchUI.filterLabels.category}
+              <Layers className="search-sub-filters__label-icon" aria-hidden="true" /> {searchUI.filterLabels.category}
             </span>
             <div className="search-sub-filters__chips">
               {subCategories.map((sc) => (
                 <button
+                  type="button"
                   key={sc.slug}
                   className={`search-sub-filters__chip${
                     activeSubCategory === sc.slug ? ' search-sub-filters__chip--active' : ''

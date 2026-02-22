@@ -6,7 +6,7 @@
  * Caches homepage and critical assets for offline access
  */
 
-const CACHE_VERSION = 'ash-shaw-v1.0.0';
+const CACHE_VERSION = 'ash-shaw-v1.1.0';
 const CACHE_NAME = `ash-shaw-pwa-${CACHE_VERSION}`;
 
 // Assets to cache immediately on install
@@ -15,6 +15,8 @@ const PRECACHE_ASSETS = [
   '/index.html',
   '/styles/globals.css',
   '/styles/animations.css',
+  '/styles/blocks/pwa-install-prompt.css',
+  '/styles/blocks/offline-indicator.css',
   '/manifest.json',
   '/offline.html'
 ];

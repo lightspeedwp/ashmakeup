@@ -9,7 +9,7 @@
  * @version 2.0.0 - Dedicated taxonomy archive routes
  */
 
-import { useNavigate } from 'react-router';
+import { useNavigate } from '../lib/router';
 import { PORTFOLIO_CATEGORIES } from '../utils/portfolioService';
 
 /**

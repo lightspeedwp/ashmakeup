@@ -13,8 +13,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { CheckCircle, XCircle, Clock, Play } from 'lucide-react';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
-import '@/styles/blocks/deployment-readiness.css';
+import '../../../styles/blocks/specimen-page.css';
+import '../../../styles/blocks/deployment-readiness.css';
 
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
@@ -231,7 +231,7 @@ export function IntegrationTesterPage() {
           onClick={runAll}
           disabled={isRunningAll}
         >
-          <Play style={{ width: '1rem', height: '1rem', marginRight: '0.375rem', display: 'inline' }} />
+          <Play className="playground__btn-icon" />
           {isRunningAll ? 'Running...' : 'Run All Tests'}
         </button>
         {totalRun > 0 && (

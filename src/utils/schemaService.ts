@@ -153,9 +153,9 @@ export function buildArticleSchema(post: BlogPost): object {
     headline: post.title,
     description: post.excerpt,
     url: `${SITE_URL}/blog/${post.slug}`,
-    datePublished: post.publishedAt || post.publishedDate,
-    ...(post.updatedAt || post.updatedDate
-      ? { dateModified: post.updatedAt || post.updatedDate }
+    datePublished: post.publishedAt,
+    ...(post.updatedAt
+      ? { dateModified: post.updatedAt }
       : {}),
     author: {
       '@type': 'Person',
@@ -182,8 +182,8 @@ export function buildArticleSchema(post: BlogPost): object {
     ...(post.category ? { articleSection: post.category } : {}),
     ...(post.tags && post.tags.length > 0 ? { keywords: post.tags.join(', ') } : {}),
     inLanguage: 'en',
-    ...(post.readTime || post.readingTime
-      ? { timeRequired: `PT${post.readTime || post.readingTime}M` }
+    ...(post.readTime
+      ? { timeRequired: `PT${post.readTime}M` }
       : {}),
   };
 }

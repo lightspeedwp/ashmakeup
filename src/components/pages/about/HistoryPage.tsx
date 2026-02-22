@@ -14,7 +14,7 @@ import { historyPageData } from '../../../data/mock/pages/history';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
-import '@/styles/blocks/history-page.css';
+import '../../../styles/blocks/history-page.css';
 
 export function HistoryPage() {
   useEffect(() => {

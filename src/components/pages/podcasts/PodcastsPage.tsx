@@ -7,7 +7,7 @@
  */
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router';
+import { useNavigate, useSearchParams } from '../../../lib/router';
 import { Calendar, Clock, PlayCircle, Mic } from 'lucide-react';
 import { podcastEpisodes } from '../../../data/mock/podcasts/episodes';
 import { podcastCategories } from '../../../data/mock/podcasts/categories';
@@ -25,7 +25,7 @@ import {
   SCHEMA_IDS,
   buildCollectionSchema,
 } from '../../../utils/schemaService';
-import '@/styles/blocks/podcasts-page.css';
+import '../../../styles/blocks/podcasts-page.css';
 
 const SORT_OPTIONS = podcastsUI.archive.sortOptions;
 
@@ -177,10 +177,10 @@ export function PodcastsPage() {
                     <span className="podcast-card__category-chip">
                       {ep.category}
                     </span>
-                    <span>
+                    <time dateTime={ep.publishedAt}>
                       <Calendar className="icon-xs" aria-hidden="true" />{' '}
                       {formatDate(ep.publishedAt)}
-                    </span>
+                    </time>
                     <span>
                       <Clock className="icon-xs" aria-hidden="true" />{' '}
                       {ep.duration}

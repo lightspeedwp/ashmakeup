@@ -11,8 +11,8 @@ import { deploymentReadinessUI } from '../../../data/mock/ui/deployment-readines
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
-import '@/styles/blocks/deployment-readiness.css';
+import '../../../styles/blocks/specimen-page.css';
+import '../../../styles/blocks/deployment-readiness.css';
 
 const CATEGORY_ICONS: Record<string, React.ElementType> = {
   Gauge,

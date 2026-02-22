@@ -1,7 +1,7 @@
 # Blog Filtering System Overview
 
-**Version:** 4.0.0  
-**Last Updated:** January 2025
+**Version:** 7.0.0  
+**Last Updated:** February 2026
 
 Complete blog filtering, search, and pagination system for the Ash Shaw Portfolio.
 
@@ -855,9 +855,9 @@ sequenceDiagram
 - **[SearchBar.md](./components/SearchBar.md)** - Search functionality
 - **[Pagination.md](./components/Pagination.md)** - Pagination component
 - **[BlogCard.md](./components/BlogCard.md)** - Blog card display
-- **[mock-data.md](./mock-data.md)** - Blog data structure
+- **[Data System Documentation](../data/README.md)** - Blog data structure
 
 ---
 
-**Last Updated:** January 2025  
-**Version:** 4.0.0
+**Last Updated:** February 2026  
+**Version:** 7.0.0

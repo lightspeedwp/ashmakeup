@@ -21,7 +21,7 @@ import { blogPageContent } from '../../../data/mock/pages/blog';
 import { blogCategories } from '../../../data/mock/blog/categories';
 import { emptyStateMessages } from '../../../data/mock/ui/error';
 import { useAppNavigate } from '../../../hooks/useAppNavigate';
-import { useSearchParams } from 'react-router';
+import { useSearchParams } from '../../../lib/router';
 import { formatDate } from '../../../utils/formatDate';
 import { getBlogCategoryCount } from '../../../utils/contentCounts';
 import { setSEO } from '../../../utils/seo';
@@ -32,7 +32,8 @@ import {
   SCHEMA_IDS,
   buildCollectionSchema,
 } from '../../../utils/schemaService';
-import "@/styles/blocks/blog-page.css";
+import { useReducedMotion } from '../../../hooks/useReducedMotion';
+import "../../../styles/blocks/blog-page.css";
 
 interface BlogPageProps {
   initialCategory?: string;
@@ -50,6 +51,7 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
   const setCurrentPage = useAppNavigate();
   const [searchParams] = useSearchParams();
   const initialCategory = propCategory || searchParams.get('category') || undefined;
+  const prefersReduced = useReducedMotion();
 
   const [blogState, setBlogState] = useState<BlogPageState>({
     page: 1,
@@ -108,7 +110,7 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
     tags: blogState.tags.length > 0 ? blogState.tags : undefined,
     page: blogState.page,
     limit: blogState.limit,
-    sortBy: sortBy === 'recent' ? 'publishedDate' : 'title',
+    sortBy: sortBy === 'recent' ? 'publishedAt' : 'title',
     sortOrder: 'desc',
     publishedOnly: true,
     autoRefresh: true,
@@ -200,11 +202,12 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
     updateBlogState({ page });
     
     setTimeout(() => {
+      const scrollBehavior = prefersReduced ? 'auto' as const : 'smooth' as const;
       const blogHeader = document.querySelector('[data-blog-header]');
       if (blogHeader) {
-        blogHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        blogHeader.scrollIntoView({ behavior: scrollBehavior, block: 'start' });
       } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: scrollBehavior });
       }
     }, 100);
     
@@ -212,7 +215,7 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
     if (announcement) {
       announcement.textContent = `Loading page ${page} of blog posts`;
     }
-  }, [updateBlogState, blogState.page]);
+  }, [updateBlogState, blogState.page, prefersReduced]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -362,15 +365,15 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
                     <div className="blog-card__footer">
                       <div className="blog-card__date">
                         <Calendar className="icon-xs" />
-                        <time dateTime={post.publishedDate}>
-                          {formatDate(post.publishedDate)}
+                        <time dateTime={post.publishedAt}>
+                          {formatDate(post.publishedAt)}
                         </time>
                       </div>
                       
-                      {post.readingTime && (
+                      {post.readTime && (
                         <div className="blog-card__date">
                           <Clock className="icon-xs" />
-                          <span>{post.readingTime} min</span>
+                          <span>{post.readTime} min</span>
                         </div>
                       )}
                     </div>
@@ -388,7 +391,8 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
           {/* Pagination */}
           {blogData?.pagination && (
              <div className="pagination-container">
-               <button 
+               <button
+                 type="button"
                  className="pagination-btn"
                  onClick={() => goToPage(blogState.page - 1)}
                  disabled={!blogData.pagination.hasPrevious}
@@ -400,6 +404,7 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
                <div className="pagination-numbers">
                  {Array.from({ length: blogData.pagination.totalPages }, (_, i) => i + 1).map((pageNum) => (
                    <button
+                     type="button"
                      key={pageNum}
                      onClick={() => goToPage(pageNum)}
                      className={`pagination-btn ${blogState.page === pageNum ? 'pagination-btn--active' : ''}`}
@@ -411,7 +416,8 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
                  ))}
                </div>
                
-               <button 
+               <button
+                 type="button"
                  className="pagination-btn"
                  onClick={() => goToPage(blogState.page + 1)}
                  disabled={!blogData.pagination.hasNext}

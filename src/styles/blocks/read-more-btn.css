@@ -41,3 +41,19 @@
 .read-more-btn:hover .read-more-btn__icon {
   transform: translateX(4px);
 }
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .read-more-btn,
+  .read-more-btn__icon {
+    transition: none;
+  }
+
+  .read-more-btn:hover {
+    transform: none;
+  }
+
+  .read-more-btn:hover .read-more-btn__icon {
+    transform: none;
+  }
+}

@@ -21,11 +21,12 @@ import { blogUI } from '../../../data/mock/ui/blog';
 import { markdownToHtml } from '../../../utils/simpleMarkdown';
 import { useAppNavigate } from '../../../hooks/useAppNavigate';
 import { useAnalytics } from '../../../hooks/useAnalytics';
-import { useThrottledCallback } from '../../../hooks/useDebounce';
-import { useParams, useNavigate } from 'react-router';
+import { useScrollPosition } from '../../../hooks/useScrollPosition';
+import { useParams, useNavigate } from '../../../lib/router';
 import { formatDate } from '../../../utils/formatDate';
+import { useReducedMotion } from '../../../hooks/useReducedMotion';
 import ashShawAvatar from 'figma:asset/e46fceb6809b8f1b7ef5c578d40578eadf301207.png';
-import "@/styles/blocks/blog-page.css";
+import "../../../styles/blocks/blog-page.css";
 
 import { setSEO } from '../../../utils/seo';
 import { pageSEO, blogPostSEO } from '../../../data/mock/seo';
@@ -58,7 +59,8 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
   const setCurrentPage = useAppNavigate();
   const navigate = useNavigate();
   const { data: post, loading, error } = useBlogPost(slug);
-  const [readingProgress, setReadingProgress] = useState(0);
+  const { scrollProgress: readingProgress } = useScrollPosition({ throttleMs: 50 });
+  const prefersReduced = useReducedMotion();
   const [likes, setLikes] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [views, setViews] = useState(0);
@@ -126,19 +128,6 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
     localStorage.setItem(`blog-isliked-${slug}`, newIsLiked.toString());
   };
 
-  /* Throttled reading progress bar scroll handler */
-  const updateReadingProgress = useThrottledCallback(() => {
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-    setReadingProgress(scrolled);
-  }, 50);
-
-  useEffect(() => {
-    window.addEventListener('scroll', updateReadingProgress, { passive: true });
-    return () => window.removeEventListener('scroll', updateReadingProgress);
-  }, [updateReadingProgress]);
-
   const handleBackToBlog = () => {
     setCurrentPage('blog');
   };
@@ -169,6 +158,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
         <main id="main-content" role="main" tabIndex={-1} className="container-wide py-fluid-lg">
           <div className="error-card">
             <button
+              type="button"
               onClick={handleBackToBlog}
               className="back-to-blog-btn mb-fluid-lg"
               aria-label="Return to blog listing"
@@ -188,6 +178,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
                 }
               </p>
               <button
+                type="button"
                 onClick={handleBackToBlog}
                 className="btn btn--neon-primary inline-flex-center gap-fluid-sm"
               >
@@ -215,11 +206,11 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
       if (href) {
         if (href === '#contact') {
           setCurrentPage('contact');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
         } else if (href.startsWith('#')) {
           const element = document.querySelector(href);
           if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+            element.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' });
           }
         }
       }
@@ -244,6 +235,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
 
           <nav aria-label="Blog navigation">
             <button
+              type="button"
               onClick={handleBackToBlog}
               className="back-to-blog-btn"
               aria-label="Return to blog listing"
@@ -260,6 +252,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
 
             <div>
               <button 
+                type="button"
                 onClick={() => {
                   const catSlug = post.category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
                   navigate(`/blog/category/${catSlug}`);
@@ -274,16 +267,16 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
             <div className="blog-article__meta">
               <div className="meta-item">
                 <Calendar className="icon-sm" />
-                <time className="meta-text" dateTime={post.publishedDate}>
-                  {formatDate(post.publishedDate)}
+                <time className="meta-text" dateTime={post.publishedAt}>
+                  {formatDate(post.publishedAt)}
                 </time>
               </div>
               
-              {post.readingTime && (
+              {post.readTime && (
                 <div className="meta-item">
                   <Clock className="icon-sm" />
                   <span className="meta-text">
-                    {blogUI.post.meta.readTime(post.readingTime)}
+                    {blogUI.post.meta.readTime(post.readTime)}
                   </span>
                 </div>
               )}
@@ -324,6 +317,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
 
           <div className="blog-article__engagement">
             <button 
+              type="button"
               onClick={handleLike}
               className={`engagement-btn ${isLiked ? 'engagement-btn--liked' : ''}`}
               aria-label={isLiked ? 'Unlike this post' : 'Like this post'}
@@ -347,6 +341,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
                   <div className="tags-list">
                     {post.tags.map((tag, index) => (
                       <button
+                        type="button"
                         key={index}
                         onClick={() => handleTagClick(tag)}
                         className="tag-badge clickable"
@@ -437,6 +432,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
                 {blogUI.post.sections.related.description}
               </p>
               <button
+                type="button"
                 onClick={handleBackToBlog}
                 className="btn btn--neon-primary inline-flex-center gap-fluid-sm"
               >

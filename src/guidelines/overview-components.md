@@ -4,6 +4,7 @@ This document provides a comprehensive overview of all components available in t
 
 **Version:** 5.0.0  
 **Last Updated:** February 2026
+**Last Reviewed:** February 21, 2026
 
 ## 📊 React Component Architecture Diagram
 
@@ -55,7 +56,7 @@ This document provides a comprehensive overview of all components available in t
 └──────┬──────┘ └──────┬──────┘ └──────┬──────┘ └──────┬──────┘
        │               │               │               │
        ▼               ▼               ▼               ▼
-┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
+┌─────────────┐ ┌────────────┐ ┌─────────────┐ ┌─────────────┐
 │   Blocks    │ │   Blocks    │ │   Blocks    │ │   Blocks    │
 │  (Cards)    │ │(Content+UI) │ │  (Cards)    │ │  (Cards)    │
 ├─────────────┤ ├─────────────┤ ├─────────────┤ ├─────────────┤
@@ -169,7 +170,7 @@ const hero = cmsData?.hero || homepageHero;
 - ✅ Easy content updates
 
 **Documentation:**
-- Complete guide: [mock-data.md](./mock-data.md)
+- Complete guide: [Data System](../data/README.md)
 - CMS integration: [contentful-integration.md](./contentful-integration.md)
 
 ---

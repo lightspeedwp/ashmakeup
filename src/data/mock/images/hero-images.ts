@@ -77,7 +77,7 @@ export const aboutHeroImages: HeroImage[] = [
     src: 'https://images.unsplash.com/photo-1601742162870-46790bce3120?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjcmVhdGl2ZSUyMGV5ZSUyMG1ha2V1cCUyMGFydCUyMG5lb24lMjBjb2xvcnN8ZW58MXx8fHwxNzU3NjY0NDc2fDA&ixlib=rb-4.1.0&q=80&w=1080',
     alt: 'Creative eye makeup art with vibrant neon colors showcasing technical mastery',
     caption: 'Technical Mastery',
-    description: 'Intricate eye makeup art with neon colors demonstrating the technical mastery and precision that defines professional makeup artistry',
+    description: 'Intricate eye makeup art with neon colors demonstrating the technical mastery and precision that defines Ash\'s makeup artistry',
     position: 'bottom',
     aspectRatio: '16:9'
   }
@@ -92,9 +92,9 @@ export const aboutHeroImages: HeroImage[] = [
 export const portfolioHeroImages: HeroImage[] = [
   {
     src: 'https://images.unsplash.com/photo-1747121445324-8ed1aec4b451?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYWtldXAlMjBhcnRpc3QlMjBwb3J0Zm9saW8lMjBjcmVhdGl2ZSUyMHdvcmt8ZW58MXx8fHwxNzU3NjY0NDgwfDA&ixlib=rb-4.1.0&q=80&w=1080',
-    alt: 'Professional makeup artist portfolio work showcasing creative and artistic styling',
+    alt: 'Creative portfolio work showcasing artistic styling and festival makeup',
     caption: 'Portfolio Excellence',
-    description: 'Professional portfolio work that demonstrates the range and excellence of Ash Shaw\'s makeup artistry across different styles and occasions',
+    description: 'Portfolio work that demonstrates the range and excellence of Ash Shaw\'s makeup artistry across different styles and occasions',
     position: 'left',
     aspectRatio: '16:9'
   },

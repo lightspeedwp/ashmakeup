@@ -29,9 +29,9 @@ export interface FaqGroup {
  */
 export const faqData: FaqItem[] = [
   {
-    id: 'services',
-    question: "Does Ash take festival bookings?",
-    answer: "Yes! While his roots are in spontaneous dancefloor artistry, he is available for official festival bookings, UV makeup installations, and VIP zones. Get in touch through the contact page to discuss bringing neon energy to your event."
+    id: 'collaborations',
+    question: "Does Ash collaborate with festivals?",
+    answer: "Absolutely! While his roots are in spontaneous dancefloor artistry, he loves connecting with festival organisers and fellow artists. If you'd like him to bring his neon energy to your event, reach out through the contact page."
   },
   {
     id: 'style',

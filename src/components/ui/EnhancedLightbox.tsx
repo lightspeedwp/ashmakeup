@@ -7,13 +7,14 @@
  */
 
 import React, { useEffect, useState, useCallback } from 'react';
-import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Grid, Play } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, LayoutGrid, Play } from 'lucide-react';
 import { PortfolioImage } from './PortfolioImage';
 import { OptimizedImage } from './OptimizedImage';
 import { VideoPlayer } from './VideoPlayer';
 import { useModal } from '../common/ModalContext';
+import { useKeyboardTrap } from '../../hooks/useKeyboardTrap';
 import { portfolioUI } from '../../data/mock/ui/portfolio';
-import "@/styles/blocks/enhanced-lightbox.css";
+import "../../styles/blocks/enhanced-lightbox.css";
 
 /**
  * Lightbox media item interface
@@ -55,6 +56,13 @@ export function EnhancedLightbox({
   const [showThumbnails, setShowThumbnails] = useState(false);
   
   const { registerModal, updateModal, unregisterModal } = useModal();
+
+  const trapRef = useKeyboardTrap<HTMLDivElement>({
+    active: isOpen && images.length > 0,
+    onEscape: onClose,
+    autoFocus: true,
+    restoreFocus: true,
+  });
 
   const hasMultipleItems = images.length > 1;
   const safeCurrentIndex = Math.max(0, Math.min(currentIndex, images.length - 1));
@@ -118,7 +126,6 @@ export function EnhancedLightbox({
       if (!isOpen) return;
 
       switch (e.key) {
-        case 'Escape': onClose(); break;
         case 'ArrowLeft': e.preventDefault(); goToPrevious(); break;
         case 'ArrowRight': e.preventDefault(); goToNext(); break;
         case 'z': case 'Z': e.preventDefault(); toggleZoom(); break;
@@ -128,7 +135,7 @@ export function EnhancedLightbox({
 
     if (isOpen) document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, goToPrevious, goToNext, toggleZoom, showThumbnails, onClose]);
+  }, [isOpen, goToPrevious, goToNext, toggleZoom, showThumbnails]);
 
   // Touch handlers for swipe
   useEffect(() => {
@@ -203,6 +210,7 @@ export function EnhancedLightbox({
       role="dialog"
       aria-modal="true"
       aria-labelledby="lightbox-title"
+      ref={trapRef}
     >
       <div 
         className="lightbox-container"
@@ -214,6 +222,7 @@ export function EnhancedLightbox({
             {/* Zoom Toggle - Only for images */}
             {!isVideo && (
               <button
+                type="button"
                 onClick={toggleZoom}
                 className="lightbox-btn"
                 aria-label={isZoomed ? portfolioUI.lightbox.zoomOut : portfolioUI.lightbox.zoomIn}
@@ -225,11 +234,12 @@ export function EnhancedLightbox({
             {/* Thumbnails Toggle */}
             {hasMultipleItems && (
               <button
+                type="button"
                 onClick={() => setShowThumbnails(!showThumbnails)}
                 className="lightbox-btn-text"
                 aria-label={showThumbnails ? portfolioUI.lightbox.thumbnails.hide : portfolioUI.lightbox.thumbnails.show}
               >
-                <Grid className="icon-sm" />
+                <LayoutGrid className="icon-sm" />
                 {showThumbnails ? portfolioUI.lightbox.hide : portfolioUI.lightbox.gallery}
               </button>
             )}
@@ -237,16 +247,18 @@ export function EnhancedLightbox({
             {/* Mobile Gallery Toggle */}
             {hasMultipleItems && (
               <button
+                type="button"
                 onClick={() => setShowThumbnails(!showThumbnails)}
                 className="lightbox-btn lightbox-btn--mobile-toggle"
                 aria-label={showThumbnails ? portfolioUI.lightbox.thumbnails.hide : portfolioUI.lightbox.thumbnails.show}
               >
-                <Grid className="icon-md" />
+                <LayoutGrid className="icon-md" />
               </button>
             )}
 
             {/* Close Button */}
             <button
+              type="button"
               onClick={onClose}
               className="lightbox-btn"
               aria-label={portfolioUI.lightbox.close}
@@ -262,6 +274,7 @@ export function EnhancedLightbox({
           {hasMultipleItems && (
             <>
               <button
+                type="button"
                 onClick={goToPrevious}
                 className="lightbox-nav-arrow lightbox-nav-arrow--prev"
                 aria-label={portfolioUI.lightbox.navigation.previous}
@@ -270,6 +283,7 @@ export function EnhancedLightbox({
               </button>
               
               <button
+                type="button"
                 onClick={goToNext}
                 className="lightbox-nav-arrow lightbox-nav-arrow--next"
                 aria-label={portfolioUI.lightbox.navigation.next}
@@ -305,6 +319,7 @@ export function EnhancedLightbox({
               <div className="lightbox-dots-mobile">
                 {images.map((_, index) => (
                   <button
+                    type="button"
                     key={index}
                     onClick={() => goToItem(index)}
                     className={`lightbox-dot ${index === currentIndex ? 'lightbox-dot--active' : 'lightbox-dot--inactive'}`}
@@ -320,6 +335,7 @@ export function EnhancedLightbox({
             <div className="lightbox-dots-desktop">
               {images.map((_, index) => (
                 <button
+                  type="button"
                   key={index}
                   onClick={() => goToItem(index)}
                   className={`lightbox-dot ${index === currentIndex ? 'lightbox-dot--active' : 'lightbox-dot--inactive'}`}
@@ -357,6 +373,7 @@ export function EnhancedLightbox({
                                   item.src.endsWith('.mp4');
                 return (
                   <button
+                    type="button"
                     key={index}
                     onClick={() => goToItem(index)}
                     className={`lightbox-thumbnail-btn ${index === currentIndex ? 'lightbox-thumbnail-btn--active' : 'lightbox-thumbnail-btn--inactive'}`}

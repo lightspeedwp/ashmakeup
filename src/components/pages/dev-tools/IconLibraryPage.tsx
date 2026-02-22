@@ -1,16 +1,29 @@
 /**
  * @fileoverview Icon Library — searchable grid of all Lucide icons used across the site
  *
+ * Uses a curated static map instead of `import *` to avoid loading the entire
+ * lucide-react bundle (1 000+ icons), which crashes the esm.sh CDN runtime.
+ *
  * @component IconLibraryPage
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import * as LucideIcons from 'lucide-react';
+import {
+  Home, ArrowLeft, ArrowRight, ArrowUp,
+  ChevronLeft, ChevronRight, ChevronDown, ExternalLink, Menu, X,
+  BookOpen, FileText, Newspaper, FolderOpen, Tag, Calendar, Clock, Layers,
+  Play, Pause, Image, Mic, Music, ZoomIn, ZoomOut, LayoutGrid,
+  Share2, Download, Copy, Heart, Eye, Plus, Minus, Check, Link2, Search,
+  Shield, Gauge, Zap, Sun, Moon, Wifi, WifiOff, HelpCircle, MessageSquare, AlertTriangle,
+  Instagram, Facebook, MessageCircle,
+  Palette, Paintbrush, Sparkles, Wrench, Type, Ruler, Circle, Cloud, MousePointerClick, Lightbulb,
+  MapPin, Building2, Scale, Rocket, Brain, Flashlight, User, Mail,
+} from 'lucide-react';
 import { iconLibraryUI } from '../../../data/mock/ui/icon-library';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
-import '@/styles/blocks/icon-library.css';
+import '../../../styles/blocks/specimen-page.css';
+import '../../../styles/blocks/icon-library.css';
 
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
@@ -24,10 +37,25 @@ const SIZE_OPTIONS: { label: string; value: IconSize }[] = [
   { label: 'XL', value: 48 },
 ];
 
+/**
+ * Curated icon map — only the icons actually referenced in the icon-library
+ * mock data. Avoids `import * as LucideIcons` which crashes esm.sh.
+ */
+const ICON_MAP: Record<string, React.ElementType> = {
+  Home, ArrowLeft, ArrowRight, ArrowUp,
+  ChevronLeft, ChevronRight, ChevronDown, ExternalLink, Menu, X,
+  BookOpen, FileText, Newspaper, FolderOpen, Tag, Calendar, Clock, Layers,
+  Play, Pause, Image, Mic, Music, ZoomIn, ZoomOut, Grid: LayoutGrid, LayoutGrid,
+  Share2, Download, Copy, Heart, Eye, Plus, Minus, Check, Link2, Search,
+  Shield, Gauge, Zap, Sun, Moon, Wifi, WifiOff, HelpCircle, MessageSquare, AlertTriangle,
+  Instagram, Facebook, MessageCircle,
+  Palette, Paintbrush, Sparkles, Wrench, Type, Ruler, Circle, Cloudy: Cloud, Cloud, MousePointerClick, Lightbulb,
+  MapPin, Compass: MapPin, Building2, Scale, Rocket, Brain, Flashlight, User, Mail,
+};
+
 /** Resolve a Lucide icon component by name */
 function getIcon(name: string): React.ElementType | null {
-  const icons = LucideIcons as Record<string, React.ElementType>;
-  return icons[name] || null;
+  return ICON_MAP[name] || null;
 }
 
 export function IconLibraryPage() {

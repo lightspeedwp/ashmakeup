@@ -8,7 +8,7 @@
  */
 
 import React from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "../../lib/router";
 import { Link2, Check } from "lucide-react";
 import { Logo } from "./Logo";
 import { SocialLinks } from "./SocialLinks";
@@ -16,8 +16,9 @@ import { navigationItems } from "../../data/mock/ui/navigation";
 import { footerContent } from "../../data/mock/ui/footer";
 import { blogCategories } from "../../data/mock/blog/categories";
 import { PORTFOLIO_CATEGORIES } from "../../utils/portfolioService";
-import "@/styles/blocks/footer.css";
-import "@/styles/blocks/button.css";
+import { useReducedMotion } from "../../hooks/useReducedMotion";
+import "../../styles/blocks/footer.css";
+import "../../styles/blocks/button.css";
 
 /**
  * Footer - Modern 4-column grid with brand, nav, blog, and portfolio columns
@@ -25,10 +26,11 @@ import "@/styles/blocks/button.css";
 export function Footer() {
   const navigate = useNavigate();
   const [linkCopied, setLinkCopied] = React.useState(false);
+  const prefersReduced = useReducedMotion();
 
   const navigateTo = (path: string) => {
     navigate(path);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: prefersReduced ? "auto" : "smooth" });
   };
 
   const handleFaqClick = () => {
@@ -70,6 +72,7 @@ export function Footer() {
           {/* Column 1 — Brand + CTAs */}
           <div className="footer__brand">
             <button
+              type="button"
               onClick={() => navigateTo("/")}
               className="footer__logo-btn"
               aria-label="Return to home page"
@@ -81,6 +84,7 @@ export function Footer() {
             </p>
             <div className="footer__cta-group">
               <button
+                type="button"
                 onClick={() => navigateTo("/contact")}
                 className="btn btn--neon-primary btn--sm"
                 aria-label="Go to contact page"
@@ -88,6 +92,7 @@ export function Footer() {
                 {footerContent.ctaButton}
               </button>
               <button
+                type="button"
                 onClick={handleFaqClick}
                 className="btn btn--neon-outline btn--sm"
                 aria-label="View Frequently Asked Questions"
@@ -104,6 +109,7 @@ export function Footer() {
               {footerNavItems.map((item) => (
                 <li key={item.id}>
                   <button
+                    type="button"
                     onClick={() => navigateTo(item.path)}
                     className="footer__nav-link"
                   >
@@ -125,6 +131,7 @@ export function Footer() {
               {blogCategories.map((cat) => (
                 <li key={cat.id}>
                   <button
+                    type="button"
                     onClick={() => navigateTo(`/blog/category/${cat.slug}`)}
                     className="footer__nav-link"
                   >
@@ -142,6 +149,7 @@ export function Footer() {
               {portfolioCategories.map((cat) => (
                 <li key={cat.id}>
                   <button
+                    type="button"
                     onClick={() => navigateTo(`/portfolio/category/${cat.slug}`)}
                     className="footer__nav-link"
                   >
@@ -165,6 +173,7 @@ export function Footer() {
           <div className="footer__bar-social">
             <SocialLinks variant="minimal" />
             <button
+              type="button"
               onClick={handleCopyLink}
               className="footer__copy-link"
               aria-label={linkCopied ? "Link copied" : "Copy page link"}
@@ -180,6 +189,7 @@ export function Footer() {
 
           <div className="footer__legal">
             <button
+              type="button"
               onClick={() => navigateTo("/terms")}
               className="footer__legal-link"
             >
@@ -187,6 +197,7 @@ export function Footer() {
             </button>
             <span className="footer__legal-dot" aria-hidden="true" />
             <button
+              type="button"
               onClick={() => navigateTo("/privacy")}
               className="footer__legal-link"
             >
@@ -194,6 +205,7 @@ export function Footer() {
             </button>
             <span className="footer__legal-dot" aria-hidden="true" />
             <button
+              type="button"
               onClick={() => navigateTo("/sitemap")}
               className="footer__legal-link"
             >

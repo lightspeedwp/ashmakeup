@@ -724,7 +724,7 @@ useEffect(() => {
 ### Internal Documentation
 - [Guidelines.md](./Guidelines.md) - Main project guidelines
 - [contentful-integration.md](./contentful-integration.md) - CMS integration
-- [mock-data.md](./mock-data.md) - Mock data system
+- [Data System Documentation](../data/README.md) - Mock data system
 
 ### External Resources
 - [Web Vitals](https://web.dev/vitals/)

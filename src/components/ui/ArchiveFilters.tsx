@@ -20,7 +20,7 @@ import { SlidersHorizontal, X } from 'lucide-react';
 import { filtersUI } from '../../data/mock/ui/filters';
 import { useModal } from '../common/ModalContext';
 import { useAnimatedCount } from '../../hooks/useAnimatedCount';
-import '@/styles/blocks/archive-filters.css';
+import '../../styles/blocks/archive-filters.css';
 
 export interface FilterCategory {
   id: string;
@@ -93,6 +93,7 @@ export function ArchiveFilters({
     <div className="archive-filters">
       {/* Mobile trigger */}
       <button
+        type="button"
         className="archive-filters__mobile-trigger"
         onClick={() => setMobileOpen(true)}
         aria-label={filtersUI.mobileFilterButton}
@@ -118,6 +119,7 @@ export function ArchiveFilters({
             <div className="archive-filters__chip-row">
               {visibleCategories.map(cat => (
                 <button
+                  type="button"
                   key={cat.slug}
                   className={`archive-filters__chip ${
                     activeCategories.includes(cat.slug)
@@ -147,6 +149,7 @@ export function ArchiveFilters({
               <div className="archive-filters__active-pills">
                 {activeCategoryNames.map(name => (
                   <button
+                    type="button"
                     key={name}
                     className="archive-filters__active-pill"
                     onClick={() => {
@@ -163,6 +166,7 @@ export function ArchiveFilters({
                 ))}
               </div>
               <button
+                type="button"
                 className="archive-filters__clear-btn"
                 onClick={onClearAll}
               >
@@ -190,6 +194,7 @@ export function ArchiveFilters({
             </span>
             {sortOptions.map(opt => (
               <button
+                type="button"
                 key={opt.value}
                 className={`archive-filters__sort-chip ${
                   sortBy === opt.value
@@ -219,6 +224,7 @@ export function ArchiveFilters({
               {filtersUI.filterLabel}
             </h2>
             <button
+              type="button"
               className="archive-filters__overlay-close"
               onClick={() => setMobileOpen(false)}
               aria-label="Close filters"
@@ -236,6 +242,7 @@ export function ArchiveFilters({
               <div className="archive-filters__overlay-chips">
                 {visibleCategories.map(cat => (
                   <button
+                    type="button"
                     key={cat.slug}
                     className={`archive-filters__overlay-chip ${
                       activeCategories.includes(cat.slug)
@@ -264,6 +271,7 @@ export function ArchiveFilters({
               <div className="archive-filters__overlay-chips">
                 {sortOptions.map(opt => (
                   <button
+                    type="button"
                     key={opt.value}
                     className={`archive-filters__overlay-chip ${
                       sortBy === opt.value
@@ -282,6 +290,7 @@ export function ArchiveFilters({
 
           <div className="archive-filters__overlay-footer">
             <button
+              type="button"
               className="archive-filters__overlay-apply"
               onClick={() => setMobileOpen(false)}
             >

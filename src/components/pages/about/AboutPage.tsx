@@ -9,8 +9,8 @@
  */
 
 import React, { useEffect } from "react";
-import { Palette, Layers, Fingerprint, Zap, Droplets, Sparkles } from "lucide-react";
-import { Compass, Music, Building2, Flashlight, Paintbrush, Wand2, Brain, Rocket } from "lucide-react";
+import { Palette, Layers, User, Zap, Droplets, Sparkles } from "lucide-react";
+import { MapPin, Music, Building2, Paintbrush, PenTool, Brain, Rocket } from "lucide-react";
 import "../../../styles/globals.css";
 import { HeroLayout } from "../../sections/HeroLayout";
 import { FaqSection } from "../../sections/FaqSection";
@@ -22,7 +22,7 @@ import { aboutHero, aboutPageText } from "../../../data/mock/pages/about";
 import { aboutUI } from "../../../data/mock/ui/about";
 import { useAboutPageContent } from "../../../hooks/useContentful";
 import { useAppNavigate } from "../../../hooks/useAppNavigate";
-import "@/styles/blocks/about-page.css";
+import "../../../styles/blocks/about-page.css";
 
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
@@ -80,7 +80,7 @@ export function AboutPage() {
     {
       id: "texture-work",
       title: aboutUI.sections.mousse.skills.texture,
-      icon: Fingerprint,
+      icon: User,
       gradientClass: "about-skill-icon-wrap--green-yellow"
     },
     {
@@ -143,12 +143,14 @@ export function AboutPage() {
         </div>
         <div className="homepage-error__actions">
           <button
+            type="button"
             onClick={refreshContent}
             className="btn btn--neon-primary"
           >
             {aboutUI.loading.retry}
           </button>
           <button
+            type="button"
             onClick={() => window.location.reload()}
             className="btn btn--ghost"
           >
@@ -230,6 +232,7 @@ export function AboutPage() {
         enableLightbox={true}
         actions={
           <button
+            type="button"
             onClick={handlePortfolioClick}
             className="btn btn--neon-primary"
             aria-label="Navigate to Portfolio page to explore makeup artistry collection"
@@ -263,7 +266,7 @@ export function AboutPage() {
           title={aboutUI.sections.journey.title}
           theme={ABOUT_SECTION_THEMES.journey}
           quote={aboutUI.sections.journey.quote}
-          icon={Compass}
+          icon={MapPin}
         >
           <p className="text-body-p text-inherit">
             {aboutPageText.journey}
@@ -306,7 +309,7 @@ export function AboutPage() {
           id="uv-section"
           title={aboutUI.sections.uv.title}
           theme={ABOUT_SECTION_THEMES.uv}
-          icon={Flashlight}
+          icon={Zap}
         >
           <p className="text-body-p text-inherit">
             {aboutPageText.uv[0]}
@@ -359,10 +362,11 @@ export function AboutPage() {
           id="uv-makeup-section"
           title={aboutUI.sections.uvMakeup.title}
           theme={ABOUT_SECTION_THEMES.nails}
-          icon={Wand2}
+          icon={PenTool}
           actions={
             <div className="about-cta-center">
               <button
+                type="button"
                 onClick={handleUVMakeupClick}
                 className="btn btn--neon-primary"
                 aria-label="Navigate to Portfolio page UV Makeup section"
@@ -405,6 +409,7 @@ export function AboutPage() {
           actions={
             <div className="about-cta-center">
               <button
+                type="button"
                 onClick={handlePortfolioClick}
                 className="btn btn--neon-primary"
                 aria-label="Navigate to Portfolio page to explore makeup artistry collection"

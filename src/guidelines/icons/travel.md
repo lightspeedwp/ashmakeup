@@ -56,7 +56,7 @@ import { Compass } from 'lucide-react';
 ### Events & Calendar
 
 #### Calendar
-**Usage:** Event dates, booking dates, schedule
+**Usage:** Event dates, festival schedule, timeline
 
 ```tsx
 import { Calendar } from 'lucide-react';
@@ -101,12 +101,12 @@ import { Users } from 'lucide-react';
 
 <div className="flex items-center gap-2">
   <Users className="w-5 h-5 text-purple-500" />
-  <span>Group Booking (5+ people)</span>
+  <span>Group Festival Pass (5+ people)</span>
 </div>
 ```
 
 #### User
-**Usage:** Individual booking, profile, contact
+**Usage:** Profile, contact, collaborator
 
 ```tsx
 import { User } from 'lucide-react';

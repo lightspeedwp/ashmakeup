@@ -5,12 +5,12 @@
       "private": true,
       "dependencies": {
           "@vitejs/plugin-react": "*",
+          "fs": "*",
           "glob": "*",
           "lucide-react": "*",
           "path": "*",
           "react": "^18.3.1",
           "react-dom": "^18.3.1",
-          "react-router": "*",
           "sharp": "*",
           "url": "*",
           "vite": "*"

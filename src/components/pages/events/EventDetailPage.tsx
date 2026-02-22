@@ -9,7 +9,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import { useParams, useNavigate } from '../../../lib/router';
 import {
   MapPin,
   Globe,
@@ -23,23 +23,10 @@ import { setSEO } from '../../../utils/seo';
 import { eventDetailSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { TravelBadge, TravelStats } from './TravelBadge';
+import { formatDateRange } from '../../../utils/formatDate';
 import type { EventEdition } from '../../../data/types/events';
-import '@/styles/blocks/event-detail-page.css';
-import '@/styles/blocks/event-travel-badge.css';
-
-/** Format ISO date to readable string */
-function formatDate(iso: string): string {
-  try {
-    const d = new Date(iso + 'T00:00:00');
-    return d.toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    });
-  } catch {
-    return iso;
-  }
-}
+import '../../../styles/blocks/event-detail-page.css';
+import '../../../styles/blocks/event-travel-badge.css';
 
 export function EventDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -211,8 +198,7 @@ export function EventDetailPage() {
                 <div className="edition-entry__header">
                   <h3 className="edition-entry__year">{edition.year}</h3>
                   <span className="edition-entry__dates">
-                    {formatDate(edition.startDate)} \u2013{' '}
-                    {formatDate(edition.endDate)}
+                    {formatDateRange(edition.startDate, edition.endDate)}
                   </span>
                   <span
                     className={`edition-entry__status-badge edition-entry__status-badge--${edition.status}`}

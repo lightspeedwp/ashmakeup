@@ -273,7 +273,7 @@ export const socialLinks: SocialLink[] = [
 ];
 ```
 
-**See [mock-data.md](../mock-data.md) for complete mock data documentation.**
+**See [Data System](../../data/README.md) for complete mock data documentation.**
 
 ---
 
@@ -785,7 +785,7 @@ export function SocialLinks({
 ## Related Documentation
 
 - **[Guidelines.md](../Guidelines.md)** - Main project guidelines
-- **[mock-data.md](../mock-data.md)** - Mock data system guide
+- **[Data System](../../data/README.md)** - Mock data system guide
 - **[overview-components.md](../overview-components.md)** - Component architecture
 - **[overview-icons.md](../overview-icons.md)** - Icon verification process
 - **[design-tokens/colors.md](../design-tokens/colors.md)** - Color system

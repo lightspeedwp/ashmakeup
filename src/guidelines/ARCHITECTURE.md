@@ -2,6 +2,7 @@
 
 **Version:** 4.0.0  
 **Last Updated:** February 2026  
+**Last Reviewed:** February 21, 2026
 **Purpose:** Clarify component organization, file locations, and taxonomy
 
 ---

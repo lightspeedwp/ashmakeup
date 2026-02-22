@@ -6,11 +6,11 @@
 export const contactUI = {
   header: {
     title: "Connect on the Dancefloor",
-    description: "Whether you're organizing a psytrance festival, booking for an event, or just want to say hi. Let's create magic together."
+    description: "Whether you're organising a psytrance festival, planning a creative collab, or just want to say hi — let's create magic together."
   },
   about: {
-    title: "Global Booking & Collabs",
-    description: "I'm a nomad of the psytrance scene. Based in Cape Town, chasing summers in Berlin and Thailand. Available for festival bookings and spontaneous creative projects worldwide.",
+    title: "Global Collabs & Connections",
+    description: "I'm a nomad of the psytrance scene. Based in Berlin, chasing festivals internationally. Open to creative collaborations and spontaneous projects worldwide.",
     quote: "Let's paint the world neon."
   },
   connect: {
@@ -27,7 +27,7 @@ export const contactUI = {
     placeholders: {
       name: "Enter your name",
       email: "Enter your email",
-      subject: "Festival / Booking / Just saying hi",
+      subject: "Festival / Collab / Just saying hi",
       message: "Tell me about your vision or event..."
     },
     button: {

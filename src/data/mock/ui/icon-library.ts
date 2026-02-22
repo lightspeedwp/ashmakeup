@@ -130,7 +130,7 @@ export const iconLibraryUI = {
         { name: 'Cloudy', usage: ['ShadowSpecimenPage'] },
         { name: 'MousePointerClick', usage: ['ButtonSpecimenPage'] },
         { name: 'LayoutGrid', usage: ['CardSpecimenPage'] },
-        { name: 'SwatchBook', usage: ['DesignTokensRefPage'] },
+        { name: 'Lightbulb', usage: ['DesignTokensRefPage'] },
       ],
     },
     {

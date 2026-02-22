@@ -1,6 +1,6 @@
 /**
  * @fileoverview Portfolio Card component with featured image, gallery slider, and category tags
- * Professional portfolio card featuring featured image, multi-image carousel, category tags,
+ * Portfolio card component featuring featured image, multi-image carousel, category tags,
  * navigation arrows, pagination dots, hover effects, and comprehensive accessibility
  * 
  * @author Ash Shaw Portfolio Team
@@ -9,12 +9,12 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, Play, Calendar } from 'lucide-react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from '../../lib/router';
 import { usePortfolioImageUrl } from './PortfolioImage';
 import { useOptimizedImage } from '../../hooks/useOptimizedImage';
 import { formatDate } from '../../utils/formatDate';
 import { PORTFOLIO_CATEGORIES } from '../../utils/portfolioService';
-import "@/styles/blocks/portfolio-card.css";
+import "../../styles/blocks/portfolio-card.css";
 
 /**
  * Portfolio image interface
@@ -206,6 +206,7 @@ export function PortfolioCard({
             <>
               {/* Navigation buttons: visibility controlled by CSS */}
               <button
+                type="button"
                 onClick={goToPrevious}
                 className="portfolio-card__nav-button portfolio-card__nav-button--prev"
                 aria-label="Previous image"
@@ -215,6 +216,7 @@ export function PortfolioCard({
               </button>
               
               <button
+                type="button"
                 onClick={goToNext}
                 className="portfolio-card__nav-button portfolio-card__nav-button--next"
                 aria-label="Next image"
@@ -240,6 +242,7 @@ export function PortfolioCard({
               <div className="portfolio-card__dots">
                 {allImages.map((_, index) => (
                   <button
+                    type="button"
                     key={index}
                     onClick={(e) => goToImage(index, e)}
                     className={`portfolio-card__dot ${index === currentImageIndex ? 'portfolio-card__dot--active' : ''}`}
@@ -277,6 +280,7 @@ export function PortfolioCard({
             
             {onNavigateToDetail && (
               <button
+                type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   onNavigateToDetail(entry.id);

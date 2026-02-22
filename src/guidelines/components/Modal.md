@@ -607,13 +607,13 @@ function DeleteConfirmation({ onConfirm }: Props) {
 ### Form Modal
 
 ```tsx
-function BookingModal() {
+function CollaborationModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    await submitBooking();
+    await submitInquiry();
     setIsSubmitting(false);
     setIsOpen(false);
   };
@@ -622,7 +622,7 @@ function BookingModal() {
     <Modal 
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
-      title="Book a Session"
+      title="Collaboration Inquiry"
       size="lg"
       primaryAction={{
         text: 'Submit Inquiry',

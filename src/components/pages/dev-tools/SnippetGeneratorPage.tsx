@@ -11,8 +11,8 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { snippetGeneratorUI } from '../../../data/mock/ui/snippet-generator';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
-import '@/styles/blocks/snippet-generator.css';
+import '../../../styles/blocks/specimen-page.css';
+import '../../../styles/blocks/snippet-generator.css';
 
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';

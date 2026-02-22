@@ -7,7 +7,7 @@
  */
 
 import React, { useMemo, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import { useParams, useNavigate } from '../../../lib/router';
 import { Calendar, Clock, BookOpen } from 'lucide-react';
 import { blogPosts } from '../../../data/mock/blog/posts';
 import { blogTags, findBlogTagBySlug } from '../../../data/mock/blog/tags';
@@ -23,8 +23,8 @@ import {
   SCHEMA_IDS,
   buildCollectionSchema,
 } from '../../../utils/schemaService';
-import '@/styles/blocks/blog-page.css';
-import '@/styles/blocks/archive-filters.css';
+import '../../../styles/blocks/blog-page.css';
+import '../../../styles/blocks/archive-filters.css';
 
 export function BlogTagPage() {
   const { slug } = useParams<{ slug: string }>();

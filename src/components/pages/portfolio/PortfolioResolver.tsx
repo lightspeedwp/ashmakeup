@@ -10,7 +10,7 @@
  */
 
 import React from 'react';
-import { useParams } from 'react-router';
+import { useParams } from '../../../lib/router';
 import { PORTFOLIO_CATEGORIES } from '../../../utils/portfolioService';
 import { PortfolioMainPage } from './PortfolioMainPage';
 import { PortfolioDetailPage } from './PortfolioDetailPage';

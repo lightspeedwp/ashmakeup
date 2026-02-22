@@ -3,13 +3,27 @@
  */
 
 import React from 'react';
-import { Download, Mail, MapPin, Instagram, FileText } from 'lucide-react';
+import { Download, Mail, MapPin, Instagram, FileText, Copy, Check } from 'lucide-react';
 import { pressKitData } from '../../../data/mock/pages/press';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { setSEO } from '../../../utils/seo';
-import '@/styles/blocks/press-page.css';
+import '../../../styles/blocks/press-page.css';
 
 export function PressKitPage() {
+  const [copiedId, setCopiedId] = React.useState<string | null>(null);
+
+  const handleCopy = async (text: string, id: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch {
+      if (import.meta.env.DEV) {
+        console.log('Clipboard write failed for press bio');
+      }
+    }
+  };
+
   React.useEffect(() => {
     setSEO({
       title: 'Press & Media Kit | Ash Shaw Makeup',
@@ -53,8 +67,9 @@ export function PressKitPage() {
                     <div className="press-bio-card__body">
                         <p className="text-body-p">{pressKitData.bios.short.content}</p>
                     </div>
-                    <button className="btn btn--ghost-neon btn--sm mt-fluid-md" onClick={() => navigator.clipboard.writeText(pressKitData.bios.short.content)}>
-                        Copy Text
+                    <button type="button" className="btn btn--ghost-neon btn--sm mt-fluid-md" onClick={() => handleCopy(pressKitData.bios.short.content, 'short')}>
+                        {copiedId === 'short' ? <Check className="icon-sm" /> : <Copy className="icon-sm" />}
+                        {copiedId === 'short' ? 'Copied!' : 'Copy Text'}
                     </button>
                 </article>
 
@@ -65,8 +80,9 @@ export function PressKitPage() {
                             <p key={i} className="text-body-p mb-fluid-sm">{para}</p>
                         ))}
                     </div>
-                     <button className="btn btn--ghost-neon btn--sm mt-fluid-md" onClick={() => navigator.clipboard.writeText(pressKitData.bios.long.content)}>
-                        Copy Text
+                     <button type="button" className="btn btn--ghost-neon btn--sm mt-fluid-md" onClick={() => handleCopy(pressKitData.bios.long.content, 'long')}>
+                        {copiedId === 'long' ? <Check className="icon-sm" /> : <Copy className="icon-sm" />}
+                        {copiedId === 'long' ? 'Copied!' : 'Copy Text'}
                     </button>
                 </article>
             </div>
@@ -77,7 +93,7 @@ export function PressKitPage() {
             <div className="press-assets-grid">
                 {pressKitData.assets.map((category) => (
                     <div key={category.id} className="press-asset-category">
-                        <h3 className="text-section-h3 mb-fluid-md border-b border-neon-purple pb-fluid-sm">
+                        <h3 className="text-section-h3 mb-fluid-md press-asset-category__title">
                             {category.title}
                         </h3>
                         <p className="text-body-p text-neutral-400 mb-fluid-md">{category.description}</p>
@@ -88,7 +104,7 @@ export function PressKitPage() {
                                         <span className="press-asset-item__label">{item.label}</span>
                                         <span className="press-asset-item__meta">{item.format} • {item.size}</span>
                                     </div>
-                                    <button className="btn btn--icon-only btn--ghost" aria-label={`Download ${item.label}`}>
+                                    <button type="button" className="btn btn--icon-only btn--ghost" aria-label={`Download ${item.label}`}>
                                         <Download className="icon-sm" />
                                     </button>
                                 </li>
@@ -99,16 +115,16 @@ export function PressKitPage() {
             </div>
         </section>
 
-        <section className="press-contact text-center">
-            <h2 className="text-section-h2 mb-fluid-md">Contact & Booking</h2>
-            <div className="flex flex-col items-center gap-fluid-sm">
-                <a href={`mailto:${pressKitData.contact.email}`} className="flex items-center gap-fluid-sm text-body-p hover:text-neon-green transition-colors">
+        <section className="press-contact">
+            <h2 className="text-section-h2 mb-fluid-md">Media Inquiries & Collaboration</h2>
+            <div className="press-contact__links">
+                <a href={`mailto:${pressKitData.contact.email}`} className="press-contact__link press-contact__link--email text-body-p">
                     <Mail className="icon-md" /> {pressKitData.contact.email}
                 </a>
-                 <a href={`https://instagram.com/${pressKitData.contact.instagram.replace('@','')}`} className="flex items-center gap-fluid-sm text-body-p hover:text-neon-pink transition-colors">
+                 <a href={`https://instagram.com/${pressKitData.contact.instagram.replace('@','')}`} className="press-contact__link press-contact__link--instagram text-body-p">
                     <Instagram className="icon-md" /> {pressKitData.contact.instagram}
                 </a>
-                 <div className="flex items-center gap-fluid-sm text-body-p text-neutral-400">
+                 <div className="press-contact__location text-body-p">
                     <MapPin className="icon-md" /> {pressKitData.contact.location}
                 </div>
             </div>

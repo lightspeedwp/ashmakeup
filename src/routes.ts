@@ -17,7 +17,7 @@
  * /about/lucy-in-the-sky-with-diamonds → LucyPage (psychedelic influence)
  * /about/travels                 → TravelsPage (nomadic festival circuit)
  * /about/podcast                 → PodcastPage (podcast project)
- * /about/ebook                   → EbookPage (ebook project)
+ * /ebook                         → EbookPage (ebook project)
  * /about/adhd                    → AdhdPage (ADHD experience)
  * /about/cycling                 → CyclingPage (cycling identity)
  * /about/aquarius                → AquariusPage (Aquarian identity blueprint)
@@ -27,6 +27,8 @@
  * /about/partners                → PartnersPage (people along the way)
  * /about/fitness                 → FitnessPage (the moving body)
  * /about/six-cats                → SixCatsPage (Six Cats Cannabis Club)
+ * /about/manifesto               → ManifestoPage (creative manifesto)
+ * /about/accessibility           → AccessibilityStatementPage (accessibility statement)
  * /events                        → EventsPage (events listing)
  * /events/category/:slug         → EventCategoryPage (category archive)
  * /events/tag/:slug              → EventTagPage (tag archive)
@@ -40,6 +42,9 @@
  * /blog/tag/:slug                → BlogTagPage (tag archive)
  * /blog/:slug                    → BlogPostPageRoute (individual post)
  * /contact                       → ContactPage (Typeform embed)
+ * /press                         → PressKitPage (press kit)
+ * /toolkit                       → GearPage (gear & toolkit)
+ * /next-festival                 → FestivalLandingPage (festival landing)
  * /videos                        → VideosPage (video showcase)
  * /videos/category/:slug         → VideoCategoryPage (category archive)
  * /videos/tag/:slug              → VideoTagPage (tag archive)
@@ -83,10 +88,10 @@
  * *                              → NotFoundPage (404)
  * 
  * @author Ash Shaw Portfolio Team
- * @version 12.0.0 - HiddenAboutPage at /about, AboutPage moved to /about/journey
+ * @version 13.0.0 - Fixed stale /about/ebook → /ebook, added missing route docs
  */
 
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter } from './lib/router';
 import { RootLayout } from './components/common/RootLayout';
 import { HomePage } from './components/pages/home/HomePage';
 import { AboutPage } from './components/pages/about/AboutPage';
@@ -109,6 +114,8 @@ import { EducationPage } from './components/pages/about/EducationPage';
 import { PartnersPage } from './components/pages/about/PartnersPage';
 import { FitnessPage } from './components/pages/about/FitnessPage';
 import { SixCatsPage } from './components/pages/about/SixCatsPage';
+import { ManifestoPage } from './components/pages/about/ManifestoPage';
+import { AccessibilityStatementPage } from './components/pages/legal/AccessibilityStatementPage';
 import { EventsPage } from './components/pages/events/EventsPage';
 import { EventCategoryPage } from './components/pages/events/EventCategoryPage';
 import { EventTagPage } from './components/pages/events/EventTagPage';
@@ -122,6 +129,9 @@ import { BlogPostPageRoute } from './components/pages/blog/BlogPostPage';
 import { BlogCategoryPage } from './components/pages/blog/BlogCategoryPage';
 import { BlogTagPage } from './components/pages/blog/BlogTagPage';
 import { ContactPage } from './components/pages/contact/ContactPage';
+import { PressKitPage } from './components/pages/press/PressKitPage';
+import { GearPage } from './components/pages/gear/GearPage';
+import { FestivalLandingPage } from './components/pages/landing/FestivalLandingPage';
 import { VideosPage } from './components/pages/videos/VideosPage';
 import { VideoDetailPage } from './components/pages/videos/VideoDetailPage';
 import { VideoCategoryPage } from './components/pages/videos/VideoCategoryPage';
@@ -161,11 +171,6 @@ import { VisualRegressionTesterPage } from './components/pages/dev-tools/VisualR
 import { IntegrationTesterPage } from './components/pages/dev-tools/IntegrationTesterPage';
 import { AccessibilityTesterPage } from './components/pages/dev-tools/AccessibilityTesterPage';
 import { PerformanceTesterPage } from './components/pages/dev-tools/PerformanceTesterPage';
-import { PressKitPage } from './components/pages/press/PressKitPage';
-import { GearPage } from './components/pages/gear/GearPage';
-import { AccessibilityStatementPage } from './components/pages/legal/AccessibilityStatementPage';
-import { ManifestoPage } from './components/pages/about/ManifestoPage';
-import { FestivalLandingPage } from './components/pages/landing/FestivalLandingPage';
 
 export const router = createBrowserRouter([
   {

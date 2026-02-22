@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import type { TravelMethod, EventTravel } from '../../../data/types/events';
 import { eventsUI } from '../../../data/mock/ui/events';
-import '@/styles/blocks/event-travel-badge.css';
+import '../../../styles/blocks/event-travel-badge.css';
 
 /** Map travel methods to Lucide icons */
 const TRAVEL_ICONS: Record<TravelMethod, React.ElementType> = {

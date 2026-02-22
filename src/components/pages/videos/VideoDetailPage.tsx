@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect, useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import { useParams, useNavigate } from '../../../lib/router';
 import {
   ArrowLeft,
   Calendar,
@@ -34,10 +34,10 @@ import {
   SCHEMA_IDS,
   buildVideoSchema,
 } from '../../../utils/schemaService';
-import '@/styles/blocks/videos-page.css';
-import '@/styles/blocks/podcasts-page.css';
-import '@/styles/blocks/portfolio-detail-page.css';
-import '@/styles/blocks/blog-page.css';
+import '../../../styles/blocks/videos-page.css';
+import '../../../styles/blocks/podcasts-page.css';
+import '../../../styles/blocks/portfolio-detail-page.css';
+import '../../../styles/blocks/blog-page.css';
 
 export function VideoDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -93,6 +93,7 @@ export function VideoDetailPage() {
               This video could not be found.
             </p>
             <button
+              type="button"
               className="podcast-detail__back"
               onClick={() => navigate('/videos')}
             >
@@ -115,6 +116,7 @@ export function VideoDetailPage() {
         <div className="videos-header__content">
           <Breadcrumbs items={videoDetailBreadcrumbs(video.title)} centered />
           <button
+            type="button"
             className="podcast-detail__back"
             onClick={() => navigate('/videos')}
           >
@@ -138,6 +140,7 @@ export function VideoDetailPage() {
         <div className="video-detail__body">
           {/* Clickable Category */}
           <button
+            type="button"
             className="video-detail__category-link"
             onClick={() => navigate(`/videos/category/${categorySlug}`)}
           >
@@ -200,6 +203,7 @@ export function VideoDetailPage() {
                   <div className="tags-list">
                     {video.tags.map(tag => (
                       <button
+                        type="button"
                         key={tag}
                         onClick={() =>
                           navigate(`/videos/tag/${encodeURIComponent(tag.toLowerCase().replace(/\s+/g, '-'))}`)

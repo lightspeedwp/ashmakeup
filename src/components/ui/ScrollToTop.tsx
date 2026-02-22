@@ -9,10 +9,12 @@
  * @version 1.2.1 - Semantic BEM Refactor
  */
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { useModal } from '../common/ModalContext';
-import "@/styles/blocks/scroll-controls.css";
+import { useScrollPosition } from '../../hooks/useScrollPosition';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+import "../../styles/blocks/scroll-controls.css";
 
 /** Module-level counter to enforce singleton rendering */
 let mountedInstances = 0;
@@ -34,8 +36,10 @@ export function ScrollToTop({
   className = "",
   ariaLabel = "Scroll to top of page"
 }: ScrollToTopProps) {
-  const [isVisible, setIsVisible] = useState(false);
+  const { isScrolledPast } = useScrollPosition({ throttleMs: 100 });
+  const isVisible = isScrolledPast(showAfter);
   const { hasOpenModals } = useModal();
+  const prefersReduced = useReducedMotion();
   const isMounted = useRef(false);
   const isPrimary = useRef(false);
 
@@ -66,7 +70,7 @@ export function ScrollToTop({
     try {
       window.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: prefersReduced ? 'auto' : 'smooth'
       });
     } catch (error) {
       if (import.meta.env.DEV) {
@@ -74,7 +78,7 @@ export function ScrollToTop({
       }
       window.scrollTo(0, 0);
     }
-  }, []);
+  }, [prefersReduced]);
 
   /**
    * Handle keyboard interactions for accessibility
@@ -85,45 +89,6 @@ export function ScrollToTop({
       scrollToTop();
     }
   }, [scrollToTop]);
-
-  /**
-   * Throttled scroll handler for performance optimization
-   */
-  const handleScroll = useCallback(() => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const shouldShow = scrollTop > showAfter;
-    
-    if (shouldShow !== isVisible) {
-      setIsVisible(shouldShow);
-    }
-  }, [showAfter, isVisible]);
-
-  /**
-   * Set up scroll listener with throttling for performance
-   */
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-    
-    const throttledScrollHandler = () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      
-      timeoutId = setTimeout(() => {
-        handleScroll();
-      }, 100);
-    };
-
-    window.addEventListener('scroll', throttledScrollHandler, { passive: true });
-    handleScroll();
-
-    return () => {
-      window.removeEventListener('scroll', throttledScrollHandler);
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [handleScroll, showAfter]);
 
   // Don't render if not visible or if any modals are open
   // Also don't render if another instance is already the primary

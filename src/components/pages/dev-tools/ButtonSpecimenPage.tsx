@@ -8,8 +8,8 @@ import React, { useEffect } from 'react';
 import { MousePointerClick, ArrowRight, Heart, Share2, Download, Play, Plus, Trash2 } from 'lucide-react';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
-import '@/styles/blocks/button-specimen.css';
+import '../../../styles/blocks/specimen-page.css';
+import '../../../styles/blocks/button-specimen.css';
 
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';

@@ -9,7 +9,7 @@
  */
 
 import React, { useEffect, useState, useMemo } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from '../../../lib/router';
 import { MapPin, Music, Calendar } from 'lucide-react';
 import {
   allEvents,
@@ -23,8 +23,8 @@ import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { TravelBadge } from './TravelBadge';
-import '@/styles/blocks/events-page.css';
-import '@/styles/blocks/event-card.css';
+import '../../../styles/blocks/events-page.css';
+import '../../../styles/blocks/event-card.css';
 
 export function EventsPage() {
   const navigate = useNavigate();
@@ -135,6 +135,7 @@ export function EventsPage() {
         aria-label={eventsUI.a11y.filterByType}
       >
         <button
+          type="button"
           className={`events-page__filter-btn${
             activeFilter === 'all' ? ' events-page__filter-btn--active' : ''
           }`}
@@ -147,6 +148,7 @@ export function EventsPage() {
           .filter((cat) => cat.count > 0 || allEvents.some((e) => e.type === cat.slug))
           .map((cat) => (
             <button
+              type="button"
               key={cat.id}
               className={`events-page__filter-btn${
                 activeFilter === cat.slug

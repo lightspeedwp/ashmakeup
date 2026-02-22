@@ -10,7 +10,7 @@
 import React from "react";
 import logoImage from 'figma:asset/428cc40e40184633483ae65f75ced5f46af6821d.png';
 import { branding } from "../../data/mock/ui/branding";
-import "@/styles/blocks/logo.css";
+import "../../styles/blocks/logo.css";
 
 /**
  * Logo component props interface for flexible sizing and styling

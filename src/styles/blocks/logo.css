@@ -65,3 +65,10 @@
 /* Light mode overrides for text if needed, 
    but usually logo image is used in light mode 
    and SVG is used in dark mode/footer */
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .logo__image {
+    transition: none;
+  }
+}

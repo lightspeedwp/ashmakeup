@@ -248,9 +248,23 @@
   color: var(--wp--preset--color--neutral-400);
 }
 
-/* Footer CTA */
-.why-section__footer {
-  display: flex;
-  justify-content: center;
-  margin-top: var(--wp--preset--spacing--fluid-lg);
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .why-section__track {
+    transition: none;
+  }
+
+  .why-section__nav-button,
+  .feature-card,
+  .feature-card__icon-wrapper {
+    transition: none;
+  }
+
+  .feature-card:hover {
+    transform: none;
+  }
+
+  .feature-card:hover .feature-card__icon-wrapper {
+    transform: none;
+  }
 }

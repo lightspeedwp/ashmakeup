@@ -1,143 +1,94 @@
-# Storybook Quick Start Guide
+# 🎨 Ash Shaw Makeup Portfolio
 
-This directory contains the Storybook configuration for the Ash Shaw Makeup Portfolio component library.
+**The "Neon vs Atomic Black" Personal Portfolio**
+
+> **Migration Status:** 🦅 **Launch Preparation** (Sprint 4) - See [Migration Guide](./guidelines/wordpress-migration-guide.md)
+
+## 🌟 Overview
+
+This is a high-performance React application built with **Vite**, **TypeScript**, and **Tailwind CSS**. It features a unique "Neon vs Atomic Black" design system, custom animations, and a focus on accessibility (WCAG 2.1 AA).
+
+**Current Architecture:**
+- **Frontend:** React 18 SPA (Single Page Application)
+- **Styling:** Tailwind V4 + CSS Variables (Fluid Typography)
+- **Data Source:** Dual Mode (Mock Data OR Headless WordPress)
+- **State:** React Context + Hooks
+- **Testing:** Build Verification Scripts
 
 ## 🚀 Quick Start
 
+### 1. Install Dependencies
 ```bash
-# Start Storybook
+npm install
+```
+
+### 2. Configure Environment
+Copy `.env.example` to `.env` and set `VITE_USE_WORDPRESS` to your desired mode.
+```bash
+cp .env.example .env
+```
+
+### 3. Verify Build
+Run the verification script to check environment variables, links, and assets.
+```bash
+npx ts-node scripts/verify-build.ts
+```
+
+### 4. Run Development Server
+```bash
+npm run dev
+```
+Access the app at `http://localhost:5173`.
+
+### 5. Run Storybook
+```bash
 npm run storybook
-
-# Build Storybook
-npm run build-storybook
 ```
-
-## 📁 Configuration Files
-
-### `main.ts`
-Main Storybook configuration file:
-- Defines story file patterns
-- Configures addons (essentials, interactions, themes)
-- Sets up Vite builder
-- Configures path aliases
-
-### `preview.tsx`
-Global settings and decorators:
-- Imports Tailwind CSS (`globals.css`)
-- Configures dark mode theme switching
-- Sets up background presets
-- Defines default parameters for stories
-
-## 🎨 Addons Included
-
-1. **@storybook/addon-essentials** - Core features
-   - Controls - Adjust props dynamically
-   - Actions - Log component events
-   - Docs - Auto-generated documentation
-   - Viewport - Responsive testing
-   - Backgrounds - Test on different backgrounds
-
-2. **@storybook/addon-themes** - Theme switching
-   - Light/dark mode toggle
-   - Applies `dark` class to HTML element
-
-3. **@storybook/addon-interactions** - Component testing
-   - Simulate user interactions
-   - Test component behavior
-
-4. **@storybook/addon-links** - Navigate between stories
-   - Create links to other stories
-   - Build documentation flows
-
-## 🎯 Story Organization
-
-Stories are located in two places:
-
-```
-components/**/*.stories.tsx    # Component stories
-stories/**/*.stories.tsx       # Documentation stories
-stories/**/*.stories.mdx       # MDX documentation
-```
-
-### Categories:
-- **Brand/** - Logo, ThemeToggle, SocialLinks
-- **UI/** - ScrollDownArrow, VideoPlayer, etc.
-- **Portfolio/** - PortfolioCard
-- **Forms/** - ContactForm
-- **Design System/** - Design tokens and guidelines
-
-## 🔧 Customization
-
-### Adding New Addons
-
-1. Install the addon:
-   ```bash
-   npm install --save-dev @storybook/addon-name
-   ```
-
-2. Add to `main.ts`:
-   ```typescript
-   addons: [
-     // ... existing addons
-     '@storybook/addon-name',
-   ]
-   ```
-
-### Changing Theme Colors
-
-Edit `preview.tsx` to customize the dark mode theme:
-
-```typescript
-decorators: [
-  withThemeByClassName({
-    themes: {
-      light: '',
-      dark: 'custom-dark-class', // Your custom class
-    },
-    defaultTheme: 'light',
-  }),
-]
-```
-
-### Adding Global Styles
-
-Import CSS in `preview.tsx`:
-
-```typescript
-import '../path/to/your/styles.css';
-```
+View the component library at `http://localhost:6006`.
 
 ## 📚 Documentation
 
-- **Full Guide:** `/STORYBOOK_IMPLEMENTATION.md`
-- **Summary:** `/STORYBOOK_COMPLETE.md`
-- **Component Guidelines:** `/guidelines/`
+The project documentation is organized in the **`/guidelines`** directory.
 
-## 🐛 Troubleshooting
+*   **[Guidelines.md](./guidelines/Guidelines.md)** - Start Here (Critical Rules).
+*   **[wordpress-migration-guide.md](./guidelines/wordpress-migration-guide.md)** - How to connect to Headless WordPress.
+*   **[overview-components.md](./guidelines/overview-components.md)** - Component architecture.
+*   **[design-tokens/neon-system.md](./guidelines/design-tokens/neon-system.md)** - Design system rules.
 
-### Stories Not Loading
-- Check file patterns in `main.ts`
-- Ensure story files end with `.stories.tsx` or `.stories.mdx`
+## 🛠️ Developer Tools
 
-### Styles Not Applied
-- Verify `globals.css` import in `preview.tsx`
-- Check Tailwind configuration
+The application includes a built-in "DevTools" suite for inspecting the design system.
+Navigate to **/dev-tools** in the running app to access:
 
-### Dark Mode Not Working
-- Verify `@storybook/addon-themes` is installed
-- Check decorator configuration in `preview.tsx`
+*   **Design Tokens:** Colors, Typography, Spacing, Shadows.
+*   **Component Showcase:** Interactive button/card tests.
+*   **Accessibility Tester:** Automated contrast checks.
+*   **Performance:** Animation stress tests.
 
-### Path Aliases Not Resolving
-- Update `viteFinal` config in `main.ts`
-- Ensure aliases match `tsconfig.json`
+## 🦅 Headless WordPress Migration
 
-## 🎓 Resources
+We are currently in **Sprint 4 (Launch Preparation)**. The codebase supports a **Dual Mode Architecture**, allowing seamless switching between local mock data and a live Headless WordPress backend.
 
-- [Storybook Docs](https://storybook.js.org/docs)
-- [Writing Stories](https://storybook.js.org/docs/react/writing-stories/introduction)
-- [Addons](https://storybook.js.org/addons)
-- [Configuration](https://storybook.js.org/docs/react/configure/overview)
+**Key Files:**
+*   `/hooks/useContent.ts` - Facade hook for data access.
+*   `/dist/wordpress-export.json` - Content import file for WP All Import.
+*   `/scripts/verify-build.ts` - Pre-flight check script.
+*   `.env.example` - Configuration template.
+
+## 📦 Project Structure
+
+```
+/
+├── components/        # React components (Atomic structure)
+├── data/              # Mock data & Types
+├── guidelines/        # Documentation
+├── hooks/             # Custom React hooks
+├── reports/           # Sprint reports & status updates
+├── styles/            # CSS Modules & Global Styles
+└── utils/             # Helper functions
+```
 
 ---
 
-**Need Help?** Check the full implementation guide in `/STORYBOOK_IMPLEMENTATION.md`
+**Maintained by:** Ash Shaw Portfolio Team
+**Last Updated:** February 2026

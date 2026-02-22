@@ -17,8 +17,8 @@ import {
 } from "../common/ColorfulIcons";
 import { whySectionContent } from "../../data/mock/pages/home";
 import { useAppNavigate } from "../../hooks/useAppNavigate";
-import "@/styles/blocks/column-layouts.css";
-import "@/styles/blocks/why-section.css";
+import "../../styles/blocks/column-layouts.css";
+import "../../styles/blocks/why-section.css";
 
 // Map icon string IDs to icon components
 const iconMap = {
@@ -125,6 +125,7 @@ export function WhySection() {
           <div className="why-section__slider-wrapper">
             {/* Navigation Buttons (Hidden on mobile via CSS) */}
             <button
+              type="button"
               onClick={prevSlide}
               disabled={currentSlideIndex === 0}
               aria-label="Previous slide"
@@ -134,6 +135,7 @@ export function WhySection() {
             </button>
 
             <button
+              type="button"
               onClick={nextSlide}
               disabled={currentSlideIndex >= maxIndex}
               aria-label="Next slide"
@@ -184,6 +186,7 @@ export function WhySection() {
               <div className="why-section__dots">
                 {Array.from({ length: maxIndex + 1 }).map((_, index) => (
                   <button
+                    type="button"
                     key={index}
                     onClick={() => setCurrentSlideIndex(index)}
                     aria-label={`Go to slide group ${index + 1}`}
@@ -202,6 +205,7 @@ export function WhySection() {
         {/* Footer CTA */}
         <div className="why-section__footer">
           <button
+            type="button"
             onClick={() => setCurrentPage("about")}
             className="btn btn--neon-secondary"
             aria-label={whySectionContent.ctaAriaLabel}

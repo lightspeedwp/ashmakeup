@@ -10,8 +10,8 @@
 
 import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import "@/styles/blocks/responsive-grid-slider.css";
-import "@/styles/blocks/column-layouts.css";
+import "../../styles/blocks/responsive-grid-slider.css";
+import "../../styles/blocks/column-layouts.css";
 
 interface ResponsiveGridSliderProps<T> {
   items: T[];
@@ -137,6 +137,7 @@ export function ResponsiveGridSlider<T extends { id?: string }>({
     <div className={`rgs-wrapper ${className}`}>
       {/* Navigation Buttons (Hidden on mobile via CSS) */}
       <button
+        type="button"
         onClick={prevSlide}
         disabled={currentSlideIndex === 0}
         aria-label="Previous items"
@@ -146,6 +147,7 @@ export function ResponsiveGridSlider<T extends { id?: string }>({
       </button>
 
       <button
+        type="button"
         onClick={nextSlide}
         disabled={currentSlideIndex >= maxIndex}
         aria-label="Next items"
@@ -183,6 +185,7 @@ export function ResponsiveGridSlider<T extends { id?: string }>({
       <div className="rgs-dots">
         {Array.from({ length: maxIndex + 1 }).map((_, index) => (
           <button
+            type="button"
             key={index}
             onClick={() => setCurrentSlideIndex(index)}
             aria-label={`Go to slide group ${index + 1}`}

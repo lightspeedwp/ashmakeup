@@ -217,7 +217,7 @@ import { HeroSection } from './components/sections/HeroSection';
   subtitle="Makeup Artist"
   tagline="Makeup that shines with colour, energy, and connection."
   primaryCTA={{
-    text: 'View Portfolio',
+    text: 'Explore Portfolio',
     onClick: () => navigate('/portfolio')
   }}
   secondaryCTA={{
@@ -232,8 +232,14 @@ import { HeroSection } from './components/sections/HeroSection';
 ```tsx
 <HeroSection 
   title="Ash Shaw"
-  backgroundImage="/images/hero-background.jpg"
+  subtitle="UV & Neon Makeup Artist"
+  tagline="Creating stunning looks for festivals, editorials, and special events."
+  backgroundImage="/images/hero-festival-makeup.jpg"
   overlay="dark"
+  primaryCTA={{
+    text: 'Explore Portfolio',
+    onClick: () => navigate('/portfolio')
+  }}
 />
 ```
 
@@ -531,13 +537,13 @@ function HomePage() {
 ```tsx
 <HeroSection 
   title="Ash Shaw"
-  subtitle="Professional Makeup Artist"
+  subtitle="UV & Neon Makeup Artist"
   tagline="Creating stunning looks for festivals, editorials, and special events."
   backgroundImage="/images/hero-festival-makeup.jpg"
   overlay="dark"
   primaryCTA={{
-    text: 'Book Now',
-    onClick: () => navigate('/contact')
+    text: 'Explore Portfolio',
+    onClick: () => navigate('/portfolio')
   }}
 />
 ```
@@ -644,7 +650,7 @@ import Particles from 'react-particles';
         Ash Shaw
       </h1>
       <p className="text-body-guideline font-body text-gray-700 mt-fluid-md">
-        Professional makeup artist specializing in creative and editorial looks
+        UV & neon makeup artist specialising in creative and festival looks
       </p>
     </div>
   </div>

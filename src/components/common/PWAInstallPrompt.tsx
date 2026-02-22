@@ -107,6 +107,7 @@ export function PWAInstallPrompt({ className = '' }: PWAInstallPromptProps) {
       <div className="pwa-install-prompt__container">
         {/* Close Button */}
         <button
+          type="button"
           className="pwa-install-prompt__close"
           onClick={handleDismiss}
           onKeyDown={(e) => handleKeyDown(e, 'dismiss')}
@@ -149,6 +150,7 @@ export function PWAInstallPrompt({ className = '' }: PWAInstallPromptProps) {
         {/* Action Buttons */}
         <div className="pwa-install-prompt__actions">
           <button
+            type="button"
             className="pwa-install-prompt__button pwa-install-prompt__button--primary"
             onClick={handleInstall}
             onKeyDown={(e) => handleKeyDown(e, 'install')}
@@ -158,6 +160,7 @@ export function PWAInstallPrompt({ className = '' }: PWAInstallPromptProps) {
           </button>
           
           <button
+            type="button"
             className="pwa-install-prompt__button pwa-install-prompt__button--secondary"
             onClick={handleDismiss}
             onKeyDown={(e) => handleKeyDown(e, 'dismiss')}

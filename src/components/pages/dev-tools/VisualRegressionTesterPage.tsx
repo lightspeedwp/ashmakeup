@@ -11,8 +11,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
-import '@/styles/blocks/snippet-generator.css';
+import '../../../styles/blocks/specimen-page.css';
+import '../../../styles/blocks/snippet-generator.css';
+import '../../../styles/blocks/visual-regression.css';
 
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
@@ -62,57 +63,18 @@ const COMPARISON_TESTS: ComparisonTest[] = [
 /** Sample card for comparison */
 function SampleCard({ wrapperClass }: { wrapperClass: string }) {
   return (
-    <div className={wrapperClass} style={{
-      padding: 'var(--wp--preset--spacing--fluid-md)',
-      borderRadius: 'var(--wp--preset--border-radius--md)',
-    }}>
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column' as const,
-        gap: 'var(--wp--preset--spacing--fluid-xs)',
-        border: '1px solid var(--border)',
-        borderRadius: 'var(--wp--preset--border-radius--md)',
-        padding: 'var(--wp--preset--spacing--fluid-sm)',
-        background: 'var(--wp--preset--color--base)',
-      }}>
-        <span style={{
-          alignSelf: 'flex-start',
-          fontSize: '0.6875rem',
-          fontWeight: 600,
-          textTransform: 'uppercase' as const,
-          letterSpacing: '0.06em',
-          padding: '0.125rem 0.5rem',
-          borderRadius: 'var(--wp--preset--border-radius--full)',
-          background: 'rgba(190, 0, 254, 0.08)',
-          color: 'var(--wp--preset--color--neon-purple-text)',
-        }}>
+    <div className={`vr-sample-card ${wrapperClass}`}>
+      <div className="vr-sample-card__inner">
+        <span className="vr-sample-card__badge">
           Sample Badge
         </span>
-        <h3 style={{
-          fontFamily: 'var(--wp--preset--font-family--brand-heading)',
-          color: 'var(--foreground)',
-        }}>
+        <h3 className="vr-sample-card__heading">
           Card Heading
         </h3>
-        <p style={{
-          fontFamily: 'var(--wp--preset--font-family--brand-body)',
-          fontSize: 'var(--wp--preset--font-size--100)',
-          color: 'var(--wp--preset--color--neutral-600)',
-        }}>
+        <p className="vr-sample-card__text">
           Body text for visual regression comparison across different states and themes.
         </p>
-        <button type="button" style={{
-          alignSelf: 'flex-start',
-          padding: '0.375rem 1rem',
-          borderRadius: 'var(--wp--preset--border-radius--full)',
-          border: '1px solid var(--border)',
-          background: 'transparent',
-          fontFamily: 'var(--wp--preset--font-family--brand-body)',
-          fontSize: 'var(--wp--preset--font-size--100)',
-          fontWeight: 600,
-          color: 'var(--foreground)',
-          cursor: 'pointer',
-        }}>
+        <button type="button" className="vr-sample-card__button">
           Ghost Button
         </button>
       </div>
@@ -218,23 +180,18 @@ export function VisualRegressionTesterPage() {
             </div>
           </div>
         ) : (
-          <div className="snippet__panel" style={{ position: 'relative' as const }}>
+          <div className="snippet__panel vr-overlay-panel">
             <div className="snippet__panel-header">
               <span className="snippet__panel-title">
                 {test.leftLabel} (base) + {test.rightLabel} (overlay at {overlayOpacity}%)
               </span>
             </div>
-            <div style={{ position: 'relative' as const }}>
+            <div className="vr-overlay__base">
               <SampleCard wrapperClass={test.leftClass} />
-              <div style={{
-                position: 'absolute' as const,
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                opacity: overlayOpacity / 100,
-                pointerEvents: 'none' as const,
-              }}>
+              <div
+                className="vr-overlay__layer"
+                style={{ opacity: overlayOpacity / 100 }}
+              >
                 <SampleCard wrapperClass={test.rightClass} />
               </div>
             </div>

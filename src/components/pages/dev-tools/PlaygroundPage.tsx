@@ -8,8 +8,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
-import '@/styles/blocks/playground.css';
+import '../../../styles/blocks/specimen-page.css';
+import '../../../styles/blocks/playground.css';
 
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';

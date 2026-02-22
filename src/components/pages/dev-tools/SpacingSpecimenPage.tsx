@@ -8,7 +8,7 @@ import React, { useEffect } from 'react';
 import { Ruler } from 'lucide-react';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
+import '../../../styles/blocks/specimen-page.css';
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
 
@@ -72,7 +72,7 @@ export function SpacingSpecimenPage() {
               </h2>
               {tokens.map((t) => (
                 <div key={t.token} className="specimen-card">
-                  <div className="specimen-row" style={{ borderBottom: 'none', padding: 0 }}>
+                  <div className="specimen-row specimen-row--flush">
                     <div className="specimen-row__label">
                       <code className="specimen-card__code">{t.token}</code>
                     </div>

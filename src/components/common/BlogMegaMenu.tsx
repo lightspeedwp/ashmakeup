@@ -15,13 +15,13 @@
  */
 
 import React, { useCallback, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from '../../lib/router';
 import { ArrowRight, Clock } from 'lucide-react';
 import { blogPosts } from '../../data/mock/blog/posts';
 import { blogCategories } from '../../data/mock/blog/categories';
 import { getBlogCategoryCount } from '../../utils/contentCounts';
 import { formatDate } from '../../utils/formatDate';
-import '@/styles/blocks/mega-menu.css';
+import '../../styles/blocks/mega-menu.css';
 
 /** Neon rainbow colours cycled across category dots */
 const NEON_COLORS = [
@@ -118,6 +118,7 @@ export function BlogMegaMenu({ isOpen, onClose, onMouseEnter, onMouseLeave }: Bl
           <h3 className="mega-menu__col-heading">Featured Post</h3>
           {featuredPost && (
             <button
+              type="button"
               className="mega-menu__featured-btn"
               role="menuitem"
               onClick={() => go(`/blog/${featuredPost.slug}`)}
@@ -159,6 +160,7 @@ export function BlogMegaMenu({ isOpen, onClose, onMouseEnter, onMouseLeave }: Bl
                 style={{ '--item-index': idx } as React.CSSProperties}
               >
                 <button
+                  type="button"
                   className="mega-menu__recent-link"
                   role="menuitem"
                   onClick={() => go(`/blog/${post.slug}`)}
@@ -182,6 +184,7 @@ export function BlogMegaMenu({ isOpen, onClose, onMouseEnter, onMouseLeave }: Bl
             ))}
           </ul>
           <button
+            type="button"
             className="mega-menu__view-all mega-menu__view-all--blog"
             role="menuitem"
             onClick={() => go('/blog')}
@@ -208,6 +211,7 @@ export function BlogMegaMenu({ isOpen, onClose, onMouseEnter, onMouseLeave }: Bl
                 } as React.CSSProperties}
               >
                 <button
+                  type="button"
                   className="mega-menu__cat-link"
                   role="menuitem"
                   onClick={() => go(`/blog/category/${cat.slug}`)}

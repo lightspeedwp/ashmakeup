@@ -266,109 +266,15 @@ function ContactForm() {
 <input type="text" autoComplete="cc-exp" />
 <input type="text" autoComplete="cc-csc" />
 
-// Booking Form Example
+// Collaboration Form Example
 <input type="date" autoComplete="bday" />         // Birthday
-<input type="text" autoComplete="organization" /> // Company
-```
-
----
-
-## Validation Patterns
-
-### Real-Time Validation
-
-```tsx
-function EmailInput() {
-  const [email, setEmail] = useState('');
-  const [isValid, setIsValid] = useState<boolean | null>(null);
-  const [touched, setTouched] = useState(false);
-  
-  const validateEmail = (value: string) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-  };
-  
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setEmail(value);
-    
-    if (touched) {
-      setIsValid(validateEmail(value));
-    }
-  };
-  
-  const handleBlur = () => {
-    setTouched(true);
-    setIsValid(validateEmail(email));
-  };
-  
-  return (
-    <div>
-      <label 
-        htmlFor="email"
-        className="block text-sm font-body font-medium text-gray-700 mb-2"
-      >
-        Email *
-      </label>
-      
-      <div className="relative">
-        <input 
-          id="email"
-          type="email"
-          inputMode="email"
-          value={email}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          className={`
-            w-full px-4 py-3 pr-10 text-base rounded-lg border
-            ${isValid === false 
-              ? 'border-red-500 focus:ring-red-200' 
-              : isValid === true
-              ? 'border-green-500 focus:ring-green-200'
-              : 'border-gray-300 focus:ring-pink-200'
-            }
-            focus:outline-none focus:ring-2
-          `}
-          placeholder="your@email.com"
-          aria-invalid={isValid === false}
-          aria-describedby={isValid === false ? 'email-error' : undefined}
-        />
-        
-        {/* Validation Icon */}
-        {touched && isValid !== null && (
-          <div className="absolute right-3 top-1/2 -translate-y-1/2">
-            {isValid ? (
-              <CheckCircle className="w-5 h-5 text-green-500" />
-            ) : (
-              <XCircle className="w-5 h-5 text-red-500" />
-            )}
-          </div>
-        )}
-      </div>
-      
-      {/* Error Message */}
-      {touched && isValid === false && (
-        <p 
-          id="email-error"
-          className="mt-2 text-sm text-red-600 flex items-center gap-1"
-        >
-          <AlertCircle className="w-4 h-4" />
-          Please enter a valid email address
-        </p>
-      )}
-    </div>
-  );
-}
-```
-
-### Form-Level Validation
-
-```tsx
-function BookingForm() {
+// ... existing code ...
+function CollaborationForm() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     date: '',
-    service: ''
+    message: ''
   });
   
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -398,8 +304,8 @@ function BookingForm() {
         }
         break;
       
-      case 'service':
-        if (!value) error = 'Please select a service';
+      case 'message':
+        if (!value) error = 'Please enter a message';
         break;
     }
     
@@ -446,7 +352,7 @@ function BookingForm() {
     }
     
     // Submit form
-    submitBooking(formData);
+    submitInquiry(formData);
   };
   
   return (
@@ -645,14 +551,14 @@ function InterestSelector() {
 // Date Input
 <div>
   <label 
-    htmlFor="booking-date"
+    htmlFor="event-date"
     className="block text-sm font-body font-medium text-gray-700 mb-2"
   >
     Preferred Date *
   </label>
   
   <input 
-    id="booking-date"
+    id="event-date"
     type="date"
     min={new Date().toISOString().split('T')[0]}
     required
@@ -670,14 +576,14 @@ function InterestSelector() {
 // Time Input
 <div>
   <label 
-    htmlFor="booking-time"
+    htmlFor="event-time"
     className="block text-sm font-body font-medium text-gray-700 mb-2"
   >
     Preferred Time *
   </label>
   
   <input 
-    id="booking-time"
+    id="event-time"
     type="time"
     min="09:00"
     max="18:00"

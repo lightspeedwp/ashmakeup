@@ -15,7 +15,7 @@ import type { FaqItem } from "../../data/mock/sections/faq";
 import { getRandomSticker } from "../../data/mock/images/sticker-graphics";
 import { OptimizedImage } from "../ui/OptimizedImage";
 import { injectFaqSchema } from "../../utils/faqSchema";
-import "@/styles/blocks/faq.css";
+import "../../styles/blocks/faq.css";
 
 interface FaqItemComponentProps {
   question: string;
@@ -28,6 +28,7 @@ function FaqItemComponent({ question, answer, isOpen, onClick }: FaqItemComponen
   return (
     <div className={`faq-item${isOpen ? " faq-item--open" : ""}`}>
       <button
+        type="button"
         onClick={onClick}
         className="faq-button"
         aria-expanded={isOpen}

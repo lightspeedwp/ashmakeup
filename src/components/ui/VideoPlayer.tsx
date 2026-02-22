@@ -13,7 +13,7 @@
 
 import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
-import "@/styles/blocks/video-player.css";
+import "../../styles/blocks/video-player.css";
 
 interface VideoPlayerProps {
   src: string;
@@ -250,6 +250,7 @@ function DirectVideoPlayer({
         <div className="video-player__buttons">
           {/* Play/Pause */}
           <button
+            type="button"
             onClick={togglePlay}
             className="video-player__btn"
             aria-label={isPlaying ? 'Pause video' : 'Play video'}
@@ -264,6 +265,7 @@ function DirectVideoPlayer({
           {/* Volume */}
           <div className="video-player__volume-controls">
             <button
+              type="button"
               onClick={toggleMute}
               className="video-player__btn"
               aria-label={isMuted ? 'Unmute video' : 'Mute video'}
@@ -291,6 +293,7 @@ function DirectVideoPlayer({
           
           {/* Fullscreen */}
           <button
+            type="button"
             onClick={toggleFullscreen}
             className="video-player__btn"
             aria-label="Toggle fullscreen"
@@ -303,6 +306,7 @@ function DirectVideoPlayer({
       {/* Play Button Overlay */}
       {!isPlaying && (
         <button
+          type="button"
           onClick={togglePlay}
           className="video-player__overlay-btn"
           aria-label="Play video"

@@ -27,11 +27,10 @@ import {
   ExternalLink,
   Palette,
   Layers,
-  Fingerprint,
   Paintbrush,
   Droplets,
   Sparkles,
-  Wand2,
+  PenTool,
   Calendar,
   Clock,
   Tag,
@@ -48,19 +47,16 @@ import {
   Share2,
   Link2,
   Download,
-  Grid,
+  LayoutGrid,
   ZoomIn,
   ZoomOut,
-  GripVertical,
-  Scale,
+  Shield,
   Sun,
   Moon,
   Wifi,
   WifiOff,
   Zap,
-  Flashlight,
   MapPin,
-  Compass,
   Building2,
   Music,
   Brain,
@@ -100,11 +96,11 @@ import {
   themeComparisonElements,
 } from "../../data/mock/ui/style-guide";
 
-import "@/styles/blocks/style-guide-page.css";
-import "@/styles/blocks/button.css";
-import "@/styles/blocks/badge.css";
-import "@/styles/blocks/archive-filters.css";
-import "@/styles/blocks/blog-page.css";
+import "../../styles/blocks/style-guide-page.css";
+import "../../styles/blocks/button.css";
+import "../../styles/blocks/badge.css";
+import "../../styles/blocks/archive-filters.css";
+import "../../styles/blocks/blog-page.css";
 
 import { setSEO } from '../../utils/seo';
 import { pageSEO } from '../../data/mock/seo';
@@ -126,11 +122,10 @@ const ICON_MAP: Record<string, LucideIcon> = {
   ExternalLink,
   Palette,
   Layers,
-  Fingerprint,
   Paintbrush,
   Droplets,
   Sparkles,
-  Wand2,
+  PenTool,
   Calendar,
   Clock,
   Tag,
@@ -147,19 +142,16 @@ const ICON_MAP: Record<string, LucideIcon> = {
   Share2,
   Link2,
   Download,
-  Grid,
+  LayoutGrid,
   ZoomIn,
   ZoomOut,
-  GripVertical,
-  Scale,
+  Shield,
   Sun,
   Moon,
   Wifi,
   WifiOff,
   Zap,
-  Flashlight,
   MapPin,
-  Compass,
   Building2,
   Music,
   Brain,

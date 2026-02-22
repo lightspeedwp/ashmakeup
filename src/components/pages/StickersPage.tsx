@@ -24,7 +24,8 @@ import {
 } from '../../data/mock/ui/stickers';
 import { Breadcrumbs } from '../ui/Breadcrumbs';
 import { OptimizedImage } from '../ui/OptimizedImage';
-import '@/styles/blocks/stickers-page.css';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+import '../../styles/blocks/stickers-page.css';
 
 import { setSEO } from '../../utils/seo';
 import { pageSEO } from '../../data/mock/seo';
@@ -217,6 +218,7 @@ export function StickersPage() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const highlightTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const prefersReduced = useReducedMotion();
 
   useEffect(() => {
     setSEO(pageSEO.stickers);
@@ -332,7 +334,7 @@ export function StickersPage() {
         `[data-sticker-id="${sticker.id}"]`,
       );
       if (card) {
-        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'center' });
       }
     }
 
@@ -340,7 +342,7 @@ export function StickersPage() {
     highlightTimerRef.current = setTimeout(() => {
       setHighlightedId(null);
     }, 2200);
-  }, [filtered]);
+  }, [filtered, prefersReduced]);
 
   /* ── Search handler ── */
   const handleSearchChange = useCallback(

@@ -7,7 +7,7 @@
  */
 
 import React, { useMemo, useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import { useParams, useNavigate } from '../../../lib/router';
 import { Calendar, Clock, Mic, PlayCircle, Tag } from 'lucide-react';
 import { podcastEpisodes } from '../../../data/mock/podcasts/episodes';
 import { findPodcastTagBySlug } from '../../../data/mock/podcasts/tags';
@@ -23,8 +23,8 @@ import {
   SCHEMA_IDS,
   buildCollectionSchema,
 } from '../../../utils/schemaService';
-import '@/styles/blocks/podcasts-page.css';
-import '@/styles/blocks/archive-filters.css';
+import '../../../styles/blocks/podcasts-page.css';
+import '../../../styles/blocks/archive-filters.css';
 
 const SORT_OPTIONS = [
   { value: 'recent', label: 'Most Recent' },
@@ -114,6 +114,7 @@ export function PodcastTagPage() {
         <div className="archive-filters__sort">
           {SORT_OPTIONS.map(opt => (
             <button
+              type="button"
               key={opt.value}
               className={`archive-filters__chip ${sortBy === opt.value ? 'archive-filters__chip--active' : ''}`}
               onClick={() => setSortBy(opt.value)}
@@ -128,6 +129,7 @@ export function PodcastTagPage() {
           <div className="archive-filters__categories">
             {relatedTags.map(rt => (
               <button
+                type="button"
                 key={rt}
                 className="archive-filters__chip"
                 onClick={() =>
@@ -182,10 +184,10 @@ export function PodcastTagPage() {
                     <span className="podcast-card__category-chip">
                       {ep.category}
                     </span>
-                    <span>
+                    <time dateTime={ep.publishedAt}>
                       <Calendar className="icon-xs" aria-hidden="true" />{' '}
                       {formatDate(ep.publishedAt)}
-                    </span>
+                    </time>
                     <span>
                       <Clock className="icon-xs" aria-hidden="true" />{' '}
                       {ep.duration}

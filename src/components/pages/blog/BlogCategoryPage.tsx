@@ -7,7 +7,7 @@
  */
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import { useParams, useNavigate } from '../../../lib/router';
 import { Calendar, Clock, BookOpen } from 'lucide-react';
 import { blogPosts } from '../../../data/mock/blog/posts';
 import { blogCategories } from '../../../data/mock/blog/categories';
@@ -25,7 +25,7 @@ import {
   SCHEMA_IDS,
   buildCollectionSchema,
 } from '../../../utils/schemaService';
-import '@/styles/blocks/blog-page.css';
+import '../../../styles/blocks/blog-page.css';
 
 const SORT_OPTIONS = [
   { value: 'recent', label: 'Most Recent' },

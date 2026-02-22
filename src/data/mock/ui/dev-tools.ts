@@ -120,7 +120,7 @@ export const devToolsPageUI = {
       description:
         'Complete reference of every CSS custom property — colours, typography, spacing, shadows, radii, z-index, opacity, and more.',
       href: '/dev-tools/tokens',
-      icon: 'SwatchBook',
+      icon: 'Lightbulb',
       badge: 'Reference',
     },
     {
@@ -202,7 +202,7 @@ export const devToolsPageUI = {
         'Auto-generated markdown documentation for every public component — props, imports, and descriptions ready to copy.',
       href: '/dev-tools/docs',
       icon: 'FileText',
-      badge: 'Docs',
+      badge: 'Reference',
     },
     {
       id: 'visual-regression',
@@ -210,7 +210,7 @@ export const devToolsPageUI = {
       description:
         'Side-by-side and overlay comparison of component rendering across themes, states, and viewport sizes.',
       href: '/dev-tools/visual-regression',
-      icon: 'SplitSquareHorizontal',
+      icon: 'Eye',
       badge: 'Testing',
     },
     {
@@ -247,7 +247,7 @@ export const devToolsPageUI = {
         'Measure real-time performance metrics using the browser Performance API. View Core Web Vitals, resource breakdowns, and image audit.',
       href: '/dev-tools/performance',
       icon: 'Gauge',
-      badge: 'Web Vitals',
+      badge: 'Testing',
     },
   ] as DevTool[],
 

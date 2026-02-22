@@ -7,7 +7,7 @@
  */
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import { useParams, useNavigate } from '../../../lib/router';
 import { Image, Layers } from 'lucide-react';
 import {
   PORTFOLIO_CATEGORIES,
@@ -19,8 +19,8 @@ import { OptimizedImage } from '../../ui/OptimizedImage';
 import { FaqSection } from '../../sections/FaqSection';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { getPortfolioCategoryCount } from '../../../utils/contentCounts';
-import '@/styles/blocks/portfolio-main-page.css';
-import '@/styles/blocks/portfolio-card.css';
+import '../../../styles/blocks/portfolio-main-page.css';
+import '../../../styles/blocks/portfolio-card.css';
 
 import { setSEO } from '../../../utils/seo';
 import { portfolioCategorySEO } from '../../../data/mock/seo';

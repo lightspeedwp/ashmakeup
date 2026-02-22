@@ -410,3 +410,30 @@
   margin: 0 calc(var(--wp--preset--spacing--block-gap) / -4);
   padding: calc(var(--wp--preset--spacing--block-gap) / 4);
 }
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .blog-preview__track {
+    transition: none;
+  }
+
+  .blog-card,
+  .blog-card__image,
+  .blog-card__title,
+  .blog-preview__nav-button,
+  .blog-preview__dot {
+    transition: none;
+  }
+
+  .blog-card:hover {
+    transform: none;
+  }
+
+  .blog-card:hover .blog-card__image {
+    transform: none;
+  }
+
+  .skeleton-box {
+    animation: none;
+  }
+}

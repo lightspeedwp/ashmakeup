@@ -12,13 +12,15 @@
  * - Screen reader announcements for navigation changes and page transitions
  * - Logo component integration with clickable home navigation
  * - SearchInput component for global search (Ctrl+K / Cmd+K)
+ * - Scroll-spy active state highlighting on the homepage
+ * - Scroll-position-based transparent/compact header states
  * 
  * @author Ash Shaw Portfolio Team
- * @version 7.0.0 - Portfolio & Blog mega menus
+ * @version 7.2.0 - Scroll-spy + sticky header states
  */
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { useLocation, useNavigate } from "react-router";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { useLocation, useNavigate } from "../../lib/router";
 import { X } from "lucide-react";
 import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
@@ -32,10 +34,34 @@ import { ContactMiniMenu } from "./ContactMiniMenu";
 import { headerNavigationItems } from "../../data/mock/ui/navigation";
 import { branding } from "../../data/mock/ui/branding";
 import { getPageIdFromPath } from "../../hooks/useAppNavigate";
-import "@/styles/blocks/header.css";
+import { useClickOutside } from "../../hooks/useClickOutside";
+import { useScrollSpy } from "../../hooks/useScrollSpy";
+import { useScrollPosition } from "../../hooks/useScrollPosition";
+import { useReducedMotion } from "../../hooks/useReducedMotion";
+import "../../styles/blocks/header.css";
 
 /** IDs of nav items that have mega-menu dropdowns */
 const MEGA_MENU_IDS = new Set(['about', 'portfolio', 'blog', 'contact']);
+
+/** Homepage section IDs observed by scroll spy */
+const HOMEPAGE_SECTION_IDS = [
+  'hero-section',
+  'why-section',
+  'work',
+  'blog-preview',
+  'testimonials',
+  'festival-countdown',
+  'instagram-feed',
+  'uv-makeup',
+  'faq-section',
+];
+
+/** Maps a homepage section ID to the corresponding nav item ID */
+const SECTION_TO_NAV: Record<string, string> = {
+  'work': 'portfolio',
+  'blog-preview': 'blog',
+  'uv-makeup': 'portfolio',
+};
 
 /**
  * Header - Comprehensive navigation component with accessibility and mobile optimization
@@ -55,6 +81,39 @@ export function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const currentPage = getPageIdFromPath(location.pathname);
+
+  /* ── Scroll-spy: highlight nav items based on visible homepage section ── */
+  const isHomePage = location.pathname === '/';
+  const activeSection = useScrollSpy(HOMEPAGE_SECTION_IDS, {
+    rootMargin: '-20% 0px -60% 0px',
+    threshold: 0,
+    enabled: isHomePage,
+    fallbackId: 'hero-section',
+  });
+
+  /** Nav item ID to highlight — scroll-spy on homepage, route-based elsewhere */
+  const activeNavId = useMemo(() => {
+    if (!isHomePage) return currentPage;
+    if (!activeSection) return 'home';
+    return SECTION_TO_NAV[activeSection] || 'home';
+  }, [isHomePage, currentPage, activeSection]);
+
+  /* ── Scroll position: transparent-at-top → compact-when-scrolled ── */
+  const SCROLL_THRESHOLD = 80;
+  const { isScrolledPast } = useScrollPosition({ throttleMs: 60 });
+  const isScrolled = isScrolledPast(SCROLL_THRESHOLD);
+
+  /** Build the header BEM class string */
+  const headerClassName = useMemo(() => {
+    const classes = ['header'];
+    if (isHomePage && !isScrolled) {
+      classes.push('header--at-top');
+    }
+    if (isScrolled) {
+      classes.push('header--scrolled');
+    }
+    return classes.join(' ');
+  }, [isHomePage, isScrolled]);
 
   const { registerModal, updateModal, unregisterModal } = useModal();
 
@@ -86,31 +145,19 @@ export function Header() {
     setOpenDropdown(null);
   }, [location.pathname]);
 
-  // Close dropdown on outside click
+  // Handle outside clicks to close dropdowns
+  const activeDropdownRef = useRef<HTMLElement | null>(null);
+  
   useEffect(() => {
-    if (!openDropdown) return;
-
-    const handleOutsideClick = (e: MouseEvent) => {
-      const target = e.target as Node;
-      const wrapper = wrapperRefs.current[openDropdown];
-
-      // Check if click is inside the trigger wrapper
-      if (wrapper && wrapper.contains(target)) return;
-
-      // Check if click is inside the fixed-position mega-menu panel
-      const megaMenu = document.querySelector('.mega-menu');
-      if (megaMenu && megaMenu.contains(target)) return;
-
-      // Check if click is inside the contact mini menu
-      const contactMini = document.querySelector('.contact-mini');
-      if (contactMini && contactMini.contains(target)) return;
-
-      setOpenDropdown(null);
-    };
-
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => document.removeEventListener('mousedown', handleOutsideClick);
+    activeDropdownRef.current = openDropdown ? wrapperRefs.current[openDropdown] : null;
   }, [openDropdown]);
+
+  useClickOutside(
+    () => setOpenDropdown(null),
+    [activeDropdownRef],
+    !!openDropdown,
+    ['.mega-menu', '.contact-mini']
+  );
 
   /* ── Shared open / close helpers ── */
 
@@ -135,10 +182,12 @@ export function Header() {
 
   /* ── Navigation helpers ── */
 
+  const prefersReduced = useReducedMotion();
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth" });
       announceToScreenReader(`Navigated to ${sectionId.replace("-", " ")} section`);
     }
   };
@@ -237,7 +286,7 @@ export function Header() {
   return (
     <>
       <nav
-        className="header"
+        className={headerClassName}
         role="navigation"
         aria-label="Main navigation"
       >
@@ -245,6 +294,7 @@ export function Header() {
           {/* Logo - clickable to home */}
           <div className="header__logo-container">
             <button
+              type="button"
               onClick={() => handleNavigation("/", "home")}
               className="header__logo-button"
               aria-label={`Go to ${branding.company.name} home page`}
@@ -264,6 +314,7 @@ export function Header() {
                   onOpenChange={setIsSearchOpen}
                 />
                 <button
+                  type="button"
                   className="header__search-close"
                   onClick={() => setIsSearchOpen(false)}
                   aria-label="Close search"
@@ -287,14 +338,15 @@ export function Header() {
                         onMouseLeave={closeMenu}
                       >
                         <button
+                          type="button"
                           ref={(el) => { triggerRefs.current[item.id] = el; }}
                           onClick={() => handleNavigation(item.path, item.id)}
                           onKeyDown={(e) => handleTriggerKeyDown(e, item.id)}
                           className={`header__nav-link ${
-                            currentPage === item.id ? "header__nav-link--active" : ""
+                            activeNavId === item.id ? "header__nav-link--active" : ""
                           }`}
                           role="menuitem"
-                          aria-current={currentPage === item.id ? "page" : undefined}
+                          aria-current={activeNavId === item.id ? "page" : undefined}
                           aria-haspopup="true"
                           aria-expanded={openDropdown === item.id}
                         >
@@ -310,13 +362,14 @@ export function Header() {
                   /* Regular nav links */
                   return (
                     <button
+                      type="button"
                       key={item.id}
                       onClick={() => handleNavigation(item.path, item.id)}
                       className={`header__nav-link ${
-                        currentPage === item.id ? "header__nav-link--active" : ""
+                        activeNavId === item.id ? "header__nav-link--active" : ""
                       }`}
                       role="menuitem"
-                      aria-current={currentPage === item.id ? "page" : undefined}
+                      aria-current={activeNavId === item.id ? "page" : undefined}
                     >
                       <item.icon className="header__nav-icon" aria-hidden="true" />
                       {item.label}
@@ -340,6 +393,7 @@ export function Header() {
           <div className="header__mobile-controls">
             <ThemeToggle />
             <button
+              type="button"
               ref={menuButtonRef}
               className="header__burger-button"
               onClick={toggleMobileMenu}

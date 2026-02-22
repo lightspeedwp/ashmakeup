@@ -339,6 +339,27 @@
   gap: 0.25rem;
 }
 
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .lightbox-overlay {
+    animation: none;
+  }
+
+  .lightbox-container--scrollable {
+    scroll-behavior: auto;
+  }
+
+  .lightbox-btn,
+  .lightbox-btn-text,
+  .lightbox-nav-arrow,
+  .lightbox-image-wrapper,
+  .lightbox-image,
+  .lightbox-dot,
+  .lightbox-thumbnail-btn {
+    transition: none;
+  }
+}
+
 /* Footer */
 .lightbox-footer {
   padding: 1rem;

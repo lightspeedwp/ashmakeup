@@ -14,8 +14,8 @@ import { EnhancedLightbox } from "../ui/EnhancedLightbox";
 import { SliderCard } from "../ui/SliderCard";
 import { homeUI } from "../../data/mock/ui/home";
 import { useAppNavigate } from "../../hooks/useAppNavigate";
-import "@/styles/blocks/column-layouts.css";
-import "@/styles/blocks/uv-makeup.css";
+import "../../styles/blocks/column-layouts.css";
+import "../../styles/blocks/uv-makeup.css";
 
 /**
  * UV Makeup Art section component displaying neon and blacklight artistry portfolio
@@ -196,6 +196,7 @@ export function UVMakeupSection() {
             <div className="uv-makeup-section__slider-wrapper">
                {/* Navigation Buttons (Hidden on mobile via CSS) */}
                <button
+                type="button"
                 onClick={prevSlide}
                 disabled={currentSlideIndex === 0}
                 aria-label="Previous slide"
@@ -205,6 +206,7 @@ export function UVMakeupSection() {
               </button>
 
               <button
+                type="button"
                 onClick={nextSlide}
                 disabled={currentSlideIndex >= maxIndex}
                 aria-label="Next slide"
@@ -254,6 +256,7 @@ export function UVMakeupSection() {
               <div className="uv-makeup-section__dots">
                 {Array.from({ length: maxIndex + 1 }).map((_, index) => (
                   <button
+                    type="button"
                     key={index}
                     onClick={() => setCurrentSlideIndex(index)}
                     aria-label={`Go to slide group ${index + 1}`}
@@ -271,6 +274,7 @@ export function UVMakeupSection() {
           {/* Call to Action */}
           <div className="uv-makeup-section__cta">
             <button
+              type="button"
               onClick={() => setCurrentPage("portfolio")}
               className="btn btn--neon-secondary uv-makeup-cta-btn"
               aria-label={homeUI.sections.uvMakeup.ctaAriaLabel}

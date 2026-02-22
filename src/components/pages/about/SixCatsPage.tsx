@@ -17,37 +17,34 @@ import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import {
   Leaf,
   Droplets,
-  Sprout,
-  Beaker,
+  Zap,
+  Clock,
   Scissors,
-  Wind,
-  Timer,
-  Package,
-  Recycle,
-  ExternalLink,
   Star,
   Heart,
   ChevronDown,
   ChevronUp,
-  Cat,
+  Layers,
+  RefreshCw,
+  ExternalLink,
 } from 'lucide-react';
-import '@/styles/blocks/about-subpage.css';
-import '@/styles/blocks/six-cats-page.css';
+import '../../../styles/blocks/about-subpage.css';
+import '../../../styles/blocks/six-cats-page.css';
 
 /** Map cultivation method IDs to icons */
 const CULTIVATION_ICONS: Record<string, React.ElementType> = {
-  'living-soil': Sprout,
+  'living-soil': Leaf,
   'rainwater': Droplets,
-  'companion-planting': Leaf,
-  'worm-tea': Beaker,
+  'companion-planting': Zap,
+  'worm-tea': Clock,
 };
 
 /** Map harvest phase IDs to icons */
 const HARVEST_ICONS: Record<string, React.ElementType> = {
   flushing: Droplets,
-  drying: Wind,
-  'dry-trimming': Scissors,
-  curing: Timer,
+  drying: Scissors,
+  'dry-trimming': Star,
+  curing: Heart,
 };
 
 export function SixCatsPage() {
@@ -158,7 +155,7 @@ export function SixCatsPage() {
       {/* ── The Cats ── */}
       <section className="six-cats-page__cats" aria-label={a11y.catsListLabel}>
         <h2 className="six-cats-page__section-heading">
-          <Cat className="six-cats-page__heading-icon" aria-hidden="true" />
+          <Layers className="six-cats-page__heading-icon" aria-hidden="true" />
           The Current Pack
         </h2>
         <div className="six-cats-page__cats-grid" role="list">
@@ -183,6 +180,7 @@ export function SixCatsPage() {
         {/* ── Memorial ── */}
         <div className="six-cats-page__memorial">
           <button
+            type="button"
             className="six-cats-page__memorial-toggle"
             onClick={() => setShowMemorial(!showMemorial)}
             aria-expanded={showMemorial}
@@ -257,6 +255,7 @@ export function SixCatsPage() {
               role="listitem"
             >
               <button
+                type="button"
                 className="six-cats-page__grade-header"
                 onClick={() =>
                   setExpandedGrade(
@@ -340,7 +339,7 @@ export function SixCatsPage() {
         </h2>
         <div className="six-cats-page__harvest-timeline" role="list">
           {harvest.map((phase, idx) => {
-            const IconComp = HARVEST_ICONS[phase.id] || Timer;
+            const IconComp = HARVEST_ICONS[phase.id] || Clock;
             return (
               <article
                 key={phase.id}
@@ -381,14 +380,14 @@ export function SixCatsPage() {
         aria-label={a11y.packagingLabel}
       >
         <h2 className="six-cats-page__section-heading">
-          <Package className="six-cats-page__heading-icon" aria-hidden="true" />
+          <Layers className="six-cats-page__heading-icon" aria-hidden="true" />
           Packaging &amp; Sustainability
         </h2>
         <div className="six-cats-page__packaging-grid">
           {packaging.map((pkg) => (
             <article key={pkg.id} className="six-cats-page__packaging-card">
               {pkg.id === 'glass' ? (
-                <Recycle
+                <RefreshCw
                   className="six-cats-page__packaging-icon"
                   aria-hidden="true"
                 />

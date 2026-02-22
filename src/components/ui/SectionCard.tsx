@@ -8,7 +8,7 @@
 
 import React from "react";
 import type { LucideIcon } from "lucide-react";
-import "@/styles/blocks/section-card.css";
+import "../../styles/blocks/section-card.css";
 
 /**
  * Props interface for SectionCard component

@@ -8,8 +8,8 @@ import React, { useEffect } from 'react';
 import { LayoutGrid, Calendar, Tag, Eye, Heart, Play, Mic, ArrowRight } from 'lucide-react';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
-import '@/styles/blocks/card-specimen.css';
+import '../../../styles/blocks/specimen-page.css';
+import '../../../styles/blocks/card-specimen.css';
 
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';

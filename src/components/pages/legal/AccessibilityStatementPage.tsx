@@ -6,7 +6,7 @@ import React from 'react';
 import { accessibilityPageData } from '../../../data/mock/pages/accessibility';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { setSEO } from '../../../utils/seo';
-import '@/styles/blocks/accessibility-page.css';
+import '../../../styles/blocks/accessibility-page.css';
 
 export function AccessibilityStatementPage() {
   React.useEffect(() => {
@@ -53,10 +53,10 @@ export function AccessibilityStatementPage() {
                 </section>
             ))}
 
-            <section className="accessibility-contact bg-neutral-900 p-fluid-xl rounded-xl border border-neutral-800">
+            <section className="accessibility-contact">
                 <h2 className="text-section-h3 text-white mb-fluid-md">{accessibilityPageData.contact.title}</h2>
                 <p className="text-body-p text-neutral-400 mb-fluid-md">
-                    {accessibilityPageData.contact.emailLabel}<a href={`mailto:${accessibilityPageData.contact.email}`} className="text-neon-cyan hover:underline">{accessibilityPageData.contact.email}</a>
+                    {accessibilityPageData.contact.emailLabel}<a href={`mailto:${accessibilityPageData.contact.email}`} className="accessibility-contact__link">{accessibilityPageData.contact.email}</a>
                 </p>
                 <p className="text-body-sm text-neutral-500">
                     {accessibilityPageData.contact.response_time}

@@ -49,3 +49,19 @@
     color: var(--wp--preset--color--neon-green);
     font-weight: bold;
 }
+
+.accessibility-contact {
+    background: var(--wp--preset--color--neutral-900);
+    padding: var(--wp--preset--spacing--fluid-xl);
+    border-radius: var(--wp--preset--border-radius--xl);
+    border: 1px solid var(--wp--preset--color--neutral-800);
+}
+
+.accessibility-contact__link {
+    color: var(--wp--preset--color--neon-cyan);
+    text-decoration: none;
+}
+
+.accessibility-contact__link:hover {
+    text-decoration: underline;
+}

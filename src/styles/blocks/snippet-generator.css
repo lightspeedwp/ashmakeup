@@ -30,6 +30,11 @@
   border-color: rgba(255, 255, 255, 0.08);
 }
 
+.snippet__controls--row {
+  flex-direction: row;
+  align-items: center;
+}
+
 .snippet__row {
   display: flex;
   gap: var(--wp--preset--spacing--fluid-sm);

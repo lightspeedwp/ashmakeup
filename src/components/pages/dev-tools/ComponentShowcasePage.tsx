@@ -15,8 +15,8 @@ import { SocialLinks } from '../../common/SocialLinks';
 import { ThemeToggle } from '../../common/ThemeToggle';
 import { ReadMoreButton } from '../../ui/ReadMoreButton';
 import { ShareComponent } from '../../ui/ShareComponent';
-import '@/styles/blocks/specimen-page.css';
-import '@/styles/blocks/component-showcase.css';
+import '../../../styles/blocks/specimen-page.css';
+import '../../../styles/blocks/component-showcase.css';
 
 const CATEGORY_LABELS: Record<string, string> = {
   common: 'Common Components',

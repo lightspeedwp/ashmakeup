@@ -4,6 +4,7 @@ This document defines the core design, development, and technical guidelines for
 
 **Version:** 7.0.0
 **Last Updated:** February 2026
+**Last Reviewed:** February 21, 2026
 
 ## 📋 Major Update (v5.3.0) - Personal Art Project
 
@@ -37,7 +38,7 @@ Read ALL overview files in this directory:
 - **[overview-patterns.md](./overview-patterns.md)** - Design patterns and compositions
 - **[overview-parts.md](./overview-parts.md)** - Template parts (Header, Footer, etc.)
 - **[overview-templates.md](./overview-templates.md)** - Page templates and layouts
-- **[mock-data.md](./mock-data.md)** - 🆕 Mock data system and usage (IMPORTANT!)
+- **[Data System Documentation](../data/README.md)** - Mock data system and usage (IMPORTANT!)
 - **[pwa-implementation.md](./pwa-implementation.md)** - 🆕 Progressive Web App features and offline support
 
 ### Step 2: Read Design Tokens (REQUIRED)
@@ -48,6 +49,7 @@ Read ALL files in the `design-tokens/` folder. Do NOT skip this step:
 - **[typography.md](./design-tokens/typography.md)** - Typography scale and hierarchy
 - **[spacing.md](./design-tokens/spacing.md)** - Spacing system and responsive patterns
 - **[accessibility-report-feb-2025.md](./accessibility-report-feb-2025.md)** - 🆕 WCAG AA compliance report
+- **[prefers-reduced-motion.md](./prefers-reduced-motion.md)** - 🆕 Reduced motion coding standards & accessibility guide
 
 ### Step 2.5: Understand Light/Dark Mode System (REQUIRED)
 Read the light/dark mode documentation for complete theme implementation:
@@ -56,7 +58,7 @@ Read the light/dark mode documentation for complete theme implementation:
 
 ### Step 3: Understand Mock Data System (REQUIRED)
 Read the mock data guidelines to understand centralized data management:
-- **[mock-data.md](./mock-data.md)** - Complete guide to the mock data system
+- **[Data System Documentation](../data/README.md)** - Complete guide to the mock data system
 
 ### Step 4: Read Component Guidelines BEFORE Using (REQUIRED)
 BEFORE using ANY component, you MUST read its specific guideline file:
@@ -163,7 +165,6 @@ ash-shaw-makeup-portfolio/
 ├── 📁 guidelines/                     # THIS DIRECTORY
 │   ├── 📄 Guidelines.md               # This file (start here)
 │   ├── 📄 README.md                   # Documentation index
-│   ├── 📄 mock-data.md                # 🆕 Mock data system guide
 │   ├── 📄 overview-components.md      # Component system overview + React diagram
 │   ├── 📄 overview-icons.md           # Icon system guide
 │   ├── 📁 components/                 # Component-specific docs
@@ -301,6 +302,7 @@ The Ash Shaw Makeup Portfolio uses a bold **Neon vs Atomic Black** design system
 All components meet the following standards:
 - **Color Contrast:** 4.5:1 minimum (body text), 7:1+ achieved in dark mode (AAA)
 - **Reduced Motion:** Full `prefers-reduced-motion` support for all 26 animations
+  - See **[prefers-reduced-motion.md](./prefers-reduced-motion.md)** for coding standards and implementation guide
 - **Keyboard Navigation:** Full support (Tab, Enter, Space, Arrows, Escape)
 - **Screen Readers:** Proper ARIA labels and semantic HTML
 - **Focus Management:** Enhanced 3px neon pink focus indicators with glow effects
@@ -315,10 +317,11 @@ All components meet the following standards:
 - **Implementation:** `TypeformEmbed` component dynamically loads the form
 
 ### Content Management
-- **Centralized Mock Data** - All content in `/data/mock/` directory
-- **Type-safe** - Full TypeScript support for all content
-- **Single source of truth** - No hardcoded content in components
-- **Easy to update** - Modify content without touching components
+- **Dual Mode Architecture** - Toggle between Mock Data and Headless WordPress via `VITE_USE_WORDPRESS`
+- **Centralized Data Access** - All components use `useContent` hooks (facade pattern)
+- **Type-safe** - Full TypeScript support for both Mock and WP data shapes
+- **Single source of truth** - Content is managed externally (WP) or in `/data/mock/`
+
 
 ---
 
@@ -406,7 +409,7 @@ See **[design-tokens/colors.md](./design-tokens/colors.md)** for complete palett
 
 The project uses a comprehensive centralized mock data system that serves as the **Single source of truth** for all application content.
 
-**📖 Complete Documentation:** See **[mock-data.md](./mock-data.md)** for comprehensive guide
+**📖 Complete Documentation:** See **[Data System Documentation](../data/README.md)** for comprehensive guide
 
 ### Data Organization
 
@@ -425,7 +428,8 @@ The project uses a comprehensive centralized mock data system that serves as the
 ## 9. 🔍 Quality Standards
 
 ### Pre-Deployment Checklist
-- [ ] TypeScript: No compilation errors
+- [ ] TypeScript: No compilation errors (`npm run type-check`)
+- [ ] Build Verification: Run `npm run verify` (checks links & env)
 - [ ] Lighthouse: 95+ performance, 100 accessibility
 - [ ] Responsive: Mobile, tablet, desktop tested
 - [ ] Accessibility: Keyboard navigation and screen reader tested

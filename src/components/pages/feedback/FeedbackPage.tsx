@@ -21,7 +21,7 @@ import { formatDate } from '../../../utils/formatDate';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import { feedbackBreadcrumbs } from "../../../data/mock/ui/breadcrumbs";
-import '@/styles/blocks/feedback-page.css';
+import '../../../styles/blocks/feedback-page.css';
 
 export function FeedbackPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -125,6 +125,7 @@ export function FeedbackPage() {
             <span className="feedback-page__filter-label">Category:</span>
             <div className="feedback-page__chip-row">
               <button
+                type="button"
                 className={`feedback-page__chip ${activeCategory === 'all' ? 'feedback-page__chip--active' : ''}`}
                 onClick={() => handleCategoryChange('all')}
                 aria-pressed={activeCategory === 'all'}
@@ -133,6 +134,7 @@ export function FeedbackPage() {
               </button>
               {categoryChips.map(cat => (
                 <button
+                  type="button"
                   key={cat.id}
                   className={`feedback-page__chip ${activeCategory === cat.id ? 'feedback-page__chip--active' : ''}`}
                   onClick={() => handleCategoryChange(cat.id)}
@@ -150,6 +152,7 @@ export function FeedbackPage() {
             <span className="feedback-page__filter-label">Tags:</span>
             <div className="feedback-page__chip-row">
               <button
+                type="button"
                 className={`feedback-page__chip ${activeTag === 'all' ? 'feedback-page__chip--active' : ''}`}
                 onClick={() => setActiveTag('all')}
                 aria-pressed={activeTag === 'all'}
@@ -158,6 +161,7 @@ export function FeedbackPage() {
               </button>
               {tagChips.map(tag => (
                 <button
+                  type="button"
                   key={tag.id}
                   className={`feedback-page__chip ${activeTag === tag.id ? 'feedback-page__chip--active' : ''}`}
                   onClick={() => setActiveTag(tag.id)}

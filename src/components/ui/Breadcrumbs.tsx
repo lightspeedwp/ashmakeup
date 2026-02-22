@@ -10,9 +10,9 @@
  */
 
 import React, { useEffect } from 'react';
-import { Link } from 'react-router';
+import { Link } from '../../lib/router';
 import { ChevronRight, Home } from 'lucide-react';
-import '@/styles/blocks/breadcrumbs.css';
+import '../../styles/blocks/breadcrumbs.css';
 
 export interface BreadcrumbItem {
   label: string;

@@ -23,7 +23,7 @@ import React, { useEffect, useRef } from 'react';
 import { Instagram } from 'lucide-react';
 import { ErrorBoundary } from '../common/ErrorBoundary';
 import { instagramUI, instagramConfig } from '../../data/mock/ui/instagram';
-import "@/styles/blocks/instagram-feed.css";
+import "../../styles/blocks/instagram-feed.css";
 
 /**
  * Loads the Behold.so widget script once and imperatively inserts the
@@ -90,7 +90,7 @@ function InstagramFeedContent() {
   }, []);
 
   return (
-    <section className="instagram-feed">
+    <section id="instagram-feed" className="instagram-feed">
       <div className="container-wide">
         <div className="instagram-feed__grid">
 

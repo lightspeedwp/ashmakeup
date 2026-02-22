@@ -426,10 +426,10 @@ function ActiveFilters({ filters, onRemove }: Props) {
 }
 ```
 
-### Status Indicators
+### Project Status
 
 ```tsx
-function BookingStatus({ status }: Props) {
+function ProjectStatus({ status }: Props) {
   const statusConfig = {
     pending: { variant: 'yellow', label: 'Pending' },
     confirmed: { variant: 'green', label: 'Confirmed' },

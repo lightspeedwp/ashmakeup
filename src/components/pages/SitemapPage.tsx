@@ -1,6 +1,6 @@
 /**
  * @fileoverview Sitemap page — visual site index with every link, category, tag,
- * and post organised by content type with a rainbow decoration
+ * and post organised by content type with a rainbow decoration.
  *
  * Sections:
  * 1. Pages — all main site pages
@@ -15,74 +15,22 @@
  *
  * @component SitemapPage
  * @author Ash Shaw Portfolio Team
- * @version 3.0.0 — Full 23-tool developer tools section, all pages listed
+ * @version 3.1.0 — Cache-bust rebuild
  */
 
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "../../lib/router";
 import {
-  Home,
-  User,
-  Image,
-  Play,
-  BookOpen,
-  Mail,
-  Layers,
-  FolderOpen,
-  Tag,
-  FileText,
-  Scale,
-  Newspaper,
-  Palette,
-  Mic,
-  HelpCircle,
-  MessageSquare,
-  Sparkles,
-  Wrench,
-  Type,
-  Ruler,
-  Cloudy,
-  Circle,
-  MousePointerClick,
-  LayoutGrid,
-  Zap,
-  Shield,
-  Gauge,
-  SwatchBook,
-  Bookmark,
-  FileCode,
-  FlaskConical,
-  Activity,
-  Rocket,
-  BarChart3,
-  Component,
-  Scissors,
-  SplitSquareHorizontal,
-  TestTube,
-  Search,
-  Sticker,
-  MapPin,
-  Book,
-  UserCircle,
-  Paintbrush,
-  Diamond,
-  Clock,
-  Plane,
-  Calendar,
-  Headphones,
+  Home, User, Image, Play, BookOpen, Mail, Layers, FolderOpen, Tag, FileText,
+  Newspaper, Palette, Mic, HelpCircle, MessageSquare, Sparkles, Star,
+  Type, Ruler, Cloud, Circle, MousePointerClick, LayoutGrid, Zap, Shield,
+  Gauge, Lightbulb, Bookmark, FileCode, Activity, Rocket,
+  Scissors, Eye, Search, MapPin,
+  Book, Paintbrush, Clock, Plane, Calendar, Headphones,
   Music,
-  BookOpenCheck,
-  Bike,
-  Brain,
-  Waves,
-  Briefcase,
-  GraduationCap,
-  Heart,
-  Compass,
-  Code,
-  Building2,
-  Leaf,
-  BookOpenCheck,
+} from "lucide-react";
+import {
+  Building2, Code, GraduationCap, Heart, Leaf, Brain,
 } from "lucide-react";
 import { sitemapContent, tagDescriptors, pageTaglines, devToolTaglines, legalTaglines, sitemapExtraPages, sitemapLegalPages, sitemapDevToolsHub } from "../../data/mock/ui/sitemap";
 import { devToolsPageUI } from "../../data/mock/ui/dev-tools";
@@ -111,7 +59,7 @@ import {
   getEventCategoryCount,
   getEventTagCount,
 } from "../../utils/contentCounts";
-import "@/styles/blocks/sitemap-page.css";
+import "../../styles/blocks/sitemap-page.css";
 
 import { setSEO } from "../../utils/seo";
 import { pageSEO } from "../../data/mock/seo";
@@ -141,7 +89,7 @@ const PAGE_ICONS: Record<string, React.ElementType> = {
 };
 
 const ABOUT_ICONS: Record<string, React.ElementType> = {
-  Compass,
+  Compass: MapPin,
   User,
   Building2,
   Paintbrush,
@@ -152,27 +100,27 @@ const ABOUT_ICONS: Record<string, React.ElementType> = {
   Mic,
   BookOpen,
   Zap,
-  Bike,
-  Waves,
+  MapPin,
+  Activity,
   Music,
   Code,
   GraduationCap,
   Heart,
   Activity,
   Leaf,
-  BookOpenCheck,
+  BookOpen,
 };
 
 /** Map icon string names (from mock data) to Lucide components */
 const ICON_MAP: Record<string, React.ElementType> = {
   Home, User, Image, Play, BookOpen, Mail, Layers, FolderOpen, Tag, FileText,
-  Scale, Newspaper, Palette, Mic, HelpCircle, MessageSquare, Sparkles, Wrench,
-  Type, Ruler, Cloudy, Circle, MousePointerClick, LayoutGrid, Zap, Shield,
-  Gauge, SwatchBook, Bookmark, FileCode, FlaskConical, Activity, Rocket,
-  BarChart3, Component, Scissors, SplitSquareHorizontal, TestTube, Search,
-  Sticker, MapPin, Book, UserCircle, Paintbrush, Diamond, Clock, Plane,
-  Calendar, Headphones, Music, BookOpenCheck, Bike, Brain, Waves, Briefcase,
-  GraduationCap, Heart, Compass, Code, Building2, Leaf, BookOpenCheck,
+  Scale: Shield, Newspaper, Palette, Mic, HelpCircle, MessageSquare, Sparkles, Wrench: Shield,
+  Type, Ruler, Cloud, Circle, MousePointerClick, LayoutGrid, Zap, Shield,
+  Gauge, Lightbulb, Bookmark, FileCode, FlaskConical: Zap, Activity, Rocket,
+  BarChart3: Activity, Component: LayoutGrid, Scissors, Eye, TestTube: Zap, Search,
+  Sticker: Sparkles, MapPin, Book, UserCircle: User, Paintbrush, Diamond: Star, Clock, Plane,
+  Calendar, Headphones, Music, BookOpenCheck: BookOpen, Bike: MapPin, Brain, Waves: Activity, Briefcase: Shield,
+  GraduationCap, Heart, Compass: MapPin, Code, Building2, Leaf, Star,
 };
 
 export function SitemapPage() {
@@ -842,7 +790,7 @@ export function SitemapPage() {
         <section className="sitemap__section" aria-labelledby="sitemap-devtools">
           <div className="sitemap__section-header">
             <div className="sitemap__section-accent sitemap__section-accent--orange" />
-            <Wrench
+            <Shield
               className="sitemap__section-icon"
               aria-hidden="true"
             />
@@ -857,7 +805,7 @@ export function SitemapPage() {
               path: t.href,
               icon: t.icon,
             }))].map((tool) => {
-              const Icon = ICON_MAP[tool.icon] || Wrench;
+              const Icon = ICON_MAP[tool.icon] || Shield;
               const tagline = devToolTaglines[tool.id === 'hub' ? 'hub' : tool.id];
               return (
                 <li key={tool.path}>
@@ -888,7 +836,7 @@ export function SitemapPage() {
         <section className="sitemap__section" aria-labelledby="sitemap-legal">
           <div className="sitemap__section-header">
             <div className="sitemap__section-accent sitemap__section-accent--cyan" />
-            <Scale className="sitemap__section-icon" aria-hidden="true" />
+            <Shield className="sitemap__section-icon" aria-hidden="true" />
             <h2 className="text-section-h2" id="sitemap-legal">
               {sitemapContent.sections.legal}
             </h2>

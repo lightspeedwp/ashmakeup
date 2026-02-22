@@ -165,6 +165,13 @@
   outline-offset: 2px;
 }
 
+.playground__btn-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.375rem;
+  display: inline;
+}
+
 /* ── Preview Panel ── */
 .playground__preview {
   flex: 1;

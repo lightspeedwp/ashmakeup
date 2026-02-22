@@ -414,3 +414,25 @@
 .slider-card__read-more-icon {
   display: none;
 }
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .slider-card,
+  .slider-card__overlay,
+  .slider-card__cta-btn,
+  .slider-card__tag,
+  .slider-card__action-btn,
+  .slider-card__action-icon,
+  .slider-card__nav-dot,
+  .slider-card__bookmark-indicator {
+    transition: none;
+  }
+
+  .slider-card:hover {
+    transform: none;
+  }
+
+  .slider-card__action-btn:hover .slider-card__action-icon {
+    transform: none;
+  }
+}

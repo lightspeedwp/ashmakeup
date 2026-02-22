@@ -223,3 +223,15 @@
     width: auto;
   }
 }
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .uv-makeup-section__track {
+    transition: none;
+  }
+
+  .uv-makeup-section__nav-button,
+  .uv-makeup-section__dot {
+    transition: none;
+  }
+}

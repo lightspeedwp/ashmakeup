@@ -31,9 +31,9 @@ import {
   buildWebSiteSchema,
   buildPersonSchema,
 } from '../../../utils/schemaService';
-import "@/styles/blocks/hero.css";
-import "@/styles/blocks/home-page.css";
-import "@/styles/blocks/rainbow-sections.css";
+import "../../../styles/blocks/hero.css";
+import "../../../styles/blocks/home-page.css";
+import "../../../styles/blocks/rainbow-sections.css";
 
 export function HomePage() {
   const navigateTo = useAppNavigate();
@@ -84,12 +84,14 @@ export function HomePage() {
         </div>
         <div className="homepage-error__actions">
           <button
+            type="button"
             onClick={refreshContent}
             className="btn btn--neon-primary"
           >
             {homeUI.error.retry}
           </button>
           <button
+            type="button"
             onClick={() => window.location.reload()}
             className="btn btn--ghost"
           >
@@ -135,6 +137,7 @@ export function HomePage() {
       )}
 
       <HeroLayout
+        id="hero-section"
         title={heroContent.title}
         subtitle={homepageContent?.hero.subtitle || homepageHero.subtitle}
         description={heroContent.description}
@@ -148,6 +151,7 @@ export function HomePage() {
         actions={
           <div className="homepage-hero__actions">
             <button
+              type="button"
               onClick={() => navigateTo("portfolio")}
               className="btn btn--neon-primary btn--lg"
               aria-label="Navigate to Portfolio page to explore makeup artistry collection"

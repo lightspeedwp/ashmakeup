@@ -7,13 +7,13 @@ import { Camera, PenTool, BatteryCharging, Shield, ChevronRight } from 'lucide-r
 import { gearPageData } from '../../../data/mock/pages/gear';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { setSEO } from '../../../utils/seo';
-import '@/styles/blocks/gear-page.css';
+import '../../../styles/blocks/gear-page.css';
 
 const IconMap = {
   paints: PenTool,
   brushes: PenTool,
   tech: Camera,
-  survival: BatteryCharging, // Closest metaphor
+  survival: Shield,
 };
 
 export function GearPage() {

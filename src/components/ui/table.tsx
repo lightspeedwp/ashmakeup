@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { cn } from "./utils";
-import "@/styles/blocks/misc-ui.css";
+import "../../styles/blocks/misc-ui.css";
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (

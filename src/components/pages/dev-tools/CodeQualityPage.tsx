@@ -9,8 +9,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { codeQualityUI } from '../../../data/mock/ui/code-quality';
 import type { DependencyNode } from '../../../data/mock/ui/code-quality';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
-import '@/styles/blocks/code-quality.css';
+import '../../../styles/blocks/specimen-page.css';
+import '../../../styles/blocks/code-quality.css';
 
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';

@@ -7,7 +7,7 @@
  */
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import { useParams, useNavigate } from '../../../lib/router';
 import { Image, Layers, Tag } from 'lucide-react';
 import { UNIFIED_PORTFOLIO_DATA, PORTFOLIO_CATEGORIES } from '../../../utils/portfolioService';
 import {
@@ -17,9 +17,9 @@ import {
 import { OptimizedImage } from '../../ui/OptimizedImage';
 import { FaqSection } from '../../sections/FaqSection';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
-import '@/styles/blocks/portfolio-main-page.css';
-import '@/styles/blocks/portfolio-card.css';
-import '@/styles/blocks/archive-filters.css';
+import '../../../styles/blocks/portfolio-main-page.css';
+import '../../../styles/blocks/portfolio-card.css';
+import '../../../styles/blocks/archive-filters.css';
 
 import { setSEO } from '../../../utils/seo';
 import { portfolioTagSEO } from '../../../data/mock/seo';
@@ -136,6 +136,7 @@ export function PortfolioTagPage() {
             <span className="portfolio-main__sort-label">Sort by</span>
             {SORT_OPTIONS.map(opt => (
               <button
+                type="button"
                 key={opt.value}
                 className={`archive-filters__chip ${sortBy === opt.value ? 'archive-filters__chip--active' : ''}`}
                 onClick={() => setSortBy(opt.value)}
@@ -153,6 +154,7 @@ export function PortfolioTagPage() {
               <div className="portfolio-main__related-chips">
                 {relatedTags.map(rt => (
                   <button
+                    type="button"
                     key={rt}
                     className="archive-filters__chip"
                     onClick={() =>

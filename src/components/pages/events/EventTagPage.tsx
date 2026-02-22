@@ -8,7 +8,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import { useParams, useNavigate } from '../../../lib/router';
 import { MapPin, Music, Calendar } from 'lucide-react';
 import { getEventsByTag } from '../../../data/mock/events';
 import { eventTags } from '../../../data/mock/events/categories';
@@ -18,8 +18,8 @@ import { setSEO } from '../../../utils/seo';
 import { eventTagSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { TravelBadge } from './TravelBadge';
-import '@/styles/blocks/events-page.css';
-import '@/styles/blocks/event-card.css';
+import '../../../styles/blocks/events-page.css';
+import '../../../styles/blocks/event-card.css';
 
 export function EventTagPage() {
   const { slug } = useParams<{ slug: string }>();

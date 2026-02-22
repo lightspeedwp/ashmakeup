@@ -1,7 +1,7 @@
 {
   "name": "ash-shaw-makeup-portfolio",
-  "version": "1.0.2",
-  "description": "Professional makeup artist portfolio showcasing festival artistry, UV makeup, and creative expression",
+  "version": "7.0.0",
+  "description": "Personal art portfolio showcasing festival makeup artistry, UV neon designs, and creative expression — Neon vs Atomic Black",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "type-check": "tsc --noEmit",
+    "verify": "ts-node scripts/verify-build.ts",
     "optimize-images": "ts-node scripts/optimize-images.ts"
   },
   "keywords": [
@@ -19,7 +20,9 @@
     "UV makeup",
     "creative",
     "berlin",
-    "nightclub"
+    "psytrance",
+    "neon",
+    "personal art project"
   ],
   "author": "Ash Shaw",
   "license": "MIT",
@@ -32,6 +35,8 @@
   "devDependencies": {
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+    "@types/node": "^20.12.0",
+    "ts-node": "^10.9.2",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",

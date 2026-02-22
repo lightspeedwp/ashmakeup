@@ -55,26 +55,52 @@
     <!-- Error Suppression Script - Must run before any other scripts -->
     <script>
       (function() {
+        // Patterns to suppress (browser extensions + esm.sh Node polyfill shims)
+        function isSuppressible(msg, src) {
+          return (
+            msg.indexOf('beholdReplaceChildren') !== -1 ||
+            msg.indexOf('async_hooks') !== -1 ||
+            msg.indexOf('esm.sh/node/') !== -1 ||
+            (src && src.indexOf('async_hooks') !== -1) ||
+            (src && src.indexOf('esm.sh/node/') !== -1)
+          );
+        }
+
         // Global error handler
         window.onerror = function(msg, url, line, col, error) {
           var message = String(msg);
+          var source = String(url || '');
+          var stack = (error && error.stack) ? error.stack : '';
           if (
-            message.includes('beholdReplaceChildren') ||
-            message.includes("Cannot read properties of undefined (reading 'beholdReplaceChildren')") ||
-            (error && error.message && error.message.includes('beholdReplaceChildren')) ||
-            (error && error.stack && error.stack.includes('beholdReplaceChildren'))
+            isSuppressible(message, source) ||
+            isSuppressible(stack, source)
           ) {
             return true; // Suppress error
           }
           return false;
         };
 
+        // Error event listener (capture phase — fires before anything else)
+        window.addEventListener('error', function(event) {
+          var message = event.message || '';
+          var filename = event.filename || '';
+          var stack = (event.error && event.error.stack) ? event.error.stack : '';
+          if (
+            isSuppressible(message, filename) ||
+            isSuppressible(stack, filename)
+          ) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+          }
+        }, true);
+
         // Unhandled rejection handler
         window.addEventListener('unhandledrejection', function(event) {
           var message = event.reason ? (event.reason.message || String(event.reason)) : '';
+          var stack = (event.reason && event.reason.stack) ? event.reason.stack : '';
           if (
-            message.includes('beholdReplaceChildren') ||
-            message.includes("Cannot read properties of undefined (reading 'beholdReplaceChildren')")
+            isSuppressible(message, '') ||
+            isSuppressible(stack, '')
           ) {
             event.preventDefault();
             event.stopImmediatePropagation();
@@ -89,10 +115,7 @@
             return (arg instanceof Error) ? (arg.message + (arg.stack || '')) : String(arg);
           }).join(' ');
 
-          if (
-            message.includes('beholdReplaceChildren') ||
-            message.includes("Cannot read properties of undefined (reading 'beholdReplaceChildren')")
-          ) {
+          if (isSuppressible(message, '')) {
             return;
           }
           originalConsoleError.apply(console, args);
@@ -118,8 +141,9 @@
       "@type": "Person",
       "name": "Ash Shaw",
       "jobTitle": "Makeup Artist",
-      "description": "Professional makeup artist specializing in festival artistry, UV makeup, and creative expression",
+      "description": "Makeup artist specialising in festival artistry, UV neon designs, and creative expression — personal art project",
       "url": "https://ashshaw.com",
+      "gender": "Male",
       "sameAs": [
         "https://instagram.com/ashshaw_makeup"
       ],
@@ -127,13 +151,14 @@
         "Festival Makeup",
         "UV Makeup",
         "Creative Makeup",
-        "Professional Makeup",
+        "Neon Face Painting",
         "Nightclub Makeup",
-        "Berlin Nightlife"
+        "Berlin Nightlife",
+        "Psytrance Festivals"
       ],
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Freelance Makeup Artist"
+      "workLocation": {
+        "@type": "City",
+        "name": "Berlin"
       }
     }
     </script>

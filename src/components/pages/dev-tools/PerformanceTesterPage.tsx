@@ -27,7 +27,7 @@ import { performanceTesterUI } from '../../../data/mock/ui/performance-tester';
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
-import '@/styles/blocks/perf-tester.css';
+import '../../../styles/blocks/perf-tester.css';
 
 /* ── Types ── */
 

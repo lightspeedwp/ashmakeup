@@ -10,7 +10,7 @@
  */
 
 import React, { useEffect, useRef } from "react";
-import "@/styles/components/typeform-embed.css";
+import "../../styles/components/typeform-embed.css";
 
 /**
  * Props interface for TypeformEmbed component

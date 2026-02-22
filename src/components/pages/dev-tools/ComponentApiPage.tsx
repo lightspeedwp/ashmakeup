@@ -8,8 +8,8 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { componentApiUI } from '../../../data/mock/ui/component-api';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
-import '@/styles/blocks/component-api.css';
+import '../../../styles/blocks/specimen-page.css';
+import '../../../styles/blocks/component-api.css';
 
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
@@ -42,9 +42,10 @@ export function ComponentApiPage() {
   }, [search]);
 
   const scrollTo = useCallback((id: string) => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const el = document.getElementById(`comp-${id}`);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      el.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
     }
   }, []);
 

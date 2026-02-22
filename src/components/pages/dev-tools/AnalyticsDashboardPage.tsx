@@ -17,8 +17,8 @@ import type { HistoryEntry, AnalyticsContentType } from '../../../utils/analytic
 import { analyticsDashboardUI } from '../../../data/mock/ui/analytics-dashboard';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
-import '@/styles/blocks/analytics-dashboard.css';
+import '../../../styles/blocks/specimen-page.css';
+import '../../../styles/blocks/analytics-dashboard.css';
 
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';

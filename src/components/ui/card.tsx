@@ -1,6 +1,6 @@
 import * as React from "react";
 import { cn } from "./utils";
-import "@/styles/blocks/data-display.css";
+import "../../styles/blocks/data-display.css";
 
 function Card({
   className,

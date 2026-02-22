@@ -219,3 +219,15 @@
   width: 100%;
   grid-column: 1 / -1;
 }
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .featured-section__track {
+    transition: none;
+  }
+
+  .featured-section__nav-button,
+  .featured-section__dot {
+    transition: none;
+  }
+}

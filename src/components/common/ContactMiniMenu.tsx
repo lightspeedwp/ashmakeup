@@ -15,11 +15,11 @@
  */
 
 import React, { useCallback, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from '../../lib/router';
 import { ArrowRight, Mail } from 'lucide-react';
 import { SocialLinks } from './SocialLinks';
 import { contactUI } from '../../data/mock/ui/contact';
-import '@/styles/blocks/contact-mini-menu.css';
+import '../../styles/blocks/contact-mini-menu.css';
 
 interface ContactMiniMenuProps {
   isOpen: boolean;
@@ -82,6 +82,7 @@ export function ContactMiniMenu({ isOpen, onClose, onMouseEnter, onMouseLeave }:
           <h3 className="contact-mini__heading">{contactUI.header.title}</h3>
           <p className="contact-mini__desc">{contactUI.about.quote}</p>
           <button
+            type="button"
             className="contact-mini__cta-btn"
             role="menuitem"
             onClick={() => go('/contact')}

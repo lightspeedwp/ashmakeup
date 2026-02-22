@@ -36,7 +36,7 @@ Follow this **exact reading order** to understand the design system:
 14. **[design-tokens/spacing.md](./design-tokens/spacing.md)** - Spacing system
 
 #### Step 4: Understand Data System (REQUIRED)
-15. **[mock-data.md](./mock-data.md)** - Mock data system and centralized content management
+15. **[Data System Documentation](../data/README.md)** - Mock data system and centralized content management
 
 #### Step 5: Read Theme Documentation (REQUIRED)
 16. **[dark-mode-implementation.md](./dark-mode-implementation.md)** - Complete dark mode implementation
@@ -72,7 +72,6 @@ guidelines/
 ├── overview-templates.md          - Page templates
 ├── overview-blog-filtering.md     - Blog filtering system
 │
-├── mock-data.md                   - Mock data system guide
 ├── search-system.md               - Global search system
 ├── pwa-implementation.md          - Progressive Web App features
 ├── dark-mode-implementation.md    - Dark mode implementation
@@ -142,8 +141,8 @@ guidelines/
 
 | File | Purpose | Version | Status |
 |------|---------|---------|--------|
-| **[Guidelines.md](./Guidelines.md)** | Main entry point, project overview | v6.0.0 | Current |
-| **[README.md](./README.md)** | This file - navigation guide | v6.0.0 | Current |
+| **[Guidelines.md](./Guidelines.md)** | Main entry point, project overview | v7.0.0 | Current |
+| **[README.md](./README.md)** | This file - navigation guide | v7.0.0 | Current |
 | **[voice-and-tone.md](./voice-and-tone.md)** | Brand voice and writing guidelines | v1.0.0 | Current |
 | **[ARCHITECTURE.md](./ARCHITECTURE.md)** | Component architecture and taxonomy | v3.2.0 | Current |
 | **[SITEMAP.md](./SITEMAP.md)** | Site structure and routing | v5.0.0 | Current |
@@ -152,9 +151,10 @@ guidelines/
 
 | File | Purpose | Version | Status |
 |------|---------|---------|--------|
-| **[mock-data.md](./mock-data.md)** | Mock data system guide | v1.0.0 | Current |
+| **[Data System](../data/README.md)** | Data system architecture | v2.0.0 | Current |
 | **[search-system.md](./search-system.md)** | Global search system | v1.0.0 | Current |
 | **[pwa-implementation.md](./pwa-implementation.md)** | PWA features | v1.0.0 | Current |
+| **[wordpress-migration-guide.md](./wordpress-migration-guide.md)** | Headless WordPress Setup | v1.0.0 | **New** |
 
 ### Design Tokens
 
@@ -174,7 +174,7 @@ guidelines/
 
 **Building a Page Component?**
 - Start with [overview-components.md](./overview-components.md)
-- Check [mock-data.md](./mock-data.md) for content
+- Check [Data System Documentation](../data/README.md) for content
 - Review [Guidelines.md](./Guidelines.md) Section 1 for architecture
 
 **Using a Specific Component?**

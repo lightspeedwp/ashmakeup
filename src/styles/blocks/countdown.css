@@ -419,6 +419,31 @@
   height: 10rem;
 }
 
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .festival-countdown__badge-animate {
+    animation: none;
+  }
+
+  .festival-countdown__icon-spin {
+    animation: none;
+  }
+
+  .festival-status__badge {
+    animation: none;
+  }
+
+  .festival-card,
+  .festival-timer-card {
+    transition: none;
+  }
+
+  .festival-card:hover,
+  .dark .festival-timer-card:hover {
+    transform: none;
+  }
+}
+
 .festival-card__bg-blob--top-left {
   top: 0;
   left: 0;

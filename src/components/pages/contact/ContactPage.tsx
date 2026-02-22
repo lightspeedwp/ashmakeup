@@ -18,7 +18,7 @@ import { OptimizedImage } from "../../ui/OptimizedImage";
 import { contactUI } from "../../../data/mock/ui/contact";
 import { contactBreadcrumbs } from "../../../data/mock/ui/breadcrumbs";
 import contactGraphic from "figma:asset/6095d8818a83e64a063161f9df091d561fde7105.png";
-import "@/styles/blocks/contact-page.css";
+import "../../../styles/blocks/contact-page.css";
 
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';

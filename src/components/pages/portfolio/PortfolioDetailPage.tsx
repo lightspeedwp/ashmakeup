@@ -32,7 +32,7 @@ import {
 } from '../../../utils/portfolioService';
 import { portfolioUI } from '../../../data/mock/ui/portfolio';
 import { useAppNavigate } from '../../../hooks/useAppNavigate';
-import { useNavigate } from 'react-router';
+import { useNavigate } from '../../../lib/router';
 import { formatDate } from '../../../utils/formatDate';
 import { markdownToHtml } from '../../../utils/simpleMarkdown';
 import { setSEO } from '../../../utils/seo';
@@ -43,7 +43,7 @@ import {
   SCHEMA_IDS,
   buildPortfolioItemSchema,
 } from '../../../utils/schemaService';
-import "@/styles/blocks/portfolio-detail-page.css";
+import "../../../styles/blocks/portfolio-detail-page.css";
 
 import { portfolioDetailBreadcrumbs } from "../../../data/mock/ui/breadcrumbs";
 
@@ -172,6 +172,7 @@ export function PortfolioDetailPage({
             {portfolioUI.detail.notFound.message}
           </p>
           <button
+            type="button"
             onClick={handleBackClick}
             className="btn btn--neon-primary inline-flex-center gap-fluid-sm"
           >
@@ -201,6 +202,7 @@ export function PortfolioDetailPage({
           {/* Back Navigation */}
           <nav className="portfolio-detail__breadcrumb mb-fluid-lg" aria-label="Back navigation">
             <button
+              type="button"
               onClick={handleBackClick}
               className="breadcrumb-btn"
               aria-label="Back to portfolio gallery"
@@ -263,6 +265,7 @@ export function PortfolioDetailPage({
             {/* Main Selected Image */}
             <div className="gallery-main-wrapper">
               <button
+                type="button"
                 onClick={() => handleImageClick(selectedImageIndex)}
                 className="gallery-main-image"
                 aria-label={`View ${portfolioEntry.images[selectedImageIndex]?.alt} in full size`}
@@ -287,6 +290,7 @@ export function PortfolioDetailPage({
               <div className="gallery-thumbnails">
                 {portfolioEntry.images.map((image, index) => (
                   <button
+                    type="button"
                     key={index}
                     onClick={() => setSelectedImageIndex(index)}
                     className={`gallery-thumbnail ${selectedImageIndex === index ? 'gallery-thumbnail--active' : ''}`}
@@ -363,6 +367,7 @@ export function PortfolioDetailPage({
                   <div className="tags-list">
                     {eventDetails.tags.map((tag, index) => (
                       <button
+                        type="button"
                         key={index}
                         className="tag-badge clickable"
                         onClick={() => handleTagClick(tag)}
@@ -484,6 +489,7 @@ export function PortfolioDetailPage({
               <div className="portfolio-feedback__actions">
                 {hasMore && (
                   <button
+                    type="button"
                     onClick={() => setVisibleFeedbackCount(prev => prev + 3)}
                     className="btn btn--neon-primary btn--outline inline-flex-center gap-fluid-sm"
                   >

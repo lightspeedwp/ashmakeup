@@ -5,10 +5,10 @@
  */
 
 import React, { useEffect } from 'react';
-import { Cloudy } from 'lucide-react';
+import { Cloud } from 'lucide-react';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
+import '../../../styles/blocks/specimen-page.css';
 
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
@@ -78,7 +78,7 @@ export function ShadowSpecimenPage() {
           <section key={cat} className="specimen-section" aria-labelledby={`shadow-${cat}`}>
             <div className="specimen-section__inner">
               <h2 id={`shadow-${cat}`} className="specimen-section__title text-card-h3">
-                <Cloudy className="specimen-section__title-icon" aria-hidden="true" />
+                <Cloud className="specimen-section__title-icon" aria-hidden="true" />
                 {CATEGORY_LABELS[cat]}
               </h2>
               <div className="specimen-grid specimen-grid--3">

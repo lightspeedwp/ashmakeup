@@ -15,8 +15,8 @@ import { faqPageUI } from '../../../data/mock/ui/faq';
 import { getRandomSticker } from '../../../data/mock/images/sticker-graphics';
 import { OptimizedImage } from '../../ui/OptimizedImage';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
-import '@/styles/blocks/faq.css';
-import '@/styles/blocks/faq-page.css';
+import '../../../styles/blocks/faq.css';
+import '../../../styles/blocks/faq-page.css';
 
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';

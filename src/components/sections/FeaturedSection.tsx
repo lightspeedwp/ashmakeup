@@ -14,8 +14,8 @@ import { ResponsiveGridSlider } from "../ui/ResponsiveGridSlider";
 import { getFeaturedPortfolioEntries } from "../../utils/portfolioService";
 import { homeUI } from "../../data/mock/ui/home";
 import { useAppNavigate } from "../../hooks/useAppNavigate";
-import "@/styles/blocks/column-layouts.css";
-import "@/styles/blocks/featured-section.css";
+import "../../styles/blocks/column-layouts.css";
+import "../../styles/blocks/featured-section.css";
 
 /**
  * Featured Work section component displaying latest festival makeup artistry
@@ -127,6 +127,7 @@ export function FeaturedSection({
           {/* CTA Button */}
           <div className="featured-section__cta-container">
             <button
+              type="button"
               onClick={() => setCurrentPage("portfolio")}
               className="btn btn--neon-primary"
               aria-label={homeUI.sections.featured.ctaAriaLabel}

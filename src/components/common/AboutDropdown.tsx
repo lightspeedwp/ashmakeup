@@ -14,14 +14,14 @@
  */
 
 import React, { useCallback, useRef, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router';
+import { useNavigate, useLocation } from '../../lib/router';
 import {
-  Compass,
+  MapPin,
   Music,
   Building2,
   Flashlight,
   Paintbrush,
-  Wand2,
+  PenTool,
   Brain,
   Rocket,
   Clock,
@@ -32,16 +32,17 @@ import {
 } from 'lucide-react';
 import { aboutDropdownItems } from '../../data/mock/ui/about-dropdown';
 import type { AboutDropdownItem } from '../../data/mock/ui/about-dropdown';
-import '@/styles/blocks/about-dropdown.css';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+import '../../styles/blocks/about-dropdown.css';
 
 /** Map icon-name strings to Lucide components */
 const DROPDOWN_ICONS: Record<string, React.ElementType> = {
-  Compass,
+  Compass: MapPin,
   Music,
   Building2,
   Flashlight,
   Paintbrush,
-  Wand2,
+  PenTool,
   Brain,
   Rocket,
   Clock,
@@ -62,6 +63,7 @@ export function AboutDropdown({ isOpen, onClose }: AboutDropdownProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const listRef = useRef<HTMLUListElement>(null);
+  const prefersReduced = useReducedMotion();
 
   /** Focus first item when dropdown opens */
   useEffect(() => {
@@ -91,15 +93,23 @@ export function AboutDropdown({ isOpen, onClose }: AboutDropdownProps) {
           // Wait for page render then scroll
           setTimeout(() => {
             const el = document.getElementById(item.sectionId!);
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (el)
+              el.scrollIntoView({
+                behavior: prefersReduced ? 'auto' : 'smooth',
+                block: 'start',
+              });
           }, 400);
         } else {
           const el = document.getElementById(item.sectionId);
-          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (el)
+            el.scrollIntoView({
+              behavior: prefersReduced ? 'auto' : 'smooth',
+              block: 'start',
+            });
         }
       }
     },
-    [navigate, location.pathname, onClose],
+    [navigate, location.pathname, onClose, prefersReduced],
   );
 
   /** Keyboard navigation within the dropdown */
@@ -150,7 +160,7 @@ export function AboutDropdown({ isOpen, onClose }: AboutDropdownProps) {
 
       <ul className="about-dropdown__list" ref={listRef}>
         {aboutDropdownItems.map((item, index) => {
-          const Icon = DROPDOWN_ICONS[item.icon] || Compass;
+          const Icon = DROPDOWN_ICONS[item.icon] || MapPin;
           /** First sub-page item (first item with href) gets separator */
           const isFirstSubPage = item.href !== undefined &&
             (index === 0 || aboutDropdownItems[index - 1].sectionId !== undefined);
@@ -171,6 +181,7 @@ export function AboutDropdown({ isOpen, onClose }: AboutDropdownProps) {
 
               {/* Clickable content */}
               <button
+                type="button"
                 className="about-dropdown__node-btn"
                 role="menuitem"
                 onClick={() => handleItemClick(item)}

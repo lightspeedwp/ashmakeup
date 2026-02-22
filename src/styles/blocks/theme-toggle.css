@@ -41,3 +41,15 @@
 .dark .theme-toggle:hover .theme-toggle__icon {
   filter: drop-shadow(0 0 4px var(--wp--preset--color--neon-purple));
 }
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle,
+  .theme-toggle__icon {
+    transition: none;
+  }
+
+  .theme-toggle:hover {
+    transform: none;
+  }
+}

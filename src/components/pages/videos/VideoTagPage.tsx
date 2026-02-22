@@ -7,7 +7,7 @@
  */
 
 import React, { useMemo, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import { useParams, useNavigate } from '../../../lib/router';
 import { Play, Tag } from 'lucide-react';
 import { videos, findVideoTagBySlug } from '../../../data/mock/videos';
 import { OptimizedImage } from '../../ui/OptimizedImage';
@@ -22,8 +22,8 @@ import {
   SCHEMA_IDS,
   buildCollectionSchema,
 } from '../../../utils/schemaService';
-import '@/styles/blocks/videos-page.css';
-import '@/styles/blocks/archive-filters.css';
+import '../../../styles/blocks/videos-page.css';
+import '../../../styles/blocks/archive-filters.css';
 
 // Import the video thumbnail image
 import videoThumbnail from 'figma:asset/f0c4301e83be5c7dcfa724f611ca2ffcca9bf032.png';
@@ -122,6 +122,7 @@ export function VideoTagPage() {
         <div className="archive-filters__sort">
           {SORT_OPTIONS.map(opt => (
             <button
+              type="button"
               key={opt.value}
               className={`archive-filters__chip ${sortBy === opt.value ? 'archive-filters__chip--active' : ''}`}
               onClick={() => setSortBy(opt.value)}
@@ -136,6 +137,7 @@ export function VideoTagPage() {
           <div className="archive-filters__categories">
             {relatedTags.map(rt => (
               <button
+                type="button"
                 key={rt}
                 className="archive-filters__chip"
                 onClick={() =>
@@ -184,7 +186,7 @@ export function VideoTagPage() {
                   <h3 className="video-card__title">{video.title}</h3>
                   <div className="video-card__meta">
                     <span>{video.category}</span>
-                    <time>{formatDate(video.publishedAt)}</time>
+                    <time dateTime={video.publishedAt}>{formatDate(video.publishedAt)}</time>
                   </div>
                   <p className="video-card__description">{video.description}</p>
                 </div>

@@ -44,7 +44,7 @@ export const historyPageData = {
       date: 'August 2020',
       title: 'First Festival Gig',
       description:
-        'Booked for a small local gathering, painting faces for 12 hours straight. The energy was electric.',
+        'Invited to a small local gathering, painting faces for 12 hours straight. The energy was electric.',
     },
     {
       id: 'ozora-2022',

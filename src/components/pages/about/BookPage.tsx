@@ -9,17 +9,19 @@
  */
 
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from '../../../lib/router';
 import { BookOpen } from 'lucide-react';
 import { bookPageData } from '../../../data/mock/pages/about-subpages';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
-import '@/styles/blocks/about-subpage.css';
-import '@/styles/blocks/button.css';
+import { useReducedMotion } from '../../../hooks/useReducedMotion';
+import '../../../styles/blocks/about-subpage.css';
+import '../../../styles/blocks/button.css';
 
 export function BookPage() {
   const navigate = useNavigate();
+  const prefersReduced = useReducedMotion();
 
   useEffect(() => {
     setSEO(pageSEO.book);
@@ -106,10 +108,11 @@ export function BookPage() {
             {book.sampleDescription}
           </p>
           <button
+            type="button"
             className="btn btn--neon-primary btn--sm"
             onClick={() => {
               navigate('/ebook');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
             }}
             aria-label="Read sample chapters from the eBook"
           >

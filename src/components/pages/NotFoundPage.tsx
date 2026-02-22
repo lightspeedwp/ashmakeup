@@ -5,9 +5,9 @@
  */
 
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "../../lib/router";
 import { Home, ArrowLeft } from "lucide-react";
-import "@/styles/blocks/not-found-page.css";
+import "../../styles/blocks/not-found-page.css";
 
 import { setSEO } from '../../utils/seo';
 import { pageSEO } from '../../data/mock/seo';
@@ -39,6 +39,7 @@ export function NotFoundPage() {
 
         <div className="not-found-actions">
           <button
+            type="button"
             onClick={() => navigate("/")}
             className="btn btn--neon-primary btn--lg"
             aria-label={notFoundUI.aria.homeButton}
@@ -48,6 +49,7 @@ export function NotFoundPage() {
           </button>
 
           <button
+            type="button"
             onClick={() => window.history.back()}
             className="btn btn--outline btn--lg"
             aria-label={notFoundUI.aria.backButton}

@@ -325,7 +325,7 @@ export const iconCategories = [
   },
   {
     category: "Makeup & Art",
-    icons: ["Palette", "Layers", "Fingerprint", "Paintbrush", "Droplets", "Sparkles", "Wand2"],
+    icons: ["Palette", "Layers", "Fingerprint", "Paintbrush", "Droplets", "Sparkles", "PenTool"],
   },
   {
     category: "Content & Media",
@@ -333,7 +333,7 @@ export const iconCategories = [
   },
   {
     category: "Actions & UI",
-    icons: ["X", "Plus", "Minus", "Check", "Copy", "Share2", "Link2", "Download", "Grid", "ZoomIn", "ZoomOut", "GripVertical", "Scale"],
+    icons: ["X", "Plus", "Minus", "Check", "Copy", "Share2", "Link2", "Download", "LayoutGrid", "ZoomIn", "ZoomOut", "GripVertical", "Scale"],
   },
   {
     category: "Theme & Status",

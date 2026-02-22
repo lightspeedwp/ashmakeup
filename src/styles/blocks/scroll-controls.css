@@ -99,3 +99,30 @@
 }
 
 /* Animations moved to /styles/animations.css */
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-down-arrow,
+  .scroll-down-arrow__border,
+  .scroll-to-top {
+    transition: none;
+  }
+
+  .scroll-down-arrow__inner {
+    animation: none;
+  }
+
+  .scroll-down-arrow:hover .scroll-down-arrow__pulse {
+    animation: none;
+  }
+
+  .scroll-to-top {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .scroll-to-top:hover {
+    transform: none;
+  }
+}

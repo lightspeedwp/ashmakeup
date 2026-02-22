@@ -1,5 +1,5 @@
 import { cn } from "./utils";
-import "@/styles/blocks/skeleton.css";
+import "../../styles/blocks/skeleton.css";
 
 function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
   return (

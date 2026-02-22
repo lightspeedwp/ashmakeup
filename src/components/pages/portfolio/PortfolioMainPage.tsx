@@ -6,7 +6,7 @@
  * guidelines and accessibility standards.
  * 
  * @author Ash Shaw Portfolio Team
- * @version 1.4.0 - Fix category filter matching via slug→id lookup
+ * @version 1.5.0 - Refactored to use async usePortfolioEntries hook (Mock/WP)
  */
 
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
@@ -27,9 +27,7 @@ import {
   PaginationPrevious,
 } from '../../ui/pagination';
 import { 
-  getPortfolioByCategory, 
   getPortfolioCategories, 
-  PORTFOLIO_CATEGORIES,
   type UnifiedPortfolioEntry 
 } from '../../../utils/portfolioService';
 import { getPortfolioCategoryCount } from '../../../utils/contentCounts';
@@ -43,7 +41,9 @@ import {
   SCHEMA_IDS,
   buildImageGallerySchema,
 } from '../../../utils/schemaService';
-import "@/styles/blocks/portfolio-main-page.css";
+import { usePortfolioEntries } from '../../../hooks/useContent'; // UPDATED IMPORT
+import { OptimizedImage } from '../../ui/OptimizedImage';
+import "../../../styles/blocks/portfolio-main-page.css";
 
 interface PortfolioCardEntry {
   id: string;
@@ -78,35 +78,15 @@ interface PortfolioPageState {
   limit: number;
 }
 
-interface PortfolioPagination {
-  page: number;
-  total: number;
-  limit: number;
-  hasNext: boolean;
-  hasPrevious: boolean;
-  totalPages: number;
-}
-
 const PORTFOLIO_CATEGORIES_DATA = getPortfolioCategories();
 
 export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
   const setCurrentPage = useAppNavigate();
-  
   const isMobile = useIsMobile();
 
   useEffect(() => {
     setSEO(pageSEO.portfolio);
   }, []);
-
-  // Inject ImageGallery schema once all entries are available
-  const allEntries = useMemo(() => getPortfolioByCategory('all'), []);
-
-  useEffect(() => {
-    injectSchema(SCHEMA_IDS.gallery, buildImageGallerySchema(allEntries as any));
-    return () => {
-      removeSchema(SCHEMA_IDS.gallery);
-    };
-  }, [allEntries]);
 
   const [portfolioState, setPortfolioState] = useState<PortfolioPageState>({
     page: 1,
@@ -119,6 +99,13 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
   );
   const [sortBy, setSortBy] = useState('recent');
 
+  /** Lookup: slug → category id (e.g. 'uv-blacklight' → 'UV Makeup') */
+  const slugToCategoryId = useMemo(() => {
+    const map = new Map<string, string>();
+    portfolioCategoryData.forEach(c => map.set(c.slug, c.id));
+    return map;
+  }, []);
+
   const archiveCategories = useMemo(() =>
     portfolioCategoryData.map(c => ({
       id: c.id,
@@ -129,18 +116,28 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
     []
   );
 
-  /** Lookup: slug → category id (e.g. 'uv-blacklight' → 'UV Makeup') */
-  const slugToCategoryId = useMemo(() => {
-    const map = new Map<string, string>();
-    portfolioCategoryData.forEach(c => map.set(c.slug, c.id));
-    return map;
-  }, []);
-
   const PORTFOLIO_SORT_OPTIONS = useMemo(() => [
     { value: 'recent', label: 'Most Recent' },
     { value: 'alphabetical', label: 'A-Z' },
     { value: 'featured', label: 'Featured' },
   ], []);
+
+  // Use the new Async Hook
+  const { data: entriesData, loading: entriesLoading, error: entriesError, refresh: refreshEntries } = usePortfolioEntries({
+    category: 'all', // We fetch all and filter client side for now to match mock behavior
+    page: 1, // We fetch all for client side pagination to match previous logic
+    limit: 100 // Fetch plenty
+  });
+
+  // Inject ImageGallery schema once all entries are available
+  useEffect(() => {
+    if (entriesData?.entries) {
+      injectSchema(SCHEMA_IDS.gallery, buildImageGallerySchema(entriesData.entries as any));
+    }
+    return () => {
+      removeSchema(SCHEMA_IDS.gallery);
+    };
+  }, [entriesData?.entries]);
 
   const handleArchiveCategoryToggle = useCallback((slug: string) => {
     setActiveCategories(prev =>
@@ -172,16 +169,9 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
   });
   
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
   };
-
-  const entriesLoading = false;
-  const entriesError = null;
-  const refreshEntries = useCallback(() => {}, []);
-
-  const staticPortfolioEntries = useMemo(() => {
-    return getPortfolioByCategory(portfolioState.category || 'all');
-  }, [portfolioState.category]);
 
   const transformUnifiedToPortfolioCard = useCallback((entries: UnifiedPortfolioEntry[]): PortfolioCardEntry[] => {
     return entries.map(entry => ({
@@ -198,11 +188,13 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
     }));
   }, []);
 
+  // Calculate filtered entries
   const portfolioEntries = useMemo((): PortfolioCardEntry[] => {
-    let entries = transformUnifiedToPortfolioCard(staticPortfolioEntries);
+    if (!entriesData?.entries) return [];
+
+    let entries = transformUnifiedToPortfolioCard(entriesData.entries);
 
     // Filter by active categories from ArchiveFilters
-    // Convert active slugs → category IDs via lookup map, then match entry.category
     if (activeCategories.length > 0) {
       const activeCategoryIds = new Set(
         activeCategories
@@ -221,41 +213,38 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
         entries = [...entries].sort((a, b) => {
           if (a.featured && !b.featured) return -1;
           if (!a.featured && b.featured) return 1;
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
+          return new Date(b.date || '').getTime() - new Date(a.date || '').getTime();
         });
         break;
       case 'recent':
       default:
         entries = [...entries].sort((a, b) =>
-          new Date(b.date).getTime() - new Date(a.date).getTime()
+          new Date(b.date || '').getTime() - new Date(a.date || '').getTime()
         );
         break;
     }
 
     return entries;
-  }, [staticPortfolioEntries, transformUnifiedToPortfolioCard, activeCategories, sortBy, slugToCategoryId]);
+  }, [entriesData, transformUnifiedToPortfolioCard, activeCategories, sortBy, slugToCategoryId]);
 
-  const pagination = useMemo((): PortfolioPagination => {
-    const total = portfolioEntries?.length || 0;
-    const totalItems = total;
-    const totalPages = Math.ceil(totalItems / portfolioState.limit);
+  // Client-side pagination based on filtered results
+  const pagination = useMemo(() => {
+    const total = portfolioEntries.length;
+    const totalPages = Math.ceil(total / portfolioState.limit);
     
     return {
       page: portfolioState.page,
-      total: totalItems,
+      total,
       limit: portfolioState.limit,
       hasNext: portfolioState.page < totalPages,
       hasPrevious: portfolioState.page > 1,
       totalPages,
     };
-  }, [portfolioEntries, portfolioState.page, portfolioState.limit]);
+  }, [portfolioEntries.length, portfolioState.page, portfolioState.limit]);
 
   const currentPageEntries = useMemo(() => {
-    if (!portfolioEntries) return [];
-    
     const startIndex = (portfolioState.page - 1) * portfolioState.limit;
     const endIndex = startIndex + portfolioState.limit;
-    
     return portfolioEntries.slice(startIndex, endIndex);
   }, [portfolioEntries, portfolioState.page, portfolioState.limit]);
 
@@ -366,6 +355,7 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
           {entriesError && !entriesLoading && (
             <div className="portfolio-error">
               <button
+                type="button"
                 onClick={refreshEntries}
                 className="btn btn--neon-primary"
               >
@@ -496,39 +486,6 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
                       </PaginationItem>
                     </PaginationContent>
                   </Pagination>
-                  
-                  {pagination.totalPages > 3 && isMobile && (
-                    <div className="mobile-quick-nav">
-                      <button
-                        onClick={() => handlePageChange(1)}
-                        disabled={portfolioState.page === 1}
-                        className="mobile-nav-btn"
-                      >
-                        ← First Page
-                      </button>
-                      <button
-                        onClick={() => handlePageChange(pagination.totalPages)}
-                        disabled={portfolioState.page === pagination.totalPages}
-                        className="mobile-nav-btn"
-                      >
-                        Last Page →
-                      </button>
-                    </div>
-                  )}
-                  
-                  {isMobile && (
-                    <div className="mobile-swipe-hint">
-                      <p className="mobile-swipe-hint__text">
-                        <svg className="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                        </svg>
-                        Swipe images to see more
-                        <svg className="icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                      </p>
-                    </div>
-                  )}
                 </div>
               )}
             </>
@@ -547,6 +504,7 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
               </p>
               {portfolioState.category && (
                 <button
+                  type="button"
                   onClick={() => handleCategoryChange('all')}
                   className="btn btn--neon-secondary"
                 >

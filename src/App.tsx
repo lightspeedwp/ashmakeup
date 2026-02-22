@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { RouterProvider } from 'react-router';
+import { RouterProvider } from './lib/router';
 import { router } from './routes';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 

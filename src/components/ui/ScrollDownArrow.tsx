@@ -8,7 +8,8 @@
 
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
-import "@/styles/blocks/scroll-controls.css";
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+import "../../styles/blocks/scroll-controls.css";
 
 /**
  * Props interface for ScrollDownArrow component
@@ -29,7 +30,8 @@ export function ScrollDownArrow({
   className = "",
   onClick
 }: ScrollDownArrowProps) {
-  
+  const prefersReduced = useReducedMotion();
+
   const handleClick = () => {
     if (onClick) {
       onClick();
@@ -49,7 +51,7 @@ export function ScrollDownArrow({
     
     if (targetElement) {
       targetElement.scrollIntoView({ 
-        behavior: 'smooth',
+        behavior: prefersReduced ? 'auto' : 'smooth',
         block: 'start'
       });
       

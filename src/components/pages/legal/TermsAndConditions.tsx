@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "../../../lib/router";
 import { termsOfService } from "../../../data/mock/pages/legal";
 import { Breadcrumbs } from "../../ui/Breadcrumbs";
 import { termsBreadcrumbs } from "../../../data/mock/ui/breadcrumbs";
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
-import "@/styles/blocks/legal-page.css";
+import "../../../styles/blocks/legal-page.css";
 
 export function TermsAndConditions() {
   const navigate = useNavigate();
@@ -44,6 +44,7 @@ export function TermsAndConditions() {
 
           <div className="legal-page-footer">
             <button
+              type="button"
               onClick={() => navigate("/")}
               className="legal-page-back-btn"
             >

@@ -13,7 +13,7 @@ import { podcastPageData } from '../../../data/mock/pages/about-subpages';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
-import '@/styles/blocks/about-subpage.css';
+import '../../../styles/blocks/about-subpage.css';
 
 export function PodcastPage() {
   useEffect(() => {

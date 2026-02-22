@@ -17,7 +17,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { useModal } from '../common/ModalContext';
-import "@/styles/blocks/share-component.css";
+import "../../styles/blocks/share-component.css";
 
 // Custom X.com logo SVG component
 const XIcon = ({ className = "share-component__icon" }: { className?: string }) => (
@@ -210,6 +210,7 @@ export function ShareComponent({
     return (
       <div className={`share-component ${className}`}>
         <button
+          type="button"
           ref={triggerRef}
           onClick={shareNative}
           className="share-component__btn"
@@ -229,25 +230,25 @@ export function ShareComponent({
         <div className={`share-component__inline-container ${alignClass}`}>
           {label && <span className="share-component__label">{label}</span>}
           <div className="share-component__inline-container">
-            <button onClick={shareToX} className="share-component__btn-icon share-component__btn-icon--x" aria-label="Share on X">
+            <button type="button" onClick={shareToX} className="share-component__btn-icon share-component__btn-icon--x" aria-label="Share on X">
               <XIcon className="share-component__social-icon" />
             </button>
-            <button onClick={shareToFacebook} className="share-component__btn-icon share-component__btn-icon--facebook" aria-label="Share on Facebook">
+            <button type="button" onClick={shareToFacebook} className="share-component__btn-icon share-component__btn-icon--facebook" aria-label="Share on Facebook">
               <Facebook className="share-component__social-icon" />
             </button>
-            <button onClick={shareToInstagram} className="share-component__btn-icon share-component__btn-icon--instagram" aria-label="Share on Instagram">
+            <button type="button" onClick={shareToInstagram} className="share-component__btn-icon share-component__btn-icon--instagram" aria-label="Share on Instagram">
               <Instagram className="share-component__social-icon" />
             </button>
-            <button onClick={shareToPinterest} className="share-component__btn-icon share-component__btn-icon--pinterest" aria-label="Share on Pinterest">
+            <button type="button" onClick={shareToPinterest} className="share-component__btn-icon share-component__btn-icon--pinterest" aria-label="Share on Pinterest">
               <PinterestIcon className="share-component__social-icon" />
             </button>
-            <button onClick={shareToWhatsApp} className="share-component__btn-icon share-component__btn-icon--whatsapp" aria-label="Share on WhatsApp">
+            <button type="button" onClick={shareToWhatsApp} className="share-component__btn-icon share-component__btn-icon--whatsapp" aria-label="Share on WhatsApp">
               <MessageCircle className="share-component__social-icon" />
             </button>
-            <button onClick={shareViaEmail} className="share-component__btn-icon share-component__btn-icon--email" aria-label="Share via Email">
+            <button type="button" onClick={shareViaEmail} className="share-component__btn-icon share-component__btn-icon--email" aria-label="Share via Email">
               <Mail className="share-component__social-icon" />
             </button>
-            <button onClick={copyToClipboard} className={`share-component__btn-icon ${copySuccess ? 'share-component__btn-icon--success' : 'share-component__btn-icon--copy'}`} aria-label="Copy Link">
+            <button type="button" onClick={copyToClipboard} className={`share-component__btn-icon ${copySuccess ? 'share-component__btn-icon--success' : 'share-component__btn-icon--copy'}`} aria-label="Copy Link">
               {copySuccess ? <Check className="share-component__social-icon" /> : <Copy className="share-component__social-icon" />}
             </button>
           </div>
@@ -262,6 +263,7 @@ export function ShareComponent({
       <div className={`share-component__container ${alignClass}`}>
         {label && <span className="share-component__label">{label}</span>}
         <button
+          type="button"
           ref={triggerRef}
           onClick={shareNative}
           className="share-component__btn"
@@ -275,33 +277,33 @@ export function ShareComponent({
 
       {isOpen && (
         <div className="share-component__dropdown">
-          <button onClick={shareToX} className="share-component__dropdown-item">
+          <button type="button" onClick={shareToX} className="share-component__dropdown-item">
             <XIcon className="share-component__dropdown-icon" />
             <span className="share-component__dropdown-text">X</span>
           </button>
-          <button onClick={shareToFacebook} className="share-component__dropdown-item">
+          <button type="button" onClick={shareToFacebook} className="share-component__dropdown-item">
             <Facebook className="share-component__dropdown-icon" />
             <span className="share-component__dropdown-text">Facebook</span>
           </button>
-          <button onClick={shareToInstagram} className="share-component__dropdown-item">
+          <button type="button" onClick={shareToInstagram} className="share-component__dropdown-item">
             <Instagram className="share-component__dropdown-icon" />
             <span className="share-component__dropdown-text">Instagram</span>
             <ExternalLink className="share-component__external-icon" />
           </button>
-          <button onClick={shareToPinterest} className="share-component__dropdown-item">
+          <button type="button" onClick={shareToPinterest} className="share-component__dropdown-item">
             <PinterestIcon className="share-component__dropdown-icon" />
             <span className="share-component__dropdown-text">Pinterest</span>
           </button>
-          <button onClick={shareToWhatsApp} className="share-component__dropdown-item">
+          <button type="button" onClick={shareToWhatsApp} className="share-component__dropdown-item">
             <MessageCircle className="share-component__dropdown-icon" />
             <span className="share-component__dropdown-text">WhatsApp</span>
           </button>
-          <button onClick={shareViaEmail} className="share-component__dropdown-item">
+          <button type="button" onClick={shareViaEmail} className="share-component__dropdown-item">
             <Mail className="share-component__dropdown-icon" />
             <span className="share-component__dropdown-text">Email</span>
           </button>
           <hr className="share-component__dropdown-divider" />
-          <button onClick={copyToClipboard} className="share-component__dropdown-item">
+          <button type="button" onClick={copyToClipboard} className="share-component__dropdown-item">
             {copySuccess ? (
               <>
                 <Check className="share-component__dropdown-icon share-component__text--success" />

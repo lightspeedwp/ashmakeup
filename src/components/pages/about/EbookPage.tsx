@@ -17,7 +17,7 @@
  */
 
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from '../../../lib/router';
 import { ChevronLeft, ChevronRight, List, X, Maximize, Minimize } from 'lucide-react';
 import { bookPages } from '../../../data/mock/pages/ebook-pages';
 import type { BookPage } from '../../../data/mock/pages/ebook-pages';
@@ -26,8 +26,8 @@ import { ebookBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
-import '@/styles/blocks/ebook.css';
-import '@/styles/blocks/button.css';
+import '../../../styles/blocks/ebook.css';
+import '../../../styles/blocks/button.css';
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    CONSTANTS
@@ -652,6 +652,7 @@ export function EbookPage() {
       {/* ── Fullscreen Close Button ── */}
       {isFullScreen && (
         <button
+          type="button"
           className="ebook-reader__fullscreen-close"
           onClick={toggleFullScreen}
           aria-label="Exit full screen"
@@ -797,6 +798,7 @@ export function EbookPage() {
 
             {/* Click zones */}
             <button
+              type="button"
               className={`ebook-reader__click-zone ebook-reader__click-zone--left ${
                 !canGoBackwardSpread ? 'ebook-reader__click-zone--disabled' : ''
               }`}
@@ -806,6 +808,7 @@ export function EbookPage() {
               tabIndex={-1}
             />
             <button
+              type="button"
               className={`ebook-reader__click-zone ebook-reader__click-zone--right ${
                 !canGoForwardSpread ? 'ebook-reader__click-zone--disabled' : ''
               }`}
@@ -829,6 +832,7 @@ export function EbookPage() {
       {/* ── Unified Navigation ── */}
       <nav className="ebook-reader__nav" aria-label="Book navigation">
         <button
+          type="button"
           className="ebook-reader__nav-btn"
           onClick={() => setDrawerOpen(true)}
           aria-label="Open chapter navigation"
@@ -838,6 +842,7 @@ export function EbookPage() {
         </button>
 
         <button
+          type="button"
           className="ebook-reader__nav-btn"
           onClick={goBackward}
           disabled={isSpreadMode ? (!canGoBackwardSpread || flipState !== 'idle') : (!canGoBackwardSingle || isAnimating)}
@@ -851,6 +856,7 @@ export function EbookPage() {
         </span>
 
         <button
+          type="button"
           className="ebook-reader__nav-btn"
           onClick={goForward}
           disabled={isSpreadMode ? (!canGoForwardSpread || flipState !== 'idle') : (!canGoForwardSingle || isAnimating)}
@@ -860,6 +866,7 @@ export function EbookPage() {
         </button>
 
         <button
+          type="button"
           className="ebook-reader__nav-btn"
           onClick={toggleFullScreen}
           aria-label={isFullScreen ? "Exit full screen" : "Enter full screen"}
@@ -890,6 +897,7 @@ export function EbookPage() {
         <div className="ebook-drawer__header">
           <span className="ebook-drawer__title">{ebookUI.drawer.title}</span>
           <button
+            type="button"
             className="ebook-reader__nav-btn"
             onClick={() => setDrawerOpen(false)}
             aria-label={ebookUI.drawer.closeAriaLabel}
@@ -900,6 +908,7 @@ export function EbookPage() {
         <nav className="ebook-drawer__list" aria-label={ebookUI.drawer.listAriaLabel}>
           {chapterIndex.map((entry, idx) => (
             <button
+              type="button"
               key={`ch-idx-${idx}`}
               className={`ebook-drawer__item ${entry.indent ? 'ebook-drawer__item--indent' : 'ebook-drawer__item--section'} ${idx === currentChapterIdx ? 'ebook-drawer__item--active' : ''}`}
               onClick={() => jumpToPage(entry.pageIndex)}

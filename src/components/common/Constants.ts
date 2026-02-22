@@ -157,7 +157,7 @@ export const ABOUT_HERO_IMAGES = [
     alt: "Creative eye makeup art with vibrant neon colors showcasing technical mastery",
     caption: "Technical Mastery",
     description:
-      "Intricate eye makeup art with neon colors demonstrating the technical mastery and precision that defines professional makeup artistry",
+      "Intricate eye makeup art with neon colors demonstrating the technical mastery and precision that defines Ash's makeup artistry",
     className:
       "absolute bottom-0 left-0 w-36 h-40 sm:w-60 sm:h-64 md:w-68 md:h-72 rounded-2xl bg-cover bg-center shadow-xl transform rotate-12 z-10 border-4 border-white ring-4 ring-teal-200/50 cursor-pointer transition-transform hover:scale-105",
   },
@@ -178,10 +178,10 @@ export const ABOUT_HERO_IMAGES = [
 export const PORTFOLIO_HERO_IMAGES = [
   {
     src: "https://images.unsplash.com/photo-1747121445324-8ed1aec4b451?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYWtldXAlMjBhcnRpc3QlMjBwb3J0Zm9saW8lMjBjcmVhdGl2ZSUyMHdvcmt8ZW58MXx8fHwxNzU3NjY0NDgwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    alt: "Professional makeup artist portfolio work showcasing creative and artistic styling",
+    alt: "Creative portfolio work showcasing artistic styling and festival makeup",
     caption: "Portfolio Excellence",
     description:
-      "Professional portfolio work that demonstrates the range and excellence of Ash Shaw's makeup artistry across different styles and occasions",
+      "Portfolio work that demonstrates the range and excellence of Ash Shaw's makeup artistry across different styles and occasions",
     className:
       "absolute top-6 left-4 sm:top-12 sm:left-8 w-48 h-56 sm:w-72 sm:h-80 md:w-80 md:h-96 rounded-2xl bg-cover bg-center shadow-2xl transform rotate-3 z-20 border-4 border-white ring-4 ring-violet-200/50 cursor-pointer transition-transform hover:scale-105",
   },

@@ -1,4 +1,7 @@
-/* Header Block Styles */
+/* Header Styles - Consolidated */
+
+/* --- Layout --- */
+/* Header Layout & Container */
 .header {
   position: fixed;
   top: 0;
@@ -19,6 +22,82 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* ── Transparent state — overlaying the homepage hero ── */
+.header--at-top {
+  background-color: transparent;
+  backdrop-filter: none;
+  border-bottom-color: transparent;
+}
+
+.dark .header--at-top {
+  background-color: transparent;
+  border-bottom-color: transparent;
+}
+
+/* ── Scrolled state — compact frosted glass ── */
+.header--scrolled {
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+}
+
+.dark .header--scrolled {
+  background-color: rgba(15, 15, 15, 0.88);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Compact padding when scrolled */
+.header--scrolled .header__nav {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+/* Smaller logo when scrolled */
+.header--scrolled .header__logo-image {
+  height: 2.25rem;
+  transition: height 0.3s ease;
+}
+
+/* Nav-link contrast when header is transparent over dark hero */
+.header--at-top .header__nav-link {
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header--at-top .header__nav-link:hover,
+.header--at-top .header__nav-link--active {
+  color: var(--wp--preset--color--neon-pink);
+  text-shadow: 0 0 12px rgba(255, 16, 240, 0.4);
+}
+
+.header--at-top .header__nav-icon {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.header--at-top .header__burger-button {
+  color: rgba(255, 255, 255, 0.9);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+/* Reduced-motion: disable header slide transitions */
+@media (prefers-reduced-motion: reduce) {
+  .header {
+    transition: none;
+  }
+
+  .header__logo-image {
+    transition: none;
+  }
+
+  .header--scrolled .header__logo-image {
+    transition: none;
+  }
+
+  .header__nav {
+    transition: none;
+  }
+}
+
 .header__nav {
   max-width: var(--wp--preset--layout--wide);
   margin: 0 auto;
@@ -26,6 +105,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transition: padding 0.3s ease;
 }
 
 /* Logo Container */
@@ -46,9 +126,13 @@
 .header__logo-image {
   height: 3rem;
   width: auto;
+  transition: height 0.3s ease;
 }
 
-/* Desktop Navigation */
+/* --- Navigation --- */
+/* Header Navigation Links */
+
+/* Desktop Navigation Container */
 .header__desktop-nav {
   display: none;
 }
@@ -137,7 +221,9 @@
   transform-origin: left;
 }
 
-/* Mobile Controls */
+/* --- Mobile --- */
+/* Mobile Controls & Burger Menu */
+
 .header__mobile-controls {
   display: flex;
   align-items: center;
@@ -194,9 +280,8 @@
   transform: translateY(-9px) rotate(-45deg);
 }
 
-/* ══════════════════════════════════════
-   SEARCH OVERLAY — replaces nav links
-   ══════════════════════════════════════ */
+/* --- Search Overlay --- */
+/* Search Overlay & Input Styles */
 
 .header__search-overlay {
   display: flex;
@@ -220,7 +305,7 @@
   padding: 8px 36px 8px 16px;
   border-color: var(--wp--preset--color--neon-pink);
   background: var(--wp--preset--color--base);
-  box-shadow: 0 0 16px rgba(255, 16, 240, 0.2);
+  box-shadow: var(--wp--preset--shadow--neon-pink);
   /* Override base width transition — input must appear at full width instantly */
   transition: border-color 300ms ease, box-shadow 300ms ease;
 }

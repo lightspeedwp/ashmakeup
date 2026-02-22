@@ -13,7 +13,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { Link } from 'react-router';
+import { Link } from '../../../lib/router';
 import {
   User,
   Building2,
@@ -35,18 +35,18 @@ import {
   Headphones,
   Play,
   Image,
-  Compass,
+  MapPin,
   Leaf,
 } from 'lucide-react';
 import { hiddenAboutData } from '../../../data/mock/pages/hidden-about';
 import { SocialLinks } from '../../common/SocialLinks';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
-import '@/styles/blocks/hidden-about.css';
+import '../../../styles/blocks/hidden-about.css';
 
 /** Map icon-name strings from mock data to Lucide components */
 const ICON_MAP: Record<string, React.ElementType> = {
-  Compass,
+  Compass: MapPin,
   User,
   Building2,
   Paintbrush,

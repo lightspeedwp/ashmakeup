@@ -15,12 +15,12 @@
  */
 
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from '../../../lib/router';
 import {
   Palette,
   Type,
   Ruler,
-  Cloudy,
+  Cloud,
   Circle,
   MousePointerClick,
   LayoutGrid,
@@ -29,32 +29,29 @@ import {
   Shield,
   Gauge,
   ArrowRight,
-  SwatchBook,
+  Lightbulb,
   Bookmark,
   FileCode,
-  FlaskConical,
   Activity,
   Rocket,
-  BarChart3,
-  Component,
+  Layers,
   Scissors,
   FileText,
-  SplitSquareHorizontal,
-  TestTube,
+  Eye,
 } from 'lucide-react';
 import { devToolsPageUI } from '../../../data/mock/ui/dev-tools';
 import type { DevTool } from '../../../data/mock/ui/dev-tools';
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
-import '@/styles/blocks/dev-tools-page.css';
+import '../../../styles/blocks/dev-tools-page.css';
 
 /** Map tool icon strings to Lucide components */
 const TOOL_ICONS: Record<string, React.ElementType> = {
   Palette,
   Type,
   Ruler,
-  Cloudy,
+  Cloud,
   Circle,
   MousePointerClick,
   LayoutGrid,
@@ -62,18 +59,15 @@ const TOOL_ICONS: Record<string, React.ElementType> = {
   Sparkles,
   Shield,
   Gauge,
-  SwatchBook,
+  Lightbulb,
   Bookmark,
   FileCode,
-  FlaskConical,
   Activity,
   Rocket,
-  BarChart3,
-  Component,
+  Layers,
   Scissors,
   FileText,
-  SplitSquareHorizontal,
-  TestTube,
+  Eye,
 };
 
 /** Build a lookup map from the flat tools array */
@@ -97,9 +91,10 @@ export function DevToolsPage() {
 
   /** Smooth-scroll to a category section */
   const scrollToCategory = useCallback((categoryId: string) => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const el = document.getElementById(`category-${categoryId}`);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      el.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
     }
   }, []);
 

@@ -9,14 +9,14 @@
  */
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router';
+import { useSearchParams, useNavigate } from '../../../lib/router';
 import { videos, videoCategories } from '../../../data/mock/videos';
 import { videosUI } from '../../../data/mock/ui/videos';
 import { filtersUI } from '../../../data/mock/ui/filters';
 import { Video } from '../../../data/types/videos';
 import { VideoModal } from './VideoModal';
 import { Play, ArrowRight } from 'lucide-react';
-import "@/styles/blocks/videos-page.css";
+import "../../../styles/blocks/videos-page.css";
 import { OptimizedImage } from '../../ui/OptimizedImage';
 import { ResponsiveGridSlider } from '../../ui/ResponsiveGridSlider';
 import { ArchiveFilters } from '../../ui/ArchiveFilters';
@@ -200,10 +200,11 @@ export function VideosPage() {
                     <h3 className="video-card__title">{video.title}</h3>
                     <div className="video-card__meta">
                       <span>{video.category}</span>
-                      <time>{formatDate(video.publishedAt)}</time>
+                      <time dateTime={video.publishedAt}>{formatDate(video.publishedAt)}</time>
                     </div>
                     <p className="video-card__description">{video.description}</p>
                     <button
+                      type="button"
                       className="video-card__read-more"
                       onClick={(e) => {
                         e.stopPropagation();

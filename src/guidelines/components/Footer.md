@@ -160,10 +160,10 @@ export function Footer({
               </ul>
             </div>
 
-            {/* Services */}
+            {/* Portfolio Categories */}
             <div>
               <h3 className="text-fluid-lg font-heading font-semibold mb-fluid-md">
-                Services
+                Portfolio Categories
               </h3>
               
               <ul className="space-y-3">
@@ -277,8 +277,8 @@ export function Footer({
         {/* Links */}
       </div>
       <div>
-        <h3 className="font-heading font-semibold mb-fluid-sm">Services</h3>
-        {/* Services */}
+        <h3 className="font-heading font-semibold mb-fluid-sm">Portfolio Categories</h3>
+        {/* Categories */}
       </div>
     </div>
   </div>
@@ -369,15 +369,15 @@ export function Footer({
 <section className="bg-gradient-pink-purple-blue text-white py-fluid-xl px-6">
   <div className="max-w-4xl mx-auto text-center">
     <h2 className="text-section-h2 font-heading font-bold mb-fluid-md">
-      Ready to Transform Your Look?
+      Ready to Collaborate?
     </h2>
     
     <p className="text-fluid-lg font-body mb-fluid-lg">
-      Book a consultation and let's create something beautiful together.
+      Reach out and let's create something beautiful together.
     </p>
     
     <button className="bg-white text-pink-600 px-button py-button rounded-lg font-body font-semibold text-button-fluid shadow-xl hover:shadow-2xl hover:scale-105 transition-all">
-      Book Now
+      Get in Touch
     </button>
   </div>
 </section>
@@ -455,7 +455,7 @@ flowchart TD
     A --> D[Copyright Bar]
     
     C --> M[Navigation Links]
-    C --> N[Services List]
+    C --> N[Categories List]
     C --> O[Contact Info]
     C --> P[Social Links]
     

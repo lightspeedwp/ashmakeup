@@ -16,9 +16,9 @@
  */
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useNavigate, useLocation } from 'react-router';
+import { useNavigate, useLocation } from '../../lib/router';
 import { Search, X } from 'lucide-react';
-import '@/styles/blocks/search.css';
+import '../../styles/blocks/search.css';
 
 /**
  * Props interface for SearchInput component
@@ -148,6 +148,7 @@ export function SearchInput({ className = '', isOpen: controlledOpen, onOpenChan
       />
       {isOpen && query && (
         <button
+          type="button"
           className="search-input__clear"
           onClick={handleClear}
           aria-label="Clear search"
@@ -156,6 +157,7 @@ export function SearchInput({ className = '', isOpen: controlledOpen, onOpenChan
         </button>
       )}
       <button
+        type="button"
         className="search-input__toggle"
         onClick={handleToggle}
         aria-label={isOpen ? 'Submit search' : 'Open search'}

@@ -1089,3 +1089,41 @@
 .dark .blog-card-skeleton__image {
   background-color: var(--wp--preset--color--neutral-800);
 }
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .blog-card,
+  .blog-card__image,
+  .category-badge,
+  .tag-badge,
+  .polaroid-image,
+  .engagement-btn,
+  .engagement-btn svg {
+    transition: none;
+  }
+
+  .blog-card:hover {
+    transform: none;
+  }
+
+  .blog-card:hover .blog-card__image {
+    transform: none;
+  }
+
+  .polaroid-image:hover,
+  .polaroid-image:nth-child(even):hover {
+    transform: none;
+  }
+
+  .category-badge:hover {
+    transform: none;
+  }
+
+  .category-badge:hover::after {
+    animation: none;
+  }
+
+  .blog-card-skeleton {
+    animation: none;
+  }
+}

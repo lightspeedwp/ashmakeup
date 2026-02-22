@@ -296,3 +296,20 @@
 .dark .testimonial-card__event {
   color: var(--wp--preset--color--neon-pink);
 }
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .testimonials-section__track {
+    transition: none;
+  }
+
+  .testimonials-section__nav-button,
+  .testimonials-section__dot,
+  .testimonial-card {
+    transition: none;
+  }
+
+  .testimonial-card:hover {
+    transform: none;
+  }
+}

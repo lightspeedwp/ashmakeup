@@ -18,8 +18,8 @@ import type { BlogPost } from '../../data/types/blog';
 import { homeUI } from '../../data/mock/ui/home';
 import { useAppNavigate } from '../../hooks/useAppNavigate';
 import { formatDate } from '../../utils/formatDate';
-import "@/styles/blocks/column-layouts.css";
-import "@/styles/blocks/blog-preview.css";
+import "../../styles/blocks/column-layouts.css";
+import "../../styles/blocks/blog-preview.css";
 
 interface BlogPreviewSectionProps {
   limit?: number;
@@ -37,7 +37,7 @@ export function BlogPreviewSection({
     error 
   } = useBlogPosts({
     limit, // Use the passed limit or default to 6
-    sortBy: 'publishedDate',
+    sortBy: 'publishedAt',
     sortOrder: 'desc',
     publishedOnly: true,
   });
@@ -65,7 +65,7 @@ export function BlogPreviewSection({
   }
 
   return (
-    <section className="blog-preview">
+    <section id="blog-preview" className="blog-preview">
       <div className="container-wide">
         {/* Section header */}
         <div className="blog-preview__header">
@@ -99,6 +99,7 @@ export function BlogPreviewSection({
               {homeUI.sections.blogPreview.error}
             </p>
             <button
+              type="button"
               onClick={goToBlog}
               className="btn btn--neon-primary"
             >
@@ -131,6 +132,7 @@ export function BlogPreviewSection({
         {!loading && !error && (
           <div className="blog-preview__cta">
             <button
+              type="button"
               onClick={goToBlog}
               className="btn btn--neon-secondary btn-gap"
               aria-label={homeUI.sections.blogPreview.ctaAriaLabel}
@@ -201,8 +203,8 @@ function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
         <div className="blog-card__footer">
           <div className="blog-card__date">
             <Calendar className="icon-calendar" aria-hidden="true" />
-            <time dateTime={post.publishedDate}>
-              {formatDate(post.publishedDate)}
+            <time dateTime={post.publishedAt}>
+              {formatDate(post.publishedAt)}
             </time>
           </div>
           <ReadMoreButton  

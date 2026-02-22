@@ -15,7 +15,7 @@
 
 import React from "react";
 import { socialLinks } from "../../data/mock/ui/social-links";
-import "@/styles/blocks/social-links.css";
+import "../../styles/blocks/social-links.css";
 
 /**
  * Props interface for SocialLinks component

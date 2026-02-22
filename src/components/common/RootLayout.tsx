@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router';
+import { Outlet, useLocation } from '../../lib/router';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { PWAInstallPrompt } from './PWAInstallPrompt';

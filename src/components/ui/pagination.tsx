@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 
 import { cn } from "./utils";
-import "@/styles/blocks/pagination.css";
+import "../../styles/blocks/pagination.css";
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (

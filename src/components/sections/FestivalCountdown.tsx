@@ -2,7 +2,7 @@
  * Festival Countdown Component
  * 
  * Countdown timer to Origin Festival (Jan 30 - Feb 1, 2026)
- * Creates urgency for booking makeup services
+ * Builds anticipation for the next festival experience
  * 
  * Styling System:
  * - WordPress-aligned global CSS classes (Batch 4)
@@ -19,7 +19,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, Clock, MapPin, Sparkles, ArrowRight } from 'lucide-react';
 import { nextFestival } from '../../data/mock/sections/countdown';
-import "@/styles/blocks/countdown.css";
+import "../../styles/blocks/countdown.css";
 
 interface TimeLeft {
   days: number;
@@ -94,7 +94,7 @@ export function FestivalCountdown() {
   const isFestivalHappening = timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0;
   
   return (
-    <section className="festival-countdown">
+    <section id="festival-countdown" className="festival-countdown">
       {/* Animated Background Elements */}
       <div className="festival-countdown__bg">
         <div className="festival-countdown__bg-effect festival-countdown__bg-effect--1" />
@@ -124,7 +124,7 @@ export function FestivalCountdown() {
                 href="#contact"
                 className="btn btn--neon-primary inline-flex-center gap-fluid-sm"
               >
-                Book Next Festival
+                Contact for Collab
                 <ArrowRight className="icon-md" />
               </a>
             </div>
@@ -206,7 +206,7 @@ export function FestivalCountdown() {
                 <div className="festival-countdown__urgency">
                   <div className="festival-countdown__urgency-badge">
                     <Clock className="icon-sm" />
-                    Limited availability - Book soon!
+                    Limited slots for collaboration!
                   </div>
                 </div>
               )}

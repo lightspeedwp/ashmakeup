@@ -25,7 +25,10 @@ export function initializeExtensionErrorSuppression() {
       message.includes('response timed out after 30000ms') ||
       (message.includes('getPage') && message.includes('timed out')) ||
       message.includes('chrome-extension://') ||
-      message.includes('extension://')
+      message.includes('extension://') ||
+      message.includes('async_hooks') ||
+      message.includes('node/async_hooks') ||
+      message.includes('esm.sh/node/')
     );
   };
 
@@ -49,12 +52,16 @@ export function initializeExtensionErrorSuppression() {
     const message = event.message || '';
     const errorObj = event.error;
     const stack = errorObj?.stack || '';
+    const filename = event.filename || '';
     
     if (
       message.includes('beholdReplaceChildren') ||
       stack.includes('beholdReplaceChildren') ||
       message.includes('Message getPage') || 
-      message.includes('timed out')
+      message.includes('timed out') ||
+      message.includes('async_hooks') ||
+      filename.includes('async_hooks') ||
+      filename.includes('esm.sh/node/')
     ) {
       event.preventDefault();
       event.stopImmediatePropagation();
@@ -70,7 +77,10 @@ export function initializeExtensionErrorSuppression() {
       message.includes('beholdReplaceChildren') ||
       stack.includes('beholdReplaceChildren') ||
       message.includes('Message getPage') ||
-      message.includes('timed out')
+      message.includes('timed out') ||
+      message.includes('async_hooks') ||
+      stack.includes('async_hooks') ||
+      stack.includes('esm.sh/node/')
     ) {
       event.preventDefault();
       event.stopImmediatePropagation();
@@ -84,10 +94,14 @@ export function initializeExtensionErrorSuppression() {
   const originalOnerror = window.onerror;
   window.onerror = function(msg, url, line, col, error) {
     const message = String(msg);
+    const source = String(url || '');
     if (
       message.includes('beholdReplaceChildren') ||
       (error && error.stack && error.stack.includes('beholdReplaceChildren')) ||
-      message.includes('Message getPage')
+      message.includes('Message getPage') ||
+      message.includes('async_hooks') ||
+      source.includes('async_hooks') ||
+      source.includes('esm.sh/node/')
     ) {
       return true; // Return true to suppress the error
     }

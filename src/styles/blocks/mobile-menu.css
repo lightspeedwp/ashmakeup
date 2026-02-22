@@ -2,7 +2,7 @@
 .mobile-menu {
   position: fixed;
   inset: 0;
-  z-index: 100; /* Stays below header (1000) but above content */
+  z-index: var(--wp--preset--z-index--100); /* Stays below header (1000) but above content */
   background-color: var(--wp--preset--color--base);
   display: flex;
   flex-direction: column;
@@ -21,10 +21,10 @@
 /* Decorative Orbs */
 .mobile-menu__orb {
   position: absolute;
-  border-radius: 50%;
+  border-radius: var(--wp--preset--border-radius--circle);
   filter: blur(80px);
   opacity: 0.3;
-  z-index: -1;
+  z-index: var(--wp--preset--z-index--n1);
 }
 
 .mobile-menu__orb--1 {
@@ -144,3 +144,21 @@
 }
 
 /* Animation moved to /styles/animations.css */
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu {
+    animation: none;
+  }
+
+  .mobile-menu__nav-link,
+  .mobile-menu__nav-icon,
+  .mobile-menu__email-link {
+    transition: none;
+  }
+
+  .mobile-menu__nav-link:hover,
+  .mobile-menu__nav-link[aria-current="page"] {
+    transform: none;
+  }
+}

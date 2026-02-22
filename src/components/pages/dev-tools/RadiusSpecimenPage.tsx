@@ -8,7 +8,7 @@ import React, { useEffect } from 'react';
 import { Circle } from 'lucide-react';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
+import '../../../styles/blocks/specimen-page.css';
 
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
@@ -90,11 +90,10 @@ export function RadiusSpecimenPage() {
           <p className="specimen-section__subtitle">All radii applied to identical 100&times;100 squares.</p>
           <div className="specimen-grid specimen-grid--6">
             {RADIUS_TOKENS.map((r) => (
-              <div key={`cmp-${r.token}`} className="specimen-card" style={{ alignItems: 'center' }}>
+              <div key={`cmp-${r.token}`} className="specimen-card specimen-card--centered">
                 <div
+                  className="specimen-swatch--fixed"
                   style={{
-                    width: '80px',
-                    height: '80px',
                     borderRadius: `var(${r.token})`,
                     background: 'var(--wp--preset--gradient--toxic-lime)',
                     flexShrink: 0,

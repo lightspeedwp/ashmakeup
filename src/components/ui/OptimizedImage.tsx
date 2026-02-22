@@ -31,7 +31,7 @@ import {
   type OptimizedResult,
 } from '../../utils/imageOptimizer';
 import { lookupOptimizedAsset } from '../../utils/imageManifest';
-import '@/styles/blocks/optimized-image.css';
+import '../../styles/blocks/optimized-image.css';
 
 /** Named preset keys */
 export type ImagePreset = keyof typeof IMAGE_PRESETS;

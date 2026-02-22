@@ -10,7 +10,7 @@ import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
-import '@/styles/blocks/specimen-page.css';
+import '../../../styles/blocks/specimen-page.css';
 
 const PANGRAM = 'The quick brown fox jumps over the lazy dog';
 

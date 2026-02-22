@@ -66,7 +66,7 @@ export const termsOfService = {
     },
     {
       heading: "3. Non-Commercial Nature",
-      content: "This website is strictly for portfolio display. No commercial services, booking facilities, or products are offered directly through this site. Any mention of 'booking' refers to external festival arrangements and is not a transaction processed here."
+      content: "This website is strictly for portfolio display. No commercial services, booking facilities, or products are offered directly through this site. Any mention of collaboration or availability refers to artistic partnerships and is not a commercial transaction processed here."
     },
     {
       heading: "4. User Conduct",

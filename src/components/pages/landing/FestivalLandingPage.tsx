@@ -7,7 +7,7 @@ import { FestivalCountdown } from '../../sections/FestivalCountdown';
 import { festivalPageData } from '../../../data/mock/pages/festival';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { setSEO } from '../../../utils/seo';
-import '@/styles/blocks/festival-landing-page.css';
+import '../../../styles/blocks/festival-landing-page.css';
 
 export function FestivalLandingPage() {
   React.useEffect(() => {

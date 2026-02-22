@@ -12,8 +12,8 @@ import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { componentApiUI } from '../../../data/mock/ui/component-api';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
-import '@/styles/blocks/component-api.css';
+import '../../../styles/blocks/specimen-page.css';
+import '../../../styles/blocks/component-api.css';
 
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
@@ -122,7 +122,7 @@ export function DocumentationGeneratorPage() {
       <div className="comp-api__layout">
         <div className="comp-api__main">
           {/* Copy All button */}
-          <div className="snippet__controls" style={{ flexDirection: 'row' as const, alignItems: 'center' }}>
+          <div className="snippet__controls snippet__controls--row">
             <span className="snippet__label">
               {filtered.length} component{filtered.length !== 1 ? 's' : ''} documented
             </span>

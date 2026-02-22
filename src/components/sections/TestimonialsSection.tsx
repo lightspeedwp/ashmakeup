@@ -10,11 +10,11 @@
  */
 
 import React, { useMemo } from 'react';
-import { testimonials } from '@/data/mock/testimonials';
-import { homeUI } from '@/data/mock/ui/home';
+import { testimonials } from '../../data/mock/testimonials';
+import { homeUI } from '../../data/mock/ui/home';
 import { ResponsiveGridSlider } from '../ui/ResponsiveGridSlider';
-import "@/styles/blocks/column-layouts.css";
-import "@/styles/blocks/testimonials.css";
+import "../../styles/blocks/column-layouts.css";
+import "../../styles/blocks/testimonials.css";
 
 export function TestimonialsSection() {
   // Use the first 6 testimonials for display
@@ -23,7 +23,7 @@ export function TestimonialsSection() {
   }, []);
   
   return (
-    <section className="testimonials-section">
+    <section id="testimonials" className="testimonials-section">
       <div className="testimonials-section__container">
         {/* Section Header */}
         <div className="testimonials-section__header">

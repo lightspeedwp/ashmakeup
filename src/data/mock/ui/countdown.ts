@@ -7,7 +7,7 @@ export const countdownUI = {
   happening: {
     badge: "HAPPENING NOW!",
     titleSuffix: "is Here! 🎉",
-    cta: "Book Next Festival"
+    cta: "See Next Festival"
   },
   upcoming: {
     badge: "Coming Soon",
@@ -17,9 +17,9 @@ export const countdownUI = {
       minutes: "Minutes",
       seconds: "Seconds"
     },
-    urgency: "Limited availability - Book soon!",
+    urgency: "Don't miss it — coming soon!",
     cta: {
-      book: "Book Now",
+      book: "Get Involved",
       view: "View Work"
     }
   }

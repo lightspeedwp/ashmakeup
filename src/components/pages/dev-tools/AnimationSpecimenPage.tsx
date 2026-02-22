@@ -8,8 +8,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Zap, Play, Pause } from 'lucide-react';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
-import '@/styles/blocks/specimen-page.css';
-import '@/styles/blocks/animation-specimen.css';
+import '../../../styles/blocks/specimen-page.css';
+import '../../../styles/blocks/animation-specimen.css';
 
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';

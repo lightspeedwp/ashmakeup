@@ -583,21 +583,21 @@ function WhySection() {
 }
 ```
 
-### Example 2: Services Showcase (Minimal)
+### Example 2: Portfolio Showcase (Minimal)
 
 ```tsx
 <ThreeColumnLayout
   header={
     <h2 className="text-section-h2 font-heading font-bold text-center">
-      My Services
+      My Work
     </h2>
   }
   gap="xl"
   padding="2xl"
 >
-  <ServiceCard title="Bridal Makeup" icon={<RingIcon />} />
-  <ServiceCard title="Special Events" icon={<StarIcon />} />
-  <ServiceCard title="Photoshoots" icon={<CameraIcon />} />
+  <SectionCard title="Festival Makeup" icon={<SparklesIcon />} />
+  <SectionCard title="Special Events" icon={<StarIcon />} />
+  <SectionCard title="Photoshoots" icon={<CameraIcon />} />
 </ThreeColumnLayout>
 ```
 

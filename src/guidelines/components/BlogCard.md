@@ -45,7 +45,7 @@ BlogCard renders with data
 For complete setup and configuration:
 
 - **[Contentful Integration Guide](../contentful-integration.md)** - Complete CMS setup
-- **[Mock Data Guide](../mock-data.md)** - Fallback data system
+- **[Data System Documentation](../../data/README.md)** - Mock data system
 - **[Guidelines.md](../Guidelines.md)** - Main project guidelines
 
 ### Usage Pattern with CMS
@@ -885,7 +885,7 @@ sequenceDiagram
 
 - **[Guidelines.md](../Guidelines.md)** - Main project guidelines
 - **[Contentful Integration Guide](../contentful-integration.md)** - CMS setup
-- **[Mock Data Guide](../mock-data.md)** - Mock data system
+- **[Data System Documentation](../../data/README.md)** - Mock data system
 - **[overview-components.md](../overview-components.md)** - Component architecture
 - **[design-tokens/spacing.md](../design-tokens/spacing.md)** - Spacing system
 - **[design-tokens/typography.md](../design-tokens/typography.md)** - Typography scale

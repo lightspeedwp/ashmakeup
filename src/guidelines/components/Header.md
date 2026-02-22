@@ -393,7 +393,7 @@ useEffect(() => {
 ```tsx
 <Header currentPage={currentPage} onNavigate={handleNavigate}>
   <button className="ml-4 bg-gradient-pink-purple-blue text-white px-button py-2 rounded-lg font-body font-medium text-fluid-sm">
-    Book Now
+    View Portfolio
   </button>
 </Header>
 ```

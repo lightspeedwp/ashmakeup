@@ -821,7 +821,7 @@ flowchart TD
 
 ## 🔗 Related Documentation
 
-- **[Mock Data System](../mock-data.md)** - Image organization
+- **[Data System Documentation](../../data/README.md)** - Image organization
 - **[ImageGallery Component](../components/ImageGallery.md)** - Gallery implementation
 - **[ImageWithFallback Component](../components/figma/ImageWithFallback.tsx)** - Fallback handling
 

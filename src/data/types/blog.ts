@@ -42,7 +42,10 @@ export interface BlogAuthor {
   /** Author avatar/photo URL */
   avatar?: string;
   
-  /** Legacy support for 'image' field */
+  /** 
+   * @deprecated Use avatar instead
+   * Legacy support for 'image' field 
+   */
   image?: string;
   
   /** Author bio/description */
@@ -79,13 +82,19 @@ export interface BlogPost {
   /** Publication date (ISO 8601 string) - primary field */
   publishedAt: string;
   
-  /** Legacy support for publishedDate */
+  /** 
+   * @deprecated Use publishedAt instead
+   * Legacy support for publishedDate 
+   */
   publishedDate?: string;
   
   /** Last updated date (ISO 8601 string) - primary field */
   updatedAt?: string;
   
-  /** Legacy support for updatedDate */
+  /** 
+   * @deprecated Use updatedAt instead
+   * Legacy support for updatedDate 
+   */
   updatedDate?: string;
   
   /** Post category */
@@ -97,7 +106,10 @@ export interface BlogPost {
   /** Estimated reading time in minutes - primary field */
   readTime?: number;
   
-  /** Legacy support for readingTime */
+  /** 
+   * @deprecated Use readTime instead
+   * Legacy support for readingTime 
+   */
   readingTime?: number;
   
   /** Post author */

@@ -158,7 +158,13 @@ button, [role="button"] {
 
   /* --- Z-INDEX (NEW) --- */
   --wp--preset--z-index--n1: -1;
+  --wp--preset--z-index--0: 0;
   --wp--preset--z-index--10: 10;
+  --wp--preset--z-index--20: 20;
+  --wp--preset--z-index--30: 30;
+  --wp--preset--z-index--40: 40;
+  --wp--preset--z-index--50: 50;
+  --wp--preset--z-index--100: 100;
   --wp--preset--z-index--header: 1000;
   --wp--preset--z-index--overlay: 2000;
   --wp--preset--z-index--modal: 3000;
@@ -183,6 +189,7 @@ button, [role="button"] {
   --wp--preset--border-radius--xl: 1.5rem;
   --wp--preset--border-radius--2xl: 2rem;
   --wp--preset--border-radius--full: 9999px;
+  --wp--preset--border-radius--circle: 50%;
   
   /* Legacy aliases for backward compatibility during refactor */
   --wp--preset--border-radius--400: var(--wp--preset--border-radius--md);

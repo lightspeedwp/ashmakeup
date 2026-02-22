@@ -125,3 +125,20 @@
   outline: 2px solid var(--wp--preset--color--neon-pink);
   outline-offset: 2px;
 }
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .social-links__link,
+  .social-links__icon {
+    transition: none;
+  }
+
+  .social-links__link:hover,
+  .social-links__link--minimal:hover {
+    transform: none;
+  }
+
+  .social-links__link:hover .social-links__icon {
+    transform: none;
+  }
+}

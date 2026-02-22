@@ -3,7 +3,7 @@
  * Flexible hero section supporting various content types with consistent styling
  *
  * @author Ash Shaw Portfolio Team
- * @version 2.0.0 - Semantic BEM Refactor & Design Tokens
+ * @version 2.1.0 - Added size prop for min-height variants (sm/md/lg/xl)
  */
 
 import React, { useState } from "react";
@@ -28,6 +28,8 @@ interface HeroImage {
 interface HeroLayoutProps {
   /** Main heading text */
   title: string;
+  /** Optional HTML id attribute for the section element */
+  id?: string;
   /** Subtitle text or element */
   subtitle?: string | React.ReactNode;
   /** Description paragraph */
@@ -56,6 +58,8 @@ interface HeroLayoutProps {
   heroImages?: HeroImage[];
   lightboxTitle?: string;
   enableLightbox?: boolean;
+  // Size prop for min-height variants
+  size?: "sm" | "md" | "lg" | "xl";
 }
 
 /**
@@ -64,6 +68,7 @@ interface HeroLayoutProps {
  */
 export function HeroLayout({
   title,
+  id,
   subtitle,
   description,
   className = "",
@@ -79,6 +84,7 @@ export function HeroLayout({
   heroImages,
   lightboxTitle = "Portfolio Gallery",
   enableLightbox = false,
+  size = "md",
 }: HeroLayoutProps) {
   // Portfolio lightbox state management
   const [lightbox, setLightbox] = useState({
@@ -199,7 +205,8 @@ export function HeroLayout({
   };
 
   // BEM Classes
-  const heroClasses = `hero ${fullscreen ? "hero--fullscreen" : ""} ${className}`;
+  const sizeClass = size !== 'md' ? `hero--${size}` : '';
+  const heroClasses = `hero ${sizeClass} ${fullscreen ? "hero--fullscreen" : ""} ${className}`.replace(/\s+/g, ' ').trim();
   const contentClasses = `hero__content ${layout === "split" ? "hero__content--split" : layout === "left" ? "hero__content--left" : ""}`;
   
   // Container Classes
@@ -208,7 +215,7 @@ export function HeroLayout({
   if (align === "full") containerClasses += " hero__container--full";
 
   return (
-    <section className={heroClasses}>
+    <section id={id} className={heroClasses}>
       {/* Decorative Elements (Orbs/Backgrounds) */}
       {decorativeElements ? (
         <div className="hero__decorative-wrapper" aria-hidden="true">

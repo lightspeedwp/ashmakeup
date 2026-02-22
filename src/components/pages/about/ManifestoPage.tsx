@@ -6,7 +6,7 @@ import React from 'react';
 import { manifestoPageData } from '../../../data/mock/pages/manifesto';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { setSEO } from '../../../utils/seo';
-import '@/styles/blocks/manifesto-page.css';
+import '../../../styles/blocks/manifesto-page.css';
 
 export function ManifestoPage() {
   React.useEffect(() => {
