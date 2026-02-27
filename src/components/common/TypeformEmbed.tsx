@@ -51,7 +51,8 @@ export function TypeformEmbed({
   className = "",
   hiddenFields
 }: TypeformEmbedProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRefInit: HTMLDivElement | null = null;
+  const containerRef = useRef(containerRefInit);
   
   // Format hidden fields string: key=value,key2=value2
   const hiddenFieldsString = hiddenFields 

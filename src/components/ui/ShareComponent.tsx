@@ -66,8 +66,10 @@ export function ShareComponent({
   const [isOpen, setIsOpen] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const [announcements, setAnnouncements] = useState('');
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const dropdownRefInit: HTMLDivElement | null = null;
+  const dropdownRef = useRef(dropdownRefInit);
+  const triggerRefInit: HTMLButtonElement | null = null;
+  const triggerRef = useRef(triggerRefInit);
   
   const { registerModal, updateModal, unregisterModal } = useModal();
 

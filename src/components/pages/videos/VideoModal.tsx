@@ -25,8 +25,10 @@ interface VideoModalProps {
  * Uses CSS classes from /styles/blocks/videos-page.css.
  */
 export function VideoModal({ video, isOpen, onClose }: VideoModalProps) {
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const overlayRefInit: HTMLDivElement | null = null;
+  const overlayRef = useRef(overlayRefInit);
+  const closeBtnRefInit: HTMLButtonElement | null = null;
+  const closeBtnRef = useRef(closeBtnRefInit);
   const prefersReduced = useReducedMotion();
 
   /** Focus the close button when the modal opens */

@@ -61,7 +61,7 @@ interface ModalContextValue {
 /**
  * Modal context with default values
  */
-const ModalContext = createContext<ModalContextValue>({
+const modalContextDefault: ModalContextValue = {
   modals: [],
   hasOpenModals: false,
   registerModal: () => {},
@@ -69,7 +69,8 @@ const ModalContext = createContext<ModalContextValue>({
   unregisterModal: () => {},
   getModal: () => undefined,
   hasModalOfType: () => false,
-});
+};
+const ModalContext = createContext(modalContextDefault);
 
 /**
  * Props for ModalProvider component
@@ -128,7 +129,8 @@ interface ModalProviderProps {
  * - Memory management with automatic cleanup
  */
 export function ModalProvider({ children }: ModalProviderProps) {
-  const [modals, setModals] = useState<ModalState[]>([]);
+  const modalsInit: ModalState[] = [];
+  const [modals, setModals] = useState(modalsInit);
 
   /**
    * Register a new modal with the context

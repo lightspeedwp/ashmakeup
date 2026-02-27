@@ -73,7 +73,7 @@ const TOOL_ICONS: Record<string, React.ElementType> = {
 /** Build a lookup map from the flat tools array */
 function useToolMap(): Map<string, DevTool> {
   return useMemo(() => {
-    const map = new Map<string, DevTool>();
+    const map = new Map();
     var tools = devToolsPageUI.tools;
     for (var i = 0; i < tools.length; i++) {
       map.set(tools[i].id, tools[i]);

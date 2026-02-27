@@ -58,7 +58,8 @@ interface AboutDropdownProps {
 export function AboutDropdown({ isOpen, onClose }: AboutDropdownProps) {
   const navigate = useNavigate();
   const location = useLocation();
-  const listRef = useRef<HTMLUListElement>(null);
+  const listRefInit: HTMLUListElement | null = null;
+  const listRef = useRef(listRefInit);
   const prefersReduced = useReducedMotion();
 
   /** Focus first item when dropdown opens */

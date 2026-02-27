@@ -44,7 +44,8 @@ interface PortfolioMegaMenuProps {
 
 export function PortfolioMegaMenu({ isOpen, onClose, onMouseEnter, onMouseLeave }: PortfolioMegaMenuProps) {
   const navigate = useNavigate();
-  const menuRef = useRef<HTMLDivElement>(null);
+  const menuRefInit: HTMLDivElement | null = null;
+  const menuRef = useRef(menuRefInit);
 
   /** Sort all work by date descending */
   const sortedWork = [...allPortfolioWork].sort(

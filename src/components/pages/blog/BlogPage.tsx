@@ -53,13 +53,14 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
   const initialCategory = propCategory || searchParams.get('category') || undefined;
   const prefersReduced = useReducedMotion();
 
-  const [blogState, setBlogState] = useState<BlogPageState>({
+  const blogStateInit: BlogPageState = {
     page: 1,
     category: initialCategory,
     tags: [],
     searchQuery: '',
     limit: 6,
-  });
+  };
+  const [blogState, setBlogState] = useState(blogStateInit);
 
   const [activeCategories, setActiveCategories] = useState<string[]>(
     initialCategory ? [initialCategory] : []

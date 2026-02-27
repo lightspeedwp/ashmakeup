@@ -30,7 +30,8 @@ interface ContactMiniMenuProps {
 
 export function ContactMiniMenu({ isOpen, onClose, onMouseEnter, onMouseLeave }: ContactMiniMenuProps) {
   const navigate = useNavigate();
-  const menuRef = useRef<HTMLDivElement>(null);
+  const menuRefInit: HTMLDivElement | null = null;
+  const menuRef = useRef(menuRefInit);
 
   const go = useCallback(
     (path: string) => {

@@ -45,7 +45,8 @@ const SORT_OPTIONS = videosUI.archive.sortOptions;
 export function VideosPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const selectedVideoInit: Video | null = null;
+  const [selectedVideo, setSelectedVideo] = useState(selectedVideoInit);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeCategories, setActiveCategories] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState('recent');

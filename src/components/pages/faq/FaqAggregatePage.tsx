@@ -44,7 +44,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 export function FaqAggregatePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
-  const [openIds, setOpenIds] = useState<Set<string>>(new Set());
+  const [openIds, setOpenIds] = useState(new Set());
 
   useEffect(() => {
     setSEO(pageSEO.faq);

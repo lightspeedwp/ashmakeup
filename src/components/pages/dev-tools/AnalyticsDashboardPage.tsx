@@ -49,7 +49,8 @@ export function AnalyticsDashboardPage() {
     video: 0,
     podcast: 0,
   });
-  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const historyInit: HistoryEntry[] = [];
+  const [history, setHistory] = useState(historyInit);
 
   useEffect(() => {
     setSEO(devToolsSEO.analytics);

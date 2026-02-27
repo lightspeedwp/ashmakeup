@@ -183,7 +183,7 @@ export function ComponentShowcasePage() {
   }, [search]);
 
   const grouped = useMemo(() => {
-    const map = new Map<string, typeof filtered>();
+    const map = new Map();
     for (var i = 0; i < CATEGORY_ORDER.length; i++) {
       var cat = CATEGORY_ORDER[i];
       const items = filtered.filter((c) => c.category === cat);

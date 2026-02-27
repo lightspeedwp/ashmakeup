@@ -29,12 +29,8 @@ interface TimeLeft {
 }
 
 export function FestivalCountdown() {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
+  const timeLeftInit: TimeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+  const [timeLeft, setTimeLeft] = useState(timeLeftInit);
   
   const [isExpired, setIsExpired] = useState(false);
   
