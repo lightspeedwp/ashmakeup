@@ -9,10 +9,10 @@
 
 import { PortfolioEntry } from '../../types';
 
-// Placeholder images - Replace with actual images
-const rainbowFusionImg = "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&q=80";
-const galaxyNailsImg = "https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=800&q=80";
-const gradientDreamsImg = "https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=800&q=80";
+// Import Figma assets
+import rainbowFusionImg from 'figma:asset/7c570c5291977a816c8152a098cd6693cff22dbd.png';
+import galaxyNailsImg from 'figma:asset/1ec0ba217cad06e2cff662a25a050b0401d1092a.png';
+import gradientDreamsImg from 'figma:asset/deb2b4ab4cb25c5e47b960708fce6ea552ee6039.png';
 
 /**
  * Nail Art Portfolio

@@ -55,9 +55,9 @@ export function ContactMiniMenu({ isOpen, onClose, onMouseEnter, onMouseLeave }:
   /** Focus first interactive element on open */
   useEffect(() => {
     if (isOpen && menuRef.current) {
-      const first = menuRef.current.querySelector<HTMLButtonElement | HTMLAnchorElement>(
+      const first = menuRef.current.querySelector(
         '.contact-mini__cta-btn, .contact-mini__email-link',
-      );
+      ) as HTMLButtonElement | HTMLAnchorElement | null;
       if (first) first.focus();
     }
   }, [isOpen]);

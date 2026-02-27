@@ -9,13 +9,13 @@
 
 import { PortfolioEntry } from '../../types';
 
-// Placeholder images - Replace with actual images
-const lostParadiseImg = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
-const edenParadiseImg = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
-const edenShishiImg = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
-const jungleFestival1 = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
-const jungleFestival2 = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
-const jungleFestival3 = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
+// Import Figma assets
+import lostParadiseImg from 'figma:asset/e7ee10c85c112ab4acfc9e54087974a5faae5966.png';
+import edenParadiseImg from 'figma:asset/3c496f3b8a5671dd00830f80a9a061ddf687e849.png';
+import edenShishiImg from 'figma:asset/2d37a7cd55fe518f7eb8124fa25a2382be67f948.png';
+import jungleFestival1 from 'figma:asset/7afa71c7ec4457a1c1983db257703a6c92a9cce7.png';
+import jungleFestival2 from 'figma:asset/1cd08d3825ac7cc423a4672f8ed279139fc99d0a.png';
+import jungleFestival3 from 'figma:asset/3eb83eb2d4eb493b80283c1b75770d8893b2fc6a.png';
 
 /**
  * Thailand Portfolio Work

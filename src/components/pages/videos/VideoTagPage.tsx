@@ -27,8 +27,8 @@ import {
 import '../../../styles/blocks/videos-page.css';
 import '../../../styles/blocks/archive-filters.css';
 
-// Placeholder video thumbnail
-const videoThumbnail = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
+// Import the video thumbnail image
+import videoThumbnail from 'figma:asset/f0c4301e83be5c7dcfa724f611ca2ffcca9bf032.png';
 
 const videoThumbnails: Record<string, string> = {
   'vid-1': videoThumbnail,

@@ -65,9 +65,7 @@ export function AboutDropdown({ isOpen, onClose }: AboutDropdownProps) {
   /** Focus first item when dropdown opens */
   useEffect(() => {
     if (isOpen && listRef.current) {
-      const firstButton = listRef.current.querySelector<HTMLButtonElement>(
-        '.about-dropdown__node-btn',
-      );
+      const firstButton = listRef.current.querySelector('.about-dropdown__node-btn') as HTMLButtonElement | null;
       if (firstButton) {
         firstButton.focus();
       }
@@ -113,9 +111,7 @@ export function AboutDropdown({ isOpen, onClose }: AboutDropdownProps) {
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       const listEl = listRef.current;
-      const items = listEl ? listEl.querySelectorAll<HTMLButtonElement>(
-        '.about-dropdown__node-btn',
-      ) : null;
+      const items = listEl ? listEl.querySelectorAll('.about-dropdown__node-btn') : null;
       const hasNoItems = !items || items.length === 0;
       if (hasNoItems) return;
 

@@ -57,7 +57,7 @@ export function EnhancedLightbox({
   
   const { registerModal, updateModal, unregisterModal } = useModal();
 
-  const trapRef = useKeyboardTrap<HTMLDivElement>({
+  const trapRef = useKeyboardTrap({
     active: isOpen && images.length > 0,
     onEscape: onClose,
     autoFocus: true,

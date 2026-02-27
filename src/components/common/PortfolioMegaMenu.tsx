@@ -88,9 +88,9 @@ export function PortfolioMegaMenu({ isOpen, onClose, onMouseEnter, onMouseLeave 
   /** Focus first interactive element on open */
   useEffect(() => {
     if (isOpen && menuRef.current) {
-      const first = menuRef.current.querySelector<HTMLButtonElement>(
+      const first = menuRef.current.querySelector(
         '.mega-menu__featured-btn, .mega-menu__recent-link, .mega-menu__cat-link',
-      );
+      ) as HTMLButtonElement | null;
       if (first) first.focus();
     }
   }, [isOpen]);

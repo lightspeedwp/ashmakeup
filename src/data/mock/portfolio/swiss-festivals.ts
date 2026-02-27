@@ -9,15 +9,15 @@
 
 import { PortfolioEntry } from '../../types';
 
-// Placeholder images — Shankra - Replace with actual images
-const festivalConnectionImg = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
-const alpineBlissImg = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
-const mountainRainbowImg = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
+// Import Figma assets — Shankra
+import festivalConnectionImg from 'figma:asset/d35493e2be08017199b3d1523d516a996ec97a5d.png';
+import alpineBlissImg from 'figma:asset/e43f2a86f8b38d1777428264c8c9126d07a9ef75.png';
+import mountainRainbowImg from 'figma:asset/80d0d3af448e4969dc796d00e91c30d3648cd9c4.png';
 
-// Placeholder images — Reiserfieber - Replace with actual images
-const alpineGlowImg = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
-const mountainSpiritImg = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
-const festivalJoyImg = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
+// Import Figma assets — Reiserfieber
+import alpineGlowImg from 'figma:asset/33024fb05609d4a4545be47508d2ad3595f143c4.png';
+import mountainSpiritImg from 'figma:asset/280168cf45339af581c4065d1f6728ea2de6ff02.png';
+import festivalJoyImg from 'figma:asset/71597fc19386bc69fb2144851d752977dfd3693e.png';
 
 /**
  * Shankra Festival 2023 Work

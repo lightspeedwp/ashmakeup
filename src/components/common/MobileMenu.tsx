@@ -36,7 +36,7 @@ export function MobileMenu({
   isOpen,
   onClose,
 }: MobileMenuProps) {
-  const trapRef = useKeyboardTrap<HTMLDivElement>({
+  const trapRef = useKeyboardTrap({
     active: isOpen,
     onEscape: onClose,
     autoFocus: true,

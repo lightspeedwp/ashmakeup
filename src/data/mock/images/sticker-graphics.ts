@@ -7,33 +7,32 @@
  * @version 7.0.0 - Added 5 new designs (paint dreams eye, geo pattern eye, rainbow flow eye, create universe eye, abstract blocks eye)
  */
 
-// Placeholder images - Replace with actual sticker graphics
-const stickerNeonSpiral = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerNeonVortex = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerCosmicEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerRainbowEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerGalaxyEyeDark = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerGalaxyEyeWave = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerGalaxyEyeNeon = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerPsychedelicEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerUfoBreakfastEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerMushroomEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerStarburstEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerNeonSwirlEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerFractalEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerPrismBurstEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerStarfieldEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerNeonWaveEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerAlienTrio = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerHalftoneEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerMosaicEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerAuroraVortexEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerImagineEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerPaintDreamsEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerGeoPatternEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerRainbowFlowEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerCreateUniverseEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
-const stickerAbstractBlocksEye = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400&q=80";
+import stickerNeonSpiral from 'figma:asset/d3c29f089898fc451873371bcd41ade68c350411.png';
+import stickerNeonVortex from 'figma:asset/ac73f3ba326b1cc61ce5148d7149960fa38c04ff.png';
+import stickerCosmicEye from 'figma:asset/b7d9d7618ce02a21f909162ff86c3a02b944d982.png';
+import stickerRainbowEye from 'figma:asset/c285a3307ef83e72ea05a995006e9a91cff04ecb.png';
+import stickerGalaxyEyeDark from 'figma:asset/a3ff6861e08c46c3f53db108c18bf00f4dbb9958.png';
+import stickerGalaxyEyeWave from 'figma:asset/ac03efc4e039fdaefbb30518323e2c68b4dad75f.png';
+import stickerGalaxyEyeNeon from 'figma:asset/a59452b4a7623664d2bb471dda9573f2ff124510.png';
+import stickerPsychedelicEye from 'figma:asset/3f4571770a4dfe7b87967ba18571e396b485c134.png';
+import stickerUfoBreakfastEye from 'figma:asset/71428a4281ded92c596f8482bfc5f4f6c582be4f.png';
+import stickerMushroomEye from 'figma:asset/e324dd2108aca23e468d101d18ad9f36227ecb24.png';
+import stickerStarburstEye from 'figma:asset/9b30f18a5d667c6fb587a0835061f8c6665b02a0.png';
+import stickerNeonSwirlEye from 'figma:asset/15cb1d54a3f2762edc5b82bfdcb272f950a764ce.png';
+import stickerFractalEye from 'figma:asset/75e1bf4dac27bde05698ebec24ea1163d955794e.png';
+import stickerPrismBurstEye from 'figma:asset/8907346263e2430d129cbb5a32b9909e5a3b8213.png';
+import stickerStarfieldEye from 'figma:asset/c014c0ecba1501c870224d37c58f2b6e47f76ed0.png';
+import stickerNeonWaveEye from 'figma:asset/4b6328b843a4a51e9a075b82c8c73fbe4b42f215.png';
+import stickerAlienTrio from 'figma:asset/39eb8a562689f3a80dae8e93c87865781d23689f.png';
+import stickerHalftoneEye from 'figma:asset/63ed7ef30e2ed2157c64997c1155cea83b13aec5.png';
+import stickerMosaicEye from 'figma:asset/e8a07104860f015b916acaeb232a61777de2fedd.png';
+import stickerAuroraVortexEye from 'figma:asset/e4ad6bb52b7e38d46cd2b7a75acf7ceab5e7874b.png';
+import stickerImagineEye from 'figma:asset/1224e4c38d6535426ae19e8b73f8250863737d2a.png';
+import stickerPaintDreamsEye from 'figma:asset/2cbb530ae9ca33032228346034623a7f83317bfc.png';
+import stickerGeoPatternEye from 'figma:asset/84111c7a5216921c0e52a6f591197fbeac334288.png';
+import stickerRainbowFlowEye from 'figma:asset/8ff60225169337b591efe035bc54d425662d7569.png';
+import stickerCreateUniverseEye from 'figma:asset/c8d5d607f61330c5485683e00ba8bcf77a6df568.png';
+import stickerAbstractBlocksEye from 'figma:asset/5c6da7d9c00527f5021ee1e01619d56ac61c94a0.png';
 
 export interface StickerGraphic {
   id: string;

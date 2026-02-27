@@ -12,10 +12,10 @@
 
 import { HeroImage } from '../../types';
 
-// Placeholder images (homepage hero) - Replace with actual images
-const heroImage1 = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
-const heroImage2 = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
-const heroImage3 = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
+// Import Figma assets (homepage hero)
+import heroImage1 from 'figma:asset/f4a28f747d49fc9d37311b17f513b62e2b95a73e.png';
+import heroImage2 from 'figma:asset/378acbf4a7518ca6c40b44540bd7a121a91375fe.png';
+import heroImage3 from 'figma:asset/e82a7d901c5a28bf9313c7535228e647eaf06b75.png';
 
 /**
  * Homepage Hero Section Images
