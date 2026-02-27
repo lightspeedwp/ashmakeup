@@ -9,7 +9,7 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "../../lib/icons";
 import "../../styles/blocks/responsive-grid-slider.css";
 import "../../styles/blocks/column-layouts.css";
 
@@ -37,7 +37,10 @@ export function ResponsiveGridSlider<T extends { id?: string }>({
   items,
   renderItem,
   desktopColumns = 3,
-  keyExtractor = (item) => item.id || Math.random().toString(),
+  keyExtractor = (item) => {
+    const itemId = (item as any).id;
+    return itemId ? itemId : Math.random().toString();
+  },
   className = "",
   layoutMode = 'grid',
 }: ResponsiveGridSliderProps<T>) {
@@ -100,7 +103,8 @@ export function ResponsiveGridSlider<T extends { id?: string }>({
   };
 
   const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
+    const hasValidTouch = touchStart !== null && touchEnd !== null;
+    if (!hasValidTouch) return;
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;

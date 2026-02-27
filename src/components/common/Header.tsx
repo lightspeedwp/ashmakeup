@@ -21,7 +21,7 @@
 
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useLocation, useNavigate } from "../../lib/router";
-import { X } from "lucide-react";
+import { X } from "../../lib/icons";
 import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
 import { useModal } from "./ModalContext";
@@ -80,10 +80,11 @@ export function Header() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const currentPage = getPageIdFromPath(location.pathname);
+  const locationPathname = location.pathname;
+  const currentPage = getPageIdFromPath(locationPathname);
 
   /* ── Scroll-spy: highlight nav items based on visible homepage section ── */
-  const isHomePage = location.pathname === '/';
+  const isHomePage = locationPathname === '/';
   const activeSection = useScrollSpy(HOMEPAGE_SECTION_IDS, {
     rootMargin: '-20% 0px -60% 0px',
     threshold: 0,
@@ -95,7 +96,7 @@ export function Header() {
   const activeNavId = useMemo(() => {
     if (!isHomePage) return currentPage;
     if (!activeSection) return 'home';
-    return SECTION_TO_NAV[activeSection] || 'home';
+    return SECTION_TO_NAV[activeSection] ? SECTION_TO_NAV[activeSection] : 'home';
   }, [isHomePage, currentPage, activeSection]);
 
   /* ── Scroll position: transparent-at-top → compact-when-scrolled ── */
@@ -128,7 +129,10 @@ export function Header() {
 
   useEffect(() => {
     if (!isMobileMenuOpen) {
-      menuButtonRef.current?.focus();
+      const btn = menuButtonRef.current;
+      if (btn) {
+        btn.focus();
+      }
     }
   }, [isMobileMenuOpen]);
 
@@ -143,7 +147,7 @@ export function Header() {
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setOpenDropdown(null);
-  }, [location.pathname]);
+  }, [locationPathname]);
 
   // Handle outside clicks to close dropdowns
   const activeDropdownRef = useRef<HTMLElement | null>(null);
@@ -177,7 +181,10 @@ export function Header() {
 
   const closeMenuImmediate = useCallback((id: string) => {
     setOpenDropdown(null);
-    triggerRefs.current[id]?.focus();
+    const btn = triggerRefs.current[id];
+    if (btn) {
+      btn.focus();
+    }
   }, []);
 
   /* ── Navigation helpers ── */
@@ -211,7 +218,8 @@ export function Header() {
         blog: "Blog",
         contact: "Contact",
       };
-      announceToScreenReader(`Navigated to ${pageNames[pageId] || pageId} page`);
+      const pageName = pageNames[pageId] ? pageNames[pageId] : pageId;
+      announceToScreenReader(`Navigated to ${pageName} page`);
     }
   };
 
@@ -220,12 +228,19 @@ export function Header() {
 
   /** Keyboard handler for dropdown trigger buttons */
   const handleTriggerKeyDown = (e: React.KeyboardEvent, id: string) => {
-    if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+    const isArrowDown = e.key === 'ArrowDown';
+    const isEnter = e.key === 'Enter';
+    const isSpace = e.key === ' ';
+    const shouldOpen = isArrowDown || isEnter || isSpace;
+    if (shouldOpen) {
       e.preventDefault();
       setOpenDropdown(id);
     } else if (e.key === 'Escape') {
       setOpenDropdown(null);
-      triggerRefs.current[id]?.focus();
+      const btn = triggerRefs.current[id];
+      if (btn) {
+        btn.focus();
+      }
     }
   };
 

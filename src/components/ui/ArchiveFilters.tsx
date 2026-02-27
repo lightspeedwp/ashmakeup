@@ -16,7 +16,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { SlidersHorizontal, X } from 'lucide-react';
+import { SlidersHorizontal, X } from '../../lib/icons';
 import { filtersUI } from '../../data/mock/ui/filters';
 import { useModal } from '../common/ModalContext';
 import { useAnimatedCount } from '../../hooks/useAnimatedCount';
@@ -73,13 +73,20 @@ export function ArchiveFilters({
 
   /** Only show categories that have content (count > 0 when count is provided) */
   const visibleCategories = categories.filter(
-    cat => cat.count === undefined || cat.count > 0,
+    cat => {
+      const isCountUndefined = cat.count === undefined;
+      const hasCount = cat.count > 0;
+      return isCountUndefined || hasCount;
+    },
   );
 
   const hasActiveFilters = activeCategories.length > 0;
 
   const activeCategoryNames = activeCategories
-    .map(slug => visibleCategories.find(c => c.slug === slug)?.name ?? slug)
+    .map(slug => {
+      const found = visibleCategories.find(c => c.slug === slug);
+      return found ? found.name : slug;
+    })
     .filter(Boolean);
 
   const animatedResultCount = useAnimatedCount(resultCount);
@@ -178,7 +185,7 @@ export function ArchiveFilters({
 
         {/* Bottom row: Result count (left) + Sort (right) */}
         <div className="archive-filters__meta-row">
-          <p className="archive-filters__result-count" aria-live="polite" aria-atomic="true">
+          <p className="archive-filters__result-count m-[0px]" aria-live="polite" aria-atomic="true">
             {filtersUI.resultsLabel}{' '}
             <strong key={resultCount} className="archive-filters__result-number">
               {animatedResultCount}

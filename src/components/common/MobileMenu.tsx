@@ -18,7 +18,7 @@ import { headerNavigationItems } from "../../data/mock/ui/navigation";
 import { SocialLinks } from "./SocialLinks";
 import { getPageIdFromPath } from "../../hooks/useAppNavigate";
 import { useKeyboardTrap } from "../../hooks/useKeyboardTrap";
-import { Mail } from "lucide-react";
+import { Mail } from "../../lib/icons";
 import "../../styles/blocks/mobile-menu.css";
 
 /**

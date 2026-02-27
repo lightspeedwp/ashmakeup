@@ -28,9 +28,7 @@ import {
   Palette,
   Layers,
   Paintbrush,
-  Droplets,
   Sparkles,
-  PenTool,
   Calendar,
   Clock,
   Tag,
@@ -57,15 +55,13 @@ import {
   WifiOff,
   Zap,
   MapPin,
-  Building2,
   Music,
   Brain,
   Rocket,
-  Instagram,
-  Facebook,
+  Camera,
   MessageCircle,
-} from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+} from "../../lib/icons";
+import type { LucideIcon } from "../../lib/icons";
 
 import { Logo } from "../common/Logo";
 import { SocialLinks } from "../common/SocialLinks";
@@ -123,9 +119,9 @@ const ICON_MAP: Record<string, LucideIcon> = {
   Palette,
   Layers,
   Paintbrush,
-  Droplets,
+  Droplets: Sparkles,
   Sparkles,
-  PenTool,
+  PenTool: Paintbrush,
   Calendar,
   Clock,
   Tag,
@@ -152,12 +148,13 @@ const ICON_MAP: Record<string, LucideIcon> = {
   WifiOff,
   Zap,
   MapPin,
-  Building2,
+  Building2: Rocket,
   Music,
   Brain,
   Rocket,
-  Instagram,
-  Facebook,
+  Instagram: Camera,
+  Camera,
+  Facebook: ExternalLink,
   MessageCircle,
 };
 
@@ -192,7 +189,7 @@ export function StyleGuidePage() {
     ? 42
     : archiveFiltersDemoCategories
         .filter((cat) => demoActiveCategories.includes(cat.slug))
-        .reduce((sum, cat) => sum + (cat.count ?? 0), 0);
+        .reduce((sum, cat) => sum + (cat.count ? cat.count : 0), 0);
 
   const handleDemoCategoryToggle = (slug: string) => {
     setDemoActiveCategories((prev) =>
@@ -657,7 +654,7 @@ export function StyleGuidePage() {
               <div className="style-guide__spacing-bar-wrap">
                 <div
                   className="style-guide__spacing-bar"
-                  style={{ width: SPACING_BAR_WIDTHS[tok.token] || "20%" }}
+                  style={{ width: SPACING_BAR_WIDTHS[tok.token] ? SPACING_BAR_WIDTHS[tok.token] : "20%" }}
                 />
               </div>
               <span className="style-guide__spacing-value">{tok.value}</span>
@@ -914,7 +911,7 @@ export function StyleGuidePage() {
                 ) : el.element === 'select' ? (
                   <div className="form-control--select-wrapper">
                     <select className="form-control form-control--select" aria-label={el.name}>
-                      {(el.options ?? []).map((opt) => (
+                      {(el.options ? el.options : []).map((opt) => (
                         <option key={opt} value={opt}>{opt}</option>
                       ))}
                     </select>

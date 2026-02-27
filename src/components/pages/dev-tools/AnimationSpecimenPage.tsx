@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect, useState, useCallback } from 'react';
-import { Zap, Play, Pause } from 'lucide-react';
+import { Zap, Play, Pause } from '../../../lib/icons';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
 import '../../../styles/blocks/specimen-page.css';

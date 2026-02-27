@@ -199,29 +199,7 @@ export const UNIFIED_PORTFOLIO_DATA: UnifiedPortfolioEntry[] = allPortfolioWork
   .filter(hasValidImageURLs)
   .map(transformEntry);
 
-// Development analytics to verify data structure
-if (import.meta?.env?.DEV) {
-  console.log('📊 UNIFIED_PORTFOLIO_DATA Analytics (New Service):');
-  console.log('  - Total entries:', UNIFIED_PORTFOLIO_DATA.length);
-  console.log('  - Featured entries:', UNIFIED_PORTFOLIO_DATA.filter(e => e.featured === true).length);
-  console.log('  - Categories breakdown:');
-  
-  const categoryCounts = UNIFIED_PORTFOLIO_DATA.reduce((acc, entry) => {
-    acc[entry.category] = (acc[entry.category] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
-  
-  Object.entries(categoryCounts).forEach(([category, count]) => {
-    console.log(`    - ${category}: ${count} entries`);
-  });
-  
-  console.log('  - Featured entries details:');
-  UNIFIED_PORTFOLIO_DATA
-    .filter(e => e.featured === true)
-    .forEach(entry => {
-      console.log(`    - "${entry.title}" (${entry.category}) - Order: ${entry.displayOrder}`);
-    });
-}
+// Development analytics removed — bundler cannot safely access import.meta.env at top-level
 
 /**
  * Get portfolio entries filtered by category

@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { Download, Mail, MapPin, Instagram, FileText, Copy, Check } from 'lucide-react';
+import { Download, Mail, MapPin, Camera, FileText, Copy, Check } from '../../../lib/icons';
 import { pressKitData } from '../../../data/mock/pages/press';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { setSEO } from '../../../utils/seo';
@@ -18,9 +18,7 @@ export function PressKitPage() {
       setCopiedId(id);
       setTimeout(() => setCopiedId(null), 2000);
     } catch {
-      if (import.meta.env.DEV) {
-        console.log('Clipboard write failed for press bio');
-      }
+      // Dev logging removed — import.meta.env.DEV crashes this bundler
     }
   };
 
@@ -122,7 +120,7 @@ export function PressKitPage() {
                     <Mail className="icon-md" /> {pressKitData.contact.email}
                 </a>
                  <a href={`https://instagram.com/${pressKitData.contact.instagram.replace('@','')}`} className="press-contact__link press-contact__link--instagram text-body-p">
-                    <Instagram className="icon-md" /> {pressKitData.contact.instagram}
+                    <Camera className="icon-md" /> {pressKitData.contact.instagram}
                 </a>
                  <div className="press-contact__location text-body-p">
                     <MapPin className="icon-md" /> {pressKitData.contact.location}

@@ -11,7 +11,7 @@
 
 import React, { useEffect } from 'react';
 import { Link } from '../../lib/router';
-import { ChevronRight, Home } from 'lucide-react';
+import { ChevronRight, Home } from '../../lib/icons';
 import '../../styles/blocks/breadcrumbs.css';
 
 export interface BreadcrumbItem {

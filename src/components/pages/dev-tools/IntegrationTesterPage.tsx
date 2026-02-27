@@ -10,7 +10,7 @@
  */
 
 import React, { useEffect, useState, useCallback } from 'react';
-import { CheckCircle, XCircle, Clock, Play } from 'lucide-react';
+import { CircleCheck, CircleX, Clock, Play } from '../../../lib/icons';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
 import '../../../styles/blocks/specimen-page.css';
@@ -88,7 +88,10 @@ const TEST_SUITES: TestSuite[] = [
       { name: 'All buttons have accessible name', check: () => {
         const buttons = document.querySelectorAll('button');
         return Array.from(buttons).every(
-          (btn) => (btn.textContent?.trim() || '').length > 0 || !!btn.getAttribute('aria-label')
+          (btn) => {
+            const btnText = btn.textContent ? btn.textContent.trim() : '';
+            return btnText.length > 0 || !!btn.getAttribute('aria-label');
+          }
         );
       }},
       { name: 'Focus visible styles (neon pink indicator)', check: () => {
@@ -258,11 +261,11 @@ export function IntegrationTesterPage() {
           return (
             <details key={suite.id} className="deploy__category" open={!!result && result.status !== 'idle'}>
               <summary className="deploy__category-header">
-                {result?.status === 'pass' ? (
-                  <CheckCircle className="deploy__check-icon deploy__check-icon--pass" aria-hidden="true" />
-                ) : result?.status === 'fail' ? (
-                  <XCircle className="deploy__check-icon deploy__check-icon--fail" aria-hidden="true" />
-                ) : result?.status === 'running' ? (
+                {result && result.status === 'pass' ? (
+                  <CircleCheck className="deploy__check-icon deploy__check-icon--pass" aria-hidden="true" />
+                ) : result && result.status === 'fail' ? (
+                  <CircleX className="deploy__check-icon deploy__check-icon--fail" aria-hidden="true" />
+                ) : result && result.status === 'running' ? (
                   <Clock className="deploy__check-icon deploy__check-icon--warn" aria-hidden="true" />
                 ) : null}
                 <span className="deploy__category-title">{suite.title}</span>
@@ -286,18 +289,18 @@ export function IntegrationTesterPage() {
                     <span className="deploy__check-rec">{suite.description}</span>
                   </div>
                 </div>
-                {result?.results.map((step, idx) => (
+                {result && result.results ? result.results.map((step, idx) => (
                   <div key={idx} className="deploy__check">
                     {step.passed ? (
-                      <CheckCircle className="deploy__check-icon deploy__check-icon--pass" aria-label="Passed" />
+                      <CircleCheck className="deploy__check-icon deploy__check-icon--pass" aria-label="Passed" />
                     ) : (
-                      <XCircle className="deploy__check-icon deploy__check-icon--fail" aria-label="Failed" />
+                      <CircleX className="deploy__check-icon deploy__check-icon--fail" aria-label="Failed" />
                     )}
                     <div className="deploy__check-info">
                       <span className="deploy__check-name">{step.name}</span>
                     </div>
                   </div>
-                ))}
+                )) : null}
               </div>
             </details>
           );

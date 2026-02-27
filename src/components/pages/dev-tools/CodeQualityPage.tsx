@@ -141,16 +141,20 @@ export function CodeQualityPage() {
         <h2 id="cq-css" className="code-quality__section-title">{data.cssStats.title}</h2>
         <p className="code-quality__section-desc">{data.cssStats.description}</p>
         <div className="code-quality__grid">
-          {data.cssStats.metrics.map((m) => (
-            <div key={m.id} className="code-quality__metric">
-              <span className="code-quality__metric-label">{m.label}</span>
-              <span className="code-quality__metric-value">{m.value}</span>
-              <span className={`code-quality__trend code-quality__trend--${m.trend}`}>
-                {m.trend === 'up' ? '▲' : m.trend === 'down' ? '▼' : '—'}
-              </span>
-              <span className="code-quality__metric-detail">{m.detail}</span>
-            </div>
-          ))}
+          {data.cssStats.metrics.map((m) => {
+            // Extract nested ternary to avoid bundler issues
+            const trendSymbol = m.trend === 'up' ? '▲' : m.trend === 'down' ? '▼' : '—';
+            return (
+              <div key={m.id} className="code-quality__metric">
+                <span className="code-quality__metric-label">{m.label}</span>
+                <span className="code-quality__metric-value">{m.value}</span>
+                <span className={`code-quality__trend code-quality__trend--${m.trend}`}>
+                  {trendSymbol}
+                </span>
+                <span className="code-quality__metric-detail">{m.detail}</span>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -184,17 +188,21 @@ export function CodeQualityPage() {
         <h2 id="cq-lint" className="code-quality__section-title">{data.lintSummary.title}</h2>
         <p className="code-quality__section-desc">{data.lintSummary.description}</p>
         <div className="code-quality__lint-list">
-          {data.lintSummary.results.map((r) => (
-            <div key={r.tool} className="code-quality__lint-item">
-              <span className="code-quality__lint-tool">{r.tool}</span>
-              <span className="code-quality__lint-count">
-                {r.errors} errors, {r.warnings} warnings
-              </span>
-              <span className={`code-quality__lint-status code-quality__lint-status--${r.status}`}>
-                {r.status === 'pass' ? 'Pass' : r.status === 'warn' ? 'Warn' : 'Fail'}
-              </span>
-            </div>
-          ))}
+          {data.lintSummary.results.map((r) => {
+            // Extract nested ternary to avoid bundler issues
+            const statusLabel = r.status === 'pass' ? 'Pass' : r.status === 'warn' ? 'Warn' : 'Fail';
+            return (
+              <div key={r.tool} className="code-quality__lint-item">
+                <span className="code-quality__lint-tool">{r.tool}</span>
+                <span className="code-quality__lint-count">
+                  {r.errors} errors, {r.warnings} warnings
+                </span>
+                <span className={`code-quality__lint-status code-quality__lint-status--${r.status}`}>
+                  {statusLabel}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </section>
 

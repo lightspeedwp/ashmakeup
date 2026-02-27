@@ -9,8 +9,8 @@
  */
 
 import React, { useEffect } from "react";
-import { Palette, Layers, User, Zap, Droplets, Sparkles } from "lucide-react";
-import { MapPin, Music, Building2, Paintbrush, PenTool, Brain, Rocket } from "lucide-react";
+import { Palette, Layers, User, Zap, Sparkles } from "../../../lib/icons";
+import { MapPin, Music, Paintbrush, Brain, Rocket } from "../../../lib/icons";
 import "../../../styles/globals.css";
 import { HeroLayout } from "../../sections/HeroLayout";
 import { FaqSection } from "../../sections/FaqSection";
@@ -20,7 +20,7 @@ import { ABOUT_SECTION_THEMES } from "../../common/Constants";
 import { aboutHeroImages } from "../../../data/mock/images/hero-images";
 import { aboutHero, aboutPageText } from "../../../data/mock/pages/about";
 import { aboutUI } from "../../../data/mock/ui/about";
-import { useAboutPageContent } from "../../../hooks/useContentful";
+import { useAboutPageContent } from "../../../hooks/useContent";
 import { useAppNavigate } from "../../../hooks/useAppNavigate";
 import "../../../styles/blocks/about-page.css";
 
@@ -88,12 +88,6 @@ export function AboutPage() {
       title: aboutUI.sections.mousse.skills.uvTechniques,
       icon: Zap,
       gradientClass: "about-skill-icon-wrap--purple-pink"
-    },
-    {
-      id: "pigment-knowledge",
-      title: aboutUI.sections.mousse.skills.pigmentKnowledge,
-      icon: Droplets,
-      gradientClass: "about-skill-icon-wrap--orange-red"
     },
     {
       id: "creative-design",
@@ -172,17 +166,18 @@ export function AboutPage() {
   }
 
   // Extract content with fallbacks to static content
+  const aboutHeroData = aboutContent ? aboutContent.hero : null;
   const heroTitle =
-    aboutContent?.hero.title || aboutHero.title;
+    aboutHeroData ? (aboutHeroData.title || aboutHero.title) : aboutHero.title;
   const heroSubtitle =
-    aboutContent?.hero.subtitle || aboutHero.subtitle;
+    aboutHeroData ? (aboutHeroData.subtitle || aboutHero.subtitle) : aboutHero.subtitle;
   const heroDescription =
-    aboutContent?.hero.description || aboutHero.description;
-  const heroImage = aboutContent?.hero.image
+    aboutHeroData ? (aboutHeroData.description || aboutHero.description) : aboutHero.description;
+  const heroImage = aboutHeroData && aboutHeroData.image
     ? {
-        src: aboutContent.hero.image.url,
-        alt: aboutContent.hero.image.alt,
-        title: aboutContent.hero.image.title,
+        src: aboutHeroData.image.url,
+        alt: aboutHeroData.image.alt,
+        title: aboutHeroData.image.title,
       }
     : null;
 
@@ -288,22 +283,6 @@ export function AboutPage() {
           </p>
         </SectionCard>
 
-        {/* Berlin Nights Section */}
-        <SectionCard
-          id="berlin-section"
-          title={aboutUI.sections.berlin.title}
-          theme={ABOUT_SECTION_THEMES.berlin}
-          quote={aboutUI.sections.berlin.quote}
-          icon={Building2}
-        >
-          <p className="text-body-p text-inherit">
-            {aboutPageText.berlin[0]}
-          </p>
-          <p className="text-body-p text-inherit mt-fluid-md">
-            {aboutPageText.berlin[1]}
-          </p>
-        </SectionCard>
-
         {/* UV Makeup Section */}
         <SectionCard
           id="uv-section"
@@ -362,7 +341,7 @@ export function AboutPage() {
           id="uv-makeup-section"
           title={aboutUI.sections.uvMakeup.title}
           theme={ABOUT_SECTION_THEMES.nails}
-          icon={PenTool}
+          icon={Paintbrush}
           actions={
             <div className="about-cta-center">
               <button

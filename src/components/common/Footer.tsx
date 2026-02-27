@@ -9,7 +9,7 @@
 
 import React from "react";
 import { useNavigate } from "../../lib/router";
-import { Link2, Check } from "lucide-react";
+import { Link2, Check } from "../../lib/icons";
 import { Logo } from "./Logo";
 import { SocialLinks } from "./SocialLinks";
 import { navigationItems } from "../../data/mock/ui/navigation";
@@ -43,9 +43,7 @@ export function Footer() {
       setLinkCopied(true);
       setTimeout(() => setLinkCopied(false), 2000);
     } catch {
-      if (import.meta.env.DEV) {
-        console.log("🐞 Clipboard write failed");
-      }
+      // Dev logging removed — import.meta.env.DEV crashes this bundler
     }
   };
 

@@ -5,9 +5,11 @@
  * counts from actual mock data at import time. Every consumer reads from
  * a single source of truth so counts stay consistent site-wide.
  *
+ * BUNDLER SAFETY: No optional chaining (?.) or nullish coalescing (??)
+ *
  * @module utils/contentCounts
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 import { blogPosts } from '../data/mock/blog/posts';
@@ -20,14 +22,28 @@ import { podcastEpisodes } from '../data/mock/podcasts/episodes';
 import { podcastCategories } from '../data/mock/podcasts/categories';
 import { videos, videoCategories } from '../data/mock/videos';
 
+/** Safe fallback for undefined counts */
+function safeCount(counts: Record<string, number>, key: string): number {
+  const val = counts[key];
+  return val !== undefined ? val : 0;
+}
+
+/** Safe tag/category string trimming */
+function safeTrim(val: string | undefined | null): string {
+  if (!val) return '';
+  return val.trim();
+}
+
+/** Safe tags array access */
+function safeTags(tags: string[] | undefined | null): string[] {
+  if (!tags) return [];
+  return tags;
+}
+
 /* ────────────────────────────────────────────
    Blog Category Counts
    ──────────────────────────────────────────── */
 
-/**
- * Count of blog posts per category name (case-insensitive match).
- * Key = category name exactly as it appears in `blogCategories[].name`.
- */
 export const blogCategoryCounts: Record<string, number> = (() => {
   const counts: Record<string, number> = {};
 
@@ -36,16 +52,14 @@ export const blogCategoryCounts: Record<string, number> = (() => {
   });
 
   blogPosts.forEach((post) => {
-    const postCat = post.category?.trim();
+    const postCat = safeTrim(post.category);
     if (!postCat) return;
 
-    // Try exact match first
     if (counts[postCat] !== undefined) {
       counts[postCat] += 1;
       return;
     }
 
-    // Fallback: case-insensitive match
     const key = Object.keys(counts).find(
       (k) => k.toLowerCase() === postCat.toLowerCase(),
     );
@@ -57,31 +71,23 @@ export const blogCategoryCounts: Record<string, number> = (() => {
   return counts;
 })();
 
-/**
- * Returns the dynamic count for a given blog category.
- * Falls back to 0 if the category has no posts.
- */
 export function getBlogCategoryCount(categoryName: string): number {
-  return blogCategoryCounts[categoryName] ?? 0;
+  return safeCount(blogCategoryCounts, categoryName);
 }
 
 /* ────────────────────────────────────────────
    Blog Tag Counts
    ──────────────────────────────────────────── */
 
-/**
- * Count of blog posts per tag (case-insensitive match).
- * Key = tag name exactly as used in `blogPosts[].tags[]`.
- */
 export const blogTagCounts: Record<string, number> = (() => {
   const counts: Record<string, number> = {};
 
   blogPosts.forEach((post) => {
-    (post.tags ?? []).forEach((tag) => {
+    const tags = safeTags(post.tags);
+    tags.forEach((tag) => {
       const normalised = tag.trim();
       if (!normalised) return;
 
-      // Find or create the canonical key (preserving first-seen casing)
       const existing = Object.keys(counts).find(
         (k) => k.toLowerCase() === normalised.toLowerCase(),
       );
@@ -96,10 +102,6 @@ export const blogTagCounts: Record<string, number> = (() => {
   return counts;
 })();
 
-/**
- * Returns the dynamic count for a given blog tag.
- * Falls back to 0 if the tag has no posts.
- */
 export function getBlogTagCount(tagName: string): number {
   const key = Object.keys(blogTagCounts).find(
     (k) => k.toLowerCase() === tagName.toLowerCase(),
@@ -111,10 +113,6 @@ export function getBlogTagCount(tagName: string): number {
    Portfolio Category Counts
    ──────────────────────────────────────────── */
 
-/**
- * Count of portfolio entries per category id.
- * Key = PORTFOLIO_CATEGORIES[].id (e.g. "Festival Makeup", "UV Makeup").
- */
 export const portfolioCategoryCounts: Record<string, number> = (() => {
   const counts: Record<string, number> = {};
 
@@ -131,26 +129,20 @@ export const portfolioCategoryCounts: Record<string, number> = (() => {
   return counts;
 })();
 
-/**
- * Returns the dynamic count for a given portfolio category.
- * Falls back to 0 if the category has no entries.
- */
 export function getPortfolioCategoryCount(categoryId: string): number {
-  return portfolioCategoryCounts[categoryId] ?? 0;
+  return safeCount(portfolioCategoryCounts, categoryId);
 }
 
 /* ────────────────────────────────────────────
    Portfolio Tag Counts
    ──────────────────────────────────────────── */
 
-/**
- * Count of portfolio entries per tag (case-insensitive match).
- */
 export const portfolioTagCounts: Record<string, number> = (() => {
   const counts: Record<string, number> = {};
 
   UNIFIED_PORTFOLIO_DATA.forEach((entry) => {
-    (entry.tags ?? []).forEach((tag) => {
+    const tags = safeTags(entry.tags);
+    tags.forEach((tag) => {
       const normalised = tag.trim();
       if (!normalised) return;
 
@@ -168,9 +160,6 @@ export const portfolioTagCounts: Record<string, number> = (() => {
   return counts;
 })();
 
-/**
- * Returns the dynamic count for a given portfolio tag.
- */
 export function getPortfolioTagCount(tagName: string): number {
   const key = Object.keys(portfolioTagCounts).find(
     (k) => k.toLowerCase() === tagName.toLowerCase(),
@@ -182,9 +171,6 @@ export function getPortfolioTagCount(tagName: string): number {
    Podcast Category Counts
    ──────────────────────────────────────────── */
 
-/**
- * Count of podcast episodes per category name.
- */
 export const podcastCategoryCounts: Record<string, number> = (() => {
   const counts: Record<string, number> = {};
 
@@ -193,7 +179,7 @@ export const podcastCategoryCounts: Record<string, number> = (() => {
   });
 
   podcastEpisodes.forEach((ep) => {
-    const cat = ep.category?.trim();
+    const cat = safeTrim(ep.category);
     if (!cat) return;
 
     if (counts[cat] !== undefined) {
@@ -212,20 +198,14 @@ export const podcastCategoryCounts: Record<string, number> = (() => {
   return counts;
 })();
 
-/**
- * Returns the dynamic count for a given podcast category.
- */
 export function getPodcastCategoryCount(categoryName: string): number {
-  return podcastCategoryCounts[categoryName] ?? 0;
+  return safeCount(podcastCategoryCounts, categoryName);
 }
 
 /* ────────────────────────────────────────────
    Video Category Counts
    ──────────────────────────────────────────── */
 
-/**
- * Count of videos per category name.
- */
 export const videoCategoryCounts: Record<string, number> = (() => {
   const counts: Record<string, number> = {};
 
@@ -234,7 +214,7 @@ export const videoCategoryCounts: Record<string, number> = (() => {
   });
 
   videos.forEach((v) => {
-    const cat = v.category?.trim();
+    const cat = safeTrim(v.category);
     if (!cat) return;
 
     if (counts[cat] !== undefined) {
@@ -253,25 +233,20 @@ export const videoCategoryCounts: Record<string, number> = (() => {
   return counts;
 })();
 
-/**
- * Returns the dynamic count for a given video category.
- */
 export function getVideoCategoryCount(categoryName: string): number {
-  return videoCategoryCounts[categoryName] ?? 0;
+  return safeCount(videoCategoryCounts, categoryName);
 }
 
 /* ────────────────────────────────────────────
    Video Tag Counts
    ──────────────────────────────────────────── */
 
-/**
- * Count of videos per tag (case-insensitive match).
- */
 export const videoTagCounts: Record<string, number> = (() => {
   const counts: Record<string, number> = {};
 
   videos.forEach((v) => {
-    (v.tags ?? []).forEach((tag) => {
+    const tags = safeTags(v.tags);
+    tags.forEach((tag) => {
       const normalised = tag.trim();
       if (!normalised) return;
 
@@ -289,9 +264,6 @@ export const videoTagCounts: Record<string, number> = (() => {
   return counts;
 })();
 
-/**
- * Returns the dynamic count for a given video tag.
- */
 export function getVideoTagCount(tagName: string): number {
   const key = Object.keys(videoTagCounts).find(
     (k) => k.toLowerCase() === tagName.toLowerCase(),
@@ -303,14 +275,12 @@ export function getVideoTagCount(tagName: string): number {
    Podcast Tag Counts
    ──────────────────────────────────────────── */
 
-/**
- * Count of podcast episodes per tag (case-insensitive match).
- */
 export const podcastTagCounts: Record<string, number> = (() => {
   const counts: Record<string, number> = {};
 
   podcastEpisodes.forEach((ep) => {
-    (ep.tags ?? []).forEach((tag) => {
+    const tags = safeTags(ep.tags);
+    tags.forEach((tag) => {
       const normalised = tag.trim();
       if (!normalised) return;
 
@@ -328,9 +298,6 @@ export const podcastTagCounts: Record<string, number> = (() => {
   return counts;
 })();
 
-/**
- * Returns the dynamic count for a given podcast tag.
- */
 export function getPodcastTagCount(tagName: string): number {
   const key = Object.keys(podcastTagCounts).find(
     (k) => k.toLowerCase() === tagName.toLowerCase(),
@@ -345,9 +312,6 @@ export function getPodcastTagCount(tagName: string): number {
 import { allEvents } from '../data/mock/events';
 import { eventCategories as eventCats } from '../data/mock/events/categories';
 
-/**
- * Count of events per category (type) slug.
- */
 export const eventCategoryCounts: Record<string, number> = (() => {
   const counts: Record<string, number> = {};
   eventCats.forEach((cat) => {
@@ -356,25 +320,20 @@ export const eventCategoryCounts: Record<string, number> = (() => {
   return counts;
 })();
 
-/**
- * Returns the dynamic count for a given event category slug.
- */
 export function getEventCategoryCount(categorySlug: string): number {
-  return eventCategoryCounts[categorySlug] ?? 0;
+  return safeCount(eventCategoryCounts, categorySlug);
 }
 
 /* ────────────────────────────────────────────
    Event Tag Counts
    ──────────────────────────────────────────── */
 
-/**
- * Count of events per tag (case-insensitive match).
- */
 export const eventTagCounts: Record<string, number> = (() => {
   const counts: Record<string, number> = {};
 
   allEvents.forEach((event) => {
-    (event.tags ?? []).forEach((tag) => {
+    const tags = safeTags(event.tags);
+    tags.forEach((tag) => {
       const normalised = tag.trim();
       if (!normalised) return;
 
@@ -392,9 +351,6 @@ export const eventTagCounts: Record<string, number> = (() => {
   return counts;
 })();
 
-/**
- * Returns the dynamic count for a given event tag.
- */
 export function getEventTagCount(tagName: string): number {
   const key = Object.keys(eventTagCounts).find(
     (k) => k.toLowerCase() === tagName.toLowerCase(),

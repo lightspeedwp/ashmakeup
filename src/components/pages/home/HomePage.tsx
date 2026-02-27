@@ -15,7 +15,7 @@ import { UVMakeupSection } from "../../sections/UVMakeupSection";
 import { TestimonialsSection } from "../../sections/TestimonialsSection";
 import { FestivalCountdown } from "../../sections/FestivalCountdown";
 import { InstagramFeed } from "../../sections/InstagramFeed";
-import { useHomepageContent } from "../../../hooks/useContentful";
+import { useHomepageContent } from "../../../hooks/useContent";
 import { FaqSection } from "../../sections/FaqSection";
 import { useAppNavigate } from "../../../hooks/useAppNavigate";
 
@@ -79,7 +79,7 @@ export function HomePage() {
           </div>
           <h1 className="text-section-h2 mb-fluid-sm">{homeUI.error.title}</h1>
           <p className="text-body-p mb-fluid-lg">
-            {contentError || homeUI.error.message}
+            {contentError ? contentError : homeUI.error.message}
           </p>
         </div>
         <div className="homepage-error__actions">
@@ -111,17 +111,24 @@ export function HomePage() {
   }
 
   const heroContent = {
-    title: homepageContent?.hero.title || homepageHero.title,
-    description: homepageContent?.hero.description || homepageHero.description,
-    ctaText: homepageContent?.hero.ctaText || homepageHero.ctaText,
-    images: homepageContent?.hero.backgroundImages?.length > 0 
-      ? homepageContent.hero.backgroundImages.map(img => ({
-          src: img.url,
-          alt: img.alt,
-          title: img.title
-        }))
-      : homepageHeroImages
+    title: homepageContent ? homepageContent.hero.title : homepageHero.title,
+    description: homepageContent ? homepageContent.hero.description : homepageHero.description,
+    ctaText: homepageContent ? homepageContent.hero.ctaText : homepageHero.ctaText,
+    images: (() => {
+      if (!homepageContent) return homepageHeroImages;
+      const bgImages = homepageContent.hero.backgroundImages;
+      if (!bgImages) return homepageHeroImages;
+      if (bgImages.length === 0) return homepageHeroImages;
+      return bgImages.map(img => ({
+        src: img.url,
+        alt: img.alt,
+        title: img.title
+      }));
+    })()
   };
+
+  const heroSubtitle = homepageContent ? homepageContent.hero.subtitle : homepageHero.subtitle;
+  const errorDisplay = contentError ? contentError : homeUI.error.message;
 
   return (
     <main id="main-content" role="main" className="home-page-layout bg-atomic-noise">
@@ -139,7 +146,7 @@ export function HomePage() {
       <HeroLayout
         id="hero-section"
         title={heroContent.title}
-        subtitle={homepageContent?.hero.subtitle || homepageHero.subtitle}
+        subtitle={heroSubtitle}
         description={heroContent.description}
         heroImages={heroContent.images}
         enableLightbox={true}

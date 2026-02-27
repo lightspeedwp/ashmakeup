@@ -16,7 +16,6 @@ import React, { useEffect } from 'react';
 import { Link } from '../../../lib/router';
 import {
   User,
-  Building2,
   Paintbrush,
   Book,
   Sparkles,
@@ -25,8 +24,6 @@ import {
   Mic,
   BookOpen,
   Zap,
-  Bike,
-  Waves,
   Music,
   Code,
   GraduationCap,
@@ -37,7 +34,7 @@ import {
   Image,
   MapPin,
   Leaf,
-} from 'lucide-react';
+} from '../../../lib/icons';
 import { hiddenAboutData } from '../../../data/mock/pages/hidden-about';
 import { SocialLinks } from '../../common/SocialLinks';
 import { setSEO } from '../../../utils/seo';
@@ -48,7 +45,7 @@ import '../../../styles/blocks/hidden-about.css';
 const ICON_MAP: Record<string, React.ElementType> = {
   Compass: MapPin,
   User,
-  Building2,
+  Building2: Sparkles,
   Paintbrush,
   Book,
   Sparkles,
@@ -57,8 +54,8 @@ const ICON_MAP: Record<string, React.ElementType> = {
   Mic,
   BookOpen,
   Zap,
-  Bike,
-  Waves,
+  Bike: MapPin,
+  Waves: Activity,
   Music,
   Code,
   GraduationCap,

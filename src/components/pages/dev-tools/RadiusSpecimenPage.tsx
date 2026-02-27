@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { Circle } from 'lucide-react';
+import { Circle } from '../../../lib/icons';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
 import '../../../styles/blocks/specimen-page.css';

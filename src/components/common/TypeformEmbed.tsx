@@ -77,22 +77,16 @@ export function TypeformEmbed({
         
         // Add error handling
         script.onerror = (error) => {
-          if (import.meta?.env?.DEV) {
-            console.warn('⚠️ Typeform script failed to load:', error);
-          }
+          // Dev logging removed — import.meta.env.DEV crashes this bundler
         };
         
         script.onload = () => {
-          if (import.meta?.env?.DEV) {
-            console.log('✅ Typeform script loaded successfully');
-          }
+          // Dev logging removed — import.meta.env.DEV crashes this bundler
         };
         
         document.body.appendChild(script);
       } catch (error) {
-        if (import.meta?.env?.DEV) {
-          console.warn('⚠️ Error loading Typeform script:', error);
-        }
+        // Dev logging removed — import.meta.env.DEV crashes this bundler
       }
     };
 

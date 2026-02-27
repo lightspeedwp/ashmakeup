@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { MapPin } from 'lucide-react';
+import { MapPin } from '../../../lib/icons';
 import { travelsPageData } from '../../../data/mock/pages/about-subpages';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';

@@ -8,7 +8,7 @@
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useParams, useNavigate } from '../../../lib/router';
-import { Calendar, Clock, BookOpen } from 'lucide-react';
+import { Calendar, Clock, BookOpen } from '../../../lib/icons';
 import { blogPosts } from '../../../data/mock/blog/posts';
 import { blogCategories } from '../../../data/mock/blog/categories';
 import { ArchiveFilters } from '../../ui/ArchiveFilters';
@@ -19,6 +19,8 @@ import { formatDate } from '../../../utils/formatDate';
 import { getBlogCategoryCount } from '../../../utils/contentCounts';
 import { setSEO } from '../../../utils/seo';
 import { blogCategorySEO } from '../../../data/mock/seo';
+import { blogCategoryBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
+import { emptyStateMessages } from '../../../data/mock/ui/error';
 import {
   injectSchema,
   removeSchema,
@@ -44,11 +46,12 @@ export function BlogCategoryPage() {
   useEffect(() => {
     if (category) {
       setSEO(blogCategorySEO(category.name));
+      const postCount = filteredPosts ? filteredPosts.length : 0;
       injectSchema(SCHEMA_IDS.collection, buildCollectionSchema(
         `${category.name} | Insights`,
         blogCategorySEO(category.name).description,
         `/blog/category/${slug}`,
-        filteredPosts?.length || 0,
+        postCount,
       ));
     }
     return () => {
@@ -69,7 +72,8 @@ export function BlogCategoryPage() {
     let posts = blogPosts.filter(post => {
       if (activeCategories.length === 0) return true;
       const cat = blogCategories.find(c => c.slug === activeCategories[0]);
-      return cat ? post.category?.toLowerCase() === cat.name.toLowerCase() : true;
+      const postCat = post.category;
+      return cat ? (postCat ? postCat.toLowerCase() === cat.name.toLowerCase() : false) : true;
     });
 
     switch (sortBy) {
@@ -109,14 +113,14 @@ export function BlogCategoryPage() {
     <main id="main-content" role="main" tabIndex={-1} className="blog-list-view bg-atomic-noise">
       <div className="blog-list-header" data-blog-header>
         <div className="container-7xl">
-          <Breadcrumbs items={blogCategoryBreadcrumbs(category?.name ?? 'Category')} centered />
+          <Breadcrumbs items={blogCategoryBreadcrumbs(category ? category.name : 'Category')} centered />
           <div className="blog-list-header__content">
             <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
-              {category?.name ?? 'Blog Category'}
+              {category ? category.name : 'Blog Category'}
             </h1>
-            {category?.description && (
+            {category && category.description ? (
               <p className="text-body-guideline">{category.description}</p>
-            )}
+            ) : null}
           </div>
         </div>
       </div>

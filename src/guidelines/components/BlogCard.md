@@ -21,7 +21,7 @@ Display blog post previews with:
 
 ## 🔗 CMS Integration
 
-This component displays blog posts from **Contentful CMS** with automatic fallback to **mock data**.
+This component displays blog posts from **Headless WordPress** (or mock data) via the unified `useContent` hook.
 
 ### Data Flow
 
@@ -30,9 +30,7 @@ Component Request
     ↓
 useBlogPosts() hook
     ↓
-contentfulService.getBlogPosts()
-    ↓
-Contentful API (with 5s timeout)
+useContent facade (Mock or WordPress)
     ↓
 Success → CMS Data
 Timeout/Error → Mock Data (fallback)
@@ -44,7 +42,7 @@ BlogCard renders with data
 
 For complete setup and configuration:
 
-- **[Contentful Integration Guide](../contentful-integration.md)** - Complete CMS setup
+- **[CMS Field Mapping](../../docs/cms-field-mapping.md)** - WordPress CPT/ACF field mapping
 - **[Data System Documentation](../../data/README.md)** - Mock data system
 - **[Guidelines.md](../Guidelines.md)** - Main project guidelines
 
@@ -52,7 +50,7 @@ For complete setup and configuration:
 
 ```typescript
 import { blogPosts } from '@/data/mock/blog';
-import { useBlogPosts } from '@/hooks/useContentful';
+import { useBlogPosts } from '@/hooks/useContent';
 import { BlogCard } from '@/components/ui/BlogCard';
 
 export function BlogPage() {
@@ -90,10 +88,10 @@ export function BlogPage() {
 - ✅ **Reading time calculations** included
 - ✅ **Located in:** `/data/mock/blog/`
 
-**Contentful CMS (Production):**
+**WordPress CMS (Production):**
 - ✅ **Dynamic content updates** without code changes
 - ✅ **Rich text editor** with markdown support
-- ✅ **Image optimization** with automatic WebP conversion
+- ✅ **Image optimization** via WordPress media library
 - ✅ **SEO metadata** (titles, descriptions, OG tags)
 - ✅ **Draft/published workflow** for content staging
 - ✅ **Scheduled publishing** for future posts
@@ -139,7 +137,7 @@ import { blogPosts, blogCategories, blogTags } from '@/data/mock/blog';
 import { searchPosts, filterByCategory, getRelatedPosts } from '@/data/mock/blog';
 
 // CMS hook (with automatic fallback)
-import { useBlogPosts, useBlogPost } from '@/hooks/useContentful';
+import { useBlogPosts, useBlogPost } from '@/hooks/useContent';
 
 // Types
 import type { BlogPost, BlogCategory } from '@/data/types/blog';
@@ -191,7 +189,7 @@ import { getRelatedPosts } from '@/data/mock/blog';
 const related = getRelatedPosts(currentPost, 3); // Get 3 related
 ```
 
-**See [Contentful Integration Guide](../contentful-integration.md) for complete setup.**
+**See [CMS Field Mapping](../../docs/cms-field-mapping.md) for complete setup.**
 
 ---
 
@@ -884,7 +882,7 @@ sequenceDiagram
 ## Related Documentation
 
 - **[Guidelines.md](../Guidelines.md)** - Main project guidelines
-- **[Contentful Integration Guide](../contentful-integration.md)** - CMS setup
+- **[CMS Field Mapping](../../docs/cms-field-mapping.md)** - CMS setup
 - **[Data System Documentation](../../data/README.md)** - Mock data system
 - **[overview-components.md](../overview-components.md)** - Component architecture
 - **[design-tokens/spacing.md](../design-tokens/spacing.md)** - Spacing system

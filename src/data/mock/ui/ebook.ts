@@ -4,7 +4,7 @@
  * Every display string rendered in EbookPage.tsx MUST be sourced from here.
  *
  * @module data/mock/ui/ebook
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 export const ebookUI = {
@@ -50,8 +50,8 @@ export const ebookUI = {
 
   /** Fullscreen toggle labels */
   fullscreen: {
-    enter: 'Enter fullscreen',
-    exit: 'Exit fullscreen',
+    enter: 'Enter full screen',
+    exit: 'Exit full screen',
   },
 
   /** Navigation button labels */
@@ -59,5 +59,14 @@ export const ebookUI = {
     prev: 'Previous page',
     next: 'Next page',
     openChapters: 'Open chapter navigation',
+    ariaLabel: 'Book navigation',
+  },
+
+  /** Aria label templates for dynamic regions */
+  aria: {
+    singlePage: (current: number, total: number) =>
+      `Page ${current} of ${total}`,
+    spreadPage: (current: number, total: number) =>
+      `Book spread ${current} of ${total}`,
   },
 };

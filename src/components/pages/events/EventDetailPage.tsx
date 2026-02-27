@@ -12,10 +12,9 @@ import React, { useEffect } from 'react';
 import { useParams, useNavigate } from '../../../lib/router';
 import {
   MapPin,
-  Globe,
   Music,
   ExternalLink,
-} from 'lucide-react';
+} from '../../../lib/icons';
 import { getEventBySlug } from '../../../data/mock/events';
 import { eventDetailBreadcrumbs } from '../../../data/mock/pages/events';
 import { eventsUI } from '../../../data/mock/ui/events';
@@ -72,7 +71,7 @@ export function EventDetailPage() {
           />
 
           <span className="event-detail__hero-badge">
-            {eventsUI.typeBadge[event.type] || event.type}
+            {eventsUI.typeBadge[event.type] ? eventsUI.typeBadge[event.type] : event.type}
           </span>
 
           <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
@@ -108,10 +107,6 @@ export function EventDetailPage() {
 
             {event.website && (
               <span className="event-detail__info-item">
-                <Globe
-                  className="event-detail__info-icon"
-                  aria-hidden="true"
-                />
                 <a
                   className="event-detail__info-link"
                   href={event.website}
@@ -203,7 +198,7 @@ export function EventDetailPage() {
                   <span
                     className={`edition-entry__status-badge edition-entry__status-badge--${edition.status}`}
                   >
-                    {eventsUI.statusBadge[edition.status] || edition.status}
+                    {eventsUI.statusBadge[edition.status] ? eventsUI.statusBadge[edition.status] : edition.status}
                   </span>
                 </div>
 

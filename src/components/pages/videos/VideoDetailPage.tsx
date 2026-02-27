@@ -17,7 +17,7 @@ import {
   Play,
   Tag,
   Share2,
-} from 'lucide-react';
+} from '../../../lib/icons';
 import { videos, videoCategories } from '../../../data/mock/videos';
 import { videosUI } from '../../../data/mock/ui/videos';
 import { ShareComponent } from '../../ui/ShareComponent';
@@ -28,6 +28,7 @@ import { formatDate } from '../../../utils/formatDate';
 import { markdownToHtml } from '../../../utils/simpleMarkdown';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO, videoSEO } from '../../../data/mock/seo';
+import { videoDetailBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
 import {
   injectSchema,
   removeSchema,
@@ -70,7 +71,8 @@ export function VideoDetailPage() {
     const cat = videoCategories.find(
       c => c.name.toLowerCase() === video.category.toLowerCase(),
     );
-    return cat?.slug ?? video.category.toLowerCase().replace(/\s+/g, '-');
+    const catSlug = cat ? cat.slug : video.category.toLowerCase().replace(/\s+/g, '-');
+    return catSlug;
   }, [video]);
 
   /** Related videos (same category, excluding current) */

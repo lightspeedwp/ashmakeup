@@ -8,7 +8,7 @@
  */
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Play, Calendar } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Calendar } from '../../lib/icons';
 import { useNavigate } from '../../lib/router';
 import { usePortfolioImageUrl } from './PortfolioImage';
 import { useOptimizedImage } from '../../hooks/useOptimizedImage';
@@ -92,10 +92,19 @@ export function PortfolioCard({
     const baseClass = "portfolio-card__category-tag";
     
     if (categoryLower.includes('festival')) return `${baseClass} portfolio-card__category-tag--festival`;
-    if (categoryLower.includes('uv') || categoryLower.includes('blacklight')) return `${baseClass} portfolio-card__category-tag--uv`;
-    if (categoryLower.includes('swiss') || categoryLower.includes('mountain')) return `${baseClass} portfolio-card__category-tag--swiss`;
-    if (categoryLower.includes('nail') || categoryLower.includes('fusion')) return `${baseClass} portfolio-card__category-tag--nail`;
-    if (categoryLower.includes('thailand') || categoryLower.includes('adventure')) return `${baseClass} portfolio-card__category-tag--gold`;
+    
+    const isUvOrBlacklight = categoryLower.includes('uv') || categoryLower.includes('blacklight');
+    if (isUvOrBlacklight) return `${baseClass} portfolio-card__category-tag--uv`;
+    
+    const isSwissOrMountain = categoryLower.includes('swiss') || categoryLower.includes('mountain');
+    if (isSwissOrMountain) return `${baseClass} portfolio-card__category-tag--swiss`;
+    
+    const isNailOrFusion = categoryLower.includes('nail') || categoryLower.includes('fusion');
+    if (isNailOrFusion) return `${baseClass} portfolio-card__category-tag--nail`;
+    
+    const isThailandOrAdventure = categoryLower.includes('thailand') || categoryLower.includes('adventure');
+    if (isThailandOrAdventure) return `${baseClass} portfolio-card__category-tag--gold`;
+    
     return `${baseClass} portfolio-card__category-tag--default`;
   };
 
@@ -117,7 +126,8 @@ export function PortfolioCard({
 
   const onTouchEnd = (e: React.TouchEvent) => {
     e.currentTarget.style.touchAction = 'auto';
-    if (!touchStart || !touchEnd) return;
+    const hasValidTouch = touchStart !== null && touchEnd !== null;
+    if (!hasValidTouch) return;
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
@@ -148,7 +158,8 @@ export function PortfolioCard({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    const isActivationKey = e.key === 'Enter' || e.key === ' ';
+    if (isActivationKey) {
       e.preventDefault();
       onImageClick(currentImageIndex);
     } else if (e.key === 'ArrowLeft' && hasMultipleImages) {
@@ -160,7 +171,8 @@ export function PortfolioCard({
     }
   };
 
-  const currentImage = allImages[currentImageIndex] || { src: '', alt: '', caption: '', description: '' };
+  const rawCurrentImage = allImages[currentImageIndex];
+  const currentImage = rawCurrentImage ? rawCurrentImage : { src: '', alt: '', caption: '', description: '' };
   const isVideo = currentImage.type === 'video';
   const displayImageSrc = isVideo && currentImage.poster ? currentImage.poster : currentImage.src;
   const resolvedImageUrl = usePortfolioImageUrl(displayImageSrc);

@@ -11,29 +11,28 @@
 
 import React from 'react';
 import {
-  Bike,
-  Train,
-  Bus,
-  Car,
+  MapPin,
+  TrainFront,
+  BusFront,
+  CarFront,
   Plane,
   ThumbsUp,
-  Footprints,
   Shuffle,
-} from 'lucide-react';
+} from '../../../lib/icons';
 import type { TravelMethod, EventTravel } from '../../../data/types/events';
 import { eventsUI } from '../../../data/mock/ui/events';
 import '../../../styles/blocks/event-travel-badge.css';
 
 /** Map travel methods to Lucide icons */
 const TRAVEL_ICONS: Record<TravelMethod, React.ElementType> = {
-  bicycle: Bike,
-  train: Train,
-  bus: Bus,
-  car: Car,
-  carpool: Car,
+  bicycle: MapPin,
+  train: TrainFront,
+  bus: BusFront,
+  car: CarFront,
+  carpool: CarFront,
   flight: Plane,
   hitchhike: ThumbsUp,
-  walk: Footprints,
+  walk: MapPin,
   mixed: Shuffle,
 };
 
@@ -84,7 +83,7 @@ export function TravelStats({ travel }: TravelStatsProps) {
     <div className="edition-entry__travel">
       <TravelBadge
         method={travel.method}
-        distanceKm={travel.totalDistanceKm || travel.distanceKm}
+        distanceKm={travel.totalDistanceKm ? travel.totalDistanceKm : travel.distanceKm}
       />
 
       {travel.description && (
@@ -94,7 +93,7 @@ export function TravelStats({ travel }: TravelStatsProps) {
       <div className="travel-stats">
         {travel.totalDistanceKm && (
           <span className="travel-stats__item">
-            <Bike className="travel-stats__icon" aria-hidden="true" />
+            <MapPin className="travel-stats__icon" aria-hidden="true" />
             {travel.totalDistanceKm}km total
           </span>
         )}
@@ -154,7 +153,7 @@ export function TravelStats({ travel }: TravelStatsProps) {
         )}
         {travel.companions && (
           <span className="travel-stats__item">
-            <Footprints className="travel-stats__icon" aria-hidden="true" />
+            <MapPin className="travel-stats__icon" aria-hidden="true" />
             {travel.companions}
           </span>
         )}

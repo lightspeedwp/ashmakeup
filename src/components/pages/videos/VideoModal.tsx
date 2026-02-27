@@ -10,7 +10,7 @@
  */
 
 import React, { useEffect, useRef, useCallback } from 'react';
-import { X } from 'lucide-react';
+import { X } from '../../../lib/icons';
 import { Video } from '../../../data/types/videos';
 import { useReducedMotion } from '../../../hooks/useReducedMotion';
 
@@ -32,7 +32,12 @@ export function VideoModal({ video, isOpen, onClose }: VideoModalProps) {
   /** Focus the close button when the modal opens */
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => closeBtnRef.current?.focus(), 100);
+      setTimeout(() => {
+        const btn = closeBtnRef.current;
+        if (btn) {
+          btn.focus();
+        }
+      }, 100);
       document.body.classList.add('modal-open');
     } else {
       document.body.classList.remove('modal-open');

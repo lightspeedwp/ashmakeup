@@ -10,7 +10,7 @@
 
 import React, { useEffect } from 'react';
 import { useNavigate } from '../../../lib/router';
-import { BookOpen } from 'lucide-react';
+import { BookOpen } from '../../../lib/icons';
 import { bookPageData } from '../../../data/mock/pages/about-subpages';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';

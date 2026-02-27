@@ -16,7 +16,7 @@ import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import {
   Leaf,
-  Droplets,
+  Sparkles,
   Zap,
   Clock,
   Scissors,
@@ -27,21 +27,21 @@ import {
   Layers,
   RefreshCw,
   ExternalLink,
-} from 'lucide-react';
+} from '../../../lib/icons';
 import '../../../styles/blocks/about-subpage.css';
 import '../../../styles/blocks/six-cats-page.css';
 
 /** Map cultivation method IDs to icons */
 const CULTIVATION_ICONS: Record<string, React.ElementType> = {
   'living-soil': Leaf,
-  'rainwater': Droplets,
+  'rainwater': Sparkles,
   'companion-planting': Zap,
   'worm-tea': Clock,
 };
 
 /** Map harvest phase IDs to icons */
 const HARVEST_ICONS: Record<string, React.ElementType> = {
-  flushing: Droplets,
+  flushing: Sparkles,
   drying: Scissors,
   'dry-trimming': Star,
   curing: Heart,

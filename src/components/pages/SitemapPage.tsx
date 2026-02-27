@@ -22,16 +22,13 @@ import React, { useEffect } from "react";
 import { useNavigate } from "../../lib/router";
 import {
   Home, User, Image, Play, BookOpen, Mail, Layers, FolderOpen, Tag, FileText,
-  Newspaper, Palette, Mic, HelpCircle, MessageSquare, Sparkles, Star,
-  Type, Ruler, Cloud, Circle, MousePointerClick, LayoutGrid, Zap, Shield,
-  Gauge, Lightbulb, Bookmark, FileCode, Activity, Rocket,
+  Newspaper, Palette, Mic, CircleHelp, MessageSquare, Sparkles, Star,
+  Type, Ruler, Cloud, Circle, Pointer, LayoutGrid, Zap, Shield,
+  Lightbulb, Bookmark, FileCode, Activity, Rocket,
   Scissors, Eye, Search, MapPin,
   Book, Paintbrush, Clock, Plane, Calendar, Headphones,
-  Music,
-} from "lucide-react";
-import {
-  Building2, Code, GraduationCap, Heart, Leaf, Brain,
-} from "lucide-react";
+  Music, Code, GraduationCap, Heart, Leaf, Brain,
+} from "../../lib/icons";
 import { sitemapContent, tagDescriptors, pageTaglines, devToolTaglines, legalTaglines, sitemapExtraPages, sitemapLegalPages, sitemapDevToolsHub } from "../../data/mock/ui/sitemap";
 import { devToolsPageUI } from "../../data/mock/ui/dev-tools";
 import { navigationItems } from "../../data/mock/ui/navigation";
@@ -91,7 +88,7 @@ const PAGE_ICONS: Record<string, React.ElementType> = {
 const ABOUT_ICONS: Record<string, React.ElementType> = {
   Compass: MapPin,
   User,
-  Building2,
+  Building2: Lightbulb,
   Paintbrush,
   Book,
   Sparkles,
@@ -106,21 +103,19 @@ const ABOUT_ICONS: Record<string, React.ElementType> = {
   Code,
   GraduationCap,
   Heart,
-  Activity,
   Leaf,
-  BookOpen,
 };
 
 /** Map icon string names (from mock data) to Lucide components */
 const ICON_MAP: Record<string, React.ElementType> = {
   Home, User, Image, Play, BookOpen, Mail, Layers, FolderOpen, Tag, FileText,
-  Scale: Shield, Newspaper, Palette, Mic, HelpCircle, MessageSquare, Sparkles, Wrench: Shield,
-  Type, Ruler, Cloud, Circle, MousePointerClick, LayoutGrid, Zap, Shield,
-  Gauge, Lightbulb, Bookmark, FileCode, FlaskConical: Zap, Activity, Rocket,
+  Scale: Shield, Newspaper, Palette, Mic, HelpCircle: CircleHelp, CircleHelp, MessageSquare, Sparkles, Wrench: Shield,
+  Type, Ruler, Cloud, Circle, MousePointerClick: Pointer, Pointer, LayoutGrid, Zap, Shield,
+  Gauge: Activity, Lightbulb, Bookmark, FileCode, FlaskConical: Zap, Activity, Rocket,
   BarChart3: Activity, Component: LayoutGrid, Scissors, Eye, TestTube: Zap, Search,
   Sticker: Sparkles, MapPin, Book, UserCircle: User, Paintbrush, Diamond: Star, Clock, Plane,
   Calendar, Headphones, Music, BookOpenCheck: BookOpen, Bike: MapPin, Brain, Waves: Activity, Briefcase: Shield,
-  GraduationCap, Heart, Compass: MapPin, Code, Building2, Leaf, Star,
+  GraduationCap, Heart, Compass: MapPin, Code, Building2: Lightbulb, Leaf, Star,
 };
 
 export function SitemapPage() {
@@ -691,7 +686,7 @@ export function SitemapPage() {
                     <span className="sitemap__link-title">{event.name}</span>
                     <span className="sitemap__link-meta">
                       {event.editions.length} edition{event.editions.length !== 1 ? 's' : ''}
-                      {event.location?.region ? ` \u00B7 ${event.location.region}, ${event.location.country}` : ''}
+                      {event.location && event.location.region ? ` \u00B7 ${event.location.region}, ${event.location.country}` : ''}
                     </span>
                   </div>
                 </button>

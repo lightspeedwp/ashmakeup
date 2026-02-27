@@ -27,9 +27,9 @@ import {
   Mic,
   Layers,
   Calendar,
-  HelpCircle,
+  CircleHelp,
   BookOpen,
-} from 'lucide-react';
+} from '../../../lib/icons';
 import { searchAllContent } from '../../../utils/searchService';
 import { searchUI } from '../../../data/mock/ui/search';
 import { ArchiveFilters } from '../../ui/ArchiveFilters';
@@ -48,7 +48,7 @@ import '../../../styles/blocks/breadcrumbs.css';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 
-import { searchBreadcrumbs } from "../../data/mock/ui/breadcrumbs";
+import { searchBreadcrumbs } from "../../../data/mock/ui/breadcrumbs";
 
 const breadcrumbs: BreadcrumbItem[] = searchBreadcrumbs;
 
@@ -61,7 +61,7 @@ const TAB_CONFIG: Record<string, { icon: React.ElementType; modifier: string }> 
   video:     { icon: Play,         modifier: 'video' },
   podcast:   { icon: Mic,          modifier: 'podcast' },
   event:     { icon: Calendar,     modifier: 'event' },
-  faq:       { icon: HelpCircle,   modifier: 'faq' },
+  faq:       { icon: CircleHelp,   modifier: 'faq' },
 };
 
 /** Also used for result card icons */
@@ -72,17 +72,17 @@ const TYPE_ICONS: Record<string, React.ElementType> = {
   podcast:   Mic,
   page:      FileText,
   event:     Calendar,
-  faq:       HelpCircle,
+  faq:       CircleHelp,
 };
 
 export function SearchResultsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const queryParam = searchParams.get('q') ?? '';
-  const typeParam = searchParams.get('type') ?? 'all';
-  const sortParam = (searchParams.get('sort') ?? 'relevance') as SearchFilters['sortBy'];
-  const categoryParam = searchParams.get('category') ?? '';
+  const queryParam = searchParams.get('q') || '';
+  const typeParam = searchParams.get('type') || 'all';
+  const sortParam = (searchParams.get('sort') || 'relevance') as SearchFilters['sortBy'];
+  const categoryParam = searchParams.get('category') || '';
 
   const [query, setQuery] = useState(queryParam);
   const [debouncedQuery, setDebouncedQuery] = useState(queryParam);
@@ -128,7 +128,7 @@ export function SearchResultsPage() {
   const typeCounts = useMemo(() => {
     const counts = new Map<string, number>();
     allResults.forEach((r) => {
-      counts.set(r.type, (counts.get(r.type) ?? 0) + 1);
+      counts.set(r.type, (counts.get(r.type) || 0) + 1);
     });
     return counts;
   }, [allResults]);
@@ -186,7 +186,7 @@ export function SearchResultsPage() {
   const grouped = useMemo(() => {
     const map = new Map<string, SearchResult[]>();
     filteredResults.forEach((r) => {
-      const list = map.get(r.type) ?? [];
+      const list = map.get(r.type) || [];
       list.push(r);
       map.set(r.type, list);
     });
@@ -201,7 +201,7 @@ export function SearchResultsPage() {
         id: ct.value,
         name: ct.label,
         slug: ct.value,
-        count: typeCounts.get(ct.value) ?? 0,
+        count: typeCounts.get(ct.value) || 0,
       }));
   }, [typeCounts]);
 
@@ -355,9 +355,10 @@ export function SearchResultsPage() {
 
             {/* Per-type tabs */}
             {searchUI.contentTypes.map((ct) => {
-              const count = typeCounts.get(ct.value) ?? 0;
+              const count = typeCounts.get(ct.value) || 0;
               if (count === 0) return null;
-              const cfg = TAB_CONFIG[ct.value] ?? { icon: FileText, modifier: ct.value };
+              const cfgEntry = TAB_CONFIG[ct.value];
+              const cfg = cfgEntry ? cfgEntry : { icon: FileText, modifier: ct.value };
               const Icon = cfg.icon;
               return (
                 <button
@@ -430,13 +431,16 @@ export function SearchResultsPage() {
           activeTab === 'all' ? (
             /* Grouped by type */
             Array.from(grouped.entries()).map(([type, items]) => {
-              const cfg = TAB_CONFIG[type];
-              const Icon = cfg?.icon || FileText;
+              const cfgGroup = TAB_CONFIG[type];
+              const Icon = cfgGroup ? cfgGroup.icon : FileText;
               return (
                 <section key={type} className={`search-results__group search-results__group--${type}`}>
                   <h2 className={`search-results__group-title search-results__group-title--${type}`}>
                     <Icon className="search-results__group-icon" aria-hidden="true" />
-                    {searchUI.contentTypes.find((ct) => ct.value === type)?.label ?? type}{' '}
+                    {(() => {
+                      const ct = searchUI.contentTypes.find((ct) => ct.value === type);
+                      return ct ? ct.label : type;
+                    })()}{' '}
                     ({items.length})
                   </h2>
                   <div className="search-results__group-grid">

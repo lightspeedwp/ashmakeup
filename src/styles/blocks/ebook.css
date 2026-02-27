@@ -20,33 +20,33 @@
   /* ── Breakpoint-scoped typography custom properties ──
      These get overridden per breakpoint further down.
      Components reference these vars so font sizes adapt in one place. */
-  --ebook-body-size: 0.875rem;
-  --ebook-body-lh: 1.65;
-  --ebook-heading-size: 1rem;
-  --ebook-chapter-title-size: 1.1rem;
-  --ebook-cover-title-size: 1.5rem;
-  --ebook-cover-subtitle-size: 0.7rem;
-  --ebook-cover-author-size: 0.8rem;
-  --ebook-toc-title-size: 0.95rem;
-  --ebook-toc-item-size: 0.8rem;
-  --ebook-section-title-size: 0.95rem;
-  --ebook-chapter-number-size: 0.6rem;
-  --ebook-chapter-start-title-size: 1.1rem;
-  --ebook-chapter-start-subtitle-size: 0.75rem;
-  --ebook-part-label-size: 0.6rem;
-  --ebook-part-title-size: 1.25rem;
-  --ebook-part-subtitle-size: 0.7rem;
-  --ebook-epigraph-size: 0.85rem;
-  --ebook-epigraph-attr-size: 0.7rem;
-  --ebook-page-number-size: 0.6rem;
+  --ebook-body-size: 1.125rem;
+  --ebook-body-lh: 1.75;
+  --ebook-heading-size: 1.25rem;
+  --ebook-chapter-title-size: 1.5rem;
+  --ebook-cover-title-size: 2rem;
+  --ebook-cover-subtitle-size: 0.95rem;
+  --ebook-cover-author-size: 1.05rem;
+  --ebook-toc-title-size: 1.25rem;
+  --ebook-toc-item-size: 1.05rem;
+  --ebook-section-title-size: 1.25rem;
+  --ebook-chapter-number-size: 0.8rem;
+  --ebook-chapter-start-title-size: 1.5rem;
+  --ebook-chapter-start-subtitle-size: 1rem;
+  --ebook-part-label-size: 0.8rem;
+  --ebook-part-title-size: 1.625rem;
+  --ebook-part-subtitle-size: 0.95rem;
+  --ebook-epigraph-size: 1.1rem;
+  --ebook-epigraph-attr-size: 0.9rem;
+  --ebook-page-number-size: 0.75rem;
   --ebook-page-pad-v: 1rem;
   --ebook-page-pad-h: 1rem;
-  --ebook-meta-size: 0.6rem;
-  --ebook-chapter-heading-size: 0.55rem;
-  --ebook-blurb-size: 0.8rem;
-  --ebook-status-size: 0.55rem;
-  --ebook-back-title-size: 1rem;
-  --ebook-dedication-size: 0.85rem;
+  --ebook-meta-size: 0.8rem;
+  --ebook-chapter-heading-size: 0.725rem;
+  --ebook-blurb-size: 1.05rem;
+  --ebook-status-size: 0.725rem;
+  --ebook-back-title-size: 1.3rem;
+  --ebook-dedication-size: 1.1rem;
 }
 
 .dark .ebook-reader {
@@ -1108,37 +1108,37 @@
    Single-page swipe mode. ~45-55 chars/line. */
 @media (min-width: 320px) and (max-width: 419px) {
   .ebook-reader {
-    --ebook-body-size: 0.875rem;      /* 14px */
-    --ebook-body-lh: 1.65;
-    --ebook-heading-size: 1rem;
-    --ebook-chapter-title-size: 1.1rem;
-    --ebook-cover-title-size: 1.5rem;
-    --ebook-cover-subtitle-size: 0.7rem;
-    --ebook-cover-author-size: 0.8rem;
-    --ebook-toc-title-size: 0.95rem;
-    --ebook-toc-item-size: 0.8rem;
-    --ebook-section-title-size: 0.95rem;
-    --ebook-chapter-number-size: 0.6rem;
-    --ebook-chapter-start-title-size: 1.1rem;
-    --ebook-chapter-start-subtitle-size: 0.75rem;
-    --ebook-part-label-size: 0.6rem;
-    --ebook-part-title-size: 1.25rem;
-    --ebook-part-subtitle-size: 0.7rem;
-    --ebook-epigraph-size: 0.85rem;
-    --ebook-epigraph-attr-size: 0.7rem;
-    --ebook-page-number-size: 0.6rem;
-    --ebook-page-pad-v: 0.875rem;
-    --ebook-page-pad-h: 0.875rem;
-    --ebook-meta-size: 0.6rem;
-    --ebook-chapter-heading-size: 0.55rem;
-    --ebook-blurb-size: 0.8rem;
-    --ebook-status-size: 0.55rem;
-    --ebook-back-title-size: 1rem;
-    --ebook-dedication-size: 0.85rem;
+    --ebook-body-size: 1.125rem;       /* 18px (up from 16px) */
+    --ebook-body-lh: 1.75;
+    --ebook-heading-size: 1.25rem;
+    --ebook-chapter-title-size: 1.5rem;
+    --ebook-cover-title-size: 2rem;
+    --ebook-cover-subtitle-size: 0.95rem;
+    --ebook-cover-author-size: 1.05rem;
+    --ebook-toc-title-size: 1.25rem;
+    --ebook-toc-item-size: 1.05rem;
+    --ebook-section-title-size: 1.25rem;
+    --ebook-chapter-number-size: 0.8rem;
+    --ebook-chapter-start-title-size: 1.5rem;
+    --ebook-chapter-start-subtitle-size: 1rem;
+    --ebook-part-label-size: 0.8rem;
+    --ebook-part-title-size: 1.625rem;
+    --ebook-part-subtitle-size: 0.95rem;
+    --ebook-epigraph-size: 1.1rem;
+    --ebook-epigraph-attr-size: 0.9rem;
+    --ebook-page-number-size: 0.75rem;
+    --ebook-page-pad-v: 1rem;
+    --ebook-page-pad-h: 1rem;
+    --ebook-meta-size: 0.8rem;
+    --ebook-chapter-heading-size: 0.725rem;
+    --ebook-blurb-size: 1.05rem;
+    --ebook-status-size: 0.725rem;
+    --ebook-back-title-size: 1.3rem;
+    --ebook-dedication-size: 1.1rem;
   }
 
   .ebook-reader__page-inner {
-    padding: 0.875rem;
+    padding: 1rem;
   }
 }
 
@@ -1147,33 +1147,33 @@
    Single-page swipe mode. ~50-60 chars/line. */
 @media (min-width: 420px) and (max-width: 767px) {
   .ebook-reader {
-    --ebook-body-size: 1rem;           /* 16px */
-    --ebook-body-lh: 1.7;
-    --ebook-heading-size: 1.125rem;
-    --ebook-chapter-title-size: 1.25rem;
-    --ebook-cover-title-size: 1.75rem;
-    --ebook-cover-subtitle-size: 0.8rem;
-    --ebook-cover-author-size: 0.9rem;
-    --ebook-toc-title-size: 1.05rem;
-    --ebook-toc-item-size: 0.875rem;
-    --ebook-section-title-size: 1.05rem;
-    --ebook-chapter-number-size: 0.7rem;
-    --ebook-chapter-start-title-size: 1.3rem;
-    --ebook-chapter-start-subtitle-size: 0.85rem;
-    --ebook-part-label-size: 0.65rem;
-    --ebook-part-title-size: 1.5rem;
-    --ebook-part-subtitle-size: 0.8rem;
-    --ebook-epigraph-size: 0.95rem;
-    --ebook-epigraph-attr-size: 0.8rem;
-    --ebook-page-number-size: 0.65rem;
+    --ebook-body-size: 1.25rem;        /* 20px (up from 18px) */
+    --ebook-body-lh: 1.8;
+    --ebook-heading-size: 1.375rem;
+    --ebook-chapter-title-size: 1.625rem;
+    --ebook-cover-title-size: 2.25rem;
+    --ebook-cover-subtitle-size: 1.05rem;
+    --ebook-cover-author-size: 1.125rem;
+    --ebook-toc-title-size: 1.375rem;
+    --ebook-toc-item-size: 1.125rem;
+    --ebook-section-title-size: 1.375rem;
+    --ebook-chapter-number-size: 0.9rem;
+    --ebook-chapter-start-title-size: 1.75rem;
+    --ebook-chapter-start-subtitle-size: 1.1rem;
+    --ebook-part-label-size: 0.85rem;
+    --ebook-part-title-size: 2rem;
+    --ebook-part-subtitle-size: 1.05rem;
+    --ebook-epigraph-size: 1.2rem;
+    --ebook-epigraph-attr-size: 1rem;
+    --ebook-page-number-size: 0.8rem;
     --ebook-page-pad-v: 1.25rem;
     --ebook-page-pad-h: 1.25rem;
-    --ebook-meta-size: 0.65rem;
-    --ebook-chapter-heading-size: 0.6rem;
-    --ebook-blurb-size: 0.9rem;
-    --ebook-status-size: 0.6rem;
-    --ebook-back-title-size: 1.15rem;
-    --ebook-dedication-size: 0.95rem;
+    --ebook-meta-size: 0.85rem;
+    --ebook-chapter-heading-size: 0.8rem;
+    --ebook-blurb-size: 1.125rem;
+    --ebook-status-size: 0.725rem;
+    --ebook-back-title-size: 1.5rem;
+    --ebook-dedication-size: 1.2rem;
   }
 
   .ebook-reader__page-inner {
@@ -1187,33 +1187,33 @@
    Single-page swipe mode. ~55-70 chars/line via max-width. */
 @media (min-width: 768px) and (max-width: 1023px) {
   .ebook-reader {
-    --ebook-body-size: 1.1rem;         /* 17.6px */
-    --ebook-body-lh: 1.75;
-    --ebook-heading-size: 1.25rem;
-    --ebook-chapter-title-size: 1.5rem;
-    --ebook-cover-title-size: 2.25rem;
-    --ebook-cover-subtitle-size: 0.9rem;
-    --ebook-cover-author-size: 1rem;
-    --ebook-toc-title-size: 1.2rem;
-    --ebook-toc-item-size: 0.95rem;
-    --ebook-section-title-size: 1.15rem;
-    --ebook-chapter-number-size: 0.75rem;
-    --ebook-chapter-start-title-size: 1.6rem;
-    --ebook-chapter-start-subtitle-size: 0.95rem;
-    --ebook-part-label-size: 0.75rem;
-    --ebook-part-title-size: 2rem;
-    --ebook-part-subtitle-size: 0.9rem;
-    --ebook-epigraph-size: 1.05rem;
-    --ebook-epigraph-attr-size: 0.85rem;
-    --ebook-page-number-size: 0.7rem;
+    --ebook-body-size: 1.375rem;       /* 22px (up from 20px) */
+    --ebook-body-lh: 1.85;
+    --ebook-heading-size: 1.5rem;
+    --ebook-chapter-title-size: 2rem;
+    --ebook-cover-title-size: 2.75rem;
+    --ebook-cover-subtitle-size: 1.125rem;
+    --ebook-cover-author-size: 1.25rem;
+    --ebook-toc-title-size: 1.5rem;
+    --ebook-toc-item-size: 1.25rem;
+    --ebook-section-title-size: 1.5rem;
+    --ebook-chapter-number-size: 0.95rem;
+    --ebook-chapter-start-title-size: 2.125rem;
+    --ebook-chapter-start-subtitle-size: 1.2rem;
+    --ebook-part-label-size: 0.95rem;
+    --ebook-part-title-size: 2.5rem;
+    --ebook-part-subtitle-size: 1.125rem;
+    --ebook-epigraph-size: 1.375rem;
+    --ebook-epigraph-attr-size: 1.05rem;
+    --ebook-page-number-size: 0.85rem;
     --ebook-page-pad-v: 2rem;
     --ebook-page-pad-h: 2.5rem;
-    --ebook-meta-size: 0.7rem;
-    --ebook-chapter-heading-size: 0.65rem;
-    --ebook-blurb-size: 1rem;
-    --ebook-status-size: 0.625rem;
-    --ebook-back-title-size: 1.35rem;
-    --ebook-dedication-size: 1.05rem;
+    --ebook-meta-size: 0.9rem;
+    --ebook-chapter-heading-size: 0.85rem;
+    --ebook-blurb-size: 1.25rem;
+    --ebook-status-size: 0.8rem;
+    --ebook-back-title-size: 1.75rem;
+    --ebook-dedication-size: 1.375rem;
   }
 
   .ebook-reader__page-inner {
@@ -1240,37 +1240,37 @@
    text must be smaller. Book is narrower here. ~50-60 chars/line. */
 @media (min-width: 1024px) and (max-width: 1279px) {
   .ebook-reader {
-    --ebook-body-size: 0.875rem;       /* 14px — narrow spread pages */
-    --ebook-body-lh: 1.7;
-    --ebook-heading-size: 1rem;
-    --ebook-chapter-title-size: 1.15rem;
-    --ebook-cover-title-size: 1.75rem;
-    --ebook-cover-subtitle-size: 0.7rem;
-    --ebook-cover-author-size: 0.85rem;
-    --ebook-toc-title-size: 1rem;
-    --ebook-toc-item-size: 0.8rem;
-    --ebook-section-title-size: 1rem;
-    --ebook-chapter-number-size: 0.6rem;
-    --ebook-chapter-start-title-size: 1.2rem;
-    --ebook-chapter-start-subtitle-size: 0.8rem;
-    --ebook-part-label-size: 0.6rem;
-    --ebook-part-title-size: 1.5rem;
-    --ebook-part-subtitle-size: 0.75rem;
-    --ebook-epigraph-size: 0.85rem;
-    --ebook-epigraph-attr-size: 0.7rem;
-    --ebook-page-number-size: 0.6rem;
-    --ebook-page-pad-v: 1.25rem;
-    --ebook-page-pad-h: 1.25rem;
-    --ebook-meta-size: 0.6rem;
-    --ebook-chapter-heading-size: 0.55rem;
-    --ebook-blurb-size: 0.85rem;
-    --ebook-status-size: 0.55rem;
-    --ebook-back-title-size: 1.1rem;
-    --ebook-dedication-size: 0.875rem;
+    --ebook-body-size: 1.125rem;       /* 18px (up from 16px) */
+    --ebook-body-lh: 1.8;
+    --ebook-heading-size: 1.25rem;
+    --ebook-chapter-title-size: 1.5rem;
+    --ebook-cover-title-size: 2.25rem;
+    --ebook-cover-subtitle-size: 0.95rem;
+    --ebook-cover-author-size: 1.05rem;
+    --ebook-toc-title-size: 1.25rem;
+    --ebook-toc-item-size: 1.05rem;
+    --ebook-section-title-size: 1.25rem;
+    --ebook-chapter-number-size: 0.8rem;
+    --ebook-chapter-start-title-size: 1.5rem;
+    --ebook-chapter-start-subtitle-size: 1rem;
+    --ebook-part-label-size: 0.8rem;
+    --ebook-part-title-size: 2rem;
+    --ebook-part-subtitle-size: 0.95rem;
+    --ebook-epigraph-size: 1.1rem;
+    --ebook-epigraph-attr-size: 0.9rem;
+    --ebook-page-number-size: 0.75rem;
+    --ebook-page-pad-v: 1.5rem;
+    --ebook-page-pad-h: 1.5rem;
+    --ebook-meta-size: 0.8rem;
+    --ebook-chapter-heading-size: 0.725rem;
+    --ebook-blurb-size: 1.1rem;
+    --ebook-status-size: 0.725rem;
+    --ebook-back-title-size: 1.4rem;
+    --ebook-dedication-size: 1.125rem;
   }
 
   .ebook-reader__page-inner {
-    padding: 1.25rem;
+    padding: 1.5rem;
   }
 }
 
@@ -1279,37 +1279,37 @@
    ~55-65 chars/line in each half-page. */
 @media (min-width: 1280px) and (max-width: 1439px) {
   .ebook-reader {
-    --ebook-body-size: 0.9375rem;      /* 15px */
-    --ebook-body-lh: 1.75;
-    --ebook-heading-size: 1.0625rem;
-    --ebook-chapter-title-size: 1.3rem;
-    --ebook-cover-title-size: 2.25rem;
-    --ebook-cover-subtitle-size: 0.8rem;
-    --ebook-cover-author-size: 0.95rem;
-    --ebook-toc-title-size: 1.1rem;
-    --ebook-toc-item-size: 0.875rem;
-    --ebook-section-title-size: 1.1rem;
-    --ebook-chapter-number-size: 0.7rem;
-    --ebook-chapter-start-title-size: 1.4rem;
-    --ebook-chapter-start-subtitle-size: 0.85rem;
-    --ebook-part-label-size: 0.7rem;
-    --ebook-part-title-size: 1.85rem;
-    --ebook-part-subtitle-size: 0.85rem;
-    --ebook-epigraph-size: 0.95rem;
-    --ebook-epigraph-attr-size: 0.75rem;
-    --ebook-page-number-size: 0.65rem;
-    --ebook-page-pad-v: 1.75rem;
-    --ebook-page-pad-h: 1.75rem;
-    --ebook-meta-size: 0.65rem;
-    --ebook-chapter-heading-size: 0.6rem;
-    --ebook-blurb-size: 0.9rem;
-    --ebook-status-size: 0.575rem;
-    --ebook-back-title-size: 1.25rem;
-    --ebook-dedication-size: 0.95rem;
+    --ebook-body-size: 1.1875rem;      /* 19px (up from 17px) */
+    --ebook-body-lh: 1.85;
+    --ebook-heading-size: 1.3125rem;
+    --ebook-chapter-title-size: 1.75rem;
+    --ebook-cover-title-size: 2.75rem;
+    --ebook-cover-subtitle-size: 1.05rem;
+    --ebook-cover-author-size: 1.2rem;
+    --ebook-toc-title-size: 1.375rem;
+    --ebook-toc-item-size: 1.125rem;
+    --ebook-section-title-size: 1.375rem;
+    --ebook-chapter-number-size: 0.9rem;
+    --ebook-chapter-start-title-size: 1.85rem;
+    --ebook-chapter-start-subtitle-size: 1.1rem;
+    --ebook-part-label-size: 0.9rem;
+    --ebook-part-title-size: 2.375rem;
+    --ebook-part-subtitle-size: 1.05rem;
+    --ebook-epigraph-size: 1.2rem;
+    --ebook-epigraph-attr-size: 0.95rem;
+    --ebook-page-number-size: 0.8rem;
+    --ebook-page-pad-v: 2rem;
+    --ebook-page-pad-h: 2rem;
+    --ebook-meta-size: 0.85rem;
+    --ebook-chapter-heading-size: 0.775rem;
+    --ebook-blurb-size: 1.125rem;
+    --ebook-status-size: 0.75rem;
+    --ebook-back-title-size: 1.6rem;
+    --ebook-dedication-size: 1.2rem;
   }
 
   .ebook-reader__page-inner {
-    padding: 1.75rem;
+    padding: 2rem;
   }
 }
 
@@ -1319,37 +1319,37 @@
    ~60-75 chars/line. Optimal legibility. */
 @media (min-width: 1440px) {
   .ebook-reader {
-    --ebook-body-size: 1.0625rem;      /* 17px */
-    --ebook-body-lh: 1.8;
-    --ebook-heading-size: 1.1875rem;
-    --ebook-chapter-title-size: 1.5rem;
-    --ebook-cover-title-size: 2.75rem;
-    --ebook-cover-subtitle-size: 0.9rem;
-    --ebook-cover-author-size: 1.1rem;
-    --ebook-toc-title-size: 1.25rem;
-    --ebook-toc-item-size: 0.9375rem;
-    --ebook-section-title-size: 1.2rem;
-    --ebook-chapter-number-size: 0.75rem;
-    --ebook-chapter-start-title-size: 1.65rem;
-    --ebook-chapter-start-subtitle-size: 0.95rem;
-    --ebook-part-label-size: 0.75rem;
-    --ebook-part-title-size: 2.25rem;
-    --ebook-part-subtitle-size: 0.9rem;
-    --ebook-epigraph-size: 1.05rem;
-    --ebook-epigraph-attr-size: 0.85rem;
-    --ebook-page-number-size: 0.7rem;
-    --ebook-page-pad-v: 2.25rem;
-    --ebook-page-pad-h: 2.5rem;
-    --ebook-meta-size: 0.7rem;
-    --ebook-chapter-heading-size: 0.625rem;
-    --ebook-blurb-size: 1rem;
-    --ebook-status-size: 0.625rem;
-    --ebook-back-title-size: 1.4rem;
-    --ebook-dedication-size: 1.05rem;
+    --ebook-body-size: 1.375rem;       /* 22px (up from 19px) */
+    --ebook-body-lh: 1.9;
+    --ebook-heading-size: 1.5rem;
+    --ebook-chapter-title-size: 2rem;
+    --ebook-cover-title-size: 3.5rem;
+    --ebook-cover-subtitle-size: 1.125rem;
+    --ebook-cover-author-size: 1.375rem;
+    --ebook-toc-title-size: 1.625rem;
+    --ebook-toc-item-size: 1.25rem;
+    --ebook-section-title-size: 1.5rem;
+    --ebook-chapter-number-size: 1rem;
+    --ebook-chapter-start-title-size: 2.125rem;
+    --ebook-chapter-start-subtitle-size: 1.2rem;
+    --ebook-part-label-size: 1rem;
+    --ebook-part-title-size: 2.875rem;
+    --ebook-part-subtitle-size: 1.125rem;
+    --ebook-epigraph-size: 1.375rem;
+    --ebook-epigraph-attr-size: 1.05rem;
+    --ebook-page-number-size: 0.85rem;
+    --ebook-page-pad-v: 2.75rem;
+    --ebook-page-pad-h: 3rem;
+    --ebook-meta-size: 0.9rem;
+    --ebook-chapter-heading-size: 0.825rem;
+    --ebook-blurb-size: 1.3rem;
+    --ebook-status-size: 0.8rem;
+    --ebook-back-title-size: 1.875rem;
+    --ebook-dedication-size: 1.375rem;
   }
 
   .ebook-reader__page-inner {
-    padding: 2.25rem 2.5rem;
+    padding: 2.75rem 3rem;
   }
 }
 

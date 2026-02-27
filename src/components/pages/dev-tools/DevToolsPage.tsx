@@ -22,12 +22,11 @@ import {
   Ruler,
   Cloud,
   Circle,
-  MousePointerClick,
+  Pointer,
   LayoutGrid,
   Zap,
   Sparkles,
   Shield,
-  Gauge,
   ArrowRight,
   Lightbulb,
   Bookmark,
@@ -38,7 +37,7 @@ import {
   Scissors,
   FileText,
   Eye,
-} from 'lucide-react';
+} from '../../../lib/icons';
 import { devToolsPageUI } from '../../../data/mock/ui/dev-tools';
 import type { DevTool } from '../../../data/mock/ui/dev-tools';
 import { setSEO } from '../../../utils/seo';
@@ -53,12 +52,13 @@ const TOOL_ICONS: Record<string, React.ElementType> = {
   Ruler,
   Cloud,
   Circle,
-  MousePointerClick,
+  MousePointerClick: Pointer,
+  Pointer,
   LayoutGrid,
   Zap,
   Sparkles,
   Shield,
-  Gauge,
+  Gauge: Activity,
   Lightbulb,
   Bookmark,
   FileCode,
@@ -74,8 +74,9 @@ const TOOL_ICONS: Record<string, React.ElementType> = {
 function useToolMap(): Map<string, DevTool> {
   return useMemo(() => {
     const map = new Map<string, DevTool>();
-    for (const tool of devToolsPageUI.tools) {
-      map.set(tool.id, tool);
+    var tools = devToolsPageUI.tools;
+    for (var i = 0; i < tools.length; i++) {
+      map.set(tools[i].id, tools[i]);
     }
     return map;
   }, []);

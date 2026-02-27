@@ -85,18 +85,15 @@ This document provides a comprehensive overview of all components available in t
                     │  Data Layer (NEW)   │
                     ├─────────────────────┤
                     │ • Mock Data System  │
-                    │ • Contentful CMS    │
+                    │ • WordPress CMS     │
                     │ • Type Definitions  │
-                    │ • useContentful     │
+                    │ • useContent        │
                     └─────────────────────┘
 
                     ┌─────────────────────┐
                     │  Utility Services   │
                     ├─────────────────────┤
-                    │ • contentfulService │
                     │ • portfolioService  │
-                    │ • emailService      │
-                    │ • timeoutHandler    │
                     └─────────────────────┘
 ```
 
@@ -128,7 +125,7 @@ Data Layer
 │   ├── Portfolio (featured.ts, thailand.ts, festivals.ts, etc.)
 │   └── UI (social-links.ts)
 │
-├── Contentful Integration (/hooks/useContentful.ts)
+├── Content Integration (/hooks/useContent.ts)
 │   ├── useHomepageContent()
 │   ├── useAboutPageContent()
 │   ├── usePortfolioSections()
@@ -149,17 +146,17 @@ Data Layer
 // 1. Import mock data
 import { homepageHero } from '@/data/mock';
 
-// 2. Import Contentful hook (optional)
-import { useHomepageContent } from '@/hooks/useContentful';
+// 2. Import content hook (optional)
+import { useHomepageContent } from '@/hooks/useContent';
 
 // 3. Use hook with fallback
 const { data: cmsData, loading, error } = useHomepageContent();
 
 // 4. Seamless fallback to mock data
-const hero = cmsData?.hero || homepageHero;
+const heroData = cmsData ? cmsData.hero : homepageHero;
 
 // 5. Use data in component
-<HeroLayout {...hero} />
+<HeroLayout {...heroData} />
 ```
 
 **Key Benefits:**
@@ -171,7 +168,7 @@ const hero = cmsData?.hero || homepageHero;
 
 **Documentation:**
 - Complete guide: [Data System](../data/README.md)
-- CMS integration: [contentful-integration.md](./contentful-integration.md)
+- CMS integration: [CMS Field Mapping](../docs/cms-field-mapping.md)
 
 ---
 

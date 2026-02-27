@@ -87,23 +87,27 @@ export function useBlogPosts(options?: {
   autoRefresh?: boolean;
   refreshInterval?: number;
 }) {
-  const page = options?.page || 1;
-  const limit = options?.limit || 10;
+  const page = options ? (options.page || 1) : 1;
+  const limit = options ? (options.limit || 10) : 10;
   
   // Filter posts by category if provided
   let filteredPosts = [...blogPosts];
   
-  if (options?.category) {
-    filteredPosts = filteredPosts.filter(post => 
-      post.category?.toLowerCase() === options.category?.toLowerCase()
-    );
+  const optCategory = options ? options.category : undefined;
+  if (optCategory) {
+    filteredPosts = filteredPosts.filter(post => {
+      const postCat = post.category ? post.category.toLowerCase() : '';
+      return postCat === optCategory.toLowerCase();
+    });
   }
   
   // Filter by tags if provided
-  if (options?.tags && options.tags.length > 0) {
-    filteredPosts = filteredPosts.filter(post =>
-      post.tags?.some(tag => options.tags?.includes(tag))
-    );
+  const optTags = options ? options.tags : undefined;
+  if (optTags && optTags.length > 0) {
+    filteredPosts = filteredPosts.filter(post => {
+      const postTags = post.tags ? post.tags : [];
+      return postTags.some(tag => optTags.includes(tag));
+    });
   }
   
   // Calculate pagination

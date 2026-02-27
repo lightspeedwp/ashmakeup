@@ -138,13 +138,14 @@ export function HeroLayout({
   };
 
   // Prepare hero images for lightbox
-  const lightboxImages =
-    heroImages?.map((img) => ({
-      src: img.src,
-      alt: img.alt,
-      caption: img.caption,
-      description: img.description,
-    })) || [];
+  const lightboxImages = heroImages
+    ? heroImages.map((img) => ({
+        src: img.src,
+        alt: img.alt,
+        caption: img.caption,
+        description: img.description,
+      }))
+    : [];
 
   const openLightbox = (index: number) => {
     if (enableLightbox && heroImages) {
@@ -163,12 +164,17 @@ export function HeroLayout({
 
   // Hero Media Component with Lightbox Integration
   const HeroMediaWithLightbox = () => {
-    if (
-      !enableLightbox ||
-      !heroImages ||
-      heroImages.length === 0
-    ) {
-      return media || null;
+    if (!enableLightbox) {
+      if (media) return media;
+      return null;
+    }
+    if (!heroImages) {
+      if (media) return media;
+      return null;
+    }
+    if (heroImages.length === 0) {
+      if (media) return media;
+      return null;
     }
 
     return (
@@ -182,17 +188,24 @@ export function HeroLayout({
             "hero__mosaic-image hero__mosaic-image--3"
           ];
 
+          const tileClass = image.className ? image.className : mosaicClasses[index % 3];
+          const bgUrl = image.src;
+          const bgStyle = { backgroundImage: `url("${bgUrl}")` };
+          const labelText = image.caption ? image.caption : image.alt;
+          const fullLabel = `View ${labelText} in portfolio gallery`;
+
           return (
             <div
               key={index}
-              className={`${image.className || mosaicClasses[index % 3]}`}
-              style={{ backgroundImage: `url("${image.src}")` }}
+              className={tileClass}
+              style={bgStyle}
+              aria-label={fullLabel}
               onClick={() => openLightbox(index)}
               role="button"
               tabIndex={0}
-              aria-label={`View ${image.caption || image.alt} in portfolio gallery`}
               onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
+                const isActivationKey = e.key === "Enter" || e.key === " ";
+                if (isActivationKey) {
                   e.preventDefault();
                   openLightbox(index);
                 }
@@ -207,7 +220,15 @@ export function HeroLayout({
   // BEM Classes
   const sizeClass = size !== 'md' ? `hero--${size}` : '';
   const heroClasses = `hero ${sizeClass} ${fullscreen ? "hero--fullscreen" : ""} ${className}`.replace(/\s+/g, ' ').trim();
-  const contentClasses = `hero__content ${layout === "split" ? "hero__content--split" : layout === "left" ? "hero__content--left" : ""}`;
+  
+  // Build content classes without nested ternary
+  let contentClassList = "hero__content";
+  if (layout === "split") {
+    contentClassList += " hero__content--split";
+  } else if (layout === "left") {
+    contentClassList += " hero__content--left";
+  }
+  const contentClasses = contentClassList;
   
   // Container Classes
   let containerClasses = "hero__container";
@@ -271,17 +292,19 @@ export function HeroLayout({
       </div>
 
       {/* Scroll Down Arrow */}
-      {showScrollArrow && (
-        <ScrollDownArrow
-          targetSectionId={scrollArrowTarget}
-          className={scrollArrowClassName || "hero__scroll-arrow"}
-          ariaLabel={
-            scrollArrowTarget
-              ? `Scroll to ${scrollArrowTarget.replace("-", " ")} section`
-              : "Scroll to next section"
-          }
-        />
-      )}
+      {showScrollArrow && (() => {
+        const arrowClass = scrollArrowClassName ? scrollArrowClassName : "hero__scroll-arrow";
+        const arrowLabel = scrollArrowTarget
+          ? `Scroll to ${scrollArrowTarget.replace("-", " ")} section`
+          : "Scroll to next section";
+        return (
+          <ScrollDownArrow
+            targetSectionId={scrollArrowTarget}
+            className={arrowClass}
+            ariaLabel={arrowLabel}
+          />
+        );
+      })()}
 
       {/* Portfolio Lightbox */}
       {enableLightbox && (

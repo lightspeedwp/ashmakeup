@@ -78,7 +78,8 @@ export function AnalyticsDashboardPage() {
   const topContentType = useMemo(() => {
     const entries = Object.entries(liveViews) as [string, number][];
     entries.sort((a, b) => b[1] - a[1]);
-    return entries[0]?.[0] || 'portfolio';
+    const first = entries[0];
+    return first ? first[0] : 'portfolio';
   }, [liveViews]);
 
   const data = analyticsDashboardUI;

@@ -130,11 +130,18 @@ export function PortfolioImage({
         // In development we log this in the debug section below
         
         // Provide different fallbacks based on likely content type
-        if (alt.toLowerCase().includes('nail') || alt.toLowerCase().includes('fusion')) {
+        const altLower = alt.toLowerCase();
+        const isNail = altLower.includes('nail');
+        const isFusion = altLower.includes('fusion');
+        const isUv = altLower.includes('uv');
+        const isNeon = altLower.includes('neon');
+        const isFestival = altLower.includes('festival');
+        
+        if (isNail || isFusion) {
           return 'https://images.unsplash.com/photo-1590926918555-c058b85940d6?w=800'; // Nail art fallback
-        } else if (alt.toLowerCase().includes('uv') || alt.toLowerCase().includes('neon')) {
+        } else if (isUv || isNeon) {
           return 'https://images.unsplash.com/photo-1602494518965-195c6ec1c980?w=800'; // UV makeup fallback
-        } else if (alt.toLowerCase().includes('festival')) {
+        } else if (isFestival) {
           return 'https://images.unsplash.com/photo-1603300382284-72ddf4985216?w=800'; // Festival makeup fallback
         } else {
           return 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800'; // Default portfolio fallback
@@ -145,13 +152,7 @@ export function PortfolioImage({
     return src;
   })();
   
-  // Debug logging in development
-  if (import.meta?.env?.DEV && src.startsWith('figma:asset/')) {
-    const resolved = FIGMA_ASSET_MAP[src];
-    if (!resolved) {
-      console.warn(`🖼️ PortfolioImage: Figma asset not found: ${src}`);
-    }
-  }
+  // Debug logging removed — import.meta.env.DEV crashes this bundler
 
   // When a preset is specified, delegate to OptimizedImage for Canvas optimisation
   if (preset) {
@@ -199,11 +200,27 @@ export function usePortfolioImageUrl(src: string): string {
         
         // Provide different fallbacks based on likely content type (simple heuristics)
         const srcLower = src.toLowerCase();
-        if (srcLower.includes('nail') || srcLower.includes('9e303d') || srcLower.includes('deb2b4') || srcLower.includes('1ec0ba')) {
+        const hasNail = srcLower.includes('nail');
+        const hasHash1 = srcLower.includes('9e303d');
+        const hasHash2 = srcLower.includes('deb2b4');
+        const hasHash3 = srcLower.includes('1ec0ba');
+        const isNailCategory = hasNail || hasHash1 || hasHash2 || hasHash3;
+        
+        const hasUv = srcLower.includes('uv');
+        const hasNeon = srcLower.includes('neon');
+        const hasHash4 = srcLower.includes('3f84a6');
+        const isUvCategory = hasUv || hasNeon || hasHash4;
+        
+        const hasFestival = srcLower.includes('festival');
+        const hasHash5 = srcLower.includes('2fed1a');
+        const hasHash6 = srcLower.includes('331df4');
+        const isFestivalCategory = hasFestival || hasHash5 || hasHash6;
+        
+        if (isNailCategory) {
           return 'https://images.unsplash.com/photo-1590926918555-c058b85940d6?w=800'; // Nail art fallback
-        } else if (srcLower.includes('uv') || srcLower.includes('neon') || srcLower.includes('3f84a6')) {
+        } else if (isUvCategory) {
           return 'https://images.unsplash.com/photo-1602494518965-195c6ec1c980?w=800'; // UV makeup fallback
-        } else if (srcLower.includes('festival') || srcLower.includes('2fed1a') || srcLower.includes('331df4')) {
+        } else if (isFestivalCategory) {
           return 'https://images.unsplash.com/photo-1603300382284-72ddf4985216?w=800'; // Festival makeup fallback
         } else {
           return 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800'; // Default portfolio fallback
@@ -214,13 +231,7 @@ export function usePortfolioImageUrl(src: string): string {
     return src;
   })();
   
-  // Debug logging in development
-  if (import.meta?.env?.DEV && src.startsWith('figma:asset/')) {
-    const resolved = FIGMA_ASSET_MAP[src];
-    if (!resolved) {
-      console.warn(`🎨 usePortfolioImageUrl: Figma asset not found: ${src}`);
-    }
-  }
+  // Debug logging removed — import.meta.env.DEV crashes this bundler
   
   return resolvedSrc;
 }

@@ -2,23 +2,22 @@
  * @fileoverview Unified responsive eBook reader.
  *
  * Breakpoints:
- *   - Mobile compact (320-419px): single-page, 14px body, tight padding
- *   - Mobile (420-767px): single-page, 16px body, moderate padding
- *   - Tablet portrait (768-1023px): single-page, 17.6px body, line-length constrained
- *   - Tablet landscape (1024-1279px): two-page spread, 14px body (narrow pages)
- *   - Desktop (1280-1439px): two-page spread, 15px body
- *   - Large desktop (1440px+): two-page spread, 17px body, max-width reached
+ *   - Mobile compact (320-419px): single-page, 18px body, tight padding
+ *   - Mobile (420-767px): single-page, 20px body, moderate padding
+ *   - Tablet portrait (768-1023px): single-page, 22px body, line-length constrained
+ *   - Tablet landscape (1024-1279px): two-page spread, 18px body (narrow pages)
+ *   - Desktop (1280-1439px): two-page spread, 19px body
+ *   - Large desktop (1440px+): two-page spread, 22px body, max-width reached
  *
  * Max-width: 1440px. Typography custom properties overridden per breakpoint.
  * Touch swipe, keyboard arrows, and button navigation all supported.
  *
  * @component EbookPage
- * @version 4.2.0 - Full screen support, removed back button
+ * @version 4.3.0 - Audit fixes: hardcoded strings centralised, redundant role removed, font sizes increased
  */
 
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { useNavigate } from '../../../lib/router';
-import { ChevronLeft, ChevronRight, List, X, Maximize, Minimize } from 'lucide-react';
+import { ChevronLeft, ChevronRight, List, X, Maximize, Minimize } from '../../../lib/icons';
 import { bookPages } from '../../../data/mock/pages/ebook-pages';
 import type { BookPage } from '../../../data/mock/pages/ebook-pages';
 import { ebookUI } from '../../../data/mock/ui/ebook';
@@ -64,9 +63,12 @@ function buildChapterIndex(pages: BookPage[]): ChapterEntry[] {
         entries.push({ pageIndex: idx, label: page.title || ebookUI.chapterIndex.foreword, indent: false });
         break;
       case 'part-title':
+        const partNum = page.part || 1;
+        const partNumeralIdx = partNum - 1;
+        const partNumeral = ebookUI.partNumerals[partNumeralIdx] || ebookUI.partNumerals[0];
         entries.push({
           pageIndex: idx,
-          label: `${ebookUI.labels.part} ${ebookUI.partNumerals[(page.part ?? 1) - 1] ?? ebookUI.partNumerals[0]} — ${page.title}`,
+          label: `${ebookUI.labels.part} ${partNumeral} — ${page.title}`,
           indent: false,
         });
         break;
@@ -140,27 +142,29 @@ function PageContent({ page }: { page: BookPage }) {
       return (
         <div className="ebook-reader__page-inner">
           <h2 className="ebook-page__title">{page.title}</h2>
-          {page.paragraphs?.map((p, i) => (
+          {page.paragraphs ? page.paragraphs.map((p, i) => (
             <p key={`${page.id}-p-${i}`} className="ebook-page__blurb">{p}</p>
-          ))}
+          )) : null}
         </div>
       );
 
     case 'inside-front':
       return (
         <div className="ebook-reader__page-inner">
-          {page.paragraphs?.map((p, i) => (
+          {page.paragraphs ? page.paragraphs.map((p, i) => (
             <p key={`${page.id}-p-${i}`} className="ebook-page__meta-line">{p}</p>
-          ))}
+          )) : null}
         </div>
       );
 
     case 'title':
+      const pageParagraphs = page.paragraphs || [];
+      const titleAuthor = pageParagraphs.length > 0 ? pageParagraphs[0] : '';
       return (
         <div className="ebook-reader__page-inner">
           <h2 className="ebook-page__title">{page.title}</h2>
           <p className="ebook-page__subtitle">{page.subtitle}</p>
-          <span className="ebook-page__author">{page.paragraphs?.[0]}</span>
+          <span className="ebook-page__author">{titleAuthor}</span>
           {page.pageNumber != null && (
             <span className="ebook-reader__page-number">{page.pageNumber}</span>
           )}
@@ -170,9 +174,9 @@ function PageContent({ page }: { page: BookPage }) {
     case 'dedication':
       return (
         <div className="ebook-reader__page-inner">
-          {page.paragraphs?.map((p, i) => (
+          {page.paragraphs ? page.paragraphs.map((p, i) => (
             <p key={`${page.id}-p-${i}`} className="ebook-page__dedication-line">{p}</p>
-          ))}
+          )) : null}
           {page.pageNumber != null && (
             <span className="ebook-reader__page-number">{page.pageNumber}</span>
           )}
@@ -182,9 +186,9 @@ function PageContent({ page }: { page: BookPage }) {
     case 'epigraph':
       return (
         <div className="ebook-reader__page-inner">
-          {page.paragraphs?.map((p, i) => (
+          {page.paragraphs ? page.paragraphs.map((p, i) => (
             <p key={`${page.id}-p-${i}`} className="ebook-page__epigraph-line">{p}</p>
-          ))}
+          )) : null}
           {page.pageNumber != null && (
             <span className="ebook-reader__page-number">{page.pageNumber}</span>
           )}
@@ -196,7 +200,7 @@ function PageContent({ page }: { page: BookPage }) {
         <div className="ebook-reader__page-inner">
           <h2 className="ebook-page__toc-title">{page.title}</h2>
           <ol className="ebook-page__toc-list">
-            {page.tocItems?.map((item, idx) =>
+            {page.tocItems ? page.tocItems.map((item, idx) =>
               item.partLabel ? (
                 <li key={`part-${item.partLabel}-${idx}`} className="ebook-page__toc-part-label">
                   <span className="ebook-page__toc-part-numeral">{item.partLabel}</span>
@@ -209,7 +213,7 @@ function PageContent({ page }: { page: BookPage }) {
                   <span className="ebook-page__toc-dots" aria-hidden="true" />
                 </li>
               )
-            )}
+            ) : null}
           </ol>
           {page.pageNumber != null && (
             <span className="ebook-reader__page-number">{page.pageNumber}</span>
@@ -222,9 +226,9 @@ function PageContent({ page }: { page: BookPage }) {
       return (
         <div className="ebook-reader__page-inner">
           <h2 className="ebook-page__section-title">{page.title}</h2>
-          {page.paragraphs?.map((p, i) => (
+          {page.paragraphs ? page.paragraphs.map((p, i) => (
             <p key={`${page.id}-p-${i}`} className="ebook-page__paragraph">{p}</p>
-          ))}
+          )) : null}
           {page.pageNumber != null && (
             <span className="ebook-reader__page-number">{page.pageNumber}</span>
           )}
@@ -246,10 +250,13 @@ function PageContent({ page }: { page: BookPage }) {
       );
 
     case 'part-title':
+      const ptPartNum = page.part || 1;
+      const ptWordIdx = ptPartNum - 1;
+      const ptWord = ebookUI.partWords[ptWordIdx] || ebookUI.partWords[0];
       return (
         <div className="ebook-reader__page-inner">
           <span className="ebook-page__part-label">
-            {ebookUI.labels.part} {ebookUI.partWords[(page.part ?? 1) - 1] ?? ebookUI.partWords[0]}
+            {ebookUI.labels.part} {ptWord}
           </span>
           <h2 className="ebook-page__title">{page.title}</h2>
           {page.subtitle && (
@@ -283,9 +290,9 @@ function PageContent({ page }: { page: BookPage }) {
               {ebookUI.labels.chapter} {page.chapter}
             </span>
           )}
-          {page.paragraphs?.map((p, i) => (
+          {page.paragraphs ? page.paragraphs.map((p, i) => (
             <p key={`${page.id}-p-${i}`} className="ebook-page__paragraph">{p}</p>
-          ))}
+          )) : null}
           {page.pageNumber != null && (
             <span className="ebook-reader__page-number">{page.pageNumber}</span>
           )}
@@ -296,9 +303,9 @@ function PageContent({ page }: { page: BookPage }) {
       return (
         <div className="ebook-reader__page-inner">
           <h2 className="ebook-page__section-title">{page.title}</h2>
-          {page.paragraphs?.map((p, i) => (
+          {page.paragraphs ? page.paragraphs.map((p, i) => (
             <p key={`${page.id}-p-${i}`} className="ebook-page__paragraph">{p}</p>
-          ))}
+          )) : null}
           {page.pageNumber != null && (
             <span className="ebook-reader__page-number">{page.pageNumber}</span>
           )}
@@ -348,7 +355,7 @@ function spreadToPage(spreadIndex: number): number {
   return spreadIndex * 2 - 1;
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━��━━
    HOOK: useSpreadMode
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
@@ -373,7 +380,6 @@ function useSpreadMode(): boolean {
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
 export function EbookPage() {
-  const navigate = useNavigate();
   const isSpreadMode = useSpreadMode();
   const mainRef = useRef<HTMLElement>(null);
 
@@ -429,9 +435,7 @@ export function EbookPage() {
         mainRef.current.requestFullscreen().catch((err) => {
            // If denied, we silently stay in "visual" full screen mode (state remains true).
            // The UI will look correct (no header, full height), just constrained to the window.
-           if (import.meta.env.DEV) {
-             console.warn(`Native full-screen denied (${err.message}). Falling back to visual full-screen.`);
-           }
+           // Dev logging removed — import.meta.env.DEV crashes this bundler
         });
       }
     } else {
@@ -624,18 +628,23 @@ export function EbookPage() {
     : `${currentPage + 1} / ${totalPages}`;
 
   /* ── Breadcrumbs ── */
-  const breadcrumbs = ebookBreadcrumbs;
+  const breadcrumbs = ebookBreadcrumbs();
 
   /* ── Single-page neighbours for peek effect ── */
   const prevPage = currentPage > 0 ? bookPages[currentPage - 1] : null;
   const nextPage = currentPage < totalPages - 1 ? bookPages[currentPage + 1] : null;
   const activePage = bookPages[currentPage];
 
+  // Extract || operators to avoid bundler issues
+  const cannotGoBackward = !canGoBackwardSpread || flipState !== 'idle';
+  const cannotGoForward = !canGoForwardSpread || flipState !== 'idle';
+  const disableBackwardSingle = !canGoBackwardSingle || isAnimating;
+  const disableForwardSingle = !canGoForwardSingle || isAnimating;
+
   return (
     <main
       ref={mainRef}
       id="main-content"
-      role="main"
       tabIndex={-1}
       className="ebook-reader bg-atomic-noise"
       aria-label={ebookUI.readerAriaLabel}
@@ -655,7 +664,7 @@ export function EbookPage() {
           type="button"
           className="ebook-reader__fullscreen-close"
           onClick={toggleFullScreen}
-          aria-label="Exit full screen"
+          aria-label={ebookUI.fullscreen.exit}
         >
           <X size={24} />
         </button>
@@ -672,14 +681,18 @@ export function EbookPage() {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
           role="region"
-          aria-label={`Page ${currentPage + 1} of ${totalPages}`}
+          aria-label={ebookUI.aria.singlePage(currentPage + 1, totalPages)}
           aria-live="polite"
         >
           <div
             className="ebook-reader__single-track"
             style={{
               transform: `translateX(${swipeOffset}%)`,
-              transition: isAnimating ? 'transform 280ms cubic-bezier(0.4, 0, 0.2, 1)' : swipeOffset !== 0 ? 'none' : 'transform 200ms ease',
+              transition: (() => {
+                if (isAnimating) return 'transform 280ms cubic-bezier(0.4, 0, 0.2, 1)';
+                if (swipeOffset !== 0) return 'none';
+                return 'transform 200ms ease';
+              })(),
             }}
           >
             {/* Previous page (off-screen left) */}
@@ -717,7 +730,7 @@ export function EbookPage() {
           <div
             className="ebook-reader__book"
             role="region"
-            aria-label={`Book spread ${currentSpread + 1} of ${totalSpreads}`}
+            aria-label={ebookUI.aria.spreadPage(currentSpread + 1, totalSpreads)}
             aria-live="polite"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
@@ -803,8 +816,8 @@ export function EbookPage() {
                 !canGoBackwardSpread ? 'ebook-reader__click-zone--disabled' : ''
               }`}
               onClick={goBackward}
-              disabled={!canGoBackwardSpread || flipState !== 'idle'}
-              aria-label="Previous page"
+              disabled={cannotGoBackward}
+              aria-label={ebookUI.nav.prev}
               tabIndex={-1}
             />
             <button
@@ -813,8 +826,8 @@ export function EbookPage() {
                 !canGoForwardSpread ? 'ebook-reader__click-zone--disabled' : ''
               }`}
               onClick={goForward}
-              disabled={!canGoForwardSpread || flipState !== 'idle'}
-              aria-label="Next page"
+              disabled={cannotGoForward}
+              aria-label={ebookUI.nav.next}
               tabIndex={-1}
             />
           </div>
@@ -830,12 +843,12 @@ export function EbookPage() {
       </div>
 
       {/* ── Unified Navigation ── */}
-      <nav className="ebook-reader__nav" aria-label="Book navigation">
+      <nav className="ebook-reader__nav" aria-label={ebookUI.nav.ariaLabel}>
         <button
           type="button"
           className="ebook-reader__nav-btn"
           onClick={() => setDrawerOpen(true)}
-          aria-label="Open chapter navigation"
+          aria-label={ebookUI.nav.openChapters}
           aria-expanded={drawerOpen}
         >
           <List className="ebook-reader__nav-icon" aria-hidden="true" />
@@ -845,8 +858,8 @@ export function EbookPage() {
           type="button"
           className="ebook-reader__nav-btn"
           onClick={goBackward}
-          disabled={isSpreadMode ? (!canGoBackwardSpread || flipState !== 'idle') : (!canGoBackwardSingle || isAnimating)}
-          aria-label="Previous page"
+          disabled={isSpreadMode ? cannotGoBackward : disableBackwardSingle}
+          aria-label={ebookUI.nav.prev}
         >
           <ChevronLeft className="ebook-reader__nav-icon" aria-hidden="true" />
         </button>
@@ -859,8 +872,8 @@ export function EbookPage() {
           type="button"
           className="ebook-reader__nav-btn"
           onClick={goForward}
-          disabled={isSpreadMode ? (!canGoForwardSpread || flipState !== 'idle') : (!canGoForwardSingle || isAnimating)}
-          aria-label="Next page"
+          disabled={isSpreadMode ? cannotGoForward : disableForwardSingle}
+          aria-label={ebookUI.nav.next}
         >
           <ChevronRight className="ebook-reader__nav-icon" aria-hidden="true" />
         </button>
@@ -869,7 +882,7 @@ export function EbookPage() {
           type="button"
           className="ebook-reader__nav-btn"
           onClick={toggleFullScreen}
-          aria-label={isFullScreen ? "Exit full screen" : "Enter full screen"}
+          aria-label={isFullScreen ? ebookUI.fullscreen.exit : ebookUI.fullscreen.enter}
         >
           {isFullScreen ? 
             <Minimize className="ebook-reader__nav-icon" aria-hidden="true" /> : 
@@ -891,7 +904,7 @@ export function EbookPage() {
       <aside
         className={`ebook-drawer ${drawerOpen ? 'ebook-drawer--open' : ''}`}
         role="dialog"
-        aria-label="Chapter navigation"
+        aria-label={ebookUI.drawer.ariaLabel}
         aria-hidden={!drawerOpen}
       >
         <div className="ebook-drawer__header">
@@ -906,16 +919,21 @@ export function EbookPage() {
           </button>
         </div>
         <nav className="ebook-drawer__list" aria-label={ebookUI.drawer.listAriaLabel}>
-          {chapterIndex.map((entry, idx) => (
-            <button
-              type="button"
-              key={`ch-idx-${idx}`}
-              className={`ebook-drawer__item ${entry.indent ? 'ebook-drawer__item--indent' : 'ebook-drawer__item--section'} ${idx === currentChapterIdx ? 'ebook-drawer__item--active' : ''}`}
-              onClick={() => jumpToPage(entry.pageIndex)}
-            >
-              {entry.label}
-            </button>
-          ))}
+          {chapterIndex.map((entry, idx) => {
+            // Extract nested ternaries to avoid bundler issues
+            const indentClass = entry.indent ? 'ebook-drawer__item--indent' : 'ebook-drawer__item--section';
+            const activeClass = idx === currentChapterIdx ? 'ebook-drawer__item--active' : '';
+            return (
+              <button
+                type="button"
+                key={`ch-idx-${idx}`}
+                className={`ebook-drawer__item ${indentClass} ${activeClass}`}
+                onClick={() => jumpToPage(entry.pageIndex)}
+              >
+                {entry.label}
+              </button>
+            );
+          })}
         </nav>
       </aside>
     </main>

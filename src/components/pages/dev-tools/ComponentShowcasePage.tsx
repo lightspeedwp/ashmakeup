@@ -184,7 +184,8 @@ export function ComponentShowcasePage() {
 
   const grouped = useMemo(() => {
     const map = new Map<string, typeof filtered>();
-    for (const cat of CATEGORY_ORDER) {
+    for (var i = 0; i < CATEGORY_ORDER.length; i++) {
+      var cat = CATEGORY_ORDER[i];
       const items = filtered.filter((c) => c.category === cat);
       if (items.length > 0) map.set(cat, items);
     }
@@ -229,7 +230,7 @@ export function ComponentShowcasePage() {
           Array.from(grouped.entries()).map(([cat, items]) => (
             <section key={cat} className="showcase__category" aria-label={CATEGORY_LABELS[cat]}>
               <h2 className="showcase__category-title">
-                {CATEGORY_LABELS[cat] || cat}
+                {CATEGORY_LABELS[cat] ? CATEGORY_LABELS[cat] : cat}
               </h2>
               {items.map((comp) => (
                 <div key={comp.id} className="showcase__frame">

@@ -3,8 +3,8 @@
  * @module data/mock/ui/navigation
  */
 
-import type { LucideIcon } from "lucide-react";
-import { Home, User, Image, Play, BookOpen, Mail, Calendar } from "lucide-react";
+import type { LucideIcon } from "../../../lib/icons";
+import { Home, User, Image, Play, BookOpen, Mail, Calendar } from "../../../lib/icons";
 
 export interface NavigationItem {
   id: string;

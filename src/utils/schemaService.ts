@@ -5,8 +5,10 @@
  * for SEO optimisation. Covers WebSite, Person, Article, VideoObject,
  * PodcastEpisode, VisualArtwork, ImageGallery, and CollectionPage schemas.
  *
+ * BUNDLER SAFETY: No optional chaining (?.) or nullish coalescing (??)
+ *
  * @module utils/schemaService
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 import type { BlogPost } from '../data/types/blog';
@@ -145,7 +147,12 @@ export function buildPersonSchema(): object {
  * Article / BlogPosting schema for individual blog posts.
  */
 export function buildArticleSchema(post: BlogPost): object {
-  const imageUrl = post.featuredImage?.url || post.featuredImage?.src || '';
+  const featImg = post.featuredImage;
+  const featImgUrl = featImg ? (featImg.url || featImg.src || '') : '';
+  const imageUrl = featImgUrl;
+
+  const postAuthor = post.author;
+  const authorName = postAuthor ? (postAuthor.name || 'Ash Shaw') : 'Ash Shaw';
 
   return {
     '@context': 'https://schema.org',
@@ -159,7 +166,7 @@ export function buildArticleSchema(post: BlogPost): object {
       : {}),
     author: {
       '@type': 'Person',
-      name: post.author?.name || 'Ash Shaw',
+      name: authorName,
       url: SITE_URL,
     },
     publisher: {
@@ -273,7 +280,8 @@ export function buildPodcastEpisodeSchema(episode: Podcast): object {
  * VisualArtwork schema for individual portfolio entries.
  */
 export function buildPortfolioItemSchema(entry: PortfolioEntry): object {
-  const primaryImage = entry.images?.[0];
+  const entryImages = entry.images;
+  const primaryImage = entryImages && entryImages.length > 0 ? entryImages[0] : undefined;
 
   return {
     '@context': 'https://schema.org',
@@ -324,7 +332,10 @@ export function buildImageGallerySchema(
     creator: ASH_SHAW_PERSON,
     numberOfItems: entries.length,
     image: entries
-      .filter((e) => e.images?.[0])
+      .filter((e) => {
+        const imgs = e.images;
+        return imgs && imgs.length > 0 && imgs[0];
+      })
       .slice(0, 20)
       .map((e) => ({
         '@type': 'ImageObject',

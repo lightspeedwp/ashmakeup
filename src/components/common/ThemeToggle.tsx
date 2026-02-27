@@ -9,7 +9,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { Moon, Sun } from 'lucide-react';
+import { Moon, Sun } from '../../lib/icons';
 import "../../styles/blocks/theme-toggle.css";
 
 export function ThemeToggle() {
@@ -19,7 +19,10 @@ export function ThemeToggle() {
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+    const isDarkSaved = savedTheme === 'dark';
+    const noSavedTheme = !savedTheme;
+    const shouldBeDark = isDarkSaved || (noSavedTheme && prefersDark);
+    if (shouldBeDark) {
       setDarkMode(true);
       document.documentElement.classList.add('dark');
     }
@@ -39,7 +42,8 @@ export function ThemeToggle() {
   };
   
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    const isActivationKey = e.key === 'Enter' || e.key === ' ';
+    if (isActivationKey) {
       e.preventDefault();
       toggleTheme();
     }

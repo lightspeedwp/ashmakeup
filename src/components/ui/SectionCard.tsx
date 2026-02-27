@@ -7,7 +7,7 @@
  */
 
 import React from "react";
-import type { LucideIcon } from "lucide-react";
+import type { LucideIcon } from "../../lib/icons";
 import "../../styles/blocks/section-card.css";
 
 /**
@@ -55,8 +55,12 @@ export function SectionCard({
     ? { background: `linear-gradient(to bottom right, var(--wp--preset--color--${theme.cardBorder.from}), var(--wp--preset--color--${theme.cardBorder.to}))` }
     : {};
 
+  const decorativeColorParts = theme.decorativeColor ? theme.decorativeColor.split(' ') : [];
+  const decorativeFirstColor = decorativeColorParts[0];
+  const decorativeSecondColor = decorativeColorParts[1] ? decorativeColorParts[1] : decorativeColorParts[0];
+  
   const orbGradientStyle = theme.decorativeColor
-    ? { background: `linear-gradient(to bottom right, var(--wp--preset--color--${theme.decorativeColor.split(' ')[0]}), var(--wp--preset--color--${theme.decorativeColor.split(' ')[1] || theme.decorativeColor.split(' ')[0]}))` }
+    ? { background: `linear-gradient(to bottom right, var(--wp--preset--color--${decorativeFirstColor}), var(--wp--preset--color--${decorativeSecondColor}))` }
     : {};
 
   // Build icon wrapper gradient from the theme's accent gradient
@@ -65,6 +69,10 @@ export function SectionCard({
     : {};
 
   const Icon = icon;
+
+  // Extract property access for className to avoid bundler issues
+  const titleColorClass = theme.titleColor ? theme.titleColor : '';
+  const quoteColorClass = theme.quoteColor ? theme.quoteColor : '';
 
   return (
     <section
@@ -90,7 +98,7 @@ export function SectionCard({
 
         <div className="section-card__inner">
           {/* Section Title */}
-          <h2 className={`section-card__title ${theme.titleColor}`}>
+          <h2 className={`section-card__title ${titleColorClass}`}>
             {Icon && (
               <span
                 className="section-card__icon-wrap"
@@ -111,7 +119,7 @@ export function SectionCard({
           {/* Pull Quote */}
           {quote && (
             <blockquote 
-              className={`section-card__quote ${theme.quoteColor}`}
+              className={`section-card__quote ${quoteColorClass}`}
               style={{ borderColor: theme.accentGradient ? `var(--wp--preset--color--${theme.accentGradient.from})` : undefined }}
             >
               "{quote}"

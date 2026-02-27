@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect, useCallback } from 'react';
-import { ChevronRight, Lightbulb } from 'lucide-react';
+import { ChevronRight, Lightbulb } from '../../../lib/icons';
 import { designTokensRefUI } from '../../../data/mock/ui/design-tokens-ref';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import '../../../styles/blocks/specimen-page.css';

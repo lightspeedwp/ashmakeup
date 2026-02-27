@@ -8,7 +8,7 @@
 
 import React, { useMemo, useEffect } from 'react';
 import { useParams, useNavigate } from '../../../lib/router';
-import { Play, Tag } from 'lucide-react';
+import { Play, Tag } from '../../../lib/icons';
 import { videos, findVideoTagBySlug } from '../../../data/mock/videos';
 import { OptimizedImage } from '../../ui/OptimizedImage';
 import { FaqSection } from '../../sections/FaqSection';
@@ -16,6 +16,8 @@ import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { formatDate } from '../../../utils/formatDate';
 import { setSEO } from '../../../utils/seo';
 import { videoTagSEO } from '../../../data/mock/seo';
+import { videoTagBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
+import { emptyStateMessages } from '../../../data/mock/ui/error';
 import {
   injectSchema,
   removeSchema,
@@ -42,17 +44,18 @@ export function VideoTagPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
 
-  const tag = findVideoTagBySlug(slug ?? '');
+  const tag = findVideoTagBySlug(slug ? slug : '');
   const [sortBy, setSortBy] = React.useState('recent');
 
   useEffect(() => {
     if (tag) {
       setSEO(videoTagSEO(tag.name));
+      const vidCount = filteredVideos ? filteredVideos.length : 0;
       injectSchema(SCHEMA_IDS.collection, buildCollectionSchema(
         `${tag.name} | Videos`,
         videoTagSEO(tag.name).description,
         `/videos/tag/${slug}`,
-        filteredVideos?.length || 0,
+        vidCount,
       ));
     }
     return () => {
@@ -62,10 +65,11 @@ export function VideoTagPage() {
 
   const filteredVideos = useMemo(() => {
     if (!slug) return [];
-    const tagName = tag?.name ?? slug.replace(/-/g, ' ');
-    let vids = videos.filter(v =>
-      (v.tags ?? []).some(t => t.toLowerCase() === tagName.toLowerCase()),
-    );
+    const tagName = tag ? tag.name : slug.replace(/-/g, ' ');
+    let vids = videos.filter(v => {
+      const vTags = v.tags ? v.tags : [];
+      return vTags.some(t => t.toLowerCase() === tagName.toLowerCase());
+    });
 
     switch (sortBy) {
       case 'recent':
@@ -88,13 +92,15 @@ export function VideoTagPage() {
   /** Related tags from the matching videos */
   const relatedTags = useMemo(() => {
     const tagSet = new Set<string>();
-    filteredVideos.forEach(v =>
-      (v.tags ?? []).forEach(t => {
-        if (t.toLowerCase() !== (tag?.name ?? '').toLowerCase()) {
+    const currentTagName = tag ? tag.name : '';
+    filteredVideos.forEach(v => {
+      const vTags = v.tags ? v.tags : [];
+      vTags.forEach(t => {
+        if (t.toLowerCase() !== currentTagName.toLowerCase()) {
           tagSet.add(t);
         }
-      }),
-    );
+      });
+    });
     return Array.from(tagSet).slice(0, 8);
   }, [filteredVideos, tag]);
 
@@ -103,12 +109,12 @@ export function VideoTagPage() {
       {/* Header */}
       <div className="videos-header">
         <div className="videos-header__content">
-          <Breadcrumbs items={videoTagBreadcrumbs(tag?.name ?? slug ?? '')} centered />
+          <Breadcrumbs items={videoTagBreadcrumbs(tag ? tag.name : (slug ? slug : ''))} centered />
           <Tag className="icon-xl" aria-hidden="true" />
           <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
-            {tag?.name ?? slug}
+            {tag ? tag.name : slug}
           </h1>
-          {tag?.description && (
+          {tag && tag.description && (
             <p className="text-body-guideline">{tag.description}</p>
           )}
           <p className="text-body-p">
@@ -172,7 +178,7 @@ export function VideoTagPage() {
               >
                 <div className="video-card__thumbnail-container">
                   <OptimizedImage
-                    src={videoThumbnails[video.id] || video.thumbnailUrl}
+                    src={videoThumbnails[video.id] ? videoThumbnails[video.id] : video.thumbnailUrl}
                     alt={video.title}
                     className="video-card__thumbnail"
                     preset="thumbnail"
@@ -198,7 +204,7 @@ export function VideoTagPage() {
             <Play className="icon-xl" aria-hidden="true" />
             <h3 className="error-title">{emptyStateMessages.videos.title}</h3>
             <p className="error-message">
-              No videos match the tag &ldquo;{tag?.name ?? slug}&rdquo;.
+              No videos match the tag &ldquo;{tag ? tag.name : slug}&rdquo;.
             </p>
           </div>
         )}

@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { MousePointerClick, ArrowRight, Heart, Share2, Download, Play, Plus, Trash2 } from 'lucide-react';
+import { Pointer, ArrowRight, Heart, Share2, Download, Play, Plus, Trash2 } from '../../../lib/icons';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
 import '../../../styles/blocks/specimen-page.css';
@@ -38,7 +38,7 @@ export function ButtonSpecimenPage() {
       <section className="specimen-section" aria-labelledby="btn-primary">
         <div className="specimen-section__inner">
           <h2 id="btn-primary" className="specimen-section__title text-card-h3">
-            <MousePointerClick className="specimen-section__title-icon" aria-hidden="true" />
+            <Pointer className="specimen-section__title-icon" aria-hidden="true" />
             Primary (Gradient)
           </h2>
           <p className="specimen-section__subtitle">Main CTA buttons with cyberpunk gradient background and neon glow on hover.</p>
@@ -61,7 +61,7 @@ export function ButtonSpecimenPage() {
       <section className="specimen-section" aria-labelledby="btn-secondary">
         <div className="specimen-section__inner">
           <h2 id="btn-secondary" className="specimen-section__title text-card-h3">
-            <MousePointerClick className="specimen-section__title-icon" aria-hidden="true" />
+            <Pointer className="specimen-section__title-icon" aria-hidden="true" />
             Secondary (Outline)
           </h2>
           <p className="specimen-section__subtitle">Bordered buttons with transparent background, neon border glow on hover.</p>
@@ -83,7 +83,7 @@ export function ButtonSpecimenPage() {
       <section className="specimen-section" aria-labelledby="btn-ghost">
         <div className="specimen-section__inner">
           <h2 id="btn-ghost" className="specimen-section__title text-card-h3">
-            <MousePointerClick className="specimen-section__title-icon" aria-hidden="true" />
+            <Pointer className="specimen-section__title-icon" aria-hidden="true" />
             Ghost
           </h2>
           <p className="specimen-section__subtitle">Minimal buttons with no border or background. Neon text colour on hover.</p>
@@ -106,7 +106,7 @@ export function ButtonSpecimenPage() {
       <section className="specimen-section" aria-labelledby="btn-icon">
         <div className="specimen-section__inner">
           <h2 id="btn-icon" className="specimen-section__title text-card-h3">
-            <MousePointerClick className="specimen-section__title-icon" aria-hidden="true" />
+            <Pointer className="specimen-section__title-icon" aria-hidden="true" />
             Icon Buttons
           </h2>
           <p className="specimen-section__subtitle">Compact square buttons for icon-only actions. All require aria-label.</p>
@@ -134,7 +134,7 @@ export function ButtonSpecimenPage() {
       <section className="specimen-section" aria-labelledby="btn-pill">
         <div className="specimen-section__inner">
           <h2 id="btn-pill" className="specimen-section__title text-card-h3">
-            <MousePointerClick className="specimen-section__title-icon" aria-hidden="true" />
+            <Pointer className="specimen-section__title-icon" aria-hidden="true" />
             Pill / Chip Buttons
           </h2>
           <p className="specimen-section__subtitle">Compact rounded-full buttons used for tags, filters, and category chips.</p>
@@ -160,7 +160,7 @@ export function ButtonSpecimenPage() {
       <section className="specimen-section" aria-labelledby="btn-sizes">
         <div className="specimen-section__inner">
           <h2 id="btn-sizes" className="specimen-section__title text-card-h3">
-            <MousePointerClick className="specimen-section__title-icon" aria-hidden="true" />
+            <Pointer className="specimen-section__title-icon" aria-hidden="true" />
             Size Comparison
           </h2>
           <div className="specimen-btn-row">

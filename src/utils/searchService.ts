@@ -2,8 +2,10 @@
  * @fileoverview Centralised search service
  * Searches across all content types: blog, portfolio, videos, podcasts, pages
  *
+ * BUNDLER SAFETY: No optional chaining (?.) or nullish coalescing (??)
+ *
  * @module utils/searchService
- * @version 1.0.0
+ * @version 1.1.0 - Bundler-safe: removed all ?. and ??
  */
 
 import { SearchResult, SearchFilters } from '../data/types/search';
@@ -35,6 +37,18 @@ function scoreMatch(text: string, query: string): number {
   return 0;
 }
 
+/** Safe helper to get a string or fallback */
+function safeStr(val: string | undefined | null, fallback: string): string {
+  if (val !== undefined && val !== null) return val;
+  return fallback;
+}
+
+/** Safe helper to get an array or empty array */
+function safeArr(val: string[] | undefined | null): string[] {
+  if (val !== undefined && val !== null) return val;
+  return [];
+}
+
 /**
  * Search all content types and return unified results
  */
@@ -47,26 +61,33 @@ export function searchAllContent(
   const q = query.trim();
   let results: SearchResult[] = [];
 
+  const filterType = filters ? filters.type : undefined;
+  const filterSortBy = filters ? filters.sortBy : undefined;
+  const filterCategory = filters ? filters.category : undefined;
+
   /* ── Blog ── */
-  if (!filters?.type || filters.type === 'blog') {
+  if (!filterType || filterType === 'blog') {
     blogPosts.forEach(post => {
       const titleScore = scoreMatch(post.title, q);
       const excerptScore = scoreMatch(post.excerpt, q) * 0.7;
+      const postTags = safeArr(post.tags);
       const tagScore = Math.max(
         0,
-        ...(post.tags ?? []).map(t => scoreMatch(t, q) * 0.5),
+        ...postTags.map(t => scoreMatch(t, q) * 0.5),
       );
-      const catScore = scoreMatch(post.category ?? '', q) * 0.4;
+      const catScore = scoreMatch(safeStr(post.category, ''), q) * 0.4;
       const best = Math.max(titleScore, excerptScore, tagScore, catScore);
 
       if (best > 0) {
+        const featuredImage = post.featuredImage;
+        const imageSrc = featuredImage ? featuredImage.src : undefined;
         results.push({
           id: post.id,
           type: 'blog',
           title: post.title,
           excerpt: post.excerpt,
           url: `/blog/${post.slug}`,
-          image: post.featuredImage?.src,
+          image: imageSrc,
           category: post.category,
           tags: post.tags,
           date: post.publishedAt,
@@ -77,11 +98,12 @@ export function searchAllContent(
   }
 
   /* ── Portfolio ── */
-  if (!filters?.type || filters.type === 'portfolio') {
+  if (!filterType || filterType === 'portfolio') {
     allPortfolioWork.forEach(entry => {
       const titleScore = scoreMatch(entry.title, q);
       const descScore = scoreMatch(entry.description, q) * 0.7;
-      const contentScore = scoreMatch(entry.content ?? '', q) * 0.5;
+      const entryContent = safeStr(entry.content, '');
+      const contentScore = scoreMatch(entryContent, q) * 0.5;
       const tagScore = Math.max(
         0,
         ...entry.tags.map(t => scoreMatch(t, q) * 0.5),
@@ -90,13 +112,16 @@ export function searchAllContent(
       const best = Math.max(titleScore, descScore, contentScore, tagScore, catScore);
 
       if (best > 0) {
+        const images = entry.images;
+        const firstImage = images && images.length > 0 ? images[0] : undefined;
+        const imageSrc = firstImage ? firstImage.src : undefined;
         results.push({
           id: entry.id,
           type: 'portfolio',
           title: entry.title,
           excerpt: '',
           url: `/portfolio/${entry.slug}`,
-          image: entry.images?.[0]?.src,
+          image: imageSrc,
           category: entry.category,
           tags: entry.tags,
           date: entry.date,
@@ -107,13 +132,15 @@ export function searchAllContent(
   }
 
   /* ── Videos ── */
-  if (!filters?.type || filters.type === 'video') {
+  if (!filterType || filterType === 'video') {
     videos.forEach(vid => {
       const titleScore = scoreMatch(vid.title, q);
       const descScore = scoreMatch(vid.description, q) * 0.7;
-      const catScore = scoreMatch(vid.category ?? '', q) * 0.4;
+      const vidCategory = safeStr(vid.category, '');
+      const catScore = scoreMatch(vidCategory, q) * 0.4;
+      const vidTags = safeArr(vid.tags);
       const tagScore = Math.max(
-        ...(vid.tags ?? []).map(t => scoreMatch(t, q) * 0.5),
+        ...vidTags.map(t => scoreMatch(t, q) * 0.5),
         0,
       );
       const best = Math.max(titleScore, descScore, catScore, tagScore);
@@ -135,7 +162,7 @@ export function searchAllContent(
   }
 
   /* ── Podcasts ── */
-  if (!filters?.type || filters.type === 'podcast') {
+  if (!filterType || filterType === 'podcast') {
     podcastEpisodes.forEach(ep => {
       const titleScore = scoreMatch(ep.title, q);
       const descScore = scoreMatch(ep.description, q) * 0.7;
@@ -146,13 +173,15 @@ export function searchAllContent(
       const best = Math.max(titleScore, descScore, tagScore);
 
       if (best > 0) {
+        const coverImage = ep.coverImage;
+        const coverSrc = coverImage ? coverImage.src : undefined;
         results.push({
           id: ep.id,
           type: 'podcast',
           title: ep.title,
           excerpt: ep.description,
           url: `/podcast/${ep.slug}`,
-          image: ep.coverImage?.src,
+          image: coverSrc,
           category: ep.category,
           tags: ep.tags,
           date: ep.publishedAt,
@@ -163,7 +192,7 @@ export function searchAllContent(
   }
 
   /* ── Pages ── */
-  if (!filters?.type || filters.type === 'page') {
+  if (!filterType || filterType === 'page') {
     const pageEntries = [
       { id: 'home', title: 'Home', desc: 'Ash Shaw - Global Psytrance Makeup Artist', path: '/' },
       { id: 'about', title: 'About', desc: 'My journey from Cape Town to Berlin, painting faces on the dancefloor.', path: '/about/journey' },
@@ -193,7 +222,7 @@ export function searchAllContent(
   }
 
   /* ── Events ── */
-  if (!filters?.type || filters.type === 'event') {
+  if (!filterType || filterType === 'event') {
     allEvents.forEach(event => {
       const titleScore = scoreMatch(event.name, q);
       const descScore = scoreMatch(event.description, q) * 0.7;
@@ -223,7 +252,7 @@ export function searchAllContent(
   }
 
   /* ── FAQs ── */
-  if (!filters?.type || filters.type === 'faq') {
+  if (!filterType || filterType === 'faq') {
     /* Global FAQs */
     faqData.forEach(faq => {
       const qScore = scoreMatch(faq.question, q);
@@ -269,11 +298,14 @@ export function searchAllContent(
   }
 
   /* ── Sort ── */
-  const sortBy = filters?.sortBy ?? 'relevance';
+  const sortBy = filterSortBy ? filterSortBy : 'relevance';
   results.sort((a, b) => {
     switch (sortBy) {
-      case 'recent':
-        return (b.date ?? '').localeCompare(a.date ?? '');
+      case 'recent': {
+        const dateA = a.date ? a.date : '';
+        const dateB = b.date ? b.date : '';
+        return dateB.localeCompare(dateA);
+      }
       case 'alphabetical':
         return a.title.localeCompare(b.title);
       case 'featured':
@@ -285,10 +317,12 @@ export function searchAllContent(
   });
 
   /* ── Category filter ── */
-  if (filters?.category) {
-    results = results.filter(
-      r => r.category?.toLowerCase() === filters.category!.toLowerCase(),
-    );
+  if (filterCategory) {
+    const lowerFilterCat = filterCategory.toLowerCase();
+    results = results.filter(r => {
+      const rCat = r.category ? r.category.toLowerCase() : '';
+      return rCat === lowerFilterCat;
+    });
   }
 
   return results;

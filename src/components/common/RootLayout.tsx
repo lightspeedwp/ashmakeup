@@ -23,11 +23,15 @@ import { ModalProvider } from './ModalContext';
 import { ErrorBoundary } from './ErrorBoundary';
 import { ScrollToTop } from '../ui/ScrollToTop';
 
+const noiseInner = '<filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" /></filter><rect width="100%" height="100%" filter="url(#noiseFilter)" />';
+const noiseMarkup = { __html: noiseInner };
+
 /**
  * RootLayout - Shared application shell rendered around all routes
  */
 export function RootLayout() {
   const location = useLocation();
+  const locationPathname = location.pathname;
 
   /**
    * Scroll to top and manage focus on every route change
@@ -43,7 +47,7 @@ export function RootLayout() {
         mainContent.focus({ preventScroll: true });
       }
     }, 100);
-  }, [location.pathname]);
+  }, [locationPathname]);
 
   /**
    * Hide third-party skip links injected by browser extensions
@@ -59,8 +63,11 @@ export function RootLayout() {
       specificSelectors.forEach(selector => {
         const elements = document.querySelectorAll(selector);
         elements.forEach(element => {
-          const text = element.textContent?.trim() || '';
-          if (text === 'Skip to main content' || text === 'Skip to content') {
+          const text = element.textContent ? element.textContent.trim() : '';
+          const isSkipToMain = text === 'Skip to main content';
+          const isSkipToContent = text === 'Skip to content';
+          const shouldHide = isSkipToMain || isSkipToContent;
+          if (shouldHide) {
             (element as HTMLElement).style.cssText = `
               display: none !important;
               visibility: hidden !important;
@@ -81,12 +88,9 @@ export function RootLayout() {
     <ModalProvider>
       <div className="app-container bg-atomic-noise">
         {/* Site-wide SVG grain noise overlay — inline <svg> avoids bundler url() resolution */}
-        <svg className="app-noise-overlay" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-          <filter id="noiseFilter">
-            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-          </filter>
-          <rect width="100%" height="100%" filter="url(#noiseFilter)" />
-        </svg>
+        <svg className="app-noise-overlay" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          dangerouslySetInnerHTML={noiseMarkup}
+        />
 
         {/* PWA Components */}
         <PWAInstallPrompt />

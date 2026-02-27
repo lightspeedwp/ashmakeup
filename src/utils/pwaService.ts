@@ -5,16 +5,15 @@
  * @module utils/pwaService
  */
 
+// import.meta.env access completely removed — proven unreliable in this bundler
+
 /**
  * Register the service worker
  * @returns Promise that resolves when service worker is registered
  */
 export async function registerServiceWorker(): Promise<ServiceWorkerRegistration | undefined> {
-  // Only register in production and if supported
+  // Only register if supported
   if (!('serviceWorker' in navigator)) {
-    if (import.meta.env.DEV) {
-      console.log('🔧 Service Worker not supported in this browser');
-    }
     return undefined;
   }
 
@@ -22,10 +21,6 @@ export async function registerServiceWorker(): Promise<ServiceWorkerRegistration
     const registration = await navigator.serviceWorker.register('/service-worker.js', {
       scope: '/'
     });
-
-    if (import.meta.env.DEV) {
-      console.log('✅ Service Worker registered successfully:', registration.scope);
-    }
 
     // Handle service worker updates
     registration.addEventListener('updatefound', () => {
@@ -35,9 +30,6 @@ export async function registerServiceWorker(): Promise<ServiceWorkerRegistration
         newWorker.addEventListener('statechange', () => {
           if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
             // New service worker available, prompt user to update
-            if (import.meta.env.DEV) {
-              console.log('🔄 New service worker available');
-            }
             showUpdateNotification();
           }
         });
@@ -46,9 +38,7 @@ export async function registerServiceWorker(): Promise<ServiceWorkerRegistration
 
     return registration;
   } catch (error) {
-    if (import.meta.env.DEV) {
-      console.error('❌ Service Worker registration failed:', error);
-    }
+    // Dev logging removed — import.meta.env.DEV crashes this bundler
     return undefined;
   }
 }
@@ -65,16 +55,11 @@ export async function unregisterServiceWorker(): Promise<boolean> {
     const registration = await navigator.serviceWorker.getRegistration();
     if (registration) {
       const result = await registration.unregister();
-      if (import.meta.env.DEV) {
-        console.log('Service Worker unregistered:', result);
-      }
       return result;
     }
     return false;
   } catch (error) {
-    if (import.meta.env.DEV) {
-      console.error('Failed to unregister service worker:', error);
-    }
+    // Dev logging removed — import.meta.env.DEV crashes this bundler
     return false;
   }
 }
@@ -159,14 +144,10 @@ export async function promptInstall(): Promise<boolean> {
         
         deferredPrompt.userChoice.then((choiceResult: any) => {
           if (choiceResult.outcome === 'accepted') {
-            if (import.meta.env.DEV) {
-              console.log('✅ User accepted PWA installation');
-            }
+            // Dev logging removed — import.meta.env.DEV crashes this bundler
             resolve(true);
           } else {
-            if (import.meta.env.DEV) {
-              console.log('❌ User dismissed PWA installation');
-            }
+            // Dev logging removed — import.meta.env.DEV crashes this bundler
             resolve(false);
           }
           deferredPrompt = null;
@@ -233,9 +214,7 @@ export async function getServiceWorkerRegistration(): Promise<ServiceWorkerRegis
   try {
     return await navigator.serviceWorker.getRegistration();
   } catch (error) {
-    if (import.meta.env.DEV) {
-      console.error('Failed to get service worker registration:', error);
-    }
+    // Dev logging removed — import.meta.env.DEV crashes this bundler
     return undefined;
   }
 }

@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { Type } from 'lucide-react';
+import { Type } from '../../../lib/icons';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
 import { setSEO } from '../../../utils/seo';

@@ -2,6 +2,8 @@
  * @fileoverview WordPress Data Hooks (Headless Mode)
  * Replacement for useContentful.ts when migrating to Headless WordPress.
  * 
+ * BUNDLER SAFETY: No optional chaining (?.) or nullish coalescing (??)
+ * 
  * Usage:
  * Swap imports in components from '@/hooks/useContentful' to '@/hooks/useWordPress'.
  */
@@ -10,8 +12,20 @@ import { useState, useEffect } from 'react';
 import { BlogPost, PortfolioEntry, PortfolioSection } from '../data/types';
 import { UNIFIED_PORTFOLIO_DATA } from '../utils/portfolioService';
 
-// Configuration
-const WP_API_URL = (import.meta.env && import.meta.env.VITE_WP_API_URL) || 'https://your-wordpress-site.com/wp-json/wp/v2';
+// import.meta.env access completely removed — proven unreliable in this bundler
+const WP_API_URL = 'https://your-wordpress-site.com/wp-json/wp/v2';
+
+/**
+ * Safe nested property access helper
+ */
+function safeGet(obj: any, ...keys: (string | number)[]): any {
+  let current = obj;
+  for (let i = 0; i < keys.length; i++) {
+    if (current === null || current === undefined) return undefined;
+    current = current[keys[i]];
+  }
+  return current;
+}
 
 /**
  * Generic fetcher for WP REST API with Header support
@@ -31,32 +45,60 @@ async function fetchWP(endpoint: string) {
  * Helper to map WP Post to BlogPost
  */
 function mapPostToBlog(p: any): BlogPost {
+  const embedded = p._embedded || {};
+  const featuredMedia = safeGet(embedded, 'wp:featuredmedia', 0);
+  const wpTerms = safeGet(embedded, 'wp:term');
+  const authorData = safeGet(embedded, 'author', 0);
+  const meta = p.meta || {};
+
+  const featuredSrc = featuredMedia ? (featuredMedia.source_url || '') : '';
+  const featuredAlt = featuredMedia ? (featuredMedia.alt_text || '') : '';
+  const mediaDetails = featuredMedia ? (featuredMedia.media_details || {}) : {};
+
+  const categoryTerm = safeGet(wpTerms, 0, 0);
+  const categoryName = categoryTerm ? (categoryTerm.name || 'Uncategorized') : 'Uncategorized';
+
+  const tagTerms = safeGet(wpTerms, 1);
+  const tags = tagTerms ? tagTerms.map((t: any) => t.name) : [];
+
+  const authorName = authorData ? (authorData.name || 'Ash Shaw') : 'Ash Shaw';
+  const avatarUrls = authorData ? (authorData.avatar_urls || {}) : {};
+  const authorAvatar = avatarUrls['96'] || '';
+  const authorBio = authorData ? (authorData.description || '') : '';
+
+  const readTimeStr = meta._read_time || '5';
+  const isFeatured = meta._featured === '1';
+  const faqsRaw = meta._faqs;
+  const faqs = faqsRaw ? JSON.parse(faqsRaw) : [];
+
+  const hasFeaturedImage = featuredSrc.length > 0;
+
   return {
     id: p.id.toString(),
     slug: p.slug,
     title: p.title.rendered,
-    excerpt: p.excerpt.rendered.replace(/<[^>]+>/g, ''), // Strip HTML from excerpt
+    excerpt: p.excerpt.rendered.replace(/<[^>]+>/g, ''),
     content: p.content.rendered,
     publishedAt: p.date,
     updatedAt: p.modified,
-    featuredImage: p._embedded?.['wp:featuredmedia']?.[0]?.source_url 
+    featuredImage: hasFeaturedImage
       ? { 
-          src: p._embedded['wp:featuredmedia'][0].source_url, 
-          alt: p._embedded['wp:featuredmedia'][0].alt_text || '',
-          width: p._embedded['wp:featuredmedia'][0].media_details?.width,
-          height: p._embedded['wp:featuredmedia'][0].media_details?.height
+          src: featuredSrc, 
+          alt: featuredAlt,
+          width: mediaDetails.width,
+          height: mediaDetails.height
         }
       : { src: '', alt: '' },
-    category: p._embedded?.['wp:term']?.[0]?.[0]?.name || 'Uncategorized',
-    tags: p._embedded?.['wp:term']?.[1]?.map((t: any) => t.name) || [],
+    category: categoryName,
+    tags: tags,
     author: {
-      name: p._embedded?.author?.[0]?.name || 'Ash Shaw',
-      avatar: p._embedded?.author?.[0]?.avatar_urls?.['96'] || '',
-      bio: p._embedded?.author?.[0]?.description || ''
+      name: authorName,
+      avatar: authorAvatar,
+      bio: authorBio
     },
-    readTime: parseInt(p.meta?._read_time || '5'),
-    featured: p.meta?._featured === '1',
-    faqs: p.meta?._faqs ? JSON.parse(p.meta._faqs) : []
+    readTime: parseInt(readTimeStr),
+    featured: isFeatured,
+    faqs: faqs
   };
 }
 
@@ -64,44 +106,55 @@ function mapPostToBlog(p: any): BlogPost {
  * Helper to map WP Portfolio CPT to PortfolioEntry
  */
 function mapPostToPortfolio(p: any): PortfolioEntry {
-  let images = [];
+  const embedded = p._embedded || {};
+  const meta = p.meta || {};
+  const featuredMedia = safeGet(embedded, 'wp:featuredmedia', 0);
+  const wpTerms = safeGet(embedded, 'wp:term');
+
+  let images: any[] = [];
   try {
-    // Try to parse the _images meta field (JSON string)
-    if (p.meta?._images) {
-      images = JSON.parse(p.meta._images);
-    } else if (p._embedded?.['wp:featuredmedia']?.[0]) {
-      // Fallback to featured image if no gallery
+    const imagesRaw = meta._images;
+    if (imagesRaw) {
+      images = JSON.parse(imagesRaw);
+    } else if (featuredMedia) {
       images = [{
-        src: p._embedded['wp:featuredmedia'][0].source_url,
-        alt: p._embedded['wp:featuredmedia'][0].alt_text || '',
+        src: featuredMedia.source_url || '',
+        alt: featuredMedia.alt_text || '',
         title: p.title.rendered,
         position: 'center',
         aspectRatio: '4:3'
       }];
     }
   } catch (e) {
-    if (import.meta.env.DEV) {
-      console.warn('Failed to parse portfolio images', e);
-    }
+    console.warn('Failed to parse portfolio images');
   }
+
+  const categoryTerm = safeGet(wpTerms, 0, 0);
+  const categoryName = categoryTerm ? (categoryTerm.name || 'Festival Makeup') : 'Festival Makeup';
+
+  const tagTerms = safeGet(wpTerms, 1);
+  const tags = tagTerms ? tagTerms.map((t: any) => t.name) : [];
+
+  const faqsRaw = meta._faqs;
+  const faqs = faqsRaw ? JSON.parse(faqsRaw) : [];
 
   return {
     id: p.id.toString(),
     slug: p.slug,
     title: p.title.rendered,
-    description: p.content.rendered, // Mapping content to description
+    description: p.content.rendered,
     content: p.content.rendered,
     excerpt: p.excerpt.rendered.replace(/<[^>]+>/g, ''),
-    category: p._embedded?.['wp:term']?.[0]?.[0]?.name || 'Festival Makeup',
-    subcategory: p.meta?._subcategory || '',
-    tags: p._embedded?.['wp:term']?.[1]?.map((t: any) => t.name) || [],
+    category: categoryName,
+    subcategory: meta._subcategory || '',
+    tags: tags,
     images: images,
-    location: p.meta?._location || '',
-    event: p.meta?._event || '',
+    location: meta._location || '',
+    event: meta._event || '',
     date: p.date,
-    featured: p.meta?._featured === '1',
+    featured: meta._featured === '1',
     order: p.menu_order || 0, 
-    faqs: p.meta?._faqs ? JSON.parse(p.meta._faqs) : []
+    faqs: faqs
   };
 }
 
@@ -130,15 +183,16 @@ export function useBlogPosts(options?: {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
+  const optPage = options ? options.page : undefined;
+  const optLimit = options ? options.limit : undefined;
+  const optCategory = options ? options.category : undefined;
+  const optTags = options ? options.tags : undefined;
+
   useEffect(() => {
-    const page = options?.page || 1;
-    const perPage = options?.limit || 10;
+    const page = optPage || 1;
+    const perPage = optLimit || 10;
     
-    // Construct query parameters
-    let query = `/posts?page=${page}&per_page=${perPage}&_embed`;
-    
-    // Add category filter (requires mapping slug to ID, skipped for prototype complexity)
-    // In a real app, we'd need to fetch category ID first or use a different endpoint
+    const query = `/posts?page=${page}&per_page=${perPage}&_embed`;
     
     setLoading(true);
     fetchWP(query)
@@ -158,13 +212,12 @@ export function useBlogPosts(options?: {
         });
       })
       .catch(err => {
-        if (import.meta.env.DEV) {
-          console.error('WP Fetch Error:', err);
-        }
+        console.error('WP Fetch Error');
+        console.error(err);
         setError(err);
       })
       .finally(() => setLoading(false));
-  }, [options?.page, options?.limit, options?.category, options?.tags]);
+  }, [optPage, optLimit, optCategory, optTags]);
 
   return { data, loading, error, refresh: () => {} };
 }
@@ -190,9 +243,8 @@ export function useBlogPost(slug: string) {
         }
       })
       .catch(err => {
-        if (import.meta.env.DEV) {
-          console.error('WP Fetch Error:', err);
-        }
+        console.error('WP Fetch Error');
+        console.error(err);
         setError(err);
       })
       .finally(() => setLoading(false));
@@ -217,12 +269,15 @@ export function usePortfolioSections() {
         
         const sectionsMap = new Map<string, PortfolioEntry[]>();
         
-        mappedEntries.forEach(entry => {
+        mappedEntries.forEach((entry: PortfolioEntry) => {
           const cat = entry.category || 'Other';
           if (!sectionsMap.has(cat)) {
             sectionsMap.set(cat, []);
           }
-          sectionsMap.get(cat)?.push(entry);
+          const existing = sectionsMap.get(cat);
+          if (existing) {
+            existing.push(entry);
+          }
         });
 
         const sections: PortfolioSection[] = Array.from(sectionsMap.entries()).map(([key, entries], index) => ({
@@ -237,9 +292,7 @@ export function usePortfolioSections() {
         setData(sections);
       })
       .catch(err => {
-        if (import.meta.env.DEV) {
-          console.warn('WP Portfolio Fetch Error (CPT might be missing):', err);
-        }
+        console.warn('WP Portfolio Fetch Error (CPT might be missing)');
         setError(err);
       })
       .finally(() => setLoading(false));
@@ -250,7 +303,6 @@ export function usePortfolioSections() {
 
 /**
  * Hook for portfolio entries (flat list with filtering)
- * Replaces getPortfolioByCategory
  */
 export function usePortfolioEntries(options?: {
   category?: string;
@@ -272,13 +324,14 @@ export function usePortfolioEntries(options?: {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
+  const optPage = options ? options.page : undefined;
+  const optLimit = options ? options.limit : undefined;
+  const optCategory = options ? options.category : undefined;
+  const optFeaturedOnly = options ? options.featuredOnly : undefined;
+
   useEffect(() => {
-    const page = options?.page || 1;
-    const limit = options?.limit || 10;
-    
-    // In WP, filtering by category/featured requires specific query params
-    // For prototype, we fetch all and filter client side if CPT filter isn't easy
-    // But ideally we use tax_query
+    const page = optPage || 1;
+    const limit = optLimit || 10;
     
     setLoading(true);
     fetchWP(`/portfolio?per_page=${limit}&page=${page}&_embed`)
@@ -297,13 +350,12 @@ export function usePortfolioEntries(options?: {
         });
       })
       .catch(err => {
-        if (import.meta.env.DEV) {
-          console.error('WP Portfolio Fetch Error:', err);
-        }
+        console.error('WP Portfolio Fetch Error');
+        console.error(err);
         setError(err);
       })
       .finally(() => setLoading(false));
-  }, [options?.category, options?.featuredOnly, options?.page, options?.limit]);
+  }, [optPage, optLimit, optCategory, optFeaturedOnly]);
 
   return { data, loading, error, refresh: () => {} };
 }

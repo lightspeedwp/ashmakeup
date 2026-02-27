@@ -20,7 +20,7 @@ Display portfolio entries with:
 
 ## 🔗 CMS Integration
 
-This component displays portfolio entries from **Contentful CMS** with automatic fallback to **mock data**.
+This component displays portfolio entries from **Headless WordPress** (or mock data) via the unified `useContent` hook.
 
 ### Data Flow
 
@@ -29,9 +29,7 @@ Component Request
     ↓
 usePortfolioSections() hook
     ↓
-contentfulService.getPortfolioSections()
-    ↓
-Contentful API (with 5s timeout)
+useContent facade (Mock or WordPress)
     ↓
 Success → CMS Data
 Timeout/Error → Mock Data (fallback)
@@ -43,7 +41,7 @@ PortfolioCard renders with data
 
 For complete setup and configuration:
 
-- **[Contentful Integration Guide](../contentful-integration.md)** - Complete CMS setup
+- **[CMS Field Mapping](../../docs/cms-field-mapping.md)** - WordPress CPT/ACF field mapping
 - **[Data System](../../data/README.md)** - Fallback data system
 - **[Guidelines.md](../Guidelines.md)** - Main project guidelines
 
@@ -51,7 +49,7 @@ For complete setup and configuration:
 
 ```typescript
 import { portfolioEntries } from '@/data/mock/portfolio';
-import { usePortfolioSections } from '@/hooks/useContentful';
+import { usePortfolioSections } from '@/hooks/useContent';
 import { PortfolioCard } from '@/components/ui/PortfolioCard';
 
 export function PortfolioSection() {
@@ -59,7 +57,7 @@ export function PortfolioSection() {
   const { sectionData, loading, error } = usePortfolioSections();
   
   // Use CMS data if available, otherwise fallback to mock
-  const entries = sectionData?.thailand || portfolioEntries.thailand;
+  const entries = sectionData ? sectionData.thailand : portfolioEntries.thailand;
   
   if (loading) {
     return <LoadingSpinner />;
@@ -88,10 +86,10 @@ export function PortfolioSection() {
 - ✅ **Rich metadata** (dates, locations, tags)
 - ✅ **Located in:** `/data/mock/portfolio/`
 
-**Contentful CMS (Production):**
+**WordPress CMS (Production):**
 - ✅ **Dynamic content updates** without code changes
 - ✅ **Rich text descriptions** with formatting
-- ✅ **Image optimization** with automatic WebP conversion
+- ✅ **Image optimization** via WordPress media library
 - ✅ **Draft/published workflow** for content staging
 - ✅ **Multi-image support** with ordering
 
@@ -122,7 +120,7 @@ export interface PortfolioEntry {
 import { portfolioEntries, getFeaturedWork } from '@/data/mock/portfolio';
 
 // CMS hook (with automatic fallback)
-import { usePortfolioSections } from '@/hooks/useContentful';
+import { usePortfolioSections } from '@/hooks/useContent';
 
 // Types
 import type { PortfolioEntry } from '@/data/types/portfolio';
@@ -150,7 +148,7 @@ const thailandWork = getWorkByCategory('thailand');
 const festivalWork = getWorkByCategory('festival');
 ```
 
-**See [Contentful Integration Guide](../contentful-integration.md) for complete setup.**
+**See [CMS Field Mapping](../../docs/cms-field-mapping.md) for complete setup.**
 
 ---
 
@@ -646,7 +644,7 @@ const handleKeyDown = (e: React.KeyboardEvent) => {
 ## Related Documentation
 
 - **[Guidelines.md](../Guidelines.md)** - Main project guidelines
-- **[Contentful Integration Guide](../contentful-integration.md)** - CMS setup
+- **[CMS Field Mapping](../../docs/cms-field-mapping.md)** - CMS setup
 - **[Data System](../../data/README.md)** - Mock data system
 - **[overview-components.md](../overview-components.md)** - Component architecture
 - **[design-tokens/spacing.md](../design-tokens/spacing.md)** - Spacing system

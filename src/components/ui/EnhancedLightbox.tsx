@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect, useState, useCallback } from 'react';
-import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, LayoutGrid, Play } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, LayoutGrid, Play } from '../../lib/icons';
 import { PortfolioImage } from './PortfolioImage';
 import { OptimizedImage } from './OptimizedImage';
 import { VideoPlayer } from './VideoPlayer';
@@ -69,13 +69,15 @@ export function EnhancedLightbox({
   const currentItem = images[safeCurrentIndex];
 
   useEffect(() => {
-    if (!isOpen || images.length === 0) return;
+    const shouldSkip = !isOpen || images.length === 0;
+    if (shouldSkip) return;
     registerModal('enhanced-lightbox', 'lightbox', { title, images });
     return () => unregisterModal('enhanced-lightbox');
   }, [registerModal, unregisterModal, title, images, isOpen]);
 
   useEffect(() => {
-    if (!isOpen || images.length === 0) return;
+    const shouldSkip = !isOpen || images.length === 0;
+    if (shouldSkip) return;
     updateModal('enhanced-lightbox', isOpen, { title, images, currentIndex: safeCurrentIndex });
   }, [updateModal, isOpen, title, images, safeCurrentIndex]);
 
@@ -116,7 +118,7 @@ export function EnhancedLightbox({
 
   const toggleZoom = useCallback(() => {
     // Only allow zooming on images
-    if (currentItem?.type !== 'video') {
+    if (currentItem && currentItem.type !== 'video') {
       setIsZoomed(!isZoomed);
     }
   }, [isZoomed, currentItem]);
@@ -194,14 +196,16 @@ export function EnhancedLightbox({
     };
   }, [isOpen, hasMultipleItems, goToPrevious, goToNext, isZoomed]);
 
-  if (!isOpen || images.length === 0 || !currentItem) {
+  const shouldNotRender = !isOpen || images.length === 0 || !currentItem;
+  if (shouldNotRender) {
     return null;
   }
 
-  const isVideo = currentItem.type === 'video' || 
-                  currentItem.src.includes('youtube') || 
-                  currentItem.src.includes('vimeo') || 
-                  currentItem.src.endsWith('.mp4');
+  const isTypeVideo = currentItem.type === 'video';
+  const hasYoutube = currentItem.src.includes('youtube');
+  const hasVimeo = currentItem.src.includes('vimeo');
+  const isMp4 = currentItem.src.endsWith('.mp4');
+  const isVideo = isTypeVideo || hasYoutube || hasVimeo || isMp4;
 
   return (
     <div 
@@ -300,7 +304,7 @@ export function EnhancedLightbox({
                 <VideoPlayer
                   src={currentItem.src}
                   poster={currentItem.poster}
-                  title={currentItem.caption || currentItem.alt}
+                  title={currentItem.caption ? currentItem.caption : currentItem.alt}
                   autoPlay={false}
                   className="lightbox-video"
                 />
@@ -346,7 +350,7 @@ export function EnhancedLightbox({
           )}
 
           {/* Caption */}
-          {(currentItem.caption || currentItem.description) && (
+          {(currentItem.caption !== undefined || currentItem.description !== undefined) && (
             <div className="lightbox-caption">
               {currentItem.caption && (
                 <h3 className="lightbox-text-title">
@@ -367,17 +371,18 @@ export function EnhancedLightbox({
           <div className="lightbox-thumbnails-container">
             <div className="lightbox-thumbnails-strip">
               {images.map((item, index) => {
-                const isItemVideo = item.type === 'video' || 
-                                  item.src.includes('youtube') || 
-                                  item.src.includes('vimeo') || 
-                                  item.src.endsWith('.mp4');
+                const isItemTypeVideo = item.type === 'video';
+                const hasItemYoutube = item.src.includes('youtube');
+                const hasItemVimeo = item.src.includes('vimeo');
+                const isItemMp4 = item.src.endsWith('.mp4');
+                const isItemVideo = isItemTypeVideo || hasItemYoutube || hasItemVimeo || isItemMp4;
                 return (
                   <button
                     type="button"
                     key={index}
                     onClick={() => goToItem(index)}
                     className={`lightbox-thumbnail-btn ${index === currentIndex ? 'lightbox-thumbnail-btn--active' : 'lightbox-thumbnail-btn--inactive'}`}
-                    aria-label={`Go to item ${index + 1}: ${item.caption || item.alt}`}
+                    aria-label={`Go to item ${index + 1}: ${item.caption ? item.caption : item.alt}`}
                   >
                     {isItemVideo ? (
                       <div className="lightbox-thumbnail-video">

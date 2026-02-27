@@ -10,7 +10,7 @@
  */
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { ArrowLeft, Calendar, MapPin, Eye, Tag, Share2, Star, Quote, MessageSquare } from 'lucide-react';
+import { ArrowLeft, Calendar, MapPin, Eye, Tag, Share2, Star, MessageSquare } from '../../../lib/icons';
 
 import { EnhancedLightbox } from '../../ui/EnhancedLightbox';
 import { ShareComponent } from '../../ui/ShareComponent';
@@ -120,7 +120,10 @@ export function PortfolioDetailPage({
     if (category) {
       setCurrentPage('portfolio', undefined, category.id);
     } else {
-      const categoryId = categories.find(c => c.name.toLowerCase() === categoryName.toLowerCase())?.id;
+      const categoryId = (() => {
+        const found = categories.find(c => c.name.toLowerCase() === categoryName.toLowerCase());
+        return found ? found.id : undefined;
+      })();
       if (categoryId) {
          setCurrentPage('portfolio', undefined, categoryId);
       } else {
@@ -247,7 +250,10 @@ export function PortfolioDetailPage({
               >
                 <Tag className="icon-sm" />
                 <span>
-                  {categories.find(c => c.id === eventDetails.category)?.name || eventDetails.category}
+                  {(() => {
+                    const foundCat = categories.find(c => c.id === eventDetails.category);
+                    return foundCat ? foundCat.name : eventDetails.category;
+                  })()}
                 </span>
               </a>
             </div>
@@ -268,11 +274,11 @@ export function PortfolioDetailPage({
                 type="button"
                 onClick={() => handleImageClick(selectedImageIndex)}
                 className="gallery-main-image"
-                aria-label={`View ${portfolioEntry.images[selectedImageIndex]?.alt} in full size`}
+                aria-label={`View ${portfolioEntry.images[selectedImageIndex] ? portfolioEntry.images[selectedImageIndex].alt : ''} in full size`}
               >
                 <OptimizedImage
-                  src={usePortfolioImageUrl(portfolioEntry.images[selectedImageIndex]?.src || '')}
-                  alt={portfolioEntry.images[selectedImageIndex]?.alt || ''}
+                  src={usePortfolioImageUrl(portfolioEntry.images[selectedImageIndex] ? portfolioEntry.images[selectedImageIndex].src : '')}
+                  alt={portfolioEntry.images[selectedImageIndex] ? portfolioEntry.images[selectedImageIndex].alt : ''}
                   className="gallery-main-image__img"
                   preset="gallery"
                 />
@@ -395,7 +401,7 @@ export function PortfolioDetailPage({
                     title={portfolioEntry.title}
                     description={portfolioEntry.description}
                     url={typeof window !== 'undefined' ? window.location.href : `https://ashshaw.makeup/portfolio-detail/${portfolioId}`}
-                    imageUrl={portfolioEntry.images[0]?.src}
+                    imageUrl={portfolioEntry.images[0] ? portfolioEntry.images[0].src : undefined}
                     variant="inline"
                     align="left"
                   />
@@ -456,14 +462,14 @@ export function PortfolioDetailPage({
 
         return (
           <section className="portfolio-feedback-section">
-            <div className="container-7xl">
+            <div className="container-7xl p-[0px]">
               <h2 className="text-section-h2 text-center mb-fluid-lg">
                 What People Say
               </h2>
               <div className="portfolio-feedback__grid">
                 {shown.map(fb => (
                   <article key={fb.id} className={`portfolio-feedback__card${fb.featured ? ' portfolio-feedback__card--featured' : ''}`}>
-                    <Quote className="portfolio-feedback__quote-icon" aria-hidden="true" />
+                    <MessageSquare className="portfolio-feedback__quote-icon" aria-hidden="true" />
                     <blockquote className="portfolio-feedback__quote">
                       {fb.quote}
                     </blockquote>

@@ -16,7 +16,7 @@
 
 import React, { useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from '../../lib/router';
-import { ArrowRight, Clock } from 'lucide-react';
+import { ArrowRight, Clock } from '../../lib/icons';
 import { blogPosts } from '../../data/mock/blog/posts';
 import { blogCategories } from '../../data/mock/blog/categories';
 import { getBlogCategoryCount } from '../../utils/contentCounts';
@@ -54,10 +54,11 @@ export function BlogMegaMenu({ isOpen, onClose, onMouseEnter, onMouseLeave }: Bl
 
   /** The single most-recent featured post */
   const featuredPost = sortedPosts.find((p) => p.featured) || sortedPosts[0];
+  const featuredId = featuredPost ? featuredPost.id : null;
 
   /** 5 recent posts excluding the featured one */
   const recentPosts = sortedPosts
-    .filter((p) => p.id !== featuredPost?.id)
+    .filter((p) => p.id !== featuredId)
     .slice(0, 5);
 
   /** Active categories (with at least one post) */

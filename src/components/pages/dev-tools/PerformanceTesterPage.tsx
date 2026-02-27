@@ -11,18 +11,18 @@
 
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import {
-  Gauge,
+  Activity,
   RefreshCw,
   Trash2,
   Lightbulb,
-  FileCode2,
+  FileText,
   Image as ImageIcon,
   Type,
-  Globe,
+  MapPin,
   Layers,
   Clock,
   ChevronDown,
-} from 'lucide-react';
+} from '../../../lib/icons';
 import { performanceTesterUI } from '../../../data/mock/ui/performance-tester';
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
@@ -204,7 +204,7 @@ function ratingClass(value: number, thresholds: { good: number; moderate: number
 function ResourceIcon({ type }: { type: string }) {
   switch (type) {
     case 'script':
-      return <FileCode2 className="perf-tester__res-icon" aria-hidden="true" />;
+      return <FileText className="perf-tester__res-icon" aria-hidden="true" />;
     case 'stylesheet':
       return <Type className="perf-tester__res-icon" aria-hidden="true" />;
     case 'img':
@@ -212,7 +212,7 @@ function ResourceIcon({ type }: { type: string }) {
     case 'font':
       return <Type className="perf-tester__res-icon" aria-hidden="true" />;
     case 'fetch':
-      return <Globe className="perf-tester__res-icon" aria-hidden="true" />;
+      return <MapPin className="perf-tester__res-icon" aria-hidden="true" />;
     default:
       return <Layers className="perf-tester__res-icon" aria-hidden="true" />;
   }
@@ -330,7 +330,7 @@ export function PerformanceTesterPage() {
                 </>
               ) : (
                 <>
-                  <Gauge className="perf-tester__btn-icon" aria-hidden="true" />
+                  <Activity className="perf-tester__btn-icon" aria-hidden="true" />
                   {results ? performanceTesterUI.actions.retest : performanceTesterUI.actions.runTest}
                 </>
               )}
@@ -453,7 +453,7 @@ export function PerformanceTesterPage() {
                 <div key={res.type} className="perf-tester__res-row">
                   <div className="perf-tester__res-type">
                     <ResourceIcon type={res.type} />
-                    <span>{(performanceTesterUI.resourceTypes as Record<string, string>)[res.type] || res.type}</span>
+                    <span>{(() => { const rt = (performanceTesterUI.resourceTypes as Record<string, string>)[res.type]; return rt ? rt : res.type; })()}</span>
                   </div>
                   <div className="perf-tester__res-stats">
                     <span className="perf-tester__res-count">{res.count}</span>
@@ -481,12 +481,18 @@ export function PerformanceTesterPage() {
               <DomStat
                 label={performanceTesterUI.domStats.totalNodes}
                 value={results.dom.totalNodes}
-                rating={results.dom.totalNodes < 1500 ? 'good' : results.dom.totalNodes < 3000 ? 'moderate' : 'poor'}
+                rating={(() => {
+                  const n = results.dom.totalNodes;
+                  return n < 1500 ? 'good' : n < 3000 ? 'moderate' : 'poor';
+                })()}
               />
               <DomStat
                 label={performanceTesterUI.domStats.maxDepth}
                 value={results.dom.maxDepth}
-                rating={results.dom.maxDepth < 15 ? 'good' : results.dom.maxDepth < 30 ? 'moderate' : 'poor'}
+                rating={(() => {
+                  const d = results.dom.maxDepth;
+                  return d < 15 ? 'good' : d < 30 ? 'moderate' : 'poor';
+                })()}
               />
               <DomStat
                 label={performanceTesterUI.domStats.elements}
@@ -590,13 +596,20 @@ function MetricGauge({
 }) {
   const rating = ratingClass(value, thresholds);
   const displayValue = unit === 'ms' ? `${value}${unit}` : `${value}`;
+  
+  // Extract nested ternary to avoid bundler issues
+  const ratingLabel = rating === 'good' 
+    ? performanceTesterUI.gaugeLabels.good 
+    : rating === 'moderate' 
+      ? performanceTesterUI.gaugeLabels.moderate 
+      : performanceTesterUI.gaugeLabels.poor;
 
   return (
     <div className={`perf-tester__gauge perf-tester__gauge--${rating}`} title={description}>
       <span className="perf-tester__gauge-value">{displayValue}</span>
       <span className="perf-tester__gauge-label">{label}</span>
       <span className={`perf-tester__gauge-badge perf-tester__gauge-badge--${rating}`}>
-        {rating === 'good' ? performanceTesterUI.gaugeLabels.good : rating === 'moderate' ? performanceTesterUI.gaugeLabels.moderate : performanceTesterUI.gaugeLabels.poor}
+        {ratingLabel}
       </span>
     </div>
   );

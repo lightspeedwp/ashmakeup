@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { Cloud } from 'lucide-react';
+import { Cloud } from '../../../lib/icons';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
 import '../../../styles/blocks/specimen-page.css';

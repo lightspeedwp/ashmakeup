@@ -12,11 +12,11 @@ import {
   ArrowLeft,
   Calendar,
   Clock,
-  PlayCircle,
+  CirclePlay,
   Mic,
   Tag,
   Share2,
-} from 'lucide-react';
+} from '../../../lib/icons';
 import { podcastEpisodes } from '../../../data/mock/podcasts/episodes';
 import { podcastCategories } from '../../../data/mock/podcasts/categories';
 import { podcastsUI } from '../../../data/mock/ui/podcasts';
@@ -28,6 +28,7 @@ import { formatDate } from '../../../utils/formatDate';
 import { markdownToHtml } from '../../../utils/simpleMarkdown';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO, podcastSEO } from '../../../data/mock/seo';
+import { podcastDetailBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
 import {
   injectSchema,
   removeSchema,
@@ -70,7 +71,8 @@ export function PodcastDetailPage() {
     const cat = podcastCategories.find(
       c => c.name.toLowerCase() === episode.category.toLowerCase(),
     );
-    return cat?.slug ?? episode.category.toLowerCase().replace(/\s+/g, '-');
+    const catSlug = cat ? cat.slug : episode.category.toLowerCase().replace(/\s+/g, '-');
+    return catSlug;
   }, [episode]);
 
   if (!episode) {
@@ -161,7 +163,7 @@ export function PodcastDetailPage() {
             onClick={() => setIsPlaying(!isPlaying)}
             aria-label={isPlaying ? 'Pause' : 'Play'}
           >
-            <PlayCircle className="icon-lg" />
+            <CirclePlay className="icon-lg" />
           </button>
           <div className="audio-player__progress">
             <div className="audio-player__bar">

@@ -148,7 +148,7 @@ export function PlaygroundPage() {
       `background: ${state.bgColor};`,
       `color: ${state.textColor};`,
       `font-family: ${state.font};`,
-      `font-size: ${FONT_SIZES[state.fontSize]?.value || '1rem'};`,
+      `font-size: ${(() => { const fs = FONT_SIZES[state.fontSize]; return fs ? fs.value : '1rem'; })()};`,
       `border-radius: ${state.radius};`,
       `box-shadow: ${state.shadow};`,
       state.gradient ? `background-image: ${state.gradient};` : '',
@@ -163,9 +163,7 @@ export function PlaygroundPage() {
       setCopiedCSS(true);
       setTimeout(() => setCopiedCSS(false), 1500);
     } catch {
-      if (import.meta.env.DEV) {
-        console.log('Clipboard write failed');
-      }
+      // Dev logging removed — import.meta.env.DEV crashes this bundler
     }
   }, [generateCSS]);
 
@@ -254,7 +252,7 @@ export function PlaygroundPage() {
           {/* Font Size */}
           <div className="playground__group">
             <label className="playground__label" htmlFor="pg-size">
-              Font Size: {FONT_SIZES[state.fontSize]?.label || '—'}
+              Font Size: {(() => { const fs = FONT_SIZES[state.fontSize]; return fs ? fs.label : '—'; })()}
             </label>
             <input
               id="pg-size"
@@ -265,7 +263,7 @@ export function PlaygroundPage() {
               value={state.fontSize}
               onChange={(e) => set('fontSize', Number(e.target.value))}
             />
-            <span className="playground__value">{FONT_SIZES[state.fontSize]?.value}</span>
+            <span className="playground__value">{(() => { const fs = FONT_SIZES[state.fontSize]; return fs ? fs.value : ''; })()}</span>
           </div>
 
           {/* Border Radius */}
@@ -363,7 +361,7 @@ export function PlaygroundPage() {
                 className="playground__card-title"
                 style={{
                   fontFamily: state.font,
-                  fontSize: FONT_SIZES[state.fontSize]?.value,
+                  fontSize: (() => { const fs = FONT_SIZES[state.fontSize]; return fs ? fs.value : undefined; })(),
                   color: state.textColor,
                 }}
               >

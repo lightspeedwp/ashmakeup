@@ -3,7 +3,7 @@
  * Bootstraps React app with proper error handling and performance monitoring
  * 
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
+ * @version 1.2.0 - Bundler-safe: guarded import.meta.env access
  */
 
 import { initializeExtensionErrorSuppression } from './utils/extensionErrorSuppressor';
@@ -16,6 +16,8 @@ import './styles/blocks/offline-indicator.css';
 import { SafetyWrapper } from './components/common/SafetyWrapper';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { registerServiceWorker } from './utils/pwaService';
+
+// import.meta.env access completely removed — proven unreliable in this bundler
 
 // Initialize aggressive extension error suppression immediately
 initializeExtensionErrorSuppression();
@@ -32,7 +34,7 @@ const root = ReactDOM.createRoot(rootElement);
 
 root.render(
   <React.StrictMode>
-    <SafetyWrapper debug={import.meta.env.DEV}>
+    <SafetyWrapper>
       <ErrorBoundary>
         <App />
       </ErrorBoundary>
@@ -40,18 +42,12 @@ root.render(
   </React.StrictMode>
 );
 
-// Add performance monitoring in development
-if (import.meta.env.DEV) {
-  // Performance monitoring removed as reportWebVitals.ts is not present
-}
-
 // Register PWA service worker for offline functionality
-if ('serviceWorker' in navigator && import.meta.env.PROD) {
+const hasServiceWorker = 'serviceWorker' in navigator;
+if (hasServiceWorker) {
   window.addEventListener('load', () => {
-    registerServiceWorker().catch((error) => {
-      if (import.meta.env.DEV) {
-        console.error('PWA Service Worker registration failed:', error);
-      }
+    registerServiceWorker().catch(() => {
+      // Dev logging removed — import.meta.env.DEV crashes this bundler
     });
   });
 }

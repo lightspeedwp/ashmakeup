@@ -55,16 +55,15 @@ export function ComponentApiPage() {
       setCopied(id);
       setTimeout(() => setCopied(null), 1500);
     } catch {
-      if (import.meta.env.DEV) {
-        console.log('Clipboard write failed');
-      }
+      // Dev logging removed — import.meta.env.DEV crashes this bundler
     }
   }, []);
 
   /** Group by category for sidebar */
   const grouped = useMemo(() => {
     const map = new Map<string, typeof filteredComponents>();
-    for (const cat of CATEGORY_ORDER) {
+    for (var i = 0; i < CATEGORY_ORDER.length; i++) {
+      var cat = CATEGORY_ORDER[i];
       const items = filteredComponents.filter((c) => c.category === cat);
       if (items.length > 0) map.set(cat, items);
     }
@@ -115,7 +114,7 @@ export function ComponentApiPage() {
             {Array.from(grouped.entries()).map(([cat, items]) => (
               <React.Fragment key={cat}>
                 <li className="comp-api__sidebar-cat">
-                  {CATEGORY_LABELS[cat] || cat}
+                  {CATEGORY_LABELS[cat] ? CATEGORY_LABELS[cat] : cat}
                 </li>
                 {items.map((c) => (
                   <li key={c.id}>
@@ -149,7 +148,7 @@ export function ComponentApiPage() {
                 <div className="comp-api__component-header">
                   <h2 className="comp-api__component-name">{comp.name}</h2>
                   <span className="comp-api__component-cat">
-                    {CATEGORY_LABELS[comp.category] || comp.category}
+                    {CATEGORY_LABELS[comp.category] ? CATEGORY_LABELS[comp.category] : comp.category}
                   </span>
                   <span className="comp-api__component-path">{comp.path}</span>
                 </div>

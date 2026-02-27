@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect, useMemo } from 'react';
-import { CheckCircle, AlertTriangle, XCircle, Gauge, Shield, Search, Lock, Code } from 'lucide-react';
+import { CircleCheck, TriangleAlert, CircleX, Activity, Shield, Search, Lock, Code } from '../../../lib/icons';
 import { deploymentReadinessUI } from '../../../data/mock/ui/deployment-readiness';
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
@@ -15,7 +15,7 @@ import '../../../styles/blocks/specimen-page.css';
 import '../../../styles/blocks/deployment-readiness.css';
 
 const CATEGORY_ICONS: Record<string, React.ElementType> = {
-  Gauge,
+  Gauge: Activity,
   Shield,
   Search,
   Lock,
@@ -23,9 +23,9 @@ const CATEGORY_ICONS: Record<string, React.ElementType> = {
 };
 
 const STATUS_ICONS = {
-  pass: CheckCircle,
-  warn: AlertTriangle,
-  fail: XCircle,
+  pass: CircleCheck,
+  warn: TriangleAlert,
+  fail: CircleX,
 };
 
 export function DeploymentReadinessPage() {
@@ -39,8 +39,10 @@ export function DeploymentReadinessPage() {
   const { totalChecks, passCount, score } = useMemo(() => {
     let total = 0;
     let passed = 0;
-    for (const cat of data.categories) {
-      for (const check of cat.checks) {
+    for (var ci = 0; ci < data.categories.length; ci++) {
+      var cat = data.categories[ci];
+      for (var ki = 0; ki < cat.checks.length; ki++) {
+        var check = cat.checks[ki];
         total++;
         if (check.status === 'pass') passed++;
       }

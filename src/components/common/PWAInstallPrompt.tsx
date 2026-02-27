@@ -13,7 +13,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { X, Download } from 'lucide-react';
+import { X, Download } from '../../lib/icons';
 import { isStandalone } from '../../utils/pwaService';
 
 interface PWAInstallPromptProps {
@@ -67,13 +67,9 @@ export function PWAInstallPrompt({ className = '' }: PWAInstallPromptProps) {
     const choiceResult = await deferredPrompt.userChoice;
 
     if (choiceResult.outcome === 'accepted') {
-      if (import.meta.env.DEV) {
-        console.log('✅ User accepted PWA installation');
-      }
+      // Dev logging removed — import.meta.env.DEV crashes this bundler
     } else {
-      if (import.meta.env.DEV) {
-        console.log('❌ User dismissed PWA installation');
-      }
+      // Dev logging removed — import.meta.env.DEV crashes this bundler
     }
 
     // Clear the deferredPrompt
@@ -87,7 +83,8 @@ export function PWAInstallPrompt({ className = '' }: PWAInstallPromptProps) {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent, action: 'install' | 'dismiss') => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    const isActivationKey = e.key === 'Enter' || e.key === ' ';
+    if (isActivationKey) {
       e.preventDefault();
       action === 'install' ? handleInstall() : handleDismiss();
     } else if (e.key === 'Escape') {

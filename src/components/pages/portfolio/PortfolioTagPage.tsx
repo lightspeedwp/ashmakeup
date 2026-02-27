@@ -8,7 +8,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, useNavigate } from '../../../lib/router';
-import { Image, Layers, Tag } from 'lucide-react';
+import { Image, Layers, Tag } from '../../../lib/icons';
 import { UNIFIED_PORTFOLIO_DATA, PORTFOLIO_CATEGORIES } from '../../../utils/portfolioService';
 import {
   portfolioTagData,
@@ -43,17 +43,18 @@ export function PortfolioTagPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
 
-  const tag = findPortfolioTagBySlug(slug ?? '');
+  const tag = findPortfolioTagBySlug(slug ? slug : '');
   const [sortBy, setSortBy] = useState('recent');
 
   useEffect(() => {
     if (tag) {
       setSEO(portfolioTagSEO(tag.name));
+      const entryCount = filteredEntries ? filteredEntries.length : 0;
       injectSchema(SCHEMA_IDS.collection, buildCollectionSchema(
         `${tag.name} | Portfolio`,
         portfolioTagSEO(tag.name).description,
         `/portfolio/tag/${slug}`,
-        filteredEntries?.length || 0,
+        entryCount,
       ));
     }
     return () => {
@@ -62,12 +63,13 @@ export function PortfolioTagPage() {
   }, [tag, slug]);
 
   const filteredEntries = useMemo(() => {
-    const tagName = tag?.name ?? slug ?? '';
-    let entries = UNIFIED_PORTFOLIO_DATA.filter(entry =>
-      (entry.tags ?? []).some(
+    const tagName = tag ? tag.name : (slug ? slug : '');
+    let entries = UNIFIED_PORTFOLIO_DATA.filter(entry => {
+      const entryTags = entry.tags ? entry.tags : [];
+      return entryTags.some(
         t => t.toLowerCase() === tagName.toLowerCase(),
-      ),
-    );
+      );
+    });
 
     switch (sortBy) {
       case 'recent':
@@ -91,13 +93,15 @@ export function PortfolioTagPage() {
   /** Related tags from the matching entries */
   const relatedTags = useMemo(() => {
     const tagSet = new Set<string>();
-    filteredEntries.forEach(e =>
-      (e.tags ?? []).forEach(t => {
-        if (t.toLowerCase() !== (tag?.name ?? '').toLowerCase()) {
+    const currentTagName = tag ? tag.name : '';
+    filteredEntries.forEach(e => {
+      const eTags = e.tags ? e.tags : [];
+      eTags.forEach(t => {
+        if (t.toLowerCase() !== currentTagName.toLowerCase()) {
           tagSet.add(t);
         }
-      }),
-    );
+      });
+    });
     return Array.from(tagSet).slice(0, 8);
   }, [filteredEntries, tag]);
 
@@ -111,12 +115,12 @@ export function PortfolioTagPage() {
       {/* ── Hero header ── */}
       <div className="portfolio-main__header">
         <div className="container-7xl">
-          <Breadcrumbs items={portfolioTagBreadcrumbs(tag?.name ?? slug ?? '')} centered />
+          <Breadcrumbs items={portfolioTagBreadcrumbs(tag ? tag.name : (slug ? slug : ''))} centered />
           <Tag className="portfolio-main__header-icon" aria-hidden="true" />
           <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
-            {tag?.name ?? slug}
+            {tag ? tag.name : slug}
           </h1>
-          {tag?.description && (
+          {tag && tag.description && (
             <p className="text-body-guideline">{tag.description}</p>
           )}
           <p className="portfolio-main__count">
@@ -237,7 +241,7 @@ export function PortfolioTagPage() {
             <Layers className="icon-xl" aria-hidden="true" />
             <h3 className="error-title">{emptyStateMessages.portfolio.title}</h3>
             <p className="error-message">
-              No portfolio entries match the tag &ldquo;{tag?.name ?? slug}&rdquo;.
+              No portfolio entries match the tag &ldquo;{tag ? tag.name : slug}&rdquo;.
             </p>
           </div>
         )}

@@ -131,13 +131,14 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
 
   // Inject ImageGallery schema once all entries are available
   useEffect(() => {
-    if (entriesData?.entries) {
+    const hasEntries = entriesData && entriesData.entries;
+    if (hasEntries) {
       injectSchema(SCHEMA_IDS.gallery, buildImageGallerySchema(entriesData.entries as any));
     }
     return () => {
       removeSchema(SCHEMA_IDS.gallery);
     };
-  }, [entriesData?.entries]);
+  }, [entriesData]);
 
   const handleArchiveCategoryToggle = useCallback((slug: string) => {
     setActiveCategories(prev =>
@@ -178,7 +179,7 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
       ...entry,
       date: entry.date,
       subtitle: entry.subtitle || entry.category,
-      featuredImage: entry.images?.[0] || {
+      featuredImage: entry.images && entry.images[0] ? entry.images[0] : {
         src: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800',
         alt: 'Default portfolio image',
         caption: 'Portfolio Image',
@@ -190,7 +191,7 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
 
   // Calculate filtered entries
   const portfolioEntries = useMemo((): PortfolioCardEntry[] => {
-    if (!entriesData?.entries) return [];
+    if (!entriesData || !entriesData.entries) return [];
 
     let entries = transformUnifiedToPortfolioCard(entriesData.entries);
 
@@ -498,7 +499,7 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
               </p>
               <p className="portfolio-empty__message">
                 {portfolioState.category 
-                  ? `No entries in the ${PORTFOLIO_CATEGORIES_DATA.find(cat => cat.id === portfolioState.category)?.name} category.`
+                  ? `No entries in the ${(() => { const found = PORTFOLIO_CATEGORIES_DATA.find(cat => cat.id === portfolioState.category); return found ? found.name : 'selected'; })()} category.`
                   : 'No portfolio entries available at the moment.'
                 }
               </p>

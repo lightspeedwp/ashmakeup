@@ -8,7 +8,7 @@
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useNavigate, useSearchParams } from '../../../lib/router';
-import { Calendar, Clock, PlayCircle, Mic } from 'lucide-react';
+import { Calendar, Clock, CirclePlay, Mic } from '../../../lib/icons';
 import { podcastEpisodes } from '../../../data/mock/podcasts/episodes';
 import { podcastCategories } from '../../../data/mock/podcasts/categories';
 import { podcastsUI } from '../../../data/mock/ui/podcasts';
@@ -76,9 +76,11 @@ export function PodcastsPage() {
     if (activeCategories.length > 0) {
       eps = eps.filter(ep =>
         activeCategories.some(
-          slug =>
-            ep.category.toLowerCase() ===
-            (podcastCategories.find(c => c.slug === slug)?.name ?? slug).toLowerCase(),
+          slug => {
+            const found = podcastCategories.find(c => c.slug === slug);
+            const catName = found ? found.name : slug;
+            return ep.category.toLowerCase() === catName.toLowerCase();
+          },
         ),
       );
     }
@@ -163,7 +165,7 @@ export function PodcastsPage() {
                     preset="content"
                   />
                   <div className="podcast-card__play-overlay" aria-hidden="true">
-                    <PlayCircle className="podcast-card__play-icon" />
+                    <CirclePlay className="podcast-card__play-icon" />
                   </div>
                   <span className="podcast-card__episode-badge">
                     EP {ep.episodeNumber}

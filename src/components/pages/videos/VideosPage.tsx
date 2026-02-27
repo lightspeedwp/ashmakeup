@@ -15,7 +15,7 @@ import { videosUI } from '../../../data/mock/ui/videos';
 import { filtersUI } from '../../../data/mock/ui/filters';
 import { Video } from '../../../data/types/videos';
 import { VideoModal } from './VideoModal';
-import { Play, ArrowRight } from 'lucide-react';
+import { Play, ArrowRight } from '../../../lib/icons';
 import "../../../styles/blocks/videos-page.css";
 import { OptimizedImage } from '../../ui/OptimizedImage';
 import { ResponsiveGridSlider } from '../../ui/ResponsiveGridSlider';
@@ -91,9 +91,11 @@ export function VideosPage() {
     if (activeCategories.length > 0) {
       vids = vids.filter(v =>
         activeCategories.some(
-          slug =>
-            v.category.toLowerCase() ===
-            (videoCategories.find(c => c.slug === slug)?.name ?? slug).toLowerCase(),
+          slug => {
+            const found = videoCategories.find(c => c.slug === slug);
+            const catName = found ? found.name : slug;
+            return v.category.toLowerCase() === catName.toLowerCase();
+          },
         ),
       );
     }
@@ -184,7 +186,7 @@ export function VideosPage() {
                 >
                   <div className="video-card__thumbnail-container">
                     <OptimizedImage 
-                      src={videoThumbnails[video.id] || video.thumbnailUrl} 
+                      src={videoThumbnails[video.id] ? videoThumbnails[video.id] : video.thumbnailUrl} 
                       alt={video.title} 
                       className="video-card__thumbnail"
                       preset="thumbnail"

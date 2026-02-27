@@ -16,7 +16,7 @@
 
 import React, { useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from '../../lib/router';
-import { ArrowRight, Mail } from 'lucide-react';
+import { ArrowRight, Mail } from '../../lib/icons';
 import { SocialLinks } from './SocialLinks';
 import { contactUI } from '../../data/mock/ui/contact';
 import '../../styles/blocks/contact-mini-menu.css';

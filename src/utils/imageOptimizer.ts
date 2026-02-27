@@ -63,7 +63,12 @@ export interface SrcSetEntry {
 const cache = new Map<string, OptimizedResult>();
 
 function cacheKey(src: string, opts: OptimizeOptions): string {
-  return `${src}__${opts.maxWidth ?? 'auto'}x${opts.maxHeight ?? 'auto'}_${opts.format ?? 'webp'}_q${opts.quality ?? 82}_dpr${opts.devicePixelRatio ?? 1}`;
+  const mw = opts.maxWidth !== undefined && opts.maxWidth !== null ? opts.maxWidth : 'auto';
+  const mh = opts.maxHeight !== undefined && opts.maxHeight !== null ? opts.maxHeight : 'auto';
+  const fmt = opts.format || 'webp';
+  const q = opts.quality !== undefined && opts.quality !== null ? opts.quality : 82;
+  const dpr = opts.devicePixelRatio !== undefined && opts.devicePixelRatio !== null ? opts.devicePixelRatio : 1;
+  return `${src}__${mw}x${mh}_${fmt}_q${q}_dpr${dpr}`;
 }
 
 /* ── Preset breakpoints for responsive srcSet generation ── */

@@ -12,7 +12,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Wifi, WifiOff } from 'lucide-react';
+import { Wifi, WifiOff } from '../../lib/icons';
 import { onlineStatusMonitor } from '../../utils/pwaService';
 
 interface OfflineIndicatorProps {
@@ -47,9 +47,13 @@ export function OfflineIndicator({ className = '' }: OfflineIndicatorProps) {
     return null;
   }
 
+  // Extract nested ternaries to avoid bundler issues
+  const onlineStatusClass = !isOnline ? 'offline-indicator--offline' : 'offline-indicator--online';
+  const visibilityClass = !showNotification ? 'offline-indicator--hidden' : '';
+
   return (
     <div
-      className={`offline-indicator ${!isOnline ? 'offline-indicator--offline' : 'offline-indicator--online'} ${!showNotification ? 'offline-indicator--hidden' : ''} ${className}`}
+      className={`offline-indicator ${onlineStatusClass} ${visibilityClass} ${className}`}
       role="status"
       aria-live="polite"
       aria-atomic="true"

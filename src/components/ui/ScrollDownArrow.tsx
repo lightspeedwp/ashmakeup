@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown } from '../../lib/icons';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import "../../styles/blocks/scroll-controls.css";
 
@@ -55,7 +55,8 @@ export function ScrollDownArrow({
         block: 'start'
       });
       
-      const announcement = `Scrolled to ${targetSectionId || 'next section'}`;
+      const sectionLabel = targetSectionId ? targetSectionId : 'next section';
+      const announcement = `Scrolled to ${sectionLabel}`;
       const ariaLive = document.createElement('div');
       ariaLive.setAttribute('aria-live', 'polite');
       ariaLive.setAttribute('class', 'sr-only');

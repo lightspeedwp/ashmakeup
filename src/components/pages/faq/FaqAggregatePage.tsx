@@ -8,7 +8,7 @@
  */
 
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import { Search, Plus, Minus, HelpCircle } from 'lucide-react';
+import { Search, Plus, Minus, CircleHelp } from '../../../lib/icons';
 import { faqData, pageFaqGroups } from '../../../data/mock/sections/faq';
 import type { FaqItem } from '../../../data/mock/sections/faq';
 import { faqPageUI } from '../../../data/mock/ui/faq';
@@ -243,7 +243,7 @@ export function FaqAggregatePage() {
           </div>
         ) : (
           <div className="faq-aggregate__empty">
-            <HelpCircle className="faq-aggregate__empty-icon" aria-hidden="true" />
+            <CircleHelp className="faq-aggregate__empty-icon" aria-hidden="true" />
             <p className="faq-aggregate__empty-text">{faqPageUI.noResults}</p>
           </div>
         )}

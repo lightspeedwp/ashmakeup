@@ -17,7 +17,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Calendar, Clock, MapPin, Sparkles, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, MapPin, Sparkles, ArrowRight } from '../../lib/icons';
 import { nextFestival } from '../../data/mock/sections/countdown';
 import "../../styles/blocks/countdown.css";
 

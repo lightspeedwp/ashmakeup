@@ -72,9 +72,7 @@ export function SnippetGeneratorPage() {
         setTimeout(() => setCopiedJSX(false), 1500);
       }
     } catch {
-      if (import.meta.env.DEV) {
-        console.log('Clipboard write failed');
-      }
+      // Dev logging removed — import.meta.env.DEV crashes this bundler
     }
   }, []);
 

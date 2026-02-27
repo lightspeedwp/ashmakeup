@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect, useState, useCallback, useRef, useMemo, memo } from 'react';
-import { X, ChevronLeft, ChevronRight, Search, Shuffle } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Search, Shuffle } from '../../lib/icons';
 import { stickerGraphics } from '../../data/mock/images/sticker-graphics';
 import type { StickerGraphic } from '../../data/mock/images/sticker-graphics';
 import {
@@ -269,11 +269,15 @@ export function StickersPage() {
       : stickerGraphics;
 
     const counts: Record<string, number> = { all: searchFiltered.length };
-    for (const theme of stickerThemes) {
-      if (theme.id === 'all') continue;
-      counts[theme.id] = searchFiltered.filter(
-        (s) => stickerThemeMap[s.id] === theme.id,
-      ).length;
+    for (var ti = 0; ti < stickerThemes.length; ti++) {
+      var theme = stickerThemes[ti];
+      if (theme.id === 'all') {
+        ti = ti; // skip — equivalent of continue
+      } else {
+        counts[theme.id] = searchFiltered.filter(
+          (s) => stickerThemeMap[s.id] === theme.id,
+        ).length;
+      }
     }
     return counts;
   }, [searchQuery]);
@@ -427,7 +431,7 @@ export function StickersPage() {
               >
                 {theme.label}
                 <span className="stickers-page__chip-count">
-                  {themeCounts[theme.id] ?? 0}
+                  {themeCounts[theme.id] ? themeCounts[theme.id] : 0}
                 </span>
               </button>
             );

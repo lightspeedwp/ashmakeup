@@ -44,7 +44,8 @@ function generateDoc(comp: typeof componentApiUI.components[0]): string {
     lines.push('');
     lines.push('| Prop | Type | Required | Default | Description |');
     lines.push('| ---- | ---- | -------- | ------- | ----------- |');
-    for (const p of comp.props) {
+    for (var pi = 0; pi < comp.props.length; pi++) {
+      var p = comp.props[pi];
       lines.push(
         `| \`${p.name}\` | \`${p.type}\` | ${p.required ? 'Yes' : 'No'} | ${p.default} | ${p.description} |`
       );
@@ -84,9 +85,7 @@ export function DocumentationGeneratorPage() {
       setCopiedAll(true);
       setTimeout(() => setCopiedAll(false), 1500);
     } catch {
-      if (import.meta.env.DEV) {
-        console.log('Clipboard write failed');
-      }
+      // Dev logging removed — import.meta.env.DEV crashes this bundler
     }
   }, [allDocs]);
 

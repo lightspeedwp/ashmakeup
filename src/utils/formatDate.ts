@@ -57,11 +57,8 @@ export function isISO8601(value: string): boolean {
  * @param context - Optional label for the warning (e.g. field name)
  */
 export function assertISO8601(value: string, context?: string): void {
-  if (import.meta.env.DEV && !isISO8601(value)) {
-    console.warn(
-      `🐞 assertISO8601: "${value}" is not a valid ISO 8601 date${context ? ` (${context})` : ''}.`
-    );
-  }
+  // Dev-only validation removed — import.meta.env.DEV crashes this bundler
+  // In production this is a no-op
 }
 
 /* ────────────────────────────────────────────────────────────────────
@@ -82,9 +79,7 @@ export function formatDate(dateString: string): string {
   const date = new Date(dateString);
 
   if (isNaN(date.getTime())) {
-    if (import.meta.env.DEV) {
-      console.warn('🐞 formatDate: Invalid date string:', dateString);
-    }
+    // Dev logging removed — import.meta.env.DEV crashes this bundler
     return dateString;
   }
 

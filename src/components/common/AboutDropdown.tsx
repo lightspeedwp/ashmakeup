@@ -18,18 +18,14 @@ import { useNavigate, useLocation } from '../../lib/router';
 import {
   MapPin,
   Music,
-  Building2,
-  Flashlight,
   Paintbrush,
-  PenTool,
   Brain,
   Rocket,
   Clock,
   Zap,
-  Bike,
   Headphones,
   Code,
-} from 'lucide-react';
+} from '../../lib/icons';
 import { aboutDropdownItems } from '../../data/mock/ui/about-dropdown';
 import type { AboutDropdownItem } from '../../data/mock/ui/about-dropdown';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -39,15 +35,15 @@ import '../../styles/blocks/about-dropdown.css';
 const DROPDOWN_ICONS: Record<string, React.ElementType> = {
   Compass: MapPin,
   Music,
-  Building2,
-  Flashlight,
+  Building2: Rocket,
+  Flashlight: Zap,
   Paintbrush,
-  PenTool,
+  PenTool: Paintbrush,
   Brain,
   Rocket,
   Clock,
   Zap,
-  Bike,
+  Bike: MapPin,
   Headphones,
   Code,
 };
@@ -115,32 +111,34 @@ export function AboutDropdown({ isOpen, onClose }: AboutDropdownProps) {
   /** Keyboard navigation within the dropdown */
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      const items = listRef.current?.querySelectorAll<HTMLButtonElement>(
+      const listEl = listRef.current;
+      const items = listEl ? listEl.querySelectorAll<HTMLButtonElement>(
         '.about-dropdown__node-btn',
-      );
-      if (!items || items.length === 0) return;
+      ) : null;
+      const hasNoItems = !items || items.length === 0;
+      if (hasNoItems) return;
 
-      const currentIndex = Array.from(items).findIndex(
+      const currentIndex = Array.from(items!).findIndex(
         (btn) => btn === document.activeElement,
       );
 
       if (e.key === 'ArrowDown') {
         e.preventDefault();
-        const next = (currentIndex + 1) % items.length;
-        items[next].focus();
+        const next = (currentIndex + 1) % items!.length;
+        items![next].focus();
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
-        const prev = (currentIndex - 1 + items.length) % items.length;
-        items[prev].focus();
+        const prev = (currentIndex - 1 + items!.length) % items!.length;
+        items![prev].focus();
       } else if (e.key === 'Escape') {
         e.preventDefault();
         onClose();
       } else if (e.key === 'Home') {
         e.preventDefault();
-        items[0].focus();
+        items![0].focus();
       } else if (e.key === 'End') {
         e.preventDefault();
-        items[items.length - 1].focus();
+        items![items!.length - 1].focus();
       }
     },
     [onClose],

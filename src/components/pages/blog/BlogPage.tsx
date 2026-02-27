@@ -10,10 +10,10 @@
  */
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { useBlogPosts } from '../../../hooks/useContentful';
+import { useBlogPosts } from '../../../hooks/useContent';
 import { OptimizedImage } from '../../ui/OptimizedImage';
 import { InstagramFeed } from '../../sections/InstagramFeed';
-import { Calendar, Clock, BookOpen } from 'lucide-react';
+import { Calendar, Clock, BookOpen } from '../../../lib/icons';
 import { FaqSection } from '../../sections/FaqSection';
 import { ArchiveFilters } from '../../ui/ArchiveFilters';
 import { blogUI } from '../../../data/mock/ui/blog';
@@ -126,7 +126,8 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
   }, [blogState.searchQuery]);
 
   const filteredPosts = useMemo(() => {
-    let posts = blogData?.posts || [];
+    const blogPosts = blogData ? blogData.posts : [];
+    let posts = blogPosts || [];
 
     // Filter by search query
     if (debouncedSearch.trim()) {
@@ -173,7 +174,7 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
     }
 
     return posts;
-  }, [blogData?.posts, debouncedSearch, activeCategories, sortBy]);
+  }, [blogData, debouncedSearch, activeCategories, sortBy]);
 
   const updateBlogState = useCallback((updates: Partial<BlogPageState>) => {
     setBlogState(prev => ({
@@ -244,7 +245,9 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
         case 'ArrowLeft':
           if (event.ctrlKey || event.metaKey) {
             event.preventDefault();
-            if (blogData?.pagination.hasPrevious) {
+            const pag = blogData ? blogData.pagination : null;
+            const hasPrev = pag ? pag.hasPrevious : false;
+            if (hasPrev) {
               goToPage(blogState.page - 1);
             }
           }
@@ -252,7 +255,9 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
         case 'ArrowRight':
           if (event.ctrlKey || event.metaKey) {
             event.preventDefault();
-            if (blogData?.pagination.hasNext) {
+            const pag2 = blogData ? blogData.pagination : null;
+            const hasNxt = pag2 ? pag2.hasNext : false;
+            if (hasNxt) {
               goToPage(blogState.page + 1);
             }
           }
@@ -262,20 +267,22 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [setCurrentPage, goToPage, blogState.page, blogData?.pagination]);
+  }, [setCurrentPage, goToPage, blogState.page, blogData]);
 
   useEffect(() => {
     setSEO(pageSEO.blog);
+    const paginationData = blogData ? blogData.pagination : null;
+    const totalItems = paginationData ? (paginationData.total || 0) : 0;
     injectSchema(SCHEMA_IDS.collection, buildCollectionSchema(
       'Insights | Makeup Tips, Festival Guides & Tutorials',
       pageSEO.blog.description,
       '/blog',
-      blogData?.pagination?.total || 0,
+      totalItems,
     ));
     return () => {
       removeSchema(SCHEMA_IDS.collection);
     };
-  }, [blogData?.pagination?.total]);
+  }, [blogData]);
 
   return (
     <main id="main-content" role="main" tabIndex={-1} className="blog-list-view bg-atomic-noise">
@@ -328,7 +335,7 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
               ))}
             </div>
           ) : filteredPosts.length > 0 ? (
-            <div className="blog-preview__grid">
+            <div className="blog-preview__grid p-[0px]">
               {filteredPosts.map((post) => (
                 <article 
                   key={post.id} 
@@ -389,7 +396,7 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
           )}
           
           {/* Pagination */}
-          {blogData?.pagination && (
+          {blogData && blogData.pagination ? (
              <div className="pagination-container">
                <button
                  type="button"
@@ -426,7 +433,7 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
                  &gt;
                </button>
              </div>
-          )}
+          ) : null}
         </div>
       </div>
 

@@ -8,7 +8,7 @@
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useParams, useNavigate } from '../../../lib/router';
-import { Play } from 'lucide-react';
+import { Play } from '../../../lib/icons';
 import { videos, videoCategories } from '../../../data/mock/videos';
 import { videosUI } from '../../../data/mock/ui/videos';
 import { ArchiveFilters } from '../../ui/ArchiveFilters';
@@ -19,6 +19,7 @@ import { formatDate } from '../../../utils/formatDate';
 import { getVideoCategoryCount } from '../../../utils/contentCounts';
 import { setSEO } from '../../../utils/seo';
 import { videoCategorySEO } from '../../../data/mock/seo';
+import { videoCategoryBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
 import {
   injectSchema,
   removeSchema,
@@ -57,11 +58,12 @@ export function VideoCategoryPage() {
   useEffect(() => {
     if (category) {
       setSEO(videoCategorySEO(category.name));
+      const vidCount = filteredVideos ? filteredVideos.length : 0;
       injectSchema(SCHEMA_IDS.collection, buildCollectionSchema(
         `${category.name} | Videos`,
         videoCategorySEO(category.name).description,
         `/videos/category/${slug}`,
-        filteredVideos?.length || 0,
+        vidCount,
       ));
     }
     return () => {
@@ -135,11 +137,11 @@ export function VideoCategoryPage() {
     <main id="main-content" role="main" tabIndex={-1} className="videos-page bg-atomic-noise">
       <div className="videos-header">
         <div className="videos-header__content">
-          <Breadcrumbs items={videoCategoryBreadcrumbs(category?.name ?? 'Category')} centered />
+          <Breadcrumbs items={videoCategoryBreadcrumbs(category ? category.name : 'Category')} centered />
           <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
-            {category?.name ?? 'Videos'}
+            {category ? category.name : 'Videos'}
           </h1>
-          {category?.description && (
+          {category && category.description && (
             <p className="text-body-guideline videos-header__description">
               {category.description}
             </p>
@@ -182,7 +184,7 @@ export function VideoCategoryPage() {
               >
                 <div className="video-card__thumbnail-container">
                   <OptimizedImage
-                    src={videoThumbnails[video.id] || video.thumbnailUrl}
+                    src={videoThumbnails[video.id] ? videoThumbnails[video.id] : video.thumbnailUrl}
                     alt={video.title}
                     className="video-card__thumbnail"
                     preset="thumbnail"

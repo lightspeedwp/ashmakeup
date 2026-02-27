@@ -8,7 +8,7 @@
 
 import React, { useMemo, useEffect, useState } from 'react';
 import { useParams, useNavigate } from '../../../lib/router';
-import { Calendar, Clock, Mic, PlayCircle, Tag } from 'lucide-react';
+import { Calendar, Clock, Mic, CirclePlay, Tag } from '../../../lib/icons';
 import { podcastEpisodes } from '../../../data/mock/podcasts/episodes';
 import { findPodcastTagBySlug } from '../../../data/mock/podcasts/tags';
 import { OptimizedImage } from '../../ui/OptimizedImage';
@@ -17,6 +17,8 @@ import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { formatDate } from '../../../utils/formatDate';
 import { setSEO } from '../../../utils/seo';
 import { podcastTagSEO } from '../../../data/mock/seo';
+import { podcastTagBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
+import { emptyStateMessages } from '../../../data/mock/ui/error';
 import {
   injectSchema,
   removeSchema,
@@ -37,16 +39,17 @@ export function PodcastTagPage() {
   const navigate = useNavigate();
   const [sortBy, setSortBy] = useState('recent');
 
-  const tag = findPodcastTagBySlug(slug ?? '');
+  const tag = findPodcastTagBySlug(slug ? slug : '');
 
   useEffect(() => {
     if (tag) {
       setSEO(podcastTagSEO(tag.name));
+      const epCount = filteredEpisodes ? filteredEpisodes.length : 0;
       injectSchema(SCHEMA_IDS.collection, buildCollectionSchema(
         `${tag.name} | Podcasts`,
         podcastTagSEO(tag.name).description,
         `/podcasts/tag/${slug}`,
-        filteredEpisodes?.length || 0,
+        epCount,
       ));
     }
     return () => {
@@ -56,10 +59,11 @@ export function PodcastTagPage() {
 
   const filteredEpisodes = useMemo(() => {
     if (!slug) return [];
-    const tagName = tag?.name ?? slug.replace(/-/g, ' ');
-    let eps = podcastEpisodes.filter(ep =>
-      (ep.tags ?? []).some(t => t.toLowerCase() === tagName.toLowerCase()),
-    );
+    const tagName = tag ? tag.name : slug.replace(/-/g, ' ');
+    let eps = podcastEpisodes.filter(ep => {
+      const epTags = ep.tags ? ep.tags : [];
+      return epTags.some(t => t.toLowerCase() === tagName.toLowerCase());
+    });
 
     switch (sortBy) {
       case 'recent':
@@ -82,13 +86,15 @@ export function PodcastTagPage() {
   /** Related tags from the matching episodes */
   const relatedTags = useMemo(() => {
     const tagSet = new Set<string>();
-    filteredEpisodes.forEach(ep =>
-      (ep.tags ?? []).forEach(t => {
-        if (t.toLowerCase() !== (tag?.name ?? '').toLowerCase()) {
+    const currentTagName = tag ? tag.name : '';
+    filteredEpisodes.forEach(ep => {
+      const epTags = ep.tags ? ep.tags : [];
+      epTags.forEach(t => {
+        if (t.toLowerCase() !== currentTagName.toLowerCase()) {
           tagSet.add(t);
         }
-      }),
-    );
+      });
+    });
     return Array.from(tagSet).slice(0, 8);
   }, [filteredEpisodes, tag]);
 
@@ -96,12 +102,12 @@ export function PodcastTagPage() {
     <main id="main-content" role="main" tabIndex={-1} className="podcasts-archive bg-atomic-noise">
       {/* Header */}
       <div className="podcasts-archive__header">
-        <Breadcrumbs items={podcastTagBreadcrumbs(tag?.name ?? slug ?? '')} centered />
+        <Breadcrumbs items={podcastTagBreadcrumbs(tag ? tag.name : (slug ? slug : ''))} centered />
         <Tag className="icon-xl" aria-hidden="true" />
         <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
-          {tag?.name ?? slug}
+          {tag ? tag.name : slug}
         </h1>
-        {tag?.description && (
+        {tag && tag.description && (
           <p className="text-body-guideline">{tag.description}</p>
         )}
         <p className="text-body-p">
@@ -170,7 +176,7 @@ export function PodcastTagPage() {
                     preset="content"
                   />
                   <div className="podcast-card__play-overlay" aria-hidden="true">
-                    <PlayCircle className="podcast-card__play-icon" />
+                    <CirclePlay className="podcast-card__play-icon" />
                   </div>
                   <span className="podcast-card__episode-badge">
                     EP {ep.episodeNumber}

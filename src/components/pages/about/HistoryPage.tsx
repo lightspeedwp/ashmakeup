@@ -9,7 +9,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { Clock } from 'lucide-react';
+import { Clock } from '../../../lib/icons';
 import { historyPageData } from '../../../data/mock/pages/history';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';

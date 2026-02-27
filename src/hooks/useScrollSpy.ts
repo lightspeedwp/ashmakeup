@@ -97,7 +97,8 @@ export function useScrollSpy(
     ratioMap.current.clear();
 
     const callback: IntersectionObserverCallback = (entries) => {
-      for (const entry of entries) {
+      for (var i = 0; i < entries.length; i++) {
+        var entry = entries[i];
         ratioMap.current.set(entry.target.id, entry.intersectionRatio);
       }
 
@@ -105,7 +106,11 @@ export function useScrollSpy(
       let bestId: string | undefined;
       let bestRatio = 0;
 
-      for (const [id, ratio] of ratioMap.current) {
+      var mapEntries = Array.from(ratioMap.current.entries());
+      for (var j = 0; j < mapEntries.length; j++) {
+        var pair = mapEntries[j];
+        var id = pair[0];
+        var ratio = pair[1];
         if (ratio > bestRatio) {
           bestRatio = ratio;
           bestId = id;
@@ -126,8 +131,9 @@ export function useScrollSpy(
 
     // Observe each section element
     const elements: Element[] = [];
-    for (const id of sectionIds) {
-      const el = document.getElementById(id);
+    for (var k = 0; k < sectionIds.length; k++) {
+      var sId = sectionIds[k];
+      const el = document.getElementById(sId);
       if (el) {
         observer.observe(el);
         elements.push(el);
@@ -135,8 +141,8 @@ export function useScrollSpy(
     }
 
     return () => {
-      for (const el of elements) {
-        observer.unobserve(el);
+      for (var m = 0; m < elements.length; m++) {
+        observer.unobserve(elements[m]);
       }
       observer.disconnect();
     };

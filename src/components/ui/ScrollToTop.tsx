@@ -10,7 +10,7 @@
  */
 
 import React, { useEffect, useCallback, useRef } from 'react';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp } from '../../lib/icons';
 import { useModal } from '../common/ModalContext';
 import { useScrollPosition } from '../../hooks/useScrollPosition';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -73,9 +73,7 @@ export function ScrollToTop({
         behavior: prefersReduced ? 'auto' : 'smooth'
       });
     } catch (error) {
-      if (import.meta.env.DEV) {
-        console.warn('Smooth scroll not supported, using instant scroll:', error);
-      }
+      // Dev logging removed — import.meta.env.DEV crashes this bundler
       window.scrollTo(0, 0);
     }
   }, [prefersReduced]);
@@ -84,7 +82,8 @@ export function ScrollToTop({
    * Handle keyboard interactions for accessibility
    */
   const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' || event.key === ' ') {
+    const isActivationKey = event.key === 'Enter' || event.key === ' ';
+    if (isActivationKey) {
       event.preventDefault();
       scrollToTop();
     }
@@ -92,7 +91,8 @@ export function ScrollToTop({
 
   // Don't render if not visible or if any modals are open
   // Also don't render if another instance is already the primary
-  if (!isVisible || hasOpenModals || !isPrimary.current) {
+  const shouldHide = !isVisible || hasOpenModals || !isPrimary.current;
+  if (shouldHide) {
     return null;
   }
 

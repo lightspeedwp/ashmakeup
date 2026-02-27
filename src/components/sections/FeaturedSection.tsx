@@ -96,14 +96,18 @@ export function FeaturedSection({
           {displayData && displayData.length > 0 ? (
             <ResponsiveGridSlider
               items={displayData}
-              keyExtractor={(work) => work.id || Math.random().toString()}
+              keyExtractor={(work) => {
+                const wId = work.id;
+                return wId ? wId : Math.random().toString();
+              }}
               renderItem={(work) => (
                 <div className="featured-section__card-wrapper">
                   <SliderCard
                     data={work}
                     onImageClick={(imageIndex) => {
+                      const workImages = work.images ? work.images : [];
                       openLightbox(
-                        work.images || [],
+                        workImages,
                         imageIndex,
                         work.title,
                         work.subtitle

@@ -20,7 +20,7 @@
  */
 
 import React, { useEffect, useRef } from 'react';
-import { Instagram } from 'lucide-react';
+import { Camera } from '../../lib/icons';
 import { ErrorBoundary } from '../common/ErrorBoundary';
 import { instagramUI, instagramConfig } from '../../data/mock/ui/instagram';
 import "../../styles/blocks/instagram-feed.css";
@@ -37,7 +37,8 @@ function InstagramFeedContent() {
 
   // Imperatively insert the <behold-widget> custom element once
   useEffect(() => {
-    if (widgetInserted.current || !widgetContainerRef.current) return;
+    const shouldSkip = widgetInserted.current || !widgetContainerRef.current;
+    if (shouldSkip) return;
 
     try {
       const widget = document.createElement('behold-widget');
@@ -45,9 +46,7 @@ function InstagramFeedContent() {
       widgetContainerRef.current.appendChild(widget);
       widgetInserted.current = true;
     } catch (err) {
-      if (import.meta?.env?.DEV) {
-        console.warn('⚠️ Failed to insert behold-widget:', err);
-      }
+      // Debug logging removed — import.meta.env.DEV crashes this bundler
     }
   }, []);
 
@@ -70,15 +69,11 @@ function InstagramFeedContent() {
     script.async = true;
 
     script.onerror = (error) => {
-      if (import.meta?.env?.DEV) {
-        console.warn('⚠️ Behold widget script failed to load:', error);
-      }
+      // Debug logging removed — import.meta.env.DEV crashes this bundler
     };
 
     script.onload = () => {
-      if (import.meta?.env?.DEV) {
-        console.log('✅ Behold widget script loaded');
-      }
+      // Debug logging removed — import.meta.env.DEV crashes this bundler
     };
 
     document.head.appendChild(script);
@@ -111,7 +106,7 @@ function InstagramFeedContent() {
               className="instagram-feed__btn"
               aria-label={instagramUI.actions.follow}
             >
-              <Instagram className="instagram-feed__btn-icon" />
+              <Camera className="instagram-feed__btn-icon" />
               <span>{instagramUI.header.handle}</span>
             </a>
           </div>

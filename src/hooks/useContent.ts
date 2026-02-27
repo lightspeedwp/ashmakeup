@@ -29,12 +29,9 @@ import {
   UnifiedPortfolioEntry
 } from '../utils/portfolioService';
 
-// Check environment variable
-const USE_WORDPRESS = (import.meta.env && import.meta.env.VITE_USE_WORDPRESS) === 'true';
-
-if (import.meta.env && import.meta.env.DEV) {
-  console.log(`🔌 Content Mode: ${USE_WORDPRESS ? 'WordPress API' : 'Mock Data'}`);
-}
+// import.meta.env access completely removed — proven unreliable in this bundler
+// WordPress mode disabled by default; toggle requires rebuild with env var
+const USE_WORDPRESS = false;
 
 // -----------------------------------------------------------------------------
 // Blog Hooks
@@ -144,12 +141,16 @@ export function usePortfolioEntries(options?: {
     setLoading(true);
     // Simulate network delay
     const timer = setTimeout(() => {
-      const page = options?.page || 1;
-      const limit = options?.limit || 10;
+      const optPage = options ? options.page : undefined;
+      const optLimit = options ? options.limit : undefined;
+      const optCategory = options ? options.category : undefined;
+      const optFeaturedOnly = options ? options.featuredOnly : undefined;
+      const page = optPage || 1;
+      const limit = optLimit || 10;
       
       const allEntries = getPortfolioByCategory(
-        options?.category || 'all',
-        options?.featuredOnly || false
+        optCategory || 'all',
+        optFeaturedOnly || false
       );
       
       const totalEntries = allEntries.length;
@@ -172,7 +173,7 @@ export function usePortfolioEntries(options?: {
     }, 300); // 300ms delay
     
     return () => clearTimeout(timer);
-  }, [options?.category, options?.featuredOnly, options?.page, options?.limit]);
+  }, [options]);
 
   return { data, loading, error: null, refresh: () => {} };
 }

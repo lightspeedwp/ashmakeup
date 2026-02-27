@@ -8,7 +8,7 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "../../lib/icons";
 import { uvMakeupWork } from "../../data/mock/portfolio/uv-makeup";
 import { EnhancedLightbox } from "../ui/EnhancedLightbox";
 import { SliderCard } from "../ui/SliderCard";
@@ -84,7 +84,8 @@ export function UVMakeupSection() {
   };
 
   const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
+    const hasValidTouch = touchStart !== null && touchEnd !== null;
+    if (!hasValidTouch) return;
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
@@ -172,12 +173,14 @@ export function UVMakeupSection() {
           {isDesktop ? (
             /* Desktop Grid View */
             <div className="layout-grid layout-grid--desktop-3 rgs-grid">
-              {uvMakeupCards.map((makeup, index) => (
-                <div key={makeup.id || index} className="uv-makeup-card-wrapper">
+              {uvMakeupCards.map((makeup, index) => {
+                const makeupKey = makeup.id ? makeup.id : String(index);
+                return (
+                <div key={makeupKey} className="uv-makeup-card-wrapper">
                   <SliderCard
                     data={makeup}
                     onImageClick={(imageIndex) => {
-                      const images = makeup.images || [];
+                      const images = makeup.images ? makeup.images : [];
                       openLightbox(
                         images,
                         imageIndex,
@@ -189,7 +192,8 @@ export function UVMakeupSection() {
                     className="uv-makeup-card"
                   />
                 </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
             /* Mobile/Tablet Slider View */
@@ -228,15 +232,17 @@ export function UVMakeupSection() {
                     transform: `translateX(calc(${currentSlideIndex} * -${100 / slidesPerView}%))`
                   }}
                 >
-                  {uvMakeupCards.map((makeup, index) => (
+                  {uvMakeupCards.map((makeup, index) => {
+                    const makeupKey = makeup.id ? makeup.id : String(index);
+                    return (
                     <div
-                      key={makeup.id || index}
+                      key={makeupKey}
                       className="uv-makeup-section__slide"
                     >
                       <SliderCard
                         data={makeup}
                         onImageClick={(imageIndex) => {
-                          const images = makeup.images || [];
+                          const images = makeup.images ? makeup.images : [];
                           openLightbox(
                             images,
                             imageIndex,
@@ -248,7 +254,8 @@ export function UVMakeupSection() {
                         className="uv-makeup-card-wrapper"
                       />
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 

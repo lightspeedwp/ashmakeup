@@ -10,7 +10,7 @@
 
 import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from '../../../lib/router';
-import { MapPin, Music, Calendar } from 'lucide-react';
+import { MapPin, Music, Calendar } from '../../../lib/icons';
 import {
   allEvents,
   getTotalEditionsAttended,
@@ -67,7 +67,10 @@ export function EventsPage() {
 
   /** Check if any edition was cycled */
   const hasCycledEdition = (editions: typeof allEvents[0]['editions']) =>
-    editions.some((ed) => ed.travel?.method === 'bicycle');
+    editions.some((ed) => {
+      const travel = ed.travel;
+      return travel ? travel.method === 'bicycle' : false;
+    });
 
   return (
     <main
@@ -217,7 +220,7 @@ export function EventsPage() {
                     </div>
                   )}
                   <span className="event-card__type-badge">
-                    {eventsUI.typeBadge[event.type] || event.type}
+                    {eventsUI.typeBadge[event.type] ? eventsUI.typeBadge[event.type] : event.type}
                   </span>
                 </div>
 
@@ -232,7 +235,7 @@ export function EventsPage() {
                     {event.location.city}, {event.location.country}
                   </span>
                   <p className="event-card__description">
-                    {event.tagline || event.description}
+                    {event.tagline ? event.tagline : event.description}
                   </p>
                 </div>
 
@@ -247,7 +250,7 @@ export function EventsPage() {
                     {attendedCount === 1
                       ? eventsUI.card.edition
                       : eventsUI.card.editions}
-                    {latestYear ? ` \u2022 ${eventsUI.card.since} ${event.editions[event.editions.length - 1]?.year}` : ''}
+                    {latestYear ? ` \u2022 ${eventsUI.card.since} ${(() => { const lastEd = event.editions[event.editions.length - 1]; return lastEd ? lastEd.year : ''; })()}` : ''}
                   </span>
                   {cycled && (
                     <TravelBadge method="bicycle" compact />

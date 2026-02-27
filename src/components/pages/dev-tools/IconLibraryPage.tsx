@@ -15,11 +15,11 @@ import {
   BookOpen, FileText, Newspaper, FolderOpen, Tag, Calendar, Clock, Layers,
   Play, Pause, Image, Mic, Music, ZoomIn, ZoomOut, LayoutGrid,
   Share2, Download, Copy, Heart, Eye, Plus, Minus, Check, Link2, Search,
-  Shield, Gauge, Zap, Sun, Moon, Wifi, WifiOff, HelpCircle, MessageSquare, AlertTriangle,
-  Instagram, Facebook, MessageCircle,
-  Palette, Paintbrush, Sparkles, Wrench, Type, Ruler, Circle, Cloud, MousePointerClick, Lightbulb,
-  MapPin, Building2, Scale, Rocket, Brain, Flashlight, User, Mail,
-} from 'lucide-react';
+  Shield, Zap, Sun, Moon, Wifi, WifiOff, CircleHelp, MessageSquare, TriangleAlert,
+  Camera, MessageCircle,
+  Palette, Paintbrush, Sparkles, Type, Ruler, Circle, Cloud, Pointer, Lightbulb,
+  MapPin, Rocket, Brain, User, Mail, Activity,
+} from '../../../lib/icons';
 import { iconLibraryUI } from '../../../data/mock/ui/icon-library';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import '../../../styles/blocks/specimen-page.css';
@@ -47,10 +47,10 @@ const ICON_MAP: Record<string, React.ElementType> = {
   BookOpen, FileText, Newspaper, FolderOpen, Tag, Calendar, Clock, Layers,
   Play, Pause, Image, Mic, Music, ZoomIn, ZoomOut, Grid: LayoutGrid, LayoutGrid,
   Share2, Download, Copy, Heart, Eye, Plus, Minus, Check, Link2, Search,
-  Shield, Gauge, Zap, Sun, Moon, Wifi, WifiOff, HelpCircle, MessageSquare, AlertTriangle,
-  Instagram, Facebook, MessageCircle,
-  Palette, Paintbrush, Sparkles, Wrench, Type, Ruler, Circle, Cloudy: Cloud, Cloud, MousePointerClick, Lightbulb,
-  MapPin, Compass: MapPin, Building2, Scale, Rocket, Brain, Flashlight, User, Mail,
+  Shield, Gauge: Activity, Zap, Sun, Moon, Wifi, WifiOff, HelpCircle: CircleHelp, CircleHelp, MessageSquare, AlertTriangle: TriangleAlert, TriangleAlert,
+  Instagram: Camera, Camera, Facebook: Heart, MessageCircle,
+  Palette, Paintbrush, Sparkles, Wrench: Shield, Type, Ruler, Circle, Cloudy: Cloud, Cloud, MousePointerClick: Pointer, Pointer, Lightbulb,
+  MapPin, Compass: MapPin, Building2: Lightbulb, Scale: Shield, Rocket, Brain, Flashlight: Zap, User, Mail, Activity,
 };
 
 /** Resolve a Lucide icon component by name */
@@ -96,15 +96,13 @@ export function IconLibraryPage() {
 
   const copyImport = useCallback(
     async (name: string) => {
-      const statement = `import { ${name} } from 'lucide-react';`;
+      const statement = `import { ${name} } from '@/lib/icons';`;
       try {
         await navigator.clipboard.writeText(statement);
         setCopied(name);
         setTimeout(() => setCopied(null), 1500);
       } catch {
-        if (import.meta.env.DEV) {
-          console.log('Clipboard write failed for:', name);
-        }
+        // Dev logging removed — import.meta.env.DEV crashes this bundler
       }
     },
     []

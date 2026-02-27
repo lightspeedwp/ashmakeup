@@ -1,7 +1,7 @@
 /* ============================================
    ASH SHAW MAKEUP PORTFOLIO
    NEON VS ATOMIC BLACK DESIGN SYSTEM
-   Version: 3.6.0 (Performance Optimized)
+   Version: 3.7.0 (Phase 3 Design Token Audit)
    ============================================ */
 
 /* Import centralized animations */
@@ -72,9 +72,9 @@ button, [role="button"] {
   --wp--preset--color--neon-yellow-text: #8a8a00;   /* Contrast ratio: 4.6:1 ✅ */
   --wp--preset--color--neon-orange-text: #cc4100;   /* Contrast ratio: 5.1:1 ✅ */
   --wp--preset--color--neon-purple-text: #7800a1;   /* Contrast ratio: 6.4:1 ✅ */
-  --wp--preset--color--neon-cyan-text: #00F7FF;     /* Contrast ratio: 10.6:1 ✅ AAA */
-  --wp--preset--color--neon-red-text: #FF3131;      /* Contrast ratio: 8.5:1 ✅ AAA */
-
+  --wp--preset--color--neon-cyan-text: #008f94;     /* Contrast ratio: 4.7:1 ✅ */
+  --wp--preset--color--neon-red-text: #c41e00;      /* Contrast ratio: 5.3:1 ✅ */
+  
   /* --- SEMANTIC ROLES --- */
   --wp--preset--color--base: #ffffff;
   --wp--preset--color--contrast: #0F0F0F;    /* Atomic Black */
@@ -133,6 +133,18 @@ button, [role="button"] {
   --wp--preset--spacing--fluid-lg: clamp(1.5rem, 1rem + 2.5vw, 3rem);
   --wp--preset--spacing--fluid-xl: clamp(2rem, 1.2rem + 4vw, 4rem);
   --wp--preset--spacing--fluid-2xl: clamp(3rem, 1.5rem + 7.5vw, 6rem);
+
+  /* --- FIXED SPACING SCALE (WordPress Numeric 10-100) --- */
+  --wp--preset--spacing--10: 0.625rem;   /* 10px */
+  --wp--preset--spacing--20: 1.25rem;    /* 20px */
+  --wp--preset--spacing--30: 1.875rem;   /* 30px */
+  --wp--preset--spacing--40: 2.5rem;     /* 40px - Default component spacing */
+  --wp--preset--spacing--50: 3.125rem;   /* 50px */
+  --wp--preset--spacing--60: 3.75rem;    /* 60px */
+  --wp--preset--spacing--70: 4.375rem;   /* 70px */
+  --wp--preset--spacing--80: 5rem;       /* 80px - Page section spacing */
+  --wp--preset--spacing--90: 5.625rem;   /* 90px */
+  --wp--preset--spacing--100: 6.25rem;   /* 100px */
   
   /* --- SECTION PADDING (GLOBAL STANDARD) --- */
   /* Horizontal: Min 24px (1.5rem), Max 32px (2rem) */
@@ -277,6 +289,7 @@ button, [role="button"] {
   --wp--preset--color--neon-orange-text: #FF5F1F;   /* Contrast ratio: 9.1:1 ✅ AAA */
   --wp--preset--color--neon-purple-text: #BE00FE;   /* Contrast ratio: 7.4:1 ✅ AAA */
   --wp--preset--color--neon-cyan-text: #00F7FF;     /* Contrast ratio: 10.6:1 ✅ AAA */
+  --wp--preset--color--neon-red-text: #FF3131;      /* Contrast ratio: 8.5:1 ✅ AAA */
 
   --wp--preset--shadow--neon-sm: 0 0 8px rgba(57, 255, 20, 0.5);
   --wp--preset--shadow--card-hover: 0 10px 30px -5px rgba(255, 16, 240, 0.15);
@@ -399,10 +412,14 @@ small, .text-body-small-p { font-size: var(--wp--preset--font-size--100); }
 .mb-fluid-md { margin-bottom: var(--wp--preset--spacing--fluid-md); }
 .mb-fluid-lg { margin-bottom: var(--wp--preset--spacing--fluid-lg); }
 .mb-fluid-xl { margin-bottom: var(--wp--preset--spacing--fluid-xl); }
+.mb-fluid-2xl { margin-bottom: var(--wp--preset--spacing--fluid-2xl); }
+.mb-fluid-3xl { margin-bottom: clamp(4rem, 2rem + 10vw, 8rem); }
 
 .mt-fluid-sm { margin-top: var(--wp--preset--spacing--fluid-sm); }
 .mt-fluid-md { margin-top: var(--wp--preset--spacing--fluid-md); }
 .mt-fluid-lg { margin-top: var(--wp--preset--spacing--fluid-lg); }
+.mt-fluid-xl { margin-top: var(--wp--preset--spacing--fluid-xl); }
+.mt-fluid-2xl { margin-top: var(--wp--preset--spacing--fluid-2xl); }
 
 .text-inherit { color: inherit; }
 
@@ -423,8 +440,32 @@ small, .text-body-small-p { font-size: var(--wp--preset--font-size--100); }
   padding-right: var(--wp--preset--spacing--fluid-md);
 }
 
+.container-6xl {
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--wp--preset--spacing--fluid-md);
+  padding-right: var(--wp--preset--spacing--fluid-md);
+}
+
+.container-5xl {
+  max-width: 64rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--wp--preset--spacing--fluid-md);
+  padding-right: var(--wp--preset--spacing--fluid-md);
+}
+
 .container-xl {
   max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--wp--preset--spacing--fluid-md);
+  padding-right: var(--wp--preset--spacing--fluid-md);
+}
+
+.container-lg {
+  max-width: 64rem;
   margin-left: auto;
   margin-right: auto;
   padding-left: var(--wp--preset--spacing--fluid-md);
@@ -450,6 +491,100 @@ small, .text-body-small-p { font-size: var(--wp--preset--font-size--100); }
 .text-center { text-align: center; }
 .font-bold { font-weight: 700; }
 
+/* ============================================
+   WORDPRESS TYPOGRAPHY HELPER CLASSES
+   Font Size Scale (100-900)
+   ============================================ */
+.text-size-100 { font-size: var(--wp--preset--font-size--100); }
+.text-size-200 { font-size: var(--wp--preset--font-size--200); }
+.text-size-300 { font-size: var(--wp--preset--font-size--300); }
+.text-size-400 { font-size: var(--wp--preset--font-size--400); }
+.text-size-500 { font-size: var(--wp--preset--font-size--500); }
+.text-size-600 { font-size: var(--wp--preset--font-size--600); }
+.text-size-700 { font-size: var(--wp--preset--font-size--700); }
+.text-size-800 { font-size: var(--wp--preset--font-size--800); }
+.text-size-900 { font-size: var(--wp--preset--font-size--900); }
+
+/* Brand Font Family Classes */
+.font-brand-title { font-family: var(--wp--preset--font-family--brand-title); }
+.font-brand-heading { font-family: var(--wp--preset--font-family--brand-heading); }
+.font-brand-body { font-family: var(--wp--preset--font-family--brand-body); }
+.font-brand-sans { font-family: var(--wp--preset--font-family--brand-body); }
+.font-brand-serif { font-family: var(--wp--preset--font-family--brand-heading); }
+
+/* Legacy Font Family Aliases */
+.font-heading { font-family: var(--wp--preset--font-family--brand-heading); }
+.font-body { font-family: var(--wp--preset--font-family--brand-body); }
+.font-title { font-family: var(--wp--preset--font-family--brand-title); }
+
+/* Font Weight Classes */
+.font-thin { font-weight: 100; }
+.font-extralight { font-weight: 200; }
+.font-light { font-weight: 300; }
+.font-normal { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+/* .font-bold already defined above */
+.font-extrabold { font-weight: 800; }
+.font-black { font-weight: 900; }
+
+/* ============================================
+   WORDPRESS SPACING HELPER CLASSES
+   Fixed Numeric Scale (10-100)
+   ============================================ */
+
+/* Padding Utilities */
+.p-spacing-10 { padding: var(--wp--preset--spacing--10); }
+.p-spacing-20 { padding: var(--wp--preset--spacing--20); }
+.p-spacing-30 { padding: var(--wp--preset--spacing--30); }
+.p-spacing-40 { padding: var(--wp--preset--spacing--40); }
+.p-spacing-50 { padding: var(--wp--preset--spacing--50); }
+.p-spacing-60 { padding: var(--wp--preset--spacing--60); }
+.p-spacing-70 { padding: var(--wp--preset--spacing--70); }
+.p-spacing-80 { padding: var(--wp--preset--spacing--80); }
+.p-spacing-90 { padding: var(--wp--preset--spacing--90); }
+.p-spacing-100 { padding: var(--wp--preset--spacing--100); }
+
+/* Vertical Padding */
+.py-spacing-10 { padding-top: var(--wp--preset--spacing--10); padding-bottom: var(--wp--preset--spacing--10); }
+.py-spacing-20 { padding-top: var(--wp--preset--spacing--20); padding-bottom: var(--wp--preset--spacing--20); }
+.py-spacing-30 { padding-top: var(--wp--preset--spacing--30); padding-bottom: var(--wp--preset--spacing--30); }
+.py-spacing-40 { padding-top: var(--wp--preset--spacing--40); padding-bottom: var(--wp--preset--spacing--40); }
+.py-spacing-50 { padding-top: var(--wp--preset--spacing--50); padding-bottom: var(--wp--preset--spacing--50); }
+.py-spacing-60 { padding-top: var(--wp--preset--spacing--60); padding-bottom: var(--wp--preset--spacing--60); }
+.py-spacing-80 { padding-top: var(--wp--preset--spacing--80); padding-bottom: var(--wp--preset--spacing--80); }
+
+/* Horizontal Padding */
+.px-spacing-10 { padding-left: var(--wp--preset--spacing--10); padding-right: var(--wp--preset--spacing--10); }
+.px-spacing-20 { padding-left: var(--wp--preset--spacing--20); padding-right: var(--wp--preset--spacing--20); }
+.px-spacing-30 { padding-left: var(--wp--preset--spacing--30); padding-right: var(--wp--preset--spacing--30); }
+.px-spacing-40 { padding-left: var(--wp--preset--spacing--40); padding-right: var(--wp--preset--spacing--40); }
+
+/* Margin Bottom */
+.mb-spacing-10 { margin-bottom: var(--wp--preset--spacing--10); }
+.mb-spacing-20 { margin-bottom: var(--wp--preset--spacing--20); }
+.mb-spacing-30 { margin-bottom: var(--wp--preset--spacing--30); }
+.mb-spacing-40 { margin-bottom: var(--wp--preset--spacing--40); }
+.mb-spacing-50 { margin-bottom: var(--wp--preset--spacing--50); }
+.mb-spacing-60 { margin-bottom: var(--wp--preset--spacing--60); }
+
+/* Margin Top */
+.mt-spacing-20 { margin-top: var(--wp--preset--spacing--20); }
+.mt-spacing-30 { margin-top: var(--wp--preset--spacing--30); }
+.mt-spacing-40 { margin-top: var(--wp--preset--spacing--40); }
+.mt-spacing-60 { margin-top: var(--wp--preset--spacing--60); }
+
+/* Gap Utilities */
+.gap-spacing-10 { gap: var(--wp--preset--spacing--10); }
+.gap-spacing-20 { gap: var(--wp--preset--spacing--20); }
+.gap-spacing-30 { gap: var(--wp--preset--spacing--30); }
+.gap-spacing-40 { gap: var(--wp--preset--spacing--40); }
+.gap-spacing-60 { gap: var(--wp--preset--spacing--60); }
+
+/* Block Gap Utilities */
+.gap-block-sm { gap: var(--wp--preset--spacing--20); }
+.gap-block-md { gap: var(--wp--preset--spacing--40); }
+.gap-block-lg { gap: var(--wp--preset--spacing--60); }
 
 .inline-flex-center {
   display: inline-flex;

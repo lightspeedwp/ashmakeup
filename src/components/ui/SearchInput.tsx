@@ -17,7 +17,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from '../../lib/router';
-import { Search, X } from 'lucide-react';
+import { Search, X } from '../../lib/icons';
 import '../../styles/blocks/search.css';
 
 /**
@@ -58,7 +58,9 @@ export function SearchInput({ className = '', isOpen: controlledOpen, onOpenChan
     if (!isControlled) {
       setInternalOpen(next);
     }
-    onOpenChange?.(next);
+    if (onOpenChange) {
+      onOpenChange(next);
+    }
   }, [isControlled, onOpenChange]);
 
   /** Close and reset on route change (skip initial mount) */
@@ -74,7 +76,10 @@ export function SearchInput({ className = '', isOpen: controlledOpen, onOpenChan
   /** Auto-focus input when controlled open state becomes true */
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 50);
+      setTimeout(() => {
+        const el = inputRef.current;
+        if (el) { el.focus(); }
+      }, 50);
     }
   }, [isOpen]);
 
@@ -90,10 +95,15 @@ export function SearchInput({ className = '', isOpen: controlledOpen, onOpenChan
   /** Global keyboard shortcut: Ctrl+K / Cmd+K to open, Escape to close */
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      const hasModifier = e.ctrlKey || e.metaKey;
+      const isKKey = e.key === 'k';
+      if (hasModifier && isKKey) {
         e.preventDefault();
         setIsOpen(true);
-        setTimeout(() => inputRef.current?.focus(), 50);
+        setTimeout(() => {
+          const el = inputRef.current;
+          if (el) { el.focus(); }
+        }, 50);
       }
       if (e.key === 'Escape' && isOpen) {
         setIsOpen(false);
@@ -118,7 +128,8 @@ export function SearchInput({ className = '', isOpen: controlledOpen, onOpenChan
   /** Clear input and refocus */
   const handleClear = () => {
     setQuery('');
-    inputRef.current?.focus();
+    const el = inputRef.current;
+    if (el) { el.focus(); }
   };
 
   /** Toggle open/submit behaviour */
@@ -128,7 +139,10 @@ export function SearchInput({ className = '', isOpen: controlledOpen, onOpenChan
     } else {
       setIsOpen(!isOpen);
       if (!isOpen) {
-        setTimeout(() => inputRef.current?.focus(), 50);
+        setTimeout(() => {
+          const el = inputRef.current;
+          if (el) { el.focus(); }
+        }, 50);
       }
     }
   };

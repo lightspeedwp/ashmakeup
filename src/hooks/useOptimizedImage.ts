@@ -53,8 +53,9 @@ export function useOptimizedImage(
    * Canvas API's crossOrigin = 'anonymous' can poison the browser cache,
    * and external CDN URLs are already server-optimised.
    */
-  const isExternalUrl =
-    originalSrc?.startsWith('http://') || originalSrc?.startsWith('https://');
+  const startsHttp = originalSrc ? originalSrc.startsWith('http://') : false;
+  const startsHttps = originalSrc ? originalSrc.startsWith('https://') : false;
+  const isExternalUrl = startsHttp || startsHttps;
   const shouldSkip = skip || isExternalUrl;
 
   const [state, setState] = useState<UseOptimizedImageResult>({

@@ -3,16 +3,16 @@
  */
 
 import React from 'react';
-import { Camera, PenTool, BatteryCharging, Shield, ChevronRight } from 'lucide-react';
+import { Image, Paintbrush, Zap, Shield, ChevronRight } from '../../../lib/icons';
 import { gearPageData } from '../../../data/mock/pages/gear';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { setSEO } from '../../../utils/seo';
 import '../../../styles/blocks/gear-page.css';
 
 const IconMap = {
-  paints: PenTool,
-  brushes: PenTool,
-  tech: Camera,
+  paints: Paintbrush,
+  brushes: Paintbrush,
+  tech: Image,
   survival: Shield,
 };
 

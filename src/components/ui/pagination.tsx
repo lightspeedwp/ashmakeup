@@ -12,8 +12,8 @@ import * as React from "react";
 import {
   ChevronLeft,
   ChevronRight,
-  MoreHorizontal,
-} from "lucide-react";
+  Ellipsis,
+} from "../../lib/icons";
 
 import { cn } from "./utils";
 import "../../styles/blocks/pagination.css";
@@ -134,7 +134,7 @@ function PaginationEllipsis({
       className={cn("pagination__ellipsis", className)}
       {...props}
     >
-      <MoreHorizontal className="pagination__ellipsis-icon" />
+      <Ellipsis className="pagination__ellipsis-icon" />
       <span className="sr-only">More pages</span>
     </span>
   );

@@ -8,7 +8,7 @@
 
 import React, { useMemo, useEffect } from 'react';
 import { useParams, useNavigate } from '../../../lib/router';
-import { Calendar, Clock, BookOpen } from 'lucide-react';
+import { Calendar, Clock, BookOpen } from '../../../lib/icons';
 import { blogPosts } from '../../../data/mock/blog/posts';
 import { blogTags, findBlogTagBySlug } from '../../../data/mock/blog/tags';
 import { OptimizedImage } from '../../ui/OptimizedImage';
@@ -17,6 +17,8 @@ import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { formatDate } from '../../../utils/formatDate';
 import { setSEO } from '../../../utils/seo';
 import { blogTagSEO } from '../../../data/mock/seo';
+import { blogTagBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
+import { emptyStateMessages } from '../../../data/mock/ui/error';
 import {
   injectSchema,
   removeSchema,
@@ -30,7 +32,10 @@ export function BlogTagPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
 
-  const tag = findBlogTagBySlug(slug ?? '');
+  const slugValue = slug || '';
+  const tag = findBlogTagBySlug(slugValue);
+  const tagName = tag ? tag.name : '';
+  const tagDesc = tag ? tag.description : '';
 
   useEffect(() => {
     if (tag) {
@@ -49,26 +54,29 @@ export function BlogTagPage() {
 
   const filteredPosts = useMemo(() => {
     if (!slug) return [];
-    const tagName = tag?.name ?? slug.replace(/-/g, ' ');
+    const resolvedTagName = tagName || slug.replace(/-/g, ' ');
     return blogPosts
-      .filter(post =>
-        (post.tags ?? []).some(t => t.toLowerCase() === tagName.toLowerCase()),
-      )
+      .filter(post => {
+        const postTags = post.tags || [];
+        return postTags.some(t => t.toLowerCase() === resolvedTagName.toLowerCase());
+      })
       .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
   }, [slug, tag]);
+
+  const breadcrumbLabel = tagName || slugValue;
 
   return (
     <main id="main-content" role="main" tabIndex={-1} className="blog-list-view bg-atomic-noise">
       <div className="blog-list-header" data-blog-header>
         <div className="container-7xl">
-          <Breadcrumbs items={blogTagBreadcrumbs(tag?.name ?? slug ?? '')} centered />
+          <Breadcrumbs items={blogTagBreadcrumbs(breadcrumbLabel)} centered />
           <div className="blog-list-header__content">
             <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
-              Tag: {tag?.name ?? slug}
+              Tag: {tagName || slug}
             </h1>
-            {tag?.description && (
-              <p className="text-body-guideline">{tag.description}</p>
-            )}
+            {tagDesc ? (
+              <p className="text-body-guideline">{tagDesc}</p>
+            ) : null}
             <p className="archive-filters__result-count">
               Number of results: <strong>{filteredPosts.length}</strong>
             </p>

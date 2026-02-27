@@ -2,9 +2,125 @@
 
 This document defines the core design, development, and technical guidelines for building and maintaining the Ash Shaw Makeup Portfolio in **Figma Make**. It serves as the entry point to a comprehensive design system with detailed documentation organized in separate files.
 
-**Version:** 7.0.0
+**Version:** 7.4.0
 **Last Updated:** February 2026
-**Last Reviewed:** February 21, 2026
+**Last Reviewed:** February 25,2026
+
+## 🚨 CRITICAL: Project Workflow & File Organization (MUST READ FIRST)
+
+### 🤖 Default AI Workflow (MUST FOLLOW)
+
+**When asked to write a prompt, audit, or review, ALWAYS follow this sequence:**
+
+1. **Create a prompt** in `/prompts/` — defines the audit scope, steps, and references to relevant guidelines.
+2. **Run the audit** described in the prompt against the codebase and guidelines.
+3. **Save findings** to a report file in `/reports/{topic}/` — only after the full audit is complete.
+4. **Create a task list** in `/tasks/` — only once the report is finalized, extract actionable items into a checklist.
+
+**This is the assumed default.** You do not need to be told each step explicitly. When told to "write a prompt" or "audit X", execute the full 4-step workflow above.
+
+**Multi-audit orchestrators:** When an audit covers multiple areas, create a master/orchestrator prompt in `/prompts/{topic}/orchestrator.md` with individual sub-prompts. Each sub-audit gets its own report in `/reports/{topic}/`. All tasks are consolidated into one task list per orchestrator in `/tasks/`.
+
+**Reusability:** All prompts should be written as reusable templates that can be re-run for ongoing maintenance.
+
+### 🚫 Root Directory Restrictions (CRITICAL)
+
+**Only the following `.md` files are allowed in the project root (`/`):**
+- `README.md` — Project overview
+- `CHANGELOG.md` — Release history (protected file — see **[changelog.md](./changelog.md)**)
+- `Attributions.md` — System-protected file (cannot be moved or deleted)
+
+**All other `.md` files MUST be placed in the appropriate folder:**
+
+| Content Type | Required Location |
+|---|---|
+| Project documentation, quick references, guides | `/docs/` |
+| Design & development guidelines | `/guidelines/` |
+| AI prompt files | `/prompts/` |
+| Audit reports & analysis | `/reports/{topic}/` |
+| Task lists & checklists | `/tasks/` |
+
+**Script files:** All `.sh` script files MUST be placed in `/scripts/`. Never create `.sh` files in the project root.
+
+**Enforcement:** If you need to create a new `.md` file, determine its purpose and place it in the correct folder above. When in doubt, use `/docs/` for general documentation.
+
+### 📁 Mandatory Folder Conventions
+
+The project uses three dedicated workflow folders. **All AI-generated and human-authored workflow artifacts MUST be stored in these folders.** Never place prompts, reports, or task lists anywhere else (e.g., never in root, never in `/guidelines/`).
+
+| Folder | Purpose | Naming Convention |
+|---|---|---|
+| `/prompts/` | All prompt files for AI-assisted tasks | `{topic}.md` or subfolder `{topic}/` with `orchestrator.md` |
+| `/reports/` | All audit findings, analysis results, reports | Subfolder per audit: `/reports/{audit-name}/` |
+| `/tasks/` | All task lists and checklists | `task-list.md` is the master general-purpose task list |
+| `/docs/` | General project documentation, quick references, attributions | Descriptive filenames (e.g., `Attributions.md`, `quick-reference.md`) |
+| `/scripts/` | All build, utility, and automation scripts (`.ts`, `.sh`, `.js`) | Descriptive filenames (e.g., `verify-build.ts`, `deploy.sh`) |
+
+**Rules:**
+
+1. **Prompts:** Always create new prompt files in `/prompts/`. For multi-step workflows, create a subfolder with a master `orchestrator.md` and child prompt files.
+2. **Reports:** Always write reports to `/reports/`, inside a suitable subfolder (e.g., `/reports/root-cleanup/`, `/reports/css-audit/`). One subfolder per audit or topic.
+3. **Tasks:** Always create task lists in `/tasks/`. The file `/tasks/task-list.md` is the **all-purpose general task list** — it must never be deleted. One task list per orchestrator prompt, stored in the root of `/tasks/`.
+4. **Lifecycle:** Archive completed tasks for later reference. Delete any report older than a few days. Regularly review all folders for unused and orphaned files.
+5. **Cross-referencing:** When referencing guidelines from prompts/reports/tasks, always link to the specific guideline file (e.g., `[BEM Architecture](../guidelines/css-architecture.md)`).
+6. **Never delete** `/tasks/task-list.md` — it is the persistent master checklist.
+7. **Docs:** The `/docs/` folder is the designated home for all general-purpose project documentation, quick references, guides, and relocated documentation files (e.g., CMS field mappings, architecture overviews). Any `.md` file that does not belong in `/guidelines/`, `/prompts/`, `/reports/`, or `/tasks/` should go in `/docs/`.
+
+### 🛡️ Bundler Compatibility Rules (Figma Make)
+
+The Figma Make bundler has known syntax incompatibilities. **All code MUST follow these workarounds:**
+
+| Forbidden Syntax | Required Workaround |
+|---|---|
+| Optional chaining (`?.`) | Explicit null checks (`if (x != null)`) |
+| Nullish coalescing (`??`) | Explicit if/else with null checks |
+| `import.meta.env` | Completely removed — proven unreliable |
+| Nested ternaries | Convert to if/else blocks |
+| `for...of` loops | Classic `for (var i = 0; i < arr.length; i++)` |
+| Object literals in JSX | Property-by-property assignment via `setProp()` helper |
+| Bracket notation (outside helpers) | Use `grab()` or `arrayGet()` helpers only |
+| `new Set<>()` generics in `.tsx` | Use `new Set()` without generic, or cast separately |
+| Arrow callbacks in certain contexts | Named function expressions |
+| `break` in loops inside closures | Use `i = length` pattern to exit loop |
+| Dot notation in certain contexts | Use `grab()` helper via `Object.entries()` |
+| `var` declarations | Preferred over `let`/`const` in router/lib code for safety |
+
+**Helper functions** (defined in `/lib/router.tsx`):
+- `grab(obj, key)` — Safe property read via `Object.entries()` iteration
+- `arrayGet(arr, index)` — Safe array access
+- `setProp(obj, key, value)` — Safe property write via `Object.defineProperty`
+- `buildContextValue()` — Object construction with `Object.entries()` and explicit if/else
+
+**Critical rule:** Do NOT replace any existing images, logos, or `figma:asset/` imports with Unsplash or placeholder images.
+
+### 🖼️ Image Protection Rule
+
+**NEVER replace existing images.** All current `figma:asset/` imports, logo files, and existing image references are protected. When adding new images, use `ImageWithFallback` from `/components/figma/ImageWithFallback.tsx` (which must not be modified — it is a protected file).
+
+### 🛑 Content Folder Protection Rule (CRITICAL — NEVER DELETE)
+
+**The `/content/` folder is STRICTLY PROTECTED.** It contains Ash's personal reference notes, research, bios, and raw content used to seed the website. These files took significant time to compile and are irreplaceable.
+
+**NEVER delete, move, archive, or modify any file in `/content/`.** Even if an audit reports these files as "orphaned" or "not imported by code", they are **intentionally kept as reference material**. "Not imported" does NOT mean "safe to delete."
+
+**Protected structure:**
+```
+/content/
+├── about/          # Personal about page notes (six-cats.md)
+├── book/           # Book content (this-one-time.md)
+├── lightspeed/     # Lightspeed agency content (5 files)
+├── personal/       # Personal bios, notes, research (12 files)
+└── social-profiles/ # Social media strategy & profiles (5 files)
+```
+
+**Rules:**
+1. **NEVER delete** any file in `/content/` — regardless of import status
+2. **NEVER flag** `/content/` files as "orphaned" in audits
+3. **NEVER recommend** deletion or archival of `/content/` files
+4. All audits MUST skip `/content/` entirely — it is out of scope
+5. If creating new reference content, place it in the appropriate `/content/` subfolder
+
+---
 
 ## 📋 Major Update (v5.3.0) - Personal Art Project
 
@@ -39,7 +155,8 @@ Read ALL overview files in this directory:
 - **[overview-parts.md](./overview-parts.md)** - Template parts (Header, Footer, etc.)
 - **[overview-templates.md](./overview-templates.md)** - Page templates and layouts
 - **[Data System Documentation](../data/README.md)** - Mock data system and usage (IMPORTANT!)
-- **[pwa-implementation.md](./pwa-implementation.md)** - 🆕 Progressive Web App features and offline support
+- **[CMS Field Mapping](../docs/cms-field-mapping.md)** - WordPress CPT/ACF field mapping reference
+- **[pwa-implementation.md](./pwa-implementation.md)** - Progressive Web App features and offline support
 
 ### Step 2: Read Design Tokens (REQUIRED)
 Read ALL files in the `design-tokens/` folder. Do NOT skip this step:
@@ -144,6 +261,13 @@ ash-shaw-makeup-portfolio/
 │   ├── 📁 ui/                         # UI primitives
 │   └── 📁 figma/                      # Figma integration utilities
 │
+├── 📁 content/                        # 🛑 PROTECTED — Personal reference notes (NEVER DELETE)
+│   ├── 📁 about/                      # About page notes
+│   ├── 📁 book/                       # Book content
+│   ├── 📁 lightspeed/                 # Lightspeed agency content
+│   ├── 📁 personal/                   # Personal bios, notes, research
+│   └── 📁 social-profiles/            # Social media strategy & profiles
+│
 ├── 📁 data/                           # 🆕 Centralized mock data system
 │   ├── 📁 mock/                       # Mock data (single source of truth)
 │   │   ├── 📁 images/                 # Hero images
@@ -176,6 +300,11 @@ ash-shaw-makeup-portfolio/
 │   ├── 📁 patterns/                   # Design patterns
 │   ├── 📁 parts/                      # Template parts
 │   └── 📁 templates/                  # Page templates
+│
+├── 📁 prompts/                        # AI prompt files (orchestrators + sub-prompts)
+├── 📁 reports/                        # Audit reports (subfolders per audit)
+├── 📁 tasks/                          # Task lists (task-list.md = master checklist)
+├── 📁 docs/                           # 🆕 General project documentation & quick references
 │
 ├── 📁 public/                         # Static assets
 └── 📁 Configuration Files             # Build and deployment configs
@@ -438,6 +567,10 @@ The project uses a comprehensive centralized mock data system that serves as the
 ---
 
 ## 10. 📖 Additional Documentation
+
+### Protected Root Files
+- **[CHANGELOG.md](../CHANGELOG.md)** - Release history following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format (protected — never delete, move, or rename)
+- **[Changelog Guidelines](./changelog.md)** - Format rules, writing standards, and protection policies for the changelog
 
 ### Component-Specific Guidelines
 Before using any component, read its specific guideline file:

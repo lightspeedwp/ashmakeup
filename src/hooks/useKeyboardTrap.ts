@@ -116,7 +116,9 @@ export function useKeyboardTrap<T extends HTMLElement = HTMLElement>(
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         event.stopPropagation();
-        onEscape?.();
+        if (onEscape) {
+          onEscape();
+        }
         return;
       }
 

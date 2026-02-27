@@ -8,7 +8,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { Mic, Headphones } from 'lucide-react';
+import { Mic, Headphones } from '../../../lib/icons';
 import { podcastPageData } from '../../../data/mock/pages/about-subpages';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';

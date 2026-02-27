@@ -16,7 +16,7 @@
 
 import React, { useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from '../../lib/router';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '../../lib/icons';
 import { allPortfolioWork } from '../../data/mock/portfolio';
 import { PORTFOLIO_CATEGORIES } from '../../utils/portfolioService';
 import { getPortfolioCategoryCount } from '../../utils/contentCounts';
@@ -53,10 +53,11 @@ export function PortfolioMegaMenu({ isOpen, onClose, onMouseEnter, onMouseLeave 
 
   /** The single most-recent featured entry */
   const featuredEntry = sortedWork.find((w) => w.featured) || sortedWork[0];
+  const featuredId = featuredEntry ? featuredEntry.id : null;
 
   /** 5 recent entries excluding the featured one */
   const recentEntries = sortedWork
-    .filter((w) => w.id !== featuredEntry?.id)
+    .filter((w) => w.id !== featuredId)
     .slice(0, 5);
 
   /** Active categories (with at least one entry, excluding "All Work") */
@@ -122,7 +123,7 @@ export function PortfolioMegaMenu({ isOpen, onClose, onMouseEnter, onMouseLeave 
               role="menuitem"
               onClick={() => go(`/portfolio/${featuredEntry.slug}`)}
             >
-              {featuredEntry.images?.[0] && (
+              {featuredEntry.images && featuredEntry.images[0] ? (
                 <div className="mega-menu__featured-img-wrap">
                   <img
                     src={featuredEntry.images[0].src}
@@ -132,7 +133,7 @@ export function PortfolioMegaMenu({ isOpen, onClose, onMouseEnter, onMouseLeave 
                   />
                   <div className="mega-menu__featured-overlay" aria-hidden="true" />
                 </div>
-              )}
+              ) : null}
               <div className="mega-menu__featured-body">
                 <span className="mega-menu__featured-cat">{featuredEntry.category}</span>
                 <span className="mega-menu__featured-title">{featuredEntry.title}</span>
@@ -163,14 +164,14 @@ export function PortfolioMegaMenu({ isOpen, onClose, onMouseEnter, onMouseLeave 
                   role="menuitem"
                   onClick={() => go(`/portfolio/${entry.slug}`)}
                 >
-                  {entry.images?.[0] && (
+                  {entry.images && entry.images[0] ? (
                     <img
                       src={entry.images[0].src}
                       alt={entry.images[0].alt}
                       className="mega-menu__recent-thumb"
                       loading="lazy"
                     />
-                  )}
+                  ) : null}
                   <div className="mega-menu__recent-text">
                     <span className="mega-menu__recent-title">{entry.title}</span>
                     <span className="mega-menu__recent-meta">

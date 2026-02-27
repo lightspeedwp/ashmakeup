@@ -11,7 +11,7 @@
 
 import React from 'react';
 import { Link } from '../../lib/router';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '../../lib/icons';
 import "../../styles/blocks/read-more-btn.css";
 
 /**
@@ -38,24 +38,27 @@ export function ReadMoreButton({
   children = "Read more" 
 }: ReadMoreButtonProps) {
   // Generate SEO-friendly URL with slug preferred over ID
-  const href = `/blog/${postSlug || postId}`;
+  const href = `/blog/${postSlug ? postSlug : postId}`;
   
   // Handle click events - navigate to individual blog post
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (onClick && (postSlug || postId)) {
+    const hasSlugOrId = postSlug !== undefined || postId !== undefined;
+    if (onClick && hasSlugOrId) {
       e.preventDefault();
       e.stopPropagation();
-      const slug = postSlug || postId;
+      const slug = postSlug ? postSlug : postId;
       onClick(`blog/${slug}`, slug);
     }
   };
   
   // Handle keyboard navigation for accessibility
   const handleKeyDown = (e: React.KeyboardEvent<HTMLAnchorElement>) => {
-    if ((e.key === 'Enter' || e.key === ' ') && onClick && (postSlug || postId)) {
+    const isActivationKey = e.key === 'Enter' || e.key === ' ';
+    const hasSlugOrId = postSlug !== undefined || postId !== undefined;
+    if (isActivationKey && onClick && hasSlugOrId) {
       e.preventDefault();
       e.stopPropagation();
-      const slug = postSlug || postId;
+      const slug = postSlug ? postSlug : postId;
       onClick(`blog/${slug}`, slug);
     }
   };

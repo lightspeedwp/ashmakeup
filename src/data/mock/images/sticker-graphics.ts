@@ -235,7 +235,7 @@ export function getStickerForPage(pageId: string): StickerGraphic {
   if (pageId.startsWith('podcast')) return stickerGraphics[5]; // Galaxy Eye Wave
   if (pageId.startsWith('event')) return stickerGraphics[10]; // Starburst Eye
 
-  const index = pageMap[pageId] ?? 0;
+  const index = pageMap[pageId] !== undefined ? pageMap[pageId] : 0;
   return stickerGraphics[index % stickerGraphics.length];
 }
 

@@ -9,7 +9,7 @@
  */
 
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import { Search, Star, MapPin, Calendar, Quote } from 'lucide-react';
+import { Search, Star, MapPin, Calendar, MessageSquare } from '../../../lib/icons';
 import { feedbackItems } from '../../../data/mock/feedback';
 import type { FeedbackItem } from '../../../data/mock/feedback';
 import { feedbackPageUI } from '../../../data/mock/ui/feedback';
@@ -189,7 +189,7 @@ export function FeedbackPage() {
           </div>
         ) : (
           <div className="feedback-page__empty">
-            <Quote className="feedback-page__empty-icon" aria-hidden="true" />
+            <MessageSquare className="feedback-page__empty-icon" aria-hidden="true" />
             <p className="feedback-page__empty-text">{feedbackPageUI.noResults}</p>
           </div>
         )}
@@ -205,7 +205,7 @@ function FeedbackCard({ feedback }: { feedback: FeedbackItem }) {
   return (
     <article className={`feedback-card${feedback.featured ? ' feedback-card--featured' : ''}`}>
       <div className="feedback-card__quote-mark" aria-hidden="true">
-        <Quote className="feedback-card__quote-icon" />
+        <MessageSquare className="feedback-card__quote-icon" />
       </div>
 
       <blockquote className="feedback-card__quote">

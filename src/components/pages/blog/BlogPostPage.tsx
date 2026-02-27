@@ -10,13 +10,13 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { useBlogPost } from '../../../hooks/useContentful';
+import { useBlogPost } from '../../../hooks/useContent';
 import { type BlogPost } from '../../../data/types/blog';
 import { OptimizedImage } from '../../ui/OptimizedImage';
 import { ShareComponent } from '../../ui/ShareComponent';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { FaqSection } from '../../sections/FaqSection';
-import { Calendar, Clock, Tag, User, ArrowLeft, BookOpen, Eye, Share2, Instagram, Facebook, Heart } from 'lucide-react';
+import { Calendar, Clock, Tag, User, ArrowLeft, BookOpen, Eye, Share2, Camera, ExternalLink, Heart } from '../../../lib/icons';
 import { blogUI } from '../../../data/mock/ui/blog';
 import { markdownToHtml } from '../../../utils/simpleMarkdown';
 import { useAppNavigate } from '../../../hooks/useAppNavigate';
@@ -48,8 +48,8 @@ const AUTHOR_PROFILE = {
   avatar: ashShawAvatar,
   bio: "Ash Shaw is a visionary makeup artist known for his vibrant, neon-infused designs and 'Atomic Black' aesthetic. With a passion for festival culture and UV artistry, he transforms faces into living canvases of color and energy.",
   socials: [
-    { name: 'Instagram', url: 'https://www.instagram.com/feedmymedia', icon: Instagram },
-    { name: 'Facebook', url: 'https://www.facebook.com/ash.shaw/', icon: Facebook }
+    { name: 'Instagram', url: 'https://www.instagram.com/feedmymedia', icon: Camera },
+    { name: 'Facebook', url: 'https://www.facebook.com/ash.shaw/', icon: ExternalLink }
   ]
 };
 
@@ -66,9 +66,11 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
   const [views, setViews] = useState(0);
 
   /* Analytics: reading time estimation + history tracking */
+  const postTitle = post ? post.title : undefined;
+  const postContent = post ? post.content : undefined;
   const { readingTime: estimatedReadTime } = useAnalytics('blog', slug, {
-    title: post?.title,
-    content: post?.content,
+    title: postTitle,
+    content: postContent,
     skip: !post,
   });
 
@@ -370,7 +372,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
                     title={post.title}
                     description={post.excerpt || post.title}
                     url={typeof window !== 'undefined' ? window.location.href : `https://ashshaw.makeup/blog/${slug}`}
-                    imageUrl={post.featuredImage?.url}
+                    imageUrl={post.featuredImage ? post.featuredImage.url : undefined}
                     variant="inline"
                     align="left"
                   />

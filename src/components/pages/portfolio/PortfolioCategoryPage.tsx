@@ -8,7 +8,7 @@
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useParams, useNavigate } from '../../../lib/router';
-import { Image, Layers } from 'lucide-react';
+import { Image, Layers } from '../../../lib/icons';
 import {
   PORTFOLIO_CATEGORIES,
   UNIFIED_PORTFOLIO_DATA,
@@ -24,6 +24,8 @@ import '../../../styles/blocks/portfolio-card.css';
 
 import { setSEO } from '../../../utils/seo';
 import { portfolioCategorySEO } from '../../../data/mock/seo';
+import { portfolioCategoryBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
+import { emptyStateMessages } from '../../../data/mock/ui/error';
 import {
   injectSchema,
   removeSchema,
@@ -56,7 +58,7 @@ export function PortfolioCategoryPage() {
         `${category.name} | Portfolio`,
         portfolioCategorySEO(category.name).description,
         `/portfolio/category/${slug}`,
-        filteredEntries?.length || 0,
+        filteredEntries ? filteredEntries.length : 0,
       ));
     }
     return () => {
@@ -137,13 +139,13 @@ export function PortfolioCategoryPage() {
     >
       <div className="portfolio-main__header">
         <div className="container-7xl">
-          <Breadcrumbs items={portfolioCategoryBreadcrumbs(category?.name ?? 'Category')} centered />
+          <Breadcrumbs items={portfolioCategoryBreadcrumbs(category ? category.name : 'Category')} centered />
           <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
-            {category?.name ?? 'Portfolio'}
+            {category ? category.name : 'Portfolio'}
           </h1>
-          {catData?.description && (
+          {catData && catData.description ? (
             <p className="text-body-guideline">{catData.description}</p>
-          )}
+          ) : null}
         </div>
       </div>
 

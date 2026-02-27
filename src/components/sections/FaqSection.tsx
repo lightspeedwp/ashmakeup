@@ -9,7 +9,7 @@
  */
 
 import React, { useState, useMemo, useEffect } from "react";
-import { Plus, Minus } from "lucide-react";
+import { Plus, Minus } from "../../lib/icons";
 import { faqData, getFaqsForPage } from "../../data/mock/sections/faq";
 import type { FaqItem } from "../../data/mock/sections/faq";
 import { getRandomSticker } from "../../data/mock/images/sticker-graphics";
@@ -91,7 +91,8 @@ export function FaqSection({ pageId, items, variant = 'default' }: FaqSectionPro
     };
   }, [pageId, items]);
 
-  const sticker = useMemo(() => getRandomSticker(pageId || 'home'), [pageId]);
+  const stickerPageId = pageId ? pageId : 'home';
+  const sticker = useMemo(() => getRandomSticker(stickerPageId), [stickerPageId]);
 
   // Inject Schema.org FAQPage JSON-LD for SEO
   useEffect(() => {
@@ -119,7 +120,7 @@ export function FaqSection({ pageId, items, variant = 'default' }: FaqSectionPro
           <div>
             {faqs.map((faq, index) => (
               <FaqItemComponent
-                key={faq.id ?? index}
+                key={faq.id ? faq.id : String(index)}
                 question={faq.question}
                 answer={faq.answer}
                 isOpen={openIndex === index}

@@ -28,11 +28,16 @@ export function useClickOutside(
       const target = event.target as Node;
 
       // Check if click is inside any of the provided refs
-      const isInsideRef = refs.some(ref => ref.current?.contains(target));
+      const isInsideRef = refs.some(ref => {
+        const el = ref.current;
+        return el ? el.contains(target) : false;
+      });
       if (isInsideRef) return;
 
       // Check if click matches any ignore selectors (e.g., specific overlay classes)
-      if (ignoreSelectors.length > 0 && target instanceof Element) {
+      const hasIgnoreSelectors = ignoreSelectors.length > 0;
+      const isElement = target instanceof Element;
+      if (hasIgnoreSelectors && isElement) {
         const isIgnored = ignoreSelectors.some(selector => target.closest(selector));
         if (isIgnored) return;
       }

@@ -6,7 +6,7 @@
 
 import React, { useEffect } from "react";
 import { useNavigate } from "../../lib/router";
-import { Home, ArrowLeft } from "lucide-react";
+import { Home, ArrowLeft } from "../../lib/icons";
 import "../../styles/blocks/not-found-page.css";
 
 import { setSEO } from '../../utils/seo';

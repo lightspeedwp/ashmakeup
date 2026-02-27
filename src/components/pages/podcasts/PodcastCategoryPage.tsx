@@ -8,7 +8,7 @@
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useParams, useNavigate } from '../../../lib/router';
-import { Calendar, Clock, Mic, PlayCircle } from 'lucide-react';
+import { Calendar, Clock, Mic, CirclePlay } from '../../../lib/icons';
 import { podcastEpisodes } from '../../../data/mock/podcasts/episodes';
 import { podcastCategories } from '../../../data/mock/podcasts/categories';
 import { podcastsUI } from '../../../data/mock/ui/podcasts';
@@ -20,6 +20,7 @@ import { formatDate } from '../../../utils/formatDate';
 import { getPodcastCategoryCount } from '../../../utils/contentCounts';
 import { setSEO } from '../../../utils/seo';
 import { podcastCategorySEO } from '../../../data/mock/seo';
+import { podcastCategoryBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
 import {
   injectSchema,
   removeSchema,
@@ -51,11 +52,12 @@ export function PodcastCategoryPage() {
   useEffect(() => {
     if (category) {
       setSEO(podcastCategorySEO(category.name));
+      const epCount = filteredEpisodes ? filteredEpisodes.length : 0;
       injectSchema(SCHEMA_IDS.collection, buildCollectionSchema(
         `${category.name} | Podcasts`,
         podcastCategorySEO(category.name).description,
         `/podcasts/category/${slug}`,
-        filteredEpisodes?.length || 0,
+        epCount,
       ));
     }
     return () => {
@@ -129,12 +131,12 @@ export function PodcastCategoryPage() {
     <main id="main-content" role="main" tabIndex={-1} className="podcasts-archive bg-atomic-noise">
       {/* Header */}
       <div className="podcasts-archive__header">
-        <Breadcrumbs items={podcastCategoryBreadcrumbs(category?.name ?? 'Category')} centered />
+        <Breadcrumbs items={podcastCategoryBreadcrumbs(category ? category.name : 'Category')} centered />
         <Mic className="icon-xl" aria-hidden="true" />
         <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
-          {category?.name ?? 'Podcasts'}
+          {category ? category.name : 'Podcasts'}
         </h1>
-        {category?.description && (
+        {category && category.description && (
           <p className="text-body-guideline">{category.description}</p>
         )}
       </div>
@@ -181,7 +183,7 @@ export function PodcastCategoryPage() {
                     preset="content"
                   />
                   <div className="podcast-card__play-overlay" aria-hidden="true">
-                    <PlayCircle className="podcast-card__play-icon" />
+                    <CirclePlay className="podcast-card__play-icon" />
                   </div>
                   <span className="podcast-card__episode-badge">
                     EP {ep.episodeNumber}

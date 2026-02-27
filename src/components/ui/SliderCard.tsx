@@ -7,7 +7,7 @@
  */
 
 import React, { useState, useCallback, memo } from "react";
-import { ChevronLeft, ChevronRight, Play, Calendar } from "lucide-react";
+import { ChevronLeft, ChevronRight, Play, Calendar } from "../../lib/icons";
 import { useNavigate } from "../../lib/router";
 import { usePortfolioImageUrl } from "./PortfolioImage";
 import { useOptimizedImage } from "../../hooks/useOptimizedImage";
@@ -73,26 +73,31 @@ function SliderCardInner({
   const [isSwiping, setIsSwiping] = useState(false);
 
   // Handle legacy single image format
-  const images: SliderImage[] =
-    data.images ||
-    (data.image
-      ? [
-          {
-            src: data.image,
-            alt: data.title,
-            caption: data.title,
-            description: data.description,
-          },
-        ]
-      : []);
+  const dataImages = data.images;
+  let images: SliderImage[];
+  if (dataImages) {
+    images = dataImages;
+  } else if (data.image) {
+    images = [
+      {
+        src: data.image,
+        alt: data.title,
+        caption: data.title,
+        description: data.description,
+      },
+    ];
+  } else {
+    images = [];
+  }
 
   const hasMultipleImages = images.length > 1;
-  const currentImage = images[currentImageIndex] || {
+  const rawCurrentImage = images[currentImageIndex];
+  const currentImage = rawCurrentImage ? rawCurrentImage : {
     src: "",
     alt: data.title,
     caption: data.title,
     description: data.description,
-    type: 'image',
+    type: 'image' as const,
     poster: ''
   };
 
@@ -148,7 +153,8 @@ function SliderCardInner({
       setIsSwiping(false);
     }, 300);
     
-    if (!touchStart || !touchEnd) return;
+    const hasValidTouch = touchStart !== null && touchEnd !== null;
+    if (!hasValidTouch) return;
 
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
@@ -202,7 +208,8 @@ function SliderCardInner({
    * Keyboard navigation handler
    */
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" || e.key === " ") {
+    const isActivationKey = e.key === "Enter" || e.key === " ";
+    if (isActivationKey) {
       e.preventDefault();
       onImageClick(currentImageIndex);
     } else if (e.key === "ArrowLeft" && hasMultipleImages) {
@@ -214,11 +221,15 @@ function SliderCardInner({
     }
   };
 
-  const subtitleText = data.subtitle || data.location;
+  const subtitleText = data.subtitle ? data.subtitle : data.location;
 
   const getCategorySlug = useCallback((): string | null => {
     if (!data.category) return null;
-    const cat = PORTFOLIO_CATEGORIES.find(c => c.id === data.category || c.name === data.category);
+    const cat = PORTFOLIO_CATEGORIES.find(c => {
+      const matchesId = c.id === data.category;
+      const matchesName = c.name === data.category;
+      return matchesId || matchesName;
+    });
     return cat && cat.slug && cat.slug !== 'all' ? cat.slug : null;
   }, [data.category]);
 

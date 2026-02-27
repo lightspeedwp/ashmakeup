@@ -11,16 +11,16 @@
 
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import {
-  AlertTriangle,
-  CheckCircle,
+  TriangleAlert,
+  CircleCheck,
   Info,
-  XCircle,
+  CircleX,
   RefreshCw,
   Trash2,
   Shield,
   Lightbulb,
   ChevronDown,
-} from 'lucide-react';
+} from '../../../lib/icons';
 import { accessibilityTesterUI } from '../../../data/mock/ui/accessibility-tester';
 import type { A11yIssue } from '../../../data/mock/ui/accessibility-tester';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
@@ -213,9 +213,9 @@ function buildSelector(el: Element): string {
 function SeverityIcon({ severity }: { severity: 'critical' | 'warning' | 'info' }) {
   switch (severity) {
     case 'critical':
-      return <XCircle className="a11y-tester__severity-icon a11y-tester__severity-icon--critical" aria-hidden="true" />;
+      return <CircleX className="a11y-tester__severity-icon a11y-tester__severity-icon--critical" aria-hidden="true" />;
     case 'warning':
-      return <AlertTriangle className="a11y-tester__severity-icon a11y-tester__severity-icon--warning" aria-hidden="true" />;
+      return <TriangleAlert className="a11y-tester__severity-icon a11y-tester__severity-icon--warning" aria-hidden="true" />;
     case 'info':
       return <Info className="a11y-tester__severity-icon a11y-tester__severity-icon--info" aria-hidden="true" />;
   }
@@ -277,6 +277,9 @@ export function AccessibilityTesterPage() {
   const infoCount = grouped.info.length;
   const passedCount = Math.max(0, totalChecks - new Set(issues.map((i) => i.ruleId)).size);
   const score = hasRun ? Math.round((passedCount / totalChecks) * 100) : 0;
+  
+  // Extract nested ternary to avoid bundler issues
+  const scoreRatingClass = score >= 90 ? 'good' : score >= 60 ? 'moderate' : 'poor';
 
   return (
     <main id="main-content" role="main" tabIndex={-1} className="a11y-tester">
@@ -343,31 +346,31 @@ export function AccessibilityTesterPage() {
               <svg className="a11y-tester__score-svg" viewBox="0 0 120 120" aria-hidden="true">
                 <circle className="a11y-tester__score-track" cx="60" cy="60" r="52" />
                 <circle
-                  className={`a11y-tester__score-fill a11y-tester__score-fill--${score >= 90 ? 'good' : score >= 60 ? 'moderate' : 'poor'}`}
+                  className={`a11y-tester__score-fill a11y-tester__score-fill--${scoreRatingClass}`}
                   cx="60"
                   cy="60"
                   r="52"
                   strokeDasharray={`${(score / 100) * 327} 327`}
                 />
               </svg>
-              <span className={`a11y-tester__score-value a11y-tester__score-value--${score >= 90 ? 'good' : score >= 60 ? 'moderate' : 'poor'}`}>
+              <span className={`a11y-tester__score-value a11y-tester__score-value--${scoreRatingClass}`}>
                 {score}%
               </span>
             </div>
 
             <div className="a11y-tester__summary-stats">
               <div className="a11y-tester__stat">
-                <CheckCircle className="a11y-tester__stat-icon a11y-tester__stat-icon--pass" aria-hidden="true" />
+                <CircleCheck className="a11y-tester__stat-icon a11y-tester__stat-icon--pass" aria-hidden="true" />
                 <span className="a11y-tester__stat-value">{passedCount}</span>
                 <span className="a11y-tester__stat-label">{accessibilityTesterUI.summary.passed}</span>
               </div>
               <div className="a11y-tester__stat">
-                <XCircle className="a11y-tester__stat-icon a11y-tester__stat-icon--critical" aria-hidden="true" />
+                <CircleX className="a11y-tester__stat-icon a11y-tester__stat-icon--critical" aria-hidden="true" />
                 <span className="a11y-tester__stat-value">{criticalCount}</span>
                 <span className="a11y-tester__stat-label">{accessibilityTesterUI.summary.critical}</span>
               </div>
               <div className="a11y-tester__stat">
-                <AlertTriangle className="a11y-tester__stat-icon a11y-tester__stat-icon--warning" aria-hidden="true" />
+                <TriangleAlert className="a11y-tester__stat-icon a11y-tester__stat-icon--warning" aria-hidden="true" />
                 <span className="a11y-tester__stat-value">{warningCount}</span>
                 <span className="a11y-tester__stat-label">{accessibilityTesterUI.summary.warning}</span>
               </div>
@@ -391,7 +394,7 @@ export function AccessibilityTesterPage() {
 
             {issueCount === 0 ? (
               <div className="a11y-tester__no-issues">
-                <CheckCircle className="a11y-tester__no-issues-icon" aria-hidden="true" />
+                <CircleCheck className="a11y-tester__no-issues-icon" aria-hidden="true" />
                 <p>{accessibilityTesterUI.summary.noIssues}</p>
               </div>
             ) : (
@@ -424,9 +427,12 @@ export function AccessibilityTesterPage() {
                             <div className="a11y-tester__issue-meta">
                               <code className="a11y-tester__issue-selector">{issue.selector}</code>
                               <span className="a11y-tester__issue-rule">
-                                {accessibilityTesterUI.rules.find((r) => r.id === issue.ruleId)?.wcag
-                                  ? `WCAG ${accessibilityTesterUI.rules.find((r) => r.id === issue.ruleId)!.wcag}`
-                                  : issue.ruleId}
+                                {(() => {
+                                  const rule = accessibilityTesterUI.rules.find((r) => r.id === issue.ruleId);
+                                  return rule && rule.wcag
+                                    ? `WCAG ${rule.wcag}`
+                                    : issue.ruleId;
+                                })()}
                               </span>
                             </div>
                           </li>

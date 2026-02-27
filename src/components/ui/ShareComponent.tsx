@@ -8,14 +8,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Share2, 
-  Facebook, 
-  Instagram, 
+  Camera, 
   MessageCircle, 
   Mail, 
   Copy, 
   Check,
   ExternalLink
-} from 'lucide-react';
+} from '../../lib/icons';
 import { useModal } from '../common/ModalContext';
 import "../../styles/blocks/share-component.css";
 
@@ -97,7 +96,10 @@ export function ShareComponent({
       if (event.key === 'Escape') {
         event.preventDefault();
         setIsOpen(false);
-        triggerRef.current?.focus();
+        const triggerEl = triggerRef.current;
+        if (triggerEl) {
+          triggerEl.focus();
+        }
       }
     };
     document.addEventListener('keydown', handleKeyDown);
@@ -137,7 +139,8 @@ export function ShareComponent({
   };
 
   const shareToPinterest = () => {
-    const pinterestUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&media=${encodeURIComponent(imageUrl || '')}&description=${encodeURIComponent(title)}`;
+    const imgUrlSafe = imageUrl ? imageUrl : '';
+    const pinterestUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&media=${encodeURIComponent(imgUrlSafe)}&description=${encodeURIComponent(title)}`;
     window.open(pinterestUrl, '_blank', 'width=600,height=400');
     setIsOpen(false);
     announceAction('Opened Pinterest sharing dialog');
@@ -234,10 +237,10 @@ export function ShareComponent({
               <XIcon className="share-component__social-icon" />
             </button>
             <button type="button" onClick={shareToFacebook} className="share-component__btn-icon share-component__btn-icon--facebook" aria-label="Share on Facebook">
-              <Facebook className="share-component__social-icon" />
+              <ExternalLink className="share-component__social-icon" />
             </button>
             <button type="button" onClick={shareToInstagram} className="share-component__btn-icon share-component__btn-icon--instagram" aria-label="Share on Instagram">
-              <Instagram className="share-component__social-icon" />
+              <Camera className="share-component__social-icon" />
             </button>
             <button type="button" onClick={shareToPinterest} className="share-component__btn-icon share-component__btn-icon--pinterest" aria-label="Share on Pinterest">
               <PinterestIcon className="share-component__social-icon" />
@@ -282,11 +285,11 @@ export function ShareComponent({
             <span className="share-component__dropdown-text">X</span>
           </button>
           <button type="button" onClick={shareToFacebook} className="share-component__dropdown-item">
-            <Facebook className="share-component__dropdown-icon" />
+            <ExternalLink className="share-component__dropdown-icon" />
             <span className="share-component__dropdown-text">Facebook</span>
           </button>
           <button type="button" onClick={shareToInstagram} className="share-component__dropdown-item">
-            <Instagram className="share-component__dropdown-icon" />
+            <Camera className="share-component__dropdown-icon" />
             <span className="share-component__dropdown-text">Instagram</span>
             <ExternalLink className="share-component__external-icon" />
           </button>

@@ -50,8 +50,12 @@ export function getTotalKmCycled(): number {
     return (
       sum +
       event.editions.reduce((edSum, ed) => {
-        if (ed.travel?.method === 'bicycle') {
-          return edSum + (ed.travel.totalDistanceKm || (ed.travel.distanceKm ? ed.travel.distanceKm * 2 : 0));
+        const travel = ed.travel;
+        if (travel && travel.method === 'bicycle') {
+          const totalDist = travel.totalDistanceKm;
+          const singleDist = travel.distanceKm;
+          const dist = totalDist || (singleDist ? singleDist * 2 : 0);
+          return edSum + dist;
         }
         return edSum;
       }, 0)

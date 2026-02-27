@@ -12,7 +12,7 @@
  */
 
 import React, { useRef, useState, useEffect, useMemo } from 'react';
-import { Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Maximize } from '../../lib/icons';
 import "../../styles/blocks/video-player.css";
 
 interface VideoPlayerProps {
@@ -29,19 +29,23 @@ interface VideoPlayerProps {
  * Detects if a URL is a YouTube or Vimeo embed URL
  */
 function detectPlatform(src: string): 'youtube' | 'vimeo' | 'direct' {
-  if (
-    src.includes('youtube.com/embed') ||
-    src.includes('youtube.com/watch') ||
-    src.includes('youtu.be/')
-  ) {
+  const isYoutubeEmbed = src.includes('youtube.com/embed');
+  const isYoutubeWatch = src.includes('youtube.com/watch');
+  const isYoutubeShort = src.includes('youtu.be/');
+  const isYoutube = isYoutubeEmbed || isYoutubeWatch || isYoutubeShort;
+  
+  if (isYoutube) {
     return 'youtube';
   }
-  if (
-    src.includes('vimeo.com') ||
-    src.includes('player.vimeo.com')
-  ) {
+  
+  const isVimeoDirect = src.includes('vimeo.com');
+  const isVimeoPlayer = src.includes('player.vimeo.com');
+  const isVimeo = isVimeoDirect || isVimeoPlayer;
+  
+  if (isVimeo) {
     return 'vimeo';
   }
+  
   return 'direct';
 }
 
@@ -234,7 +238,7 @@ function DirectVideoPlayer({
           <input
             type="range"
             min="0"
-            max={duration || 0}
+            max={duration ? duration : 0}
             value={currentTime}
             onChange={handleSeek}
             className="video-player__progress"

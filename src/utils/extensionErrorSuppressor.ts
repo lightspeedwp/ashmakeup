@@ -6,17 +6,24 @@
 export function initializeExtensionErrorSuppression() {
   if (typeof window === 'undefined') return;
 
+  // import.meta.env access completely removed — proven unreliable in this bundler
+  // Always suppress extension errors (previously disabled in dev mode)
+
   // 1. Suppress Console Errors
   const originalConsoleError = console.error;
   const originalConsoleWarn = console.warn;
   const originalConsoleLog = console.log;
 
   const shouldSuppress = (args: any[]) => {
-    const message = args.map(arg => 
-      typeof arg === 'string' ? arg : 
-      arg instanceof Error ? arg.message + (arg.stack || '') : 
-      JSON.stringify(arg)
-    ).join(' ');
+    const message = args.map(arg => {
+      if (typeof arg === 'string') return arg;
+      if (arg instanceof Error) {
+        const errMsg = arg.message ? arg.message : '';
+        const errStack = arg.stack ? arg.stack : '';
+        return errMsg + errStack;
+      }
+      return JSON.stringify(arg);
+    }).join(' ');
 
     return (
       message.includes('beholdReplaceChildren') ||
@@ -51,7 +58,8 @@ export function initializeExtensionErrorSuppression() {
   const handleWindowError = (event: ErrorEvent) => {
     const message = event.message || '';
     const errorObj = event.error;
-    const stack = errorObj?.stack || '';
+    const errorStack = errorObj ? errorObj.stack : '';
+    const stack = errorStack ? errorStack : '';
     const filename = event.filename || '';
     
     if (
@@ -70,8 +78,12 @@ export function initializeExtensionErrorSuppression() {
 
   // 3. Suppress Unhandled Rejections (Promises)
   const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
-    const message = event.reason?.message || event.reason?.toString() || '';
-    const stack = event.reason?.stack || '';
+    const reason = event.reason;
+    const reasonMsg = reason ? reason.message : '';
+    const reasonStr = reason ? reason.toString() : '';
+    const message = reasonMsg ? reasonMsg : (reasonStr ? reasonStr : '');
+    const reasonStack = reason ? reason.stack : '';
+    const stack = reasonStack ? reasonStack : '';
     
     if (
       message.includes('beholdReplaceChildren') ||
@@ -95,9 +107,12 @@ export function initializeExtensionErrorSuppression() {
   window.onerror = function(msg, url, line, col, error) {
     const message = String(msg);
     const source = String(url || '');
+    const errorStack = error ? error.stack : '';
+    const stackStr = errorStack ? errorStack : '';
+    const stackHasBehold = stackStr.includes('beholdReplaceChildren');
     if (
       message.includes('beholdReplaceChildren') ||
-      (error && error.stack && error.stack.includes('beholdReplaceChildren')) ||
+      stackHasBehold ||
       message.includes('Message getPage') ||
       message.includes('async_hooks') ||
       source.includes('async_hooks') ||

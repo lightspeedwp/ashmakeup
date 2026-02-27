@@ -9,7 +9,7 @@
 
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from '../../../lib/router';
-import { MapPin, Music, Calendar } from 'lucide-react';
+import { MapPin, Music, Calendar } from '../../../lib/icons';
 import { getEventsByTag } from '../../../data/mock/events';
 import { eventTags } from '../../../data/mock/events/categories';
 import { eventTagBreadcrumbs } from '../../../data/mock/pages/events';
@@ -34,7 +34,7 @@ export function EventTagPage() {
     }
   }, [tag]);
 
-  const tagName = tag?.name || slug || 'Tag';
+  const tagName = tag ? tag.name : (slug ? slug : 'Tag');
 
   return (
     <main
@@ -53,7 +53,7 @@ export function EventTagPage() {
             {tagName}
           </h1>
 
-          {tag?.description && (
+          {tag && tag.description && (
             <p className="events-page__hero-desc text-body-p">
               {tag.description}
             </p>
@@ -74,7 +74,10 @@ export function EventTagPage() {
               (ed) => ed.status === 'attended',
             ).length;
             const cycled = event.editions.some(
-              (ed) => ed.travel?.method === 'bicycle',
+              (ed) => {
+                const travel = ed.travel;
+                return travel ? travel.method === 'bicycle' : false;
+              },
             );
 
             return (
@@ -99,7 +102,7 @@ export function EventTagPage() {
                     />
                   </div>
                   <span className="event-card__type-badge">
-                    {eventsUI.typeBadge[event.type] || event.type}
+                    {eventsUI.typeBadge[event.type] ? eventsUI.typeBadge[event.type] : event.type}
                   </span>
                 </div>
                 <div className="event-card__body">
@@ -109,7 +112,7 @@ export function EventTagPage() {
                     {event.location.city}, {event.location.country}
                   </span>
                   <p className="event-card__description">
-                    {event.tagline || event.description}
+                    {event.tagline ? event.tagline : event.description}
                   </p>
                 </div>
                 <div className="event-card__meta">

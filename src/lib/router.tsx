@@ -1,14 +1,24 @@
 /**
- * @fileoverview Lightweight client-side router — drop-in replacement for react-router
+ * @fileoverview Lightweight client-side router
  *
- * Built to eliminate the `async_hooks` runtime error caused by react-router v7's
+ * Built to eliminate the async_hooks runtime error caused by react-router v7
  * server-side code being loaded via esm.sh in the Figma Make environment.
  *
  * Exposes the same public API surface used across the codebase:
  *   createBrowserRouter, RouterProvider, useNavigate, useLocation,
  *   useParams, useSearchParams, Link, Outlet
  *
- * @version 1.0.0
+ * BUNDLER SAFETY (v3.0.0):
+ * - No optional chaining (?.) or nullish coalescing (??)
+ * - No for...of loops (uses classic for-index loops)
+ * - No spread operators in JSX or destructuring rest
+ * - No nested if blocks (extracted to helpers)
+ * - No inline type keyword in imports
+ * - No bracket-notation on objects (uses grab helper)
+ * - Array access via safe arrayGet helper
+ * - All object property reads via safe grab helper
+ *
+ * @version 3.0.0
  */
 
 import React, {
@@ -18,25 +28,67 @@ import React, {
   useEffect,
   useCallback,
   useMemo,
-  useRef,
-  type ReactNode,
-  type ComponentType,
-  type MouseEvent,
 } from 'react';
 
-/* ────────────────────────────── Types ────────────────────────────── */
+/* ── Bundler-safe property access helpers ── */
+
+/**
+ * Safely read a property from an object without dot-notation or bracket-notation
+ * in call-site code.  Uses Object.entries iteration so the bundler cannot
+ * statically rewrite the access pattern.
+ */
+function grab(obj: any, key: string): any {
+  if (obj == null) return undefined;
+  var entries = Object.entries(obj);
+  for (var i = 0; i < entries.length; i++) {
+    var pair = entries[i];
+    if (pair[0] === key) return pair[1];
+  }
+  return undefined;
+}
+
+/**
+ * Safely read from an array by numeric index, using iteration to avoid
+ * bracket-notation that the bundler may choke on.
+ */
+function arrayGet(arr: any[], index: number): any {
+  if (!arr) return undefined;
+  if (index < 0) return undefined;
+  var count = 0;
+  for (var i = 0; i < arr.length; i++) {
+    if (count === index) {
+      return arr[i];
+    }
+    count++;
+  }
+  return undefined;
+}
+
+/**
+ * Safely set a property on an object using Object.defineProperty
+ * to avoid bracket-notation assignment that the bundler chokes on.
+ */
+function setProp(obj: any, key: string, val: any): void {
+  Object.defineProperty(obj, key, {
+    value: val,
+    writable: true,
+    enumerable: true,
+    configurable: true,
+  });
+}
+
+/* ── Types ── */
 
 export interface RouteObject {
   path?: string;
   index?: boolean;
-  Component?: ComponentType<any>;
+  Component?: React.ComponentType<any>;
   children?: RouteObject[];
 }
 
 interface MatchedRoute {
   route: RouteObject;
   params: Record<string, string>;
-  /** child routes that still need matching */
   children?: RouteObject[];
 }
 
@@ -51,121 +103,318 @@ interface RouterContextValue {
   location: LocationDescriptor;
   navigate: NavigateFunction;
   params: Record<string, string>;
-  /** Stack of matched routes for nested Outlet rendering */
   outlets: MatchedRoute[];
-  /** Index into the outlets stack for the current Outlet depth */
   depth: number;
 }
 
 type NavigateFunction = (to: string | number, options?: { replace?: boolean }) => void;
 
-/* ────────────────────────────── Context ────────────────────────────── */
+/* ── Context ── */
 
-const RouterContext = createContext<RouterContextValue | null>(null);
+var RouterContext = createContext<RouterContextValue | null>(null);
 
 function useRouterContext(): RouterContextValue {
-  const ctx = useContext(RouterContext);
-  if (!ctx) throw new Error('Router hooks must be used inside <RouterProvider>');
+  var ctx = useContext(RouterContext);
+  if (!ctx) throw new Error('Router hooks must be used inside RouterProvider');
   return ctx;
 }
 
-/* ────────────────────────────── Matching ────────────────────────────── */
+/* ── Matching helpers ── */
 
-/**
- * Convert a route path pattern (e.g. "blog/:slug") into a RegExp + param names.
- */
-function compilePath(pattern: string): { regex: RegExp; paramNames: string[] } {
-  const paramNames: string[] = [];
-
-  // Catch-all "*"
-  if (pattern === '*') {
-    return { regex: /^\/.*$/, paramNames: ['*'] };
-  }
-
-  const regexStr = pattern
-    .split('/')
-    .filter(Boolean)
-    .map((seg) => {
-      if (seg === '*') {
-        paramNames.push('*');
-        return '(?:/(.*))?';
-      }
-      if (seg.startsWith(':')) {
-        paramNames.push(seg.slice(1));
-        return '/([^/]+)';
-      }
-      return '/' + seg.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    })
-    .join('');
-
-  return { regex: new RegExp('^' + (regexStr || '') + '/?$', 'i'), paramNames };
+function buildCompileResult(r: RegExp, p: string[]): { regex: RegExp; paramNames: string[] } {
+  var obj = {} as { regex: RegExp; paramNames: string[] };
+  obj.regex = r;
+  obj.paramNames = p;
+  return obj;
 }
 
-/**
- * Walk the route tree and produce a flat list of matched routes (parent → child)
- * so that each level can render via <Outlet />.
- */
+function compilePath(pattern: string): { regex: RegExp; paramNames: string[] } {
+  var paramNames: string[] = [];
+
+  if (pattern === '*') {
+    return buildCompileResult(/^\/.*$/, ['*']);
+  }
+
+  var segments = pattern.split('/').filter(Boolean);
+  var regexParts: string[] = [];
+
+  for (var i = 0; i < segments.length; i++) {
+    var seg = arrayGet(segments, i) as string;
+    var isWild = seg === '*';
+    var isParam = !isWild && seg.startsWith(':');
+
+    if (isWild) {
+      paramNames.push('*');
+      regexParts.push('(?:/(.*))?');
+    } else if (isParam) {
+      paramNames.push(seg.slice(1));
+      regexParts.push('/([^/]+)');
+    } else {
+      regexParts.push('/' + seg.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    }
+  }
+
+  var finalStr = regexParts.join('');
+  return buildCompileResult(new RegExp('^' + finalStr + '/?$', 'i'), paramNames);
+}
+
+function compilePrefixPath(pattern: string): { regex: RegExp; paramNames: string[] } {
+  var paramNames: string[] = [];
+  var isSlash = pattern === '/';
+  var hasNoPattern = !pattern;
+  if (hasNoPattern) {
+    return buildCompileResult(/^/, paramNames);
+  }
+  if (isSlash) {
+    return buildCompileResult(/^/, paramNames);
+  }
+
+  var segments = pattern.split('/').filter(Boolean);
+  var regexParts: string[] = [];
+
+  for (var i = 0; i < segments.length; i++) {
+    var seg = arrayGet(segments, i) as string;
+    var isParam = seg.startsWith(':');
+    if (isParam) {
+      paramNames.push(seg.slice(1));
+      regexParts.push('/([^/]+)');
+    } else {
+      regexParts.push('/' + seg.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    }
+  }
+
+  return buildCompileResult(new RegExp('^' + regexParts.join(''), 'i'), paramNames);
+}
+
+function extractParam(arr: RegExpMatchArray, idx: number): string {
+  var raw = arrayGet(arr, idx);
+  if (!raw) return '';
+  return decodeURIComponent(raw);
+}
+
+function mergeParams(
+  a: Record<string, string>,
+  b: Record<string, string>,
+): Record<string, string> {
+  var result: Record<string, string> = {};
+  var aEntries = Object.entries(a);
+  for (var i = 0; i < aEntries.length; i++) {
+    var aPair = arrayGet(aEntries, i);
+    if (aPair) {
+      var aKey = arrayGet(aPair, 0);
+      var aVal = arrayGet(aPair, 1);
+      setProp(result, aKey, aVal);
+    }
+  }
+  var bEntries = Object.entries(b);
+  for (var j = 0; j < bEntries.length; j++) {
+    var bPair = arrayGet(bEntries, j);
+    if (bPair) {
+      var bKey = arrayGet(bPair, 0);
+      var bVal = arrayGet(bPair, 1);
+      setProp(result, bKey, bVal);
+    }
+  }
+  return result;
+}
+
+function extractMatchParams(
+  paramNames: string[],
+  regexMatch: RegExpMatchArray,
+): Record<string, string> {
+  var params: Record<string, string> = {};
+  for (var i = 0; i < paramNames.length; i++) {
+    var name = arrayGet(paramNames, i) as string;
+    setProp(params, name, extractParam(regexMatch, i + 1));
+  }
+  return params;
+}
+
+/* ── Helper functions to build MatchedRoute and NavOptions ── */
+
+function buildMatchedRoute(r: RouteObject, p: Record<string, string>, c: RouteObject[] | undefined): MatchedRoute {
+  var m = {} as MatchedRoute;
+  m.route = r;
+  m.params = p;
+  m.children = c;
+  return m;
+}
+
+function buildNavOptions(replaceVal: boolean | undefined): { replace?: boolean } {
+  var opts = {} as { replace?: boolean };
+  opts.replace = replaceVal;
+  return opts;
+}
+
+/* ── matchRoutes: Flattened to avoid nested if blocks ── */
+
+function tryMatchIndex(
+  route: RouteObject,
+  pathname: string,
+): MatchedRoute[] | null {
+  var isIndex = grab(route, 'index');
+  if (!isIndex) return null;
+  var isRoot = pathname === '/';
+  var isEmpty = pathname === '';
+  if (isRoot) return [buildMatchedRoute(route, {}, undefined)];
+  if (isEmpty) return [buildMatchedRoute(route, {}, undefined)];
+  return null;
+}
+
+function tryMatchPathless(
+  route: RouteObject,
+  pathname: string,
+): MatchedRoute[] | null {
+  var routePath = grab(route, 'path');
+  var routeChildren = grab(route, 'children') as RouteObject[] | undefined;
+  if (routePath !== undefined) return null;
+  if (!routeChildren) return null;
+
+  var childMatch = matchRoutes(routeChildren, pathname);
+  if (!childMatch) return null;
+
+  var firstChild = arrayGet(childMatch, 0);
+  var childParams: Record<string, string> = {};
+  if (firstChild) {
+    var fp = grab(firstChild, 'params');
+    if (fp) {
+      childParams = fp;
+    }
+  }
+  var entry = buildMatchedRoute(route, childParams, routeChildren);
+  var result: MatchedRoute[] = [entry];
+  for (var i = 0; i < childMatch.length; i++) {
+    var item = arrayGet(childMatch, i);
+    if (item) {
+      result.push(item);
+    }
+  }
+  return result;
+}
+
+function tryMatchParent(
+  route: RouteObject,
+  pathname: string,
+): MatchedRoute[] | null {
+  var routePath = grab(route, 'path') as string | undefined;
+  var routeChildren = grab(route, 'children') as RouteObject[] | undefined;
+  if (!routeChildren) return null;
+  if (routeChildren.length === 0) return null;
+
+  var pattern = '';
+  if (routePath) {
+    pattern = routePath;
+  }
+  var compiled = compilePrefixPath(pattern);
+  var prefixRegex = compiled.regex;
+  var paramNames = compiled.paramNames;
+  var prefixMatch = pathname.match(prefixRegex);
+  if (!prefixMatch) return null;
+
+  var params = extractMatchParams(paramNames, prefixMatch);
+  var matchedPath = arrayGet(prefixMatch, 0);
+  var matchedStr = '';
+  if (matchedPath) {
+    matchedStr = String(matchedPath);
+  }
+  var cleanedPath = matchedStr.replace(/\/$/, '');
+  var sliceStart = cleanedPath.length;
+  var rest = pathname.slice(sliceStart);
+  if (!rest) {
+    rest = '/';
+  }
+
+  var childMatch = matchRoutes(routeChildren, rest);
+  if (!childMatch) return null;
+
+  var firstChild = arrayGet(childMatch, 0);
+  var childParams: Record<string, string> = {};
+  if (firstChild) {
+    var fp = grab(firstChild, 'params');
+    if (fp) {
+      childParams = fp;
+    }
+  }
+  var merged = mergeParams(params, childParams);
+
+  var result: MatchedRoute[] = [buildMatchedRoute(route, merged, routeChildren)];
+  for (var i = 0; i < childMatch.length; i++) {
+    var m = arrayGet(childMatch, i);
+    var mParams = grab(m, 'params');
+    var mRoute = grab(m, 'route');
+    var mKids = grab(m, 'children');
+    var safeMP: Record<string, string> = {};
+    if (mParams) {
+      safeMP = mParams;
+    }
+    var combined = mergeParams(merged, safeMP);
+    result.push(buildMatchedRoute(mRoute, combined, mKids));
+  }
+  return result;
+}
+
+function tryMatchLeaf(
+  route: RouteObject,
+  pathname: string,
+): MatchedRoute[] | null {
+  var routePath = grab(route, 'path') as string | undefined;
+  var pattern = '';
+  if (routePath) {
+    pattern = routePath;
+  }
+
+  if (pattern === '*') {
+    var wildcard = '*';
+    var params: Record<string, string> = {};
+    setProp(params, wildcard, pathname);
+    return [buildMatchedRoute(route, params, undefined)];
+  }
+
+  var compiled = compilePath(pattern);
+  var regex = compiled.regex;
+  var paramNames = compiled.paramNames;
+  var match = pathname.match(regex);
+  if (!match) return null;
+
+  var matchParams = extractMatchParams(paramNames, match);
+  return [buildMatchedRoute(route, matchParams, undefined)];
+}
+
 function matchRoutes(
   routes: RouteObject[],
   pathname: string,
 ): MatchedRoute[] | null {
-  for (const route of routes) {
-    // Index route — match parent path exactly
-    if (route.index) {
-      // Index routes match only when there's nothing left to match
-      if (pathname === '/' || pathname === '') {
-        const matched: MatchedRoute = { route, params: {}, children: undefined };
-        return [matched];
-      }
-      continue;
-    }
+  for (var i = 0; i < routes.length; i++) {
+    var route = arrayGet(routes, i) as RouteObject;
 
-    if (route.path === undefined && route.children) {
-      // Layout route without its own path — try matching children
-      const childMatch = matchRoutes(route.children, pathname);
-      if (childMatch) {
-        return [{ route, params: childMatch[0]?.params ?? {}, children: route.children }, ...childMatch];
-      }
-      continue;
-    }
+    // 1. Try index route
+    var indexResult = tryMatchIndex(route, pathname);
+    if (indexResult) return indexResult;
 
-    const pattern = route.path ?? '';
-    const hasChildren = route.children && route.children.length > 0;
+    // Skip further matching if this is an index route
+    var isIndex = grab(route, 'index');
+    if (!isIndex) {
+      // 2. Try pathless layout route
+      var pathlessResult = tryMatchPathless(route, pathname);
+      if (pathlessResult) return pathlessResult;
 
-    if (hasChildren) {
-      // Parent route — match prefix
-      const { regex: prefixRegex, paramNames } = compilePrefixPath(pattern);
-      const prefixMatch = pathname.match(prefixRegex);
-      if (prefixMatch) {
-        const params: Record<string, string> = {};
-        paramNames.forEach((name, i) => {
-          params[name] = decodeURIComponent(prefixMatch[i + 1] || '');
-        });
+      // 3. Determine if it has children
+      var routeChildren = grab(route, 'children') as RouteObject[] | undefined;
+      var hasChildren = false;
+      if (routeChildren) {
+        hasChildren = routeChildren.length > 0;
+      }
 
-        const rest = pathname.slice(prefixMatch[0].replace(/\/$/, '').length) || '/';
-        const childMatch = matchRoutes(route.children!, rest);
-        if (childMatch) {
-          // Merge params
-          const merged = { ...params, ...childMatch[0]?.params };
-          return [
-            { route, params: merged, children: route.children },
-            ...childMatch.map((m) => ({ ...m, params: { ...merged, ...m.params } })),
-          ];
-        }
+      // 4. Try parent match (has children)
+      if (hasChildren) {
+        var parentResult = tryMatchParent(route, pathname);
+        if (parentResult) return parentResult;
       }
-    } else {
-      // Leaf route — exact match
-      if (pattern === '*') {
-        return [{ route, params: { '*': pathname } }];
-      }
-      const { regex, paramNames } = compilePath(pattern);
-      const match = pathname.match(regex);
-      if (match) {
-        const params: Record<string, string> = {};
-        paramNames.forEach((name, i) => {
-          params[name] = decodeURIComponent(match[i + 1] || '');
-        });
-        return [{ route, params }];
+
+      // 5. Try leaf match (no children) — only if no children
+      if (!hasChildren) {
+        var leafResult = tryMatchLeaf(route, pathname);
+        if (leafResult) return leafResult;
       }
     }
   }
@@ -173,66 +422,86 @@ function matchRoutes(
   return null;
 }
 
-function compilePrefixPath(pattern: string): { regex: RegExp; paramNames: string[] } {
-  const paramNames: string[] = [];
-  if (!pattern || pattern === '/') {
-    return { regex: /^/, paramNames };
-  }
+/* ── Location helpers ── */
 
-  const regexStr = pattern
-    .split('/')
-    .filter(Boolean)
-    .map((seg) => {
-      if (seg.startsWith(':')) {
-        paramNames.push(seg.slice(1));
-        return '/([^/]+)';
-      }
-      return '/' + seg.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    })
-    .join('');
-
-  return { regex: new RegExp('^' + regexStr, 'i'), paramNames };
+function readWindowPathname(): string {
+  return window.location.pathname;
 }
 
-/* ────────────────────────────── Location helpers ────────────────────────────── */
+function readWindowSearch(): string {
+  return window.location.search;
+}
+
+function readWindowHash(): string {
+  return window.location.hash;
+}
 
 function createLocation(): LocationDescriptor {
-  return {
-    pathname: window.location.pathname,
-    search: window.location.search,
-    hash: window.location.hash,
-    key: Math.random().toString(36).slice(2, 8),
-  };
+  var randStr = Math.random().toString(36);
+  var keyVal = randStr.slice(2, 8);
+  var loc = {} as LocationDescriptor;
+  loc.pathname = readWindowPathname();
+  loc.search = readWindowSearch();
+  loc.hash = readWindowHash();
+  loc.key = keyVal;
+  return loc;
 }
 
-/* ────────────────────────────── createBrowserRouter ────────────────────────────── */
+/* ── createBrowserRouter ── */
 
 export interface BrowserRouter {
   routes: RouteObject[];
-  /** Subscribe to location changes. Returns unsubscribe fn. */
   subscribe: (cb: () => void) => () => void;
   getLocation: () => LocationDescriptor;
   navigate: NavigateFunction;
 }
 
 export function createBrowserRouter(routes: RouteObject[]): BrowserRouter {
-  let location = createLocation();
-  const listeners = new Set<() => void>();
+  var listeners: Array<() => void> = [];
 
   function notify() {
-    location = createLocation();
-    listeners.forEach((fn) => fn());
+    for (var i = 0; i < listeners.length; i++) {
+      var fn = arrayGet(listeners, i) as (() => void) | undefined;
+      if (fn) {
+        fn();
+      }
+    }
   }
 
-  // Listen for browser back/forward
+  function removeListener(cb: () => void) {
+    var idx = -1;
+    for (var i = 0; i < listeners.length; i++) {
+      var current = arrayGet(listeners, i);
+      var isSame = current === cb;
+      if (isSame) {
+        idx = i;
+        i = listeners.length;
+      }
+    }
+    if (idx >= 0) {
+      listeners.splice(idx, 1);
+    }
+  }
+
+  function subscribeFn(cb: () => void): () => void {
+    listeners.push(cb);
+    return function unsubscribeFn() {
+      removeListener(cb);
+    };
+  }
+
   window.addEventListener('popstate', notify);
 
-  const navigate: NavigateFunction = (to, options) => {
+  var navigate: NavigateFunction = function navigateFn(to, options) {
     if (typeof to === 'number') {
       window.history.go(to);
       return;
     }
-    if (options?.replace) {
+    var shouldReplace = false;
+    if (options) {
+      shouldReplace = grab(options, 'replace');
+    }
+    if (shouldReplace) {
       window.history.replaceState(null, '', to);
     } else {
       window.history.pushState(null, '', to);
@@ -240,171 +509,309 @@ export function createBrowserRouter(routes: RouteObject[]): BrowserRouter {
     notify();
   };
 
-  return {
-    routes,
-    subscribe: (cb) => {
-      listeners.add(cb);
-      return () => listeners.delete(cb);
-    },
-    getLocation: () => location,
-    navigate,
-  };
+  var result: BrowserRouter = {} as BrowserRouter;
+  result.routes = routes;
+  result.subscribe = subscribeFn;
+  result.getLocation = createLocation;
+  result.navigate = navigate;
+  return result;
 }
 
-/* ────────────────────────────── RouterProvider ────────────────────────────── */
+/* ── Helper to build context value ── */
+
+function buildContextValue(
+  loc: LocationDescriptor,
+  nav: NavigateFunction,
+  p: Record<string, string>,
+  o: MatchedRoute[],
+  d: number,
+): RouterContextValue {
+  var val: RouterContextValue = {} as RouterContextValue;
+  val.location = loc;
+  val.navigate = nav;
+  val.params = p;
+  val.outlets = o;
+  val.depth = d;
+  return val;
+}
+
+/* ── RouterProvider ── */
 
 export function RouterProvider({ router }: { router: BrowserRouter }) {
-  const [location, setLocation] = useState(router.getLocation);
+  var routerGetLocation = grab(router, 'getLocation') as () => LocationDescriptor;
+  var routerSubscribe = grab(router, 'subscribe') as (cb: () => void) => () => void;
+  var routerRoutes = grab(router, 'routes') as RouteObject[];
+  var routerNavigate = grab(router, 'navigate') as NavigateFunction;
 
-  useEffect(() => {
-    // Sync in case location changed between render and effect
-    setLocation(router.getLocation());
-    return router.subscribe(() => setLocation(router.getLocation()));
-  }, [router]);
+  var locationState = useState<LocationDescriptor>(routerGetLocation);
+  var location = arrayGet(locationState, 0) as LocationDescriptor;
+  var setLocation = arrayGet(locationState, 1) as React.Dispatch<React.SetStateAction<LocationDescriptor>>;
 
-  const matched = useMemo(
-    () => matchRoutes(router.routes, location.pathname),
-    [router.routes, location.pathname],
-  );
+  useEffect(function syncLocationEffect() {
+    setLocation(routerGetLocation());
+    return routerSubscribe(function onRouteChange() { setLocation(routerGetLocation()); });
+  }, [routerGetLocation, routerSubscribe]);
 
-  const params = useMemo(() => {
-    if (!matched || matched.length === 0) return {};
-    return matched[matched.length - 1].params;
+  var locationPathname = grab(location, 'pathname') as string;
+
+  var matched = useMemo(function matchMemo() {
+    return matchRoutes(routerRoutes, locationPathname);
+  }, [routerRoutes, locationPathname]);
+
+  var params = useMemo(function paramsMemo() {
+    if (!matched) return {};
+    var len = matched.length;
+    if (len === 0) return {};
+    var lastMatch = arrayGet(matched, len - 1);
+    if (!lastMatch) return {};
+    var p = grab(lastMatch, 'params');
+    if (p) return p;
+    return {};
   }, [matched]);
 
-  const ctx = useMemo<RouterContextValue>(
-    () => ({
-      location,
-      navigate: router.navigate,
-      params,
-      outlets: matched ?? [],
-      depth: 0,
-    }),
-    [location, router.navigate, params, matched],
-  );
+  var outletsList: MatchedRoute[] = [];
+  if (matched) {
+    outletsList = matched;
+  }
 
-  if (!matched || matched.length === 0) {
+  var ctx = useMemo(function ctxMemo() {
+    return buildContextValue(location, routerNavigate, params, outletsList, 0);
+  }, [location, routerNavigate, params, outletsList]);
+
+  if (!matched) {
     return null;
   }
 
-  const TopComponent = matched[0].route.Component;
+  var matchedLen = matched.length;
+  if (matchedLen === 0) {
+    return null;
+  }
+
+  var firstMatch = arrayGet(matched, 0);
+  if (!firstMatch) {
+    return null;
+  }
+
+  var firstRoute = grab(firstMatch, 'route');
+  if (!firstRoute) {
+    return null;
+  }
+
+  var TopComponent = grab(firstRoute, 'Component') as React.ComponentType<any> | undefined;
+  if (!TopComponent) {
+    return null;
+  }
+
   return (
     <RouterContext.Provider value={ctx}>
-      {TopComponent ? <TopComponent /> : null}
+      <TopComponent />
     </RouterContext.Provider>
   );
 }
 
-/* ────────────────────────────── Hooks ────────────────────────────── */
+/* ── Hooks ── */
 
-/**
- * Returns a function to navigate programmatically.
- * Compatible with react-router's useNavigate().
- */
 export function useNavigate(): NavigateFunction {
-  return useRouterContext().navigate;
+  var ctx = useRouterContext();
+  return grab(ctx, 'navigate') as NavigateFunction;
 }
 
-/**
- * Returns the current location object.
- * Compatible with react-router's useLocation().
- */
 export function useLocation(): LocationDescriptor {
-  return useRouterContext().location;
+  var ctx = useRouterContext();
+  return grab(ctx, 'location') as LocationDescriptor;
 }
 
-/**
- * Returns URL params extracted from route patterns (e.g. `:slug`).
- * Compatible with react-router's useParams().
- */
 export function useParams<T extends Record<string, string> = Record<string, string>>(): T {
-  return useRouterContext().params as T;
+  var ctx = useRouterContext();
+  return grab(ctx, 'params') as T;
 }
 
-/**
- * Returns [searchParams, setSearchParams] tuple.
- * Compatible with react-router's useSearchParams().
- */
 export function useSearchParams(): [URLSearchParams, (next: URLSearchParams | ((prev: URLSearchParams) => URLSearchParams), opts?: { replace?: boolean }) => void] {
-  const { location, navigate } = useRouterContext();
+  var ctx = useRouterContext();
+  var loc = grab(ctx, 'location') as LocationDescriptor;
+  var nav = grab(ctx, 'navigate') as NavigateFunction;
 
-  const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
+  var locSearch = grab(loc, 'search') as string;
+  var locPathname = grab(loc, 'pathname') as string;
+  var locHash = grab(loc, 'hash') as string;
 
-  const setSearchParams = useCallback(
-    (
+  var searchParams = useMemo(function searchParamsMemo() {
+    return new URLSearchParams(locSearch);
+  }, [locSearch]);
+
+  var setSearchParams = useCallback(
+    function setSearchParamsFn(
       next: URLSearchParams | ((prev: URLSearchParams) => URLSearchParams),
       opts?: { replace?: boolean },
-    ) => {
-      const resolved = typeof next === 'function' ? next(new URLSearchParams(location.search)) : next;
-      const qs = resolved.toString();
-      const newUrl = location.pathname + (qs ? '?' + qs : '') + location.hash;
-      navigate(newUrl, { replace: opts?.replace });
+    ) {
+      var resolved: URLSearchParams;
+      if (typeof next === 'function') {
+        resolved = next(new URLSearchParams(locSearch));
+      } else {
+        resolved = next;
+      }
+      var qs = resolved.toString();
+      var newUrl = locPathname;
+      if (qs) {
+        newUrl = newUrl + '?' + qs;
+      }
+      newUrl = newUrl + locHash;
+      var replaceMode: boolean | undefined;
+      if (opts) {
+        replaceMode = grab(opts, 'replace');
+      }
+      nav(newUrl, buildNavOptions(replaceMode));
     },
-    [location, navigate],
+    [locSearch, locPathname, locHash, nav],
   );
 
   return [searchParams, setSearchParams];
 }
 
-/* ────────────────────────────── Outlet ────────────────────────────── */
+/* ── Outlet ── */
 
-/**
- * Renders the matched child route component.
- * Compatible with react-router's <Outlet />.
- */
 export function Outlet() {
-  const ctx = useRouterContext();
-  const nextDepth = ctx.depth + 1;
+  var ctx = useRouterContext();
 
-  if (nextDepth >= ctx.outlets.length) {
+  var currentDepth = grab(ctx, 'depth') as number;
+  var currentOutlets = grab(ctx, 'outlets') as MatchedRoute[];
+  var currentLocation = grab(ctx, 'location') as LocationDescriptor;
+  var currentNavigate = grab(ctx, 'navigate') as NavigateFunction;
+
+  var nextDepth = currentDepth + 1;
+
+  // useMemo MUST run before any conditional returns (Rules of Hooks)
+  var childCtx = useMemo(function childCtxMemo() {
+    var len = currentOutlets.length;
+    if (nextDepth >= len) {
+      return buildContextValue(currentLocation, currentNavigate, {}, currentOutlets, nextDepth);
+    }
+    var match = arrayGet(currentOutlets, nextDepth);
+    if (!match) {
+      return buildContextValue(currentLocation, currentNavigate, {}, currentOutlets, nextDepth);
+    }
+    var p = grab(match, 'params');
+    var safeParams = {};
+    if (p) {
+      safeParams = p;
+    }
+    return buildContextValue(currentLocation, currentNavigate, safeParams, currentOutlets, nextDepth);
+  }, [currentLocation, currentNavigate, currentOutlets, nextDepth]);
+
+  // Conditional returns after hooks
+  var outletsLen = currentOutlets.length;
+  if (nextDepth >= outletsLen) {
     return null;
   }
 
-  const nextMatch = ctx.outlets[nextDepth];
-  const NextComponent = nextMatch.route.Component;
+  var nextMatch = arrayGet(currentOutlets, nextDepth);
+  if (!nextMatch) {
+    return null;
+  }
 
-  const childCtx = useMemo<RouterContextValue>(
-    () => ({ ...ctx, depth: nextDepth, params: nextMatch.params }),
-    [ctx, nextDepth, nextMatch.params],
-  );
+  var nextRoute = grab(nextMatch, 'route') as RouteObject | undefined;
+  if (!nextRoute) {
+    return null;
+  }
+
+  var NextComponent = grab(nextRoute, 'Component') as React.ComponentType<any> | undefined;
+  if (!NextComponent) {
+    return null;
+  }
 
   return (
     <RouterContext.Provider value={childCtx}>
-      {NextComponent ? <NextComponent /> : null}
+      <NextComponent />
     </RouterContext.Provider>
   );
 }
 
-/* ────────────────────────────── Link ────────────────────────────── */
+/* ── Link ── */
 
-interface LinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
+interface LinkProps {
   to: string;
   replace?: boolean;
-  children?: ReactNode;
+  children?: React.ReactNode;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  className?: string;
+  id?: string;
+  title?: string;
+  target?: string;
+  rel?: string;
+  tabIndex?: number;
+  role?: string;
+  style?: React.CSSProperties;
+  'aria-label'?: string;
+  'aria-current'?: string | undefined;
+  'aria-describedby'?: string;
+  'aria-hidden'?: boolean | 'true' | 'false';
+  'data-testid'?: string;
 }
 
-/**
- * Client-side navigation link.
- * Compatible with react-router's <Link />.
- */
-export function Link({ to, replace: shouldReplace, children, onClick, ...rest }: LinkProps) {
-  const { navigate } = useRouterContext();
+export function Link(props: LinkProps) {
+  var to = grab(props, 'to') as string;
+  var shouldReplace = grab(props, 'replace') as boolean | undefined;
+  var children = grab(props, 'children') as React.ReactNode;
+  var externalOnClick = grab(props, 'onClick') as React.MouseEventHandler<HTMLAnchorElement> | undefined;
+  var className = grab(props, 'className') as string | undefined;
+  var id = grab(props, 'id') as string | undefined;
+  var title = grab(props, 'title') as string | undefined;
+  var target = grab(props, 'target') as string | undefined;
+  var rel = grab(props, 'rel') as string | undefined;
+  var tabIndex = grab(props, 'tabIndex') as number | undefined;
+  var role = grab(props, 'role') as string | undefined;
+  var style = grab(props, 'style') as React.CSSProperties | undefined;
+  var ariaLabel = grab(props, 'aria-label') as string | undefined;
+  var ariaCurrent = grab(props, 'aria-current') as string | undefined;
+  var ariaDescribedby = grab(props, 'aria-describedby') as string | undefined;
+  var ariaHidden = grab(props, 'aria-hidden') as boolean | 'true' | 'false' | undefined;
+  var dataTestid = grab(props, 'data-testid') as string | undefined;
 
-  const handleClick = useCallback(
-    (e: MouseEvent<HTMLAnchorElement>) => {
-      if (onClick) onClick(e);
-      // Allow modifier keys to open in new tab
-      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) {
-        return;
-      }
+  var ctx = useRouterContext();
+  var navigate = grab(ctx, 'navigate') as NavigateFunction;
+
+  var handleClick = useCallback(
+    function linkClickHandler(e: React.MouseEvent<HTMLAnchorElement>) {
+      if (externalOnClick) externalOnClick(e);
+
+      var isDefaultPrevented = e.defaultPrevented;
+      var buttonNumber = e.button;
+      var hasMetaKey = e.metaKey;
+      var hasAltKey = e.altKey;
+      var hasCtrlKey = e.ctrlKey;
+      var hasShiftKey = e.shiftKey;
+
+      if (isDefaultPrevented) return;
+      if (buttonNumber !== 0) return;
+      if (hasMetaKey) return;
+      if (hasAltKey) return;
+      if (hasCtrlKey) return;
+      if (hasShiftKey) return;
+
       e.preventDefault();
-      navigate(to, { replace: shouldReplace });
+      navigate(to, buildNavOptions(shouldReplace));
     },
-    [to, shouldReplace, navigate, onClick],
+    [to, shouldReplace, navigate, externalOnClick],
   );
 
   return (
-    <a href={to} onClick={handleClick} {...rest}>
+    <a
+      href={to}
+      onClick={handleClick}
+      className={className}
+      id={id}
+      title={title}
+      target={target}
+      rel={rel}
+      tabIndex={tabIndex}
+      role={role}
+      style={style}
+      aria-label={ariaLabel}
+      aria-current={ariaCurrent}
+      aria-describedby={ariaDescribedby}
+      aria-hidden={ariaHidden}
+      data-testid={dataTestid}
+    >
       {children}
     </a>
   );

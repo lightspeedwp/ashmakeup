@@ -5,13 +5,16 @@
  * Includes timeout error handling, API error recovery, and accessibility support.
  * 
  * @author Ash Shaw Portfolio Team
- * @version 1.2.0 - Semantic BEM Refactor
+ * @version 1.3.0 - Bundler-safe: no && or || in JSX
  */
 
 import React, { Component, ReactNode } from 'react';
-import { AlertTriangle, RefreshCw } from 'lucide-react';
+import { TriangleAlert, RefreshCw } from '../../lib/icons';
 import { errorMessages } from '../../data/mock/ui/error';
 import "../../styles/blocks/button.css";
+
+// import.meta.env access completely removed — proven unreliable in this bundler
+const _ebIsDev = false;
 
 /**
  * Error boundary props interface
@@ -54,25 +57,59 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    const errorMessage = error?.message || error?.toString() || '';
+    const errorMessage = error && error.message ? error.message : '';
+    const errorToString = error ? error.toString() : '';
+    const finalErrorMessage = errorMessage ? errorMessage : errorToString;
     
-    if (
-      errorMessage.includes('Message getPage (id: 3) response timed out after 30000ms') ||
-      errorMessage.includes('response timed out after 30000ms') ||
-      errorMessage.includes('getPage') && errorMessage.includes('timed out') ||
-      errorMessage.includes('Message getPage') ||
-      errorMessage.includes('beholdReplaceChildren') ||
-      errorMessage.includes('extension://') ||
-      errorMessage.includes('chrome-extension://') ||
-      errorMessage.includes('moz-extension://') ||
-      errorMessage.includes('async_hooks') ||
-      errorMessage.includes('esm.sh/node/') ||
-      error?.stack?.includes('async_hooks') ||
-      error?.stack?.includes('esm.sh/node/') ||
-      error?.stack?.includes('extension://') ||
-      error?.name === 'TimeoutError' ||
-      error?.name === 'ExtensionError'
-    ) {
+    const errorStack = error && error.stack ? error.stack : '';
+    const errorName = error && error.name ? error.name : '';
+    
+    // Check for timeout errors in message
+    const isTimeoutMsg = finalErrorMessage.includes('Message getPage (id: 3) response timed out after 30000ms');
+    const isGenericTimeout = finalErrorMessage.includes('response timed out after 30000ms');
+    const hasGetPage = finalErrorMessage.includes('getPage');
+    const hasTimedOut = finalErrorMessage.includes('timed out');
+    const isGetPageTimeout = hasGetPage && hasTimedOut;
+    const isGetPageMsg = finalErrorMessage.includes('Message getPage');
+    
+    // Check for extension errors in message
+    const isBeholdError = finalErrorMessage.includes('beholdReplaceChildren');
+    const hasExtensionUrl = finalErrorMessage.includes('extension://');
+    const hasChromeExt = finalErrorMessage.includes('chrome-extension://');
+    const hasMozExt = finalErrorMessage.includes('moz-extension://');
+    
+    // Check for async_hooks errors in message
+    const hasAsyncHooks = finalErrorMessage.includes('async_hooks');
+    const hasEsmNode = finalErrorMessage.includes('esm.sh/node/');
+    
+    // Check for errors in stack trace
+    const stackHasAsyncHooks = errorStack.includes('async_hooks');
+    const stackHasEsmNode = errorStack.includes('esm.sh/node/');
+    const stackHasExtension = errorStack.includes('extension://');
+    
+    // Check for named errors
+    const isTimeoutError = errorName === 'TimeoutError';
+    const isExtensionError = errorName === 'ExtensionError';
+    
+    // Combine all checks
+    const shouldIgnoreError = 
+      isTimeoutMsg ||
+      isGenericTimeout ||
+      isGetPageTimeout ||
+      isGetPageMsg ||
+      isBeholdError ||
+      hasExtensionUrl ||
+      hasChromeExt ||
+      hasMozExt ||
+      hasAsyncHooks ||
+      hasEsmNode ||
+      stackHasAsyncHooks ||
+      stackHasEsmNode ||
+      stackHasExtension ||
+      isTimeoutError ||
+      isExtensionError;
+    
+    if (shouldIgnoreError) {
       this.setState({
         hasError: false,
         error: null,
@@ -90,9 +127,11 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       this.props.onError(error, errorInfo);
     }
 
-    if (import.meta?.env?.DEV) {
-      console.error('Error Boundary caught an error:', error);
-      console.error('Error Info:', errorInfo);
+    if (_ebIsDev) {
+      console.error('Error Boundary caught an error:');
+      console.error(error);
+      console.error('Error Info:');
+      console.error(errorInfo);
     }
   }
 
@@ -118,13 +157,20 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         return fallback;
       }
 
-      const isTimeoutError = error?.message?.includes('timed out') || 
-                            error?.message?.includes('timeout');
-      const isNetworkError = error?.message?.includes('network') || 
-                            error?.message?.includes('fetch');
-      const isContentError = error?.message?.includes('Contentful') || 
-                            error?.message?.includes('CMS');
-      const isBrowserExtensionError = error?.message?.includes('extension');
+      const messageText = error && error.message ? error.message : '';
+      const hasTimedOut = messageText.includes('timed out');
+      const hasTimeout = messageText.includes('timeout');
+      const isTimeoutError = hasTimedOut ? true : hasTimeout;
+      
+      const hasNetwork = messageText.includes('network');
+      const hasFetch = messageText.includes('fetch');
+      const isNetworkError = hasNetwork ? true : hasFetch;
+      
+      const hasContentful = messageText.includes('Contentful');
+      const hasCMS = messageText.includes('CMS');
+      const isContentError = hasContentful ? true : hasCMS;
+      
+      const isBrowserExtensionError = messageText.includes('extension');
 
       let errorTitle = errorMessages.default.title;
       let errorMessage = errorMessages.default.message;
@@ -148,6 +194,12 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         suggestions = errorMessages.content.suggestions;
       }
 
+      const hasSuggestions = suggestions.length > 0;
+      const shouldShowReload = retryCount > 1;
+      const shouldShowDebug = _ebIsDev && error;
+      const hasErrorInfo = this.state.errorInfo !== null;
+      const shouldShowRetryCount = retryCount > 0;
+
       return (
         <div 
           className="error-boundary"
@@ -158,7 +210,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             {/* Error Icon */}
             <div className="error-boundary__header">
               <div className="error-boundary__icon-wrapper">
-                <AlertTriangle className="error-boundary__icon" />
+                <TriangleAlert className="error-boundary__icon" />
               </div>
               <h1 className="error-boundary__title">
                 {errorTitle}
@@ -169,7 +221,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             </div>
 
             {/* Suggestions */}
-            {suggestions.length > 0 && (
+            {hasSuggestions ? (
               <div className="error-boundary__suggestions">
                 <h2 className="error-boundary__suggestions-title">
                   What you can try:
@@ -183,7 +235,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                   ))}
                 </ul>
               </div>
-            )}
+            ) : null}
 
             {/* Action Buttons */}
             <div className="error-boundary__actions">
@@ -197,7 +249,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 Try Again
               </button>
 
-              {retryCount > 1 && (
+              {shouldShowReload ? (
                 <button
                   type="button"
                   onClick={this.handleReload}
@@ -206,11 +258,11 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 >
                   Reload Page
                 </button>
-              )}
+              ) : null}
             </div>
 
             {/* Debug Info (Development Only) */}
-            {import.meta?.env?.DEV && error && (
+            {shouldShowDebug ? (
               <details className="error-boundary__debug">
                 <summary className="error-boundary__debug-summary">
                   Debug Information (Development Only)
@@ -219,22 +271,22 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                   <p><strong>Error:</strong> {error.toString()}</p>
                   <p><strong>Stack:</strong></p>
                   <pre className="error-boundary__pre">{error.stack}</pre>
-                  {this.state.errorInfo && (
+                  {hasErrorInfo ? (
                     <>
                       <p><strong>Component Stack:</strong></p>
-                      <pre className="error-boundary__pre">{this.state.errorInfo.componentStack}</pre>
+                      <pre className="error-boundary__pre">{this.state.errorInfo ? this.state.errorInfo.componentStack : ''}</pre>
                     </>
-                  )}
+                  ) : null}
                 </div>
               </details>
-            )}
+            ) : null}
 
             {/* Retry Count Display */}
-            {retryCount > 0 && (
+            {shouldShowRetryCount ? (
               <p className="error-boundary__retry-count">
                 Retry attempts: {retryCount}
               </p>
-            )}
+            ) : null}
           </div>
         </div>
       );

@@ -9,8 +9,8 @@
  */
 
 import React, { useCallback } from 'react';
-import { ArrowRight, Calendar } from 'lucide-react';
-import { useBlogPosts } from '../../hooks/useContentful';
+import { ArrowRight, Calendar } from '../../lib/icons';
+import { useBlogPosts } from '../../hooks/useContent';
 import { OptimizedImage } from '../ui/OptimizedImage';
 import { ReadMoreButton } from '../ui/ReadMoreButton';
 import { ResponsiveGridSlider } from '../ui/ResponsiveGridSlider';
@@ -58,9 +58,11 @@ export function BlogPreviewSection({
     }
   }, [setCurrentPage]);
 
-  const posts = blogData?.posts || [];
+  const blogPosts = blogData ? blogData.posts : null;
+  const posts = blogPosts ? blogPosts : [];
 
-  if (!loading && (!blogData?.posts || blogData.posts.length === 0)) {
+  const hasNoPosts = !blogPosts || blogPosts.length === 0;
+  if (!loading && hasNoPosts) {
     return null;
   }
 
@@ -70,7 +72,7 @@ export function BlogPreviewSection({
         {/* Section header */}
         <div className="blog-preview__header">
           <h2 className="text-section-h2">
-            {title || homeUI.sections.blogPreview.title}
+            {title ? title : homeUI.sections.blogPreview.title}
           </h2>
           <p className="text-body-guideline text-blog-description">
             {homeUI.sections.blogPreview.description}
@@ -162,7 +164,8 @@ function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
           className="blog-card__image-container"
           onClick={() => onViewPost(post.slug)}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
+            const isActivationKey = e.key === 'Enter' || e.key === ' ';
+            if (isActivationKey) {
               e.preventDefault();
               onViewPost(post.slug);
             }

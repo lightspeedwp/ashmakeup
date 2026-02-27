@@ -78,8 +78,9 @@ export function OptimizedImage({
    * cache so even the fallback `<img>` gets a cached CORS-failed response.
    * External CDN URLs (Unsplash, etc.) are already server-optimised.
    */
-  const isExternalUrl =
-    src?.startsWith('http://') || src?.startsWith('https://');
+  const startsWithHttp = src ? src.startsWith('http://') : false;
+  const startsWithHttps = src ? src.startsWith('https://') : false;
+  const isExternalUrl = startsWithHttp || startsWithHttps;
 
   const [optimizedSrc, setOptimizedSrc] = useState<string | null>(null);
   const [optimizedSrcSet, setOptimizedSrcSet] = useState<string | undefined>(undefined);
@@ -100,7 +101,8 @@ export function OptimizedImage({
   }, [preset, maxWidth, maxHeight, quality, format]);
 
   const optimize = useCallback(async () => {
-    if (!src || isExternalUrl) return;
+    const shouldSkip = !src || isExternalUrl;
+    if (shouldSkip) return;
 
     // Check for pre-optimized asset first (build-time optimization)
     if (preset) {
@@ -115,16 +117,12 @@ export function OptimizedImage({
             onOptimized({
               url: preOptimized.path,
               width: preOptimized.width,
-              height: preOptimized.height || 0,
-              sizeBytes: preOptimized.size || 0,
+              height: preOptimized.height ? preOptimized.height : 0,
+              sizeBytes: preOptimized.size ? preOptimized.size : 0,
               format: 'image/webp',
             });
           }
-          if (import.meta?.env?.DEV) {
-            console.log(
-              `🖼️ OptimizedImage: Found pre-optimized asset for ${preset}`
-            );
-          }
+          // Dev logging removed — import.meta.env.DEV crashes this bundler
         }
         return; // Skip runtime optimization
       }
@@ -141,11 +139,7 @@ export function OptimizedImage({
         setIsLoading(false);
         if (onOptimized) onOptimized(result);
 
-        if (import.meta?.env?.DEV) {
-          console.log(
-            `🖼️ OptimizedImage: ${formatBytes(result.sizeBytes)} @ ${result.width}×${result.height}`
-          );
-        }
+        // Dev logging removed — import.meta.env.DEV crashes this bundler
       }
     } catch {
       if (mountedRef.current) {
@@ -154,9 +148,7 @@ export function OptimizedImage({
         setOptimizedSrcSet(undefined);
         setIsLoading(false);
         setError(true);
-        if (import.meta?.env?.DEV) {
-          console.warn('🖼️ OptimizedImage: optimisation failed, using original src');
-        }
+        // Dev logging removed — import.meta.env.DEV crashes this bundler
       }
     }
   }, [src, isExternalUrl, resolvedOptions, onOptimized]);
@@ -170,7 +162,7 @@ export function OptimizedImage({
   }, [optimize]);
 
   // Determine which src to render
-  const displaySrc = optimizedSrc || src;
+  const displaySrc = optimizedSrc ? optimizedSrc : src;
 
   // Determine default sizes attribute based on preset (unless overridden)
   const defaultSizes = preset ? {
@@ -182,14 +174,15 @@ export function OptimizedImage({
     lightbox: '100vw',
   }[preset] : undefined;
 
-  const displaySizes = rest.sizes || defaultSizes;
+  const displaySizes = rest.sizes ? rest.sizes : defaultSizes;
 
   // BEM class composition
+  const classNameSafe = className ? className : '';
   const rootClass = [
     'optimized-image',
     isLoading && showPlaceholder ? 'optimized-image--loading' : '',
     error ? 'optimized-image--fallback' : '',
-    className || '',
+    classNameSafe,
   ]
     .filter(Boolean)
     .join(' ');
