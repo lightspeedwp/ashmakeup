@@ -17,6 +17,19 @@ import { useAppNavigate } from "../../hooks/useAppNavigate";
 import "../../styles/blocks/column-layouts.css";
 import "../../styles/blocks/featured-section.css";
 
+/** Bundler-safe type alias — avoids Array<T> nested generic in hook calls */
+type FeaturedLightboxImage = { src: string; alt: string; caption?: string; description?: string };
+type FeaturedLightboxState = {
+  isOpen: boolean;
+  images: FeaturedLightboxImage[];
+  currentIndex: number;
+  title: string;
+  description: string;
+};
+const INITIAL_FEATURED_LIGHTBOX: FeaturedLightboxState = {
+  isOpen: false, images: [], currentIndex: 0, title: '', description: '',
+};
+
 /**
  * Featured Work section component displaying latest festival makeup artistry
  */
@@ -26,24 +39,7 @@ export function FeaturedSection({
   limit?: number;
 }) {
   const setCurrentPage = useAppNavigate();
-  const [lightbox, setLightbox] = useState<{
-    isOpen: boolean;
-    images: Array<{
-      src: string;
-      alt: string;
-      caption?: string;
-      description?: string;
-    }>;
-    currentIndex: number;
-    title?: string;
-    description?: string;
-  }>({
-    isOpen: false,
-    images: [],
-    currentIndex: 0,
-    title: "",
-    description: "",
-  });
+  const [lightbox, setLightbox] = useState(INITIAL_FEATURED_LIGHTBOX);
 
   // Get featured portfolio entries
   const displayData = useMemo(() => {
@@ -51,12 +47,7 @@ export function FeaturedSection({
   }, [limit]);
 
   const openLightbox = (
-    images: Array<{
-      src: string;
-      alt: string;
-      caption?: string;
-      description?: string;
-    }>,
+    images: FeaturedLightboxImage[],
     currentIndex: number,
     title?: string,
     description?: string,

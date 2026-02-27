@@ -355,7 +355,7 @@ function spreadToPage(spreadIndex: number): number {
   return spreadIndex * 2 - 1;
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━��━━
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    HOOK: useSpreadMode
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
@@ -381,7 +381,8 @@ function useSpreadMode(): boolean {
 
 export function EbookPage() {
   const isSpreadMode = useSpreadMode();
-  const mainRef = useRef<HTMLElement>(null);
+  const mainRefInit: HTMLElement | null = null;
+  const mainRef = useRef(mainRefInit);
 
   const spreads = React.useMemo(() => buildSpreads(bookPages), []);
   const totalPages = bookPages.length;
@@ -461,7 +462,8 @@ export function EbookPage() {
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
   const isSwiping = useRef(false);
-  const readerRef = useRef<HTMLDivElement>(null);
+  const readerRefInit: HTMLDivElement | null = null;
+  const readerRef = useRef(readerRefInit);
 
   useEffect(() => {
     setSEO(pageSEO.ebook);

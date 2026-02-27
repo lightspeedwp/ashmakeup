@@ -224,10 +224,11 @@ function SeverityIcon({ severity }: { severity: 'critical' | 'warning' | 'info' 
 /* ── Component ── */
 
 export function AccessibilityTesterPage() {
-  const [issues, setIssues] = useState<A11yIssue[]>([]);
+  const issuesInit: A11yIssue[] = [];
+  const [issues, setIssues] = useState(issuesInit);
   const [hasRun, setHasRun] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
-  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set(['critical', 'warning', 'info']));
+  const [expandedGroups, setExpandedGroups] = useState(new Set(['critical', 'warning', 'info']));
 
   useEffect(() => {
     setSEO(devToolsSEO.accessibility);

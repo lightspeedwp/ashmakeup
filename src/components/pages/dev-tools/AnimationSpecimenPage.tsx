@@ -60,7 +60,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 const CATEGORIES = ['utility', 'neon', 'ui'] as const;
 
 export function AnimationSpecimenPage() {
-  const [paused, setPaused] = useState<Set<string>>(new Set());
+  const [paused, setPaused] = useState(new Set());
 
   useEffect(() => {
     setSEO(devToolsSEO.neon);

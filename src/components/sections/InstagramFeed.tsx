@@ -32,7 +32,8 @@ import "../../styles/blocks/instagram-feed.css";
  */
 function InstagramFeedContent() {
   const scriptLoaded = useRef(false);
-  const widgetContainerRef = useRef<HTMLDivElement>(null);
+  const widgetContainerRefInit: HTMLDivElement | null = null;
+  const widgetContainerRef = useRef(widgetContainerRefInit);
   const widgetInserted = useRef(false);
 
   // Imperatively insert the <behold-widget> custom element once

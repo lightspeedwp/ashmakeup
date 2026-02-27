@@ -92,7 +92,7 @@ export function PortfolioTagPage() {
 
   /** Related tags from the matching entries */
   const relatedTags = useMemo(() => {
-    const tagSet = new Set<string>();
+    const tagSet = new Set();
     const currentTagName = tag ? tag.name : '';
     filteredEntries.forEach(e => {
       const eTags = e.tags ? e.tags : [];

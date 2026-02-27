@@ -179,7 +179,7 @@ export function StyleGuidePage() {
   }, []);
 
   /** Tracks which animation cards are actively playing */
-  const [activeAnimations, setActiveAnimations] = useState<Set<string>>(new Set());
+  const [activeAnimations, setActiveAnimations] = useState(new Set());
 
   /** ArchiveFilters demo state */
   const [demoActiveCategories, setDemoActiveCategories] = useState<string[]>([]);
@@ -514,7 +514,7 @@ export function StyleGuidePage() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════
+      {/* ══════════════════��════════════════════════
           5. BUTTONS
           ═══════════════════════════════════════════ */}
       <section

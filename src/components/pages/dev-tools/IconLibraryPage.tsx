@@ -60,7 +60,8 @@ function getIcon(name: string): React.ElementType | null {
 
 export function IconLibraryPage() {
   const [search, setSearch] = useState('');
-  const [size, setSize] = useState<IconSize>(24);
+  const sizeInit: IconSize = 24;
+  const [size, setSize] = useState(sizeInit);
   const [copied, setCopied] = useState<string | null>(null);
 
   useEffect(() => {

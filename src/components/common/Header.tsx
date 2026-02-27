@@ -73,10 +73,13 @@ export function Header() {
   /** Which dropdown/mega-menu is currently open (only one at a time) */
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
-  const menuButtonRef = useRef<HTMLButtonElement>(null);
-  const triggerRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  const wrapperRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const menuButtonRef = useRef(null as HTMLButtonElement | null);
+  // Bundler-safe: extract typed init values — avoids Record<K,V> / ReturnType<T> nested generics in useRef calls
+  const triggerRefInit: Record<string, HTMLButtonElement | null> = {};
+  const triggerRefs = useRef(triggerRefInit);
+  const wrapperRefInit: Record<string, HTMLDivElement | null> = {};
+  const wrapperRefs = useRef(wrapperRefInit);
+  const closeTimeoutRef = useRef(null as number | null);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -150,7 +153,7 @@ export function Header() {
   }, [locationPathname]);
 
   // Handle outside clicks to close dropdowns
-  const activeDropdownRef = useRef<HTMLElement | null>(null);
+  const activeDropdownRef = useRef(null as HTMLElement | null);
   
   useEffect(() => {
     activeDropdownRef.current = openDropdown ? wrapperRefs.current[openDropdown] : null;

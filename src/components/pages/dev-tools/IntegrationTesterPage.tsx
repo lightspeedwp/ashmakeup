@@ -153,7 +153,7 @@ const TEST_SUITES: TestSuite[] = [
 ];
 
 export function IntegrationTesterPage() {
-  const [results, setResults] = useState<Map<string, TestResult>>(new Map());
+  const [results, setResults] = useState(new Map());
   const [isRunningAll, setIsRunningAll] = useState(false);
 
   useEffect(() => {

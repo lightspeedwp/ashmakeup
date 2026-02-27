@@ -221,9 +221,10 @@ function ResourceIcon({ type }: { type: string }) {
 /* ── Component ── */
 
 export function PerformanceTesterPage() {
-  const [results, setResults] = useState<PerfResults | null>(null);
+  const resultsInit: PerfResults | null = null;
+  const [results, setResults] = useState(resultsInit);
   const [isRunning, setIsRunning] = useState(false);
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(
+  const [expandedSections, setExpandedSections] = useState(
     new Set(['vitals', 'timing', 'resources', 'dom', 'images'])
   );
 

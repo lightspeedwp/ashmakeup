@@ -134,7 +134,8 @@ function DirectVideoPlayer({
   loop = false,
   muted = false
 }: VideoPlayerProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRefInit: HTMLVideoElement | null = null;
+  const videoRef = useRef(videoRefInit);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(muted);
   const [currentTime, setCurrentTime] = useState(0);

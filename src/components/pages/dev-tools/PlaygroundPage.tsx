@@ -126,7 +126,8 @@ const DEFAULTS: PlaygroundState = {
 };
 
 export function PlaygroundPage() {
-  const [state, setState] = useState<PlaygroundState>({ ...DEFAULTS });
+  const playgroundStateInit: PlaygroundState = { ...DEFAULTS };
+  const [state, setState] = useState(playgroundStateInit);
   const [copiedCSS, setCopiedCSS] = useState(false);
 
   useEffect(() => {
@@ -134,8 +135,8 @@ export function PlaygroundPage() {
   }, []);
 
   const set = useCallback(
-    <K extends keyof PlaygroundState>(key: K, value: PlaygroundState[K]) => {
-      setState((prev) => ({ ...prev, [key]: value }));
+    function setPlaygroundProp(key: keyof PlaygroundState, value: PlaygroundState[keyof PlaygroundState]) {
+      setState(function updatePlayground(prev) { return { ...prev, [key]: value }; });
     },
     []
   );

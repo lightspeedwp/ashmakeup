@@ -126,7 +126,7 @@ export function SearchResultsPage() {
 
   /* Counts per content type (for tab badges) */
   const typeCounts = useMemo(() => {
-    const counts = new Map<string, number>();
+    const counts = new Map();
     allResults.forEach((r) => {
       counts.set(r.type, (counts.get(r.type) || 0) + 1);
     });
@@ -184,7 +184,7 @@ export function SearchResultsPage() {
 
   /* Group by type (for All tab) */
   const grouped = useMemo(() => {
-    const map = new Map<string, SearchResult[]>();
+    const map = new Map();
     filteredResults.forEach((r) => {
       const list = map.get(r.type) || [];
       list.push(r);

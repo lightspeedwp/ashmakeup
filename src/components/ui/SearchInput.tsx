@@ -45,7 +45,8 @@ interface SearchInputProps {
 export function SearchInput({ className = '', isOpen: controlledOpen, onOpenChange }: SearchInputProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const [query, setQuery] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRefInit: HTMLInputElement | null = null;
+  const inputRef = useRef(inputRefInit);
   const isInitialMount = useRef(true);
   const navigate = useNavigate();
   const location = useLocation();

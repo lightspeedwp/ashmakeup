@@ -17,29 +17,25 @@ import { useAppNavigate } from "../../hooks/useAppNavigate";
 import "../../styles/blocks/column-layouts.css";
 import "../../styles/blocks/uv-makeup.css";
 
+/** Bundler-safe type alias — avoids Array<T> nested generic in hook calls */
+type UVLightboxImage = { src: string; alt: string; caption?: string; description?: string };
+type UVLightboxState = {
+  isOpen: boolean;
+  images: UVLightboxImage[];
+  currentIndex: number;
+  title: string;
+  description: string;
+};
+const INITIAL_UV_LIGHTBOX: UVLightboxState = {
+  isOpen: false, images: [], currentIndex: 0, title: '', description: '',
+};
+
 /**
  * UV Makeup Art section component displaying neon and blacklight artistry portfolio
  */
 export function UVMakeupSection() {
   const setCurrentPage = useAppNavigate();
-  const [lightbox, setLightbox] = useState<{
-    isOpen: boolean;
-    images: Array<{
-      src: string;
-      alt: string;
-      caption?: string;
-      description?: string;
-    }>;
-    currentIndex: number;
-    title?: string;
-    description?: string;
-  }>({
-    isOpen: false,
-    images: [],
-    currentIndex: 0,
-    title: "",
-    description: "",
-  });
+  const [lightbox, setLightbox] = useState(INITIAL_UV_LIGHTBOX);
 
   // Responsive State
   const [isDesktop, setIsDesktop] = useState(true);

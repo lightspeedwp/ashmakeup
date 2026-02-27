@@ -80,6 +80,18 @@ interface PortfolioPageState {
 
 const PORTFOLIO_CATEGORIES_DATA = getPortfolioCategories();
 
+/** Bundler-safe type alias — avoids Array<T> nested generic in hook calls */
+type PortfolioLightboxImage = { src: string; alt: string; caption?: string; description?: string };
+type PortfolioLightboxState = {
+  isOpen: boolean;
+  currentIndex: number;
+  images: PortfolioLightboxImage[];
+  title: string;
+};
+const INITIAL_PORTFOLIO_LIGHTBOX: PortfolioLightboxState = {
+  isOpen: false, currentIndex: 0, images: [], title: '',
+};
+
 export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
   const setCurrentPage = useAppNavigate();
   const isMobile = useIsMobile();
@@ -88,11 +100,12 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
     setSEO(pageSEO.portfolio);
   }, []);
 
-  const [portfolioState, setPortfolioState] = useState<PortfolioPageState>({
+  const portfolioStateInit: PortfolioPageState = {
     page: 1,
     category: initialCategory,
     limit: 10,
-  });
+  };
+  const [portfolioState, setPortfolioState] = useState(portfolioStateInit);
 
   const [activeCategories, setActiveCategories] = useState<string[]>(
     initialCategory ? [initialCategory] : []
@@ -101,7 +114,7 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
 
   /** Lookup: slug → category id (e.g. 'uv-blacklight' → 'UV Makeup') */
   const slugToCategoryId = useMemo(() => {
-    const map = new Map<string, string>();
+    const map = new Map();
     portfolioCategoryData.forEach(c => map.set(c.slug, c.id));
     return map;
   }, []);
@@ -157,17 +170,7 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
     }));
   }, [initialCategory]);
   
-  const [lightbox, setLightbox] = useState<{
-    isOpen: boolean;
-    currentIndex: number;
-    images: Array<{ src: string; alt: string; caption?: string; description?: string }>;
-    title: string;
-  }>({
-    isOpen: false,
-    currentIndex: 0,
-    images: [],
-    title: '',
-  });
+  const [lightbox, setLightbox] = useState(INITIAL_PORTFOLIO_LIGHTBOX);
   
   const scrollToTop = () => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

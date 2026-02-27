@@ -91,7 +91,7 @@ export function VideoTagPage() {
 
   /** Related tags from the matching videos */
   const relatedTags = useMemo(() => {
-    const tagSet = new Set<string>();
+    const tagSet = new Set();
     const currentTagName = tag ? tag.name : '';
     filteredVideos.forEach(v => {
       const vTags = v.tags ? v.tags : [];

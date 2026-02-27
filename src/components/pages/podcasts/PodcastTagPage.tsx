@@ -85,7 +85,7 @@ export function PodcastTagPage() {
 
   /** Related tags from the matching episodes */
   const relatedTags = useMemo(() => {
-    const tagSet = new Set<string>();
+    const tagSet = new Set();
     const currentTagName = tag ? tag.name : '';
     filteredEpisodes.forEach(ep => {
       const epTags = ep.tags ? ep.tags : [];

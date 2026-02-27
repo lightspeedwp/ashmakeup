@@ -44,7 +44,8 @@ interface BlogMegaMenuProps {
 
 export function BlogMegaMenu({ isOpen, onClose, onMouseEnter, onMouseLeave }: BlogMegaMenuProps) {
   const navigate = useNavigate();
-  const menuRef = useRef<HTMLDivElement>(null);
+  const menuRefInit: HTMLDivElement | null = null;
+  const menuRef = useRef(menuRefInit);
 
   /** Sort posts by publishedAt descending */
   const sortedPosts = [...blogPosts].sort(

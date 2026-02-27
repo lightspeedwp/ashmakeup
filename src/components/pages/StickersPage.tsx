@@ -92,7 +92,8 @@ function StickerLightbox({
   onPrev,
   onNext,
 }: LightboxProps) {
-  const backdropRef = useRef<HTMLDivElement>(null);
+  const backdropRefInit: HTMLDivElement | null = null;
+  const backdropRef = useRef(backdropRefInit);
   const current = stickers[activeIndex];
 
   /* Keyboard navigation */
@@ -216,8 +217,10 @@ export function StickersPage() {
   const [activeTheme, setActiveTheme] = useState('all');
   const [highlightedId, setHighlightedId] = useState<string | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
-  const highlightTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const gridRefInit: HTMLDivElement | null = null;
+  const gridRef = useRef(gridRefInit);
+  // Bundler-safe: use number | null instead of ReturnType<typeof setTimeout> nested generic
+  const highlightTimerRef = useRef(null as number | null);
   const prefersReduced = useReducedMotion();
 
   useEffect(() => {

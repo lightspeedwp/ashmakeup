@@ -61,7 +61,7 @@ export function ComponentApiPage() {
 
   /** Group by category for sidebar */
   const grouped = useMemo(() => {
-    const map = new Map<string, typeof filteredComponents>();
+    const map = new Map();
     for (var i = 0; i < CATEGORY_ORDER.length; i++) {
       var cat = CATEGORY_ORDER[i];
       const items = filteredComponents.filter((c) => c.category === cat);

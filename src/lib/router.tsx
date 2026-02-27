@@ -111,7 +111,8 @@ type NavigateFunction = (to: string | number, options?: { replace?: boolean }) =
 
 /* ── Context ── */
 
-var RouterContext = createContext<RouterContextValue | null>(null);
+var routerContextInit: RouterContextValue | null = null;
+var RouterContext = createContext(routerContextInit);
 
 function useRouterContext(): RouterContextValue {
   var ctx = useContext(RouterContext);
@@ -543,7 +544,7 @@ export function RouterProvider({ router }: { router: BrowserRouter }) {
   var routerRoutes = grab(router, 'routes') as RouteObject[];
   var routerNavigate = grab(router, 'navigate') as NavigateFunction;
 
-  var locationState = useState<LocationDescriptor>(routerGetLocation);
+  var locationState = useState(routerGetLocation);
   var location = arrayGet(locationState, 0) as LocationDescriptor;
   var setLocation = arrayGet(locationState, 1) as React.Dispatch<React.SetStateAction<LocationDescriptor>>;
 
