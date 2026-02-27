@@ -32,8 +32,8 @@ import {
   buildCollectionSchema,
 } from '../../../utils/schemaService';
 
-// Import the video thumbnail image
-import videoThumbnail from 'figma:asset/f0c4301e83be5c7dcfa724f611ca2ffcca9bf032.png';
+// Placeholder video thumbnail
+const videoThumbnail = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
 
 // Map video IDs to their imported thumbnail images
 const videoThumbnails: Record<string, string> = {

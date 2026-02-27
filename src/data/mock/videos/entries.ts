@@ -32,7 +32,7 @@ I created these stickers as give-aways at festivals. They are printed on hologra
 - Bike frames and helmets
 
 Each sticker is a tiny piece of the dancefloor you can take home with you.`,
-    thumbnailUrl: 'figma:asset/f0c4301e83be5c7dcfa724f611ca2ffcca9bf032.png',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80',
     videoUrl: 'https://www.youtube.com/embed/tSn54dzzVtw',
     platform: 'youtube',
     duration: '00:15',

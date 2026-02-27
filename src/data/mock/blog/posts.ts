@@ -9,8 +9,9 @@
 
 import { BlogPost } from '../../types';
 
-import houwhoekPass from 'figma:asset/06d4edfbf4b3d5e14311a5a52ea6756b57d2c956.png';
-import sunsetView from 'figma:asset/dfc0e7ceee6b7f81fd3e6ccf4d7036097bc79477.png';
+// Placeholder images - Replace with actual images
+const houwhoekPass = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80";
+const sunsetView = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80";
 
 /**
  * Blog Posts

@@ -25,7 +25,8 @@ import { useScrollPosition } from '../../../hooks/useScrollPosition';
 import { useParams, useNavigate } from '../../../lib/router';
 import { formatDate } from '../../../utils/formatDate';
 import { useReducedMotion } from '../../../hooks/useReducedMotion';
-import ashShawAvatar from 'figma:asset/e46fceb6809b8f1b7ef5c578d40578eadf301207.png';
+// Placeholder avatar image
+const ashShawAvatar = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=200&q=80";
 import "../../../styles/blocks/blog-page.css";
 
 import { setSEO } from '../../../utils/seo';

@@ -9,13 +9,13 @@
 
 import { PortfolioEntry } from '../../types';
 
-// Import Figma assets
-import gondwanaRainbow from 'figma:asset/74b708f3be9c02b929444ed900d4217477ac45ad.png';
-import gondwanaUvDots from 'figma:asset/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png';
-import gondwanaCosmicWarrior from 'figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png';
-import originPinkMohawk from 'figma:asset/e46fceb6809b8f1b7ef5c578d40578eadf301207.png';
-import originGeometric from 'figma:asset/2678f2e48d60b8ccd6855469149ffc2cd8877e1c.png';
-import originNeonGrid from 'figma:asset/04aa88bd7a81e3f14ceb68f980492bf374b041db.png';
+// Placeholder images - Replace with actual images
+const gondwanaRainbow = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
+const gondwanaUvDots = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
+const gondwanaCosmicWarrior = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
+const originPinkMohawk = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
+const originGeometric = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
+const originNeonGrid = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
 
 /**
  * Festival Makeup Portfolio

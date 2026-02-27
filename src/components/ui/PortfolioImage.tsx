@@ -13,40 +13,34 @@
 import React from 'react';
 import { OptimizedImage, type ImagePreset } from './OptimizedImage';
 
-// Import the Jungle Festival images
-import jungleImage1 from 'figma:asset/7afa71c7ec4457a1c1983db257703a6c92a9cce7.png';
-import jungleImage2 from 'figma:asset/1cd08d3825ac7cc423a4672f8ed279139fc99d0a.png';
-import jungleImage3 from 'figma:asset/3eb83eb2d4eb493b80283c1b75770d8893b2fc6a.png';
+// Placeholder images - Replace with actual images
+const jungleImage1 = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
+const jungleImage2 = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
+const jungleImage3 = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
 
-// Import the Nation of Gondwana Festival images
-import gondwanaImage1 from 'figma:asset/74b708f3be9c02b929444ed900d4217477ac45ad.png';
-import gondwanaImage2 from 'figma:asset/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png';
-import gondwanaImage3 from 'figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png';
+const gondwanaImage1 = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
+const gondwanaImage2 = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
+const gondwanaImage3 = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
 
-// Import Origin Festival 2025 images
-import originImage1 from 'figma:asset/e46fceb6809b8f1b7ef5c578d40578eadf301207.png';
-import originImage2 from 'figma:asset/2678f2e48d60b8ccd6855469149ffc2cd8877e1c.png';
-import originImage3 from 'figma:asset/04aa88bd7a81e3f14ceb68f980492bf374b041db.png';
+const originImage1 = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
+const originImage2 = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
+const originImage3 = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
 
-// Import Thailand portfolio images
-import thailandLostParadise from 'figma:asset/e7ee10c85c112ab4acfc9e54087974a5faae5966.png';
-import thailandEdenParadise from 'figma:asset/3c496f3b8a5671dd00830f80a9a061ddf687e849.png';
-import thailandEdenShishi from 'figma:asset/2d37a7cd55fe518f7eb8124fa25a2382be67f948.png';
+const thailandLostParadise = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
+const thailandEdenParadise = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
+const thailandEdenShishi = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
 
-// Import Nail Art portfolio images
-import nailRainbowFusion from 'figma:asset/7c570c5291977a816c8152a098cd6693cff22dbd.png';
-import nailGalaxy from 'figma:asset/1ec0ba217cad06e2cff662a25a050b0401d1092a.png';
-import nailGradientDreams from 'figma:asset/deb2b4ab4cb25c5e47b960708fce6ea552ee6039.png';
+const nailRainbowFusion = "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&q=80";
+const nailGalaxy = "https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=800&q=80";
+const nailGradientDreams = "https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=800&q=80";
 
-// Import Shankra Festival (Swiss) images
-import shankraConnection from 'figma:asset/d35493e2be08017199b3d1523d516a996ec97a5d.png';
-import shankraAlpineBliss from 'figma:asset/e43f2a86f8b38d1777428264c8c9126d07a9ef75.png';
-import shankraMountainRainbow from 'figma:asset/80d0d3af448e4969dc796d00e91c30d3648cd9c4.png';
+const shankraConnection = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
+const shankraAlpineBliss = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
+const shankraMountainRainbow = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
 
-// Import Reiserfieber (Swiss) images
-import reiserfieberAlpineGlow from 'figma:asset/33024fb05609d4a4545be47508d2ad3595f143c4.png';
-import reiserfieberMountainSpirit from 'figma:asset/280168cf45339af581c4065d1f6728ea2de6ff02.png';
-import reiserfieberFestivalJoy from 'figma:asset/71597fc19386bc69fb2144851d752977dfd3693e.png';
+const reiserfieberAlpineGlow = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
+const reiserfieberMountainSpirit = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
+const reiserfieberFestivalJoy = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
 
 /**
  * Map of figma:asset URLs to imported assets

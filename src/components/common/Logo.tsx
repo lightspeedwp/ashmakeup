@@ -8,7 +8,8 @@
  */
 
 import React from "react";
-import logoImage from 'figma:asset/428cc40e40184633483ae65f75ced5f46af6821d.png';
+// Placeholder logo image
+const logoImage = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=400&q=80";
 import { branding } from "../../data/mock/ui/branding";
 import "../../styles/blocks/logo.css";
 

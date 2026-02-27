@@ -17,7 +17,8 @@ import { FaqSection } from "../../sections/FaqSection";
 import { OptimizedImage } from "../../ui/OptimizedImage";
 import { contactUI } from "../../../data/mock/ui/contact";
 import { contactBreadcrumbs } from "../../../data/mock/ui/breadcrumbs";
-import contactGraphic from "figma:asset/6095d8818a83e64a063161f9df091d561fde7105.png";
+// Placeholder contact graphic
+const contactGraphic = "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=600&q=80";
 import "../../../styles/blocks/contact-page.css";
 
 import { setSEO } from '../../../utils/seo';

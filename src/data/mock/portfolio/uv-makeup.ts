@@ -9,9 +9,9 @@
 
 import { PortfolioEntry } from '../../types';
 
-// Import Figma assets
-import rainbowLightningImg from 'figma:asset/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png';
-import electricBlueImg from 'figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png';
+// Placeholder images - Replace with actual images
+const rainbowLightningImg = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
+const electricBlueImg = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
 
 /**
  * UV Makeup Portfolio

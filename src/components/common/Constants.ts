@@ -7,40 +7,48 @@
  * @version 1.0.0
  */
 
-// Import homepage hero images
-import heroImage1 from "figma:asset/f4a28f747d49fc9d37311b17f513b62e2b95a73e.png";
-import heroImage2 from "figma:asset/378acbf4a7518ca6c40b44540bd7a121a91375fe.png";
-import heroImage3 from "figma:asset/e82a7d901c5a28bf9313c7535228e647eaf06b75.png";
+/**
+ * NOTE: Image placeholders using Unsplash
+ * To use your own images:
+ * 1. Add images to src/assets/images/ directories
+ * 2. Import them like: import heroImage1 from "../assets/images/hero/hero-1.jpg"
+ * 3. Replace the placeholder strings below with the imported variables
+ */
 
-// Import Origin Festival images
-import originPinkMohawk from "figma:asset/e46fceb6809b8f1b7ef5c578d40578eadf301207.png";
-import originGeometric from "figma:asset/2678f2e48d60b8ccd6855469149ffc2cd8877e1c.png";
-import originNeonGrid from "figma:asset/04aa88bd7a81e3f14ceb68f980492bf374b041db.png";
+// Homepage hero images - Replace with actual images
+const heroImage1 = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
+const heroImage2 = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
+const heroImage3 = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
 
-// Import Thailand images
-import lostParadiseImg from "figma:asset/e7ee10c85c112ab4acfc9e54087974a5faae5966.png";
-import edenParadiseImg from "figma:asset/3c496f3b8a5671dd00830f80a9a061ddf687e849.png";
-import edenShishiImg from "figma:asset/2d37a7cd55fe518f7eb8124fa25a2382be67f948.png";
+// Origin Festival images - Replace with actual images
+const originPinkMohawk = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
+const originGeometric = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
+const originNeonGrid = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
 
-// Import Shankra Festival images
-import festivalConnectionImg from "figma:asset/d35493e2be08017199b3d1523d516a996ec97a5d.png";
-import alpineBlissImg from "figma:asset/e43f2a86f8b38d1777428264c8c9126d07a9ef75.png";
-import mountainRainbowImg from "figma:asset/80d0d3af448e4969dc796d00e91c30d3648cd9c4.png";
+// Thailand images - Replace with actual images
+const lostParadiseImg = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
+const edenParadiseImg = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
+const edenShishiImg = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
 
-// Import Reiserfieber images
-import alpineGlowImg from "figma:asset/33024fb05609d4a4545be47508d2ad3595f143c4.png";
-import mountainSpiritImg from "figma:asset/280168cf45339af581c4065d1f6728ea2de6ff02.png";
-import festivalJoyImg from "figma:asset/71597fc19386bc69fb2144851d752977dfd3693e.png";
+// Shankra Festival images - Replace with actual images
+const festivalConnectionImg = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
+const alpineBlissImg = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
+const mountainRainbowImg = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
 
-// Import UV Makeup images
-import gondwanaRainbowImg from "figma:asset/74b708f3be9c02b929444ed900d4217477ac45ad.png";
-import rainbowLightningImg from "figma:asset/d99e9e671329d5df41ad0f55042fb3f135e30fdf.png";
-import electricBlueImg from "figma:asset/bb2d15f1b5450668f0a032ad3765e13d8db4fdd2.png";
+// Reiserfieber images - Replace with actual images
+const alpineGlowImg = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
+const mountainSpiritImg = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
+const festivalJoyImg = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
 
-// Import Nail Art images
-import rainbowFusionImg from "figma:asset/7c570c5291977a816c8152a098cd6693cff22dbd.png";
-import galaxyNailsImg from "figma:asset/1ec0ba217cad06e2cff662a25a050b0401d1092a.png";
-import gradientDreamsImg from "figma:asset/deb2b4ab4cb25c5e47b960708fce6ea552ee6039.png";
+// UV Makeup images - Replace with actual images
+const gondwanaRainbowImg = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
+const rainbowLightningImg = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
+const electricBlueImg = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
+
+// Nail Art images - Replace with actual images
+const rainbowFusionImg = "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&q=80";
+const galaxyNailsImg = "https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=800&q=80";
+const gradientDreamsImg = "https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=800&q=80";
 
 /**
  * Social media platform configuration with URLs and metadata

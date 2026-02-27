@@ -9,10 +9,10 @@
 
 import { PortfolioEntry } from '../../types';
 
-// Import Figma assets
-import festivalEyeArt from 'figma:asset/f4a28f747d49fc9d37311b17f513b62e2b95a73e.png';
-import rainbowHeart from 'figma:asset/378acbf4a7518ca6c40b44540bd7a121a91375fe.png';
-import vibrantFaceArt from 'figma:asset/e82a7d901c5a28bf9313c7535228e647eaf06b75.png';
+// Placeholder images - Replace with actual images
+const festivalEyeArt = "https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=80";
+const rainbowHeart = "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80";
+const vibrantFaceArt = "https://images.unsplash.com/photo-1514866726862-0f081731e63f?w=800&q=80";
 
 /**
  * Featured Portfolio Work
