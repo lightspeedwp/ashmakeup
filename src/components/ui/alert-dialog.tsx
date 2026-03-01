@@ -5,17 +5,17 @@
 
 import * as React from "react";
 
-function AlertDialog({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
-function AlertDialogPortal({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function AlertDialog({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
+function AlertDialogPortal({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
 function AlertDialogOverlay() { return null; }
-function AlertDialogTrigger({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
-function AlertDialogContent({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
-function AlertDialogHeader({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
-function AlertDialogFooter({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
-function AlertDialogTitle({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
-function AlertDialogDescription({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
-function AlertDialogAction({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
-function AlertDialogCancel({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function AlertDialogTrigger({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
+function AlertDialogContent({ children }: { children?: React.ReactNode }) { return <div>{children}</div>; }
+function AlertDialogHeader({ children }: { children?: React.ReactNode }) { return <div>{children}</div>; }
+function AlertDialogFooter({ children }: { children?: React.ReactNode }) { return <div>{children}</div>; }
+function AlertDialogTitle({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
+function AlertDialogDescription({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
+function AlertDialogAction({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
+function AlertDialogCancel({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
 
 export {
   AlertDialog,

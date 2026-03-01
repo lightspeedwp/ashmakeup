@@ -23,5 +23,5 @@ interface SafetyWrapperProps {
  * locally instead of falling through to esm.sh.
  */
 export function SafetyWrapper({ children }: SafetyWrapperProps) {
-  return <>{children}</>;
+  return <div className="safety-wrapper">{children}</div>;
 }

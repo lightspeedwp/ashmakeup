@@ -36,71 +36,74 @@ import "../../../styles/blocks/home-page.css";
 import "../../../styles/blocks/rainbow-sections.css";
 
 export function HomePage() {
-  const navigateTo = useAppNavigate();
+  var navigateTo = useAppNavigate();
 
-  useEffect(() => {
+  useEffect(function() {
     setSEO(pageSEO.home);
     injectSchema(SCHEMA_IDS.website, buildWebSiteSchema());
     injectSchema(SCHEMA_IDS.person, buildPersonSchema());
-    return () => {
+    return function() {
       removeSchema(SCHEMA_IDS.website);
       removeSchema(SCHEMA_IDS.person);
     };
   }, []);
 
-  const { 
-    data: homepageContent, 
-    loading: contentLoading, 
-    error: contentError,
-    refresh: refreshContent 
-  } = useHomepageContent();
+  var contentData = useHomepageContent();
+  var homepageContent = contentData.data;
+  var contentLoading = contentData.loading;
+  var contentError = contentData.error;
+  var refreshContent = contentData.refresh;
 
-  const LoadingState = () => (
-    <main id="main-content" role="main" className="homepage-loading">
-      <div className="container-wide">
-        <div className="homepage-loading__content">
-          <div className="loading-skeleton">
-            <div className="skeleton-bar skeleton-bar--title"></div>
-            <div className="skeleton-bar skeleton-bar--subtitle"></div>
-            <div className="skeleton-bar skeleton-bar--hero"></div>
-            <div className="skeleton-bar skeleton-bar--button"></div>
+  function LoadingState() {
+    return (
+      <main id="main-content" role="main" className="homepage-loading">
+        <div className="container-wide">
+          <div className="homepage-loading__content">
+            <div className="loading-skeleton">
+              <div className="skeleton-bar skeleton-bar--title"></div>
+              <div className="skeleton-bar skeleton-bar--subtitle"></div>
+              <div className="skeleton-bar skeleton-bar--hero"></div>
+              <div className="skeleton-bar skeleton-bar--button"></div>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
-  );
+      </main>
+    );
+  }
 
-  const ErrorState = () => (
-    <main id="main-content" role="main" className="homepage-error">
-      <div className="homepage-error__content">
-        <div className="homepage-error__icon-wrapper">
-          <div className="homepage-error__icon">
-            <span role="img" aria-label="Warning">⚠️</span>
+  function ErrorState() {
+    return (
+      <main id="main-content" role="main" className="homepage-error">
+        <div className="homepage-error__content">
+          <div className="homepage-error__icon-wrapper">
+            <div className="homepage-error__icon">
+              <span role="img" aria-label="Warning">⚠️</span>
+            </div>
+            <h1 className="text-section-h2 mb-fluid-sm">{homeUI.error.title}</h1>
+            <p className="text-body-p mb-fluid-lg">
+              {contentError ? contentError : homeUI.error.message}
+            </p>
           </div>
-          <h1 className="text-section-h2 mb-fluid-sm">{homeUI.error.title}</h1>
-          <p className="text-body-p mb-fluid-lg">
-            {contentError ? contentError : homeUI.error.message}
-          </p>
+          <div className="homepage-error__actions">
+            <button
+              type="button"
+              onClick={refreshContent}
+              className="btn btn--neon-primary"
+            >
+              {homeUI.error.retry}
+            </button>
+            <button
+              type="button"
+              onClick={function() { window.location.reload(); }}
+              className="btn btn--ghost"
+            >
+              {homeUI.error.refresh}
+            </button>
+          </div>
         </div>
-        <div className="homepage-error__actions">
-          <button
-            type="button"
-            onClick={refreshContent}
-            className="btn btn--neon-primary"
-          >
-            {homeUI.error.retry}
-          </button>
-          <button
-            type="button"
-            onClick={() => window.location.reload()}
-            className="btn btn--ghost"
-          >
-            {homeUI.error.refresh}
-          </button>
-        </div>
-      </div>
-    </main>
-  );
+      </main>
+    );
+  }
 
   if (contentLoading && !homepageContent) {
     return <LoadingState />;
@@ -110,25 +113,33 @@ export function HomePage() {
     return <ErrorState />;
   }
 
-  const heroContent = {
+  var heroImages = homepageHeroImages;
+  if (homepageContent) {
+    var bgImages = homepageContent.hero.backgroundImages;
+    if (bgImages && bgImages.length > 0) {
+      heroImages = bgImages.map(function(img) {
+        return {
+          src: img.url,
+          alt: img.alt,
+          title: img.title
+        };
+      });
+    }
+  }
+
+  var heroContent = {
     title: homepageContent ? homepageContent.hero.title : homepageHero.title,
     description: homepageContent ? homepageContent.hero.description : homepageHero.description,
     ctaText: homepageContent ? homepageContent.hero.ctaText : homepageHero.ctaText,
-    images: (() => {
-      if (!homepageContent) return homepageHeroImages;
-      const bgImages = homepageContent.hero.backgroundImages;
-      if (!bgImages) return homepageHeroImages;
-      if (bgImages.length === 0) return homepageHeroImages;
-      return bgImages.map(img => ({
-        src: img.url,
-        alt: img.alt,
-        title: img.title
-      }));
-    })()
+    images: heroImages
   };
 
-  const heroSubtitle = homepageContent ? homepageContent.hero.subtitle : homepageHero.subtitle;
-  const errorDisplay = contentError ? contentError : homeUI.error.message;
+  var heroSubtitle = homepageContent ? homepageContent.hero.subtitle : homepageHero.subtitle;
+  var errorDisplay = contentError ? contentError : homeUI.error.message;
+
+  function handlePortfolioClick() {
+    navigateTo("portfolio");
+  }
 
   return (
     <main id="main-content" role="main" className="home-page-layout bg-atomic-noise">
@@ -159,7 +170,7 @@ export function HomePage() {
           <div className="homepage-hero__actions">
             <button
               type="button"
-              onClick={() => navigateTo("portfolio")}
+              onClick={handlePortfolioClick}
               className="btn btn--neon-primary btn--lg"
               aria-label="Navigate to Portfolio page to explore makeup artistry collection"
             >

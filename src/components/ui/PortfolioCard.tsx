@@ -60,8 +60,10 @@ export function PortfolioCard({
 }: PortfolioCardProps) {
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const touchStartInit: number | null = null;
+  const [touchStart, setTouchStart] = useState(touchStartInit);
+  const touchEndInit: number | null = null;
+  const [touchEnd, setTouchEnd] = useState(touchEndInit);
 
   const allImages = useMemo(() => {
     const combined = [entry.featuredImage];
@@ -215,7 +217,7 @@ export function PortfolioCard({
         </a>
           
           {hasMultipleImages && (
-            <>
+            <div className="portfolio-card__controls-wrapper">
               {/* Navigation buttons: visibility controlled by CSS */}
               <button
                 type="button"
@@ -267,7 +269,7 @@ export function PortfolioCard({
               <div className="portfolio-card__counter">
                 {currentImageIndex + 1}/{allImages.length}
               </div>
-            </>
+            </div>
           )}
       </div>
 

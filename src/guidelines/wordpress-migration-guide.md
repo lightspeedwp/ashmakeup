@@ -56,14 +56,18 @@ Add the following fields:
 ## 3. Content Import Process
 
 ### 3.1. Get the Export File
-The export file is located at:
-`/dist/wordpress-export.json`
+The export file was previously located at `/dist/wordpress-export.json`. This file has been **deleted** (it was a build artifact removed during the Feb 25, 2026 cleanup audit).
 
-(Run `ts-node scripts/export-content.ts` to regenerate it if needed).
+To regenerate it, run:
+```
+ts-node scripts/export-content.ts
+```
+
+This will recreate `wordpress-export.json` in `/dist/`. The `/dist/` folder is excluded from source control.
 
 ### 3.2. Import into WordPress
 1.  Go to **All Import > New Import**.
-2.  Upload `wordpress-export.json`.
+2.  Upload `wordpress-export.json` (after regenerating it per step 3.1).
 3.  Select **New Items** and choose **Post** (for blog) or **Portfolio Entry** (for portfolio).
     *   *Note:* You will need to run the import twice: once for Posts and once for Portfolio items, filtering the JSON path if possible, or just letting it skip mismatched types.
     *   **Important: Image Paths:** The `featured_image` field in the JSON export may contain `figma:asset/...` paths (internal React paths). These will **not** be automatically imported by WordPress.

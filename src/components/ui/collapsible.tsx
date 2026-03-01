@@ -5,8 +5,8 @@
 
 import * as React from "react";
 
-function Collapsible({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
-function CollapsibleTrigger({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
-function CollapsibleContent({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function Collapsible({ children }: { children?: React.ReactNode }) { return <div>{children}</div>; }
+function CollapsibleTrigger({ children }: { children?: React.ReactNode }) { return <div>{children}</div>; }
+function CollapsibleContent({ children }: { children?: React.ReactNode }) { return <div>{children}</div>; }
 
 export { Collapsible, CollapsibleTrigger, CollapsibleContent };

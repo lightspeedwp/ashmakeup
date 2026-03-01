@@ -124,7 +124,7 @@ export function usePortfolioEntries(options?: {
   }
 
   // Mock Mode (Simulate Async)
-  const [data, setData] = useState<{
+  const contentDataInit: {
     entries: UnifiedPortfolioEntry[];
     pagination: {
       currentPage: number;
@@ -134,7 +134,8 @@ export function usePortfolioEntries(options?: {
       hasPrevious: boolean;
       perPage: number;
     }
-  } | null>(null);
+  } | null = null;
+  const [data, setData] = useState(contentDataInit);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

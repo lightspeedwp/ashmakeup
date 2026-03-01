@@ -5,38 +5,11 @@
 
 import * as React from "react";
 
-const noop = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+function noop({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
 
-const ContextMenu = noop;
-const ContextMenuTrigger = noop;
-const ContextMenuContent = noop;
-const ContextMenuItem = noop;
-const ContextMenuCheckboxItem = noop;
-const ContextMenuRadioItem = noop;
-const ContextMenuLabel = noop;
-const ContextMenuSeparator = noop;
-const ContextMenuShortcut = noop;
-const ContextMenuGroup = noop;
-const ContextMenuPortal = noop;
-const ContextMenuSub = noop;
-const ContextMenuSubContent = noop;
-const ContextMenuSubTrigger = noop;
-const ContextMenuRadioGroup = noop;
+var ContextMenu = noop;
+var ContextMenuTrigger = noop;
+var ContextMenuContent = noop;
+var ContextMenuItem = noop;
 
-export {
-  ContextMenu,
-  ContextMenuTrigger,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuCheckboxItem,
-  ContextMenuRadioItem,
-  ContextMenuLabel,
-  ContextMenuSeparator,
-  ContextMenuShortcut,
-  ContextMenuGroup,
-  ContextMenuPortal,
-  ContextMenuSub,
-  ContextMenuSubContent,
-  ContextMenuSubTrigger,
-  ContextMenuRadioGroup,
-};
+export { ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem };

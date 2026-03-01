@@ -43,6 +43,13 @@
 }
 
 /* Background Effects */
+.hero__bg-effects {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .hero__bg-effect {
   position: absolute;
   border-radius: var(--wp--preset--border-radius--circle);

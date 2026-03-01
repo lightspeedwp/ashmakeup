@@ -24,7 +24,8 @@ const CATEGORY_LABELS: Record<string, string> = {
 
 export function ComponentApiPage() {
   const [search, setSearch] = useState('');
-  const [copied, setCopied] = useState<string | null>(null);
+  const copiedInit: string | null = null;
+  const [copied, setCopied] = useState(copiedInit);
 
   useEffect(() => {
     setSEO(devToolsSEO.api);
@@ -70,6 +71,31 @@ export function ComponentApiPage() {
     return map;
   }, [filteredComponents]);
 
+  /** Build flat sidebar list to avoid React.Fragment (bundler restriction) */
+  var sidebarItems: React.ReactNode[] = [];
+  Array.from(grouped.entries()).forEach(function(entry) {
+    var cat = entry[0];
+    var items = entry[1];
+    sidebarItems.push(
+      <li key={cat + "__cat"} className="comp-api__sidebar-cat">
+        {CATEGORY_LABELS[cat] ? CATEGORY_LABELS[cat] : cat}
+      </li>
+    );
+    for (var si = 0; si < items.length; si++) {
+      var c = items[si];
+      sidebarItems.push(
+        <li key={c.id}>
+          <button
+            className="comp-api__sidebar-link"
+            onClick={() => scrollTo(c.id)}
+          >
+            {c.name}
+          </button>
+        </li>
+      );
+    }
+  });
+
   return (
     <main id="main-content" role="main" tabIndex={-1} className="specimen-page">
       {/* Hero */}
@@ -111,23 +137,7 @@ export function ComponentApiPage() {
             aria-label="Filter components"
           />
           <ul className="comp-api__sidebar-list">
-            {Array.from(grouped.entries()).map(([cat, items]) => (
-              <React.Fragment key={cat}>
-                <li className="comp-api__sidebar-cat">
-                  {CATEGORY_LABELS[cat] ? CATEGORY_LABELS[cat] : cat}
-                </li>
-                {items.map((c) => (
-                  <li key={c.id}>
-                    <button
-                      className="comp-api__sidebar-link"
-                      onClick={() => scrollTo(c.id)}
-                    >
-                      {c.name}
-                    </button>
-                  </li>
-                ))}
-              </React.Fragment>
-            ))}
+            {sidebarItems}
           </ul>
         </nav>
 

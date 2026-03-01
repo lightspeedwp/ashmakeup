@@ -6,5 +6,5 @@
 import * as React from "react";
 
 export function Command({ children }: { children?: React.ReactNode }) {
-  return <>{children}</>;
+  return <div>{children}</div>;
 }

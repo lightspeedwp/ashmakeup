@@ -5,28 +5,24 @@
 
 import * as React from "react";
 
-const noop = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+function noop({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
 
-const Select = noop;
-const SelectContent = noop;
-const SelectGroup = noop;
-const SelectItem = noop;
-const SelectLabel = noop;
-const SelectScrollDownButton = noop;
-const SelectScrollUpButton = noop;
-const SelectSeparator = noop;
-const SelectTrigger = noop;
-const SelectValue = noop;
+var Select = noop;
+var SelectGroup = noop;
+var SelectValue = noop;
+var SelectTrigger = noop;
+var SelectContent = noop;
+var SelectLabel = noop;
+var SelectItem = noop;
+var SelectSeparator = function() { return null; };
 
 export {
   Select,
-  SelectContent,
   SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectScrollDownButton,
-  SelectScrollUpButton,
-  SelectSeparator,
-  SelectTrigger,
   SelectValue,
+  SelectTrigger,
+  SelectContent,
+  SelectLabel,
+  SelectItem,
+  SelectSeparator,
 };

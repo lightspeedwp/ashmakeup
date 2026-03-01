@@ -5,8 +5,8 @@
 
 import * as React from "react";
 
-function Avatar({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function Avatar({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
 function AvatarImage() { return null; }
-function AvatarFallback({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function AvatarFallback({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
 
 export { Avatar, AvatarImage, AvatarFallback };

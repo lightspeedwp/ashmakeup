@@ -71,7 +71,8 @@ export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   /** Which dropdown/mega-menu is currently open (only one at a time) */
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const openDropdownInit: string | null = null;
+  const [openDropdown, setOpenDropdown] = useState(openDropdownInit);
 
   const menuButtonRef = useRef(null as HTMLButtonElement | null);
   // Bundler-safe: extract typed init values — avoids Record<K,V> / ReturnType<T> nested generics in useRef calls
@@ -302,7 +303,7 @@ export function Header() {
   };
 
   return (
-    <>
+    <div className="header-wrapper">
       <nav
         className={headerClassName}
         role="navigation"
@@ -343,7 +344,7 @@ export function Header() {
               </div>
             ) : (
               /* ── Standard Navigation ── */
-              <>
+              <div className="header__nav-items-wrapper">
                 {headerNavigationItems.map((item) => {
                   /* Items with mega-menu / dropdown */
                   if (MEGA_MENU_IDS.has(item.id)) {
@@ -403,7 +404,7 @@ export function Header() {
 
                 {/* Theme Toggle - Desktop */}
                 <ThemeToggle />
-              </>
+              </div>
             )}
           </div>
 
@@ -431,6 +432,6 @@ export function Header() {
 
       {/* Mobile Menu Component */}
       <MobileMenu isOpen={isMobileMenuOpen} onClose={closeMobileMenu} />
-    </>
+    </div>
   );
 }

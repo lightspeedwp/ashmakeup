@@ -451,7 +451,8 @@ export function EbookPage() {
 
   /* ── Primary state: single-page index (source of truth) ── */
   const [currentPage, setCurrentPage] = useState(() => readSavedPage(totalPages - 1));
-  const [flipState, setFlipState] = useState<'idle' | 'forward' | 'backward'>('idle');
+  const flipStateInit: 'idle' | 'forward' | 'backward' = 'idle';
+  const [flipState, setFlipState] = useState(flipStateInit);
   const [swipeOffset, setSwipeOffset] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -459,8 +460,10 @@ export function EbookPage() {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   /* ── Touch refs ── */
-  const touchStartX = useRef<number | null>(null);
-  const touchStartY = useRef<number | null>(null);
+  const touchStartXInit: number | null = null;
+  const touchStartX = useRef(touchStartXInit);
+  const touchStartYInit: number | null = null;
+  const touchStartY = useRef(touchStartYInit);
   const isSwiping = useRef(false);
   const readerRefInit: HTMLDivElement | null = null;
   const readerRef = useRef(readerRefInit);

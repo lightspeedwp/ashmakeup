@@ -36,8 +36,10 @@ import '../../styles/blocks/optimized-image.css';
 /** Named preset keys */
 export type ImagePreset = keyof typeof IMAGE_PRESETS;
 
-export interface OptimizedImageProps
-  extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'src'> {
+/** Bundler-safe: avoid nested capital-letter generics in interface extends */
+type ImgPropsWithoutSrc = Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'src'>;
+
+export interface OptimizedImageProps extends ImgPropsWithoutSrc {
   /** Image source — imported asset, URL, or data URI */
   src: string;
   /** Alt text (required for accessibility) */
@@ -82,8 +84,10 @@ export function OptimizedImage({
   const startsWithHttps = src ? src.startsWith('https://') : false;
   const isExternalUrl = startsWithHttp || startsWithHttps;
 
-  const [optimizedSrc, setOptimizedSrc] = useState<string | null>(null);
-  const [optimizedSrcSet, setOptimizedSrcSet] = useState<string | undefined>(undefined);
+  const optimizedSrcInit: string | null = null;
+  const [optimizedSrc, setOptimizedSrc] = useState(optimizedSrcInit);
+  const optimizedSrcSetInit: string | undefined = undefined;
+  const [optimizedSrcSet, setOptimizedSrcSet] = useState(optimizedSrcSetInit);
   const [isLoading, setIsLoading] = useState(!isExternalUrl);
   const [error, setError] = useState(false);
   const mountedRef = useRef(true);

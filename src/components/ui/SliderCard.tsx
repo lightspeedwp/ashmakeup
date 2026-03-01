@@ -66,10 +66,10 @@ function SliderCardInner({
 }: SliderCardProps) {
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [touchStart, setTouchStart] = useState<number | null>(
-    null,
-  );
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const touchStartInit: number | null = null;
+  const [touchStart, setTouchStart] = useState(touchStartInit);
+  const touchEndInit: number | null = null;
+  const [touchEnd, setTouchEnd] = useState(touchEndInit);
   const [isSwiping, setIsSwiping] = useState(false);
 
   // Handle legacy single image format
@@ -286,7 +286,7 @@ function SliderCardInner({
 
         {/* Multi-image Navigation Controls */}
         {hasMultipleImages && (
-          <>
+          <div className="slider-card__nav-controls">
             {/* Desktop Navigation Arrows - Hover only with reduced opacity */}
             <div className="slider-card__nav-btn-container">
               <button
@@ -351,7 +351,7 @@ function SliderCardInner({
             <div className="slider-card__counter">
               {currentImageIndex + 1}/{images.length}
             </div>
-          </>
+          </div>
         )}
       </div>
 

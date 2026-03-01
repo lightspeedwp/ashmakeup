@@ -44,7 +44,8 @@ export function useThrottledCallback<T extends (...args: any[]) => void>(
   delay: number = 100,
 ): T {
   const lastCallRef = useRef(0);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timerRefInit: ReturnType<typeof setTimeout> | null = null;
+  const timerRef = useRef(timerRefInit);
   const callbackRef = useRef(callback);
 
   // Keep callback ref fresh without causing re-renders

@@ -17,8 +17,10 @@ import { useState, useEffect, useRef } from 'react';
  */
 export function useAnimatedCount(target: number, duration = 320): number {
   const [display, setDisplay] = useState(target);
-  const rafRef = useRef<number | null>(null);
-  const startRef = useRef<number | null>(null);
+  const rafRefInit: number | null = null;
+  const rafRef = useRef(rafRefInit);
+  const startRefInit: number | null = null;
+  const startRef = useRef(startRefInit);
   const fromRef = useRef(target);
 
   useEffect(() => {

@@ -5,38 +5,20 @@
 
 import * as React from "react";
 
-const noop = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+function noop({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
 
-const DropdownMenu = noop;
-const DropdownMenuTrigger = noop;
-const DropdownMenuContent = noop;
-const DropdownMenuItem = noop;
-const DropdownMenuCheckboxItem = noop;
-const DropdownMenuRadioItem = noop;
-const DropdownMenuLabel = noop;
-const DropdownMenuSeparator = noop;
-const DropdownMenuShortcut = noop;
-const DropdownMenuGroup = noop;
-const DropdownMenuPortal = noop;
-const DropdownMenuSub = noop;
-const DropdownMenuSubContent = noop;
-const DropdownMenuSubTrigger = noop;
-const DropdownMenuRadioGroup = noop;
+var DropdownMenu = noop;
+var DropdownMenuTrigger = noop;
+var DropdownMenuContent = noop;
+var DropdownMenuItem = noop;
+var DropdownMenuLabel = noop;
+var DropdownMenuSeparator = function() { return null; };
 
 export {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuCheckboxItem,
-  DropdownMenuRadioItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuGroup,
-  DropdownMenuPortal,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuRadioGroup,
 };

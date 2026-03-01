@@ -28,7 +28,8 @@ import '../../../styles/blocks/event-card.css';
 
 export function EventsPage() {
   const navigate = useNavigate();
-  const [activeFilter, setActiveFilter] = useState<string>('all');
+  const activeFilterInit: string = 'all';
+  const [activeFilter, setActiveFilter] = useState(activeFilterInit);
 
   useEffect(() => {
     setSEO(pageSEO.events);

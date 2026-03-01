@@ -64,17 +64,18 @@ export function PortfolioDetailPage({
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isStoryExpanded] = useState(false);
 
-  const [lightbox, setLightbox] = useState<{
+  const lightboxInit: {
     isOpen: boolean;
     currentIndex: number;
     images: PortfolioImage[];
     title: string;
-  }>({
+  } = {
     isOpen: false,
     currentIndex: 0,
     images: [],
     title: '',
-  });
+  };
+  const [lightbox, setLightbox] = useState(lightboxInit);
 
   const categories = useMemo(() => getPortfolioCategories(), []);
 

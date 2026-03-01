@@ -1,19 +1,12 @@
 /**
- * @fileoverview Reusable Hero Layout component for consistent page headers
- * Flexible hero section supporting various content types with consistent styling
- *
- * @author Ash Shaw Portfolio Team
- * @version 2.1.0 - Added size prop for min-height variants (sm/md/lg/xl)
+ * Reusable Hero Layout component for consistent page headers across the site
+ * Implements strict BEM architecture and responsive design tokens.
  */
 
-import React, { useState } from "react";
-import { ScrollDownArrow } from "../ui/ScrollDownArrow";
-import { EnhancedLightbox } from "../ui/EnhancedLightbox";
-import "../../styles/blocks/hero.css";
+import React, { useState } from 'react';
+import { ScrollDownArrow } from '../ui/ScrollDownArrow';
+import { EnhancedLightbox } from '../ui/EnhancedLightbox';
 
-/**
- * Hero image interface for lightbox functionality
- */
 interface HeroImage {
   src: string;
   alt: string;
@@ -22,92 +15,68 @@ interface HeroImage {
   className?: string;
 }
 
-/**
- * Props interface for HeroLayout
- */
 interface HeroLayoutProps {
-  /** Main heading text */
   title: string;
-  /** Optional HTML id attribute for the section element */
   id?: string;
-  /** Subtitle text or element */
   subtitle?: string | React.ReactNode;
-  /** Description paragraph */
   description?: string;
-  /** Additional custom classes */
   className?: string;
-  /** Decorative background elements */
   decorativeElements?: React.ReactNode;
-  /** Action buttons/links */
   actions?: React.ReactNode;
-  /** Media element (image/video/grid) */
   media?: React.ReactNode;
-  /** Layout variation */
-  layout?: "center" | "left" | "split";
-  /** Width alignment */
-  align?: "default" | "wide" | "full";
-  /** Fullscreen height toggle */
+  layout?: 'center' | 'split' | 'left';
+  align?: 'default' | 'wide' | 'full';
   fullscreen?: boolean;
-  /** Show scroll down indicator */
   showScrollArrow?: boolean;
-  /** Target ID for scroll arrow */
   scrollArrowTarget?: string;
-  /** Custom class for scroll arrow */
   scrollArrowClassName?: string;
-  // Lightbox functionality
   heroImages?: HeroImage[];
   lightboxTitle?: string;
   enableLightbox?: boolean;
-  // Size prop for min-height variants
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: 'sm' | 'md' | 'lg';
 }
 
-/**
- * Reusable Hero Layout component for consistent page headers across the site
- * Implements strict BEM architecture and responsive design tokens.
- */
-export function HeroLayout({
-  title,
-  id,
-  subtitle,
-  description,
-  className = "",
-  decorativeElements,
-  actions,
-  media,
-  layout = "center",
-  align = "default",
-  fullscreen = false,
-  showScrollArrow = true,
-  scrollArrowTarget,
-  scrollArrowClassName,
-  heroImages,
-  lightboxTitle = "Portfolio Gallery",
-  enableLightbox = false,
-  size = "md",
-}: HeroLayoutProps) {
-  // Portfolio lightbox state management
-  const [lightbox, setLightbox] = useState({
+export function HeroLayout(props: HeroLayoutProps) {
+  var title = props.title;
+  var id = props.id;
+  var subtitle = props.subtitle;
+  var description = props.description;
+  var className = props.className || "";
+  var decorativeElements = props.decorativeElements;
+  var actions = props.actions;
+  var media = props.media;
+  var layout = props.layout || "center";
+  var align = props.align || "default";
+  var fullscreen = props.fullscreen || false;
+  var showScrollArrow = props.showScrollArrow !== false;
+  var scrollArrowTarget = props.scrollArrowTarget;
+  var scrollArrowClassName = props.scrollArrowClassName;
+  var heroImages = props.heroImages;
+  var lightboxTitle = props.lightboxTitle || "Portfolio Gallery";
+  var enableLightbox = props.enableLightbox || false;
+  var size = props.size || "md";
+
+  // Portfolio lightbox state management - initial state built without type assertion
+  var initialLightbox = {
     isOpen: false,
-    images: [] as Array<{
-      src: string;
-      alt: string;
-      caption?: string;
-      description?: string;
-    }>,
+    images: [],
     currentIndex: 0,
     title: "",
-  });
+  };
+  var lightboxState = useState(initialLightbox);
+  var lightbox = lightboxState[0];
+  var setLightbox = lightboxState[1];
 
   // Helper function to render subtitle with colored words for brand tagline
-  const renderSubtitle = () => {
+  function renderSubtitle() {
     if (!subtitle) return null;
     
     // Check if this is the brand tagline that needs individual word colors
-    const subtitleText = typeof subtitle === 'string' ? subtitle : '';
-    const isBrandTagline = subtitleText.includes('colour') && 
-                          subtitleText.includes('energy') && 
-                          subtitleText.includes('connection');
+    var subtitleText = typeof subtitle === 'string' ? subtitle : '';
+    var hasColour = subtitleText.includes('colour');
+    var hasEnergy = subtitleText.includes('energy');
+    var hasConnection = subtitleText.includes('connection');
+    var isBrandTagline = hasColour && hasEnergy && hasConnection;
     
     if (isBrandTagline) {
       return (
@@ -135,19 +104,23 @@ export function HeroLayout({
         {subtitle}
       </h2>
     );
-  };
+  }
 
   // Prepare hero images for lightbox
-  const lightboxImages = heroImages
-    ? heroImages.map((img) => ({
+  var lightboxImages = [];
+  if (heroImages) {
+    for (var i = 0; i < heroImages.length; i++) {
+      var img = heroImages[i];
+      lightboxImages.push({
         src: img.src,
         alt: img.alt,
         caption: img.caption,
         description: img.description,
-      }))
-    : [];
+      });
+    }
+  }
 
-  const openLightbox = (index: number) => {
+  function openLightbox(index: number) {
     if (enableLightbox && heroImages) {
       setLightbox({
         isOpen: true,
@@ -156,14 +129,19 @@ export function HeroLayout({
         title: lightboxTitle,
       });
     }
-  };
+  }
 
-  const closeLightbox = () => {
-    setLightbox((prev) => ({ ...prev, isOpen: false }));
-  };
+  function closeLightbox() {
+    setLightbox({
+      isOpen: false,
+      images: lightbox.images,
+      currentIndex: lightbox.currentIndex,
+      title: lightbox.title,
+    });
+  }
 
   // Hero Media Component with Lightbox Integration
-  const HeroMediaWithLightbox = () => {
+  function HeroMediaWithLightbox() {
     if (!enableLightbox) {
       if (media) return media;
       return null;
@@ -177,63 +155,86 @@ export function HeroLayout({
       return null;
     }
 
+    var imageElements = [];
+    for (var i = 0; i < heroImages.length; i++) {
+      var image = heroImages[i];
+      var index = i;
+      
+      // Mosaic tile configurations mapped to BEM classes
+      var mosaicClasses = [
+        "hero__mosaic-image hero__mosaic-image--1",
+        "hero__mosaic-image hero__mosaic-image--2",
+        "hero__mosaic-image hero__mosaic-image--3"
+      ];
+
+      var tileClass = image.className ? image.className : mosaicClasses[index % 3];
+      var bgUrl = image.src;
+      var bgStyle = { backgroundImage: "url(\"" + bgUrl + "\")" };
+      var labelText = image.caption ? image.caption : image.alt;
+      var fullLabel = "View " + labelText + " in portfolio gallery";
+
+      var currentIndex = index;
+      function makeClickHandler(idx: number) {
+        return function() { openLightbox(idx); };
+      }
+      
+      function makeKeyHandler(idx: number) {
+        return function(e: React.KeyboardEvent) {
+          var isEnter = e.key === "Enter";
+          var isSpace = e.key === " ";
+          var isActivationKey = isEnter || isSpace;
+          if (isActivationKey) {
+            e.preventDefault();
+            openLightbox(idx);
+          }
+        };
+      }
+
+      imageElements.push(
+        <div
+          key={index}
+          className={tileClass}
+          style={bgStyle}
+          aria-label={fullLabel}
+          onClick={makeClickHandler(currentIndex)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={makeKeyHandler(currentIndex)}
+        />
+      );
+    }
+
     return (
       <div className="hero__media-container">
-        {/* Render hero images with lightbox functionality */}
-        {heroImages.map((image, index) => {
-          // Mosaic tile configurations mapped to BEM classes
-          const mosaicClasses = [
-            "hero__mosaic-image hero__mosaic-image--1",
-            "hero__mosaic-image hero__mosaic-image--2",
-            "hero__mosaic-image hero__mosaic-image--3"
-          ];
-
-          const tileClass = image.className ? image.className : mosaicClasses[index % 3];
-          const bgUrl = image.src;
-          const bgStyle = { backgroundImage: `url("${bgUrl}")` };
-          const labelText = image.caption ? image.caption : image.alt;
-          const fullLabel = `View ${labelText} in portfolio gallery`;
-
-          return (
-            <div
-              key={index}
-              className={tileClass}
-              style={bgStyle}
-              aria-label={fullLabel}
-              onClick={() => openLightbox(index)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                const isActivationKey = e.key === "Enter" || e.key === " ";
-                if (isActivationKey) {
-                  e.preventDefault();
-                  openLightbox(index);
-                }
-              }}
-            />
-          );
-        })}
+        {imageElements}
       </div>
     );
   };
 
   // BEM Classes
-  const sizeClass = size !== 'md' ? `hero--${size}` : '';
-  const heroClasses = `hero ${sizeClass} ${fullscreen ? "hero--fullscreen" : ""} ${className}`.replace(/\s+/g, ' ').trim();
+  var sizeClass = size !== 'md' ? 'hero--' + size : '';
+  var fullscreenClass = fullscreen ? "hero--fullscreen" : "";
+  var heroClassList = "hero " + sizeClass + " " + fullscreenClass + " " + className;
+  var heroClasses = heroClassList.replace(/\s+/g, ' ').trim();
   
   // Build content classes without nested ternary
-  let contentClassList = "hero__content";
+  var contentClassList = "hero__content";
   if (layout === "split") {
     contentClassList += " hero__content--split";
   } else if (layout === "left") {
     contentClassList += " hero__content--left";
   }
-  const contentClasses = contentClassList;
+  var contentClasses = contentClassList;
   
   // Container Classes
-  let containerClasses = "hero__container";
+  var containerClasses = "hero__container";
   if (align === "wide") containerClasses += " hero__container--wide";
   if (align === "full") containerClasses += " hero__container--full";
+
+  // Scroll arrow properties
+  var arrowClass = scrollArrowClassName ? scrollArrowClassName : "hero__scroll-arrow";
+  var targetName = scrollArrowTarget ? scrollArrowTarget.replace("-", " ") : "next";
+  var arrowLabel = "Scroll to " + targetName + " section";
 
   return (
     <section id={id} className={heroClasses}>
@@ -243,12 +244,11 @@ export function HeroLayout({
           {decorativeElements}
         </div>
       ) : (
-        /* Default Background Effects if none provided */
-        <>
+        <div className="hero__bg-effects" aria-hidden="true">
            <div className="hero__bg-effect hero__bg-effect--1" />
            <div className="hero__bg-effect hero__bg-effect--2" />
            <div className="hero__bg-effect hero__bg-effect--3" />
-        </>
+        </div>
       )}
 
       {/* Content Container */}
@@ -292,19 +292,13 @@ export function HeroLayout({
       </div>
 
       {/* Scroll Down Arrow */}
-      {showScrollArrow && (() => {
-        const arrowClass = scrollArrowClassName ? scrollArrowClassName : "hero__scroll-arrow";
-        const arrowLabel = scrollArrowTarget
-          ? `Scroll to ${scrollArrowTarget.replace("-", " ")} section`
-          : "Scroll to next section";
-        return (
-          <ScrollDownArrow
-            targetSectionId={scrollArrowTarget}
-            className={arrowClass}
-            ariaLabel={arrowLabel}
-          />
-        );
-      })()}
+      {showScrollArrow && (
+        <ScrollDownArrow
+          targetSectionId={scrollArrowTarget}
+          className={arrowClass}
+          ariaLabel={arrowLabel}
+        />
+      )}
 
       {/* Portfolio Lightbox */}
       {enableLightbox && (

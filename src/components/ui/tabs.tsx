@@ -5,11 +5,11 @@
 
 import * as React from "react";
 
-const noop = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+function noop({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
 
-const Tabs = noop;
-const TabsList = noop;
-const TabsTrigger = noop;
-const TabsContent = noop;
+var Tabs = noop;
+var TabsList = noop;
+var TabsTrigger = noop;
+var TabsContent = noop;
 
 export { Tabs, TabsList, TabsTrigger, TabsContent };

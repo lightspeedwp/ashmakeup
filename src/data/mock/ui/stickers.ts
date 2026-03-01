@@ -56,6 +56,7 @@ export const stickerThemeMap: Record<string, string> = {
   'rainbow-flow-eye': 'rainbow',
   'create-universe-eye': 'rainbow',
   'abstract-blocks-eye': 'galaxy',
+  'makeup-artist': 'psychedelic',
 };
 
 /** All UI strings for the stickers page */

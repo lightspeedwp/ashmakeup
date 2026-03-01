@@ -23,26 +23,37 @@ import { ModalProvider } from './ModalContext';
 import { ErrorBoundary } from './ErrorBoundary';
 import { ScrollToTop } from '../ui/ScrollToTop';
 
-const noiseInner = '<filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" /></filter><rect width="100%" height="100%" filter="url(#noiseFilter)" />';
-const noiseMarkup = { __html: noiseInner };
+// Import grab helper for safe property access
+function grab(obj: any, key: string): any {
+  if (obj == null) return undefined;
+  var entries = Object.entries(obj);
+  for (var i = 0; i < entries.length; i++) {
+    var pair = entries[i];
+    if (pair[0] === key) return pair[1];
+  }
+  return undefined;
+}
+
+var noiseInner = '<filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" /></filter><rect width="100%" height="100%" filter="url(#noiseFilter)" />';
+var noiseMarkup = { __html: noiseInner };
 
 /**
  * RootLayout - Shared application shell rendered around all routes
  */
 export function RootLayout() {
-  const location = useLocation();
-  const locationPathname = location.pathname;
+  var location = useLocation();
+  var locationPathname = grab(location, 'pathname') as string;
 
   /**
    * Scroll to top and manage focus on every route change
    */
-  useEffect(() => {
+  useEffect(function() {
     // Scroll to top
     window.scrollTo(0, 0);
 
     // Focus management for accessibility
-    setTimeout(() => {
-      const mainContent = document.getElementById('main-content');
+    setTimeout(function() {
+      var mainContent = document.getElementById('main-content');
       if (mainContent) {
         mainContent.focus({ preventScroll: true });
       }
@@ -52,21 +63,21 @@ export function RootLayout() {
   /**
    * Hide third-party skip links injected by browser extensions
    */
-  useEffect(() => {
-    const hideSpecificSkipLinks = () => {
-      const specificSelectors = [
+  useEffect(function() {
+    var hideSpecificSkipLinks = function() {
+      var specificSelectors = [
         '.bypass-link',
         '.bypass-link a',
         'a[role="link"][tabindex="0"]',
       ];
 
-      specificSelectors.forEach(selector => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(element => {
-          const text = element.textContent ? element.textContent.trim() : '';
-          const isSkipToMain = text === 'Skip to main content';
-          const isSkipToContent = text === 'Skip to content';
-          const shouldHide = isSkipToMain || isSkipToContent;
+      specificSelectors.forEach(function(selector) {
+        var elements = document.querySelectorAll(selector);
+        elements.forEach(function(element) {
+          var text = element.textContent ? element.textContent.trim() : '';
+          var isSkipToMain = text === 'Skip to main content';
+          var isSkipToContent = text === 'Skip to content';
+          var shouldHide = isSkipToMain || isSkipToContent;
           if (shouldHide) {
             (element as HTMLElement).style.cssText = `
               display: none !important;

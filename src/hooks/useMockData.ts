@@ -141,9 +141,11 @@ export function useBlogPosts(options?: {
  * Returns mock data from /data/mock/blog
  */
 export function useBlogPost(slug: string) {
-  const [post, setPost] = useState<any>(null);
+  const postInit: any = null;
+  const [post, setPost] = useState(postInit);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const errorInit: Error | null = null;
+  const [error, setError] = useState(errorInit);
 
   useEffect(() => {
     if (!slug) {

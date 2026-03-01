@@ -48,7 +48,8 @@ export function VideosPage() {
   const selectedVideoInit: Video | null = null;
   const [selectedVideo, setSelectedVideo] = useState(selectedVideoInit);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeCategories, setActiveCategories] = useState<string[]>([]);
+  const activeCategoriesInit: string[] = [];
+  const [activeCategories, setActiveCategories] = useState(activeCategoriesInit);
   const [sortBy, setSortBy] = useState('recent');
 
   /** Seed activeCategories from ?category= query param on mount */

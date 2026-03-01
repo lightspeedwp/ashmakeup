@@ -63,7 +63,8 @@ export function useScrollPosition(
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const lastCallRef = useRef(0);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timerRefInit: ReturnType<typeof setTimeout> | null = null;
+  const timerRef = useRef(timerRefInit);
 
   /** Compute and store current scroll values */
   const measure = useCallback(() => {

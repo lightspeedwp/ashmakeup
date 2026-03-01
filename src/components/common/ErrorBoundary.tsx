@@ -1,23 +1,11 @@
-/**
- * @fileoverview Error Boundary component for catching and handling React errors
- * 
- * Provides comprehensive error catching and user-friendly error display with recovery options.
- * Includes timeout error handling, API error recovery, and accessibility support.
- * 
- * @author Ash Shaw Portfolio Team
- * @version 1.3.0 - Bundler-safe: no && or || in JSX
- */
-
-import React, { Component, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { TriangleAlert, RefreshCw } from '../../lib/icons';
-import { errorMessages } from '../../data/mock/ui/error';
-import "../../styles/blocks/button.css";
 
-// import.meta.env access completely removed — proven unreliable in this bundler
+// Bundler workaround: import.meta.env is forbidden, use direct false for production safety
 const _ebIsDev = false;
 
 /**
- * Error boundary props interface
+ * Props for ErrorBoundary component
  */
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -26,7 +14,12 @@ interface ErrorBoundaryProps {
 }
 
 /**
- * Error boundary state interface
+ * Props without children (for HOC)
+ */
+type ErrorBoundaryPropsWithoutChildren = Omit<ErrorBoundaryProps, 'children'>;
+
+/**
+ * State for ErrorBoundary component
  */
 interface ErrorBoundaryState {
   hasError: boolean;
@@ -36,9 +29,78 @@ interface ErrorBoundaryState {
 }
 
 /**
- * Error Boundary component for catching and handling React errors
+ * Partial state for getDerivedStateFromError
  */
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+type PartialErrorBoundaryState = Partial<ErrorBoundaryState>;
+
+/**
+ * Type for component that can be wrapped with ErrorBoundary
+ */
+type AnyComponentType = (props: any) => JSX.Element | null;
+
+/**
+ * Error messages for different error types
+ */
+const errorMessages = {
+  default: {
+    title: 'Oops! Something went wrong',
+    message: 'We encountered an unexpected error. Don\'t worry, your data is safe.',
+    suggestions: [
+      'Try refreshing the page',
+      'Clear your browser cache',
+      'Check your internet connection',
+      'Try again in a few moments',
+    ],
+  },
+  timeout: {
+    title: 'Request Timed Out',
+    message: 'The request took too long to complete. This might be a temporary network issue.',
+    suggestions: [
+      'Check your internet connection',
+      'Try again in a few moments',
+      'Reload the page',
+    ],
+  },
+  network: {
+    title: 'Network Error',
+    message: 'We couldn\'t connect to our servers. Please check your internet connection.',
+    suggestions: [
+      'Check your internet connection',
+      'Try disabling VPN or proxy',
+      'Try again in a few moments',
+    ],
+  },
+  content: {
+    title: 'Content Loading Error',
+    message: 'We had trouble loading some content. This might be a temporary issue.',
+    suggestions: [
+      'Try refreshing the page',
+      'Check your internet connection',
+      'Try again in a few moments',
+    ],
+  },
+  browserExtension: {
+    title: 'Browser Extension Conflict',
+    message: 'A browser extension may be interfering with the application.',
+    suggestions: [
+      'Try disabling browser extensions',
+      'Use an incognito/private window',
+      'Try a different browser',
+    ],
+  },
+};
+
+/**
+ * Error Boundary component for catching and handling React errors
+ * 
+ * Bundler workaround: extends Component without angle-bracket generics
+ * (the bundler misreads `Component<Props, State>` as JSX).
+ * State type is declared explicitly on the class body.
+ * Props are typed via constructor parameter only.
+ */
+export class ErrorBoundary extends React.Component {
+  state: ErrorBoundaryState;
+
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = {
@@ -47,9 +109,13 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       errorInfo: null,
       retryCount: 0,
     };
+    
+    // Bind methods to this context for event handlers
+    this.handleRetry = this.handleRetry.bind(this);
+    this.handleReload = this.handleReload.bind(this);
   }
 
-  static getDerivedStateFromError(error: Error): Partial<ErrorBoundaryState> {
+  static getDerivedStateFromError(error: Error): PartialErrorBoundaryState {
     return {
       hasError: true,
       error,
@@ -123,8 +189,9 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       errorInfo,
     });
 
-    if (this.props.onError) {
-      this.props.onError(error, errorInfo);
+    var propsTyped = this.props as ErrorBoundaryProps;
+    if (propsTyped.onError) {
+      propsTyped.onError(error, errorInfo);
     }
 
     if (_ebIsDev) {
@@ -135,46 +202,53 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     }
   }
 
-  handleRetry = () => {
-    this.setState(prevState => ({
-      hasError: false,
-      error: null,
-      errorInfo: null,
-      retryCount: prevState.retryCount + 1,
-    }));
-  };
+  handleRetry() {
+    var self = this;
+    this.setState(function(prevState) {
+      return {
+        hasError: false,
+        error: null,
+        errorInfo: null,
+        retryCount: prevState.retryCount + 1,
+      };
+    });
+  }
 
-  handleReload = () => {
+  handleReload() {
     window.location.reload();
-  };
+  }
 
   render() {
-    const { hasError, error, retryCount } = this.state;
-    const { children, fallback } = this.props;
+    var hasError = this.state.hasError;
+    var error = this.state.error;
+    var retryCount = this.state.retryCount;
+    var propsTyped = this.props as ErrorBoundaryProps;
+    var children = propsTyped.children;
+    var fallback = propsTyped.fallback;
 
     if (hasError) {
       if (fallback) {
         return fallback;
       }
 
-      const messageText = error && error.message ? error.message : '';
-      const hasTimedOut = messageText.includes('timed out');
-      const hasTimeout = messageText.includes('timeout');
-      const isTimeoutError = hasTimedOut ? true : hasTimeout;
+      var messageText = error && error.message ? error.message : '';
+      var hasTimedOut = messageText.includes('timed out');
+      var hasTimeout = messageText.includes('timeout');
+      var isTimeoutError = hasTimedOut ? true : hasTimeout;
       
-      const hasNetwork = messageText.includes('network');
-      const hasFetch = messageText.includes('fetch');
-      const isNetworkError = hasNetwork ? true : hasFetch;
+      var hasNetwork = messageText.includes('network');
+      var hasFetch = messageText.includes('fetch');
+      var isNetworkError = hasNetwork ? true : hasFetch;
       
-      const hasContentful = messageText.includes('Contentful');
-      const hasCMS = messageText.includes('CMS');
-      const isContentError = hasContentful ? true : hasCMS;
+      var hasContentful = messageText.includes('Contentful');
+      var hasCMS = messageText.includes('CMS');
+      var isContentError = hasContentful ? true : hasCMS;
       
-      const isBrowserExtensionError = messageText.includes('extension');
+      var isBrowserExtensionError = messageText.includes('extension');
 
-      let errorTitle = errorMessages.default.title;
-      let errorMessage = errorMessages.default.message;
-      let suggestions: string[] = [];
+      var errorTitle = errorMessages.default.title;
+      var errorMessage = errorMessages.default.message;
+      var suggestions = [];
 
       if (isBrowserExtensionError) {
         errorTitle = errorMessages.browserExtension.title;
@@ -194,11 +268,16 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         suggestions = errorMessages.content.suggestions;
       }
 
-      const hasSuggestions = suggestions.length > 0;
-      const shouldShowReload = retryCount > 1;
-      const shouldShowDebug = _ebIsDev && error;
-      const hasErrorInfo = this.state.errorInfo !== null;
-      const shouldShowRetryCount = retryCount > 0;
+      var hasSuggestions = suggestions.length > 0;
+      var shouldShowReload = retryCount > 1;
+      var shouldShowDebug = _ebIsDev && error;
+      var hasErrorInfo = this.state.errorInfo !== null;
+      var shouldShowRetryCount = retryCount > 0;
+      
+      var tryAgainLabel = 'Try again (attempt ' + (retryCount + 1) + ')';
+      var errorString = error ? error.toString() : '';
+      var errorStackString = error && error.stack ? error.stack : '';
+      var componentStackString = this.state.errorInfo && this.state.errorInfo.componentStack ? this.state.errorInfo.componentStack : '';
 
       return (
         <div 
@@ -227,12 +306,14 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                   What you can try:
                 </h2>
                 <ul className="error-boundary__suggestions-list">
-                  {suggestions.map((suggestion, index) => (
-                    <li key={index} className="error-boundary__suggestion-item">
-                      <span className="error-boundary__bullet">•</span>
-                      {suggestion}
-                    </li>
-                  ))}
+                  {suggestions.map(function(suggestion, index) {
+                    return (
+                      <li key={index} className="error-boundary__suggestion-item">
+                        <span className="error-boundary__bullet">•</span>
+                        {suggestion}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ) : null}
@@ -243,7 +324,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 type="button"
                 onClick={this.handleRetry}
                 className="btn btn--neon-primary error-boundary__btn"
-                aria-label={`Try again (attempt ${retryCount + 1})`}
+                aria-label={tryAgainLabel}
               >
                 <RefreshCw className="btn__icon" />
                 Try Again
@@ -268,14 +349,14 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                   Debug Information (Development Only)
                 </summary>
                 <div className="error-boundary__debug-content">
-                  <p><strong>Error:</strong> {error.toString()}</p>
+                  <p><strong>Error:</strong> {errorString}</p>
                   <p><strong>Stack:</strong></p>
-                  <pre className="error-boundary__pre">{error.stack}</pre>
+                  <pre className="error-boundary__pre">{errorStackString}</pre>
                   {hasErrorInfo ? (
-                    <>
+                    <div className="error-boundary__component-stack">
                       <p><strong>Component Stack:</strong></p>
-                      <pre className="error-boundary__pre">{this.state.errorInfo ? this.state.errorInfo.componentStack : ''}</pre>
-                    </>
+                      <pre className="error-boundary__pre">{componentStackString}</pre>
+                    </div>
                   ) : null}
                 </div>
               </details>
@@ -296,11 +377,11 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 }
 
-export function withErrorBoundary<P extends object>(
-  Component: React.ComponentType<P>,
-  errorBoundaryProps?: Omit<ErrorBoundaryProps, 'children'>
+export function withErrorBoundary(
+  Component: AnyComponentType,
+  errorBoundaryProps?: ErrorBoundaryPropsWithoutChildren
 ) {
-  return function WrappedComponent(props: P) {
+  return function WrappedComponent(props: any) {
     return (
       <ErrorBoundary {...errorBoundaryProps}>
         <Component {...props} />

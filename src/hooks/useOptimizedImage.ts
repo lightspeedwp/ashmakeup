@@ -58,12 +58,13 @@ export function useOptimizedImage(
   const isExternalUrl = startsHttp || startsHttps;
   const shouldSkip = skip || isExternalUrl;
 
-  const [state, setState] = useState<UseOptimizedImageResult>({
+  const stateInit: UseOptimizedImageResult = {
     src: originalSrc,
     loading: !shouldSkip,
     error: false,
     result: null,
-  });
+  };
+  const [state, setState] = useState(stateInit);
 
   const mountedRef = useRef(true);
 

@@ -82,13 +82,15 @@ export function useScrollSpy(
     fallbackId,
   } = options;
 
-  const [activeId, setActiveId] = useState<string | undefined>(fallbackId);
+  const activeIdInit: string | undefined = fallbackId;
+  const [activeId, setActiveId] = useState(activeIdInit);
 
   /**
    * Track intersection ratios so we can pick the section with the
    * highest visibility when multiple sections are simultaneously in view.
    */
-  const ratioMap = useRef<Map<string, number>>(new Map());
+  const ratioMapInit: Map<string, number> = new Map();
+  const ratioMap = useRef(ratioMapInit);
 
   useEffect(() => {
     if (!enabled) return;

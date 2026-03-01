@@ -35,7 +35,7 @@ const SORT_OPTIONS = [
 ];
 
 export function PodcastTagPage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug } = useParams();
   const navigate = useNavigate();
   const [sortBy, setSortBy] = useState('recent');
 

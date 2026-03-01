@@ -222,12 +222,12 @@
 
 /* ── Reduced Motion ── */
 @media (prefers-reduced-motion: reduce) {
-  .featured-section__track {
+  .featured-section__card {
     transition: none;
   }
+}
 
-  .featured-section__nav-button,
-  .featured-section__dot {
-    transition: none;
-  }
+/* ── Fragment Replacement Wrapper ── */
+.featured-section-wrapper {
+  /* No styles needed - just a semantic wrapper to replace React.Fragment */
 }

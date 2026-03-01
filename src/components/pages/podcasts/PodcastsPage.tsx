@@ -32,7 +32,8 @@ const SORT_OPTIONS = podcastsUI.archive.sortOptions;
 export function PodcastsPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [activeCategories, setActiveCategories] = useState<string[]>([]);
+  const activeCategoriesInit: string[] = [];
+  const [activeCategories, setActiveCategories] = useState(activeCategoriesInit);
   const [sortBy, setSortBy] = useState('recent');
 
   /** Seed activeCategories from ?category= query param on mount */

@@ -14,10 +14,8 @@ import { TypeformEmbed } from "../../common/TypeformEmbed";
 import { SocialLinks } from "../../common/SocialLinks";
 import { Breadcrumbs } from "../../ui/Breadcrumbs";
 import { FaqSection } from "../../sections/FaqSection";
-import { OptimizedImage } from "../../ui/OptimizedImage";
 import { contactUI } from "../../../data/mock/ui/contact";
 import { contactBreadcrumbs } from "../../../data/mock/ui/breadcrumbs";
-import contactGraphic from "figma:asset/6095d8818a83e64a063161f9df091d561fde7105.png";
 import "../../../styles/blocks/contact-page.css";
 
 import { setSEO } from '../../../utils/seo';
@@ -55,7 +53,7 @@ export function ContactPage() {
 
         {/* Two Column Layout */}
         <div className="contact-page-grid">
-          {/* Left Column - About, Social, FAQ */}
+          {/* Left Column - About, Social */}
           <div className="contact-page-about">
             <h2 className="text-section-h2 text-gradient-blue-teal-green mb-fluid-sm">
               {contactUI.about.title}
@@ -74,14 +72,9 @@ export function ContactPage() {
               </h3>
               <SocialLinks className="contact-page-social-links" />
             </div>
-
-            {/* FAQ Section */}
-            <div className="contact-page-faq-inline">
-              <FaqSection pageId="contact" />
-            </div>
           </div>
 
-          {/* Right Column - Contact Form & Graphic */}
+          {/* Right Column - Contact Form */}
           <div className="contact-page-form">
             <h2 className="text-section-h2 text-gradient-gold-peach-coral mb-fluid-sm">
               {contactUI.form.title}
@@ -90,17 +83,12 @@ export function ContactPage() {
               formId="01KGP965M86E2TCRWEVS0WJX57"
               height="600px"
             />
-            
-            {/* Contact Graphic */}
-            <div className="contact-page-graphic">
-              <OptimizedImage 
-                src={contactGraphic} 
-                alt={contactUI.graphic.alt}
-                className="contact-page-graphic-image"
-                preset="content"
-              />
-            </div>
           </div>
+        </div>
+
+        {/* FAQ Section — full width, below the two-column grid */}
+        <div className="contact-page-faq-fullwidth">
+          <FaqSection pageId="contact" />
         </div>
       </main>
     </div>

@@ -7,22 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Removed
+---
 
-- `/hooks/useContentful.ts` — deprecated re-export shim deleted (all consumers migrated to `useContent`)
-- `/content/` folder — 25 orphaned markdown files across 5 subfolders deleted (zero imports, all content migrated to `/data/mock/`)
-- `/dist/wordpress-export.json` — stale build artifact deleted
+## [7.5.0] - 2026-03-01
+
+### Added
+
+- `makeup-artist` sticker entry added to `/data/mock/images/sticker-graphics.ts` — contact graphic (`figma:asset/6095d8818a83e64a063161f9df091d561fde7105.png`) registered as sticker #27, theme `psychedelic`
+- `makeup-artist` mapped in `stickerThemeMap` in `/data/mock/ui/stickers.ts`
+- `.contact-page-faq-fullwidth` CSS class added to `/styles/blocks/contact-page.css` — full-width FAQ block below the two-column grid
+- Comprehensive Cleanup Audit 4 report — `/reports/comprehensive-cleanup/04-unused-imports.md`
+- Comprehensive Cleanup Audit 5 report — `/reports/comprehensive-cleanup/05-css-hygiene.md` (87 CSS files verified, zero orphans)
+- Comprehensive Cleanup Audit 6 report — `/reports/comprehensive-cleanup/06-folder-hygiene.md`
 
 ### Changed
 
+- `ContactPage.tsx` — `OptimizedImage` graphic removed; FAQ section lifted out of left column and placed full-width below the two-column grid
 - `BlogPreviewSection.tsx` — `useContentful` import → `useContent`
 - `HomePage.tsx` — `useContentful` import → `useContent`
 - `AboutPage.tsx` — `useContentful` import → `useContent`
 - `BlogPage.tsx` — `useContentful` import → `useContent`
 - `BlogPostPage.tsx` — `useContentful` import → `useContent`
-- `/guidelines/overview-components.md` — Contentful CMS references → WordPress/useContent
-- `/guidelines/components/PortfolioCard.md` — Contentful CMS references → WordPress/useContent
-- `/guidelines/components/BlogCard.md` — Contentful CMS references → WordPress/useContent
+- `CardSpecimenPage.tsx` — removed unused `Tag`, `Heart`, `Mic` icon imports (dev-tools deep scan)
+- `VisualRegressionTesterPage.tsx` — removed unused `takeScreenshotNote` callback and `useCallback` import (dev-tools deep scan)
+- `postcss.config.js` — stale comment updated to accurately reflect Tailwind V4 Vite-plugin architecture and BEM-only styling approach
+- `/guidelines/Guidelines.md` — Content Folder Protection Rule updated to historical status (folder deleted Feb 25); file structure diagram corrected; `Guidelines.md` legacy root exception explicitly documented in root restriction rule
+- `/guidelines/sections/BlogPreviewSection.md` — `useContentful` code example corrected to `useContent`
+- `/guidelines/wordpress-migration-guide.md` — `/dist/wordpress-export.json` reference updated with deletion notice and regeneration instructions
+- `/guidelines/overview-components.md`, `/guidelines/components/PortfolioCard.md`, `/guidelines/components/BlogCard.md` — Contentful CMS references updated to WordPress/useContent
+- `/tasks/task-list.md` and `/tasks/comprehensive-cleanup-tasks.md` — all post-audit follow-up items resolved and ticked; dead report links replaced with `_(report archived)_` notation
+- UI Primitives Decision documented: Option A (keep all 45 shadcn stubs) — CSS cascade dependency confirmed, project feature-complete, stubs tree-shaken from production bundle
+
+### Removed
+
+- `OptimizedImage` and `contactGraphic` imports removed from `ContactPage.tsx` (image migrated to sticker data file)
+- `/hooks/useContentful.ts` — deprecated re-export shim deleted (all consumers migrated to `useContent`)
+- `/content/` folder — 25 orphaned markdown files across 5 subfolders deleted (zero imports, all content migrated to `/data/mock/`)
+- `/dist/wordpress-export.json` — stale build artifact deleted
+- `.contact-page-faq-inline` rule removed from `/styles/blocks/contact-page.css` (confirmed unused — zero references in codebase)
+- `/reports/root-cleanup/` — all 8 audit reports deleted (lifecycle rule: reports older than a few days; all items fully resolved)
 
 ## [7.4.0] - 2026-02-25
 

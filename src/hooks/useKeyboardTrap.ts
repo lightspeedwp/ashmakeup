@@ -64,8 +64,10 @@ export function useKeyboardTrap<T extends HTMLElement = HTMLElement>(
 ): RefObject<T | null> {
   const { active, onEscape, autoFocus = true, restoreFocus = true } = options;
 
-  const containerRef = useRef<T | null>(null);
-  const previousFocusRef = useRef<Element | null>(null);
+  const containerRefInit: T | null = null;
+  const containerRef = useRef(containerRefInit);
+  const previousFocusRefInit: Element | null = null;
+  const previousFocusRef = useRef(previousFocusRefInit);
 
   // Store the previously focused element when the trap activates
   useEffect(() => {
@@ -83,7 +85,7 @@ export function useKeyboardTrap<T extends HTMLElement = HTMLElement>(
 
     // Small delay to allow the DOM to settle (e.g., CSS transitions)
     const timer = setTimeout(() => {
-      const focusable = container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+      const focusable = container.querySelectorAll(FOCUSABLE_SELECTOR) as NodeListOf<HTMLElement>;
       if (focusable.length > 0) {
         focusable[0].focus({ preventScroll: true });
       } else {
@@ -125,7 +127,7 @@ export function useKeyboardTrap<T extends HTMLElement = HTMLElement>(
       if (event.key !== 'Tab') return;
 
       const focusable = Array.from(
-        container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+        container.querySelectorAll(FOCUSABLE_SELECTOR) as NodeListOf<HTMLElement>,
       );
 
       if (focusable.length === 0) {

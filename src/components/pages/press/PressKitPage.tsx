@@ -10,7 +10,8 @@ import { setSEO } from '../../../utils/seo';
 import '../../../styles/blocks/press-page.css';
 
 export function PressKitPage() {
-  const [copiedId, setCopiedId] = React.useState<string | null>(null);
+  const copiedIdInit: string | null = null;
+  const [copiedId, setCopiedId] = React.useState(copiedIdInit);
 
   const handleCopy = async (text: string, id: string) => {
     try {

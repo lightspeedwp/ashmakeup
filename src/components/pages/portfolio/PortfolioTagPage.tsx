@@ -40,7 +40,7 @@ const SORT_OPTIONS = [
 ];
 
 export function PortfolioTagPage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug } = useParams();
   const navigate = useNavigate();
 
   const tag = findPortfolioTagBySlug(slug ? slug : '');

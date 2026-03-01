@@ -11,7 +11,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useBlogPost } from '../../../hooks/useContent';
-import { type BlogPost } from '../../../data/types/blog';
+import type { BlogPost } from '../../../data/types/blog';
 import { OptimizedImage } from '../../ui/OptimizedImage';
 import { ShareComponent } from '../../ui/ShareComponent';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
@@ -54,7 +54,7 @@ const AUTHOR_PROFILE = {
 };
 
 export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
-  const params = useParams<{ slug: string }>();
+  const params = useParams();
   const slug = slugProp || params.slug || '';
   const setCurrentPage = useAppNavigate();
   const navigate = useNavigate();

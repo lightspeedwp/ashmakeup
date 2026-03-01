@@ -215,8 +215,10 @@ function StickerLightbox({
 export function StickersPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTheme, setActiveTheme] = useState('all');
-  const [highlightedId, setHighlightedId] = useState<string | null>(null);
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const highlightedIdInit: string | null = null;
+  const [highlightedId, setHighlightedId] = useState(highlightedIdInit);
+  const lightboxIndexInit: number | null = null;
+  const [lightboxIndex, setLightboxIndex] = useState(lightboxIndexInit);
   const gridRefInit: HTMLDivElement | null = null;
   const gridRef = useRef(gridRefInit);
   // Bundler-safe: use number | null instead of ReturnType<typeof setTimeout> nested generic

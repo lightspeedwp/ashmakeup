@@ -97,28 +97,21 @@ The Figma Make bundler has known syntax incompatibilities. **All code MUST follo
 
 **NEVER replace existing images.** All current `figma:asset/` imports, logo files, and existing image references are protected. When adding new images, use `ImageWithFallback` from `/components/figma/ImageWithFallback.tsx` (which must not be modified — it is a protected file).
 
-### 🛑 Content Folder Protection Rule (CRITICAL — NEVER DELETE)
+### 🛑 Content Folder Protection Rule (HISTORICAL — FOLDER DELETED)
 
-**The `/content/` folder is STRICTLY PROTECTED.** It contains Ash's personal reference notes, research, bios, and raw content used to seed the website. These files took significant time to compile and are irreplaceable.
+> ⚠️ **Status update (Feb 25, 2026):** The `/content/` folder was deleted during the comprehensive codebase cleanup audit (Audit 2). The 25 files it contained were confirmed as having zero code imports and were removed as orphaned reference material. The folder no longer exists in the repository.
 
-**NEVER delete, move, archive, or modify any file in `/content/`.** Even if an audit reports these files as "orphaned" or "not imported by code", they are **intentionally kept as reference material**. "Not imported" does NOT mean "safe to delete."
+**If re-creating reference content** in the future, use a `/content/` subfolder and treat it as protected personal reference material — never import from it in code, and never flag it as "orphaned" in audits.
 
-**Protected structure:**
+**Historical protected structure (now deleted):**
 ```
-/content/
+/content/          ← DELETED Feb 25, 2026
 ├── about/          # Personal about page notes (six-cats.md)
 ├── book/           # Book content (this-one-time.md)
 ├── lightspeed/     # Lightspeed agency content (5 files)
 ├── personal/       # Personal bios, notes, research (12 files)
 └── social-profiles/ # Social media strategy & profiles (5 files)
 ```
-
-**Rules:**
-1. **NEVER delete** any file in `/content/` — regardless of import status
-2. **NEVER flag** `/content/` files as "orphaned" in audits
-3. **NEVER recommend** deletion or archival of `/content/` files
-4. All audits MUST skip `/content/` entirely — it is out of scope
-5. If creating new reference content, place it in the appropriate `/content/` subfolder
 
 ---
 
@@ -261,12 +254,7 @@ ash-shaw-makeup-portfolio/
 │   ├── 📁 ui/                         # UI primitives
 │   └── 📁 figma/                      # Figma integration utilities
 │
-├── 📁 content/                        # 🛑 PROTECTED — Personal reference notes (NEVER DELETE)
-│   ├── 📁 about/                      # About page notes
-│   ├── 📁 book/                       # Book content
-│   ├── 📁 lightspeed/                 # Lightspeed agency content
-│   ├── 📁 personal/                   # Personal bios, notes, research
-│   └── 📁 social-profiles/            # Social media strategy & profiles
+├── 📁 content/                        # ⚠️ DELETED Feb 25, 2026 (orphaned reference files removed in cleanup audit)
 │
 ├── 📁 data/                           # 🆕 Centralized mock data system
 │   ├── 📁 mock/                       # Mock data (single source of truth)

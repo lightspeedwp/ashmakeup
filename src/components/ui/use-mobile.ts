@@ -57,9 +57,8 @@ const MOBILE_BREAKPOINT = 768;
  * - Maintains consistency with CSS media query breakpoints
  */
 export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(
-    undefined,
-  );
+  const isMobileInit: boolean | undefined = undefined;
+  const [isMobile, setIsMobile] = React.useState(isMobileInit);
 
   React.useEffect(() => {
     const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);

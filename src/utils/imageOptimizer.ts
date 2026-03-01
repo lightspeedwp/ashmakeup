@@ -60,7 +60,7 @@ export interface SrcSetEntry {
 
 /* ── In-memory cache ── */
 
-const cache = new Map<string, OptimizedResult>();
+const cache: Map<string, OptimizedResult> = new Map();
 
 function cacheKey(src: string, opts: OptimizeOptions): string {
   const mw = opts.maxWidth !== undefined && opts.maxWidth !== null ? opts.maxWidth : 'auto';

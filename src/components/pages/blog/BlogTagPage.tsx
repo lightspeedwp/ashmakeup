@@ -29,7 +29,7 @@ import '../../../styles/blocks/blog-page.css';
 import '../../../styles/blocks/archive-filters.css';
 
 export function BlogTagPage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug } = useParams();
   const navigate = useNavigate();
 
   const slugValue = slug || '';

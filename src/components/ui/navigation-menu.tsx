@@ -5,16 +5,17 @@
 
 import * as React from "react";
 
-const noop = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+function noop({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
+function noopVoid() { return null; }
 
-const NavigationMenu = noop;
-const NavigationMenuList = noop;
-const NavigationMenuItem = noop;
-const NavigationMenuContent = noop;
-const NavigationMenuTrigger = noop;
-const NavigationMenuLink = noop;
-const NavigationMenuIndicator = noop;
-const NavigationMenuViewport = () => null;
+var NavigationMenu = noop;
+var NavigationMenuList = noop;
+var NavigationMenuItem = noop;
+var NavigationMenuContent = noop;
+var NavigationMenuTrigger = noop;
+var NavigationMenuLink = noop;
+var NavigationMenuIndicator = noop;
+var NavigationMenuViewport = noopVoid;
 
 export {
   NavigationMenu,

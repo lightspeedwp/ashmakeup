@@ -5,9 +5,9 @@
 
 import * as React from "react";
 
-const noop = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+function noop({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
 
-const ScrollArea = noop;
-const ScrollBar = noop;
+var ScrollArea = noop;
+var ScrollBar = noop;
 
 export { ScrollArea, ScrollBar };

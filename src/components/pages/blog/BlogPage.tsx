@@ -62,9 +62,8 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
   };
   const [blogState, setBlogState] = useState(blogStateInit);
 
-  const [activeCategories, setActiveCategories] = useState<string[]>(
-    initialCategory ? [initialCategory] : []
-  );
+  const activeCategoriesInit: string[] = initialCategory ? [initialCategory] : [];
+  const [activeCategories, setActiveCategories] = useState(activeCategoriesInit);
   const [sortBy, setSortBy] = useState('recent');
 
   useEffect(() => {

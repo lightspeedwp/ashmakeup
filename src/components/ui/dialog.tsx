@@ -5,18 +5,19 @@
 
 import * as React from "react";
 
-const noop = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+function noop({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
+function noopVoid() { return null; }
 
-const Dialog = noop;
-const DialogClose = noop;
-const DialogContent = noop;
-const DialogDescription = noop;
-const DialogFooter = noop;
-const DialogHeader = noop;
-const DialogOverlay = () => null;
-const DialogPortal = noop;
-const DialogTitle = noop;
-const DialogTrigger = noop;
+var Dialog = noop;
+var DialogClose = noop;
+var DialogContent = noop;
+var DialogDescription = noop;
+var DialogFooter = noop;
+var DialogHeader = noop;
+var DialogOverlay = noopVoid;
+var DialogPortal = noop;
+var DialogTitle = noop;
+var DialogTrigger = noop;
 
 export {
   Dialog,

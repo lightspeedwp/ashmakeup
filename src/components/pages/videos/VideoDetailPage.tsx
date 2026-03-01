@@ -41,7 +41,7 @@ import '../../../styles/blocks/portfolio-detail-page.css';
 import '../../../styles/blocks/blog-page.css';
 
 export function VideoDetailPage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug } = useParams();
   const navigate = useNavigate();
 
   const video = useMemo(

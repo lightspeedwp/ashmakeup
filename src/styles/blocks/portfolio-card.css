@@ -212,6 +212,20 @@
 }
 
 /* ==========================================================================
+   Navigation Controls Wrapper
+   ========================================================================== */
+.portfolio-card__controls-wrapper {
+  /* Transparent wrapper to avoid React.Fragment tracking attributes issue */
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.portfolio-card__controls-wrapper > * {
+  pointer-events: auto;
+}
+
+/* ==========================================================================
    Navigation Buttons (desktop hover only)
    ========================================================================== */
 .portfolio-card__nav-button {

@@ -41,7 +41,7 @@ const SORT_OPTIONS = [
 ];
 
 export function VideoTagPage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug } = useParams();
   const navigate = useNavigate();
 
   const tag = findVideoTagBySlug(slug ? slug : '');

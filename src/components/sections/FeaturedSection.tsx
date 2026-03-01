@@ -70,7 +70,7 @@ export function FeaturedSection({
   };
 
   return (
-    <>
+    <div className="featured-section-wrapper">
       <section id="work" className="featured-section">
         <div className="container-wide">
           {/* Section Header */}
@@ -143,6 +143,6 @@ export function FeaturedSection({
         title={lightbox.title}
         description={lightbox.description}
       />
-    </>
+    </div>
   );
 }

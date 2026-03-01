@@ -362,3 +362,13 @@
     transition: none;
   }
 }
+
+/* ── Fragment Replacement Wrappers ── */
+/* Transparent wrappers to replace React.Fragment and avoid bundler data-attribute conflicts */
+.header-wrapper {
+  /* No styles needed - just a semantic wrapper */
+}
+
+.header__nav-items-wrapper {
+  display: contents; /* Make wrapper invisible to layout */
+}

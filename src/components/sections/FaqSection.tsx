@@ -59,7 +59,8 @@ interface FaqSectionProps {
 }
 
 export function FaqSection({ pageId, items, variant = 'default' }: FaqSectionProps = {}) {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const openIndexInit: number | null = null;
+  const [openIndex, setOpenIndex] = useState(openIndexInit);
 
   const { title, description, faqs } = useMemo(() => {
     // Priority 1: explicit items passed as props

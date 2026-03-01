@@ -325,6 +325,9 @@ body {
 .text-neon-red { color: var(--wp--preset--color--neon-red-text); }
 .text-neon-cyan { color: var(--wp--preset--color--neon-cyan-text); }
 
+/* Bundler Fragment Replacement — transparent structural wrappers */
+.safety-wrapper { display: contents; }
+
 .text-gradient-pink-purple-blue {
   background: var(--wp--preset--gradient--cyberpunk);
   -webkit-background-clip: text;

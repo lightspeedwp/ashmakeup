@@ -169,7 +169,7 @@ export function useBlogPosts(options?: {
   sortBy?: string;
   sortOrder?: 'asc' | 'desc';
 }) {
-  const [data, setData] = useState<{ 
+  const blogDataInit: { 
     posts: BlogPost[]; 
     pagination: {
       currentPage: number;
@@ -179,9 +179,11 @@ export function useBlogPosts(options?: {
       hasPrevious: boolean;
       perPage: number;
     }
-  } | null>(null);
+  } | null = null;
+  const [data, setData] = useState(blogDataInit);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const errorInitBP: Error | null = null;
+  const [error, setError] = useState(errorInitBP);
 
   const optPage = options ? options.page : undefined;
   const optLimit = options ? options.limit : undefined;
@@ -226,9 +228,11 @@ export function useBlogPosts(options?: {
  * Hook for single blog post
  */
 export function useBlogPost(slug: string) {
-  const [data, setData] = useState<BlogPost | null>(null);
+  const blogPostInit: BlogPost | null = null;
+  const [data, setData] = useState(blogPostInit);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const bpErrorInit: Error | null = null;
+  const [error, setError] = useState(bpErrorInit);
 
   useEffect(() => {
     if (!slug) return;
@@ -257,9 +261,11 @@ export function useBlogPost(slug: string) {
  * Hook for portfolio entries
  */
 export function usePortfolioSections() {
-  const [data, setData] = useState<PortfolioSection[]>([]);
+  const portSectionsInit: PortfolioSection[] = [];
+  const [data, setData] = useState(portSectionsInit);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const portSectErrorInit: Error | null = null;
+  const [error, setError] = useState(portSectErrorInit);
 
   useEffect(() => {
     setLoading(true);
@@ -267,7 +273,7 @@ export function usePortfolioSections() {
       .then(({ json: posts }) => {
         const mappedEntries = posts.map(mapPostToPortfolio);
         
-        const sectionsMap = new Map<string, PortfolioEntry[]>();
+        const sectionsMap = new Map();
         
         mappedEntries.forEach((entry: PortfolioEntry) => {
           const cat = entry.category || 'Other';
@@ -310,7 +316,7 @@ export function usePortfolioEntries(options?: {
   limit?: number;
   page?: number;
 }) {
-  const [data, setData] = useState<{
+  const portEntrDataInit: {
     entries: PortfolioEntry[];
     pagination: {
       currentPage: number;
@@ -320,9 +326,11 @@ export function usePortfolioEntries(options?: {
       hasPrevious: boolean;
       perPage: number;
     }
-  } | null>(null);
+  } | null = null;
+  const [data, setData] = useState(portEntrDataInit);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const portEntrErrorInit: Error | null = null;
+  const [error, setError] = useState(portEntrErrorInit);
 
   const optPage = options ? options.page : undefined;
   const optLimit = options ? options.limit : undefined;

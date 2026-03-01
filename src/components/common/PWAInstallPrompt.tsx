@@ -23,7 +23,8 @@ interface PWAInstallPromptProps {
 
 export function PWAInstallPrompt({ className = '' }: PWAInstallPromptProps) {
   const [showPrompt, setShowPrompt] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const deferredPromptInit: any = null;
+  const [deferredPrompt, setDeferredPrompt] = useState(deferredPromptInit);
 
   useEffect(() => {
     // Don't show if already installed

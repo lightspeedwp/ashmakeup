@@ -182,7 +182,8 @@ export function StyleGuidePage() {
   const [activeAnimations, setActiveAnimations] = useState(new Set());
 
   /** ArchiveFilters demo state */
-  const [demoActiveCategories, setDemoActiveCategories] = useState<string[]>([]);
+  const demoActiveCategoriesInit: string[] = [];
+  const [demoActiveCategories, setDemoActiveCategories] = useState(demoActiveCategoriesInit);
   const [demoSortBy, setDemoSortBy] = useState("recent");
 
   const demoResultCount = demoActiveCategories.length === 0
@@ -514,7 +515,7 @@ export function StyleGuidePage() {
         </div>
       </section>
 
-      {/* ══════════════════��════════════════════════
+      {/* ═══════════════════════════════════════════
           5. BUTTONS
           ═══════════════════════════════════════════ */}
       <section

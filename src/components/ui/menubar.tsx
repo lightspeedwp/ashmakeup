@@ -5,40 +5,12 @@
 
 import * as React from "react";
 
-const noop = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+function noop({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
 
-const Menubar = noop;
-const MenubarPortal = noop;
-const MenubarMenu = noop;
-const MenubarTrigger = noop;
-const MenubarContent = noop;
-const MenubarGroup = noop;
-const MenubarSeparator = noop;
-const MenubarLabel = noop;
-const MenubarCheckboxItem = noop;
-const MenubarRadioGroup = noop;
-const MenubarRadioItem = noop;
-const MenubarItem = noop;
-const MenubarSub = noop;
-const MenubarSubContent = noop;
-const MenubarSubTrigger = noop;
-const MenubarShortcut = noop;
+var Menubar = noop;
+var MenubarMenu = noop;
+var MenubarTrigger = noop;
+var MenubarContent = noop;
+var MenubarItem = noop;
 
-export {
-  Menubar,
-  MenubarPortal,
-  MenubarMenu,
-  MenubarTrigger,
-  MenubarContent,
-  MenubarGroup,
-  MenubarSeparator,
-  MenubarLabel,
-  MenubarCheckboxItem,
-  MenubarRadioGroup,
-  MenubarRadioItem,
-  MenubarItem,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
-  MenubarShortcut,
-};
+export { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem };

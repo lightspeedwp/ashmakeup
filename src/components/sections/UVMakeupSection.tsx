@@ -66,8 +66,10 @@ export function UVMakeupSection() {
   }, []);
 
   // Swipe Logic
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const touchStartInit: number | null = null;
+  const [touchStart, setTouchStart] = useState(touchStartInit);
+  const touchEndInit: number | null = null;
+  const [touchEnd, setTouchEnd] = useState(touchEndInit);
   const minSwipeDistance = 50;
 
   const onTouchStart = (e: React.TouchEvent) => {
@@ -149,7 +151,7 @@ export function UVMakeupSection() {
   };
 
   return (
-    <>
+    <div className="uv-makeup-section-wrapper">
       <section id="uv-makeup" className="uv-makeup-section">
         <div className="container-wide uv-makeup-section__content">
           {/* Section Header */}
@@ -297,6 +299,6 @@ export function UVMakeupSection() {
         title={lightbox.title}
         description={lightbox.description}
       />
-    </>
+    </div>
   );
 }

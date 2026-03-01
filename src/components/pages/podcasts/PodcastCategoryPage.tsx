@@ -36,13 +36,12 @@ const SORT_OPTIONS = [
 ];
 
 export function PodcastCategoryPage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug } = useParams();
   const navigate = useNavigate();
 
   const category = podcastCategories.find(c => c.slug === slug);
-  const [activeCategories, setActiveCategories] = useState<string[]>(
-    slug ? [slug] : [],
-  );
+  const activeCategoriesInit: string[] = slug ? [slug] : [];
+  const [activeCategories, setActiveCategories] = useState(activeCategoriesInit);
   const [sortBy, setSortBy] = useState('recent');
 
   useEffect(() => {

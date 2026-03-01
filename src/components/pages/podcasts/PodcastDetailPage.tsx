@@ -40,7 +40,7 @@ import '../../../styles/blocks/portfolio-detail-page.css';
 import '../../../styles/blocks/blog-page.css';
 
 export function PodcastDetailPage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug } = useParams();
   const navigate = useNavigate();
   const [isPlaying, setIsPlaying] = useState(false);
 

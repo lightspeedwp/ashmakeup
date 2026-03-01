@@ -62,7 +62,8 @@ export function IconLibraryPage() {
   const [search, setSearch] = useState('');
   const sizeInit: IconSize = 24;
   const [size, setSize] = useState(sizeInit);
-  const [copied, setCopied] = useState<string | null>(null);
+  const copiedInit: string | null = null;
+  const [copied, setCopied] = useState(copiedInit);
 
   useEffect(() => {
     setSEO(devToolsSEO.icons);

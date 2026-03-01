@@ -310,15 +310,15 @@ export function ShareComponent({
           <hr className="share-component__dropdown-divider" />
           <button type="button" onClick={copyToClipboard} className="share-component__dropdown-item">
             {copySuccess ? (
-              <>
+              <span className="share-component__dropdown-item-content">
                 <Check className="share-component__dropdown-icon share-component__text--success" />
                 <span className="share-component__dropdown-text share-component__text--success">Copied!</span>
-              </>
+              </span>
             ) : (
-              <>
+              <span className="share-component__dropdown-item-content">
                 <Copy className="share-component__dropdown-icon" />
                 <span className="share-component__dropdown-text">Copy Link</span>
-              </>
+              </span>
             )}
           </button>
         </div>

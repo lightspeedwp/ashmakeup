@@ -20,8 +20,8 @@ import { PortfolioDetailPage } from './PortfolioDetailPage';
  * refers to a category filter or an individual portfolio entry.
  */
 export function PortfolioResolver() {
-  const { slug } = useParams<{ slug: string }>();
-
+  const { slug } = useParams();
+  
   if (!slug) {
     return <PortfolioMainPage />;
   }

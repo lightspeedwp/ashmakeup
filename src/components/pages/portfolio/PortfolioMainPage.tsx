@@ -107,9 +107,8 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
   };
   const [portfolioState, setPortfolioState] = useState(portfolioStateInit);
 
-  const [activeCategories, setActiveCategories] = useState<string[]>(
-    initialCategory ? [initialCategory] : []
-  );
+  const activeCategoriesInit: string[] = initialCategory ? [initialCategory] : [];
+  const [activeCategories, setActiveCategories] = useState(activeCategoriesInit);
   const [sortBy, setSortBy] = useState('recent');
 
   /** Lookup: slug → category id (e.g. 'uv-blacklight' → 'UV Makeup') */

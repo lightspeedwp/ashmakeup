@@ -5,10 +5,10 @@
 
 import * as React from "react";
 
-const noop = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+function noop({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
 
-const HoverCard = noop;
-const HoverCardTrigger = noop;
-const HoverCardContent = noop;
+var HoverCard = noop;
+var HoverCardTrigger = noop;
+var HoverCardContent = noop;
 
 export { HoverCard, HoverCardTrigger, HoverCardContent };

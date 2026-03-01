@@ -5,11 +5,11 @@
 
 import * as React from "react";
 
-const noop = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+function noop({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
 
-const Popover = noop;
-const PopoverTrigger = noop;
-const PopoverContent = noop;
-const PopoverAnchor = noop;
+var Popover = noop;
+var PopoverTrigger = noop;
+var PopoverContent = noop;
+var PopoverAnchor = noop;
 
 export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor };

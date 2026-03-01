@@ -79,10 +79,13 @@ function setProp(obj: any, key: string, val: any): void {
 
 /* ── Types ── */
 
+/** Bundler-safe: avoid angle brackets in interface */
+type AnyComponent = React.ComponentType<any>;
+
 export interface RouteObject {
   path?: string;
   index?: boolean;
-  Component?: React.ComponentType<any>;
+  Component?: AnyComponent;
   children?: RouteObject[];
 }
 
@@ -546,7 +549,7 @@ export function RouterProvider({ router }: { router: BrowserRouter }) {
 
   var locationState = useState(routerGetLocation);
   var location = arrayGet(locationState, 0) as LocationDescriptor;
-  var setLocation = arrayGet(locationState, 1) as React.Dispatch<React.SetStateAction<LocationDescriptor>>;
+  var setLocation = arrayGet(locationState, 1) as any;
 
   useEffect(function syncLocationEffect() {
     setLocation(routerGetLocation());
@@ -598,7 +601,7 @@ export function RouterProvider({ router }: { router: BrowserRouter }) {
     return null;
   }
 
-  var TopComponent = grab(firstRoute, 'Component') as React.ComponentType<any> | undefined;
+  var TopComponent = grab(firstRoute, 'Component') as AnyComponent | undefined;
   if (!TopComponent) {
     return null;
   }
@@ -622,9 +625,9 @@ export function useLocation(): LocationDescriptor {
   return grab(ctx, 'location') as LocationDescriptor;
 }
 
-export function useParams<T extends Record<string, string> = Record<string, string>>(): T {
+export function useParams(): Record<string, string> {
   var ctx = useRouterContext();
-  return grab(ctx, 'params') as T;
+  return grab(ctx, 'params') as Record<string, string>;
 }
 
 export function useSearchParams(): [URLSearchParams, (next: URLSearchParams | ((prev: URLSearchParams) => URLSearchParams), opts?: { replace?: boolean }) => void] {
@@ -715,7 +718,7 @@ export function Outlet() {
     return null;
   }
 
-  var NextComponent = grab(nextRoute, 'Component') as React.ComponentType<any> | undefined;
+  var NextComponent = grab(nextRoute, 'Component') as AnyComponent | undefined;
   if (!NextComponent) {
     return null;
   }
@@ -753,7 +756,7 @@ export function Link(props: LinkProps) {
   var to = grab(props, 'to') as string;
   var shouldReplace = grab(props, 'replace') as boolean | undefined;
   var children = grab(props, 'children') as React.ReactNode;
-  var externalOnClick = grab(props, 'onClick') as React.MouseEventHandler<HTMLAnchorElement> | undefined;
+  var externalOnClick = grab(props, 'onClick') as ((...args: any[]) => void) | undefined;
   var className = grab(props, 'className') as string | undefined;
   var id = grab(props, 'id') as string | undefined;
   var title = grab(props, 'title') as string | undefined;
@@ -772,7 +775,7 @@ export function Link(props: LinkProps) {
   var navigate = grab(ctx, 'navigate') as NavigateFunction;
 
   var handleClick = useCallback(
-    function linkClickHandler(e: React.MouseEvent<HTMLAnchorElement>) {
+    function linkClickHandler(e: any) {
       if (externalOnClick) externalOnClick(e);
 
       var isDefaultPrevented = e.defaultPrevented;

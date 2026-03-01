@@ -33,6 +33,7 @@ import stickerGeoPatternEye from 'figma:asset/84111c7a5216921c0e52a6f591197fbeac
 import stickerRainbowFlowEye from 'figma:asset/8ff60225169337b591efe035bc54d425662d7569.png';
 import stickerCreateUniverseEye from 'figma:asset/c8d5d607f61330c5485683e00ba8bcf77a6df568.png';
 import stickerAbstractBlocksEye from 'figma:asset/5c6da7d9c00527f5021ee1e01619d56ac61c94a0.png';
+import stickerMakeupArtist from 'figma:asset/6095d8818a83e64a063161f9df091d561fde7105.png';
 
 export interface StickerGraphic {
   id: string;
@@ -201,6 +202,12 @@ export const stickerGraphics: StickerGraphic[] = [
     src: stickerAbstractBlocksEye,
     alt: 'Rainbow paintbrush eye with galaxy iris on abstract colourful geometric blocks, clouds and cosmic shapes background',
     label: 'Abstract Blocks Eye',
+  },
+  {
+    id: 'makeup-artist',
+    src: stickerMakeupArtist,
+    alt: 'Ash Shaw makeup artist illustration',
+    label: 'Makeup Artist',
   },
 ];
 

@@ -276,7 +276,7 @@ export function EnhancedLightbox({
         <div className="lightbox-content">
           {/* Navigation Arrows */}
           {hasMultipleItems && (
-            <>
+            <div className="lightbox-nav-wrapper">
               <button
                 type="button"
                 onClick={goToPrevious}
@@ -294,7 +294,7 @@ export function EnhancedLightbox({
               >
                 <ChevronRight className="icon-2xl" strokeWidth={2.5} />
               </button>
-            </>
+            </div>
           )}
 
           {/* Media Content (Image or Video) */}
@@ -415,7 +415,7 @@ export function EnhancedLightbox({
         <div className="lightbox-footer">
           <p className="lightbox-footer-content">
             {hasMultipleItems && (
-              <>
+              <React.Fragment>
                 <span className="lightbox-nav-hint-wrapper">
                   <svg className="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
@@ -427,13 +427,13 @@ export function EnhancedLightbox({
                   </svg>
                 </span>
                 <span className="lightbox-separator">•</span>
-              </>
+              </React.Fragment>
             )}
             {!isVideo && (
-              <>
+              <React.Fragment>
                 <span>{portfolioUI.lightbox.navigation.hintZoom}</span>
                 <span className="lightbox-separator">•</span>
-              </>
+              </React.Fragment>
             )}
             <span className="lightbox-hint-desktop">{portfolioUI.lightbox.navigation.hintKeyboard}</span>
             <span>{portfolioUI.lightbox.navigation.hintClose}</span>

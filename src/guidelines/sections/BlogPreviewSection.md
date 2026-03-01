@@ -307,7 +307,7 @@ Each card displays a blog post preview:
 ### Blog Posts Hook
 
 ```tsx
-import { useBlogPosts } from '../../hooks/useContentful';
+import { useBlogPosts } from '../../hooks/useContent';
 
 // Fetch latest blog posts
 const { posts, loading, error } = useBlogPosts();

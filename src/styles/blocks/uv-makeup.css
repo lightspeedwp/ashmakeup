@@ -229,9 +229,9 @@
   .uv-makeup-section__track {
     transition: none;
   }
+}
 
-  .uv-makeup-section__nav-button,
-  .uv-makeup-section__dot {
-    transition: none;
-  }
+/* ── Fragment Replacement Wrapper ── */
+.uv-makeup-section-wrapper {
+  /* No styles needed - just a semantic wrapper to replace React.Fragment */
 }

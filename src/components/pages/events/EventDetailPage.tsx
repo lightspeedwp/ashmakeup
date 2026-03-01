@@ -28,7 +28,7 @@ import '../../../styles/blocks/event-detail-page.css';
 import '../../../styles/blocks/event-travel-badge.css';
 
 export function EventDetailPage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug } = useParams();
   const navigate = useNavigate();
   const event = slug ? getEventBySlug(slug) : undefined;
 

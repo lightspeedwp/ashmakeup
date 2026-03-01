@@ -5,6 +5,6 @@
 
 import * as React from "react";
 
-function AspectRatio({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function AspectRatio({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
 
 export { AspectRatio };

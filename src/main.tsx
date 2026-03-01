@@ -43,10 +43,10 @@ root.render(
 );
 
 // Register PWA service worker for offline functionality
-const hasServiceWorker = 'serviceWorker' in navigator;
+var hasServiceWorker = 'serviceWorker' in navigator;
 if (hasServiceWorker) {
-  window.addEventListener('load', () => {
-    registerServiceWorker().catch(() => {
+  window.addEventListener('load', function onWindowLoad() {
+    registerServiceWorker().catch(function onRegisterError() {
       // Dev logging removed — import.meta.env.DEV crashes this bundler
     });
   });

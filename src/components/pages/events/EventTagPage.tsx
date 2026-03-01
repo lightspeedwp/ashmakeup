@@ -22,7 +22,7 @@ import '../../../styles/blocks/events-page.css';
 import '../../../styles/blocks/event-card.css';
 
 export function EventTagPage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug } = useParams();
   const navigate = useNavigate();
 
   const tag = eventTags.find((t) => t.slug === slug);

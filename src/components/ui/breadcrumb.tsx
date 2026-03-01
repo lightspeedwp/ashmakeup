@@ -6,12 +6,12 @@
 
 import * as React from "react";
 
-function Breadcrumb({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
-function BreadcrumbList({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
-function BreadcrumbItem({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
-function BreadcrumbLink({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
-function BreadcrumbPage({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
-function BreadcrumbSeparator({ children }: { children?: React.ReactNode }) { return <>{children}</>; }
+function Breadcrumb({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
+function BreadcrumbList({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
+function BreadcrumbItem({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
+function BreadcrumbLink({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
+function BreadcrumbPage({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
+function BreadcrumbSeparator({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
 function BreadcrumbEllipsis() { return null; }
 
 export {

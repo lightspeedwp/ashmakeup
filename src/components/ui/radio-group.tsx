@@ -5,9 +5,9 @@
 
 import * as React from "react";
 
-const noop = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+function noop({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
 
-const RadioGroup = noop;
-const RadioGroupItem = noop;
+var RadioGroup = noop;
+var RadioGroupItem = noop;
 
 export { RadioGroup, RadioGroupItem };

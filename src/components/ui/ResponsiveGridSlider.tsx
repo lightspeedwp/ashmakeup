@@ -89,8 +89,10 @@ export function ResponsiveGridSlider<T extends { id?: string }>({
   };
 
   // Swipe Logic
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const touchStartInit: number | null = null;
+  const [touchStart, setTouchStart] = useState(touchStartInit);
+  const touchEndInit: number | null = null;
+  const [touchEnd, setTouchEnd] = useState(touchEndInit);
   const minSwipeDistance = 50;
 
   const onTouchStart = (e: React.TouchEvent) => {

@@ -84,7 +84,8 @@ function SampleCard({ wrapperClass }: { wrapperClass: string }) {
 
 export function VisualRegressionTesterPage() {
   const [activeTest, setActiveTest] = useState(COMPARISON_TESTS[0].id);
-  const [viewMode, setViewMode] = useState<'side-by-side' | 'overlay'>('side-by-side');
+  const viewModeInit: 'side-by-side' | 'overlay' = 'side-by-side';
+  const [viewMode, setViewMode] = useState(viewModeInit);
   const [overlayOpacity, setOverlayOpacity] = useState(50);
 
   useEffect(() => {

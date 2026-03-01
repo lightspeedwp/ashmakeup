@@ -5,16 +5,16 @@
 
 import * as React from "react";
 
-const noop = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+function noop({ children }: { children?: React.ReactNode }) { return <span>{children}</span>; }
 
-const Sheet = noop;
-const SheetTrigger = noop;
-const SheetClose = noop;
-const SheetContent = noop;
-const SheetHeader = noop;
-const SheetFooter = noop;
-const SheetTitle = noop;
-const SheetDescription = noop;
+var Sheet = noop;
+var SheetTrigger = noop;
+var SheetClose = noop;
+var SheetContent = noop;
+var SheetHeader = noop;
+var SheetFooter = noop;
+var SheetTitle = noop;
+var SheetDescription = noop;
 
 export {
   Sheet,

@@ -127,7 +127,7 @@ export function FestivalCountdown() {
           </div>
         ) : (
           // Countdown to festival
-          <>
+          <div className="festival-countdown__content">
             {/* Festival Info */}
             <div className="festival-countdown__header">
               <div className="festival-countdown__subtitle">
@@ -207,7 +207,7 @@ export function FestivalCountdown() {
                 </div>
               )}
             </div>
-          </>
+          </div>
         )}
       </div>
     </section>

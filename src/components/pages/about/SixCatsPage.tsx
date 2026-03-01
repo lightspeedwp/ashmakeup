@@ -48,7 +48,8 @@ const HARVEST_ICONS: Record<string, React.ElementType> = {
 };
 
 export function SixCatsPage() {
-  const [expandedGrade, setExpandedGrade] = useState<string | null>(null);
+  const expandedGradeInit: string | null = null;
+  const [expandedGrade, setExpandedGrade] = useState(expandedGradeInit);
   const [showMemorial, setShowMemorial] = useState(false);
 
   useEffect(() => {
