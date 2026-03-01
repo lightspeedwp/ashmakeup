@@ -9,6 +9,162 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.0.0] - 2026-03-01
+
+### Added
+
+#### Pages — About Sub-page Ecosystem (18 new pages)
+- `HiddenAboutPage` (`/about`) — unlisted gateway to Ash's world; full story summary, media promotions, social links, and jump-links to all about sub-pages
+- `HistoryPage` (`/about/history`) — studio and personal history archive
+- `BerlinPage` (`/about/berlin`) — Berlin as creative anchor
+- `BookPage` (`/about/book`) — book project showcase
+- `BioPage` (`/about/bio`) — full long-form biography
+- `ProcessPage` (`/about/process`) — creative process breakdown
+- `LucyPage` (`/about/lucy-in-the-sky-with-diamonds`) — psychedelic and artistic influences
+- `TravelsPage` (`/about/travels`) — nomadic festival circuit and travel diary
+- `PodcastPage` (`/about/podcast`) — podcast project overview
+- `AdhdPage` (`/about/adhd`) — personal ADHD experience essay
+- `CyclingPage` (`/about/cycling`) — cycling as identity and lifestyle
+- `AquariusPage` (`/about/aquarius`) — Aquarian identity blueprint
+- `MusicPage` (`/about/music`) — psytrance and 140 BPM musical obsession
+- `LightSpeedPage` (`/about/lightspeed`) — LightSpeed WordPress agency chapter
+- `EducationPage` (`/about/education`) — unconventional education story
+- `PartnersPage` (`/about/partners`) — people along the way
+- `FitnessPage` (`/about/fitness`) — the moving body and fitness practice
+- `SixCatsPage` (`/about/six-cats`) — Six Cats Cannabis Club
+
+#### Pages — New Standalone Pages
+- `ManifestoPage` (`/about/manifesto`) — the Neon vs Atomic Black creative manifesto
+- `EbookPage` (`/ebook`) — fully responsive two-page eBook reader with touch swipe, keyboard arrow navigation, table of contents drawer, and fullscreen mode; dual-spread on desktop, single-page on mobile/tablet
+- `PressKitPage` (`/press`) — downloadable press kit with copy-to-clipboard bio snippets and media asset grid
+- `GearPage` (`/toolkit`) — full makeup gear and toolkit showcase organised by category
+- `FestivalLandingPage` (`/next-festival`) — festival countdown landing page with live timer and hero image
+- `SitemapPage` (`/sitemap`) — comprehensive visual site index covering all pages, categories, posts, podcasts, videos, tags, dev tools, and legal pages
+- `StyleGuidePage` (`/style-guide`, also at `/dev-tools/style-guide`) — full design-system reference with live previews of all 26 animations, all tokens, and all icon sets
+
+#### Pages — Legal
+- `PrivacyPolicy` (`/privacy`) — full privacy policy with data handling documentation
+- `TermsAndConditions` (`/terms`) — terms and conditions
+- `AccessibilityStatementPage` (`/about/accessibility`) — WCAG 2.1 AA compliance statement
+
+#### Pages — Events System (entirely new)
+- `EventsPage` (`/events`) — full events listing with hero, stats bar (km cycled, editions attended), and category filter pills
+- `EventDetailPage` (`/events/:slug`) — single event detail with rich content and TravelBadge
+- `EventCategoryPage` (`/events/category/:slug`) — category archive for events
+- `EventTagPage` (`/events/tag/:slug`) — tag archive for events
+- `TravelBadge` component — decorative travel/festival badge element used in event cards
+
+#### Pages — Archive Sub-pages (Blog, Portfolio, Video, Podcast)
+- `BlogCategoryPage` (`/blog/category/:slug`) — filtered blog archive by category
+- `BlogTagPage` (`/blog/tag/:slug`) — filtered blog archive by tag
+- `PortfolioMainPage` (`/portfolio`) — full gallery with category filtering, pagination, lightbox, and FAQ section; replaces the previous flat portfolio page
+- `PortfolioDetailPage` — single portfolio entry detail view
+- `PortfolioCategoryPage` (`/portfolio/category/:slug`) — category archive for portfolio
+- `PortfolioTagPage` (`/portfolio/tag/:slug`) — tag archive for portfolio
+- `PortfolioResolver` (`/portfolio/:slug`) — slug-based router that resolves to the correct portfolio detail page
+- `VideoCategoryPage` (`/videos/category/:slug`) — category archive for videos
+- `VideoTagPage` (`/videos/tag/:slug`) — tag archive for videos
+- `VideoDetailPage` (`/video/:slug`) — single video page with embedded player, rich markdown content, tags, and share footer
+- `PodcastCategoryPage` (`/podcasts/category/:slug`) — category archive for podcasts
+- `PodcastTagPage` (`/podcasts/tag/:slug`) — tag archive for podcasts
+- `PodcastDetailPage` (`/podcast/:slug`) — single episode detail page
+
+#### Navigation — Mega Menus & Dropdowns
+- `BlogMegaMenu` — three-column dropdown (featured post + image, 5 recent posts, category list with neon dots and counts); "Neon Cascade Ripple" pure-CSS drop animation
+- `PortfolioMegaMenu` — three-column dropdown (featured card + image, 5 recent entries, category list with neon dots and counts); "Neon Grid Reveal" staggered slide-in animation
+- `AboutDropdown` — animated process-flow vertical timeline in the desktop header; keyboard accessible (Arrow keys, Escape, Enter/Space); pure-CSS stagger, line draw, and neon dot pulse
+- `ContactMiniMenu` — compact contact overlay for the header contact link
+- `ThemeToggle` — persistent light/dark mode switcher with localStorage sync and `prefers-color-scheme` detection
+
+#### Sections
+- `FestivalCountdown` — live countdown timer to next festival with day/hour/minute/second display
+- `InstagramFeed` — Behold.so embeddable widget integration (`@feedmymedia`); two-column layout (25% title/CTA + 75% widget); imperative DOM insertion via `useRef` to prevent React reconciliation conflicts with the `behold-widget` custom element
+- `TestimonialsSection` — testimonial display using `ResponsiveGridSlider` (desktop 3-column grid, tablet/mobile slider)
+- `UVMakeupSection` — UV/blacklight portfolio showcase with `ResponsiveGridSlider` hybrid layout and `EnhancedLightbox` integration
+- `WhySection` — new homepage "why" narrative section
+
+#### UI Components
+- `EnhancedLightbox` (v4.0.0) — video-capable lightbox modal with pagination dots, prominent slider arrows, zoom in/out, grid overview mode, keyboard trap (`useKeyboardTrap`), and `VideoPlayer` integration
+- `VideoPlayer` (v2.0.0) — unified video player supporting direct files (MP4/WebM) with custom controls, YouTube embeds, and Vimeo embeds (auto-detected by URL pattern)
+- `ResponsiveGridSlider` — layout component that renders a CSS grid on desktop and a touch/keyboard slider on tablet and mobile; used by `TestimonialsSection` and `UVMakeupSection`
+- `OptimizedImage` — client-side image optimization wrapper using the Canvas API for runtime resizing and compression
+- `ReadMoreButton` — styled expandable read-more toggle button
+- `SearchInput` — accessible search input with debounce and clear button
+- `SectionCard` — reusable content card primitive for section layouts
+- `ShareComponent` — social sharing widget with copy-link, Twitter, and native share API support
+- `SliderCard` — card variant optimised for slider/carousel contexts
+
+#### Common Components
+- `RootLayout` — shared application shell wrapping all routes; provides Header, Footer, PWAInstallPrompt, OfflineIndicator, ModalProvider, ScrollToTop, screen reader live regions, scroll restoration, and focus management on route change
+- `ColorfulIcons` — custom animated SVG icon set using `dangerouslySetInnerHTML` to bypass bundler SVG transform issues; icons include ShineIcon and others with multi-stop gradients and `<animate>` keyframes
+- `SafetyWrapper` — thin render error boundary targeting third-party extension errors (e.g. Behold's `beholdReplaceChildren`); part of a defence-in-depth error suppression system alongside `ErrorBoundary` and `extensionErrorSuppressor`
+- `ModalContext` — React context and `useModal` hook for application-wide modal state management
+- `SocialLinks` — standalone social links bar component used in header and footer
+
+#### Custom Icon System (`/lib/`)
+- `icon-base.tsx` — shared `IconProps` interface and base render logic
+- `icons-set-a.tsx` through `icons-set-e.tsx` — bundler-safe icon library across 5 files using `dangerouslySetInnerHTML` for SVG children (bypasses the bundler's broken `jsxs` SVG transform); covers the full icon vocabulary of the site
+- `icons.ts` — barrel export for the complete icon set
+
+#### Mock Data — New Systems
+- `/data/mock/events/` — full events data system: `origin-festival.ts`, `categories.ts`; helper functions `getEventBySlug`, `getEventsByType`, `getEventsByTag`, `getTotalEditionsAttended`, `getTotalKmCycled`
+- `/data/mock/testimonials/` — testimonials data with `Testimonial` interface supporting rating, role, event, featured flag, and optional video testimonial
+- `/data/mock/portfolio/uv-makeup.ts` — UV/blacklight makeup portfolio collection
+- `/data/mock/portfolio/festivals.ts` — general festival makeup collection
+- `/data/mock/portfolio/swiss-festivals.ts` — Swiss festival portfolio collection
+- `/data/mock/portfolio/thailand.ts` — Thailand and Southeast Asia portfolio collection
+- `/data/mock/portfolio/nail-art.ts` — creative nail art and fusion nail designs collection
+- `/data/mock/sections/countdown.ts` — festival countdown section data
+- `/data/mock/pages/ebook-pages.ts` — eBook page content with `BookPage` type
+- `/data/mock/pages/events.ts`, `festival.ts`, `gear.ts`, `hidden-about.ts`, `history.ts`, `legal.ts`, `manifesto.ts`, `press.ts`, `six-cats.ts` — page content for all new pages
+- `/data/mock/ui/` — 20+ new UI data files covering all new pages and components (about-dropdown, accessibility-tester, events, ebook, countdown, filters, instagram, stickers, style-guide, and more)
+- `/data/types/events.ts`, `search.ts`, `videos.ts` — new TypeScript type definitions
+
+#### Hooks
+- `useAnalytics` — hook wrapping `analyticsService` for per-component view/like/read-time tracking
+- `useAnimatedCount` — animated number counter with configurable duration and easing
+- `useAppNavigate` — bundler-safe navigation wrapper around the custom router's `useNavigate`
+- `useClickOutside` — ref-based outside-click detection
+- `useDebounce` — value debounce hook for search inputs
+- `useKeyboardTrap` — focus trap for modal and lightbox accessibility
+- `useOptimizedImage` — hook wrapping `imageOptimizer` for React component use
+- `useReducedMotion` — `prefers-reduced-motion` media query observer
+- `useScrollPosition` — scroll position tracker for sticky/parallax effects
+- `useScrollSpy` — active section detector for in-page navigation
+- `useWordPress` — WordPress REST API integration hook (paired with the Dual Mode Architecture)
+
+#### Utilities
+- `analyticsService.ts` — localStorage-based analytics tracking views, likes, reading time, and browsing history per content type and slug
+- `imageOptimizer.ts` — client-side Canvas API image processing: resize to target dimensions, compress to JPEG/WebP, generate responsive `srcSet` variants, cache blobs to avoid re-processing
+- `simpleMarkdown.ts` — lightweight Markdown→HTML converter supporting headers, bold, italic, ordered/unordered lists, links, images (with Polaroid styling), and blockquotes
+- `contentCounts.ts` — centralized dynamic content counts for blog categories, blog tags, and portfolio categories; computed at import time from live mock data
+- `formatDate.ts` — date formatting utility
+- `imageManifest.ts` — static image manifest registry
+- `extensionErrorSuppressor.ts` — global error suppressor for known third-party extension errors (Behold, browser extensions)
+- `faqSchema.ts` — Schema.org FAQPage JSON-LD generation helper
+
+#### Guidelines
+- `/guidelines/responsive/` — six new responsive design guidelines: `breakpoints-system.md`, `interaction-modes.md`, `layout-patterns.md`, `navigation-responsive.md`, `spacing-adjustments.md`, `typography-scaling.md`
+- `/guidelines/events-system.md` — Events system data model and usage documentation
+- `/guidelines/overview-blog-filtering.md` — blog filtering and archive system documentation
+- `/guidelines/search-system.md` — global search system architecture
+- `/guidelines/sitemap-routes.md` — full route registry documentation
+- `/guidelines/voice-and-tone.md` — editorial voice and tone guide
+- Multiple new component, block, section, pattern, icon, and template guideline files
+
+#### Dev Tools
+- `AnimationSpecimenPage` (`/dev-tools/neon`) — live interactive preview of all 26 CSS animation keyframes with controls
+
+### Changed
+
+- `AboutPage` — moved from `/about` to `/about/journey`; `/about` now serves `HiddenAboutPage` as an unlisted portal
+- Portfolio architecture — `PortfolioMainPage` replaces the previous flat portfolio component; full detail/category/tag/resolver sub-page system added
+- Route count — grown from ~15 to 60+ registered routes across all content types
+- `routes.ts` — version bumped to 13.0.0 reflecting full route expansion; comprehensive JSDoc route map added
+- Header navigation — updated to use `BlogMegaMenu`, `PortfolioMegaMenu`, `AboutDropdown`, and `ContactMiniMenu` in place of simple links
+
+---
+
 ## [7.5.0] - 2026-03-01
 
 ### Added

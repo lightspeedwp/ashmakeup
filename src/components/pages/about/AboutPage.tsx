@@ -371,10 +371,10 @@ export function AboutPage() {
           quote={aboutUI.sections.creative.quote}
           icon={Brain}
         >
-          <p className="text-body-p text-inherit">
+          <p className="text-body-p text-inherit m-[0px]">
             {aboutPageText.creative[0]}
           </p>
-          <p className="text-body-p text-inherit mt-fluid-md">
+          <p className="text-body-p text-inherit mt-fluid-md m-[0px]">
             {aboutPageText.creative[1]}
           </p>
         </SectionCard>
