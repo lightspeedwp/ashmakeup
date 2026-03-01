@@ -4,8 +4,10 @@
  * Features a neon pink/yellow book cover visualisation,
  * chapter previews, and the story behind the book.
  *
+ * Phase 5 Polish — ContentSection, Accordion for chapters, bundler-safe syntax
+ *
  * @component BookPage
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 import React, { useEffect } from 'react';
@@ -15,19 +17,51 @@ import { bookPageData } from '../../../data/mock/pages/about-subpages';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
+import { ContentSection } from '../../sections/ContentSection';
+import { Accordion } from '../../ui/Accordion';
 import { useReducedMotion } from '../../../hooks/useReducedMotion';
 import '../../../styles/blocks/about-subpage.css';
 import '../../../styles/blocks/button.css';
 
-export function BookPage() {
-  const navigate = useNavigate();
-  const prefersReduced = useReducedMotion();
+/**
+ * Build accordion items from chapter previews
+ */
+function buildChapterAccordion() {
+  var chapters = bookPageData.book.chapters;
+  var items = [];
+  for (var i = 0; i < chapters.length; i++) {
+    var ch = chapters[i];
+    items.push({
+      id: ch.id,
+      title: ch.number + '. ' + ch.title,
+      content: React.createElement(
+        'p',
+        { className: 'about-subpage__chapter-teaser' },
+        ch.teaser
+      ),
+    });
+  }
+  return items;
+}
 
-  useEffect(() => {
+export function BookPage() {
+  var navigate = useNavigate();
+  var prefersReduced = useReducedMotion();
+
+  useEffect(function () {
     setSEO(pageSEO.book);
   }, []);
 
-  const { hero, breadcrumbs, sections, book } = bookPageData;
+  var hero = bookPageData.hero;
+  var breadcrumbs = bookPageData.breadcrumbs;
+  var sections = bookPageData.sections;
+  var book = bookPageData.book;
+  var chapterAccordionItems = buildChapterAccordion();
+
+  function handleReadSample() {
+    navigate('/ebook');
+    window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
+  }
 
   return (
     <main
@@ -66,42 +100,57 @@ export function BookPage() {
 
         {/* ── Blurb ── */}
         <section className="about-subpage__section">
-          {book.blurb.map((line, i) => (
-            <p key={`blurb-${i}`} className="about-subpage__section-text">
-              {line}
-            </p>
-          ))}
+          {book.blurb.map(function (line, i) {
+            return (
+              <p key={'blurb-' + i} className="about-subpage__section-text">
+                {line}
+              </p>
+            );
+          })}
         </section>
 
-        {/* ── Body Sections ── */}
-        {sections.map((section) => (
-          <section key={section.id} className="about-subpage__section">
-            <h2 className="about-subpage__section-title">{section.title}</h2>
-            {section.paragraphs.map((p, i) => (
-              <p key={`${section.id}-p-${i}`} className="about-subpage__section-text">
-                {p}
-              </p>
-            ))}
-          </section>
-        ))}
-      </div>
+        {/* ── Body Sections (Phase 3 ContentSection) ── */}
+        {sections.map(function (section, idx) {
+          var delayClass = idx < 6 ? ' entrance-fade-up--delay-' + (idx + 1) : '';
 
-      {/* ── Chapter Previews ── */}
-      <div className="about-subpage__chapters">
-        <h2 className="about-subpage__chapters-title">{book.chaptersHeading}</h2>
-        {book.chapters.map((ch) => (
-          <article key={ch.id} className="about-subpage__chapter">
-            <div className="about-subpage__chapter-number">{ch.number}</div>
-            <div className="about-subpage__chapter-body">
-              <h3 className="about-subpage__chapter-title">{ch.title}</h3>
-              <p className="about-subpage__chapter-teaser">{ch.teaser}</p>
+          return (
+            <div key={section.id} className={'entrance-fade-up' + delayClass}>
+              <ContentSection
+                id={section.id}
+                title={section.title}
+                variant="default"
+                colorAccent="pink"
+              >
+                {section.paragraphs.map(function (p, i) {
+                  return (
+                    <p key={section.id + '-p-' + i} className="about-subpage__section-text">
+                      {p}
+                    </p>
+                  );
+                })}
+              </ContentSection>
             </div>
-          </article>
-        ))}
+          );
+        })}
       </div>
 
-      {/* ── Read Sample Chapters ── */}
+      {/* ── Chapter Previews as Accordion (Phase 3) ── */}
       <div className="about-subpage__body">
+        <div className="entrance-fade-up entrance-fade-up--delay-2">
+          <ContentSection
+            id="chapter-previews"
+            title={book.chaptersHeading}
+            variant="default"
+            colorAccent="pink"
+          >
+            <Accordion
+              items={chapterAccordionItems}
+              allowMultiple={true}
+            />
+          </ContentSection>
+        </div>
+
+        {/* ── Read Sample Chapters ── */}
         <section className="about-subpage__section">
           <h2 className="about-subpage__section-title">{book.sampleHeading}</h2>
           <p className="about-subpage__section-text">
@@ -110,10 +159,7 @@ export function BookPage() {
           <button
             type="button"
             className="btn btn--neon-primary btn--sm"
-            onClick={() => {
-              navigate('/ebook');
-              window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
-            }}
+            onClick={handleReadSample}
             aria-label="Read sample chapters from the eBook"
           >
             <BookOpen className="btn__icon" aria-hidden="true" />

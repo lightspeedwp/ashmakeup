@@ -180,7 +180,7 @@
 - [x] Accordion component built
 - [x] ContentSection component built
 - [x] ChapterNav component built
-- [ ] All components documented
+- [x] All components documented (6 guideline files created in /guidelines/components/)
 
 ---
 
@@ -304,197 +304,24 @@
 - [x] AdhdPage upgraded (PullQuote + ContentSection components, entrance animations)
 - [x] LightSpeedPage upgraded (PullQuote + Timeline + Accordion + ContentSection)
 - [x] Manifesto SEO entry added to pageSEO
-- [ ] Remaining sub-pages (Berlin, Process, Travels, etc.) polish pass
+- [x] BerlinPage upgraded (ContentSection, bundler-safe syntax, entrance animations)
+- [x] ProcessPage upgraded (Timeline for steps, ContentSection, bundler-safe syntax)
+- [x] TravelsPage upgraded (ContentSection, bundler-safe syntax)
+- [x] CyclingPage upgraded (Timeline for rides, Accordion for kit list, ContentSection)
+- [x] MusicPage upgraded (PullQuote + ContentSection, bundler-safe syntax)
+- [x] FitnessPage upgraded (PullQuote + ContentSection, bundler-safe syntax)
+- [x] LucyPage upgraded (ContentSection, bundler-safe syntax)
+- [x] BioPage upgraded (ContentSection, bundler-safe syntax)
+- [x] BookPage upgraded (ContentSection + Accordion, removed destructuring/const/arrow callbacks)
+- [x] EducationPage upgraded (PullQuote + Timeline + ContentSection, bundler-safe syntax)
+- [x] HistoryPage upgraded (Phase 3 Timeline replaced custom timeline, removed inline styles)
+- [x] PartnersPage upgraded (PullQuote + ContentSection, bundler-safe syntax)
+- [x] PodcastPage upgraded (ContentSection + Accordion for episodes, removed destructuring)
+- [x] History page CSS rewritten (removed old custom timeline, simplified BEM)
+- [x] SixCatsPage polish (Accordion for grading, ContentSection, bundler-safe syntax)
+- [x] HiddenAboutPage polish (icon resolver function, bundler-safe syntax)
 - [ ] All sub-pages accessibility audit
 
 ---
 
-## 📖 Phase 6: Additional Ebook Expansions (P2)
-
-### Task 6.1: Expand Chapter 2 — Wired Different
-**Priority:** P2  
-**Effort:** M  
-**Source:** `/content/personal/identity.md`
-
-- [ ] Expand Chapter 2 from 2 pages → 4 pages
-- [ ] Add "The Aquarian Blueprint" section
-- [ ] Add deep dive into ADHD:
-  - [ ] Not a deficit, a surplus of attention
-  - [ ] How ADHD shows up in art (hyperfocus, ambidextrous painting, spontaneous design)
-  - [ ] How ADHD shows up in business (process obsession, radical delegation)
-  - [ ] School/offices felt like incompatible software
-  - [ ] Twenty years to understand it's a feature, not a bug
-- [ ] Update page numbering
-- [ ] Test ebook reader
-
-**Files Modified:**
-- `/data/mock/pages/ebook-pages.ts`
-
----
-
-### Task 6.2: Expand Chapter 6 — The Costume Evolution
-**Priority:** P2  
-**Effort:** M  
-**Source:** `/content/personal/identity.md`
-
-- [ ] Expand Chapter 6 from 1 page → 3 pages
-- [ ] Add full costume timeline with details:
-  - [ ] The Yellow Suit (found at charity shop, Vortex 1999, "Chicken Man")
-  - [ ] The Red Suit (escalation)
-  - [ ] White & Black Cow Suit (pivot to character)
-  - [ ] Brown & Beige Cow Suit ("Cow Man" era — people still ask about this)
-  - [ ] UV Paint (July 2019 — the final evolution)
-- [ ] Add narrative: "The costume became the art became the identity"
-- [ ] Add reflection: "No longer wearing something outrageous — now MAKING other people outrageous"
-- [ ] Update page numbering
-- [ ] Test ebook reader
-
-**Files Modified:**
-- `/data/mock/pages/ebook-pages.ts`
-
----
-
-### Task 6.3: Expand Chapter 8 — LSD (LightSpeedDevelopment)
-**Priority:** P2  
-**Effort:** M  
-**Source:** `/content/lightspeed/company-history.md`
-
-- [ ] Expand Chapter 8 from 2 pages → 4 pages
-- [ ] Add founding motivation:
-  - [ ] "I've always been entrepreneurial, but I really didn't like working for an employer..."
-  - [ ] "You never know if you're ready to start a business, but I knew I didn't want to work at City Varsity for another year"
-  - [ ] Born from fundamental need for autonomy
-- [ ] Add first employee story (2005)
-- [ ] Add BarCamp Cape Town 2006 pivot moment:
-  - [ ] Dave Duarte introduced him to WordPress
-  - [ ] Single networking event redirected LightSpeed from IT support to WordPress
-- [ ] Add intentional acronym (LSD) — double meaning
-- [ ] Update page numbering
-- [ ] Test ebook reader
-
-**Files Modified:**
-- `/data/mock/pages/ebook-pages.ts`
-
----
-
-### Task 6.4: Add "The Bullied Kid" Section
-**Priority:** P2  
-**Effort:** S  
-**Source:** `/content/personal/identity.md`
-
-- [ ] Decide placement:
-  - [ ] Option A: Add to Chapter 2 (Wired Different) as formative experience
-  - [ ] Option B: Add to Chapter 16 (Dance Like No One's Watching) as connection to makeup artistry
-- [ ] Write section:
-  - [ ] Bullied as a kid for being small
-  - [ ] Matric kids made him stand on stage and apologize to entire school
-  - [ ] Formative pain directly connected to makeup artistry
-  - [ ] Kid who was made to feel small now makes others feel radiant
-  - [ ] Kid who was publicly humiliated now creates moments of public celebration
-- [ ] Update page numbering
-- [ ] Test ebook reader
-
-**Files Modified:**
-- `/data/mock/pages/ebook-pages.ts`
-
----
-
-### Task 6.5: Ebook Content Polish Pass
-**Priority:** P2  
-**Effort:** L
-
-- [ ] Read through all 20 chapters for consistency
-- [ ] Check tone and voice (raw, honest, conversational)
-- [ ] Verify all content flows logically
-- [ ] Check for repetition across chapters
-- [ ] Ensure chapter endings lead naturally to next chapter
-- [ ] Polish language (remove filler, tighten sentences)
-- [ ] Verify chapter titles match content
-- [ ] Final page count estimate: ~135 pages
-
-**Files Modified:**
-- `/data/mock/pages/ebook-pages.ts`
-
----
-
-### Task 6.6: Final Ebook Testing (Phase 6)
-**Priority:** P2  
-**Effort:** M
-
-- [ ] Test ebook with final page count (~135 pages)
-- [ ] Verify all chapters render correctly
-- [ ] Test navigation (chapter drawer, keyboard, touch swipe)
-- [ ] Test settings modal (font size, minimal mode)
-- [ ] Test fullscreen mode
-- [ ] Test page numbering accuracy
-- [ ] Test TOC page with final chapters
-- [ ] Performance test (page load, transitions)
-- [ ] Cross-browser test (Chrome, Firefox, Safari, Edge)
-- [ ] Mobile test (iOS, Android)
-
-**Files Tested:**
-- `/components/pages/about/EbookPage.tsx`
-- `/data/mock/pages/ebook-pages.ts`
-
----
-
-## ✅ Completion Checklist
-
-### Phase 1: Ebook Content Expansion (P0)
-- [ ] Chapter 10 expanded (Six Cats)
-- [ ] Chapter 19 expanded (Twenty-Three Years)
-- [ ] Appendix B written (The Tribes)
-- [ ] Page numbering updated
-- [ ] Ebook tested with ~126 pages
-
-### Phase 2: Content Design Tokens (P1)
-- [x] Content layout tokens created
-- [x] Content interactive tokens created
-- [x] Content typography tokens created
-- [x] Content color tokens created
-- [x] Content animation tokens created
-- [x] All tokens imported in globals.css
-
-### Phase 3: Core Content Components (P1)
-- [x] Timeline component built
-- [x] PullQuote component built
-- [x] SplitContent component built
-- [x] Accordion component built
-- [x] ContentSection component built
-- [x] ChapterNav component built
-- [ ] All components documented
-
-### Phase 4: About Landing Page Redesign (P1)
-- [x] About landing data file created
-- [x] Hero section redesigned
-- [x] Aquarian Blueprint section added
-- [x] ADHD section added
-- [x] Costume Evolution timeline added
-- [x] Bullied Kid pull quote added
-- [x] Chapter navigation added
-- [x] SEO meta updated
-- [ ] Accessibility audit passed
-
-### Phase 5: About Sub-Pages Polish (P2)
-- [x] ManifestoPage redesigned (removed inline styles, template literals, Tailwind; added PullQuote + ContentSection)
-- [x] AquariusPage upgraded (PullQuote + ContentSection components, entrance animations)
-- [x] AdhdPage upgraded (PullQuote + ContentSection components, entrance animations)
-- [x] LightSpeedPage upgraded (PullQuote + Timeline + Accordion + ContentSection)
-- [x] Manifesto SEO entry added to pageSEO
-- [ ] Remaining sub-pages (Berlin, Process, Travels, etc.) polish pass
-- [ ] All sub-pages accessibility audit
-
-### Phase 6: Additional Ebook Expansions (P2)
-- [ ] Chapter 2 expanded (Wired Different)
-- [ ] Chapter 6 expanded (Costume Evolution)
-- [ ] Chapter 8 expanded (LSD)
-- [ ] Bullied Kid section added
-- [ ] Ebook content polish pass complete
-- [ ] Final ebook testing complete (~135 pages)
-
----
-
-**Task List Complete**  
-**Total Tasks:** 65+ individual tasks  
-**Estimated Timeline:** 6 weeks (with dedicated effort)  
-**Next Action:** Phase 5 — About sub-pages polish, then Phases 1/6 — ebook content expansion
+## 📖 Phase 6:

@@ -559,9 +559,120 @@ export const bookPages: BookPage[] = [
     pageNumber: 41,
     chapter: 10,
     paragraphs: [
-      'The grading system tells you how seriously we take this. Quads (AAAA) down to Budget Blend (A) \u2014 every batch tastes tested weekly during the two-month curing process. Glass packaging that customers return to be sanitised and reused. Nothing wasted. Nothing rushed.',
+      '\u2014 THE CATS: RESIDENTS \u2014',
+      '',
+      'Timmy \u2014 The Resident Therapy Cat. Timmy is the gentle giant of the operation. He arrived as a stray, malnourished and cautious, and over months transformed into the most affectionate cat in the house. He has an uncanny sense for when someone needs comfort \u2014 he\u2019ll appear on your lap during a stressful work call or curl up next to you when you\u2019re feeling low. He is the unofficial emotional support officer of Six Cats. Every harvest, Timmy claims a spot in the drying room and supervises.',
+      'Wendy \u2014 The Agile Matriarch. Wendy is old, fast, and takes no nonsense. She rules the garden with quiet authority, patrolling the perimeter with the precision of a security consultant. The other cats defer to her. She was one of the earliest rescues, arriving thin and feral, and within a year she owned every room in the house. Wendy\u2019s survival instinct and adaptability mirror the ethos of Six Cats itself \u2014 resourceful, resilient, and fiercely independent.',
+      'Jimmy \u2014 The FIV Fighter. Jimmy tested positive for FIV (Feline Immunodeficiency Virus) when he arrived. The vet said to keep him comfortable. That was years ago. Jimmy is still here, still eating, still fighting, still claiming the best sunny spot in the garden every morning. He is proof that a diagnosis is not a destiny. He requires extra care \u2014 immune-boosting supplements, regular vet checks, and isolation when he\u2019s run-down \u2014 but he gives back more than he takes. Jimmy is the most determined cat I\u2019ve ever known.',
+    ],
+  },
+
+  {
+    id: 'ch10-content-3',
+    type: 'chapter-content',
+    pageNumber: 42,
+    chapter: 10,
+    paragraphs: [
+      'Bean \u2014 The Survivor. Bean arrived in the worst condition of any cat we\u2019ve taken in. Underweight, dehydrated, covered in fleas, and terrified of humans. The first two months were slow \u2014 leaving food near her hiding spot, sitting quietly in the same room without approaching, waiting for her to decide when she was ready. When she finally climbed onto my lap, it was one of the most rewarding moments of the entire Six Cats journey. Bean is now unrecognisable from the cat who arrived. She\u2019s gained weight, her coat gleams, and she greets visitors at the door like she owns the place. Because she does.',
+      'Jeff \u2014 The Wanderer. Jeff is the adventurer. He disappears for hours, sometimes days, returning with the air of someone who\u2019s been on a tremendous journey and has no intention of telling you about it. He\u2019s the most independent of all the cats, preferring the garden and the neighbourhood rooftops to the comfort of the couch. Jeff taught me that not every personality needs to be domesticated. Some spirits need to roam. You just make sure the door is always open for when they come home.',
+      'Frank \u2014 Blue Eyes. Frank is striking \u2014 pure white with piercing blue eyes that stop visitors in their tracks. He\u2019s the most photogenic of the crew and seems to know it. Frank is gentle, almost regal, and moves through the house with an elegance the other cats lack. He arrived relatively healthy compared to the others, as though the universe decided to send us one cat who didn\u2019t need fixing. Frank is the calm at the centre of the Six Cats operation \u2014 beautiful, untroubled, and content.',
+    ],
+  },
+
+  {
+    id: 'ch10-content-4',
+    type: 'chapter-content',
+    pageNumber: 43,
+    chapter: 10,
+    paragraphs: [
+      '\u2014 IN MEMORIAM \u2014',
+      '',
+      'Lisa (Granny Cat) \u2014 Passed July 2020. Lisa was one of the original two cats, adopted in 2003 alongside her brother Bart. She lived to a grand old age and earned the nickname Granny Cat in her final years. She was slow, dignified, and had a particular fondness for sitting in the exact spot where you needed to work. Lisa set the tone for everything that followed \u2014 the idea that rescued animals deserve not just shelter but a life of comfort and dignity. When she passed, the garden felt emptier for months.',
+      'Moe (Fat-Boy-Fat) \u2014 Passed January 2022. Moe earned his nickname honestly. He was enormous, unapologetic, and ate with the enthusiasm of someone who had once known hunger and decided it would never happen again. Moe was the comic relief of Six Cats \u2014 the cat who got stuck in places, who fell off shelves, who ate food that wasn\u2019t his and looked at you as if to say, "And what are you going to do about it?" Behind the comedy was a cat who had been abandoned and found safety. Moe reminded us that joy is a survival mechanism.',
+      'Lucy (Dennis the Menace) \u2014 Passed October 2023. Lucy was a cross-Burmese cat with a personality that could fill a stadium. Nicknamed Dennis the Menace for her relentless energy, her mischief, and her ability to be in exactly the wrong place at exactly the wrong time. Lucy was the heartbeat of Six Cats. She was curious, demanding, affectionate on her terms, and utterly impossible to ignore. Her passing hit harder than any of the others. The book is dedicated to her. The green garden carries on, but it carries on with Lucy\u2019s spirit woven into every harvest.',
+    ],
+  },
+
+  {
+    id: 'ch10-content-5',
+    type: 'chapter-content',
+    pageNumber: 44,
+    chapter: 10,
+    paragraphs: [
+      '\u2014 THE EIGHT VALUES OF SIX CATS \u2014',
+      '',
+      'Every harvest season, these eight values guide the operation:',
+      'Authenticity \u2014 We grow what we say we grow. No relabelling, no exaggeration, no pretence. What you see is what you get.',
+      'Consciousness \u2014 Every decision considers impact: on the soil, on the water table, on the neighbourhood, on the people who consume the product. Consciousness is not a marketing term; it\u2019s a daily practice.',
+      'Consistency \u2014 Same soil, same methods, same care, every season. The goal is not to reinvent but to refine. Consistency is what separates hobbyists from craftspeople.',
+      'Experience \u2014 Nearly twenty years of growing informs every decision. Experience is the compound interest of patience.',
+    ],
+  },
+
+  {
+    id: 'ch10-content-6',
+    type: 'chapter-content',
+    pageNumber: 45,
+    chapter: 10,
+    paragraphs: [
+      'Meticulousness \u2014 Every plant is observed daily. Leaf colour, soil moisture, pest activity, growth rate. The notebook is sacred. Data drives the decisions, and the decisions drive the quality.',
+      'Sustainability \u2014 Rainwater harvesting (13,500 litres of storage capacity). Bokashi composting. Worm farming. Glass packaging returned and reused. Nothing leaves the operation that can be cycled back into it.',
+      'Passion \u2014 This is not a side hustle. This is a practice, a meditation, a way of engaging with the natural world. The same passion that drives the art drives the garden.',
+      'Quality \u2014 The grading system exists because quality is measurable. Every batch is taste-tested weekly during the two-month curing process. We don\u2019t release anything we wouldn\u2019t consume ourselves.',
+    ],
+  },
+
+  {
+    id: 'ch10-content-7',
+    type: 'chapter-content',
+    pageNumber: 46,
+    chapter: 10,
+    paragraphs: [
+      '\u2014 CULTIVATION METHODS \u2014',
+      '',
+      'Living Soil: The foundation of the Six Cats method. We build soil, we don\u2019t buy it. Bokashi bins handle kitchen waste, breaking it down into pre-compost that feeds the worm farm. The worms produce castings and liquid fertiliser (worm tea). This closed-loop system means the garden feeds itself. The soil is alive \u2014 teeming with microorganisms, fungi, and beneficial bacteria that create a root environment no synthetic fertiliser can replicate.',
+      'Rainwater Harvesting: Cape Town\u2019s water crisis in 2018 was a wake-up call for every resident. We installed a 13,500-litre rainwater harvesting system with triple filtration. Every drop that touches our plants comes from the sky, collected from our roof, filtered through sediment, carbon, and UV stages. The system means we grow independently of municipal water supply and our plants receive water without chlorine or fluoride.',
+      'Companion Planting: Basil grows alongside cannabis in every bed. It repels certain pests, attracts beneficial pollinators, and \u2014 some growers believe \u2014 enhances terpene production in neighbouring cannabis plants. We also plant marigolds, lavender, and rosemary at the garden borders. The garden looks beautiful, smells incredible, and functions as an integrated pest management system.',
+    ],
+  },
+
+  {
+    id: 'ch10-content-8',
+    type: 'chapter-content',
+    pageNumber: 47,
+    chapter: 10,
+    paragraphs: [
+      'Worm Tea: Every two weeks during the growing season, we brew aerobic compost tea. Worm castings go into a mesh bag, suspended in a bucket of water with an aquarium pump providing oxygen. After 24\u201348 hours of bubbling, the tea is teeming with beneficial microorganisms. Applied as a foliar spray and soil drench, it supercharges the microbial life in the soil and gives the plants a visible growth boost within days.',
+      '\u2014 HARVEST PHASES \u2014',
+      'Flushing: Ten days before harvest, we stop all feeding and water with plain rainwater only. This forces the plant to use its stored nutrients, resulting in a cleaner, smoother smoke with no chemical aftertaste. The leaves begin to yellow as the plant consumes its own chlorophyll \u2014 a sign that flushing is working.',
+      'Drying: The entire plant is hung upside down in a dark, ventilated room at 16\u201318\u00B0C and 55\u201360% humidity. Slow drying over 10\u201314 days preserves terpenes and prevents mould. We check daily. The stems snap, they don\u2019t bend \u2014 that\u2019s when you know it\u2019s ready.',
+    ],
+  },
+
+  {
+    id: 'ch10-content-9',
+    type: 'chapter-content',
+    pageNumber: 48,
+    chapter: 10,
+    paragraphs: [
+      'Dry Trimming: We trim after drying, not before. Dry trimming preserves the trichomes (the tiny crystal-like structures that contain cannabinoids and terpenes) and produces a tighter, more aesthetically pleasing bud. It\u2019s slower and more labour-intensive than wet trimming, but the quality difference is noticeable.',
+      'Curing: Two months in airtight glass jars, burped daily for the first two weeks, then weekly thereafter. Curing is where good flower becomes exceptional flower. The moisture redistributes evenly, the chlorophyll breaks down completely, and the terpene profile develops its full complexity. We taste-test every week. The jars are labelled, dated, and stored in a cool, dark room. Patience is the final ingredient.',
+      '\u2014 THE GRADING SYSTEM \u2014',
+      'Quads (AAAA): Top-shelf. Dense, trichome-covered, exceptional terpene profile. The best of the season. Trips (AAA): Excellent quality. Slightly less dense or less visually striking, but flavour and effect are outstanding. Doubles (AA): Good, solid flower. The everyday option. Singles (A) / Budget Blend: Smaller buds, less visual appeal, but still grown with the same care. Often used for edibles or pre-rolls.',
+    ],
+  },
+
+  {
+    id: 'ch10-content-10',
+    type: 'chapter-content',
+    pageNumber: 49,
+    chapter: 10,
+    paragraphs: [
+      '\u2014 ASH\u2019S GREEN FINGERS \u2014',
+      '',
       'Six Cats is the outlet for what I call my green fingers \u2014 the deeply satisfying practice of growing something from seed to harvest. These are the same hands that paint neon faces at festivals. Both practices require the same qualities: patience, attention to detail, sensitivity to the subject, and a deep respect for the process. The cannabis plant and the human face both reward the artist who listens before they paint.',
       'Six Cats was started with Barbara, who is also my partner at LightSpeed and one of my best friends. We\u2019ve built two creative businesses together, which is either a testament to our partnership or our mutual stubbornness \u2014 probably both. Every season since 2019 has been a new chapter. The cats have come and gone. Lucy, our cross-Burmese matriarch, left us in October 2023. The green garden carries on.',
+      'What started as one man\u2019s garden has become a club, a community, and a philosophy. The eight values aren\u2019t just about cannabis \u2014 they\u2019re about how I approach everything. Authenticity in the art. Consciousness in the business. Consistency on the bicycle. Meticulousness in the code. Sustainability in the lifestyle. Passion in everything. Quality above all. Six Cats is not a side project. It\u2019s a mirror.',
     ],
   },
 
@@ -569,7 +680,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch11-title',
     type: 'chapter-start',
-    pageNumber: 42,
+    pageNumber: 50,
     chapter: 11,
     title: 'Berlin Calling',
     subtitle: 'A bicycle, a city discovered just before the world stopped, and the freedom to be unapologetically yourself.',
@@ -578,7 +689,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch11-content-1',
     type: 'chapter-content',
-    pageNumber: 43,
+    pageNumber: 51,
     chapter: 11,
     paragraphs: [
       'Berlin called to me not through brochures or travel blogs, but through stories whispered at afterparties and painted across the faces of returning festival friends. I discovered it in 2019 \u2014 just before the world stopped \u2014 arriving with a bicycle and the instinct that this city was going to mean something.',
@@ -590,7 +701,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch11-content-2',
     type: 'chapter-content',
-    pageNumber: 44,
+    pageNumber: 52,
     chapter: 11,
     paragraphs: [
       'Berlin gave me three things no other city could. Freedom to be weird \u2014 not just tolerated but expected. A city where cycling to a club in fairy lights with a box of UV paints is completely unremarkable. Affordable creative space \u2014 compared to London, Paris, or San Francisco, Berlin let a young South African build a life without the crushing overhead that kills creativity. And the right scene \u2014 techno and psytrance communities that overlap, collaborate, and welcome outsiders.',
@@ -603,7 +714,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch12-title',
     type: 'chapter-start',
-    pageNumber: 45,
+    pageNumber: 53,
     chapter: 12,
     title: 'The Loaded Bike',
     subtitle: 'UV paints, brush kit, mirror stand, camping gear, touring panniers. 40 kilograms. Everything an artist needs, on two wheels.',
@@ -612,7 +723,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch12-content-1',
     type: 'chapter-content',
-    pageNumber: 46,
+    pageNumber: 54,
     chapter: 12,
     paragraphs: [
       'When I cycle to a festival, the journey becomes part of the art. Hundreds of kilometres of road dissolve the noise of everyday life. By the time I arrive, I\u2019m present, clear, and creatively charged.',
@@ -624,7 +735,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch12-content-2',
     type: 'chapter-content',
-    pageNumber: 47,
+    pageNumber: 55,
     chapter: 12,
     paragraphs: [
       'The notable routes stack up like stories. 300 kilometres from San Francisco to Point Reyes and back in California. Two trips in the Netherlands totalling nearly 800 kilometres. Munich to Amsterdam: 1,000 kilometres in ten days. Bike touring in Bali. And always, the Thai routes \u2014 over 7,000 kilometres total.',
@@ -637,7 +748,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch13-title',
     type: 'chapter-start',
-    pageNumber: 48,
+    pageNumber: 56,
     chapter: 13,
     title: 'Neon Revelations',
     subtitle: 'The night Ash picked up UV paint and discovered his voice wasn\u2019t in words.',
@@ -646,7 +757,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch13-content-1',
     type: 'chapter-content',
-    pageNumber: 49,
+    pageNumber: 57,
     chapter: 13,
     paragraphs: [
       'July 2019. A psytrance gathering somewhere in Berlin. I picked up UV-reactive face paint for the first time. Something clicked that had been building for twenty years of festival life \u2014 from the yellow Chicken Man suit, through the Cow Man era, through years of being the most visible person on every dancefloor \u2014 but never having an art form of my own.',
@@ -658,7 +769,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch13-content-2',
     type: 'chapter-content',
-    pageNumber: 50,
+    pageNumber: 58,
     chapter: 13,
     paragraphs: [
       'I don\u2019t sketch beforehand. I don\u2019t look at Pinterest boards or follow trends. The creative process begins with a feeling \u2014 the energy of the music, the light conditions, and the vibe of the person sitting in front of me. This isn\u2019t chaos; it\u2019s trust. Trust in thousands of hours of practice, in the muscle memory of ambidextrous hands, and in the belief that the best art happens when you stop trying to control it.',
@@ -671,7 +782,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch14-title',
     type: 'chapter-start',
-    pageNumber: 51,
+    pageNumber: 59,
     chapter: 14,
     title: 'The Pilgrimage',
     subtitle: 'The cycling tradition to Origin Festival \u2014 and then the world stopped.',
@@ -680,7 +791,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch14-content-1',
     type: 'chapter-content',
-    pageNumber: 52,
+    pageNumber: 60,
     chapter: 14,
     paragraphs: [
       'Origin Festival. Elandskloof Guest Farm, Helderstroom, Western Cape. It falls on my birthday weekend every year. The pilgrimage to a psytrance festival is as important as the event itself \u2014 cycling through mountain passes with a loaded bike is a meditation, a way to cleanse the mind before entering the psychedelic playground.',
@@ -692,7 +803,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch14-content-2',
     type: 'chapter-content',
-    pageNumber: 53,
+    pageNumber: 61,
     chapter: 14,
     paragraphs: [
       'COVID hit. The festivals disappeared. The dancefloors went dark. For a brain wired for sensory richness and community connection, the silence was deafening.',
@@ -709,7 +820,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'part4-title',
     type: 'part-title',
-    pageNumber: 54,
+    pageNumber: 62,
     part: 4,
     title: 'Re-emergence',
     subtitle: '& Finding Myself Again',
@@ -719,7 +830,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch15-title',
     type: 'chapter-start',
-    pageNumber: 55,
+    pageNumber: 63,
     chapter: 15,
     title: 'The Artist\u2019s Lifestyle',
     subtitle: 'Someone at a party told me: \u201CYou live an artist\u2019s lifestyle.\u201D They were right.',
@@ -728,7 +839,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch15-content-1',
     type: 'chapter-content',
-    pageNumber: 56,
+    pageNumber: 64,
     chapter: 15,
     paragraphs: [
       'They meant it as an observation, not a compliment or a criticism \u2014 just the plain truth of watching someone who has deliberately shaped his entire life around whatever feeds his creativity and passion.',
@@ -740,7 +851,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch15-content-2',
     type: 'chapter-content',
-    pageNumber: 57,
+    pageNumber: 65,
     chapter: 15,
     paragraphs: [
       'The year follows the festivals and the seasons. Cape Town summers: Origin Festival on my birthday weekend, the South African psytrance circuit, cycling in the Western Cape mountains. European summer: Berlin as creative anchor, open-airs in Hasenheide Park, techno nights in Friedrichshain, cycling to festivals across Germany, Czech Republic, Austria. Thailand: island life, Koh Phangan parties, jungle festivals, tropical UV art. The shoulder seasons: connecting it all by bicycle, train, and shared rides.',
@@ -753,7 +864,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch16-title',
     type: 'chapter-start',
-    pageNumber: 58,
+    pageNumber: 66,
     chapter: 16,
     title: 'Dance Like No One\u2019s Watching',
     subtitle: 'The dancefloor as sacred space, and the art of making people shine.',
@@ -762,7 +873,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch16-content-1',
     type: 'chapter-content',
-    pageNumber: 59,
+    pageNumber: 67,
     chapter: 16,
     paragraphs: [
       'The psytrance dancefloor is not metaphorically sacred \u2014 it\u2019s literally sacred. It\u2019s where ADHD brains find their natural operating environment. Where sensory richness replaces the boredom of conventional spaces. Where community forms without the filters of daily life. Never about escape \u2014 always about deeper engagement with reality.',
@@ -774,7 +885,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch16-content-2',
     type: 'chapter-content',
-    pageNumber: 60,
+    pageNumber: 68,
     chapter: 16,
     paragraphs: [
       'I\u2019ve also explored an alternative book concept called \u201CDance Like No One\u2019s Watching,\u201D structured through the visual and identity evolution: early days of dancing, the cow suit, the chicken suit, my rave suit, and finally makeup. Whether it becomes a standalone book or merges with this one remains to be decided.',
@@ -787,7 +898,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch17-title',
     type: 'chapter-start',
-    pageNumber: 61,
+    pageNumber: 69,
     chapter: 17,
     title: 'One Million Steps',
     subtitle: 'Berlin summer 2025 \u2014 the record-breaking season.',
@@ -796,7 +907,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch17-content-1',
     type: 'chapter-content',
-    pageNumber: 62,
+    pageNumber: 70,
     chapter: 17,
     paragraphs: [
       'Special thanks to dearest friend Vitor who graciously hosted me \u2014 one of the most special humans I know. Berlin summer 2025 was the season where everything came together.',
@@ -808,7 +919,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch17-content-2',
     type: 'chapter-content',
-    pageNumber: 63,
+    pageNumber: 71,
     chapter: 17,
     paragraphs: [
       'The Origin Festival cycling tradition continued post-COVID. 2022: the annual tradition truly begins. First year back after COVID, on two wheels. Felt like coming home. 2023: the birthday sash ride \u2014 left the festival on my birthday, someone gave me a happy birthday sash. Cycled the whole way to Peregrine Farmstall in Grabouw wearing it.',
@@ -821,7 +932,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch18-title',
     type: 'chapter-start',
-    pageNumber: 64,
+    pageNumber: 72,
     chapter: 18,
     title: 'Freedom as Operating Principle',
     subtitle: 'The business, the team, and why freedom isn\u2019t the opposite of discipline.',
@@ -830,7 +941,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch18-content-1',
     type: 'chapter-content',
-    pageNumber: 65,
+    pageNumber: 73,
     chapter: 18,
     paragraphs: [
       'Freedom shows up everywhere in my life. Berlin: a city that demands difference. LightSpeed: remote-first, flexible hours, creative autonomy for the team. The bicycle: freedom of movement, no schedules, no dependency on infrastructure. Festival life: the dancefloor as the last truly free space. The art: no pre-planning, no Pinterest references, no client briefs. Pure spontaneous creation.',
@@ -842,7 +953,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch18-content-2',
     type: 'chapter-content',
-    pageNumber: 66,
+    pageNumber: 74,
     chapter: 18,
     paragraphs: [
       'When we advertised for new developers, we posted on LinkedIn and received 450 applicants, of which only a handful properly read the requirements. We expressly did NOT want Elementor or page builder developers. We wanted people with a will to learn. Out of 450 applicants, only 2 made it to interview. Those two interns are now levelling up faster than anyone I\u2019ve ever seen.',
@@ -855,7 +966,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch19-title',
     type: 'chapter-start',
-    pageNumber: 67,
+    pageNumber: 75,
     chapter: 19,
     title: 'Twenty-Three Years',
     subtitle: 'The business that became the longest project of a restless life.',
@@ -876,23 +987,115 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch19-content-2',
     type: 'chapter-content',
-    pageNumber: 67,
+    pageNumber: 69,
     chapter: 19,
     paragraphs: [
-      'The pivot happened at BarCamp Cape Town 2006. I met Dave Duarte who inspired me to get started with WordPress. This single networking event redirected LightSpeed from IT support to WordPress web development. The connections made there didn\u2019t just introduce me to WordPress \u2014 they opened the door to an entire community and way of working that would define the next two decades.',
-      'Warwick Booth joined in December 2006. Barbara Kerr joined in 2010 and became a partner soon after. The trajectory shifted with every right person who came through. Right now, in 2026, we have a team of thirteen \u2014 core developers, designers, interns levelling up faster than anyone I\u2019ve ever seen. The team is the most optimal it has ever been in the twenty-three years the company has been going.',
-      'We\u2019ve attended 20+ WordCamps across four continents. I spoke at WordCamp Europe 2025 in Basel about bridging design and development using Figma design systems. We organised WordCamp Cape Town in 2011 and 2012. The WordPress community gave LightSpeed everything \u2014 clients, friendships, open-source collaborators, and a philosophy of radical transparency and knowledge-sharing.',
+      '\u2014 THE TIMELINE \u2014',
+      '',
+      '2003: Founded LightSpeed at age twenty-two. Initially an IT support company working from a spare bedroom in Cape Town. The name was deliberately chosen \u2014 LightSpeedDevelopment. LSD. That was intentional.',
+      '2005: Hired the first employee. The company was no longer just me. That shift \u2014 from solo operator to employer \u2014 was one of the biggest psychological adjustments of the entire journey.',
+      '2006: BarCamp Cape Town. The pivotal event. Met Dave Duarte, who introduced me to WordPress. This single unconference \u2014 where attendees create the schedule on the day \u2014 redirected LightSpeed from IT support to WordPress web development. Everything that followed traces back to that room.',
+      '2006: Warwick Booth joined in December. He has been by my side for nearly two decades. The first truly right person.',
     ],
   },
 
   {
     id: 'ch19-content-3',
     type: 'chapter-content',
-    pageNumber: 68,
+    pageNumber: 70,
     chapter: 19,
     paragraphs: [
-      'What twenty-three years teaches you: Freedom requires structure. The most liberating thing you can build is a system that works without you. The right people change everything. ADHD is not a handicap in business \u2014 it\u2019s an engine. The hyperfocus. The pattern recognition. The need to build systems to manage the chaos. These are features, not bugs.',
-      'The business feeds the art. The art feeds the business. The same brain that builds WordPress design systems is the brain that designs neon faces at 3am on a dancefloor. LightSpeed has run profitably for twenty-three years because the entrepreneurial drive and the creative drive are the same thing: identify what makes you come alive, then engineer your entire existence around those things.',
+      '2009: Chris Vancoillie joined the team. Another key addition that strengthened the development capacity.',
+      '2010: Barbara Kerr joined and became a partner soon after. She took on the roles of COO, CFO, and HR \u2014 all the operational roles that my ADHD brain struggles with. Barbara\u2019s contribution to LightSpeed cannot be overstated. She brought structure, financial discipline, and human management skills that allowed me to focus on what I do best: creative direction, technical strategy, and client relationships.',
+      '2011\u20132012: Organised WordCamp Cape Town. Gave back to the community that gave us everything.',
+      '2017\u20132019: Jos\u00E9 Abreu joined for his first period. A talented developer who brought fresh energy and perspective.',
+      '2020: Justin Abrahamse rejoined the team. Having someone return to the company after time away is one of the most validating things that can happen \u2014 it means the culture works.',
+      '2021: Lourens Visser joined. The team continued to grow with people who shared the values.',
+    ],
+  },
+
+  {
+    id: 'ch19-content-4',
+    type: 'chapter-content',
+    pageNumber: 71,
+    chapter: 19,
+    paragraphs: [
+      '2023: Tibi Buzdugan and Zared Rogers joined. The team was expanding into its strongest configuration yet.',
+      '2025: Three interns joined \u2014 selected from 450 LinkedIn applicants, of whom only a handful properly read the requirements. We expressly did NOT want Elementor or page builder developers. We wanted people with a will to learn. Out of 450, only 2 made it to interview. Those interns are now levelling up faster than anyone I\u2019ve ever seen.',
+      '2025: Jos\u00E9 Abreu rejoined in September. His return story is one of the best in LightSpeed history \u2014 proof that the right people find their way back.',
+      '2026: Thirteen people. The most optimal team in twenty-three years. Core developers, designers, interns, and a founder who cycles to festivals with UV paint in his panniers.',
+    ],
+  },
+
+  {
+    id: 'ch19-content-5',
+    type: 'chapter-content',
+    pageNumber: 72,
+    chapter: 19,
+    paragraphs: [
+      '\u2014 BARCAMP CAPE TOWN 2006: THE STORY \u2014',
+      '',
+      'BarCamp was an unconference \u2014 no preset agenda, no keynote speakers, no hierarchy. Attendees showed up and created the programme on the morning of the event. Topics were written on Post-it notes and arranged on a whiteboard. If you wanted to talk about something, you claimed a slot.',
+      'Dave Duarte was there. He gave an impassioned talk about this open-source CMS called WordPress and why it was going to change the web. I was running an IT support company and dabbling in web design. Something clicked. Not just the technology \u2014 the philosophy. Open source. Community-driven. Transparent. Accessible. These were the same values my parents had instilled.',
+      'The people at that BarCamp didn\u2019t just introduce me to WordPress \u2014 they introduced me to a way of working and building that would define the next two decades. Jeremy Thurgood, Jonathan Sobel, and dozens of others who became part of the extended LightSpeed network. Twenty-nine people at that event impacted my career in ways I\u2019m still discovering.',
+    ],
+  },
+
+  {
+    id: 'ch19-content-6',
+    type: 'chapter-content',
+    pageNumber: 73,
+    chapter: 19,
+    paragraphs: [
+      '\u2014 THE PEOPLE WHO CHANGED EVERYTHING \u2014',
+      '',
+      'Warwick Booth \u2014 Joined December 2006. Lead Developer. Nearly two decades of working together, building together, problem-solving together. Warwick is the technical backbone of LightSpeed. When I say "the right people change everything," Warwick is the first name I think of. He understood the vision from day one and has been instrumental in every major project since.',
+      'Barbara Kerr \u2014 Partner, COO/CFO/HR. Barbara and I built two businesses together \u2014 LightSpeed and Six Cats. She handles the operations, the finances, the human side of the business. Without Barbara, LightSpeed would be a very different company. She brought the structure that my ADHD brain needs but cannot create alone. Our partnership \u2014 personal and professional \u2014 is one of the most important relationships of my life.',
+      'Jos\u00E9 Abreu \u2014 The return story. Jos\u00E9 first joined in 2017, left after two years, and returned in September 2025. His comeback was seamless \u2014 as if he\u2019d never left. The fact that someone would choose to return to LightSpeed after experiencing other workplaces tells you everything about the culture we\u2019ve built.',
+    ],
+  },
+
+  {
+    id: 'ch19-content-7',
+    type: 'chapter-content',
+    pageNumber: 74,
+    chapter: 19,
+    paragraphs: [
+      '\u2014 PRODUCTS & OPEN SOURCE \u2014',
+      '',
+      'LSX Design System: Our flagship design system built in Figma. A comprehensive component library, typography scale, colour system, and spacing framework that bridges the gap between design and development. I spoke about it at WordCamp Europe 2025 in Basel.',
+      'Tour Operator Plugin Suite: A collection of WordPress plugins for the tourism industry. Tour operators, activity providers, accommodation listings \u2014 a vertical-specific product that grew from our South African client base. The plugins handle bookings, itineraries, and integration with third-party travel systems.',
+      'WooCommerce Style Book: A tool for standardising WooCommerce storefront appearance across client projects. Design tokens, component patterns, and a visual regression testing workflow.',
+      'Open source has been central to LightSpeed\u2019s identity since the WordPress pivot. We contribute to the WordPress community through code, speaking, organising, and mentoring. The WordPress Theme Review Team, WordCamp organisation, and active participation in the block editor ecosystem.',
+    ],
+  },
+
+  {
+    id: 'ch19-content-8',
+    type: 'chapter-content',
+    pageNumber: 75,
+    chapter: 19,
+    paragraphs: [
+      '\u2014 AI & THE MODERN WORKFLOW \u2014',
+      '',
+      'The fusion of AI, creativity, and open source has been a radical, life-changing shift. I\u2019m currently mentoring the entire team into a new age of AI-powered workflow. The tools: GitHub Copilot for code completion and pair programming. ChatGPT for research, content drafting, and brainstorming. Claude for deep analysis, long-form writing, and complex problem-solving. Model Context Protocol (MCP) for connecting AI assistants to our development tools.',
+      'The team is levelling up week on week at a rate never seen before in my career. Yes, this is because of AI, but without a team that has the drive to learn, progress, and grow, this would not happen. AI amplifies what\u2019s already there. If the foundation is solid \u2014 curiosity, work ethic, willingness to learn \u2014 AI turns good developers into exceptional ones.',
+      'Technology fuels me. I embrace AI daily \u2014 bringing together GitHub Copilot, ChatGPT, Claude, and MCP with my love for Figma prototyping, design systems, and GitHub code management. This portfolio website itself was built using AI-assisted workflows in Figma Make. The future of web development is not AI replacing developers. It\u2019s AI empowering developers to build things they couldn\u2019t build alone.',
+    ],
+  },
+
+  {
+    id: 'ch19-content-9',
+    type: 'chapter-content',
+    pageNumber: 76,
+    chapter: 19,
+    paragraphs: [
+      '\u2014 WHAT TWENTY-THREE YEARS TEACHES YOU \u2014',
+      '',
+      'Freedom requires structure. The most liberating thing you can build is a system that works without you. ADHD brains need structure to function, so I build meticulous systems \u2014 GitHub workflows, daily planning templates, curriculum structures \u2014 that keep the chaos productive.',
+      'The right people change everything. From Warwick in 2006 to the interns in 2025, every right hire shifted the trajectory. The wrong hires taught equally valuable lessons. Hiring is the single most impactful thing a founder does.',
+      'ADHD is an engine, not a handicap. The hyperfocus. The pattern recognition. The need to build systems to manage the chaos. The ability to context-switch between design, code, client strategy, and team management. These are features, not bugs.',
+      'The business feeds the art, the art feeds the business. The same brain that builds WordPress design systems is the brain that designs neon faces at 3am on a dancefloor. LightSpeed has run profitably for twenty-three years because the entrepreneurial drive and the creative drive are the same thing.',
       'Autonomy is non-negotiable. The freedom given to the LightSpeed team mirrors the freedom I demand for myself. Happy team, better work, better company. The company is the container that makes the rest possible \u2014 the Berlin summers, the Thailand bootcamps, the festival circuits, the art. LightSpeed is the financial engine that funds a life lived in full colour.',
     ],
   },
@@ -963,7 +1166,7 @@ export const bookPages: BookPage[] = [
 
   /* ═══════════════════════════════════════════════════════════
      APPENDIX A — DANCE LIKE NO ONE'S WATCHING
-     ═══════════════════════════════════════════════════════════ */
+     ═════════════════════════════════════════════════════════��═ */
 
   {
     id: 'appendix-a-title',
@@ -1071,17 +1274,61 @@ export const bookPages: BookPage[] = [
     ],
   },
 
+  /* ── Koh Phangan Muay Thai Crew ── */
+  {
+    id: 'appendix-b-koh-phangan',
+    type: 'chapter-content',
+    pageNumber: 82,
+    paragraphs: [
+      '\u2014 THE KOH PHANGAN MUAY THAI CREW \u2014',
+      '',
+      'Koh Phangan is not just a holiday destination. It\u2019s a training ground, a creative retreat, and a community that runs on a completely different clock. The Muay Thai crew \u2014 the fighters, the trainers, the people who show up at the gym every morning regardless of how the night before went \u2014 became one of the most important tribes in my life.',
+      'I started training Muay Thai in 2019, first in Cape Town, then seriously on Koh Phangan during the 2023 and 2025 training seasons. The island attracts a specific type of person: digital nomads, fighters, yogis, and creatives who have structured their lives around freedom and discipline in equal measure. The gym is the meeting point.',
+      'What the Muay Thai crew taught me: Your body is your primary tool. Discipline and freedom are not opposites. Suffering shared in training creates bonds that small talk never could. The island strips away pretence \u2014 at 7am in 35-degree heat, throwing kicks at a heavy bag, there is no room for ego. The Koh Phangan crew taught me that recovery is as important as exertion, that the best ideas come after training, and that a community built around shared physical challenge is one of the most honest tribes you can belong to.',
+    ],
+  },
+
+  /* ── LightSpeed Team as Tribe ── */
+  {
+    id: 'appendix-b-lightspeed',
+    type: 'chapter-content',
+    pageNumber: 83,
+    paragraphs: [
+      '\u2014 LIGHTSPEED: THE LONGEST TRIBE \u2014',
+      '',
+      'Thirteen people. Twenty-three years. An extended family that builds websites, ships code, argues about design systems, and celebrates each other\u2019s victories. LightSpeed is not just a company \u2014 it\u2019s a tribe in the truest sense.',
+      'The team operates remotely, distributed across South Africa and beyond. We connect through GitHub, Slack, video calls, and the occasional in-person gathering that reminds us why we chose each other. The values are explicit: freedom, autonomy, quality, continuous learning, and radical transparency.',
+      'Warwick has been here since 2006. Barbara since 2010. Jos\u00E9 left and came back. The interns are levelling up faster than anyone I\u2019ve ever seen. This is a tribe that chose to be here \u2014 not because they couldn\u2019t find work elsewhere, but because the culture, the freedom, and the shared purpose of building excellent things together is worth more than a corporate salary.',
+      'The overlap with other tribes is significant. LightSpeed team members attend WordCamps, ride bicycles, go to festivals, and train Muay Thai. The company is not separate from the life \u2014 it\u2019s integrated into it. The tribe that funds the art. The tribe that makes the freedom possible. The tribe that proves a company can be a family without being a cult.',
+    ],
+  },
+
+  /* ── Cape Town Creative Community ── */
+  {
+    id: 'appendix-b-cape-town-creative',
+    type: 'chapter-content',
+    pageNumber: 84,
+    paragraphs: [
+      '\u2014 CAPE TOWN CREATIVE COMMUNITY \u2014',
+      '',
+      'Cape Town\u2019s creative scene is a tribe unto itself. It\u2019s where the garden meets the gallery, where the tech community overlaps with the festival scene, where the cyclists and the dancers and the entrepreneurs share coffee shops and co-working spaces and sunset sessions on Signal Hill.',
+      'Six Cats Cannabis Club is part of this community \u2014 the growers, the plant enthusiasts, the people who approach cannabis as a craft rather than a commodity. The Cape Town creative tribe taught me that entrepreneurship and artistry are not separate paths \u2014 they\u2019re the same path viewed from different angles.',
+      'The mountain defines this city. Table Mountain is the backdrop to everything \u2014 the training runs, the sunset sessions, the late-night drives home from parties. The creative community here is shaped by geography: mountains, ocean, vineyards, and bush all within a 30-minute drive. The landscape makes the people expansive. The people make the work meaningful.',
+      'Cape Town is where I started. It\u2019s where LightSpeed was born, where Six Cats grows, where the cycling tradition began. Every other tribe leads back here eventually. This is the root system.',
+    ],
+  },
+
   /* ── The Overlap ── */
   {
     id: 'appendix-b-overlap',
     type: 'chapter-content',
-    pageNumber: 82,
+    pageNumber: 85,
     paragraphs: [
-      '\u2014 THE OVERLAP \u2014',
+      '\u2014 THE OVERLAP IS THE IDENTITY \u2014',
       '',
-      'The magic happens in the overlap. The WordPress developer who DJs psytrance sets. The trail runner who paints UV faces at festivals. The triathlete who codes during the week and dances all weekend. The Berlin club kid who runs a profitable agency. These tribes aren\u2019t separate \u2014 they\u2019re frequencies that, when layered, create something richer than any single identity.',
-      'The tribes shaped me. The psytrance dancefloor taught me to move. The WordPress community taught me to build. The Berlin scene taught me to be unapologetically myself. The endurance sports taught me discipline. The mountain taught me humility. The bicycle taught me freedom.',
-      'We are the sum of our tribes. And these are mine.',
+      'A map of belonging across six continents. The magic happens in the overlap. The WordPress developer who DJs psytrance sets. The trail runner who paints UV faces at festivals. The triathlete who codes during the week and dances all weekend. The Berlin club kid who runs a profitable agency from a laptop. The Muay Thai fighter who grows organic cannabis in a Cape Town garden.',
+      'These tribes aren\u2019t separate \u2014 they\u2019re frequencies that, when layered, create something richer than any single identity. The psytrance dancefloor taught me to move. The WordPress community taught me to build. The Berlin scene taught me to be unapologetically myself. The endurance sports taught me discipline. The mountain taught me humility. The bicycle taught me freedom. The Muay Thai gym taught me presence. The LightSpeed team taught me that the right people change everything.',
+      'No single tribe defines me. The intersection of all of them does. The overlap is the identity. We are the sum of our tribes. And these are mine.',
     ],
   },
 

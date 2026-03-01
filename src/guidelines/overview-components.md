@@ -712,10 +712,19 @@ useEffect(() => {
 
 Before using any component, read its specific guideline file:
 
+### Core UI Components
 - **[Logo](./components/Logo.md)** - Brand logo with responsive sizing
 - **[ScrollDownArrow](./components/ScrollDownArrow.md)** - Animated scroll indicator
 - **[ScrollBackToTop](./components/ScrollBackToTop.md)** - Floating scroll button
 - **[LayoutSwitcher](./components/LayoutSwitcher.md)** - Grid/list view toggle
+
+### Phase 3 Content Components (NEW)
+- **[Timeline](./components/Timeline.md)** - Chronological event timeline with neon accents
+- **[PullQuote](./components/PullQuote.md)** - Visually emphasized blockquote with neon borders
+- **[Accordion](./components/Accordion.md)** - Collapsible content sections with keyboard navigation
+- **[ChapterNav](./components/ChapterNav.md)** - Sticky chapter navigation with scroll spy
+- **[ContentSection](./components/ContentSection.md)** - Flexible content wrapper with design variants
+- **[SplitContent](./components/SplitContent.md)** - Two-column image-text split layout
 
 ---
 

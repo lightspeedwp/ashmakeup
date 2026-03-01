@@ -4,9 +4,10 @@
  * web developer, festival workshops, and the "university of the dancefloor."
  *
  * Neon accent: Orange
+ * Phase 5 Polish — PullQuote, Timeline, ContentSection, bundler-safe syntax
  *
  * @component EducationPage
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 import React, { useEffect } from 'react';
@@ -14,12 +15,35 @@ import { educationPageData } from '../../../data/mock/pages/about-subpages';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
+import { PullQuote } from '../../ui/PullQuote';
+import { Timeline } from '../../ui/Timeline';
+import { ContentSection } from '../../sections/ContentSection';
 import '../../../styles/blocks/about-subpage.css';
 
+/**
+ * Build timeline events from formal education entries
+ */
+function buildEducationTimeline() {
+  var entries = educationPageData.formalEducation;
+  var events = [];
+  for (var i = 0; i < entries.length; i++) {
+    var entry = entries[i];
+    events.push({
+      year: entry.year,
+      title: entry.institution + ' \u2014 ' + entry.qualification,
+      description: entry.description,
+    });
+  }
+  return events;
+}
+
 export function EducationPage() {
-  useEffect(() => {
+  useEffect(function () {
     setSEO(pageSEO.education);
   }, []);
+
+  var data = educationPageData;
+  var educationTimeline = buildEducationTimeline();
 
   return (
     <main
@@ -28,75 +52,92 @@ export function EducationPage() {
       tabIndex={-1}
       className="about-subpage about-subpage--education bg-atomic-noise"
     >
-      {/* -- Hero -- */}
+      {/* ── Hero ── */}
       <header className="about-subpage__hero">
         <div className="about-subpage__hero-content">
-          <Breadcrumbs items={educationPageData.breadcrumbs} centered />
+          <Breadcrumbs items={data.breadcrumbs} centered />
 
           <span className="about-subpage__hero-badge">
-            {educationPageData.hero.badge}
+            {data.hero.badge}
           </span>
 
           <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
-            {educationPageData.hero.title}
+            {data.hero.title}
           </h1>
 
           <p className="about-subpage__hero-desc text-body-p">
-            {educationPageData.hero.description}
+            {data.hero.description}
           </p>
         </div>
       </header>
 
-      {/* -- Pull Quote -- */}
-      <blockquote className="about-subpage__pull-quote" aria-label="Featured quote">
-        <p className="about-subpage__pull-quote-text">
-          {educationPageData.pullQuote}
-        </p>
-      </blockquote>
+      {/* ── Pull Quote (Phase 3) ── */}
+      <div className="about-subpage__body">
+        <div className="entrance-fade-up">
+          <PullQuote
+            quote={data.pullQuote}
+            variant="center"
+            neonColor="yellow"
+          />
+        </div>
+      </div>
 
-      {/* -- Stats Grid -- */}
+      {/* ── Stats Grid ── */}
       <div
         className="about-subpage__facts"
         role="list"
         aria-label="Education stats"
       >
-        {educationPageData.stats.map((stat) => (
-          <div key={stat.id} className="about-subpage__fact" role="listitem">
-            <span className="about-subpage__fact-label">{stat.label}</span>
-            <span className="about-subpage__fact-value">{stat.value}</span>
-          </div>
-        ))}
+        {data.stats.map(function (stat) {
+          return (
+            <div key={stat.id} className="about-subpage__fact" role="listitem">
+              <span className="about-subpage__fact-label">{stat.label}</span>
+              <span className="about-subpage__fact-value">{stat.value}</span>
+            </div>
+          );
+        })}
       </div>
 
-      {/* -- Formal Education Timeline (Steps) -- */}
-      <div className="about-subpage__steps" aria-label="Formal education timeline">
-        {educationPageData.formalEducation.map((entry) => (
-          <article key={entry.id} className="about-subpage__step">
-            <div className="about-subpage__step-number" aria-hidden="true">
-              {entry.year.slice(0, 4)}
-            </div>
-            <div className="about-subpage__step-body">
-              <h3 className="about-subpage__step-title">
-                {entry.institution} — {entry.qualification}
-              </h3>
-              <p className="about-subpage__step-desc">{entry.description}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-
-      {/* -- Sections -- */}
+      {/* ── Formal Education Timeline (Phase 3) ── */}
       <div className="about-subpage__body">
-        {educationPageData.sections.map((section) => (
-          <section key={section.id} className="about-subpage__section">
-            <h2 className="about-subpage__section-title">{section.title}</h2>
-            {section.paragraphs.map((p, i) => (
-              <p key={`${section.id}-p-${i}`} className="about-subpage__section-text">
-                {p}
-              </p>
-            ))}
-          </section>
-        ))}
+        <div className="entrance-fade-up entrance-fade-up--delay-1">
+          <ContentSection
+            id="formal-education"
+            title="The Formal Path"
+            variant="callout"
+            colorAccent="pink"
+          >
+            <Timeline
+              events={educationTimeline}
+              variant="vertical"
+              colorAccent="pink"
+            />
+          </ContentSection>
+        </div>
+
+        {/* ── Sections (Phase 3 ContentSection) ── */}
+        {data.sections.map(function (section, idx) {
+          var delayClass = idx < 6 ? ' entrance-fade-up--delay-' + (idx + 2) : '';
+
+          return (
+            <div key={section.id} className={'entrance-fade-up' + delayClass}>
+              <ContentSection
+                id={section.id}
+                title={section.title}
+                variant="default"
+                colorAccent="pink"
+              >
+                {section.paragraphs.map(function (p, i) {
+                  return (
+                    <p key={section.id + '-p-' + i} className="about-subpage__section-text">
+                      {p}
+                    </p>
+                  );
+                })}
+              </ContentSection>
+            </div>
+          );
+        })}
       </div>
     </main>
   );

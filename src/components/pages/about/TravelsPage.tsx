@@ -1,7 +1,10 @@
 /**
  * @fileoverview Travels page — Ash's nomadic festival circuit
+ *
+ * Phase 5 Polish — ContentSection for body, bundler-safe syntax
+ *
  * @component TravelsPage
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 import React, { useEffect } from 'react';
@@ -10,12 +13,15 @@ import { travelsPageData } from '../../../data/mock/pages/about-subpages';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
+import { ContentSection } from '../../sections/ContentSection';
 import '../../../styles/blocks/about-subpage.css';
 
 export function TravelsPage() {
-  useEffect(() => {
+  useEffect(function () {
     setSEO(pageSEO.travels);
   }, []);
+
+  var data = travelsPageData;
 
   return (
     <main
@@ -27,51 +33,65 @@ export function TravelsPage() {
       {/* ── Hero ── */}
       <header className="about-subpage__hero">
         <div className="about-subpage__hero-content">
-          <Breadcrumbs items={travelsPageData.breadcrumbs} centered />
+          <Breadcrumbs items={data.breadcrumbs} centered />
 
           <span className="about-subpage__hero-badge">
-            {travelsPageData.hero.badge}
+            {data.hero.badge}
           </span>
 
           <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
-            {travelsPageData.hero.title}
+            {data.hero.title}
           </h1>
 
           <p className="about-subpage__hero-desc text-body-p">
-            {travelsPageData.hero.description}
+            {data.hero.description}
           </p>
         </div>
       </header>
 
       {/* ── Destinations Grid ── */}
       <div className="about-subpage__destinations" aria-label="Destinations">
-        {travelsPageData.destinations.map((dest) => (
-          <article key={dest.id} className="about-subpage__destination">
-            <h2 className="about-subpage__destination-name">
-              <MapPin
-                className="about-subpage__destination-icon"
-                aria-hidden="true"
-              />
-              {dest.name}
-            </h2>
-            <span className="about-subpage__destination-region">{dest.region}</span>
-            <p className="about-subpage__destination-desc">{dest.description}</p>
-          </article>
-        ))}
+        {data.destinations.map(function (dest) {
+          return (
+            <article key={dest.id} className="about-subpage__destination">
+              <h2 className="about-subpage__destination-name">
+                <MapPin
+                  className="about-subpage__destination-icon"
+                  aria-hidden="true"
+                />
+                {dest.name}
+              </h2>
+              <span className="about-subpage__destination-region">{dest.region}</span>
+              <p className="about-subpage__destination-desc">{dest.description}</p>
+            </article>
+          );
+        })}
       </div>
 
-      {/* ── Sections ── */}
+      {/* ── Sections (Phase 3 ContentSection) ── */}
       <div className="about-subpage__body">
-        {travelsPageData.sections.map((section) => (
-          <section key={section.id} className="about-subpage__section">
-            <h2 className="about-subpage__section-title">{section.title}</h2>
-            {section.paragraphs.map((p, i) => (
-              <p key={`${section.id}-p-${i}`} className="about-subpage__section-text">
-                {p}
-              </p>
-            ))}
-          </section>
-        ))}
+        {data.sections.map(function (section, idx) {
+          var delayClass = idx < 6 ? ' entrance-fade-up--delay-' + (idx + 1) : '';
+
+          return (
+            <div key={section.id} className={'entrance-fade-up' + delayClass}>
+              <ContentSection
+                id={section.id}
+                title={section.title}
+                variant="default"
+                colorAccent="pink"
+              >
+                {section.paragraphs.map(function (p, i) {
+                  return (
+                    <p key={section.id + '-p-' + i} className="about-subpage__section-text">
+                      {p}
+                    </p>
+                  );
+                })}
+              </ContentSection>
+            </div>
+          );
+        })}
       </div>
     </main>
   );

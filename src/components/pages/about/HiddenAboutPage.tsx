@@ -8,8 +8,11 @@
  *
  * Always renders on an atomic-black background regardless of theme.
  *
+ * Phase 5 Polish — bundler-safe syntax (no arrow functions, const, destructuring,
+ * template literals, Record generics)
+ *
  * @component HiddenAboutPage
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 import React, { useEffect } from 'react';
@@ -41,38 +44,44 @@ import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import '../../../styles/blocks/hidden-about.css';
 
-/** Map icon-name strings from mock data to Lucide components */
-const ICON_MAP: Record<string, React.ElementType> = {
-  Compass: MapPin,
-  User,
-  Building2: Sparkles,
-  Paintbrush,
-  Book,
-  Sparkles,
-  Clock,
-  Plane,
-  Mic,
-  BookOpen,
-  Zap,
-  Bike: MapPin,
-  Waves: Activity,
-  Music,
-  Code,
-  GraduationCap,
-  Heart,
-  Activity,
-  Headphones,
-  Play,
-  Image,
-  Leaf,
-};
+/**
+ * Resolve icon by name string from mock data
+ */
+function getIcon(name) {
+  if (name === 'Compass') return MapPin;
+  if (name === 'User') return User;
+  if (name === 'Building2') return Sparkles;
+  if (name === 'Paintbrush') return Paintbrush;
+  if (name === 'Book') return Book;
+  if (name === 'Sparkles') return Sparkles;
+  if (name === 'Clock') return Clock;
+  if (name === 'Plane') return Plane;
+  if (name === 'Mic') return Mic;
+  if (name === 'BookOpen') return BookOpen;
+  if (name === 'Zap') return Zap;
+  if (name === 'Bike') return MapPin;
+  if (name === 'Waves') return Activity;
+  if (name === 'Music') return Music;
+  if (name === 'Code') return Code;
+  if (name === 'GraduationCap') return GraduationCap;
+  if (name === 'Heart') return Heart;
+  if (name === 'Activity') return Activity;
+  if (name === 'Headphones') return Headphones;
+  if (name === 'Play') return Play;
+  if (name === 'Image') return Image;
+  if (name === 'Leaf') return Leaf;
+  return Sparkles;
+}
 
 export function HiddenAboutPage() {
-  useEffect(() => {
+  useEffect(function () {
     setSEO(pageSEO.hiddenAbout);
   }, []);
 
-  const { hero, story, media, subpages } = hiddenAboutData;
+  var hero = hiddenAboutData.hero;
+  var story = hiddenAboutData.story;
+  var media = hiddenAboutData.media;
+  var subpages = hiddenAboutData.subpages;
 
   return (
     <main
@@ -98,9 +107,11 @@ export function HiddenAboutPage() {
           <h2 id="hidden-story-title" className="hidden-about__story-title">
             {story.title}
           </h2>
-          {story.paragraphs.map((p, i) => (
-            <p key={`story-${i}`} className="hidden-about__story-text">{p}</p>
-          ))}
+          {story.paragraphs.map(function (p, i) {
+            return (
+              <p key={'story-' + i} className="hidden-about__story-text">{p}</p>
+            );
+          })}
         </section>
 
         <div className="hidden-about__divider" aria-hidden="true" />
@@ -115,13 +126,14 @@ export function HiddenAboutPage() {
           </div>
 
           <div className="hidden-about__media-grid">
-            {media.items.map((item) => {
-              const Icon = ICON_MAP[item.icon] || Sparkles;
+            {media.items.map(function (item) {
+              var Icon = getIcon(item.icon);
+              var cardClass = 'hidden-about__media-card hidden-about__media-card--' + item.accent;
               return (
                 <Link
                   key={item.id}
                   to={item.href}
-                  className={`hidden-about__media-card hidden-about__media-card--${item.accent}`}
+                  className={cardClass}
                 >
                   <Icon className="hidden-about__media-icon" aria-hidden="true" />
                   <span className="hidden-about__media-label">{item.label}</span>
@@ -151,18 +163,19 @@ export function HiddenAboutPage() {
               Every Chapter
             </h2>
             <p className="hidden-about__subpages-subtitle">
-              {subpages.length} pages. One life. Tap any card to dive deeper.
+              {subpages.length + ' pages. One life. Tap any card to dive deeper.'}
             </p>
           </div>
 
           <div className="hidden-about__subpages-grid">
-            {subpages.map((page) => {
-              const Icon = ICON_MAP[page.icon] || Sparkles;
+            {subpages.map(function (page) {
+              var Icon = getIcon(page.icon);
+              var cardClass = 'hidden-about__card hidden-about__card--' + page.accent;
               return (
                 <Link
                   key={page.id}
                   to={page.href}
-                  className={`hidden-about__card hidden-about__card--${page.accent}`}
+                  className={cardClass}
                 >
                   <div className="hidden-about__card-dot">
                     <Icon className="hidden-about__card-dot-icon" aria-hidden="true" />
