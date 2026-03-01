@@ -1,11 +1,12 @@
-/* ============================================
-   ASH SHAW MAKEUP PORTFOLIO
-   NEON VS ATOMIC BLACK DESIGN SYSTEM
-   Version: 3.7.0 (Phase 3 Design Token Audit)
-   ============================================ */
-
 /* Import centralized animations */
 @import './animations.css';
+
+/* Import content design tokens (Phase 2) */
+@import './tokens/content-layouts.css';
+@import './tokens/content-interactive.css';
+@import './tokens/content-typography.css';
+@import './tokens/content-colors.css';
+@import './tokens/content-animations.css';
 
 /* 1. RESET (Minimal, replacing Tailwind Preflight) */
 *, *::before, *::after {

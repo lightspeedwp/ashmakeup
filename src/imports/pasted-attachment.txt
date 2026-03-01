@@ -1,0 +1,59 @@
+
+
+
+## Settings Modal Trigger: Where should the spanner/gear icon live?
+
+- next to the full screen icon
+
+In the existing toolbar (next to full-screen button)?
+
+- yes
+
+
+Floating button in corner?
+
+- yes, but only in minimal mode, there should be a setting to turn off the menu below the book and then only one minimal control button will displkay
+
+
+In the header?
+
+- yes, maybe or the footer, wherever it will not obscure text or page numbers or something in the book.
+
+
+## Full-Screen Mode: When entering full-screen, should:
+
+Settings modal still be accessible?
+
+- yes
+
+
+Show minimal controls overlay (fade out after inactivity)?
+
+- not sure, I will let you decide what is most accessible and wcag AA and AAA compliant
+
+
+Exit full-screen button always visible or auto-hide?
+
+- yes, always visible
+
+
+Page Flip Animation Style: What feel do you prefer?
+
+I like all of these, implement whatever compliments the ebook user experience, maybe mix and match:
+- Book-style flip (3D page curl effect)
+- Slide transition (pages slide left/right)
+- Fade transition (cross-fade between pages)
+- Modern page flip (smooth horizontal slide with slight scale)
+
+## Mobile Swipe Sensitivity: Should swipe work:
+
+Anywhere on the page content?
+
+- not sure, might be a usability problem if anywhere on page, I will take your advice
+
+
+Only in specific swipe zones (left/right edges)?
+
+- yes
+
+

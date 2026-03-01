@@ -248,6 +248,67 @@
   color: var(--wp--preset--color--neutral-400);
 }
 
+/* ──────────────────────────────────────────────
+   Footer CTA Section
+   ────────────────────────────────────────────── */
+.why-section__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--wp--preset--spacing--fluid-md);
+  margin-top: var(--wp--preset--spacing--fluid-xl);
+}
+
+.why-section__footer-left {
+  flex: 0 1 auto;
+}
+
+.why-section__follow-text {
+  font-size: var(--wp--preset--font-size--300);
+  color: var(--wp--preset--color--neutral-600);
+  margin: 0;
+}
+
+.dark .why-section__follow-text {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.why-section__follow-link {
+  color: var(--wp--preset--color--neon-purple);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.why-section__follow-link:hover {
+  color: var(--wp--preset--color--neon-pink);
+  text-decoration: underline;
+}
+
+.dark .why-section__follow-link {
+  color: var(--wp--preset--color--neon-cyan);
+}
+
+.dark .why-section__follow-link:hover {
+  color: var(--wp--preset--color--neon-green);
+  text-shadow: 0 0 10px var(--wp--preset--color--neon-green);
+}
+
+/* Responsive Footer */
+@media (max-width: 767px) {
+  .why-section__footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--wp--preset--spacing--fluid-sm);
+  }
+
+  .why-section__follow-text {
+    font-size: var(--wp--preset--font-size--200);
+  }
+}
+
 /* ── Reduced Motion ── */
 @media (prefers-reduced-motion: reduce) {
   .why-section__track {

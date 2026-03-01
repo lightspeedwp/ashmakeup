@@ -1,10 +1,11 @@
 # Master Task List
 
 **Created:** February 25, 2026
-**Last Updated:** March 1, 2026
+**Last Updated:** March 1, 2026 (18:30)
 **Source Prompts:**
 - [root-cleanup-audit.md](../prompts/root-cleanup-audit.md)
 - [comprehensive-cleanup orchestrator](../prompts/comprehensive-cleanup/orchestrator.md)
+- Content migration and ebook expansion (ongoing)
 
 **Reports:**
 - `/reports/root-cleanup/` — ~~8 reports~~ **Deleted March 1, 2026** (lifecycle rule: reports older than a few days; all items resolved)
@@ -59,6 +60,64 @@
 
 ---
 
+## Content Migration & Expansion (Ongoing)
+
+### ✅ Phase 1: Content Organization (COMPLETE — March 1, 2026)
+- [x] Break up `RESTORE-FROM-GIT.md` into organized content files
+- [x] Create `/content/personal/` folder with 10 reference files:
+  - `artists-lifestyle.md`, `berlin.md`, `cape-town.md`, `education.md`, `fitness.md`
+  - `identity.md`, `lucy.md`, `profile.md`, `six-cats.md`, `thailand.md`
+- [x] Create `/content/lightspeed/` folder with 5 reference files:
+  - `company-history.md`, `internship.md`, `jose-abreu.md`, `team-workflow.md`, `team.md`
+- [x] Create `/content/book/` folder with 1 file:
+  - `this-one-time.md` (ebook master content)
+
+### ✅ Phase 2: Ebook Expansion (COMPLETE — March 1, 2026)
+- [x] Fix duplicate Chapter 18 entries in `/data/mock/pages/ebook-pages.ts`
+- [x] Fix misplaced `ch17-content-2` block (merged into ch18-content-2)
+- [x] Add **Chapter 19: Twenty-Three Years** (3 content pages, pages 65-68)
+  - Content about LightSpeed's 23-year history sourced from `/content/lightspeed/company-history.md`
+  - BarCamp Cape Town 2006 pivot story
+  - Team evolution and WordPress community
+  - Lessons from 23 years of entrepreneurship
+- [x] Renumber "The Cumulative Effect" from Chapter 18 to **Chapter 20** (pages 69-71)
+- [x] Add **Appendix B: The Tribes** (6 content pages, pages 76-81)
+  - Global tribes: Psytrance/140 BPM, WordPress Community, Techno & House Music Scene
+  - Location-specific tribes: Cape Town Psytrance, Berlin Club Scene, Cape Town WordPress/Tech, Trail Running, Mountain Biking, Triathlon
+  - "The Overlap" section on multi-tribal identity
+- [x] Update all page numbers for Afterword (72), Appendix A (73-75), About the Author (82)
+- [x] Correct all company age references from "twenty-two years" to "twenty-three years"
+
+**Ebook stats after expansion:**
+- **Total pages:** 82 (was 69)
+- **Chapters:** 20 (was 18, but one was duplicated)
+- **Appendices:** 2 (was 1)
+- **New content:** 13 pages added (3 for Chapter 19, 6 for Appendix B, 4 from page renumbering)
+
+### 🔄 Phase 3: Content Audit & Website Updates (TODO)
+- [ ] Audit `/content/` files against `/data/mock/pages/` to identify update opportunities
+- [ ] Update `AboutPage`, `BerlinPage`, `LightSpeedPage`, `SixCatsPage` with new content from reference files
+- [ ] Review `BioPage`, `HistoryPage`, `TravelsPage` for consistency with ebook content
+- [ ] Update `/data/mock/pages/about-subpages.ts` with enhanced content
+- [ ] Sync `/content/personal/berlin.md` with `/data/mock/pages/about-subpages.ts` Berlin section
+- [ ] Sync `/content/lightspeed/company-history.md` with `/data/mock/pages/about-subpages.ts` LightSpeed section
+
+### 🔄 Phase 4: Blog Topic Generation (TODO)
+- [ ] Review ebook chapters for backdated blog post ideas
+- [ ] Create blog post proposals from:
+  - Chapter 10: Six Cats (May 2019 backdated post)
+  - Chapter 11: Berlin Calling (July 2019 discovery backdated post)
+  - Chapter 19: Twenty-Three Years (Jan 2026 retrospective post)
+  - Appendix B: The Tribes (multi-part series idea)
+- [ ] Draft 3-5 backdated blog posts for `/data/mock/blog/posts.ts`
+
+### 🔄 Phase 5: Social Media Guidelines Update (TODO)
+- [ ] Review `/content/social-profiles/` for updates needed
+- [ ] Update social media voice/tone guidelines to reflect tribal identity
+- [ ] Create content calendar templates for cross-platform posting
+
+---
+
 ## Low Priority (Documentation)
 
 - [x] Update `/guidelines/overview-components.md` to remove Contentful references — Feb 25, 2026
@@ -105,3 +164,5 @@ _Archive completed tasks here for reference._
 - [x] **Guideline cross-reference verification** — 3 stale references fixed across Guidelines.md, BlogPreviewSection.md, wordpress-migration-guide.md — March 1, 2026
 - [x] **postcss.config.js** — stale Tailwind comment corrected to reflect V4 Vite plugin + BEM-only architecture — March 1, 2026
 - [x] **UI Primitives Decision** — Option A (keep all 45 shadcn stubs): CSS cascade dependency confirmed, project feature-complete, stubs are tree-shaken — March 1, 2026
+- [x] **Content Organization (Phase 1)** — broke up `RESTORE-FROM-GIT.md` into 16 organized reference files across `/content/personal/` (10 files), `/content/lightspeed/` (5 files), `/content/book/` (1 file) — March 1, 2026
+- [x] **Ebook Expansion (Phase 2)** — added Chapter 19 "Twenty-Three Years" (3 pages), renumbered Chapter 20 "The Cumulative Effect", added Appendix B "The Tribes" (6 pages covering global + location-specific tribes); fixed duplicate Chapter 18 entries; updated all page numbers; total ebook now 82 pages — March 1, 2026

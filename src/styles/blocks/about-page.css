@@ -362,3 +362,130 @@
 .dark .text-about-body-alt {
   color: #fff;
 }
+
+/* ──────────────────────────────────────────────
+   About Landing — Phase 4 Redesign Sections
+   ────────────────────────────────────────────── */
+
+/* Chapter nav + content grid */
+.about-landing {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--wp--preset--spacing--fluid-lg);
+  padding: var(--wp--preset--spacing--section-horizontal);
+  max-width: var(--wp--preset--layout--wide);
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .about-landing {
+    grid-template-columns: 200px 1fr;
+    gap: var(--wp--preset--spacing--fluid-xl);
+  }
+}
+
+.about-landing__nav {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .about-landing__nav {
+    display: block;
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
+  }
+}
+
+.about-landing__sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--fluid-xl);
+  min-width: 0;
+}
+
+/* Mobile chapter nav — horizontal scroll */
+.about-landing__mobile-nav {
+  display: block;
+  position: sticky;
+  top: var(--header-height, 4rem);
+  z-index: 10;
+  background-color: var(--wp--preset--color--base);
+  border-bottom: 1px solid var(--border);
+  padding: var(--wp--preset--spacing--fluid-sm) var(--wp--preset--spacing--section-horizontal);
+  margin-left: calc(-1 * var(--wp--preset--spacing--section-horizontal));
+  margin-right: calc(-1 * var(--wp--preset--spacing--section-horizontal));
+}
+
+.dark .about-landing__mobile-nav {
+  background-color: var(--wp--preset--color--atomic-black);
+}
+
+@media (min-width: 1024px) {
+  .about-landing__mobile-nav {
+    display: none;
+  }
+}
+
+/* ADHD bullets list */
+.about-adhd-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--wp--preset--spacing--fluid-sm) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--fluid-sm);
+}
+
+.about-adhd-list__item {
+  position: relative;
+  padding-left: var(--wp--preset--spacing--fluid-md);
+}
+
+.about-adhd-list__item::before {
+  content: '\2022';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--wp--preset--color--neon-green-text);
+}
+
+.dark .about-adhd-list__item::before {
+  color: var(--wp--preset--color--neon-green);
+}
+
+/* Bullied kid context paragraphs */
+.about-context-text {
+  color: var(--wp--preset--color--neutral-600);
+}
+
+.dark .about-context-text {
+  color: var(--wp--preset--color--neutral-300);
+}
+
+/* Sub-heading inside ADHD section */
+.about-adhd-subheading {
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-size: var(--wp--preset--font-size--300);
+  font-weight: 600;
+  margin-top: var(--wp--preset--spacing--fluid-md);
+  margin-bottom: var(--wp--preset--spacing--fluid-sm);
+  color: var(--wp--preset--color--neon-green-text);
+}
+
+.dark .about-adhd-subheading {
+  color: var(--wp--preset--color--neon-green);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .about-landing .entrance-fade-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,55 +1,108 @@
 /**
- * @fileoverview Manifesto Page component
+ * @fileoverview Manifesto Page — Neon vs Atomic Black creative philosophy
+ *
+ * Redesigned with Phase 3 components: PullQuote, ContentSection.
+ * Removed inline styles, template literals, and Tailwind utility classes.
+ * Strict BEM architecture.
+ *
+ * @component ManifestoPage
+ * @version 2.0.0 — Phase 5 Polish
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { manifestoPageData } from '../../../data/mock/pages/manifesto';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
+import { PullQuote } from '../../ui/PullQuote';
+import { ContentSection } from '../../sections/ContentSection';
 import { setSEO } from '../../../utils/seo';
+import { pageSEO } from '../../../data/mock/seo';
 import '../../../styles/blocks/manifesto-page.css';
 
+/**
+ * Map section theme string to neon color accent
+ */
+function themeToAccent(theme: string): 'pink' | 'green' | 'blue' | 'purple' {
+  if (theme === 'neon-pink') return 'pink';
+  if (theme === 'neon-green') return 'green';
+  if (theme === 'neon-cyan') return 'blue';
+  if (theme === 'neon-purple') return 'purple';
+  return 'purple';
+}
+
 export function ManifestoPage() {
-  React.useEffect(() => {
-    setSEO({
+  useEffect(function () {
+    var seo = pageSEO.manifesto;
+    if (seo) {
+      setSEO(seo);
+    } else {
+      setSEO({
         title: 'Manifesto: Neon vs Atomic Black | Ash Shaw Makeup',
         description: manifestoPageData.hero.description,
-        image: '/images/og-manifesto.jpg'
-    });
+      });
+    }
   }, []);
 
+  var heroData = manifestoPageData.hero;
+  var sections = manifestoPageData.sections;
+  var footerQuote = manifestoPageData.footerQuote;
+
   return (
-    <main className="manifesto-page bg-atomic-noise">
-      <header 
-        className="manifesto-page__hero"
-        style={{
-            backgroundImage: `radial-gradient(circle at center, rgba(15, 15, 15, 0) 0%, rgba(15, 15, 15, 1) 90%), url('${manifestoPageData.hero.image}')`
-        }}
-      >
-        <div className="container-xl text-center">
-             <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'About', href: '/about' }, { label: 'Manifesto' }]} centered />
-             <h1 className="text-hero-h1 text-gradient-cyberpunk mb-fluid-md">
-                 {manifestoPageData.hero.title}
-             </h1>
-             <p className="text-section-h2 text-neutral-300 max-w-2xl mx-auto tracking-widest uppercase">
-                 {manifestoPageData.hero.description}
-             </p>
+    <main
+      id="main-content"
+      role="main"
+      tabIndex={-1}
+      className="manifesto-page bg-atomic-noise"
+    >
+      {/* ── Hero ── */}
+      <header className="manifesto-page__hero">
+        <div className="manifesto-page__hero-inner">
+          <Breadcrumbs
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'About', href: '/about' },
+              { label: 'Manifesto' },
+            ]}
+            centered
+          />
+          <h1 className="text-hero-h1 text-gradient-cyberpunk manifesto-page__title">
+            {heroData.title}
+          </h1>
+          <p className="manifesto-page__hero-desc">
+            {heroData.description}
+          </p>
         </div>
       </header>
 
+      {/* ── Manifesto Sections ── */}
       <div className="manifesto-scroll-container">
-        {manifestoPageData.sections.map((section, index) => (
-            <section key={section.id} className={`manifesto-section theme-${section.theme}`}>
-                <div className="container-lg manifesto-section__inner">
-                    <h2 className="manifesto-title">{section.title}</h2>
-                    <p className="manifesto-content">{section.content}</p>
-                    <div className="manifesto-decoration" />
-                </div>
-            </section>
-        ))}
+        {sections.map(function (section) {
+          var accent = themeToAccent(section.theme);
+
+          return (
+            <div key={section.id} className="entrance-fade-up">
+              <ContentSection
+                id={section.id}
+                title={section.title}
+                variant="callout"
+                colorAccent={accent}
+                backgroundPattern="noise"
+              >
+                <p className="manifesto-content">
+                  {section.content}
+                </p>
+              </ContentSection>
+            </div>
+          );
+        })}
       </div>
-      
-      <div className="manifesto-footer text-center py-fluid-3xl">
-          <p className="text-body-lg text-neutral-400 italic">"{manifestoPageData.footerQuote}"</p>
+
+      {/* ── Footer Quote ── */}
+      <div className="manifesto-footer-section">
+        <PullQuote
+          quote={footerQuote}
+          variant="center"
+          neonColor="pink"
+        />
       </div>
     </main>
   );

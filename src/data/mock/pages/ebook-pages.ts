@@ -142,17 +142,31 @@ export const bookPages: BookPage[] = [
     title: 'Contents (continued)',
     tocItems: [
       { number: 0, title: 'Part Three \u2014 Nomadic Life Begins (BC)', partLabel: 'III' },
-      { number: 10, title: 'Berlin Calling' },
-      { number: 11, title: 'The Loaded Bike' },
-      { number: 12, title: 'Neon Revelations' },
-      { number: 13, title: 'The Pilgrimage' },
+      { number: 10, title: 'Six Cats: The Green Garden' },
+      { number: 11, title: 'Berlin Calling' },
+      { number: 12, title: 'The Loaded Bike' },
+      { number: 13, title: 'Neon Revelations' },
+      { number: 14, title: 'The Pilgrimage' },
       { number: 0, title: 'Part Four \u2014 Re-emergence & Finding Myself Again', partLabel: 'IV' },
-      { number: 14, title: 'The Artist\u2019s Lifestyle' },
-      { number: 15, title: 'Dance Like No One\u2019s Watching' },
-      { number: 16, title: 'One Million Steps' },
-      { number: 17, title: 'Freedom as Operating Principle' },
-      { number: 18, title: 'The Cumulative Effect' },
-      { number: 0, title: 'Appendix \u2014 Dance Like No One\u2019s Watching', partLabel: '\u2014' },
+      { number: 15, title: 'The Artist\u2019s Lifestyle' },
+      { number: 16, title: 'Dance Like No One\u2019s Watching' },
+      { number: 17, title: 'One Million Steps' },
+      { number: 18, title: 'Freedom as Operating Principle' },
+      { number: 19, title: 'Twenty-Three Years' },
+      { number: 20, title: 'The Cumulative Effect' },
+    ],
+  },
+
+  /* ── 6.5: Table of Contents (page 3) ── */
+  {
+    id: 'toc-3',
+    type: 'toc',
+    pageNumber: 6,
+    title: 'Contents (continued)',
+    tocItems: [
+      { number: 0, title: 'Appendices', partLabel: '\u2014' },
+      { number: 0, title: '  Appendix A \u2014 Dance Like No One\u2019s Watching', partLabel: '' },
+      { number: 0, title: '  Appendix B \u2014 The Tribes', partLabel: '' },
     ],
   },
 
@@ -160,7 +174,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'foreword',
     type: 'foreword',
-    pageNumber: 6,
+    pageNumber: 8,
     title: 'How to Read This',
     paragraphs: [
       'These are draft excerpts. They\u2019re rough, honest, and unpolished by design. The book is being written in the same way Ash paints \u2014 fast first strokes to capture the energy, refined later to bring out the detail.',
@@ -177,7 +191,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'part1-title',
     type: 'part-title',
-    pageNumber: 7,
+    pageNumber: 9,
     part: 1,
     title: 'Early Life',
     subtitle: 'Pre-Y2K',
@@ -187,7 +201,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch1-title',
     type: 'chapter-start',
-    pageNumber: 8,
+    pageNumber: 10,
     chapter: 1,
     title: 'Snails in the Garden',
     subtitle: 'An only child in a small Afrikaans town, building worlds nobody asked for.',
@@ -196,7 +210,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch1-content-1',
     type: 'chapter-content',
-    pageNumber: 9,
+    pageNumber: 11,
     chapter: 1,
     paragraphs: [
       'I was born in Paarl, a small town in the Western Cape of South Africa, surrounded by vineyards and mountains and the kind of quiet that drives certain types of children slightly mad. I was an only child. I spent a lot of time on my own or with my parents, which meant I was engaging with adults from a young age. My mum encouraged me as much as possible.',
@@ -208,7 +222,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch1-content-2',
     type: 'chapter-content',
-    pageNumber: 10,
+    pageNumber: 12,
     chapter: 1,
     paragraphs: [
       'I spent hours alone in my room building intricate Lego systems. Towers, complex multi-level structures spanning an entire bookshelf that became my Lego world. The Lego men had systems to move up and down different levels. I would spend hours completely absorbed, amusing myself, building something nobody asked for with an intensity that should have been a clue about what was coming.',
@@ -221,7 +235,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch2-title',
     type: 'chapter-start',
-    pageNumber: 11,
+    pageNumber: 13,
     chapter: 2,
     title: 'Wired Different',
     subtitle: 'ADHD, Aquarius, and the feeling that the world was running on a different operating system.',
@@ -230,7 +244,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch2-content-1',
     type: 'chapter-content',
-    pageNumber: 12,
+    pageNumber: 14,
     chapter: 2,
     paragraphs: [
       'Here\u2019s the thing about ADHD that nobody tells you when you\u2019re growing up in a small town in the Western Cape in the 1990s: it\u2019s not a deficit of attention. It\u2019s a surplus of it, all going in directions that school wasn\u2019t designed to handle.',
@@ -242,7 +256,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch2-content-2',
     type: 'chapter-content',
-    pageNumber: 13,
+    pageNumber: 15,
     chapter: 2,
     paragraphs: [
       'I was bullied because I was small. I was a bit of an outlier \u2014 friendly with everyone, had friends in different schools, but wasn\u2019t the most popular kid. One particularly painful memory: the matric kids made me stand on stage and apologise to the entire school for not knowing the inter-school songs. I still cannot remember lyrics.',
@@ -255,7 +269,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch3-title',
     type: 'chapter-start',
-    pageNumber: 14,
+    pageNumber: 16,
     chapter: 3,
     title: 'Half Colours',
     subtitle: 'Racing bicycles, the 2 o\u2019clock club, and finding the first thing that matched the wiring.',
@@ -264,7 +278,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch3-content-1',
     type: 'chapter-content',
-    pageNumber: 15,
+    pageNumber: 17,
     chapter: 3,
     paragraphs: [
       'While the classroom was a struggle, the sports field was where I thrived. I started racing bicycles in 1994, age thirteen. My first provincial mountain bike race was in 1995. By 1997 I was representing the Western Province cross-country mountain bike team. I got my colours three years running: third in 1997, first in 1998 \u2014 Western Province champion \u2014 and third again in 1999.',
@@ -276,7 +290,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch3-content-2',
     type: 'chapter-content',
-    pageNumber: 16,
+    pageNumber: 18,
     chapter: 3,
     paragraphs: [
       'In Standard 9 and 10 I worked in Tyger Valley at a coffee shop on Sundays for extra cash. I spoke Afrikaans fluently \u2014 growing up in an Afrikaans town made it essential. Still speak it today.',
@@ -289,7 +303,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch4-title',
     type: 'chapter-start',
-    pageNumber: 17,
+    pageNumber: 19,
     chapter: 4,
     title: 'The First Drop',
     subtitle: 'Every journey starts somewhere impossible. This one started on a dancefloor in the Western Cape bush.',
@@ -298,7 +312,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch4-content-1',
     type: 'chapter-content',
-    pageNumber: 18,
+    pageNumber: 20,
     chapter: 4,
     paragraphs: [
       'In 1999 I enrolled at Daemelin College to study marketing while training extensively for the mountain bike championships. It was also the year I went to my first festival \u2014 the Vortex Easter weekend festival. My second festival was the December Vortex, which was my first transformative experience with Lucy.',
@@ -310,7 +324,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch4-content-2',
     type: 'chapter-content',
-    pageNumber: 19,
+    pageNumber: 21,
     chapter: 4,
     paragraphs: [
       'By morning they were calling me the Chicken Man.',
@@ -327,7 +341,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'part2-title',
     type: 'part-title',
-    pageNumber: 20,
+    pageNumber: 22,
     part: 2,
     title: 'Carefree 20s & Early',
     subtitle: 'The scene years, the people, the business',
@@ -337,7 +351,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch5-title',
     type: 'chapter-start',
-    pageNumber: 21,
+    pageNumber: 23,
     chapter: 5,
     title: 'Eighty-Six Hours',
     subtitle: 'A bus to Zambia, three border crossings, and three and a half minutes that rearranged everything.',
@@ -346,7 +360,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch5-content-1',
     type: 'chapter-content',
-    pageNumber: 22,
+    pageNumber: 24,
     chapter: 5,
     paragraphs: [
       'The first international journey. The defining experience. Solipse \u2014 the solar eclipse festival in Zambia, 2001.',
@@ -358,7 +372,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch5-content-2',
     type: 'chapter-content',
-    pageNumber: 23,
+    pageNumber: 25,
     chapter: 5,
     paragraphs: [
       'I was twenty years old, and I had no idea that those three and a half minutes would rearrange my understanding of what matters.',
@@ -371,7 +385,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch6-title',
     type: 'chapter-start',
-    pageNumber: 24,
+    pageNumber: 26,
     chapter: 6,
     title: 'The Costume Evolution',
     subtitle: 'From the Chicken Man to the Cow Man \u2014 and the identity that was building underneath.',
@@ -380,7 +394,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch6-content-1',
     type: 'chapter-content',
-    pageNumber: 25,
+    pageNumber: 27,
     chapter: 6,
     paragraphs: [
       'In the early 2000s, I discovered a love for dancing at festivals and conceptualised the idea of dressing up at parties. The evolution happened in stages, and each stage taught me something about visibility, identity, and the courage to be different.',
@@ -392,7 +406,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch6-content-2',
     type: 'chapter-content',
-    pageNumber: 26,
+    pageNumber: 28,
     chapter: 6,
     paragraphs: [
       'In the 2000s I was going to two to four festivals a month in Cape Town. Every single Alien Safari. Every single Vortex. This wasn\u2019t casual attendance. This was a way of life. The dancefloor was classroom, gallery, church, and community centre.',
@@ -405,7 +419,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch7-title',
     type: 'chapter-start',
-    pageNumber: 27,
+    pageNumber: 29,
     chapter: 7,
     title: 'The Dancefloor Gave Me Everything',
     subtitle: 'The people, the connections, the life built on 140 BPM.',
@@ -414,7 +428,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch7-content-1',
     type: 'chapter-content',
-    pageNumber: 28,
+    pageNumber: 30,
     chapter: 7,
     paragraphs: [
       'The significant relationships in my life share a common thread: they were all forged on the dancefloor, in festival conditions, in moments of shared intensity. Not at dinner parties or through dating apps \u2014 on the trance floor, at 3am, in the glow of UV light.',
@@ -426,7 +440,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch7-content-2',
     type: 'chapter-content',
-    pageNumber: 29,
+    pageNumber: 31,
     chapter: 7,
     paragraphs: [
       'The lesson the dancefloor teaches you, if you stay long enough, is that ego is optional. Connection is everything. The most beautiful art happens when you stop trying to be impressive and start trying to be honest.',
@@ -439,7 +453,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch8-title',
     type: 'chapter-start',
-    pageNumber: 30,
+    pageNumber: 32,
     chapter: 8,
     title: 'LSD',
     subtitle: 'LightSpeedDevelopment. The acronym was intentional.',
@@ -448,7 +462,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch8-content-1',
     type: 'chapter-content',
-    pageNumber: 31,
+    pageNumber: 33,
     chapter: 8,
     paragraphs: [
       'I\u2019ve always been entrepreneurial, but I really didn\u2019t like working for an employer. I have my own ideas and things that drive me. I have my own way \u2014 when you work for somebody else they tell you what to do and I would prefer to decide what I do. Throughout my whole life, I\u2019ve designed my life the way I want to live it.',
@@ -460,7 +474,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch8-content-2',
     type: 'chapter-content',
-    pageNumber: 32,
+    pageNumber: 34,
     chapter: 8,
     paragraphs: [
       'In 2005, I hired my first employee. Then came the pivotal event: BarCamp Cape Town in 2006. I met Dave Duarte, who inspired me to get started with WordPress. That single networking event redirected LightSpeed from IT support to WordPress web development. Warwick Booth joined the company in December 2006 and has been by my side for nearly two decades.',
@@ -473,7 +487,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch9-title',
     type: 'chapter-start',
-    pageNumber: 33,
+    pageNumber: 35,
     chapter: 9,
     title: 'Island Time',
     subtitle: 'Thailand, the island that became a second home, and the road to 7,000 kilometres.',
@@ -482,7 +496,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch9-content-1',
     type: 'chapter-content',
-    pageNumber: 34,
+    pageNumber: 36,
     chapter: 9,
     paragraphs: [
       'I travelled to Thailand for the first time in 2005. Met my friend Mel Heinz and Colin on Koh Phangan. First fell in love with island life and the place that would become my third home after Cape Town and Berlin.',
@@ -494,7 +508,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'ch9-content-2',
     type: 'chapter-content',
-    pageNumber: 35,
+    pageNumber: 37,
     chapter: 9,
     paragraphs: [
       'Thailand became the stage for some of the most ambitious cycling of my life. Over 7,000 kilometres touring on bicycle. Bangkok to Chiang Rai for a festival, then rode on the Monday to Chiang Mai. Hua Hin to Phuket: nearly 900 kilometres in six days for friend Pierre Vocat\u2019s wedding, then 1,100 kilometres on the return. I got saddle sores with lasting scars from that one.',
@@ -511,39 +525,73 @@ export const bookPages: BookPage[] = [
   {
     id: 'part3-title',
     type: 'part-title',
-    pageNumber: 36,
+    pageNumber: 38,
     part: 3,
     title: 'Nomadic Life Begins',
     subtitle: 'Before COVID (BC)',
   },
 
-  /* ── Chapter 10: Berlin Calling ── */
+  /* ── Chapter 10: Six Cats: The Green Garden ── */
   {
     id: 'ch10-title',
     type: 'chapter-start',
-    pageNumber: 37,
+    pageNumber: 39,
     chapter: 10,
-    title: 'Berlin Calling',
-    subtitle: 'A one-way ticket, a bicycle, and the city that would become home.',
+    title: 'Six Cats: The Green Garden',
+    subtitle: 'A garden in Cape Town, nearly 20 years of growing experience, and a cannabis club born in May 2019.',
   },
 
   {
     id: 'ch10-content-1',
     type: 'chapter-content',
-    pageNumber: 38,
+    pageNumber: 40,
     chapter: 10,
     paragraphs: [
-      'Berlin called to me not through brochures or travel blogs, but through stories whispered at afterparties and painted across the faces of returning festival friends. I arrived in 2016 with a one-way ticket, a bike, and exactly enough savings for two months\u2019 rent.',
-      'What I found was a city that doesn\u2019t just tolerate difference \u2014 it demands it. From Kreuzberg\u2019s graffiti-covered facades to Neuk\u00F6lln\u2019s late-night shawarma runs, Berlin gave me permission to be unapologetically myself.',
-      'Berlin\u2019s club culture is legendary, and for good reason. The city\u2019s warehouses, abandoned power stations, and basement bars became my studios. Under UV lights and surrounded by pounding techno, I discovered that makeup art and electronic music are two expressions of the same energy.',
+      'I\u2019ve always had green fingers. Long before Six Cats had a name or a website or a grading system, there was a garden in Cape Town and a quiet, patient relationship with growing that had been building for nearly two decades. Cannabis cultivation is an art form that rewards exactly the qualities I have in abundance: meticulousness, patience, obsessive attention to detail, and a genuine respect for the natural process.',
+      'In May 2019, that passion became a club. Six Cats Cannabis Club \u2014 named, naturally, for the cats. The first cats were adopted in 2003, a brother and sister called Bart and Lisa. They quickly became the mascots for the yearly harvest. Over the years, nine homeless cats found their way to us, some have left, and the ones who remain are the soul of the operation.',
+      'The cultivation philosophy is entirely organic: living soil built from Bokashi composting and worm farming, rainwater harvested and triple-filtered (Cape Town almost ran out of water in 2018 \u2014 we take water seriously), companion planting with basil, worm compost tea brewed every two weeks throughout the growing season. Nothing rushed. Nothing synthetic. Small-batch, hand-tended, high-quality flower grown outdoors using the natural cycles of the sun and seasons.',
     ],
   },
 
   {
     id: 'ch10-content-2',
     type: 'chapter-content',
-    pageNumber: 39,
+    pageNumber: 41,
     chapter: 10,
+    paragraphs: [
+      'The grading system tells you how seriously we take this. Quads (AAAA) down to Budget Blend (A) \u2014 every batch tastes tested weekly during the two-month curing process. Glass packaging that customers return to be sanitised and reused. Nothing wasted. Nothing rushed.',
+      'Six Cats is the outlet for what I call my green fingers \u2014 the deeply satisfying practice of growing something from seed to harvest. These are the same hands that paint neon faces at festivals. Both practices require the same qualities: patience, attention to detail, sensitivity to the subject, and a deep respect for the process. The cannabis plant and the human face both reward the artist who listens before they paint.',
+      'Six Cats was started with Barbara, who is also my partner at LightSpeed and one of my best friends. We\u2019ve built two creative businesses together, which is either a testament to our partnership or our mutual stubbornness \u2014 probably both. Every season since 2019 has been a new chapter. The cats have come and gone. Lucy, our cross-Burmese matriarch, left us in October 2023. The green garden carries on.',
+    ],
+  },
+
+  /* ── Chapter 11: Berlin Calling ── */
+  {
+    id: 'ch11-title',
+    type: 'chapter-start',
+    pageNumber: 42,
+    chapter: 11,
+    title: 'Berlin Calling',
+    subtitle: 'A bicycle, a city discovered just before the world stopped, and the freedom to be unapologetically yourself.',
+  },
+
+  {
+    id: 'ch11-content-1',
+    type: 'chapter-content',
+    pageNumber: 43,
+    chapter: 11,
+    paragraphs: [
+      'Berlin called to me not through brochures or travel blogs, but through stories whispered at afterparties and painted across the faces of returning festival friends. I discovered it in 2019 \u2014 just before the world stopped \u2014 arriving with a bicycle and the instinct that this city was going to mean something.',
+      'What I found was a city that doesn\u2019t just tolerate difference \u2014 it demands it. From Kreuzberg\u2019s graffiti-covered facades to Neuk\u00F6lln\u2019s late-night shawarma runs, Berlin gave me permission to be unapologetically myself.',
+      'Berlin\u2019s club culture is legendary, and for good reason. The city\u2019s warehouses, abandoned power stations, and basement bars became my studios. Under UV lights and surrounded by pounding techno, I discovered that makeup art and electronic music are two expressions of the same energy.',
+    ],
+  },
+
+  {
+    id: 'ch11-content-2',
+    type: 'chapter-content',
+    pageNumber: 44,
+    chapter: 11,
     paragraphs: [
       'Berlin gave me three things no other city could. Freedom to be weird \u2014 not just tolerated but expected. A city where cycling to a club in fairy lights with a box of UV paints is completely unremarkable. Affordable creative space \u2014 compared to London, Paris, or San Francisco, Berlin let a young South African build a life without the crushing overhead that kills creativity. And the right scene \u2014 techno and psytrance communities that overlap, collaborate, and welcome outsiders.',
       'I didn\u2019t just find a community in Berlin \u2014 I found my species. DJs, visual artists, fire dancers, sound engineers, fellow festival freaks who understand that creativity isn\u2019t a career; it\u2019s a way of being. The community is specifically neurodivergent creatives who look out for each other, share studio space, and collaborate on wild ideas that would make no sense anywhere else. This is the tribe of misfits \u2014 the people whose brains run on the same frequency.',
@@ -551,21 +599,21 @@ export const bookPages: BookPage[] = [
     ],
   },
 
-  /* ── Chapter 11: The Loaded Bike ── */
+  /* ── Chapter 12: The Loaded Bike ── */
   {
-    id: 'ch11-title',
+    id: 'ch12-title',
     type: 'chapter-start',
-    pageNumber: 40,
-    chapter: 11,
+    pageNumber: 45,
+    chapter: 12,
     title: 'The Loaded Bike',
     subtitle: 'UV paints, brush kit, mirror stand, camping gear, touring panniers. 40 kilograms. Everything an artist needs, on two wheels.',
   },
 
   {
-    id: 'ch11-content-1',
+    id: 'ch12-content-1',
     type: 'chapter-content',
-    pageNumber: 41,
-    chapter: 11,
+    pageNumber: 46,
+    chapter: 12,
     paragraphs: [
       'When I cycle to a festival, the journey becomes part of the art. Hundreds of kilometres of road dissolve the noise of everyday life. By the time I arrive, I\u2019m present, clear, and creatively charged.',
       'The touring kit: a gravel bike, Arkel pannier bags, Tubus racks, a bike bag on the top tube next to the handlebars, phone mount. UV paints, brush kit, mirror stand when heading to festivals. Camping gear. Total weight: 40 kilograms. Portability isn\u2019t a limitation \u2014 it\u2019s a design constraint that forces creative efficiency.',
@@ -574,10 +622,10 @@ export const bookPages: BookPage[] = [
   },
 
   {
-    id: 'ch11-content-2',
+    id: 'ch12-content-2',
     type: 'chapter-content',
-    pageNumber: 42,
-    chapter: 11,
+    pageNumber: 47,
+    chapter: 12,
     paragraphs: [
       'The notable routes stack up like stories. 300 kilometres from San Francisco to Point Reyes and back in California. Two trips in the Netherlands totalling nearly 800 kilometres. Munich to Amsterdam: 1,000 kilometres in ten days. Bike touring in Bali. And always, the Thai routes \u2014 over 7,000 kilometres total.',
       'The proudest on-the-road repair: riding with a road bike in a trailer with a 14-inch tyre. Got a flat. The tube wasn\u2019t something replaceable in Thailand. Luckily I had tyre sealant \u2014 took the valve out, got the sealant into the tube, pumped it up, and sealed the puncture. Resourcefulness on the road.',
@@ -585,21 +633,21 @@ export const bookPages: BookPage[] = [
     ],
   },
 
-  /* ── Chapter 12: Neon Revelations ── */
+  /* ── Chapter 13: Neon Revelations ── */
   {
-    id: 'ch12-title',
+    id: 'ch13-title',
     type: 'chapter-start',
-    pageNumber: 43,
-    chapter: 12,
+    pageNumber: 48,
+    chapter: 13,
     title: 'Neon Revelations',
     subtitle: 'The night Ash picked up UV paint and discovered his voice wasn\u2019t in words.',
   },
 
   {
-    id: 'ch12-content-1',
+    id: 'ch13-content-1',
     type: 'chapter-content',
-    pageNumber: 44,
-    chapter: 12,
+    pageNumber: 49,
+    chapter: 13,
     paragraphs: [
       'July 2019. A psytrance gathering somewhere in Berlin. I picked up UV-reactive face paint for the first time. Something clicked that had been building for twenty years of festival life \u2014 from the yellow Chicken Man suit, through the Cow Man era, through years of being the most visible person on every dancefloor \u2014 but never having an art form of my own.',
       'That night, the art found me.',
@@ -608,10 +656,10 @@ export const bookPages: BookPage[] = [
   },
 
   {
-    id: 'ch12-content-2',
+    id: 'ch13-content-2',
     type: 'chapter-content',
-    pageNumber: 45,
-    chapter: 12,
+    pageNumber: 50,
+    chapter: 13,
     paragraphs: [
       'I don\u2019t sketch beforehand. I don\u2019t look at Pinterest boards or follow trends. The creative process begins with a feeling \u2014 the energy of the music, the light conditions, and the vibe of the person sitting in front of me. This isn\u2019t chaos; it\u2019s trust. Trust in thousands of hours of practice, in the muscle memory of ambidextrous hands, and in the belief that the best art happens when you stop trying to control it.',
       'UV art has a unique property: what you see during application is NOT what you see under blacklight. Colours that look muted in daylight become explosively vivid under UV. Understanding this transformation is central to my process \u2014 I paint for the reveal, not the application. Certain greens that look bland in daylight become nuclear under UV. Pinks that seem aggressive in natural light become ethereal.',
@@ -619,21 +667,21 @@ export const bookPages: BookPage[] = [
     ],
   },
 
-  /* ── Chapter 13: The Pilgrimage ── */
+  /* ── Chapter 14: The Pilgrimage ── */
   {
-    id: 'ch13-title',
+    id: 'ch14-title',
     type: 'chapter-start',
-    pageNumber: 46,
-    chapter: 13,
+    pageNumber: 51,
+    chapter: 14,
     title: 'The Pilgrimage',
     subtitle: 'The cycling tradition to Origin Festival \u2014 and then the world stopped.',
   },
 
   {
-    id: 'ch13-content-1',
+    id: 'ch14-content-1',
     type: 'chapter-content',
-    pageNumber: 47,
-    chapter: 13,
+    pageNumber: 52,
+    chapter: 14,
     paragraphs: [
       'Origin Festival. Elandskloof Guest Farm, Helderstroom, Western Cape. It falls on my birthday weekend every year. The pilgrimage to a psytrance festival is as important as the event itself \u2014 cycling through mountain passes with a loaded bike is a meditation, a way to cleanse the mind before entering the psychedelic playground.',
       'The first cycling pilgrimage was in 2020, just before COVID lockdowns changed everything. The route: Woodstock, Cape Town through Sir Lowry\u2019s Pass to Grabouw, through the Elgin Valley, over Houwhoek Pass to Helderstroom. About 150 kilometres one way through mountain passes in the Western Cape.',
@@ -642,10 +690,10 @@ export const bookPages: BookPage[] = [
   },
 
   {
-    id: 'ch13-content-2',
+    id: 'ch14-content-2',
     type: 'chapter-content',
-    pageNumber: 48,
-    chapter: 13,
+    pageNumber: 53,
+    chapter: 14,
     paragraphs: [
       'COVID hit. The festivals disappeared. The dancefloors went dark. For a brain wired for sensory richness and community connection, the silence was deafening.',
       'But the bicycle was still there. The business was still there. The art lived in memory and in photographs. The question became: when the world opens again, who do you come back as?',
@@ -661,27 +709,27 @@ export const bookPages: BookPage[] = [
   {
     id: 'part4-title',
     type: 'part-title',
-    pageNumber: 49,
+    pageNumber: 54,
     part: 4,
     title: 'Re-emergence',
     subtitle: '& Finding Myself Again',
   },
 
-  /* ── Chapter 14: The Artist's Lifestyle ── */
+  /* ── Chapter 15: The Artist's Lifestyle ── */
   {
-    id: 'ch14-title',
+    id: 'ch15-title',
     type: 'chapter-start',
-    pageNumber: 50,
-    chapter: 14,
+    pageNumber: 55,
+    chapter: 15,
     title: 'The Artist\u2019s Lifestyle',
     subtitle: 'Someone at a party told me: \u201CYou live an artist\u2019s lifestyle.\u201D They were right.',
   },
 
   {
-    id: 'ch14-content-1',
+    id: 'ch15-content-1',
     type: 'chapter-content',
-    pageNumber: 51,
-    chapter: 14,
+    pageNumber: 56,
+    chapter: 15,
     paragraphs: [
       'They meant it as an observation, not a compliment or a criticism \u2014 just the plain truth of watching someone who has deliberately shaped his entire life around whatever feeds his creativity and passion.',
       'I don\u2019t separate work from art, or art from life. I shape my year, my movements, my daily rhythms \u2014 everything \u2014 around the things that fuel me. Sport: racing bicycles since 1994, triathlon since 2010, Muay Thai since 2019, yoga since the early 2000s. Growing cannabis: co-founder of Six Cats Club. Dance: the psytrance dancefloor as classroom, gallery, church. Makeup: the visible output of twenty-five years of dancefloor immersion. Business: twenty-two years of building LightSpeed. Problem solving: the ADHD brain that rejected boredom but devoured interesting problems.',
@@ -690,10 +738,10 @@ export const bookPages: BookPage[] = [
   },
 
   {
-    id: 'ch14-content-2',
+    id: 'ch15-content-2',
     type: 'chapter-content',
-    pageNumber: 52,
-    chapter: 14,
+    pageNumber: 57,
+    chapter: 15,
     paragraphs: [
       'The year follows the festivals and the seasons. Cape Town summers: Origin Festival on my birthday weekend, the South African psytrance circuit, cycling in the Western Cape mountains. European summer: Berlin as creative anchor, open-airs in Hasenheide Park, techno nights in Friedrichshain, cycling to festivals across Germany, Czech Republic, Austria. Thailand: island life, Koh Phangan parties, jungle festivals, tropical UV art. The shoulder seasons: connecting it all by bicycle, train, and shared rides.',
       'The quote resonates because it captures something I\u2019d been working toward without always having words for it: a life where creativity isn\u2019t compartmentalised. Where the cycling informs the dancing, the dancing informs the painting, the painting informs the problem-solving, and the problem-solving feeds back into the business that funds all of it.',
@@ -701,21 +749,21 @@ export const bookPages: BookPage[] = [
     ],
   },
 
-  /* ── Chapter 15: Dance Like No One's Watching ── */
+  /* ── Chapter 16: Dance Like No One's Watching ── */
   {
-    id: 'ch15-title',
+    id: 'ch16-title',
     type: 'chapter-start',
-    pageNumber: 53,
-    chapter: 15,
+    pageNumber: 58,
+    chapter: 16,
     title: 'Dance Like No One\u2019s Watching',
     subtitle: 'The dancefloor as sacred space, and the art of making people shine.',
   },
 
   {
-    id: 'ch15-content-1',
+    id: 'ch16-content-1',
     type: 'chapter-content',
-    pageNumber: 54,
-    chapter: 15,
+    pageNumber: 59,
+    chapter: 16,
     paragraphs: [
       'The psytrance dancefloor is not metaphorically sacred \u2014 it\u2019s literally sacred. It\u2019s where ADHD brains find their natural operating environment. Where sensory richness replaces the boredom of conventional spaces. Where community forms without the filters of daily life. Never about escape \u2014 always about deeper engagement with reality.',
       'I don\u2019t charge for my makeup. Sometimes people offer money; sometimes I tell them they can buy me a drink. For me it\u2019s the pleasure of being able to do my art on somebody and see them happy afterwards. This is a personal art project, not a professional pursuit.',
@@ -724,10 +772,10 @@ export const bookPages: BookPage[] = [
   },
 
   {
-    id: 'ch15-content-2',
+    id: 'ch16-content-2',
     type: 'chapter-content',
-    pageNumber: 55,
-    chapter: 15,
+    pageNumber: 60,
+    chapter: 16,
     paragraphs: [
       'I\u2019ve also explored an alternative book concept called \u201CDance Like No One\u2019s Watching,\u201D structured through the visual and identity evolution: early days of dancing, the cow suit, the chicken suit, my rave suit, and finally makeup. Whether it becomes a standalone book or merges with this one remains to be decided.',
       'Every region brings different faces, different skin tones, different relationships to body art. Thai festival-goers embrace full-body UV coverage. Berlin clubbers want sharp geometric precision. South African crowds love bold, expressive colour blocks. I\u2019ve learned to read and adapt \u2014 not changing my style, but letting it be informed by the culture and energy of each place.',
@@ -735,21 +783,21 @@ export const bookPages: BookPage[] = [
     ],
   },
 
-  /* ── Chapter 16: One Million Steps ── */
+  /* ── Chapter 17: One Million Steps ── */
   {
-    id: 'ch16-title',
+    id: 'ch17-title',
     type: 'chapter-start',
-    pageNumber: 56,
-    chapter: 16,
+    pageNumber: 61,
+    chapter: 17,
     title: 'One Million Steps',
     subtitle: 'Berlin summer 2025 \u2014 the record-breaking season.',
   },
 
   {
-    id: 'ch16-content-1',
+    id: 'ch17-content-1',
     type: 'chapter-content',
-    pageNumber: 57,
-    chapter: 16,
+    pageNumber: 62,
+    chapter: 17,
     paragraphs: [
       'Special thanks to dearest friend Vitor who graciously hosted me \u2014 one of the most special humans I know. Berlin summer 2025 was the season where everything came together.',
       'I spoke at WordCamp Europe in June in Basel. Did some of my most inspired work during the time in Berlin \u2014 very proud of my creative output. Practiced doing creative makeup every weekend for two months \u2014 very pleased with the outcome and my improved skills. Sisyphos: my little piece of heaven while I\u2019m in Berlin. Met incredible people, saw old friends, made new memories.',
@@ -758,10 +806,10 @@ export const bookPages: BookPage[] = [
   },
 
   {
-    id: 'ch16-content-2',
+    id: 'ch17-content-2',
     type: 'chapter-content',
-    pageNumber: 58,
-    chapter: 16,
+    pageNumber: 63,
+    chapter: 17,
     paragraphs: [
       'The Origin Festival cycling tradition continued post-COVID. 2022: the annual tradition truly begins. First year back after COVID, on two wheels. Felt like coming home. 2023: the birthday sash ride \u2014 left the festival on my birthday, someone gave me a happy birthday sash. Cycled the whole way to Peregrine Farmstall in Grabouw wearing it.',
       '2026 was the epic one. Day 1: 80 kilometres from Woodstock via Sir Lowry\u2019s Pass to Grabouw. Day 2, my birthday: 75 kilometres to Helderstroom. Arrived at 11:30 in the morning, skipped the queue, shouted it was my birthday. The weekend: painted faces in the shade by day, watched them glow under UV cannons at night. Stats: 300 kilometres total, 40-kilogram bike pack, 3,200 metres of climbing, 14 hours of riding, top speed 75 kilometres per hour.',
@@ -769,21 +817,21 @@ export const bookPages: BookPage[] = [
     ],
   },
 
-  /* ── Chapter 17: Freedom as Operating Principle ── */
+  /* ── Chapter 18: Freedom as Operating Principle ── */
   {
-    id: 'ch17-title',
+    id: 'ch18-title',
     type: 'chapter-start',
-    pageNumber: 59,
-    chapter: 17,
+    pageNumber: 64,
+    chapter: 18,
     title: 'Freedom as Operating Principle',
     subtitle: 'The business, the team, and why freedom isn\u2019t the opposite of discipline.',
   },
 
   {
-    id: 'ch17-content-1',
+    id: 'ch18-content-1',
     type: 'chapter-content',
-    pageNumber: 60,
-    chapter: 17,
+    pageNumber: 65,
+    chapter: 18,
     paragraphs: [
       'Freedom shows up everywhere in my life. Berlin: a city that demands difference. LightSpeed: remote-first, flexible hours, creative autonomy for the team. The bicycle: freedom of movement, no schedules, no dependency on infrastructure. Festival life: the dancefloor as the last truly free space. The art: no pre-planning, no Pinterest references, no client briefs. Pure spontaneous creation.',
       'Freedom is something that many employees don\u2019t experience. The freedom given to the LightSpeed team helps them lead happier lives and ultimately benefits the company because they deliver better work. It\u2019s taken a long time and many years of change, adaptation, and adjustment to get to this point.',
@@ -792,32 +840,78 @@ export const bookPages: BookPage[] = [
   },
 
   {
-    id: 'ch17-content-2',
+    id: 'ch18-content-2',
     type: 'chapter-content',
-    pageNumber: 61,
-    chapter: 17,
+    pageNumber: 66,
+    chapter: 18,
     paragraphs: [
       'When we advertised for new developers, we posted on LinkedIn and received 450 applicants, of which only a handful properly read the requirements. We expressly did NOT want Elementor or page builder developers. We wanted people with a will to learn. Out of 450 applicants, only 2 made it to interview. Those two interns are now levelling up faster than anyone I\u2019ve ever seen.',
       'The process obsession at LightSpeed isn\u2019t despite ADHD; it\u2019s because of it. ADHD brains need structure to function, so I build meticulous systems \u2014 GitHub workflows, daily planning templates, curriculum structures \u2014 that keep the chaos productive. Radical delegation: giving the team freedom isn\u2019t just philosophy; it\u2019s necessity. An ADHD founder can\u2019t micromanage.',
-      'Right now LightSpeed has the most optimal workflow and team it has ever had in the twenty-two years the company has been going. Technology fuels me. I embrace AI daily \u2014 GitHub Copilot, ChatGPT, Claude, and MCP \u2014 bringing them together with my love for Figma prototyping, design systems, and GitHub code management.',
+      'Right now LightSpeed has the most optimal workflow and team it has ever had in the twenty-three years the company has been going. Technology fuels me. I embrace AI daily \u2014 GitHub Copilot, ChatGPT, Claude, and MCP \u2014 bringing them together with my love for Figma prototyping, design systems, and GitHub code management.',
     ],
   },
 
-  /* ── Chapter 18: The Cumulative Effect ── */
+  /* ── Chapter 19: Twenty-Three Years ── */
   {
-    id: 'ch18-title',
+    id: 'ch19-title',
     type: 'chapter-start',
-    pageNumber: 62,
-    chapter: 18,
+    pageNumber: 67,
+    chapter: 19,
+    title: 'Twenty-Three Years',
+    subtitle: 'The business that became the longest project of a restless life.',
+  },
+
+  {
+    id: 'ch19-content-1',
+    type: 'chapter-content',
+    pageNumber: 68,
+    chapter: 19,
+    paragraphs: [
+      'LightSpeedDevelopment \u2014 LSD \u2014 was founded in January 2003. I was twenty-two years old. The acronym was intentional. The company wasn\u2019t born from a business plan; it was born from a fundamental need for autonomy. The same brain that rejected boredom in school rejected being told what to do at work. The solution was to build something of my own.',
+      'You never know if you\u2019re ready to start a business, but I knew that I didn\u2019t want to work at City Varsity for another year. I\u2019ve always been entrepreneurial, but I really didn\u2019t like working for an employer. I have my own ideas and things that drive me. I have my own way \u2014 when you work for somebody else they tell you what to do and I would prefer to decide what I do. Throughout my whole life, I\u2019ve designed my life the way I want to live it.',
+      'The company is the longest project I have ever worked on \u2014 longer than any festival circuit, any cycling route, any relationship. Twenty-three years is more than half my life. The lessons compound over decades.',
+    ],
+  },
+
+  {
+    id: 'ch19-content-2',
+    type: 'chapter-content',
+    pageNumber: 67,
+    chapter: 19,
+    paragraphs: [
+      'The pivot happened at BarCamp Cape Town 2006. I met Dave Duarte who inspired me to get started with WordPress. This single networking event redirected LightSpeed from IT support to WordPress web development. The connections made there didn\u2019t just introduce me to WordPress \u2014 they opened the door to an entire community and way of working that would define the next two decades.',
+      'Warwick Booth joined in December 2006. Barbara Kerr joined in 2010 and became a partner soon after. The trajectory shifted with every right person who came through. Right now, in 2026, we have a team of thirteen \u2014 core developers, designers, interns levelling up faster than anyone I\u2019ve ever seen. The team is the most optimal it has ever been in the twenty-three years the company has been going.',
+      'We\u2019ve attended 20+ WordCamps across four continents. I spoke at WordCamp Europe 2025 in Basel about bridging design and development using Figma design systems. We organised WordCamp Cape Town in 2011 and 2012. The WordPress community gave LightSpeed everything \u2014 clients, friendships, open-source collaborators, and a philosophy of radical transparency and knowledge-sharing.',
+    ],
+  },
+
+  {
+    id: 'ch19-content-3',
+    type: 'chapter-content',
+    pageNumber: 68,
+    chapter: 19,
+    paragraphs: [
+      'What twenty-three years teaches you: Freedom requires structure. The most liberating thing you can build is a system that works without you. The right people change everything. ADHD is not a handicap in business \u2014 it\u2019s an engine. The hyperfocus. The pattern recognition. The need to build systems to manage the chaos. These are features, not bugs.',
+      'The business feeds the art. The art feeds the business. The same brain that builds WordPress design systems is the brain that designs neon faces at 3am on a dancefloor. LightSpeed has run profitably for twenty-three years because the entrepreneurial drive and the creative drive are the same thing: identify what makes you come alive, then engineer your entire existence around those things.',
+      'Autonomy is non-negotiable. The freedom given to the LightSpeed team mirrors the freedom I demand for myself. Happy team, better work, better company. The company is the container that makes the rest possible \u2014 the Berlin summers, the Thailand bootcamps, the festival circuits, the art. LightSpeed is the financial engine that funds a life lived in full colour.',
+    ],
+  },
+
+  /* ── Chapter 20: The Cumulative Effect ── */
+  {
+    id: 'ch20-title',
+    type: 'chapter-start',
+    pageNumber: 69,
+    chapter: 20,
     title: 'The Cumulative Effect',
     subtitle: 'It\u2019s never one moment. It\u2019s the thousand moments that suddenly click.',
   },
 
   {
-    id: 'ch18-content-1',
+    id: 'ch20-content-1',
     type: 'chapter-content',
-    pageNumber: 63,
-    chapter: 18,
+    pageNumber: 70,
+    chapter: 20,
     paragraphs: [
       'It is never one thing. Usually it is the culmination of many experiences over a period that finally crystallise into understanding.',
       'The dancefloor at Vortex 1999. The 86-hour bus to Zambia. The solar eclipse. Berlin. The first time picking up UV paint. The 300-kilometre birthday ride to Origin. None of these alone explain who I am. Together, they are the cumulative effect.',
@@ -826,13 +920,13 @@ export const bookPages: BookPage[] = [
   },
 
   {
-    id: 'ch18-content-2',
+    id: 'ch20-content-2',
     type: 'chapter-content',
-    pageNumber: 64,
-    chapter: 18,
+    pageNumber: 71,
+    chapter: 20,
     paragraphs: [
       'Every powerful experience is followed by integration \u2014 journaling, cycling, creating, talking with trusted friends. The goal was never to check out of reality. It was to check in more deeply. To bring back something useful \u2014 a new way of seeing colour, a dissolved creative block, a reminder that the universe is far stranger and more beautiful than the default settings suggest.',
-      'The cycling is integration. The art is integration. The business is integration. Everything feeds back. LightSpeed has run profitably for twenty-two years because the entrepreneurial drive and the creative drive are the same thing: identify what makes you come alive, then engineer your entire existence around those things.',
+      'The cycling is integration. The art is integration. The business is integration. Everything feeds back. LightSpeed has run profitably for twenty-three years because the entrepreneurial drive and the creative drive are the same thing: identify what makes you come alive, then engineer your entire existence around those things.',
       'The conventional path never matched the wiring. The wiring needed Berlin, needed the dancefloor, needed UV paint, needed the bicycle. The wiring needed freedom. And now, at this point in the story, the wiring has found its operating system. The neon soul is fully online.',
     ],
   },
@@ -845,7 +939,7 @@ export const bookPages: BookPage[] = [
   {
     id: 'afterword',
     type: 'afterword',
-    pageNumber: 65,
+    pageNumber: 72,
     title: 'Afterword',
     paragraphs: [
       'This book is being written the same way the art is made \u2014 not planned to the last detail, but trusted to emerge from the process. Some chapters are drafted from voice notes recorded on cycling rides. Others are still being lived.',
@@ -855,21 +949,34 @@ export const bookPages: BookPage[] = [
   },
 
   /* ═══════════════════════════════════════════════════════════
-     APPENDIX — DANCE LIKE NO ONE'S WATCHING
+     APPENDICES
+     ═══════════════════════════════════════════════════════════ */
+
+  /* ── Appendices Divider Page ── */
+  {
+    id: 'appendices-divider',
+    type: 'part-title',
+    pageNumber: 72,
+    title: 'Appendices',
+    subtitle: 'Extended reflections, tribes, and the dance continues.',
+  },
+
+  /* ═══════════════════════════════════════════════════════════
+     APPENDIX A — DANCE LIKE NO ONE'S WATCHING
      ═══════════════════════════════════════════════════════════ */
 
   {
-    id: 'appendix-title',
+    id: 'appendix-a-title',
     type: 'appendix-title',
-    pageNumber: 66,
-    title: 'Dance Like No One\u2019s Watching',
+    pageNumber: 74,
+    title: 'Appendix A: Dance Like No One\u2019s Watching',
     subtitle: 'The other book \u2014 or maybe this book\u2019s secret twin.',
   },
 
   {
-    id: 'appendix-content-1',
+    id: 'appendix-a-content-1',
     type: 'chapter-content',
-    pageNumber: 67,
+    pageNumber: 75,
     paragraphs: [
       'There\u2019s another book inside this book. It traces the same life through a different lens: the visual and identity evolution from the dancefloor outward. Costumes as confidence, movement as medicine, and makeup as the final creative expression.',
       'Chapter one: early days of dancing. A kid in a small town discovering that his body understood rhythm before his brain understood words. The first festivals, the first time losing yourself in the music and finding something better on the other side.',
@@ -878,9 +985,9 @@ export const bookPages: BookPage[] = [
   },
 
   {
-    id: 'appendix-content-2',
+    id: 'appendix-a-content-2',
     type: 'chapter-content',
-    pageNumber: 68,
+    pageNumber: 76,
     paragraphs: [
       'Chapter three: the chicken suit. Rewinding even further \u2014 the yellow suit at that first Vortex, the name that stuck, the discovery that people remember the ones who dare to be ridiculous. The chicken suit was permission to be absurd, and absurdity is the gateway to freedom.',
       'Chapter four: my rave suit. The evolution into deliberate self-expression. Not a character costume anymore, but an extension of identity. The rave suit era was the bridge between wearing something outrageous and BEING something outrageous.',
@@ -888,11 +995,101 @@ export const bookPages: BookPage[] = [
     ],
   },
 
+  /* ═══════════════════════════════════════════════════════════
+     APPENDIX B — THE TRIBES
+     ═══════════════════════════════════════════════════════════ */
+
+  {
+    id: 'appendix-b-title',
+    type: 'appendix-title',
+    pageNumber: 77,
+    title: 'Appendix B: The Tribes',
+    subtitle: 'The communities that shaped a neon soul.',
+  },
+
+  {
+    id: 'appendix-b-intro',
+    type: 'chapter-content',
+    pageNumber: 78,
+    paragraphs: [
+      'We are the sum of our tribes. Not the families we\u2019re born into, but the communities we choose \u2014 the ones that recognise us before we recognise ourselves. These are the tribes that shaped me, held me, and gave me the freedom to become myself. Some are global networks spanning continents. Others are hyperlocal, defined by geography and a shared way of moving through the world.',
+      'This appendix maps the tribes. The psytrance dancefloors. The WordPress community. The Berlin club scene. The trail runners, the cyclists, the festival freaks. These are not separate identities \u2014 they\u2019re overlapping frequencies that, when combined, create the person writing this book.',
+    ],
+  },
+
+  /* ── Global Tribes ── */
+  {
+    id: 'appendix-b-global',
+    type: 'chapter-content',
+    pageNumber: 79,
+    paragraphs: [
+      '\u2014 GLOBAL TRIBES \u2014',
+      '',
+      '1. PSYTRANCE / 140 BPM',
+      'The first tribe. The dancefloor family that taught me what it means to lose yourself and find yourself in the same breath. From Vortex 1999 to festivals across four continents, the psytrance scene is where I learned to dance, to connect, to create. Rolling basslines, UV lights, and a shared understanding that the dancefloor is a portal to something larger. The tribe that gave me my first costume, my first festival family, and eventually, my art form.',
+      '',
+      '2. WORDPRESS COMMUNITY',
+      'The professional tribe. BarCamp Cape Town 2006 was the gateway \u2014 Dave Duarte, Jeremy Thurgood, and a room full of open-source believers who showed me that business and community don\u2019t have to be opposites. Twenty years of WordCamps across four continents. The Theme Review Team. The late-night discussions about design systems and block themes. This is the tribe that taught me radical transparency, knowledge-sharing, and the power of building in public.',
+      '',
+      '3. TECHNO & HOUSE MUSIC SCENE',
+      'The sonic evolution. While psytrance was the foundation, techno and house are the architecture of my adult musical life. Pounding 4/4 rhythms, hypnotic repetition, and the understanding that electronic music is meditation in motion. From Cape Town\u2019s underground clubs to Berlin\u2019s legendary warehouses, this is the tribe that proved that dancing is a spiritual practice. The DJ booth is an altar. The dancefloor is a ceremony. The bass is the prayer.',
+    ],
+  },
+
+  /* ── Location-Specific Tribes ── */
+  {
+    id: 'appendix-b-locations-1',
+    type: 'chapter-content',
+    pageNumber: 80,
+    paragraphs: [
+      '\u2014 LOCATION-SPECIFIC TRIBES \u2014',
+      '',
+      '1. CAPE TOWN PSYTRANCE SCENE',
+      'Home base. Origin Festival. Alien Safari. The outdoor gatherings in the Boland mountains where it all started. This is where I learned to paint faces under UV light, where Six Cats Club was born, where the cycling tradition began. The Cape Town psytrance tribe is family \u2014 the ones who witnessed every evolution from Chicken Man to Cow Man to UV artist. The mountain backdrop, the Western Cape summer, the sunrise sets that turn into all-day sessions. This is where the roots grow deep.',
+      '',
+      '2. BERLIN CLUB SCENE',
+      'The laboratory. Sisyphos. Griessm\u00FChle (RIP). About Blank. The warehouses and basements where techno is religion and the door policy is a filter for energy, not status. The Berlin club scene taught me that freedom isn\u2019t chaos \u2014 it\u2019s structure with the rules stripped away. The tribe here is neurodivergent creatives, DJs, visual artists, fire dancers, and festival freaks who understand that creativity isn\u2019t a career; it\u2019s a way of being. This is the tribe of misfits \u2014 the ones whose brains run on the same frequency.',
+      '',
+      '3. CAPE TOWN WORDPRESS & TECH COMMUNITY',
+      'The professional home. LightSpeed\u2019s extended network. The organisers of WordCamp Cape Town. The developers, designers, and agency owners who meet for coffee at truth or Origin Coffee Roasting and talk shop until the espresso runs out. This tribe gave LightSpeed its first clients, its first collaborators, and a city-wide reputation for quality work. The overlap with the cycling and festival communities is significant \u2014 many of these people are multi-tribal.',
+    ],
+  },
+
+  {
+    id: 'appendix-b-locations-2',
+    type: 'chapter-content',
+    pageNumber: 81,
+    paragraphs: [
+      '4. TRAIL RUNNING TRIBE',
+      'The mountain people. Table Mountain. Lion\u2019s Head. The trails that wind through fynbos and granite. Trail running is meditation in motion, endurance as spiritual practice. The tribe here values grit, humility, and the understanding that the mountain teaches lessons you can\u2019t learn anywhere else. Early morning starts. Vertical climbs. The camaraderie at the summit. This tribe taught me that strength is as much mental as physical.',
+      '',
+      '5. MOUNTAIN BIKING TRIBE',
+      'The cyclists. The ones who understand that a loaded bike is freedom on two wheels. From racing days representing Western Province (1997\u20131999) to bike packing across continents, the mountain biking tribe taught me self-sufficiency, resourcefulness, and the meditative power of pedalling. Munich to Amsterdam. 7,000+ kilometres across Thailand. The 300-kilometre birthday ride to Origin Festival. The bike is the vehicle. The road is the teacher.',
+      '',
+      '6. TRIATHLON TRIBE',
+      'The multi-discipline warriors. Swim, bike, run \u2014 repeat. The triathlon tribe values balance, structure, and the cumulative effect of consistent training. Koh Phangan bootcamps. Thai heat and humidity. The discipline required to train three sports simultaneously while working remotely. This tribe taught me that endurance isn\u2019t about one epic effort \u2014 it\u2019s about showing up every day and stacking small wins into transformation.',
+    ],
+  },
+
+  /* ── The Overlap ── */
+  {
+    id: 'appendix-b-overlap',
+    type: 'chapter-content',
+    pageNumber: 82,
+    paragraphs: [
+      '\u2014 THE OVERLAP \u2014',
+      '',
+      'The magic happens in the overlap. The WordPress developer who DJs psytrance sets. The trail runner who paints UV faces at festivals. The triathlete who codes during the week and dances all weekend. The Berlin club kid who runs a profitable agency. These tribes aren\u2019t separate \u2014 they\u2019re frequencies that, when layered, create something richer than any single identity.',
+      'The tribes shaped me. The psytrance dancefloor taught me to move. The WordPress community taught me to build. The Berlin scene taught me to be unapologetically myself. The endurance sports taught me discipline. The mountain taught me humility. The bicycle taught me freedom.',
+      'We are the sum of our tribes. And these are mine.',
+    ],
+  },
+
   /* ── About the Author ── */
   {
     id: 'about-author',
     type: 'about-author',
-    pageNumber: 69,
+    pageNumber: 83,
     title: 'About the Author',
     paragraphs: [
       'Ashley \u201CAsh\u201D Ward Shaw is a South African-born, Berlin-based UV makeup artist, cyclist, WordPress agency founder, dancer, and self-described crazy Aquarian who loves life. He has been a hyperactive individual since childhood \u2014 whenever you see him he is moving and/or talking.',

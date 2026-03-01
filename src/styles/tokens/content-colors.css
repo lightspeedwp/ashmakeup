@@ -1,0 +1,41 @@
+/* ============================================
+   CONTENT COLOR TOKENS
+   Story/tech/philosophy/community accent system
+   Phase 2 — Content Expansion & Redesign
+   ============================================ */
+
+/* --- Story Accent (Hot Pink — biographical content) --- */
+.color-story--border { border-color: var(--wp--preset--color--neon-pink-text); }
+.color-story--text { color: var(--wp--preset--color--neon-pink-text); }
+.color-story--bg { background-color: rgba(255, 16, 240, 0.08); }
+
+.dark .color-story--border { border-color: var(--wp--preset--color--neon-pink); }
+.dark .color-story--text { color: var(--wp--preset--color--neon-pink); }
+.dark .color-story--bg { background-color: rgba(255, 16, 240, 0.12); }
+
+/* --- Tech Accent (Electric Green — technical content) --- */
+.color-tech--border { border-color: var(--wp--preset--color--neon-green-text); }
+.color-tech--text { color: var(--wp--preset--color--neon-green-text); }
+.color-tech--bg { background-color: rgba(57, 255, 20, 0.08); }
+
+.dark .color-tech--border { border-color: var(--wp--preset--color--neon-green); }
+.dark .color-tech--text { color: var(--wp--preset--color--neon-green); }
+.dark .color-tech--bg { background-color: rgba(57, 255, 20, 0.12); }
+
+/* --- Philosophy Accent (Royal Blue — reflective content) --- */
+.color-philosophy--border { border-color: var(--wp--preset--color--neon-blue-text); }
+.color-philosophy--text { color: var(--wp--preset--color--neon-blue-text); }
+.color-philosophy--bg { background-color: rgba(31, 81, 255, 0.08); }
+
+.dark .color-philosophy--border { border-color: var(--wp--preset--color--neon-blue); }
+.dark .color-philosophy--text { color: var(--wp--preset--color--neon-blue); }
+.dark .color-philosophy--bg { background-color: rgba(31, 81, 255, 0.12); }
+
+/* --- Community Accent (Violet Purple — people/tribe content) --- */
+.color-community--border { border-color: var(--wp--preset--color--neon-purple-text); }
+.color-community--text { color: var(--wp--preset--color--neon-purple-text); }
+.color-community--bg { background-color: rgba(190, 0, 254, 0.08); }
+
+.dark .color-community--border { border-color: var(--wp--preset--color--neon-purple); }
+.dark .color-community--text { color: var(--wp--preset--color--neon-purple); }
+.dark .color-community--bg { background-color: rgba(190, 0, 254, 0.12); }

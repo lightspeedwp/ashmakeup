@@ -124,7 +124,7 @@ function InstagramFeedContent() {
 export function InstagramFeed() {
   return (
     <ErrorBoundary>
-      <InstagramFeedContent />
+      
     </ErrorBoundary>
   );
 }

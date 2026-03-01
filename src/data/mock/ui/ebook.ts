@@ -59,6 +59,7 @@ export const ebookUI = {
     prev: 'Previous page',
     next: 'Next page',
     openChapters: 'Open chapter navigation',
+    settings: 'Open reader settings',
     ariaLabel: 'Book navigation',
   },
 

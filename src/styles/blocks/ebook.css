@@ -17,36 +17,40 @@
   margin: 0 auto;
   width: 100%;
 
+  /* ── Font scale multiplier (controlled by JavaScript) ── */
+  --ebook-font-scale: 1;
+
   /* ── Breakpoint-scoped typography custom properties ──
      These get overridden per breakpoint further down.
-     Components reference these vars so font sizes adapt in one place. */
-  --ebook-body-size: 1.125rem;
-  --ebook-body-lh: 1.75;
-  --ebook-heading-size: 1.25rem;
-  --ebook-chapter-title-size: 1.5rem;
-  --ebook-cover-title-size: 2rem;
-  --ebook-cover-subtitle-size: 0.95rem;
-  --ebook-cover-author-size: 1.05rem;
-  --ebook-toc-title-size: 1.25rem;
-  --ebook-toc-item-size: 1.05rem;
-  --ebook-section-title-size: 1.25rem;
-  --ebook-chapter-number-size: 0.8rem;
-  --ebook-chapter-start-title-size: 1.5rem;
-  --ebook-chapter-start-subtitle-size: 1rem;
-  --ebook-part-label-size: 0.8rem;
-  --ebook-part-title-size: 1.625rem;
-  --ebook-part-subtitle-size: 0.95rem;
-  --ebook-epigraph-size: 1.1rem;
-  --ebook-epigraph-attr-size: 0.9rem;
-  --ebook-page-number-size: 0.75rem;
-  --ebook-page-pad-v: 1rem;
-  --ebook-page-pad-h: 1rem;
-  --ebook-meta-size: 0.8rem;
-  --ebook-chapter-heading-size: 0.725rem;
-  --ebook-blurb-size: 1.05rem;
-  --ebook-status-size: 0.725rem;
-  --ebook-back-title-size: 1.3rem;
-  --ebook-dedication-size: 1.1rem;
+     Components reference these vars so font sizes adapt in one place.
+     Multiplied by --ebook-font-scale for user font size preference. */
+  --ebook-body-size: calc(1rem * var(--ebook-font-scale));
+  --ebook-body-lh: 1.6;
+  --ebook-heading-size: calc(1.125rem * var(--ebook-font-scale));
+  --ebook-chapter-title-size: calc(1.375rem * var(--ebook-font-scale));
+  --ebook-cover-title-size: calc(1.75rem * var(--ebook-font-scale));
+  --ebook-cover-subtitle-size: calc(0.875rem * var(--ebook-font-scale));
+  --ebook-cover-author-size: calc(0.95rem * var(--ebook-font-scale));
+  --ebook-toc-title-size: calc(1.125rem * var(--ebook-font-scale));
+  --ebook-toc-item-size: calc(0.95rem * var(--ebook-font-scale));
+  --ebook-section-title-size: calc(1.125rem * var(--ebook-font-scale));
+  --ebook-chapter-number-size: calc(0.75rem * var(--ebook-font-scale));
+  --ebook-chapter-start-title-size: calc(1.375rem * var(--ebook-font-scale));
+  --ebook-chapter-start-subtitle-size: calc(0.9rem * var(--ebook-font-scale));
+  --ebook-part-label-size: calc(0.75rem * var(--ebook-font-scale));
+  --ebook-part-title-size: calc(1.5rem * var(--ebook-font-scale));
+  --ebook-part-subtitle-size: calc(0.875rem * var(--ebook-font-scale));
+  --ebook-epigraph-size: calc(1rem * var(--ebook-font-scale));
+  --ebook-epigraph-attr-size: calc(0.825rem * var(--ebook-font-scale));
+  --ebook-page-number-size: calc(0.7rem * var(--ebook-font-scale));
+  --ebook-page-pad-v: 0.875rem;
+  --ebook-page-pad-h: 0.875rem;
+  --ebook-meta-size: calc(0.75rem * var(--ebook-font-scale));
+  --ebook-chapter-heading-size: calc(0.675rem * var(--ebook-font-scale));
+  --ebook-blurb-size: calc(0.95rem * var(--ebook-font-scale));
+  --ebook-status-size: calc(0.675rem * var(--ebook-font-scale));
+  --ebook-back-title-size: calc(1.2rem * var(--ebook-font-scale));
+  --ebook-dedication-size: calc(1rem * var(--ebook-font-scale));
 }
 
 .dark .ebook-reader {
@@ -61,13 +65,43 @@
 }
 
 .ebook-reader__hero-inner {
-  max-width: var(--wp--preset--layout--wide);
-  margin: 0 auto;
-  padding: 0 var(--wp--preset--spacing--section-horizontal);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+}
+
+/* ══════════════════════════════════════
+   FULLSCREEN MODE - Hide Global Header
+   ══════════════════════════════════════ */
+
+body.ebook-fullscreen .header {
+  display: none !important;
+}
+
+body.ebook-fullscreen .ebook-reader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+}
+
+body.ebook-fullscreen .ebook-reader__hero {
+  padding-top: var(--wp--preset--spacing--fluid-sm);
+}
+
+/* ══════════════════════════════════════
+   MINIMAL MODE - Hide Navigation Bar
+   ══════════════════════════════════════ */
+
+.ebook-reader--minimal .ebook-reader__nav {
+  display: none;
+}
+
+.ebook-reader--minimal .ebook-reader__progress {
+  display: none;
 }
 
 /* ══════════════════════════════════════
@@ -92,12 +126,29 @@
   will-change: transform;
 }
 
+/* Smooth page transitions */
+.ebook-reader__single-track--animating {
+  transition: transform 350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ebook-reader__single-track--swiping {
+  transition: none;
+}
+
 .ebook-reader__single-page {
   width: calc(100% / 3);
   min-height: 100%;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
+  opacity: 1;
+  transition: opacity 300ms ease;
+}
+
+/* Fade effect for inactive pages */
+.ebook-reader__single-page--prev,
+.ebook-reader__single-page--next {
+  opacity: 0.3;
 }
 
 .ebook-reader__single-page .ebook-reader__page-inner {
@@ -106,6 +157,49 @@
   -webkit-overflow-scrolling: touch;
   border-radius: 0;
   box-shadow: none;
+}
+
+/* ── Swipe Zones (visual feedback) ── */
+.ebook-reader__swipe-zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20%;
+  max-width: 80px;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.ebook-reader__swipe-zone--left {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 20, 147, 0.1) 0%,
+    transparent 100%
+  );
+}
+
+.ebook-reader__swipe-zone--right {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    rgba(20, 255, 255, 0.1) 0%,
+    transparent 100%
+  );
+}
+
+.ebook-reader__swipe-zone--active {
+  opacity: 1;
+}
+
+/* Mobile-specific swipe zone adjustments */
+@media (max-width: 767px) {
+  .ebook-reader__swipe-zone {
+    width: 25%;
+    max-width: 100px;
+  }
 }
 
 /* ══════════════════════════════════════
@@ -200,7 +294,7 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  padding: clamp(1rem, 0.75rem + 2vw, 3rem) clamp(1rem, 0.75rem + 2.5vw, 3rem);
+  padding: clamp(0.75rem, 0.5rem + 1.5vw, 2.5rem) clamp(0.75rem, 0.5rem + 2vw, 2.5rem);
 
   /* Light mode: warm off-white paper */
   background: #FAFAF7;
@@ -247,7 +341,8 @@
 }
 
 /* ══════════════════════════════════════
-   3D FLIP LAYER (spread mode)
+   3D PAGE CURL FLIP (spread mode)
+   Book-style page flip effect
    ══════════════════════════════════════ */
 
 .ebook-reader__flip-layer {
@@ -263,23 +358,32 @@
 .ebook-reader__flip-layer--forward {
   right: 0;
   transform-origin: left center;
-  animation: ebookFlipForward 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+  animation: ebookFlipForward 600ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .ebook-reader__flip-layer--backward {
   left: 0;
   transform-origin: right center;
-  animation: ebookFlipBackward 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+  animation: ebookFlipBackward 600ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
+/* 3D page curl animations */
 @keyframes ebookFlipForward {
-  0% { transform: rotateY(0deg); }
-  100% { transform: rotateY(-180deg); }
+  0% { 
+    transform: rotateY(0deg);
+  }
+  100% { 
+    transform: rotateY(-180deg);
+  }
 }
 
 @keyframes ebookFlipBackward {
-  0% { transform: rotateY(180deg); }
-  100% { transform: rotateY(0deg); }
+  0% { 
+    transform: rotateY(0deg);
+  }
+  100% { 
+    transform: rotateY(180deg);
+  }
 }
 
 .ebook-reader__flip-face {
@@ -291,7 +395,12 @@
   flex-direction: column;
 }
 
+.ebook-reader__flip-face--front {
+  z-index: 2;
+}
+
 .ebook-reader__flip-face--back {
+  z-index: 1;
   transform: rotateY(180deg);
 }
 
@@ -838,7 +947,7 @@
 
 /* ── Chapter Content ── */
 .ebook-page--chapter-content .ebook-reader__page-inner {
-  gap: clamp(0.6rem, 0.5rem + 0.35vw, 0.85rem);
+  gap: clamp(0.4rem, 0.3rem + 0.2vw, 0.6rem);
 }
 
 .ebook-page__chapter-heading {
@@ -859,6 +968,11 @@
   font-size: var(--ebook-body-size);
   line-height: var(--ebook-body-lh);
   color: var(--wp--preset--color--neutral-700);
+  margin-bottom: clamp(0.6rem, 0.5rem + 0.25vw, 0.8rem);
+}
+
+.ebook-page__paragraph:last-of-type {
+  margin-bottom: 0;
 }
 
 .dark .ebook-page__paragraph {
@@ -1147,37 +1261,37 @@
    Single-page swipe mode. ~50-60 chars/line. */
 @media (min-width: 420px) and (max-width: 767px) {
   .ebook-reader {
-    --ebook-body-size: 1.25rem;        /* 20px (up from 18px) */
-    --ebook-body-lh: 1.8;
-    --ebook-heading-size: 1.375rem;
-    --ebook-chapter-title-size: 1.625rem;
-    --ebook-cover-title-size: 2.25rem;
-    --ebook-cover-subtitle-size: 1.05rem;
-    --ebook-cover-author-size: 1.125rem;
-    --ebook-toc-title-size: 1.375rem;
-    --ebook-toc-item-size: 1.125rem;
-    --ebook-section-title-size: 1.375rem;
-    --ebook-chapter-number-size: 0.9rem;
-    --ebook-chapter-start-title-size: 1.75rem;
-    --ebook-chapter-start-subtitle-size: 1.1rem;
-    --ebook-part-label-size: 0.85rem;
-    --ebook-part-title-size: 2rem;
-    --ebook-part-subtitle-size: 1.05rem;
-    --ebook-epigraph-size: 1.2rem;
-    --ebook-epigraph-attr-size: 1rem;
-    --ebook-page-number-size: 0.8rem;
-    --ebook-page-pad-v: 1.25rem;
-    --ebook-page-pad-h: 1.25rem;
-    --ebook-meta-size: 0.85rem;
-    --ebook-chapter-heading-size: 0.8rem;
-    --ebook-blurb-size: 1.125rem;
-    --ebook-status-size: 0.725rem;
-    --ebook-back-title-size: 1.5rem;
-    --ebook-dedication-size: 1.2rem;
+    --ebook-body-size: 1.0625rem;      /* 17px (reduced from 20px) */
+    --ebook-body-lh: 1.65;
+    --ebook-heading-size: 1.1875rem;
+    --ebook-chapter-title-size: 1.4375rem;
+    --ebook-cover-title-size: 1.875rem;
+    --ebook-cover-subtitle-size: 0.9375rem;
+    --ebook-cover-author-size: 1rem;
+    --ebook-toc-title-size: 1.1875rem;
+    --ebook-toc-item-size: 1rem;
+    --ebook-section-title-size: 1.1875rem;
+    --ebook-chapter-number-size: 0.8125rem;
+    --ebook-chapter-start-title-size: 1.5rem;
+    --ebook-chapter-start-subtitle-size: 0.9875rem;
+    --ebook-part-label-size: 0.7875rem;
+    --ebook-part-title-size: 1.75rem;
+    --ebook-part-subtitle-size: 0.9375rem;
+    --ebook-epigraph-size: 1.0625rem;
+    --ebook-epigraph-attr-size: 0.9rem;
+    --ebook-page-number-size: 0.75rem;
+    --ebook-page-pad-v: 1.125rem;
+    --ebook-page-pad-h: 1.125rem;
+    --ebook-meta-size: 0.7875rem;
+    --ebook-chapter-heading-size: 0.75rem;
+    --ebook-blurb-size: 1rem;
+    --ebook-status-size: 0.675rem;
+    --ebook-back-title-size: 1.3125rem;
+    --ebook-dedication-size: 1.0625rem;
   }
 
   .ebook-reader__page-inner {
-    padding: 1.25rem;
+    padding: 1rem;
   }
 }
 
@@ -1187,37 +1301,37 @@
    Single-page swipe mode. ~55-70 chars/line via max-width. */
 @media (min-width: 768px) and (max-width: 1023px) {
   .ebook-reader {
-    --ebook-body-size: 1.375rem;       /* 22px (up from 20px) */
-    --ebook-body-lh: 1.85;
-    --ebook-heading-size: 1.5rem;
-    --ebook-chapter-title-size: 2rem;
-    --ebook-cover-title-size: 2.75rem;
-    --ebook-cover-subtitle-size: 1.125rem;
-    --ebook-cover-author-size: 1.25rem;
-    --ebook-toc-title-size: 1.5rem;
-    --ebook-toc-item-size: 1.25rem;
-    --ebook-section-title-size: 1.5rem;
-    --ebook-chapter-number-size: 0.95rem;
-    --ebook-chapter-start-title-size: 2.125rem;
-    --ebook-chapter-start-subtitle-size: 1.2rem;
-    --ebook-part-label-size: 0.95rem;
-    --ebook-part-title-size: 2.5rem;
-    --ebook-part-subtitle-size: 1.125rem;
-    --ebook-epigraph-size: 1.375rem;
-    --ebook-epigraph-attr-size: 1.05rem;
-    --ebook-page-number-size: 0.85rem;
-    --ebook-page-pad-v: 2rem;
-    --ebook-page-pad-h: 2.5rem;
-    --ebook-meta-size: 0.9rem;
-    --ebook-chapter-heading-size: 0.85rem;
-    --ebook-blurb-size: 1.25rem;
-    --ebook-status-size: 0.8rem;
-    --ebook-back-title-size: 1.75rem;
-    --ebook-dedication-size: 1.375rem;
+    --ebook-body-size: 1.1875rem;      /* 19px (reduced from 22px) */
+    --ebook-body-lh: 1.7;
+    --ebook-heading-size: 1.3125rem;
+    --ebook-chapter-title-size: 1.75rem;
+    --ebook-cover-title-size: 2.25rem;
+    --ebook-cover-subtitle-size: 1rem;
+    --ebook-cover-author-size: 1.125rem;
+    --ebook-toc-title-size: 1.3125rem;
+    --ebook-toc-item-size: 1.125rem;
+    --ebook-section-title-size: 1.3125rem;
+    --ebook-chapter-number-size: 0.875rem;
+    --ebook-chapter-start-title-size: 1.875rem;
+    --ebook-chapter-start-subtitle-size: 1.0625rem;
+    --ebook-part-label-size: 0.875rem;
+    --ebook-part-title-size: 2.125rem;
+    --ebook-part-subtitle-size: 1rem;
+    --ebook-epigraph-size: 1.1875rem;
+    --ebook-epigraph-attr-size: 0.9375rem;
+    --ebook-page-number-size: 0.8rem;
+    --ebook-page-pad-v: 1.5rem;
+    --ebook-page-pad-h: 2rem;
+    --ebook-meta-size: 0.8125rem;
+    --ebook-chapter-heading-size: 0.7875rem;
+    --ebook-blurb-size: 1.125rem;
+    --ebook-status-size: 0.75rem;
+    --ebook-back-title-size: 1.5rem;
+    --ebook-dedication-size: 1.1875rem;
   }
 
   .ebook-reader__page-inner {
-    padding: 2rem 2.5rem;
+    padding: 1.5rem 2rem;
   }
 
   /* Constrain line length for optimal reading on wide single-page */
@@ -1279,37 +1393,37 @@
    ~55-65 chars/line in each half-page. */
 @media (min-width: 1280px) and (max-width: 1439px) {
   .ebook-reader {
-    --ebook-body-size: 1.1875rem;      /* 19px (up from 17px) */
-    --ebook-body-lh: 1.85;
-    --ebook-heading-size: 1.3125rem;
-    --ebook-chapter-title-size: 1.75rem;
-    --ebook-cover-title-size: 2.75rem;
-    --ebook-cover-subtitle-size: 1.05rem;
-    --ebook-cover-author-size: 1.2rem;
-    --ebook-toc-title-size: 1.375rem;
-    --ebook-toc-item-size: 1.125rem;
-    --ebook-section-title-size: 1.375rem;
-    --ebook-chapter-number-size: 0.9rem;
-    --ebook-chapter-start-title-size: 1.85rem;
-    --ebook-chapter-start-subtitle-size: 1.1rem;
-    --ebook-part-label-size: 0.9rem;
-    --ebook-part-title-size: 2.375rem;
-    --ebook-part-subtitle-size: 1.05rem;
-    --ebook-epigraph-size: 1.2rem;
-    --ebook-epigraph-attr-size: 0.95rem;
-    --ebook-page-number-size: 0.8rem;
-    --ebook-page-pad-v: 2rem;
-    --ebook-page-pad-h: 2rem;
-    --ebook-meta-size: 0.85rem;
-    --ebook-chapter-heading-size: 0.775rem;
-    --ebook-blurb-size: 1.125rem;
-    --ebook-status-size: 0.75rem;
-    --ebook-back-title-size: 1.6rem;
-    --ebook-dedication-size: 1.2rem;
+    --ebook-body-size: 1.0625rem;      /* 17px (reduced from 19px) */
+    --ebook-body-lh: 1.7;
+    --ebook-heading-size: 1.1875rem;
+    --ebook-chapter-title-size: 1.5625rem;
+    --ebook-cover-title-size: 2.375rem;
+    --ebook-cover-subtitle-size: 0.9375rem;
+    --ebook-cover-author-size: 1.0625rem;
+    --ebook-toc-title-size: 1.25rem;
+    --ebook-toc-item-size: 1rem;
+    --ebook-section-title-size: 1.25rem;
+    --ebook-chapter-number-size: 0.8125rem;
+    --ebook-chapter-start-title-size: 1.6875rem;
+    --ebook-chapter-start-subtitle-size: 1rem;
+    --ebook-part-label-size: 0.8125rem;
+    --ebook-part-title-size: 2.125rem;
+    --ebook-part-subtitle-size: 0.9375rem;
+    --ebook-epigraph-size: 1.0625rem;
+    --ebook-epigraph-attr-size: 0.875rem;
+    --ebook-page-number-size: 0.75rem;
+    --ebook-page-pad-v: 1.75rem;
+    --ebook-page-pad-h: 1.75rem;
+    --ebook-meta-size: 0.8125rem;
+    --ebook-chapter-heading-size: 0.725rem;
+    --ebook-blurb-size: 1rem;
+    --ebook-status-size: 0.7rem;
+    --ebook-back-title-size: 1.4375rem;
+    --ebook-dedication-size: 1.0625rem;
   }
 
   .ebook-reader__page-inner {
-    padding: 2rem;
+    padding: 1.75rem;
   }
 }
 
@@ -1319,37 +1433,37 @@
    ~60-75 chars/line. Optimal legibility. */
 @media (min-width: 1440px) {
   .ebook-reader {
-    --ebook-body-size: 1.375rem;       /* 22px (up from 19px) */
-    --ebook-body-lh: 1.9;
-    --ebook-heading-size: 1.5rem;
-    --ebook-chapter-title-size: 2rem;
-    --ebook-cover-title-size: 3.5rem;
-    --ebook-cover-subtitle-size: 1.125rem;
-    --ebook-cover-author-size: 1.375rem;
-    --ebook-toc-title-size: 1.625rem;
-    --ebook-toc-item-size: 1.25rem;
-    --ebook-section-title-size: 1.5rem;
-    --ebook-chapter-number-size: 1rem;
-    --ebook-chapter-start-title-size: 2.125rem;
-    --ebook-chapter-start-subtitle-size: 1.2rem;
-    --ebook-part-label-size: 1rem;
-    --ebook-part-title-size: 2.875rem;
-    --ebook-part-subtitle-size: 1.125rem;
-    --ebook-epigraph-size: 1.375rem;
-    --ebook-epigraph-attr-size: 1.05rem;
-    --ebook-page-number-size: 0.85rem;
-    --ebook-page-pad-v: 2.75rem;
-    --ebook-page-pad-h: 3rem;
-    --ebook-meta-size: 0.9rem;
-    --ebook-chapter-heading-size: 0.825rem;
-    --ebook-blurb-size: 1.3rem;
-    --ebook-status-size: 0.8rem;
-    --ebook-back-title-size: 1.875rem;
-    --ebook-dedication-size: 1.375rem;
+    --ebook-body-size: 1.125rem;       /* 18px (reduced from 22px) */
+    --ebook-body-lh: 1.75;
+    --ebook-heading-size: 1.25rem;
+    --ebook-chapter-title-size: 1.625rem;
+    --ebook-cover-title-size: 2.75rem;
+    --ebook-cover-subtitle-size: 1rem;
+    --ebook-cover-author-size: 1.125rem;
+    --ebook-toc-title-size: 1.375rem;
+    --ebook-toc-item-size: 1.0625rem;
+    --ebook-section-title-size: 1.25rem;
+    --ebook-chapter-number-size: 0.875rem;
+    --ebook-chapter-start-title-size: 1.75rem;
+    --ebook-chapter-start-subtitle-size: 1.0625rem;
+    --ebook-part-label-size: 0.875rem;
+    --ebook-part-title-size: 2.25rem;
+    --ebook-part-subtitle-size: 1rem;
+    --ebook-epigraph-size: 1.125rem;
+    --ebook-epigraph-attr-size: 0.9375rem;
+    --ebook-page-number-size: 0.8rem;
+    --ebook-page-pad-v: 2.25rem;
+    --ebook-page-pad-h: 2.5rem;
+    --ebook-meta-size: 0.8125rem;
+    --ebook-chapter-heading-size: 0.775rem;
+    --ebook-blurb-size: 1.0625rem;
+    --ebook-status-size: 0.75rem;
+    --ebook-back-title-size: 1.5625rem;
+    --ebook-dedication-size: 1.125rem;
   }
 
   .ebook-reader__page-inner {
-    padding: 2.75rem 3rem;
+    padding: 2.25rem 2.5rem;
   }
 }
 
@@ -1381,4 +1495,70 @@
 .ebook-reader__fullscreen-close:focus-visible {
   outline: 2px solid var(--wp--preset--color--neon-pink);
   outline-offset: 2px;
+}
+
+/* ══════════════════════════════════════
+   MINIMAL MODE — Floating Settings Button
+   ══════════════════════════════════════ */
+
+.ebook-reader__floating-settings {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  
+  background: var(--wp--preset--color--neon-pink);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 4px 16px rgba(255, 16, 240, 0.4),
+    0 0 0 0 rgba(255, 16, 240, 0.4);
+  
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  animation: floatingPulse 3s ease-in-out infinite;
+}
+
+.ebook-reader__floating-settings:hover {
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 
+    0 6px 24px rgba(255, 16, 240, 0.6),
+    0 0 0 8px rgba(255, 16, 240, 0.2);
+}
+
+.ebook-reader__floating-settings:focus-visible {
+  outline: 3px solid var(--wp--preset--color--neon-yellow);
+  outline-offset: 4px;
+}
+
+.dark .ebook-reader__floating-settings {
+  background: var(--wp--preset--color--neon-pink);
+  box-shadow: 
+    0 4px 20px rgba(255, 16, 240, 0.6),
+    0 0 40px rgba(255, 16, 240, 0.3);
+}
+
+@keyframes floatingPulse {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.05);
+  }
+}
+
+@media (max-width: 767px) {
+  .ebook-reader__floating-settings {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+  }
 }

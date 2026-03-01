@@ -4,9 +4,10 @@
  * ADHD, and expanded awareness combine into one operating system.
  *
  * Neon accent: Cyan
+ * Phase 5 Polish — integrated PullQuote & ContentSection components
  *
  * @component AquariusPage
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 import React, { useEffect } from 'react';
@@ -14,12 +15,16 @@ import { aquariusPageData } from '../../../data/mock/pages/about-subpages';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
+import { PullQuote } from '../../ui/PullQuote';
+import { ContentSection } from '../../sections/ContentSection';
 import '../../../styles/blocks/about-subpage.css';
 
 export function AquariusPage() {
-  useEffect(() => {
+  useEffect(function () {
     setSEO(pageSEO.aquarius);
   }, []);
+
+  var data = aquariusPageData;
 
   return (
     <main
@@ -31,28 +36,32 @@ export function AquariusPage() {
       {/* ── Hero ── */}
       <header className="about-subpage__hero">
         <div className="about-subpage__hero-content">
-          <Breadcrumbs items={aquariusPageData.breadcrumbs} centered />
+          <Breadcrumbs items={data.breadcrumbs} centered />
 
           <span className="about-subpage__hero-badge">
-            {aquariusPageData.hero.badge}
+            {data.hero.badge}
           </span>
 
           <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
-            {aquariusPageData.hero.title}
+            {data.hero.title}
           </h1>
 
           <p className="about-subpage__hero-desc text-body-p">
-            {aquariusPageData.hero.description}
+            {data.hero.description}
           </p>
         </div>
       </header>
 
-      {/* ── Pull Quote ── */}
-      <blockquote className="about-subpage__pull-quote" aria-label="Featured quote">
-        <p className="about-subpage__pull-quote-text">
-          {aquariusPageData.pullQuote}
-        </p>
-      </blockquote>
+      {/* ── Pull Quote (Phase 3 component) ── */}
+      <div className="about-subpage__body">
+        <div className="entrance-fade-up">
+          <PullQuote
+            quote={data.pullQuote}
+            variant="center"
+            neonColor="blue"
+          />
+        </div>
+      </div>
 
       {/* ── Traits Grid ── */}
       <div
@@ -60,40 +69,56 @@ export function AquariusPage() {
         role="list"
         aria-label="Aquarian traits"
       >
-        {aquariusPageData.traits.map((trait) => (
-          <div key={trait.id} className="about-subpage__fact" role="listitem">
-            <span className="about-subpage__fact-label">{trait.label}</span>
-            <span className="about-subpage__fact-value">{trait.value}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* ── Thread Cards (Aquarius × …) ── */}
-      <div className="about-subpage__destinations" aria-label="Aquarian threads">
-        {aquariusPageData.threads.map((thread) => (
-          <article key={thread.id} className="about-subpage__destination">
-            <div className="about-subpage__destination-name">
-              {thread.title}
+        {data.traits.map(function (trait) {
+          return (
+            <div key={trait.id} className="about-subpage__fact" role="listitem">
+              <span className="about-subpage__fact-label">{trait.label}</span>
+              <span className="about-subpage__fact-value">{trait.value}</span>
             </div>
-            <p className="about-subpage__destination-desc">
-              {thread.description}
-            </p>
-          </article>
-        ))}
+          );
+        })}
       </div>
 
-      {/* ── Sections ── */}
-      <div className="about-subpage__body">
-        {aquariusPageData.sections.map((section) => (
-          <section key={section.id} className="about-subpage__section">
-            <h2 className="about-subpage__section-title">{section.title}</h2>
-            {section.paragraphs.map((p, i) => (
-              <p key={`${section.id}-p-${i}`} className="about-subpage__section-text">
-                {p}
+      {/* ── Thread Cards (Aquarius x ...) ── */}
+      <div className="about-subpage__destinations" aria-label="Aquarian threads">
+        {data.threads.map(function (thread) {
+          return (
+            <article key={thread.id} className="about-subpage__destination">
+              <div className="about-subpage__destination-name">
+                {thread.title}
+              </div>
+              <p className="about-subpage__destination-desc">
+                {thread.description}
               </p>
-            ))}
-          </section>
-        ))}
+            </article>
+          );
+        })}
+      </div>
+
+      {/* ── Sections (wrapped in ContentSection) ── */}
+      <div className="about-subpage__body">
+        {data.sections.map(function (section, idx) {
+          var delayClass = idx < 6 ? ' entrance-fade-up--delay-' + (idx + 1) : '';
+
+          return (
+            <div key={section.id} className={'entrance-fade-up' + delayClass}>
+              <ContentSection
+                id={section.id}
+                title={section.title}
+                variant="default"
+                colorAccent="blue"
+              >
+                {section.paragraphs.map(function (p, i) {
+                  return (
+                    <p key={section.id + '-p-' + i} className="about-subpage__section-text">
+                      {p}
+                    </p>
+                  );
+                })}
+              </ContentSection>
+            </div>
+          );
+        })}
       </div>
     </main>
   );

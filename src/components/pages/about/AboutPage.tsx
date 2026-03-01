@@ -1,205 +1,134 @@
 /**
- * @fileoverview About page component for Ash Shaw Makeup Portfolio
- * Provides immersive storytelling through full-width sections, gradient frames,
- * Contentful CMS integration, and accessibility-compliant structure with creative visual elements.
- * Features a responsive CSS Grid layout for skills section.
+ * @fileoverview About landing page — redesigned with Phase 3 content components
+ *
+ * Uses Timeline, PullQuote, SplitContent, ContentSection, and ChapterNav
+ * to create an immersive storytelling experience for Ash Shaw's identity.
  *
  * @author Ash Shaw Portfolio Team
- * @version 4.0.0 - Pure Responsive Grid Layout
+ * @version 5.0.0 - Phase 4 Content Expansion Redesign
  */
 
-import React, { useEffect } from "react";
-import { Palette, Layers, User, Zap, Sparkles } from "../../../lib/icons";
-import { MapPin, Music, Paintbrush, Brain, Rocket } from "../../../lib/icons";
+import React, { useEffect, useState, useCallback } from "react";
 import "../../../styles/globals.css";
-import { HeroLayout } from "../../sections/HeroLayout";
-import { FaqSection } from "../../sections/FaqSection";
-
-import { SectionCard } from "../../ui/SectionCard";
-import { ABOUT_SECTION_THEMES } from "../../common/Constants";
-import { aboutHeroImages } from "../../../data/mock/images/hero-images";
-import { aboutHero, aboutPageText } from "../../../data/mock/pages/about";
-import { aboutUI } from "../../../data/mock/ui/about";
-import { useAboutPageContent } from "../../../hooks/useContent";
-import { useAppNavigate } from "../../../hooks/useAppNavigate";
 import "../../../styles/blocks/about-page.css";
 
-import { setSEO } from '../../../utils/seo';
-import { pageSEO } from '../../../data/mock/seo';
+/* ── Layout / Section Components ── */
+import { HeroLayout } from "../../sections/HeroLayout";
+import { ContentSection } from "../../sections/ContentSection";
+import { SplitContent } from "../../sections/SplitContent";
+import { FaqSection } from "../../sections/FaqSection";
+
+/* ── UI Components ── */
+import { PullQuote } from "../../ui/PullQuote";
+import { Timeline } from "../../ui/Timeline";
+import { ChapterNav } from "../../ui/ChapterNav";
+import { ScrollDownArrow } from "../../ui/ScrollDownArrow";
+
+/* ── Data ── */
+import { aboutLandingData } from "../../../data/mock/pages/about-landing";
+import { aboutHeroImages } from "../../../data/mock/images/hero-images";
+import { aboutHero } from "../../../data/mock/pages/about";
+import { aboutUI } from "../../../data/mock/ui/about";
+
+/* ── Hooks ── */
+import { useAboutPageContent } from "../../../hooks/useContent";
+import { useAppNavigate } from "../../../hooks/useAppNavigate";
+
+/* ── SEO & Schema ── */
+import { setSEO } from "../../../utils/seo";
+import { pageSEO } from "../../../data/mock/seo";
 import {
   injectSchema,
   removeSchema,
   SCHEMA_IDS,
   buildPersonSchema,
-} from '../../../utils/schemaService';
+} from "../../../utils/schemaService";
+
+/* ── Image for ADHD section ── */
+var adhdImageUrl =
+  "https://images.unsplash.com/photo-1533408944756-4950754f3ebc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZW9uJTIwVVYlMjBwYWludCUyMGFydGlzdCUyMGZlc3RpdmFsJTIwZmFjZXxlbnwxfHx8fDE3NzIzODEyNTV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral";
 
 /**
- * About page component providing Ash Shaw's complete makeup artistry story with Contentful CMS integration
+ * About landing page — immersive identity storytelling with chapter navigation
  */
 export function AboutPage() {
-  const setCurrentPage = useAppNavigate();
+  var setCurrentPage = useAppNavigate();
+  var landingData = aboutLandingData;
 
-  useEffect(() => {
+  /* ── Active chapter tracking for ChapterNav ── */
+  var defaultChapterId = landingData.chapters.length > 0 ? landingData.chapters[0].id : "";
+  var activeChapterState = useState(defaultChapterId);
+  var activeChapter = activeChapterState[0];
+  var setActiveChapter = activeChapterState[1];
+
+  /* ── SEO + Schema ── */
+  useEffect(function () {
     setSEO(pageSEO.about);
     injectSchema(SCHEMA_IDS.person, buildPersonSchema());
-    return () => {
+    return function () {
       removeSchema(SCHEMA_IDS.person);
     };
   }, []);
 
-  // Fetch dynamic about page content from Contentful
-  const {
-    data: aboutContent,
-    loading: contentLoading,
-    error: contentError,
-    refresh: refreshContent,
-  } = useAboutPageContent();
-
-  const handlePortfolioClick = () => {
-    setCurrentPage("portfolio");
-  };
-
-  const handleUVMakeupClick = () => {
-    setCurrentPage("portfolio");
-  };
-
-  // Skills Data
-  const skills = [
-    {
-      id: "color-theory",
-      title: aboutUI.sections.mousse.skills.theory,
-      icon: Palette,
-      gradientClass: "about-skill-icon-wrap--pink-purple"
-    },
-    {
-      id: "blending-mastery",
-      title: aboutUI.sections.mousse.skills.blending,
-      icon: Layers,
-      gradientClass: "about-skill-icon-wrap--cyan-blue"
-    },
-    {
-      id: "texture-work",
-      title: aboutUI.sections.mousse.skills.texture,
-      icon: User,
-      gradientClass: "about-skill-icon-wrap--green-yellow"
-    },
-    {
-      id: "uv-techniques",
-      title: aboutUI.sections.mousse.skills.uvTechniques,
-      icon: Zap,
-      gradientClass: "about-skill-icon-wrap--purple-pink"
-    },
-    {
-      id: "creative-design",
-      title: aboutUI.sections.mousse.skills.creativeDesign,
-      icon: Sparkles,
-      gradientClass: "about-skill-icon-wrap--blue-green"
-    }
-  ];
-
-  // Loading state component
-  const LoadingState = () => (
-    <div className="about-loading-container">
-      <div className="about-loading-wrapper">
-        <div className="about-loading-content">
-          <div className="loading-skeleton">
-            <div className="skeleton-bar skeleton-bar--title"></div>
-            <div className="skeleton-bar skeleton-bar--subtitle"></div>
-            <div className="skeleton-bar skeleton-bar--hero"></div>
-            <div className="about-skeleton-stack">
-              {[...Array(4)].map((_, i) => (
-                <div
-                  key={i}
-                  className="about-skeleton-card"
-                ></div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  // Error state component with retry functionality
-  const ErrorState = () => (
-    <div className="homepage-error">
-      <div className="homepage-error__content">
-        <div className="homepage-error__icon-wrapper">
-          <div className="homepage-error__icon">
-            <span role="img" aria-label="Warning">⚠️</span>
-          </div>
-          <h1 className="text-section-h2 mb-fluid-sm">
-            {aboutUI.loading.title}
-          </h1>
-          <p className="text-body-p mb-fluid-lg">
-            {contentError || aboutUI.loading.errorMessage}
-          </p>
-        </div>
-        <div className="homepage-error__actions">
-          <button
-            type="button"
-            onClick={refreshContent}
-            className="btn btn--neon-primary"
-          >
-            {aboutUI.loading.retry}
-          </button>
-          <button
-            type="button"
-            onClick={() => window.location.reload()}
-            className="btn btn--ghost"
-          >
-            {aboutUI.loading.refresh}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-
-  // Show loading state while fetching initial content
-  if (contentLoading && !aboutContent) {
-    return <LoadingState />;
-  }
-
-  // Show error state if content failed to load and no cached data
-  if (contentError && !aboutContent) {
-    return <ErrorState />;
-  }
-
-  // Extract content with fallbacks to static content
-  const aboutHeroData = aboutContent ? aboutContent.hero : null;
-  const heroTitle =
-    aboutHeroData ? (aboutHeroData.title || aboutHero.title) : aboutHero.title;
-  const heroSubtitle =
-    aboutHeroData ? (aboutHeroData.subtitle || aboutHero.subtitle) : aboutHero.subtitle;
-  const heroDescription =
-    aboutHeroData ? (aboutHeroData.description || aboutHero.description) : aboutHero.description;
-  const heroImage = aboutHeroData && aboutHeroData.image
-    ? {
-        src: aboutHeroData.image.url,
-        alt: aboutHeroData.image.alt,
-        title: aboutHeroData.image.title,
+  /* ── Scroll spy for active chapter ── */
+  useEffect(function () {
+    function handleScroll() {
+      var chapters = landingData.chapters;
+      var found = "";
+      for (var i = 0; i < chapters.length; i++) {
+        var el = document.getElementById(chapters[i].id);
+        if (el) {
+          var rect = el.getBoundingClientRect();
+          if (rect.top <= 200) {
+            found = chapters[i].id;
+          }
+        }
       }
-    : null;
+      if (found) {
+        setActiveChapter(found);
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return function () {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  /* ── Contentful fallback (legacy hook) ── */
+  var contentResult = useAboutPageContent();
+  var aboutContent = contentResult.data;
+  var contentLoading = contentResult.loading;
+
+  var heroTitle = aboutContent && aboutContent.hero
+    ? (aboutContent.hero.title || aboutHero.title)
+    : aboutHero.title;
+
+  var heroDescription = landingData.hero.description;
+
+  /* ── Handlers ── */
+  var handlePortfolioClick = useCallback(function () {
+    setCurrentPage("portfolio");
+  }, [setCurrentPage]);
+
+  var handleChapterClick = useCallback(function (id: string) {
+    var el = document.getElementById(id);
+    if (el) {
+      var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      el.scrollIntoView({
+        behavior: prefersReduced ? "auto" : "smooth",
+        block: "start",
+      });
+    }
+  }, []);
 
   return (
     <div className="about-page-container">
-      {/* Content loading indicator */}
-      {contentLoading && aboutContent && (
-        <div className="loading-toast">
-          <div className="loading-toast__inner">
-            <div className="loading-toast__content">
-              <div className="loading-spinner"></div>
-              <span>{aboutUI.loading.message}</span>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Dynamic Hero Section with Contentful content */}
+      {/* ──────────────── HERO ──────────────── */}
       <HeroLayout
         title={heroTitle}
         subtitle={
-          <>
+          <React.Fragment>
             <em className="text-gradient-pink-rose">
               {aboutUI.hero.subtitle.words[0]}
             </em>
@@ -212,7 +141,7 @@ export function AboutPage() {
               {aboutUI.hero.subtitle.words[2]}
             </em>{" "}
             {aboutUI.hero.subtitle.suffix}
-          </>
+          </React.Fragment>
         }
         description={heroDescription}
         size="xl"
@@ -221,8 +150,8 @@ export function AboutPage() {
         fullscreen={true}
         className="hero"
         showScrollArrow={true}
-        scrollArrowTarget="journey-section"
-        heroImages={heroImage ? [heroImage] : aboutHeroImages}
+        scrollArrowTarget="aquarian-section"
+        heroImages={aboutHeroImages}
         lightboxTitle={aboutUI.hero.lightboxTitle}
         enableLightbox={true}
         actions={
@@ -236,178 +165,151 @@ export function AboutPage() {
           </button>
         }
         decorativeElements={
-          <>
-            <div
-              className="about-hero-orb-1"
-              aria-hidden="true"
-            ></div>
-            <div
-              className="about-hero-orb-2"
-              aria-hidden="true"
-            ></div>
-            <div
-              className="about-hero-orb-3"
-              aria-hidden="true"
-            ></div>
-          </>
+          <React.Fragment>
+            <div className="about-hero-orb-1" aria-hidden="true"></div>
+            <div className="about-hero-orb-2" aria-hidden="true"></div>
+            <div className="about-hero-orb-3" aria-hidden="true"></div>
+          </React.Fragment>
         }
       />
 
-      {/* Sections between Hero and Footer */}
-      <div className="about-content bg-atomic-noise">
-        {/* Journey Section */}
-        <SectionCard
-          id="journey-section"
-          title={aboutUI.sections.journey.title}
-          theme={ABOUT_SECTION_THEMES.journey}
-          quote={aboutUI.sections.journey.quote}
-          icon={MapPin}
-        >
-          <p className="text-body-p text-inherit">
-            {aboutPageText.journey}
-          </p>
-        </SectionCard>
+      {/* ──────────────── CHAPTER NAV + CONTENT ──────────────── */}
+      <div className="about-landing bg-atomic-noise">
 
-        {/* Festival Section */}
-        <SectionCard
-          id="festival-section"
-          title={aboutUI.sections.festival.title}
-          theme={ABOUT_SECTION_THEMES.festival}
-          icon={Music}
-        >
-          <p className="text-body-p text-inherit">
-            {aboutPageText.festival[0]}
-          </p>
-          <p className="text-body-p text-inherit mt-fluid-md">
-            {aboutPageText.festival[1]}
-          </p>
-        </SectionCard>
+        {/* Mobile chapter nav (horizontal, sticky) */}
+        <div className="about-landing__mobile-nav">
+          <ChapterNav
+            chapters={landingData.chapters}
+            activeChapter={activeChapter}
+            onChapterClick={handleChapterClick}
+          />
+        </div>
 
-        {/* UV Makeup Section */}
-        <SectionCard
-          id="uv-section"
-          title={aboutUI.sections.uv.title}
-          theme={ABOUT_SECTION_THEMES.uv}
-          icon={Zap}
-        >
-          <p className="text-body-p text-inherit">
-            {aboutPageText.uv[0]}
-          </p>
-          <p className="text-body-p text-inherit mt-fluid-md">
-            {aboutPageText.uv[1]}
-          </p>
-          <div className="about-technical-card">
-            <h3 className="about-technical-title">
-              {aboutUI.sections.uv.technical.title}
-            </h3>
-            <div className="about-technical-divider"></div>
-            <p className="about-technical-description">
-              {aboutUI.sections.uv.technical.description}
-            </p>
+        {/* Desktop sidebar nav */}
+        <aside className="about-landing__nav">
+          <ChapterNav
+            chapters={landingData.chapters}
+            activeChapter={activeChapter}
+            onChapterClick={handleChapterClick}
+          />
+        </aside>
+
+        {/* ──────────────── SECTIONS ──────────────── */}
+        <div className="about-landing__sections">
+
+          {/* ─── 1. The Aquarian Blueprint ─── */}
+          <div className="entrance-fade-up">
+            <ContentSection
+              id="aquarian-section"
+              title={landingData.aquarianBlueprint.title}
+              variant="callout"
+              colorAccent="blue"
+            >
+              {landingData.aquarianBlueprint.paragraphs.map(function (para, idx) {
+                return (
+                  <p className="text-body-p" key={"aq-p-" + idx}>
+                    {para}
+                  </p>
+                );
+              })}
+              <PullQuote
+                quote={landingData.aquarianBlueprint.quote}
+                author="Ash Shaw"
+                variant="center"
+                neonColor="blue"
+              />
+            </ContentSection>
           </div>
-        </SectionCard>
 
-        {/* Mousse Makeup Section */}
-        <SectionCard
-          id="mousse-section"
-          title={aboutUI.sections.mousse.title}
-          theme={ABOUT_SECTION_THEMES.mousse}
-          icon={Paintbrush}
-        >
-          <p className="text-body-p text-inherit">
-            {aboutPageText.mousse[0]}
-          </p>
-          <p className="text-body-p text-inherit mt-fluid-md">
-            {aboutPageText.mousse[1]}
-          </p>
-          
-          {/* Skills Responsive Grid Layout */}
-          <div className="about-skills-grid">
-            {skills.map((skill) => (
-              <div key={skill.id} className="about-skill-item">
-                <div className={`about-skill-icon-wrap ${skill.gradientClass}`}>
-                  <skill.icon className="about-skill-icon" aria-hidden="true" />
-                </div>
-                <h4 className="about-skill-title">
-                  {skill.title}
-                </h4>
-              </div>
-            ))}
+          {/* ─── 2. ADHD — Wired Different ─── */}
+          <div className="entrance-fade-up entrance-fade-up--delay-1">
+            <ContentSection
+              id="adhd-section"
+              title={landingData.adhdSection.title}
+              variant="default"
+              colorAccent="green"
+            >
+              <SplitContent
+                imageUrl={adhdImageUrl}
+                imageAlt={landingData.adhdSection.imageAlt}
+                imageSide="left"
+                variant="even"
+              >
+                <p className="text-body-p">
+                  {landingData.adhdSection.intro}
+                </p>
+
+                <h3 className="about-adhd-subheading">
+                  {landingData.adhdSection.artHeading}
+                </h3>
+                <ul className="about-adhd-list">
+                  {landingData.adhdSection.artPoints.map(function (point, idx) {
+                    return (
+                      <li className="about-adhd-list__item" key={"art-" + idx}>
+                        {point}
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                <h3 className="about-adhd-subheading">
+                  {landingData.adhdSection.businessHeading}
+                </h3>
+                <ul className="about-adhd-list">
+                  {landingData.adhdSection.businessPoints.map(function (point, idx) {
+                    return (
+                      <li className="about-adhd-list__item" key={"biz-" + idx}>
+                        {point}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </SplitContent>
+            </ContentSection>
           </div>
-        </SectionCard>
 
-        {/* UV Makeup Section (Nails theme) */}
-        <SectionCard
-          id="uv-makeup-section"
-          title={aboutUI.sections.uvMakeup.title}
-          theme={ABOUT_SECTION_THEMES.nails}
-          icon={Paintbrush}
-          actions={
-            <div className="about-cta-center">
-              <button
-                type="button"
-                onClick={handleUVMakeupClick}
-                className="btn btn--neon-primary"
-                aria-label="Navigate to Portfolio page UV Makeup section"
-              >
-                {aboutUI.sections.uvMakeup.cta}
-              </button>
-            </div>
-          }
-        >
-          <p className="text-body-p text-inherit">
-            {aboutPageText.uvMakeup[0]}
-          </p>
-          <p className="text-body-p text-inherit mt-fluid-md">
-            {aboutPageText.uvMakeup[1]}
-          </p>
-        </SectionCard>
+          {/* ─── 3. The Costume Evolution ─── */}
+          <div className="entrance-fade-up entrance-fade-up--delay-2">
+            <ContentSection
+              id="costume-section"
+              title={landingData.costumeEvolution.title}
+              variant="default"
+              colorAccent="pink"
+            >
+              <Timeline
+                events={landingData.costumeEvolution.events}
+                variant="vertical"
+                colorAccent="pink"
+              />
+            </ContentSection>
+          </div>
 
-        {/* Creative Process Section */}
-        <SectionCard
-          id="creative-section"
-          title={aboutUI.sections.creative.title}
-          theme={ABOUT_SECTION_THEMES.creative}
-          quote={aboutUI.sections.creative.quote}
-          icon={Brain}
-        >
-          <p className="text-body-p text-inherit m-[0px]">
-            {aboutPageText.creative[0]}
-          </p>
-          <p className="text-body-p text-inherit mt-fluid-md m-[0px]">
-            {aboutPageText.creative[1]}
-          </p>
-        </SectionCard>
+          {/* ─── 4. Making Others Shine — The Bullied Kid ─── */}
+          <div className="entrance-fade-up entrance-fade-up--delay-3">
+            <ContentSection
+              id="shine-section"
+              title="Making Others Shine"
+              variant="callout"
+              colorAccent="pink"
+            >
+              {landingData.bulliedKid.contextParagraphs.map(function (para, idx) {
+                return (
+                  <p className="text-body-p about-context-text" key={"bk-p-" + idx}>
+                    {para}
+                  </p>
+                );
+              })}
+              <PullQuote
+                quote={landingData.bulliedKid.quote}
+                variant="center"
+                neonColor="pink"
+              />
+            </ContentSection>
+          </div>
 
-        {/* Looking Forward Section */}
-        <SectionCard
-          id="future-section"
-          title={aboutUI.sections.future.title}
-          theme={ABOUT_SECTION_THEMES.future}
-          icon={Rocket}
-          actions={
-            <div className="about-cta-center">
-              <button
-                type="button"
-                onClick={handlePortfolioClick}
-                className="btn btn--neon-primary"
-                aria-label="Navigate to Portfolio page to explore makeup artistry collection"
-              >
-                {aboutUI.sections.future.cta}
-              </button>
-            </div>
-          }
-        >
-          <p className="text-body-p text-inherit">
-            {aboutPageText.future[0]}
-          </p>
-          <p className="text-body-p text-inherit mt-fluid-md">
-            {aboutPageText.future[1]}
-          </p>
-        </SectionCard>
-
-        {/* FAQ Section */}
-        <FaqSection pageId="about" />
+          {/* ─── FAQ Section ─── */}
+          <FaqSection pageId="about" />
+        </div>
       </div>
     </div>
   );

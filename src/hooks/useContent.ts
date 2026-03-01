@@ -174,7 +174,12 @@ export function usePortfolioEntries(options?: {
     }, 300); // 300ms delay
     
     return () => clearTimeout(timer);
-  }, [options]);
+  }, [
+    options ? options.category : undefined,
+    options ? options.page : undefined,
+    options ? options.limit : undefined,
+    options ? options.featuredOnly : undefined
+  ]);
 
   return { data, loading, error: null, refresh: () => {} };
 }

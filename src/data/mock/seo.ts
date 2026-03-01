@@ -30,15 +30,21 @@ export const pageSEO: Record<string, SEOData> = {
   },
 
   about: {
-    title: 'About Ash Shaw | The Artist Behind Neon vs Atomic Black',
+    title: 'About Ash Shaw | Aquarian, ADHD Creative & UV Makeup Artist',
     description:
-      'Meet Ash Shaw \u2014 a Berlin-based makeup artist creating bold neon and UV face art at psytrance festivals across Europe, Thailand, and South Africa since 2019.',
+      'Meet Ash Shaw \u2014 an Aquarian ADHD creative based in Berlin, painting bold neon and UV face art at psytrance festivals worldwide since 2019. His story, his wiring, his evolution.',
   },
 
   hiddenAbout: {
     title: 'The Whole Story | Ash Shaw \u2014 Hidden',
     description:
       'The hidden map to every corner of Ash Shaw\u2019s world. His story, his art, his podcast, his sub-pages \u2014 all in one place.',
+  },
+
+  manifesto: {
+    title: 'Manifesto: Neon vs Atomic Black | Ash Shaw Makeup',
+    description:
+      'The creative philosophy behind Ash Shaw\u2019s neon and UV makeup art \u2014 a manifesto of light, darkness, and the art that exists between them.',
   },
 
   history: {

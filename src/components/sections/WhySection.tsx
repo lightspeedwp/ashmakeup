@@ -204,6 +204,20 @@ export function WhySection() {
 
         {/* Footer CTA */}
         <div className="why-section__footer">
+          <div className="why-section__footer-left">
+            <p className="why-section__follow-text">
+              Follow my latest work on{" "}
+              <a
+                href="https://instagram.com/feedmymedia"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="why-section__follow-link"
+                aria-label="Visit Ash Shaw's Instagram profile"
+              >
+                Instagram @feedmymedia
+              </a>
+            </p>
+          </div>
           <button
             type="button"
             onClick={() => setCurrentPage("about")}

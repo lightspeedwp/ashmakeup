@@ -4,9 +4,6 @@
   
   # Directory with the static files to deploy
   publish = "dist"
-  
-  # Directory with the build functions
-  functions = "supabase/functions"
 
 # Production environment variables
 [build.environment]

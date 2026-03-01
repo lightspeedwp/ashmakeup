@@ -17,7 +17,7 @@
  */
 
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { ChevronLeft, ChevronRight, List, X, Maximize, Minimize } from '../../../lib/icons';
+import { ChevronLeft, ChevronRight, List, X, Maximize, Minimize, SlidersHorizontal } from '../../../lib/icons';
 import { bookPages } from '../../../data/mock/pages/ebook-pages';
 import type { BookPage } from '../../../data/mock/pages/ebook-pages';
 import { ebookUI } from '../../../data/mock/ui/ebook';
@@ -25,6 +25,17 @@ import { ebookBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
 import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
+import { EbookSettingsModal } from '../../ui/EbookSettingsModal';
+import {
+  readSavedPage,
+  savePage,
+  readFontSize,
+  saveFontSize,
+  readMinimalMode,
+  saveMinimalMode,
+  FONT_SIZE_SCALE,
+  type FontSizePreset,
+} from '../../../utils/ebookPreferences';
 import '../../../styles/blocks/ebook.css';
 import '../../../styles/blocks/button.css';
 
@@ -99,34 +110,12 @@ function buildChapterIndex(pages: BookPage[]): ChapterEntry[] {
 const chapterIndex = buildChapterIndex(bookPages);
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   LOCALSTORAGE HELPERS
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-
-function readSavedPage(maxIndex: number): number {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw === null) return 0;
-    const parsed = parseInt(raw, 10);
-    if (Number.isNaN(parsed) || parsed < 0 || parsed > maxIndex) return 0;
-    return parsed;
-  } catch {
-    return 0;
-  }
-}
-
-function savePage(pageIndex: number): void {
-  try {
-    localStorage.setItem(STORAGE_KEY, String(pageIndex));
-  } catch {
-    /* storage full or blocked — silent fail */
-  }
-}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    PAGE CONTENT RENDERER
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
-function PageContent({ page }: { page: BookPage }) {
+function PageContent(props: { page: BookPage }) {
+  const page = props.page;
+  
   switch (page.type) {
     case 'cover':
       return (
@@ -392,6 +381,20 @@ export function EbookPage() {
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   useEffect(() => {
+    // Apply fullscreen class to body when in fullscreen mode
+    if (isFullScreen) {
+      document.body.classList.add('ebook-fullscreen');
+    } else {
+      document.body.classList.remove('ebook-fullscreen');
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.classList.remove('ebook-fullscreen');
+    };
+  }, [isFullScreen]);
+
+  useEffect(() => {
     const handleFullScreenChange = () => {
       // Only sync if the browser actually changed mode. 
       // This handles the user pressing ESC to exit native fullscreen.
@@ -459,6 +462,29 @@ export function EbookPage() {
   /* ── Chapter drawer state ── */
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  /* ── Settings modal state ── */
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
+  /* ── Font size state ── */
+  const [fontSize, setFontSize] = useState(() => readFontSize());
+
+  /* ── Minimal mode state ── */
+  const [minimalMode, setMinimalMode] = useState(() => readMinimalMode());
+
+  /* ── Apply font size to CSS custom properties ── */
+  useEffect(() => {
+    const scale = FONT_SIZE_SCALE[fontSize];
+    if (mainRef.current) {
+      mainRef.current.style.setProperty('--ebook-font-scale', String(scale));
+    }
+    saveFontSize(fontSize);
+  }, [fontSize]);
+
+  /* ── Persist minimal mode ── */
+  useEffect(() => {
+    saveMinimalMode(minimalMode);
+  }, [minimalMode]);
+
   /* ── Touch refs ── */
   const touchStartXInit: number | null = null;
   const touchStartX = useRef(touchStartXInit);
@@ -467,6 +493,10 @@ export function EbookPage() {
   const isSwiping = useRef(false);
   const readerRefInit: HTMLDivElement | null = null;
   const readerRef = useRef(readerRefInit);
+
+  /* ── Swipe zone visual feedback ── */
+  const [leftSwipeActive, setLeftSwipeActive] = useState(false);
+  const [rightSwipeActive, setRightSwipeActive] = useState(false);
 
   useEffect(() => {
     setSEO(pageSEO.ebook);
@@ -491,6 +521,11 @@ export function EbookPage() {
     if (isSpreadMode) {
       if (!canGoForwardSpread || flipState !== 'idle') return;
       setFlipState('forward');
+      setTimeout(() => {
+        const nextSpreadIdx = Math.min(currentSpread + 1, totalSpreads - 1);
+        setCurrentPage(spreadToPage(nextSpreadIdx));
+        setFlipState('idle');
+      }, 600); // Match 3D flip animation duration
     } else {
       if (!canGoForwardSingle) return;
       setIsAnimating(true);
@@ -499,15 +534,20 @@ export function EbookPage() {
         setCurrentPage((p) => Math.min(p + 1, totalPages - 1));
         setSwipeOffset(0);
         setIsAnimating(false);
-      }, 280);
+      }, 400); // Smoother animation timing
     }
-  }, [isSpreadMode, canGoForwardSpread, canGoForwardSingle, flipState, isAnimating, totalPages]);
+  }, [isSpreadMode, canGoForwardSpread, canGoForwardSingle, flipState, isAnimating, totalPages, currentSpread, totalSpreads]);
 
   const goBackward = useCallback(() => {
     if (isAnimating) return;
     if (isSpreadMode) {
       if (!canGoBackwardSpread || flipState !== 'idle') return;
       setFlipState('backward');
+      setTimeout(() => {
+        const prevSpreadIdx = Math.max(currentSpread - 1, 0);
+        setCurrentPage(spreadToPage(prevSpreadIdx));
+        setFlipState('idle');
+      }, 600); // Match 3D flip animation duration
     } else {
       if (!canGoBackwardSingle) return;
       setIsAnimating(true);
@@ -516,9 +556,9 @@ export function EbookPage() {
         setCurrentPage((p) => Math.max(p - 1, 0));
         setSwipeOffset(0);
         setIsAnimating(false);
-      }, 280);
+      }, 400); // Smoother animation timing
     }
-  }, [isSpreadMode, canGoBackwardSpread, canGoBackwardSingle, flipState, isAnimating]);
+  }, [isSpreadMode, canGoBackwardSpread, canGoBackwardSingle, flipState, isAnimating, currentSpread]);
 
   const handleFlipEnd = useCallback(() => {
     if (flipState === 'forward') {
@@ -531,26 +571,73 @@ export function EbookPage() {
     setFlipState('idle');
   }, [flipState, currentSpread, totalSpreads]);
 
+  /* ── Chapter jump ── */
+  const jumpToPage = useCallback((pageIndex: number) => {
+    setCurrentPage(Math.max(0, Math.min(pageIndex, totalPages - 1)));
+    setFlipState('idle');
+    setSwipeOffset(0);
+    setIsAnimating(false);
+    setDrawerOpen(false);
+  }, [totalPages]);
+
   /* ── Keyboard ── */
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape' && drawerOpen) {
-        e.preventDefault();
-        setDrawerOpen(false);
+      // Escape key handling (highest priority)
+      if (e.key === 'Escape') {
+        if (drawerOpen) {
+          e.preventDefault();
+          setDrawerOpen(false);
+          return;
+        }
+        if (settingsOpen) {
+          e.preventDefault();
+          setSettingsOpen(false);
+          return;
+        }
+        if (isFullScreen) {
+          e.preventDefault();
+          toggleFullScreen();
+          return;
+        }
         return;
       }
-      if (drawerOpen) return;
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+
+      // Don't handle shortcuts when modal/drawer is open
+      if (drawerOpen || settingsOpen) return;
+
+      // Navigation shortcuts
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown') {
         e.preventDefault();
         goForward();
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
         e.preventDefault();
         goBackward();
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        jumpToPage(0);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        jumpToPage(totalPages - 1);
+      }
+      // Settings shortcuts (case-insensitive)
+      else if (e.key === 's' || e.key === 'S') {
+        e.preventDefault();
+        setSettingsOpen(true);
+      } else if (e.key === 'm' || e.key === 'M') {
+        e.preventDefault();
+        setMinimalMode(!minimalMode);
+      } else if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        toggleFullScreen();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        setDrawerOpen(true);
       }
     }
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [goForward, goBackward, drawerOpen]);
+  }, [goForward, goBackward, drawerOpen, settingsOpen, isFullScreen, toggleFullScreen, minimalMode, jumpToPage, totalPages]);
 
   /* ── Touch swipe (works in both modes) ── */
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
@@ -576,6 +663,18 @@ export function EbookPage() {
     if (isSwiping.current && !isSpreadMode && !isAnimating) {
       const percent = (dx / window.innerWidth) * 100;
       setSwipeOffset(Math.max(-50, Math.min(50, percent)));
+
+      // Visual feedback for swipe zones
+      if (percent < -10) {
+        setLeftSwipeActive(true);
+        setRightSwipeActive(false);
+      } else if (percent > 10) {
+        setLeftSwipeActive(false);
+        setRightSwipeActive(true);
+      } else {
+        setLeftSwipeActive(false);
+        setRightSwipeActive(false);
+      }
     }
   }, [isSpreadMode, isAnimating]);
 
@@ -597,25 +696,11 @@ export function EbookPage() {
     touchStartX.current = null;
     touchStartY.current = null;
     isSwiping.current = false;
+
+    // Reset swipe zone visual feedback
+    setLeftSwipeActive(false);
+    setRightSwipeActive(false);
   }, [goForward, goBackward]);
-
-  /* ── Chapter jump ── */
-  const jumpToPage = useCallback((pageIndex: number) => {
-    setCurrentPage(Math.max(0, Math.min(pageIndex, totalPages - 1)));
-    setFlipState('idle');
-    setSwipeOffset(0);
-    setIsAnimating(false);
-    setDrawerOpen(false);
-  }, [totalPages]);
-
-  /** Find which chapter entry the current page is closest to (at or after) */
-  const currentChapterIdx = React.useMemo(() => {
-    let best = 0;
-    for (let i = 0; i < chapterIndex.length; i++) {
-      if (chapterIndex[i].pageIndex <= currentPage) best = i;
-    }
-    return best;
-  }, [currentPage]);
 
   /* ── Spread data for desktop ── */
   const spread = spreads[currentSpread];
@@ -628,9 +713,33 @@ export function EbookPage() {
   const progress = isSpreadMode ? progressSpread : progressSingle;
 
   /* ── Display label ── */
-  const pageLabel = isSpreadMode
-    ? `${currentSpread + 1} / ${totalSpreads}`
-    : `${currentPage + 1} / ${totalPages}`;
+  const pageLabel = (() => {
+    if (isSpreadMode) {
+      // Spread mode: show range of actual page numbers
+      const leftNum = spread.left != null && spread.left.pageNumber != null ? spread.left.pageNumber : null;
+      const rightNum = spread.right != null && spread.right.pageNumber != null ? spread.right.pageNumber : null;
+      
+      if (leftNum != null && rightNum != null) {
+        return `Pages ${leftNum}–${rightNum}`;
+      }
+      if (leftNum != null) {
+        return `Page ${leftNum}`;
+      }
+      if (rightNum != null) {
+        return `Page ${rightNum}`;
+      }
+      // No page numbers (cover, TOC, etc.)
+      return `${currentSpread + 1} / ${totalSpreads}`;
+    } else {
+      // Single-page mode: show actual page number
+      const currentPageData = bookPages[currentPage];
+      if (currentPageData != null && currentPageData.pageNumber != null) {
+        return `Page ${currentPageData.pageNumber}`;
+      }
+      // No page number (cover, TOC, etc.)
+      return `${currentPage + 1} / ${totalPages}`;
+    }
+  })();
 
   /* ── Breadcrumbs ── */
   const breadcrumbs = ebookBreadcrumbs();
@@ -639,6 +748,20 @@ export function EbookPage() {
   const prevPage = currentPage > 0 ? bookPages[currentPage - 1] : null;
   const nextPage = currentPage < totalPages - 1 ? bookPages[currentPage + 1] : null;
   const activePage = bookPages[currentPage];
+
+  /* ── Current chapter index (for drawer active state) ── */
+  const currentChapterIdx = React.useMemo(() => {
+    // Find the last chapter entry that is <= currentPage
+    var idx = -1;
+    for (var i = 0; i < chapterIndex.length; i++) {
+      if (chapterIndex[i].pageIndex <= currentPage) {
+        idx = i;
+      } else {
+        break;
+      }
+    }
+    return idx;
+  }, [currentPage]);
 
   // Extract || operators to avoid bundler issues
   const cannotGoBackward = !canGoBackwardSpread || flipState !== 'idle';
@@ -651,7 +774,7 @@ export function EbookPage() {
       ref={mainRef}
       id="main-content"
       tabIndex={-1}
-      className="ebook-reader bg-atomic-noise"
+      className={`ebook-reader bg-atomic-noise ${minimalMode ? 'ebook-reader--minimal' : ''}`}
       aria-label={ebookUI.readerAriaLabel}
     >
       {/* ── Slim Hero ── */}
@@ -894,6 +1017,15 @@ export function EbookPage() {
             <Maximize className="ebook-reader__nav-icon" aria-hidden="true" />
           }
         </button>
+
+        <button
+          type="button"
+          className="ebook-reader__nav-btn"
+          onClick={() => setSettingsOpen(true)}
+          aria-label={ebookUI.nav.settings}
+        >
+          <SlidersHorizontal className="ebook-reader__nav-icon" aria-hidden="true" />
+        </button>
       </nav>
 
       {/* ══════════════════════════════════════
@@ -941,6 +1073,37 @@ export function EbookPage() {
           })}
         </nav>
       </aside>
+
+      {/* ══════════════════════════════════════
+         SETTINGS MODAL
+         ══════════════════════════════════════ */}
+      <EbookSettingsModal
+        isOpen={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        fontSize={fontSize}
+        minimalMode={minimalMode}
+        onPageJump={jumpToPage}
+        onFontSizeChange={setFontSize}
+        onMinimalModeToggle={() => setMinimalMode(!minimalMode)}
+        progressPercent={progress * 100}
+        currentChapterTitle={chapterIndex[currentChapterIdx]?.label}
+      />
+
+      {/* ══════════════════════════════════════
+         MINIMAL MODE — Floating Settings Button
+         ══════════════════════════════════════ */}
+      {minimalMode && (
+        <button
+          type="button"
+          className="ebook-reader__floating-settings"
+          onClick={() => setSettingsOpen(true)}
+          aria-label="Open reader settings"
+        >
+          <SlidersHorizontal size={24} aria-hidden="true" />
+        </button>
+      )}
     </main>
   );
 }
