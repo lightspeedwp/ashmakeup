@@ -139,21 +139,22 @@ export function FaqAggregatePage() {
   return (
     <main id="main-content" role="main" tabIndex={-1} className="faq-aggregate bg-atomic-noise">
       {/* Header */}
-      <div className="faq-aggregate__header">
-        <div className="faq-aggregate__header-content">
+      <div className="faq-aggregate__header section-spacing px-horizontal-section">
+        <div className="faq-aggregate__header-content section-container">
           <Breadcrumbs items={faqBreadcrumbs} centered />
-          <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-fluid-md">
+          <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-0">
             {faqPageUI.title}
           </h1>
-          <p className="text-body-guideline mb-fluid-lg faq-aggregate__subtitle">
+          <p className="text-body-guideline mb-0 faq-aggregate__subtitle">
             {faqPageUI.subtitle}
           </p>
         </div>
       </div>
 
-      <div className="container-7xl py-fluid-lg">
-        {/* Search + filters row */}
-        <div className="faq-aggregate__controls">
+      <div className="faq-aggregate-content section-spacing px-horizontal-section">
+        <div className="container-7xl section-container">
+          {/* Search + filters row */}
+          <div className="faq-aggregate__controls section-container">
           {/* Search */}
           <div className="faq-aggregate__search" role="search">
             <Search className="faq-aggregate__search-icon" aria-hidden="true" />
@@ -257,6 +258,7 @@ export function FaqAggregatePage() {
             className="faq-aggregate__sticker-image"
           />
         </div>
+      </div>
       </div>
     </main>
   );

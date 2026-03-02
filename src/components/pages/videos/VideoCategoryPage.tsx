@@ -50,47 +50,53 @@ export function VideoCategoryPage() {
   const [activeCategories, setActiveCategories] = useState(activeCategoriesInit);
   const [sortBy, setSortBy] = useState('recent');
 
-  useEffect(() => {
+  useEffect(function () {
     setActiveCategories(slug ? [slug] : []);
   }, [slug]);
 
-  useEffect(() => {
+  useEffect(function () {
     if (category) {
       setSEO(videoCategorySEO(category.name));
       const vidCount = filteredVideos ? filteredVideos.length : 0;
       injectSchema(SCHEMA_IDS.collection, buildCollectionSchema(
-        `${category.name} | Videos`,
+        category.name + ' | Videos',
         videoCategorySEO(category.name).description,
-        `/videos/category/${slug}`,
+        '/videos/category/' + slug,
         vidCount,
       ));
     }
-    return () => {
+    return function () {
       removeSchema(SCHEMA_IDS.collection);
     };
   }, [category, slug]);
 
   const categories = useMemo(
-    () =>
-      videoCategories.map(c => ({
-        id: c.id,
-        name: c.name,
-        slug: c.slug,
-        count: getVideoCategoryCount(c.name),
-      })).filter(c => c.count > 0),
+    function () {
+      return videoCategories.map(function (c) {
+        return {
+          id: c.id,
+          name: c.name,
+          slug: c.slug,
+          count: getVideoCategoryCount(c.name),
+        };
+      }).filter(function (c) { return c.count > 0; });
+    },
     [],
   );
 
-  const filteredVideos = useMemo(() => {
-    let vids = [...videos];
+  const filteredVideos = useMemo(function () {
+    let vids = [];
+    for (var i = 0; i < videos.length; i++) {
+      vids.push(videos[i]);
+    }
 
     if (activeCategories.length > 0) {
       const activeCat = videoCategories.find(
-        c => c.slug === activeCategories[0],
+        function (c) { return c.slug === activeCategories[0]; }
       );
       if (activeCat) {
         vids = vids.filter(
-          v => v.category.toLowerCase() === activeCat.name.toLowerCase(),
+          function (v) { return v.category.toLowerCase() === activeCat.name.toLowerCase(); }
         );
       }
     }
@@ -98,15 +104,16 @@ export function VideoCategoryPage() {
     switch (sortBy) {
       case 'recent':
         vids.sort(
-          (a, b) =>
-            new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+          function (a, b) {
+            return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+          }
         );
         break;
       case 'alphabetical':
-        vids.sort((a, b) => a.title.localeCompare(b.title));
+        vids.sort(function (a, b) { return a.title.localeCompare(b.title); });
         break;
       case 'featured':
-        vids.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+        vids.sort(function (a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0); });
         break;
     }
 
@@ -114,11 +121,11 @@ export function VideoCategoryPage() {
   }, [activeCategories, sortBy]);
 
   const handleCategoryToggle = useCallback(
-    (catSlug: string) => {
-      const isActive = activeCategories.includes(catSlug);
+    function (catSlug) {
+      const isActive = activeCategories.indexOf(catSlug) !== -1;
       // Toggle logic: single select behavior implied by routing
       const newCategories = isActive 
-        ? activeCategories.filter(s => s !== catSlug) 
+        ? activeCategories.filter(function (s) { return s !== catSlug; }) 
         : [catSlug];
 
       setActiveCategories(newCategories);
@@ -126,7 +133,7 @@ export function VideoCategoryPage() {
       if (newCategories.length === 0) {
         navigate('/videos');
       } else {
-        navigate(`/videos/category/${catSlug}`);
+        navigate('/videos/category/' + catSlug);
       }
     },
     [navigate, activeCategories],
@@ -134,75 +141,78 @@ export function VideoCategoryPage() {
 
   return (
     <main id="main-content" role="main" tabIndex={-1} className="videos-page bg-atomic-noise">
-      <div className="videos-header">
-        <div className="videos-header__content">
+      <div className="videos-header section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
           <Breadcrumbs items={videoCategoryBreadcrumbs(category ? category.name : 'Category')} centered />
-          <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
+          <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-0">
             {category ? category.name : 'Videos'}
           </h1>
           {category && category.description && (
-            <p className="text-body-guideline videos-header__description">
+            <p className="text-body-guideline mb-0 videos-header__description">
               {category.description}
             </p>
           )}
         </div>
       </div>
 
-      <div className="container-7xl py-fluid-lg">
-        <ArchiveFilters
-          contentType="video"
-          categories={categories}
-          activeCategories={activeCategories}
-          sortBy={sortBy}
-          sortOptions={SORT_OPTIONS}
-          resultCount={filteredVideos.length}
-          onCategoryToggle={handleCategoryToggle}
-          onSortChange={setSortBy}
-          onClearAll={() => {
-            setActiveCategories([]);
-            navigate('/videos');
-          }}
-        />
+      <div className="videos-content-section section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
+          <ArchiveFilters
+            contentType="video"
+            categories={categories}
+            activeCategories={activeCategories}
+            sortBy={sortBy}
+            sortOptions={SORT_OPTIONS}
+            resultCount={filteredVideos.length}
+            onCategoryToggle={handleCategoryToggle}
+            onSortChange={setSortBy}
+            onClearAll={function () {
+              setActiveCategories([]);
+              navigate('/videos');
+            }}
+          />
 
         {filteredVideos.length > 0 ? (
           <div className="videos-grid">
-            {filteredVideos.map(video => (
-              <article
-                key={video.id}
-                className="video-card"
-                onClick={() => navigate(`/video/${video.slug}`)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    navigate(`/video/${video.slug}`);
-                  }
-                }}
-                aria-label={`Play video: ${video.title}`}
-              >
-                <div className="video-card__thumbnail-container">
-                  <OptimizedImage
-                    src={videoThumbnails[video.id] ? videoThumbnails[video.id] : video.thumbnailUrl}
-                    alt={video.title}
-                    className="video-card__thumbnail"
-                    preset="thumbnail"
-                  />
-                  <div className="video-card__play-button">
-                    <Play className="video-card__play-icon" />
+            {filteredVideos.map(function (video) {
+              return (
+                <article
+                  key={video.id}
+                  className="video-card"
+                  onClick={function () { navigate('/video/' + video.slug); }}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      navigate('/video/' + video.slug);
+                    }
+                  }}
+                  aria-label={'Play video: ' + video.title}
+                >
+                  <div className="video-card__thumbnail-container">
+                    <OptimizedImage
+                      src={videoThumbnails[video.id] ? videoThumbnails[video.id] : video.thumbnailUrl}
+                      alt={video.title}
+                      className="video-card__thumbnail"
+                      preset="thumbnail"
+                    />
+                    <div className="video-card__play-button">
+                      <Play className="video-card__play-icon" />
+                    </div>
+                    <div className="video-card__duration">{video.duration}</div>
                   </div>
-                  <div className="video-card__duration">{video.duration}</div>
-                </div>
-                <div className="video-card__content">
-                  <h3 className="video-card__title">{video.title}</h3>
-                  <div className="video-card__meta">
-                    <span>{video.category}</span>
-                    <time dateTime={video.publishedAt}>{formatDate(video.publishedAt)}</time>
+                  <div className="video-card__content">
+                    <h3 className="video-card__title">{video.title}</h3>
+                    <div className="video-card__meta">
+                      <span>{video.category}</span>
+                      <time dateTime={video.publishedAt}>{formatDate(video.publishedAt)}</time>
+                    </div>
+                    <p className="video-card__description">{video.description}</p>
                   </div>
-                  <p className="video-card__description">{video.description}</p>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         ) : (
           <div className="error-card">
@@ -210,6 +220,7 @@ export function VideoCategoryPage() {
             <h3 className="error-title">{videosUI.archive.emptyState}</h3>
           </div>
         )}
+      </div>
       </div>
 
       <FaqSection pageId="videos" />

@@ -1,16 +1,18 @@
 /**
- * @fileoverview About landing page — redesigned with Phase 3 content components
+ * @fileoverview About Journey page — Global psytrance makeup artist story
  *
- * Uses Timeline, PullQuote, SplitContent, ContentSection, and ChapterNav
- * to create an immersive storytelling experience for Ash Shaw's identity.
+ * Combines the original psytrance journey content with immersive design:
+ * ChapterNav sidebar, scroll spy, Timeline, SplitContent, PullQuotes,
+ * entrance animations, and staggered fade-ups.
  *
  * @author Ash Shaw Portfolio Team
- * @version 5.0.0 - Phase 4 Content Expansion Redesign
+ * @version 7.5.0 - Hybrid design with chapter nav + journey content
  */
 
 import React, { useEffect, useState, useCallback } from "react";
 import "../../../styles/globals.css";
 import "../../../styles/blocks/about-page.css";
+import "../../../styles/blocks/artistry-page.css";
 
 /* ── Layout / Section Components ── */
 import { HeroLayout } from "../../sections/HeroLayout";
@@ -22,16 +24,23 @@ import { FaqSection } from "../../sections/FaqSection";
 import { PullQuote } from "../../ui/PullQuote";
 import { Timeline } from "../../ui/Timeline";
 import { ChapterNav } from "../../ui/ChapterNav";
-import { ScrollDownArrow } from "../../ui/ScrollDownArrow";
 
 /* ── Data ── */
-import { aboutLandingData } from "../../../data/mock/pages/about-landing";
+import { artistryPageData } from "../../../data/mock/pages/artistry";
 import { aboutHeroImages } from "../../../data/mock/images/hero-images";
-import { aboutHero } from "../../../data/mock/pages/about";
 import { aboutUI } from "../../../data/mock/ui/about";
 
+/* ── Icons ── */
+import {
+  Palette,
+  Blend,
+  Layers,
+  Lightbulb,
+  Sparkles,
+  ArrowRight,
+} from "lucide-react";
+
 /* ── Hooks ── */
-import { useAboutPageContent } from "../../../hooks/useContent";
 import { useAppNavigate } from "../../../hooks/useAppNavigate";
 
 /* ── SEO & Schema ── */
@@ -44,19 +53,45 @@ import {
   buildPersonSchema,
 } from "../../../utils/schemaService";
 
-/* ── Image for ADHD section ── */
-var adhdImageUrl =
-  "https://images.unsplash.com/photo-1533408944756-4950754f3ebc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZW9uJTIwVVYlMjBwYWludCUyMGFydGlzdCUyMGZlc3RpdmFsJTIwZmFjZXxlbnwxfHx8fDE3NzIzODEyNTV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral";
+/* ── UV split image ── */
+var uvSplitImage =
+  "https://images.unsplash.com/photo-1539035992980-e41ff3f540ed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxVViUyMGJsYWNrbGlnaHQlMjBuZW9uJTIwZmFjZSUyMHBhaW50JTIwZmVzdGl2YWx8ZW58MXx8fHwxNzcyMzk5MDk3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral";
 
 /**
- * About landing page — immersive identity storytelling with chapter navigation
+ * Map skill IDs to icon elements and gradient classes
+ */
+var skillIconMap: Record<string, { icon: React.ReactNode; gradient: string }> = {
+  "color-theory": {
+    icon: React.createElement(Palette, { className: "about-skill-icon", "aria-hidden": true }),
+    gradient: "about-skill-icon-wrap--pink-purple",
+  },
+  "blending": {
+    icon: React.createElement(Blend, { className: "about-skill-icon", "aria-hidden": true }),
+    gradient: "about-skill-icon-wrap--cyan-blue",
+  },
+  "texture": {
+    icon: React.createElement(Layers, { className: "about-skill-icon", "aria-hidden": true }),
+    gradient: "about-skill-icon-wrap--green-yellow",
+  },
+  "uv-techniques": {
+    icon: React.createElement(Lightbulb, { className: "about-skill-icon", "aria-hidden": true }),
+    gradient: "about-skill-icon-wrap--purple-pink",
+  },
+  "creative-design": {
+    icon: React.createElement(Sparkles, { className: "about-skill-icon", "aria-hidden": true }),
+    gradient: "about-skill-icon-wrap--blue-green",
+  },
+};
+
+/**
+ * About Journey page — immersive psytrance makeup artist story
  */
 export function AboutPage() {
   var setCurrentPage = useAppNavigate();
-  var landingData = aboutLandingData;
+  var data = artistryPageData;
 
   /* ── Active chapter tracking for ChapterNav ── */
-  var defaultChapterId = landingData.chapters.length > 0 ? landingData.chapters[0].id : "";
+  var defaultChapterId = data.chapters.length > 0 ? data.chapters[0].id : "";
   var activeChapterState = useState(defaultChapterId);
   var activeChapter = activeChapterState[0];
   var setActiveChapter = activeChapterState[1];
@@ -73,7 +108,7 @@ export function AboutPage() {
   /* ── Scroll spy for active chapter ── */
   useEffect(function () {
     function handleScroll() {
-      var chapters = landingData.chapters;
+      var chapters = data.chapters;
       var found = "";
       for (var i = 0; i < chapters.length; i++) {
         var el = document.getElementById(chapters[i].id);
@@ -95,20 +130,17 @@ export function AboutPage() {
     };
   }, []);
 
-  /* ── Contentful fallback (legacy hook) ── */
-  var contentResult = useAboutPageContent();
-  var aboutContent = contentResult.data;
-  var contentLoading = contentResult.loading;
-
-  var heroTitle = aboutContent && aboutContent.hero
-    ? (aboutContent.hero.title || aboutHero.title)
-    : aboutHero.title;
-
-  var heroDescription = landingData.hero.description;
-
   /* ── Handlers ── */
   var handlePortfolioClick = useCallback(function () {
     setCurrentPage("portfolio");
+  }, [setCurrentPage]);
+
+  var handleUvGalleryClick = useCallback(function () {
+    setCurrentPage("portfolio");
+  }, [setCurrentPage]);
+
+  var handleAdhdClick = useCallback(function () {
+    setCurrentPage("about/adhd");
   }, [setCurrentPage]);
 
   var handleChapterClick = useCallback(function (id: string) {
@@ -126,9 +158,9 @@ export function AboutPage() {
     <div className="about-page-container">
       {/* ──────────────── HERO ──────────────── */}
       <HeroLayout
-        title={heroTitle}
+        title="Global Psytrance Artist"
         subtitle={
-          <React.Fragment>
+          <span>
             <em className="text-gradient-pink-rose">
               {aboutUI.hero.subtitle.words[0]}
             </em>
@@ -141,16 +173,16 @@ export function AboutPage() {
               {aboutUI.hero.subtitle.words[2]}
             </em>{" "}
             {aboutUI.hero.subtitle.suffix}
-          </React.Fragment>
+          </span>
         }
-        description={heroDescription}
+        description={data.hero.description}
         size="xl"
         layout="split"
         align="wide"
         fullscreen={true}
         className="hero"
         showScrollArrow={true}
-        scrollArrowTarget="aquarian-section"
+        scrollArrowTarget="electric-journey"
         heroImages={aboutHeroImages}
         lightboxTitle={aboutUI.hero.lightboxTitle}
         enableLightbox={true}
@@ -161,15 +193,15 @@ export function AboutPage() {
             className="btn btn--neon-primary"
             aria-label="Navigate to Portfolio page to explore makeup artistry collection"
           >
-            {aboutUI.hero.cta}
+            {data.hero.cta}
           </button>
         }
         decorativeElements={
-          <React.Fragment>
+          <div>
             <div className="about-hero-orb-1" aria-hidden="true"></div>
             <div className="about-hero-orb-2" aria-hidden="true"></div>
             <div className="about-hero-orb-3" aria-hidden="true"></div>
-          </React.Fragment>
+          </div>
         }
       />
 
@@ -179,7 +211,7 @@ export function AboutPage() {
         {/* Mobile chapter nav (horizontal, sticky) */}
         <div className="about-landing__mobile-nav">
           <ChapterNav
-            chapters={landingData.chapters}
+            chapters={data.chapters}
             activeChapter={activeChapter}
             onChapterClick={handleChapterClick}
           />
@@ -188,7 +220,7 @@ export function AboutPage() {
         {/* Desktop sidebar nav */}
         <aside className="about-landing__nav">
           <ChapterNav
-            chapters={landingData.chapters}
+            chapters={data.chapters}
             activeChapter={activeChapter}
             onChapterClick={handleChapterClick}
           />
@@ -197,118 +229,272 @@ export function AboutPage() {
         {/* ──────────────── SECTIONS ──────────────── */}
         <div className="about-landing__sections">
 
-          {/* ─── 1. The Aquarian Blueprint ─── */}
+          {/* ─── 1. The electric journey begins ─── */}
           <div className="entrance-fade-up">
             <ContentSection
-              id="aquarian-section"
-              title={landingData.aquarianBlueprint.title}
+              id="electric-journey"
+              title={data.sections[0].title}
               variant="callout"
-              colorAccent="blue"
+              colorAccent="cyan"
             >
-              {landingData.aquarianBlueprint.paragraphs.map(function (para, idx) {
+              {data.sections[0].paragraphs.map(function (para, pIdx) {
                 return (
-                  <p className="text-body-p" key={"aq-p-" + idx}>
+                  <p className="text-body-p" key={"ej-p-" + pIdx}>
                     {para}
                   </p>
                 );
               })}
               <PullQuote
-                quote={landingData.aquarianBlueprint.quote}
+                quote="Every brush stroke ignites a story."
                 author="Ash Shaw"
                 variant="center"
-                neonColor="blue"
+                neonColor="cyan"
               />
             </ContentSection>
           </div>
 
-          {/* ─── 2. ADHD — Wired Different ─── */}
+          {/* ─── 2. Festival euphoria ─── */}
           <div className="entrance-fade-up entrance-fade-up--delay-1">
             <ContentSection
-              id="adhd-section"
-              title={landingData.adhdSection.title}
+              id="festival-euphoria"
+              title={data.sections[1].title}
+              variant="default"
+              colorAccent="pink"
+            >
+              {data.sections[1].paragraphs.map(function (para, pIdx) {
+                return (
+                  <p className="text-body-p" key={"fe-p-" + pIdx}>
+                    {para}
+                  </p>
+                );
+              })}
+            </ContentSection>
+          </div>
+
+          {/* ─── 3. UV explorations (split layout with image) ─── */}
+          <div className="entrance-fade-up entrance-fade-up--delay-2">
+            <ContentSection
+              id="uv-explorations"
+              title={data.sections[2].title}
               variant="default"
               colorAccent="green"
             >
               <SplitContent
-                imageUrl={adhdImageUrl}
-                imageAlt={landingData.adhdSection.imageAlt}
+                imageUrl={uvSplitImage}
+                imageAlt="UV blacklight neon face paint at a psytrance festival"
                 imageSide="left"
                 variant="even"
               >
-                <p className="text-body-p">
-                  {landingData.adhdSection.intro}
-                </p>
+                {data.sections[2].paragraphs.map(function (para, pIdx) {
+                  return (
+                    <p className="text-body-p" key={"uv-p-" + pIdx}>
+                      {para}
+                    </p>
+                  );
+                })}
 
-                <h3 className="about-adhd-subheading">
-                  {landingData.adhdSection.artHeading}
-                </h3>
-                <ul className="about-adhd-list">
-                  {landingData.adhdSection.artPoints.map(function (point, idx) {
-                    return (
-                      <li className="about-adhd-list__item" key={"art-" + idx}>
-                        {point}
-                      </li>
-                    );
-                  })}
-                </ul>
-
-                <h3 className="about-adhd-subheading">
-                  {landingData.adhdSection.businessHeading}
-                </h3>
-                <ul className="about-adhd-list">
-                  {landingData.adhdSection.businessPoints.map(function (point, idx) {
-                    return (
-                      <li className="about-adhd-list__item" key={"biz-" + idx}>
-                        {point}
-                      </li>
-                    );
-                  })}
-                </ul>
+                {/* Technical mastery card */}
+                <div className="about-technical-card">
+                  <h3 className="about-technical-title">{data.technicalMastery.title}</h3>
+                  <div className="about-technical-divider" aria-hidden="true"></div>
+                  <p className="about-technical-description text-body-p">
+                    {data.technicalMastery.description}
+                  </p>
+                </div>
               </SplitContent>
             </ContentSection>
           </div>
 
-          {/* ─── 3. The Costume Evolution ─── */}
-          <div className="entrance-fade-up entrance-fade-up--delay-2">
+          {/* ─── 4. Professional mousse eyeshadows + skills ─── */}
+          <div className="entrance-fade-up">
             <ContentSection
-              id="costume-section"
-              title={landingData.costumeEvolution.title}
+              id="mousse-shadows"
+              title={data.mousseShadows.title}
               variant="default"
               colorAccent="pink"
             >
-              <Timeline
-                events={landingData.costumeEvolution.events}
-                variant="vertical"
-                colorAccent="pink"
-              />
+              {data.mousseShadows.paragraphs.map(function (para, pIdx) {
+                return (
+                  <p className="text-body-p" key={"mousse-p-" + pIdx}>
+                    {para}
+                  </p>
+                );
+              })}
+
+              <div className="about-skills-grid">
+                {data.mousseShadows.skills.map(function (skill) {
+                  var iconData = skillIconMap[skill.id];
+                  var iconEl = iconData ? iconData.icon : null;
+                  var gradientClass = iconData ? iconData.gradient : "about-skill-icon-wrap--pink-purple";
+
+                  return (
+                    <div className="about-skill-item" key={skill.id}>
+                      <div className={"about-skill-icon-wrap " + gradientClass}>
+                        {iconEl}
+                      </div>
+                      <span className="about-skill-title">{skill.label}</span>
+                    </div>
+                  );
+                })}
+              </div>
             </ContentSection>
           </div>
 
-          {/* ─── 4. Making Others Shine — The Bullied Kid ─── */}
-          <div className="entrance-fade-up entrance-fade-up--delay-3">
+          {/* ─── 5. UV makeup artistry ─── */}
+          <div className="entrance-fade-up entrance-fade-up--delay-1">
             <ContentSection
-              id="shine-section"
-              title="Making Others Shine"
+              id="uv-artistry"
+              title={data.uvArtistry.title}
               variant="callout"
-              colorAccent="pink"
+              colorAccent="purple"
             >
-              {landingData.bulliedKid.contextParagraphs.map(function (para, idx) {
+              {data.uvArtistry.paragraphs.map(function (para, pIdx) {
                 return (
-                  <p className="text-body-p about-context-text" key={"bk-p-" + idx}>
+                  <p className="text-body-p" key={"uva-p-" + pIdx}>
+                    {para}
+                  </p>
+                );
+              })}
+              <div className="about-cta-center">
+                <button
+                  type="button"
+                  onClick={handleUvGalleryClick}
+                  className="btn btn--neon-outline"
+                  aria-label="Navigate to UV makeup gallery in Portfolio"
+                >
+                  {data.uvArtistry.cta}
+                </button>
+              </div>
+            </ContentSection>
+          </div>
+
+          {/* ─── 6. Creative process ─── */}
+          <div className="entrance-fade-up entrance-fade-up--delay-2">
+            <ContentSection
+              id="creative-process"
+              title={data.creativeProcess.title}
+              variant="default"
+              colorAccent="green"
+            >
+              {data.creativeProcess.paragraphs.map(function (para, pIdx) {
+                return (
+                  <p className="text-body-p" key={"cp-p-" + pIdx}>
                     {para}
                   </p>
                 );
               })}
               <PullQuote
-                quote={landingData.bulliedKid.quote}
+                quote={data.creativeProcess.quote}
+                variant="center"
+                neonColor="green"
+              />
+            </ContentSection>
+          </div>
+
+          {/* ─── 7. The costume evolution (Timeline) ─── */}
+          <div className="entrance-fade-up">
+            <ContentSection
+              id="costume-timeline"
+              title={data.costumeEvolution.title}
+              variant="default"
+              colorAccent="pink"
+            >
+              <Timeline
+                events={data.costumeEvolution.events}
+                variant="vertical"
+                colorAccent="pink"
+                ariaLabel="Ash Shaw's costume evolution timeline from 1999 to 2019"
+              />
+            </ContentSection>
+          </div>
+
+          {/* ─── 8. ADHD — Wired different (brief + link) ─── */}
+          <div className="entrance-fade-up entrance-fade-up--delay-1">
+            <ContentSection
+              id="adhd-brief"
+              title={data.adhdBrief.title}
+              variant="callout"
+              colorAccent="yellow"
+            >
+              <p className="text-body-p">
+                {data.adhdBrief.paragraph}
+              </p>
+              <div className="about-cta-center">
+                <button
+                  type="button"
+                  onClick={handleAdhdClick}
+                  className="btn btn--neon-outline"
+                  aria-label="Read the full ADHD story on the dedicated ADHD page"
+                >
+                  <span>{data.adhdBrief.linkLabel}</span>
+                  <ArrowRight className="about-btn-arrow" aria-hidden="true" />
+                </button>
+              </div>
+            </ContentSection>
+          </div>
+
+          {/* ─── 9. Making others shine ─── */}
+          <div className="entrance-fade-up entrance-fade-up--delay-2">
+            <ContentSection
+              id="making-others-shine"
+              title={data.makingOthersShine.title}
+              variant="callout"
+              colorAccent="pink"
+            >
+              {data.makingOthersShine.paragraphs.map(function (para, idx) {
+                return (
+                  <p className="text-body-p" key={"mos-p-" + idx}>
+                    {para}
+                  </p>
+                );
+              })}
+              <PullQuote
+                quote={data.makingOthersShine.quote}
                 variant="center"
                 neonColor="pink"
               />
             </ContentSection>
           </div>
 
+          {/* ─── 10. Looking forward ─── */}
+          <div className="entrance-fade-up">
+            <ContentSection
+              id="looking-forward"
+              title={data.lookingForward.title}
+              variant="default"
+              colorAccent="cyan"
+            >
+              {data.lookingForward.paragraphs.map(function (para, pIdx) {
+                return (
+                  <p className="text-body-p" key={"lf-p-" + pIdx}>
+                    {para}
+                  </p>
+                );
+              })}
+              <div className="about-cta-center">
+                <button
+                  type="button"
+                  onClick={handlePortfolioClick}
+                  className="btn btn--neon-primary"
+                  aria-label="Navigate to Portfolio page to explore makeup artistry collection"
+                >
+                  {data.lookingForward.cta}
+                </button>
+              </div>
+            </ContentSection>
+          </div>
+
           {/* ─── FAQ Section ─── */}
-          <FaqSection pageId="about" />
+          <FaqSection
+            pageId="about"
+            items={data.faqs.map(function (faq) {
+              return {
+                id: faq.id,
+                question: faq.question,
+                answer: faq.answer,
+              };
+            })}
+          />
         </div>
       </div>
     </div>

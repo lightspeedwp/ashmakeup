@@ -1,158 +1,37 @@
 /* ==========================================================================
-   Portfolio Card Block Styles
-   Structure mirrors blog-card but with neon differentiators (date + Read More)
-   ========================================================================== */
-
-/* Card Container */
-.portfolio-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--wp--preset--color--base);
-  border-radius: var(--wp--preset--border-radius--lg);
-  overflow: hidden;
-  box-shadow: var(--wp--preset--shadow--card);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid var(--border);
-  height: 100%;
-  cursor: pointer;
-  outline: none;
-}
-
-.dark .portfolio-card {
-  background-color: rgba(30, 30, 30, 0.6);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-.portfolio-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--wp--preset--shadow--card-hover);
-}
-
-.portfolio-card:focus-visible {
-  box-shadow: var(--wp--preset--shadow--focus-ring-strong);
-  border-color: var(--wp--preset--color--neon-purple);
-}
-
-/* ==========================================================================
-   Image Container
-   ========================================================================== */
-.portfolio-card__image-container {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4/3;
-  background-size: cover;
-  background-position: center;
-  background-color: var(--wp--preset--color--neutral-200);
-  overflow: hidden;
-}
-
-/* Video Overlay */
-.portfolio-card__video-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease;
-  z-index: 5;
-}
-
-.portfolio-card:hover .portfolio-card__video-overlay {
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.portfolio-card__play-button {
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(4px);
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.portfolio-card:hover .portfolio-card__play-button {
-  transform: scale(1.1);
-  background-color: rgba(255, 255, 255, 0.3);
-  border-color: #fff;
-  box-shadow: var(--wp--preset--shadow--neon-purple);
-}
-
-.portfolio-card__play-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: #fff;
-  fill: currentColor;
-  margin-left: 0.25rem; /* Optical alignment */
-}
-
-/* ==========================================================================
-   Category Tag (frosted overlay on image — top-right)
-   ========================================================================== */
-.portfolio-card__category-tag {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  padding: 4px 12px;
-  border-radius: var(--wp--preset--border-radius--full);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #fff;
-  z-index: 10;
-  backdrop-filter: blur(4px);
-  background-color: rgba(15, 15, 15, 0.7);
-}
-
-.portfolio-card__category-tag--festival { background-color: rgba(233, 30, 99, 0.8); }
-.portfolio-card__category-tag--uv { background-color: rgba(156, 39, 176, 0.8); }
-.portfolio-card__category-tag--swiss { background-color: rgba(63, 81, 181, 0.8); }
-.portfolio-card__category-tag--nail { background-color: rgba(255, 152, 0, 0.8); }
-.portfolio-card__category-tag--gold { background-color: rgba(255, 193, 7, 0.8); color: #000; }
-.portfolio-card__category-tag--default { background-color: rgba(33, 150, 243, 0.8); }
-
-.portfolio-card__category-tag.clickable {
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-decoration: none;
-  color: #fff;
-}
-
-.portfolio-card__category-tag.clickable:hover {
-  transform: scale(1.05);
-  filter: brightness(1.2);
-  box-shadow: var(--wp--preset--shadow--neon-sm);
-}
-
-.portfolio-card__category-tag--gold.clickable:hover {
-  color: #000;
-}
-
-/* ==========================================================================
    Archive Page Card Variants (Category/Tag pages)
    ========================================================================== */
 .portfolio-card-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--wp--preset--spacing--fluid-lg);
+  gap: var(--wp--preset--spacing--fluid-md);
 }
 
-@media (min-width: 640px) {
+@media (min-width: 600px) {
   .portfolio-card-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--wp--preset--spacing--fluid-lg);
   }
 }
 
 @media (min-width: 1024px) {
   .portfolio-card-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: var(--wp--preset--spacing--fluid-lg);
+  }
+}
+
+@media (min-width: 1440px) {
+  .portfolio-card-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--wp--preset--spacing--fluid-xl);
+  }
+}
+
+@media (min-width: 1800px) {
+  .portfolio-card-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--wp--preset--spacing--fluid-2xl);
   }
 }
 
@@ -488,11 +367,63 @@
   transition: transform 0.2s ease;
 }
 
-.portfolio-card__action-btn:hover .portfolio-card__action-icon {
-  transform: translateX(3px);
-}
+/* ── Reduced Motion (V-04 fix) ── */
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-card {
+    transition: none;
+  }
 
-/* Legacy — kept for backward compat but no longer rendered */
-.portfolio-card__gallery-indicator {
-  display: none;
+  .portfolio-card:hover {
+    transform: none;
+  }
+
+  .portfolio-card__video-overlay {
+    transition: none;
+  }
+
+  .portfolio-card__play-button {
+    transition: none;
+  }
+
+  .portfolio-card:hover .portfolio-card__play-button {
+    transform: none;
+  }
+
+  .portfolio-card__category-tag.clickable,
+  .portfolio-card__category.clickable {
+    transition: none;
+  }
+
+  .portfolio-card__category-tag.clickable:hover,
+  .portfolio-card__category.clickable:hover {
+    transform: none;
+  }
+
+  .portfolio-card__nav-button {
+    transition: none;
+  }
+
+  .portfolio-card__nav-button:hover {
+    transform: translateY(-50%);
+  }
+
+  .portfolio-card__dot {
+    transition: none;
+  }
+
+  .portfolio-card__counter {
+    transition: none;
+  }
+
+  .portfolio-card__action-btn {
+    transition: none;
+  }
+
+  .portfolio-card__action-btn:hover {
+    transform: none;
+  }
+
+  .portfolio-card__action-icon {
+    transition: none;
+  }
 }

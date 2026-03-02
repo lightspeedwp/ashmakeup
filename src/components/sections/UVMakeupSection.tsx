@@ -40,20 +40,26 @@ export function UVMakeupSection() {
   // Responsive State
   const [isDesktop, setIsDesktop] = useState(true);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [slidesPerView, setSlidesPerView] = useState(3);
+  const [slidesPerView, setSlidesPerView] = useState(5);
 
   // Handle Resize Logic for Hybrid Layout
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      if (width < 768) {
+      if (width < 600) {
         setSlidesPerView(1);
         setIsDesktop(false);
-      } else if (width < 1280) {
+      } else if (width < 1024) {
         setSlidesPerView(2);
         setIsDesktop(false);
-      } else {
+      } else if (width < 1440) {
         setSlidesPerView(3);
+        setIsDesktop(true);
+      } else if (width < 1800) {
+        setSlidesPerView(4);
+        setIsDesktop(true);
+      } else {
+        setSlidesPerView(5);
         setIsDesktop(true);
       }
     };
@@ -152,13 +158,13 @@ export function UVMakeupSection() {
 
   return (
     <div className="uv-makeup-section-wrapper">
-      <section id="uv-makeup" className="uv-makeup-section">
-        <div className="container-wide uv-makeup-section__content">
+      <section id="uv-makeup" className="uv-makeup-section section-spacing px-horizontal-section">
+        <div className="container-wide uv-makeup-section__content section-container">
           {/* Section Header */}
           <div className="uv-makeup-section__header">
             <h2
               id="uv-makeup"
-              className="text-section-h2 text-gradient-pink-purple-blue mb-fluid-lg"
+              className="text-section-h2 text-gradient-pink-purple-blue"
             >
               {homeUI.sections.uvMakeup.title}
             </h2>
@@ -170,7 +176,7 @@ export function UVMakeupSection() {
           {/* Hybrid Content Layout: Grid on Desktop, Slider on Mobile/Tablet */}
           {isDesktop ? (
             /* Desktop Grid View */
-            <div className="layout-grid layout-grid--desktop-3 rgs-grid">
+            <div className="layout-grid layout-grid--desktop-3 uv-makeup-section__grid">
               {uvMakeupCards.map((makeup, index) => {
                 const makeupKey = makeup.id ? makeup.id : String(index);
                 return (

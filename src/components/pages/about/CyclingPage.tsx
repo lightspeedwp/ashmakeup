@@ -15,6 +15,7 @@ import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { Timeline } from '../../ui/Timeline';
+import { StatCard } from '../../ui/StatCard';
 import { ContentSection } from '../../sections/ContentSection';
 import { Accordion } from '../../ui/Accordion';
 import '../../../styles/blocks/about-subpage.css';
@@ -74,8 +75,8 @@ export function CyclingPage() {
       className="about-subpage about-subpage--cycling bg-atomic-noise"
     >
       {/* ── Hero ── */}
-      <header className="about-subpage__hero">
-        <div className="about-subpage__hero-content">
+      <header className="about-subpage__hero section-spacing px-horizontal-section">
+        <div className="about-subpage__hero-content section-container">
           <Breadcrumbs items={data.breadcrumbs} centered />
 
           <span className="about-subpage__hero-badge">
@@ -93,24 +94,19 @@ export function CyclingPage() {
       </header>
 
       {/* ── Stats Grid ── */}
-      <div
-        className="about-subpage__facts"
-        role="list"
-        aria-label="Cycling stats"
-      >
-        {data.stats.map(function (stat) {
-          return (
-            <div key={stat.id} className="about-subpage__fact" role="listitem">
-              <span className="about-subpage__fact-label">{stat.label}</span>
-              <span className="about-subpage__fact-value">{stat.value}</span>
-            </div>
-          );
-        })}
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          <StatCard
+            items={data.stats}
+            ariaLabel="Cycling stats"
+          />
+        </div>
       </div>
 
       {/* ── Sections (Phase 3 ContentSection) ── */}
-      <div className="about-subpage__body">
-        {data.sections.map(function (section, idx) {
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          {data.sections.map(function (section, idx) {
           var delayClass = idx < 6 ? ' entrance-fade-up--delay-' + (idx + 1) : '';
 
           return (
@@ -132,38 +128,41 @@ export function CyclingPage() {
             </div>
           );
         })}
+        </div>
       </div>
 
       {/* ── Notable Rides Timeline (Phase 3) ── */}
-      <div className="about-subpage__body">
-        <div className="entrance-fade-up entrance-fade-up--delay-2">
-          <ContentSection
-            id="notable-rides"
-            title="Notable Rides"
-            variant="default"
-            colorAccent="green"
-          >
-            <Timeline
-              events={ridesTimeline}
-              variant="vertical"
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          <div className="entrance-fade-up entrance-fade-up--delay-2">
+            <ContentSection
+              id="notable-rides"
+              title="Notable Rides"
+              variant="default"
               colorAccent="green"
-            />
-          </ContentSection>
-        </div>
+            >
+              <Timeline
+                events={ridesTimeline}
+                variant="vertical"
+                colorAccent="green"
+              />
+            </ContentSection>
+          </div>
 
-        {/* ── Kit List as Accordion (Phase 3) ── */}
-        <div className="entrance-fade-up entrance-fade-up--delay-3">
-          <ContentSection
-            id="kit-list"
-            title="What Fits on the Bike"
-            variant="default"
-            colorAccent="green"
-          >
-            <Accordion
-              items={kitAccordionItems}
-              allowMultiple={true}
-            />
-          </ContentSection>
+          {/* ── Kit List as Accordion (Phase 3) ── */}
+          <div className="entrance-fade-up entrance-fade-up--delay-3">
+            <ContentSection
+              id="kit-list"
+              title="What Fits on the Bike"
+              variant="default"
+              colorAccent="green"
+            >
+              <Accordion
+                items={kitAccordionItems}
+                allowMultiple={true}
+              />
+            </ContentSection>
+          </div>
         </div>
       </div>
     </main>

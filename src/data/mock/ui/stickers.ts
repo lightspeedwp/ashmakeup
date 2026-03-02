@@ -3,7 +3,7 @@
  * All page content lives here — no hardcoded strings in components.
  *
  * @module data/mock/ui/stickers
- * @version 2.2.0 — Added 5 new sticker theme mappings (paint dreams, geo pattern, rainbow flow, create universe, abstract blocks)
+ * @version 3.0.0 — Added 7 new sticker theme categories (geometry, typography, neurodivergent, cycling, branding, berlin, spirals)
  */
 
 /** Theme definition for sticker categorisation */
@@ -22,6 +22,12 @@ export const stickerThemes: StickerTheme[] = [
   { id: 'galaxy', label: 'Galaxy' },
   { id: 'psychedelic', label: 'Psychedelic' },
   { id: 'rainbow', label: 'Rainbow' },
+  { id: 'geometry', label: 'Sacred geometry' },
+  { id: 'typography', label: 'Festival phrases' },
+  { id: 'neurodivergent', label: 'Neurodivergent pride' },
+  { id: 'cycling', label: 'Cycling & endurance' },
+  { id: 'branding', label: 'Six Cats & branding' },
+  { id: 'berlin', label: 'Berlin scene' },
 ];
 
 /**
@@ -57,6 +63,19 @@ export const stickerThemeMap: Record<string, string> = {
   'create-universe-eye': 'rainbow',
   'abstract-blocks-eye': 'galaxy',
   'makeup-artist': 'psychedelic',
+  'flower-of-life': 'geometry',
+  'metatrons-cube': 'geometry',
+  'sri-yantra': 'geometry',
+  'dance-until-sunrise': 'typography',
+  '138-bpm': 'typography',
+  'good-vibes-only': 'typography',
+  'adhd-brain': 'neurodivergent',
+  'wired-different': 'neurodivergent',
+  'gravel-bike': 'cycling',
+  'two-wheels-dancefloor': 'cycling',
+  'six-cats': 'branding',
+  'berlin-calling': 'berlin',
+  'hypnotic-spiral': 'spirals',
 };
 
 /** All UI strings for the stickers page */
@@ -66,7 +85,7 @@ export const stickersPageUI = {
   },
   hero: {
     badge: 'Art Prints',
-    title: 'Sticker Designs',
+    title: 'Sticker designs',
     description:
       'A growing collection of hand-crafted neon sticker graphics — psychedelic eyes, cosmic spirals, and everything in between. Each design started as a digital painting and lives across the site as decorative flourishes.',
   },
@@ -88,7 +107,7 @@ export const stickersPageUI = {
   },
   breadcrumbs: [
     { label: 'Home', href: '/' },
-    { label: 'Developer Tools', href: '/dev-tools' },
-    { label: 'Sticker Designs' },
+    { label: 'Developer tools', href: '/dev-tools' },
+    { label: 'Sticker designs' },
   ],
 };

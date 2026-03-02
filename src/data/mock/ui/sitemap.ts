@@ -43,24 +43,24 @@ export interface SitemapPageEntry {
 }
 
 export const sitemapExtraPages: SitemapPageEntry[] = [
-  { id: "press", label: "Press Kit", path: "/press", icon: "Newspaper" },
-  { id: "toolkit", label: "The Toolkit", path: "/toolkit", icon: "Wrench" },
-  { id: "next-festival", label: "Next Festival", path: "/next-festival", icon: "Calendar" },
-  { id: "accessibility", label: "Accessibility Statement", path: "/about/accessibility", icon: "UserCircle" },
+  { id: "press", label: "Press kit", path: "/press", icon: "Newspaper" },
+  { id: "toolkit", label: "The toolkit", path: "/toolkit", icon: "Wrench" },
+  { id: "next-festival", label: "Next festival", path: "/next-festival", icon: "Calendar" },
+  { id: "accessibility", label: "Accessibility statement", path: "/about/accessibility", icon: "UserCircle" },
   { id: "faq", label: "FAQ", path: "/faq", icon: "HelpCircle" },
   { id: "feedback", label: "Feedback", path: "/feedback", icon: "MessageSquare" },
   { id: "podcasts", label: "Podcasts", path: "/podcasts", icon: "Mic" },
   { id: "search", label: "Search", path: "/search", icon: "Search" },
-  { id: "stickers", label: "Sticker Gallery", path: "/stickers", icon: "Sticker" },
-  { id: "style-guide", label: "Style Guide", path: "/style-guide", icon: "Palette" },
+  { id: "stickers", label: "Sticker gallery", path: "/stickers", icon: "Sticker" },
+  { id: "style-guide", label: "Style guide", path: "/style-guide", icon: "Palette" },
 ];
 
 /**
  * Legal pages listed in the Legal section of the sitemap.
  */
 export const sitemapLegalPages: SitemapPageEntry[] = [
-  { id: "terms", label: "Terms & Conditions", path: "/terms", icon: "FileText" },
-  { id: "privacy", label: "Privacy Policy", path: "/privacy", icon: "FileText" },
+  { id: "terms", label: "Terms & conditions", path: "/terms", icon: "FileText" },
+  { id: "privacy", label: "Privacy policy", path: "/privacy", icon: "FileText" },
   { id: "sitemap", label: "Sitemap", path: "/sitemap", icon: "Layers" },
 ];
 
@@ -70,7 +70,7 @@ export const sitemapLegalPages: SitemapPageEntry[] = [
  */
 export const sitemapDevToolsHub: SitemapPageEntry = {
   id: "hub",
-  label: "Developer Tools Hub",
+  label: "Developer tools hub",
   path: "/dev-tools",
   icon: "Wrench",
 };
@@ -128,14 +128,14 @@ export const sitemapContent = {
   },
   sections: {
     pages: "Pages",
-    portfolioCategories: "Portfolio Categories",
-    blogCategories: "Blog Categories",
-    blogPosts: "Blog Posts",
+    portfolioCategories: "Portfolio categories",
+    blogCategories: "Blog categories",
+    blogPosts: "Blog posts",
     podcasts: "Podcasts",
     videos: "Videos",
     events: "Events",
     tags: "Tags",
-    devTools: "Developer Tools",
+    devTools: "Developer tools",
     legal: "Legal",
   },
 };

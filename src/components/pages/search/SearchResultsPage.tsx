@@ -277,193 +277,205 @@ export function SearchResultsPage() {
   return (
     <main id="main-content" role="main" tabIndex={-1} className="search-results bg-atomic-noise">
       {/* Header */}
-      <div className="search-results__header">
-        <Breadcrumbs items={breadcrumbs} centered />
-        <h1 className="text-section-h2">
-          {debouncedQuery ? (
-            <>
-              Results for{' '}
-              <span className="search-results__keyword">
-                &ldquo;{debouncedQuery}&rdquo;
-              </span>
-            </>
-          ) : (
-            'Search'
+      <div className="search-results__header section-spacing px-horizontal-section">
+        <div className="section-container">
+          <Breadcrumbs items={breadcrumbs} centered />
+          <h1 className="text-section-h2 mb-0">
+            {debouncedQuery ? (
+              <>
+                Results for{' '}
+                <span className="search-results__keyword">
+                  &ldquo;{debouncedQuery}&rdquo;
+                </span>
+              </>
+            ) : (
+              'Search'
+            )}
+          </h1>
+          {debouncedQuery && (
+            <p className="search-results__count mb-0">
+              {filteredResults.length}{' '}
+              {filteredResults.length === 1 ? 'result' : 'results'} found
+            </p>
           )}
-        </h1>
-        {debouncedQuery && (
-          <p className="search-results__count">
-            {filteredResults.length}{' '}
-            {filteredResults.length === 1 ? 'result' : 'results'} found
-          </p>
-        )}
+        </div>
       </div>
 
-      <div className="search-results__body">
-        {/* Search input */}
-        <div className="search-results__input-wrapper">
-          <Search className="search-results__input-icon" aria-hidden="true" />
-          <input
-            type="text"
-            className="search-results__input-wide"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={searchUI.placeholder}
-            aria-label={searchUI.ariaLabel}
-            autoFocus
-          />
+      <div className="search-results__body section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
+          {/* Search input */}
+          <div className="search-results__input-wrapper section-container">
+            <div className="flex-row items-center gap-fluid-sm w-full">
+              <Search className="search-results__input-icon" aria-hidden="true" />
+              <input
+                type="text"
+                className="search-results__input-wide"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={searchUI.placeholder}
+                aria-label={searchUI.ariaLabel}
+                autoFocus
+              />
+            </div>
+          </div>
+
+          {/* Suggestions (when no query) */}
+          {!debouncedQuery && (
+            <div className="search-suggestions section-container" role="group" aria-label={searchUI.suggestionsLabel}>
+              <span className="search-suggestions__label">{searchUI.suggestionsLabel}</span>
+              <div className="flex-row flex-wrap gap-fluid-sm">
+                {searchUI.suggestions.map((term) => (
+                  <button
+                    key={term}
+                    type="button"
+                    className="search-suggestions__chip"
+                    onClick={() => handleSuggestion(term)}
+                  >
+                    {term}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Tabbed content types — each with unique icon, colour and animation */}
+          {debouncedQuery && allResults.length > 0 && (
+            <div className="search-tabs section-container" role="tablist" aria-label={searchUI.filterLabels.contentType}>
+              <div className="flex-row flex-wrap gap-fluid-sm">
+                {/* All tab */}
+                {(() => {
+                  const cfg = TAB_CONFIG['all'];
+                  const Icon = cfg.icon;
+                  return (
+                    <button
+                      type="button"
+                      role="tab"
+                      aria-selected={activeTab === 'all'}
+                      className={`search-tabs__tab search-tabs__tab--${cfg.modifier}${activeTab === 'all' ? ' search-tabs__tab--active' : ''}`}
+                      onClick={() => handleTabChange('all')}
+                    >
+                      <Icon className="search-tabs__tab-icon" aria-hidden="true" />
+                      {searchUI.tabAll}
+                      <span className="search-tabs__tab-count">({allResults.length})</span>
+                    </button>
+                  );
+                })()}
+
+                {/* Per-type tabs */}
+                {searchUI.contentTypes.map((ct) => {
+                  const count = typeCounts.get(ct.value) || 0;
+                  if (count === 0) return null;
+                  const cfgEntry = TAB_CONFIG[ct.value];
+                  const cfg = cfgEntry ? cfgEntry : { icon: FileText, modifier: ct.value };
+                  const Icon = cfg.icon;
+                  return (
+                    <button
+                      type="button"
+                      key={ct.value}
+                      role="tab"
+                      aria-selected={activeTab === ct.value}
+                      className={`search-tabs__tab search-tabs__tab--${cfg.modifier}${activeTab === ct.value ? ' search-tabs__tab--active' : ''}`}
+                      onClick={() => handleTabChange(ct.value)}
+                    >
+                      <Icon className="search-tabs__tab-icon" aria-hidden="true" />
+                      {ct.label}
+                      <span className="search-tabs__tab-count">({count})</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Sort controls */}
+          {debouncedQuery && filteredResults.length > 0 && (
+            <ArchiveFilters
+              contentType="search"
+              categories={sortCategories}
+              activeCategories={activeTab === 'all' ? [] : [activeTab]}
+              sortBy={sortBy}
+              sortOptions={searchUI.sortOptions}
+              resultCount={filteredResults.length}
+              onCategoryToggle={() => {}}
+              onSortChange={handleSortChange}
+              onClearAll={() => {
+                handleTabChange('all');
+                setSortBy('relevance');
+              }}
+            />
+          )}
+
+          {/* Dynamic sub-filters (content-type-specific category chips) */}
+          {debouncedQuery && subCategories.length > 0 && (
+            <div
+              className="search-sub-filters section-container"
+              role="group"
+              aria-label={searchUI.filterLabels.category}
+            >
+              <span className="search-sub-filters__label">
+                <Layers className="search-sub-filters__label-icon" aria-hidden="true" /> {searchUI.filterLabels.category}
+              </span>
+              <div className="search-sub-filters__chips flex-row flex-wrap gap-fluid-xs">
+                {subCategories.map((sc) => (
+                  <button
+                    type="button"
+                    key={sc.slug}
+                    className={`search-sub-filters__chip${
+                      activeSubCategory === sc.slug ? ' search-sub-filters__chip--active' : ''
+                    }`}
+                    onClick={() =>
+                      setActiveSubCategory((prev) => (prev === sc.slug ? '' : sc.slug))
+                    }
+                    aria-pressed={activeSubCategory === sc.slug}
+                  >
+                    {sc.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ── Results ── */}
+          {hasResults ? (
+            activeTab === 'all' ? (
+              /* Grouped by type */
+              <div className="section-container">
+                {Array.from(grouped.entries()).map(([type, items]) => {
+                  const cfgGroup = TAB_CONFIG[type];
+                  const Icon = cfgGroup ? cfgGroup.icon : FileText;
+                  return (
+                    <section key={type} className={`search-results__group search-results__group--${type} section-container`}>
+                      <h2 className={`search-results__group-title search-results__group-title--${type} mb-0`}>
+                        <Icon className="search-results__group-icon" aria-hidden="true" />
+                        {(() => {
+                          const ct = searchUI.contentTypes.find((ct) => ct.value === type);
+                          return ct ? ct.label : type;
+                        })()}{' '}
+                        ({items.length})
+                      </h2>
+                      <div className="search-results__group-grid">
+                        {items.map(renderCard)}
+                      </div>
+                    </section>
+                  );
+                })}
+              </div>
+            ) : (
+              /* Flat grid for single type */
+              <div className="search-results__flat-grid section-container" role="tabpanel">
+                {filteredResults.map(renderCard)}
+              </div>
+            )
+          ) : debouncedQuery ? (
+            <div className="search-results__empty section-container">
+              <Search className="search-results__empty-icon" aria-hidden="true" />
+              <h2 className="search-results__empty-title mb-0">{searchUI.noResults.title}</h2>
+              <p className="search-results__empty-message mb-0">
+                {searchUI.noResults.message}
+              </p>
+            </div>
+          ) : null}
         </div>
-
-        {/* Suggestions (when no query) */}
-        {!debouncedQuery && (
-          <div className="search-suggestions" role="group" aria-label={searchUI.suggestionsLabel}>
-            <span className="search-suggestions__label">{searchUI.suggestionsLabel}</span>
-            {searchUI.suggestions.map((term) => (
-              <button
-                key={term}
-                type="button"
-                className="search-suggestions__chip"
-                onClick={() => handleSuggestion(term)}
-              >
-                {term}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* Tabbed content types — each with unique icon, colour and animation */}
-        {debouncedQuery && allResults.length > 0 && (
-          <div className="search-tabs" role="tablist" aria-label={searchUI.filterLabels.contentType}>
-            {/* All tab */}
-            {(() => {
-              const cfg = TAB_CONFIG['all'];
-              const Icon = cfg.icon;
-              return (
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={activeTab === 'all'}
-                  className={`search-tabs__tab search-tabs__tab--${cfg.modifier}${activeTab === 'all' ? ' search-tabs__tab--active' : ''}`}
-                  onClick={() => handleTabChange('all')}
-                >
-                  <Icon className="search-tabs__tab-icon" aria-hidden="true" />
-                  {searchUI.tabAll}
-                  <span className="search-tabs__tab-count">({allResults.length})</span>
-                </button>
-              );
-            })()}
-
-            {/* Per-type tabs */}
-            {searchUI.contentTypes.map((ct) => {
-              const count = typeCounts.get(ct.value) || 0;
-              if (count === 0) return null;
-              const cfgEntry = TAB_CONFIG[ct.value];
-              const cfg = cfgEntry ? cfgEntry : { icon: FileText, modifier: ct.value };
-              const Icon = cfg.icon;
-              return (
-                <button
-                  type="button"
-                  key={ct.value}
-                  role="tab"
-                  aria-selected={activeTab === ct.value}
-                  className={`search-tabs__tab search-tabs__tab--${cfg.modifier}${activeTab === ct.value ? ' search-tabs__tab--active' : ''}`}
-                  onClick={() => handleTabChange(ct.value)}
-                >
-                  <Icon className="search-tabs__tab-icon" aria-hidden="true" />
-                  {ct.label}
-                  <span className="search-tabs__tab-count">({count})</span>
-                </button>
-              );
-            })}
-          </div>
-        )}
-
-        {/* Sort controls */}
-        {debouncedQuery && filteredResults.length > 0 && (
-          <ArchiveFilters
-            contentType="search"
-            categories={sortCategories}
-            activeCategories={activeTab === 'all' ? [] : [activeTab]}
-            sortBy={sortBy}
-            sortOptions={searchUI.sortOptions}
-            resultCount={filteredResults.length}
-            onCategoryToggle={() => {}}
-            onSortChange={handleSortChange}
-            onClearAll={() => {
-              handleTabChange('all');
-              setSortBy('relevance');
-            }}
-          />
-        )}
-
-        {/* Dynamic sub-filters (content-type-specific category chips) */}
-        {debouncedQuery && subCategories.length > 0 && (
-          <div
-            className="search-sub-filters"
-            role="group"
-            aria-label={searchUI.filterLabels.category}
-          >
-            <span className="search-sub-filters__label">
-              <Layers className="search-sub-filters__label-icon" aria-hidden="true" /> {searchUI.filterLabels.category}
-            </span>
-            <div className="search-sub-filters__chips">
-              {subCategories.map((sc) => (
-                <button
-                  type="button"
-                  key={sc.slug}
-                  className={`search-sub-filters__chip${
-                    activeSubCategory === sc.slug ? ' search-sub-filters__chip--active' : ''
-                  }`}
-                  onClick={() =>
-                    setActiveSubCategory((prev) => (prev === sc.slug ? '' : sc.slug))
-                  }
-                  aria-pressed={activeSubCategory === sc.slug}
-                >
-                  {sc.name}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ── Results ── */}
-        {hasResults ? (
-          activeTab === 'all' ? (
-            /* Grouped by type */
-            Array.from(grouped.entries()).map(([type, items]) => {
-              const cfgGroup = TAB_CONFIG[type];
-              const Icon = cfgGroup ? cfgGroup.icon : FileText;
-              return (
-                <section key={type} className={`search-results__group search-results__group--${type}`}>
-                  <h2 className={`search-results__group-title search-results__group-title--${type}`}>
-                    <Icon className="search-results__group-icon" aria-hidden="true" />
-                    {(() => {
-                      const ct = searchUI.contentTypes.find((ct) => ct.value === type);
-                      return ct ? ct.label : type;
-                    })()}{' '}
-                    ({items.length})
-                  </h2>
-                  <div className="search-results__group-grid">
-                    {items.map(renderCard)}
-                  </div>
-                </section>
-              );
-            })
-          ) : (
-            /* Flat grid for single type */
-            <div className="search-results__flat-grid" role="tabpanel">
-              {filteredResults.map(renderCard)}
-            </div>
-          )
-        ) : debouncedQuery ? (
-          <div className="search-results__empty">
-            <Search className="search-results__empty-icon" aria-hidden="true" />
-            <h2 className="search-results__empty-title">{searchUI.noResults.title}</h2>
-            <p className="search-results__empty-message">
-              {searchUI.noResults.message}
-            </p>
-          </div>
-        ) : null}
       </div>
 
     </main>

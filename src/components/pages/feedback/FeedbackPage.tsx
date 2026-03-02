@@ -33,51 +33,62 @@ export function FeedbackPage() {
   }, []);
 
   /** Category chips from portfolio categories */
-  const categoryChips = useMemo(() =>
-    portfolioCategoryData.map(c => ({
-      id: c.slug,
-      name: c.name,
-      count: feedbackItems.filter(fb => fb.categorySlug === c.slug).length,
-    })).filter(c => c.count > 0),
-    []
-  );
+  const categoryChips = useMemo(function () {
+    return portfolioCategoryData.map(function (c) {
+      return {
+        id: c.slug,
+        name: c.name,
+        count: feedbackItems.filter(function (fb) { return fb.categorySlug === c.slug; }).length,
+      };
+    }).filter(function (c) { return c.count > 0; });
+  }, []);
 
   /** Tag chips from portfolio tags — only those used in feedback */
-  const tagChips = useMemo(() => {
-    const usedTags = new Set(feedbackItems.flatMap(fb => fb.tags));
+  const tagChips = useMemo(function () {
+    const usedTags = new Set();
+    for (var i = 0; i < feedbackItems.length; i++) {
+      for (var j = 0; j < feedbackItems[i].tags.length; j++) {
+        usedTags.add(feedbackItems[i].tags[j]);
+      }
+    }
     return portfolioTagData
-      .filter(t => usedTags.has(t.slug))
-      .map(t => ({
-        id: t.slug,
-        name: t.name,
-        count: feedbackItems.filter(fb => fb.tags.includes(t.slug)).length,
-      }));
+      .filter(function (t) { return usedTags.has(t.slug); })
+      .map(function (t) {
+        return {
+          id: t.slug,
+          name: t.name,
+          count: feedbackItems.filter(function (fb) { return fb.tags.indexOf(t.slug) !== -1; }).length,
+        };
+      });
   }, []);
 
   /** Filtered feedback */
-  const filtered = useMemo(() => {
-    let result = [...feedbackItems];
+  const filtered = useMemo(function () {
+    let result = [];
+    for (var i = 0; i < feedbackItems.length; i++) {
+      result.push(feedbackItems[i]);
+    }
 
     if (activeCategory !== 'all') {
-      result = result.filter(fb => fb.categorySlug === activeCategory);
+      result = result.filter(function (fb) { return fb.categorySlug === activeCategory; });
     }
 
     if (activeTag !== 'all') {
-      result = result.filter(fb => fb.tags.includes(activeTag));
+      result = result.filter(function (fb) { return fb.tags.indexOf(activeTag) !== -1; });
     }
 
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
-      result = result.filter(fb =>
-        fb.quote.toLowerCase().includes(q) ||
-        fb.name.toLowerCase().includes(q) ||
-        fb.location.toLowerCase().includes(q) ||
-        (fb.event && fb.event.toLowerCase().includes(q))
-      );
+      result = result.filter(function (fb) {
+        return fb.quote.toLowerCase().indexOf(q) !== -1 ||
+          fb.name.toLowerCase().indexOf(q) !== -1 ||
+          fb.location.toLowerCase().indexOf(q) !== -1 ||
+          (fb.event && fb.event.toLowerCase().indexOf(q) !== -1);
+      });
     }
 
     // Featured first, then by date
-    return result.sort((a, b) => {
+    return result.sort(function (a, b) {
       if (a.featured && !b.featured) return -1;
       if (!a.featured && b.featured) return 1;
       return new Date(b.date).getTime() - new Date(a.date).getTime();
@@ -92,20 +103,21 @@ export function FeedbackPage() {
   return (
     <main id="main-content" role="main" tabIndex={-1} className="feedback-page bg-atomic-noise">
       {/* Header */}
-      <div className="feedback-page__header">
-        <div className="feedback-page__header-content">
+      <div className="feedback-page__header section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
           <Breadcrumbs items={feedbackBreadcrumbs} centered />
-          <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-fluid-md">
+          <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-0">
             {feedbackPageUI.title}
           </h1>
-          <p className="text-body-guideline mb-fluid-lg feedback-page__subtitle">
+          <p className="text-body-guideline mb-0 feedback-page__subtitle">
             {feedbackPageUI.subtitle}
           </p>
         </div>
       </div>
 
-      <div className="container-7xl py-fluid-lg">
-        {/* Controls */}
+      <div className="feedback-page-content section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
+          {/* Controls */}
         <div className="feedback-page__controls">
           {/* Search */}
           <div className="feedback-page__search" role="search">
@@ -116,7 +128,7 @@ export function FeedbackPage() {
               placeholder={feedbackPageUI.searchPlaceholder}
               aria-label={feedbackPageUI.searchPlaceholder}
               value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
+              onChange={function (e) { setSearchQuery(e.target.value); }}
             />
           </div>
 
@@ -126,24 +138,26 @@ export function FeedbackPage() {
             <div className="feedback-page__chip-row">
               <button
                 type="button"
-                className={`feedback-page__chip ${activeCategory === 'all' ? 'feedback-page__chip--active' : ''}`}
-                onClick={() => handleCategoryChange('all')}
+                className={'feedback-page__chip ' + (activeCategory === 'all' ? 'feedback-page__chip--active' : '')}
+                onClick={function () { handleCategoryChange('all'); }}
                 aria-pressed={activeCategory === 'all'}
               >
                 {feedbackPageUI.allCategoriesLabel}
               </button>
-              {categoryChips.map(cat => (
-                <button
-                  type="button"
-                  key={cat.id}
-                  className={`feedback-page__chip ${activeCategory === cat.id ? 'feedback-page__chip--active' : ''}`}
-                  onClick={() => handleCategoryChange(cat.id)}
-                  aria-pressed={activeCategory === cat.id}
-                >
-                  {cat.name}
-                  <span className="feedback-page__chip-count">{cat.count}</span>
-                </button>
-              ))}
+              {categoryChips.map(function (cat) {
+                return (
+                  <button
+                    type="button"
+                    key={cat.id}
+                    className={'feedback-page__chip ' + (activeCategory === cat.id ? 'feedback-page__chip--active' : '')}
+                    onClick={function () { handleCategoryChange(cat.id); }}
+                    aria-pressed={activeCategory === cat.id}
+                  >
+                    {cat.name}
+                    <span className="feedback-page__chip-count">{cat.count}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -153,24 +167,26 @@ export function FeedbackPage() {
             <div className="feedback-page__chip-row">
               <button
                 type="button"
-                className={`feedback-page__chip ${activeTag === 'all' ? 'feedback-page__chip--active' : ''}`}
-                onClick={() => setActiveTag('all')}
+                className={'feedback-page__chip ' + (activeTag === 'all' ? 'feedback-page__chip--active' : '')}
+                onClick={function () { setActiveTag('all'); }}
                 aria-pressed={activeTag === 'all'}
               >
                 All
               </button>
-              {tagChips.map(tag => (
-                <button
-                  type="button"
-                  key={tag.id}
-                  className={`feedback-page__chip ${activeTag === tag.id ? 'feedback-page__chip--active' : ''}`}
-                  onClick={() => setActiveTag(tag.id)}
-                  aria-pressed={activeTag === tag.id}
-                >
-                  {tag.name}
-                  <span className="feedback-page__chip-count">{tag.count}</span>
-                </button>
-              ))}
+              {tagChips.map(function (tag) {
+                return (
+                  <button
+                    type="button"
+                    key={tag.id}
+                    className={'feedback-page__chip ' + (activeTag === tag.id ? 'feedback-page__chip--active' : '')}
+                    onClick={function () { setActiveTag(tag.id); }}
+                    aria-pressed={activeTag === tag.id}
+                  >
+                    {tag.name}
+                    <span className="feedback-page__chip-count">{tag.count}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -183,9 +199,9 @@ export function FeedbackPage() {
         {/* Feedback cards */}
         {filtered.length > 0 ? (
           <div className="feedback-page__grid">
-            {filtered.map(fb => (
-              <FeedbackCard key={fb.id} feedback={fb} />
-            ))}
+            {filtered.map(function (fb) {
+              return <FeedbackCard key={fb.id} feedback={fb} />;
+            })}
           </div>
         ) : (
           <div className="feedback-page__empty">
@@ -194,6 +210,7 @@ export function FeedbackPage() {
           </div>
         )}
       </div>
+      </div>
 
       <FaqSection pageId="contact" />
     </main>
@@ -201,9 +218,10 @@ export function FeedbackPage() {
 }
 
 /** Single feedback card */
-function FeedbackCard({ feedback }: { feedback: FeedbackItem }) {
+function FeedbackCard(props) {
+  var feedback = props.feedback;
   return (
-    <article className={`feedback-card${feedback.featured ? ' feedback-card--featured' : ''}`}>
+    <article className={'feedback-card' + (feedback.featured ? ' feedback-card--featured' : '')}>
       <div className="feedback-card__quote-mark" aria-hidden="true">
         <MessageSquare className="feedback-card__quote-icon" />
       </div>
@@ -212,13 +230,15 @@ function FeedbackCard({ feedback }: { feedback: FeedbackItem }) {
         {feedback.quote}
       </blockquote>
 
-      <div className="feedback-card__rating" aria-label={`${feedback.rating} out of 5 stars`}>
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Star
-            key={i}
-            className={`feedback-card__star ${i < feedback.rating ? 'feedback-card__star--filled' : ''}`}
-          />
-        ))}
+      <div className="feedback-card__rating" aria-label={feedback.rating + ' out of 5 stars'}>
+        {[0, 1, 2, 3, 4].map(function (i) {
+          return (
+            <Star
+              key={i}
+              className={'feedback-card__star ' + (i < feedback.rating ? 'feedback-card__star--filled' : '')}
+            />
+          );
+        })}
       </div>
 
       <div className="feedback-card__footer">
@@ -230,9 +250,9 @@ function FeedbackCard({ feedback }: { feedback: FeedbackItem }) {
           </span>
         </div>
         <div className="feedback-card__meta">
-          {feedback.event && (
+          {feedback.event ? (
             <span className="feedback-card__event">{feedback.event}</span>
-          )}
+          ) : null}
           <span className="feedback-card__date">
             <Calendar className="feedback-card__meta-icon" aria-hidden="true" />
             {formatDate(feedback.date)}
@@ -242,11 +262,13 @@ function FeedbackCard({ feedback }: { feedback: FeedbackItem }) {
 
       {/* Tag pills */}
       <div className="feedback-card__tags">
-        {feedback.tags.map(tag => (
-          <span key={tag} className="feedback-card__tag">
-            {tag}
-          </span>
-        ))}
+        {feedback.tags.map(function (tag) {
+          return (
+            <span key={tag} className="feedback-card__tag">
+              {tag}
+            </span>
+          );
+        })}
       </div>
     </article>
   );

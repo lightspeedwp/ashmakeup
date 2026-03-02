@@ -35,7 +35,7 @@ export interface AboutDropdownItem {
 export const aboutDropdownItems: AboutDropdownItem[] = [
   {
     id: 'journey',
-    label: 'The Journey Begins',
+    label: 'The journey begins',
     icon: 'Compass',
     accent: 'orange',
     sectionId: 'journey-section',
@@ -43,7 +43,7 @@ export const aboutDropdownItems: AboutDropdownItem[] = [
   },
   {
     id: 'festival',
-    label: 'Festival Euphoria',
+    label: 'Festival euphoria',
     icon: 'Music',
     accent: 'green',
     sectionId: 'festival-section',
@@ -51,7 +51,7 @@ export const aboutDropdownItems: AboutDropdownItem[] = [
   },
   {
     id: 'berlin',
-    label: 'Berlin Nights',
+    label: 'Berlin nights',
     icon: 'Building2',
     accent: 'purple',
     sectionId: 'berlin-section',
@@ -59,7 +59,7 @@ export const aboutDropdownItems: AboutDropdownItem[] = [
   },
   {
     id: 'uv',
-    label: 'UV Explorations',
+    label: 'UV explorations',
     icon: 'Flashlight',
     accent: 'cyan',
     sectionId: 'uv-section',
@@ -67,7 +67,7 @@ export const aboutDropdownItems: AboutDropdownItem[] = [
   },
   {
     id: 'mousse',
-    label: 'Mousse Eyeshadows',
+    label: 'Mousse eyeshadows',
     icon: 'Paintbrush',
     accent: 'pink',
     sectionId: 'mousse-section',
@@ -75,7 +75,7 @@ export const aboutDropdownItems: AboutDropdownItem[] = [
   },
   {
     id: 'uv-makeup',
-    label: 'UV Makeup Artistry',
+    label: 'UV makeup artistry',
     icon: 'PenTool',
     accent: 'red',
     sectionId: 'uv-makeup-section',
@@ -83,7 +83,7 @@ export const aboutDropdownItems: AboutDropdownItem[] = [
   },
   {
     id: 'creative',
-    label: 'Creative Process',
+    label: 'Creative process',
     icon: 'Brain',
     accent: 'blue',
     sectionId: 'creative-section',
@@ -91,7 +91,7 @@ export const aboutDropdownItems: AboutDropdownItem[] = [
   },
   {
     id: 'future',
-    label: 'Looking Forward',
+    label: 'Looking forward',
     icon: 'Rocket',
     accent: 'yellow',
     sectionId: 'future-section',
@@ -100,7 +100,7 @@ export const aboutDropdownItems: AboutDropdownItem[] = [
   /* ── Sub-Pages ── */
   {
     id: 'adhd',
-    label: 'Wired Different',
+    label: 'Wired different',
     icon: 'Zap',
     accent: 'yellow',
     href: '/about/adhd',
@@ -108,7 +108,7 @@ export const aboutDropdownItems: AboutDropdownItem[] = [
   },
   {
     id: 'cycling',
-    label: 'Two Wheels & UV Paint',
+    label: 'Two wheels & UV paint',
     icon: 'Bike',
     accent: 'green',
     href: '/about/cycling',
@@ -116,7 +116,7 @@ export const aboutDropdownItems: AboutDropdownItem[] = [
   },
   {
     id: 'music',
-    label: '140 BPM Heartbeat',
+    label: '140 BPM heartbeat',
     icon: 'Headphones',
     accent: 'purple',
     href: '/about/music',
@@ -124,7 +124,7 @@ export const aboutDropdownItems: AboutDropdownItem[] = [
   },
   {
     id: 'lightspeed',
-    label: 'The Day Job',
+    label: 'The day job',
     icon: 'Code',
     accent: 'blue',
     href: '/about/lightspeed',
@@ -132,7 +132,7 @@ export const aboutDropdownItems: AboutDropdownItem[] = [
   },
   {
     id: 'history',
-    label: 'Full History',
+    label: 'Full history',
     icon: 'Clock',
     accent: 'purple',
     href: '/about/history',

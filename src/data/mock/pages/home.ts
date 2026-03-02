@@ -33,21 +33,21 @@ export const whyReasons: WhyReason[] = [
   {
     id: 'spread-joy',
     icon: 'shine',
-    title: 'Psytrance Energy',
+    title: 'Psytrance energy',
     description: 'My art is fueled by the music. I channel the high-energy vibrations of psytrance into neon designs that flow with your movement and glow under the UV lights.',
     order: 1
   },
   {
     id: 'brings-joy',
     icon: 'joy',
-    title: 'Global Connection',
+    title: 'Global connection',
     description: 'Traveling between Cape Town, Berlin, and Thailand, I connect with souls on dancefloors worldwide. Makeup is my language of connection in the global trance community.',
     order: 2
   },
   {
     id: 'keep-growing',
     icon: 'growth',
-    title: 'Ambidextrous Skill',
+    title: 'Ambidextrous skill',
     description: 'Adapting to the chaos of festivals, I\'ve mastered ambidextrous application to work fast and precisely from any angle, ensuring you don\'t miss a beat.',
     order: 3
   }
@@ -70,7 +70,7 @@ export const whySectionContent = {
  */
 export const homepageContent: PageContent = {
   id: 'home',
-  title: 'Ash Shaw - Global Psytrance & UV Makeup Artist',
+  title: 'Ash Shaw - Global psytrance & UV makeup artist',
   metaDescription: 'Global psytrance and UV makeup artist based in Cape Town, Berlin, and Thailand. Creating neon festival looks and blacklight artistry for the trance community.',
   hero: homepageHero,
   sections: {

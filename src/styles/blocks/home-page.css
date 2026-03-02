@@ -108,15 +108,7 @@
 }
 
 /* ── UVMakeupSection ── */
-.home-page-layout .uv-makeup-section__header {
-  margin-bottom: 0;
-}
-.home-page-layout .uv-makeup-section__slider-wrapper {
-  margin-bottom: 0;
-}
-.home-page-layout .uv-makeup-section__cta {
-  margin-top: 0;
-}
+/* Gap-based layout — no margin overrides needed */
 
 /* ── Reset margin utilities on direct children of inner containers ──
    Parent gap handles all vertical rhythm — no margin needed */

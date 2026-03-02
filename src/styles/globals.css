@@ -1,6 +1,9 @@
 /* Import centralized animations */
 @import './animations.css';
 
+/* Import responsive grid system */
+@import './blocks/responsive-grid-system.css';
+
 /* Import content design tokens (Phase 2) */
 @import './tokens/content-layouts.css';
 @import './tokens/content-interactive.css';
@@ -159,15 +162,22 @@ button, [role="button"] {
   /* --- LAYOUT (NEW) --- */
   --wp--preset--layout--content: 800px;
   --wp--preset--layout--wide: 1440px;
+  --wp--preset--layout--desktop-wide: 1568px;
+  --wp--preset--layout--ultra-wide: 1768px;
+  --wp--preset--layout--desktop-xl: 1800px;
+  --wp--preset--layout--full-hd: 1920px;
   --wp--preset--layout--full: 100%;
 
   /* --- RESPONSIVE BREAKPOINTS (Reference) --- */
   /* These values are for reference. Use @media queries in CSS files. */
   /* --wp--custom--breakpoint--mobile-compact: 320px; */
-  /* --wp--custom--breakpoint--mobile: 480px; */
+  /* --wp--custom--breakpoint--mobile: 420px; */
   /* --wp--custom--breakpoint--tablet-portrait: 768px; */
   /* --wp--custom--breakpoint--tablet-landscape: 1024px; */
   /* --wp--custom--breakpoint--desktop: 1440px; */
+  /* --wp--custom--breakpoint--desktop-wide: 1568px; */
+  /* --wp--custom--breakpoint--ultra-wide: 1768px; */
+  /* --wp--custom--breakpoint--full-hd: 1920px; */
 
   /* --- Z-INDEX (NEW) --- */
   --wp--preset--z-index--n1: -1;
@@ -297,12 +307,15 @@ button, [role="button"] {
 }
 
 /* ATOMIC BLACK NOISE TEXTURE */
+/* Light mode: soft neutral background with subtle warm noise */
 .bg-atomic-noise {
-  background-color: var(--wp--preset--color--atomic-black);
-  background-image: radial-gradient(circle at center, rgba(30, 30, 30, 0.3) 0%, transparent 70%);
+  background-color: var(--wp--preset--color--base);
+  background-image: radial-gradient(circle at center, rgba(230, 230, 235, 0.4) 0%, transparent 70%);
 }
 
+/* Dark mode: atomic black with deep noise grain */
 .dark .bg-atomic-noise {
+  background-color: var(--wp--preset--color--atomic-black);
   background-image: radial-gradient(circle at center, rgba(50, 50, 50, 0.2) 0%, transparent 70%);
 }
 
@@ -430,6 +443,38 @@ small, .text-body-small-p { font-size: var(--wp--preset--font-size--100); }
 /* Layout Helpers */
 .container-wide {
   max-width: var(--wp--preset--layout--wide);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--wp--preset--spacing--fluid-md);
+  padding-right: var(--wp--preset--spacing--fluid-md);
+}
+
+.container-desktop-wide {
+  max-width: var(--wp--preset--layout--desktop-wide);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--wp--preset--spacing--fluid-md);
+  padding-right: var(--wp--preset--spacing--fluid-md);
+}
+
+.container-ultra-wide {
+  max-width: var(--wp--preset--layout--ultra-wide);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--wp--preset--spacing--fluid-md);
+  padding-right: var(--wp--preset--spacing--fluid-md);
+}
+
+.container-desktop-xl {
+  max-width: var(--wp--preset--layout--desktop-xl);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--wp--preset--spacing--fluid-md);
+  padding-right: var(--wp--preset--spacing--fluid-md);
+}
+
+.container-full-hd {
+  max-width: var(--wp--preset--layout--full-hd);
   margin-left: auto;
   margin-right: auto;
   padding-left: var(--wp--preset--spacing--fluid-md);

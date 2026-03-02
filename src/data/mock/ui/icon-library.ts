@@ -21,12 +21,12 @@ export const iconLibraryUI = {
   seo: { title: 'Icon Library | Developer Tools | Ash Shaw' },
   breadcrumbs: [
     { label: 'Home', href: '/' },
-    { label: 'Developer Tools', href: '/dev-tools' },
-    { label: 'Icon Library' },
+    { label: 'Developer tools', href: '/dev-tools' },
+    { label: 'Icon library' },
   ] as BreadcrumbItem[],
   hero: {
     badge: 'Reference',
-    title: 'Icon Library',
+    title: 'Icon library',
     description:
       'Every Lucide icon used across the Ash Shaw portfolio — searchable, grouped by category, with size toggle and copy-to-clipboard import statements.',
   },

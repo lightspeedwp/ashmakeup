@@ -18,6 +18,7 @@ import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { FaqSection } from '../../sections/FaqSection';
 import { Calendar, Clock, Tag, User, ArrowLeft, BookOpen, Eye, Share2, Camera, ExternalLink, Heart } from '../../../lib/icons';
 import { blogUI } from '../../../data/mock/ui/blog';
+import { authorBio } from '../../../data/mock/pages/blog';
 import { markdownToHtml } from '../../../utils/simpleMarkdown';
 import { useAppNavigate } from '../../../hooks/useAppNavigate';
 import { useAnalytics } from '../../../hooks/useAnalytics';
@@ -44,12 +45,12 @@ interface BlogPostPageProps {
 }
 
 const AUTHOR_PROFILE = {
-  name: 'Ash Shaw',
+  name: authorBio.name,
   avatar: ashShawAvatar,
-  bio: "Ash Shaw is a visionary makeup artist known for his vibrant, neon-infused designs and 'Atomic Black' aesthetic. With a passion for festival culture and UV artistry, he transforms faces into living canvases of color and energy.",
+  bio: authorBio.bio,
   socials: [
-    { name: 'Instagram', url: 'https://www.instagram.com/feedmymedia', icon: Camera },
-    { name: 'Facebook', url: 'https://www.facebook.com/ash.shaw/', icon: ExternalLink }
+    { name: authorBio.socials[0].name, url: authorBio.socials[0].url, icon: Camera },
+    { name: authorBio.socials[1].name, url: authorBio.socials[1].url, icon: ExternalLink },
   ]
 };
 
@@ -74,21 +75,21 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
     skip: !post,
   });
 
-  useEffect(() => {
+  useEffect(function () {
     if (post) {
       setSEO(blogPostSEO(post.title, post.excerpt));
       injectSchema(SCHEMA_IDS.article, buildArticleSchema(post));
     } else if (!loading) {
       setSEO(pageSEO.notFound);
     }
-    return () => {
+    return function () {
       removeSchema(SCHEMA_IDS.article);
     };
   }, [post, loading]);
 
-  useEffect(() => {
+  useEffect(function () {
     // Mock view count
-    const storageKeyViews = `blog-views-${slug}`;
+    const storageKeyViews = 'blog-views-' + slug;
     const storedViews = localStorage.getItem(storageKeyViews);
     
     if (storedViews) {
@@ -100,8 +101,8 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
     }
 
     // Mock initial likes or load from storage
-    const storageKeyLikes = `blog-likes-${slug}`;
-    const storageKeyIsLiked = `blog-isliked-${slug}`;
+    const storageKeyLikes = 'blog-likes-' + slug;
+    const storageKeyIsLiked = 'blog-isliked-' + slug;
     
     const storedLikes = localStorage.getItem(storageKeyLikes);
     const storedIsLiked = localStorage.getItem(storageKeyIsLiked);
@@ -119,35 +120,37 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
     }
   }, [slug]);
 
-  const handleLike = () => {
+  const handleLike = function () {
     const newIsLiked = !isLiked;
     const newLikes = newIsLiked ? likes + 1 : likes - 1;
     
     setIsLiked(newIsLiked);
     setLikes(newLikes);
     
-    localStorage.setItem(`blog-likes-${slug}`, newLikes.toString());
-    localStorage.setItem(`blog-isliked-${slug}`, newIsLiked.toString());
+    localStorage.setItem('blog-likes-' + slug, newLikes.toString());
+    localStorage.setItem('blog-isliked-' + slug, newIsLiked.toString());
   };
 
-  const handleBackToBlog = () => {
+  const handleBackToBlog = function () {
     setCurrentPage('blog');
   };
 
   // Handle clickable tags
-  const handleTagClick = (tag: string) => {
+  const handleTagClick = function (tag) {
     const tagSlug = tag.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-    navigate(`/blog/tag/${tagSlug}`);
+    navigate('/blog/tag/' + tagSlug);
   };
 
   if (loading) {
     return (
       <div className="blog-post-view bg-atomic-noise">
-        <main id="main-content" role="main" tabIndex={-1} className="container-wide py-fluid-lg">
-          <div className="blog-post-skeleton">
-            <div className="skeleton-bar skeleton-bar--title"></div>
-            <div className="skeleton-bar skeleton-bar--hero"></div>
-            <div className="skeleton-bar skeleton-bar--subtitle"></div>
+        <main id="main-content" role="main" tabIndex={-1} className="blog-post-main section-spacing px-horizontal-section">
+          <div className="container-wide section-container">
+            <div className="blog-post-skeleton">
+              <div className="skeleton-bar skeleton-bar--title"></div>
+              <div className="skeleton-bar skeleton-bar--hero"></div>
+              <div className="skeleton-bar skeleton-bar--subtitle"></div>
+            </div>
           </div>
         </main>
       </div>
@@ -157,36 +160,38 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
   if (error || !post) {
     return (
       <div className="blog-post-view bg-atomic-noise">
-        <main id="main-content" role="main" tabIndex={-1} className="container-wide py-fluid-lg">
-          <div className="error-card">
-            <button
-              type="button"
-              onClick={handleBackToBlog}
-              className="back-to-blog-btn mb-fluid-lg"
-              aria-label="Return to blog listing"
-            >
-              <ArrowLeft className="icon-md" />
-              {blogUI.post.navigation.backToBlog}
-            </button>
-            
-            <div className="error-content">
-              <h1 className="error-title">
-                {blogUI.post.notFound.title}
-              </h1>
-              <p className="error-message">
-                {error ? 
-                  blogUI.post.notFound.errorMessage(error) : 
-                  blogUI.post.notFound.message(slug)
-                }
-              </p>
+        <main id="main-content" role="main" tabIndex={-1} className="blog-post-main section-spacing px-horizontal-section">
+          <div className="container-wide section-container">
+            <div className="error-card">
               <button
                 type="button"
                 onClick={handleBackToBlog}
-                className="btn btn--neon-primary inline-flex-center gap-fluid-sm"
+                className="back-to-blog-btn mb-fluid-lg"
+                aria-label="Return to blog listing"
               >
-                {blogUI.post.notFound.viewAllButton}
-                <BookOpen className="icon-md" />
+                <ArrowLeft className="icon-md" />
+                {blogUI.post.navigation.backToBlog}
               </button>
+              
+              <div className="error-content">
+                <h1 className="error-title">
+                  {blogUI.post.notFound.title}
+                </h1>
+                <p className="error-message">
+                  {error ? 
+                    blogUI.post.notFound.errorMessage(error) : 
+                    blogUI.post.notFound.message(slug)
+                  }
+                </p>
+                <button
+                  type="button"
+                  onClick={handleBackToBlog}
+                  className="btn btn--neon-primary inline-flex-center gap-fluid-sm"
+                >
+                  {blogUI.post.notFound.viewAllButton}
+                  <BookOpen className="icon-md" />
+                </button>
+              </div>
             </div>
           </div>
         </main>
@@ -197,8 +202,8 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
   // Parse markdown content
   const htmlContent = markdownToHtml(post.content);
 
-  const handleContentClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLElement;
+  const handleContentClick = function (e) {
+    const target = e.target;
     const link = target.closest('a');
     
     if (link && link.getAttribute('data-internal-link') === 'true') {
@@ -209,7 +214,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
         if (href === '#contact') {
           setCurrentPage('contact');
           window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
-        } else if (href.startsWith('#')) {
+        } else if (href.indexOf('#') === 0) {
           const element = document.querySelector(href);
           if (element) {
             element.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' });
@@ -223,7 +228,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
     <div className="blog-post-view bg-atomic-noise">
       <div 
         className="reading-progress-bar"
-        style={{ width: `${readingProgress}%` }}
+        style={{ width: readingProgress + '%' }}
         role="progressbar"
         aria-valuenow={Math.round(readingProgress)}
         aria-valuemin={0}
@@ -231,219 +236,226 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
         aria-label="Reading progress"
       />
 
-      <main id="main-content" role="main" tabIndex={-1} className="container-wide py-fluid-lg">
-        <article className="blog-article">
-          <Breadcrumbs items={blogPostBreadcrumbs(post.title)} />
+      <main id="main-content" role="main" tabIndex={-1} className="blog-post-main section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
+          <article className="blog-article">
+            <Breadcrumbs items={blogPostBreadcrumbs(post.title)} />
 
-          <nav aria-label="Blog navigation">
-            <button
-              type="button"
-              onClick={handleBackToBlog}
-              className="back-to-blog-btn"
-              aria-label="Return to blog listing"
-            >
-              <ArrowLeft className="icon-md" />
-              {blogUI.post.navigation.backToBlog}
-            </button>
-          </nav>
-
-          <header className="blog-article__header">
-            <h2 className="text-section-h2">
-              {post.title}
-            </h2>
-
-            <div>
-              <button 
-                type="button"
-                onClick={() => {
-                  const catSlug = post.category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-                  navigate(`/blog/category/${catSlug}`);
-                }}
-                className="category-badge"
-                aria-label={`View all posts in ${post.category}`}
-              >
-                {post.category}
-              </button>
-            </div>
-
-            <div className="blog-article__meta">
-              <div className="meta-item">
-                <Calendar className="icon-sm" />
-                <time className="meta-text" dateTime={post.publishedAt}>
-                  {formatDate(post.publishedAt)}
-                </time>
-              </div>
-              
-              {post.readTime && (
-                <div className="meta-item">
-                  <Clock className="icon-sm" />
-                  <span className="meta-text">
-                    {blogUI.post.meta.readTime(post.readTime)}
-                  </span>
-                </div>
-              )}
-
-              <div className="meta-item">
-                <Eye className="icon-sm" />
-                <span className="meta-text">
-                  {views.toLocaleString()} views
-                </span>
-              </div>
-            </div>
-          </header>
-
-          {post.featuredImage && (
-            <div className="blog-article__image-container">
-              <OptimizedImage
-                src={post.featuredImage.url}
-                alt={post.featuredImage.alt || post.title}
-                className="blog-article__image"
-                preset="content"
-              />
-            </div>
-          )}
-
-          <div className="blog-article__content">
-            {post.excerpt && (
-              <div className="blog-article__excerpt">
-                {post.excerpt}
-              </div>
-            )}
-
-            <div 
-              className="rich-text-content"
-              dangerouslySetInnerHTML={{ __html: htmlContent }}
-              onClick={handleContentClick}
-            />
-          </div>
-
-          <div className="blog-article__engagement">
-            <button 
-              type="button"
-              onClick={handleLike}
-              className={`engagement-btn ${isLiked ? 'engagement-btn--liked' : ''}`}
-              aria-label={isLiked ? 'Unlike this post' : 'Like this post'}
-            >
-              <Heart className={`icon-md ${isLiked ? 'engagement-btn__icon--filled' : ''}`} />
-              <span>{likes}</span>
-            </button>
-          </div>
-
-          <section className="blog-article__footer">
-            <div className="tags-share-container">
-              
-              {/* Tags Section */}
-              <div className="tags-section">
-                <div className="section-label mb-fluid-sm">
-                  <Tag className="icon-sm text-neon-purple" />
-                  <span>Tags:</span>
-                </div>
-                
-                {post.tags && post.tags.length > 0 ? (
-                  <div className="tags-list">
-                    {post.tags.map((tag, index) => (
-                      <button
-                        type="button"
-                        key={index}
-                        onClick={() => handleTagClick(tag)}
-                        className="tag-badge clickable"
-                        aria-label={`View posts tagged ${tag}`}
-                      >
-                        {tag}
-                      </button>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="no-tags-text">
-                    {blogUI.post.sections.tags.noTags}
-                  </p>
-                )}
-              </div>
-
-              {/* Share Section */}
-              <div className="share-section">
-                <div className="section-label mb-fluid-sm">
-                  <Share2 className="icon-sm text-neon-purple" />
-                  <span>Share this:</span>
-                </div>
-                <div className="share-buttons">
-                  <ShareComponent
-                    label=""
-                    title={post.title}
-                    description={post.excerpt || post.title}
-                    url={typeof window !== 'undefined' ? window.location.href : `https://ashshaw.makeup/blog/${slug}`}
-                    imageUrl={post.featuredImage ? post.featuredImage.url : undefined}
-                    variant="inline"
-                    align="left"
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Per-item FAQs — shown only if the post has item-level FAQs */}
-          {post.faqs && post.faqs.length > 0 && (
-            <FaqSection items={post.faqs} />
-          )}
-
-          {/* Author Section - Hardcoded as requested */}
-          <section className="author-section">
-            <h2 className="text-section-h2">
-              {blogUI.post.sections.author.title}
-            </h2>
-            <div className="author-card">
-              <OptimizedImage
-                src={AUTHOR_PROFILE.avatar}
-                alt={`${AUTHOR_PROFILE.name} profile photo`}
-                className="author-avatar"
-                preset="thumbnail"
-              />
-              <div className="author-info">
-                <h3 className="author-name">
-                  {AUTHOR_PROFILE.name}
-                </h3>
-                <p className="author-bio">
-                  {AUTHOR_PROFILE.bio}
-                </p>
-                
-                {/* Social Links */}
-                <div className="author-socials">
-                  {AUTHOR_PROFILE.socials.map((social) => (
-                    <a 
-                      key={social.name}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="author-social-link"
-                      aria-label={`Follow ${AUTHOR_PROFILE.name} on ${social.name}`}
-                    >
-                      <social.icon className="icon-md" />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="related-posts-section">
-            <h2 className="text-section-h2 text-center">
-              {blogUI.post.sections.related.title}
-            </h2>
-            <div className="related-posts-container">
-              <p className="related-posts-description">
-                {blogUI.post.sections.related.description}
-              </p>
+            <nav aria-label="Blog navigation">
               <button
                 type="button"
                 onClick={handleBackToBlog}
-                className="btn btn--neon-primary inline-flex-center gap-fluid-sm"
+                className="back-to-blog-btn"
+                aria-label="Return to blog listing"
               >
-                {blogUI.post.sections.related.viewAllButton}
-                <BookOpen className="icon-md" />
+                <ArrowLeft className="icon-md" />
+                {blogUI.post.navigation.backToBlog}
+              </button>
+            </nav>
+
+            <header className="blog-article__header">
+              <h1 className="text-section-h2">
+                {post.title}
+              </h1>
+
+              <div>
+                <button 
+                  type="button"
+                  onClick={function () {
+                    const catSlug = post.category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                    navigate('/blog/category/' + catSlug);
+                  }}
+                  className="category-badge"
+                  aria-label={'View all posts in ' + post.category}
+                >
+                  {post.category}
+                </button>
+              </div>
+
+              <div className="blog-article__meta">
+                <div className="meta-item">
+                  <Calendar className="icon-sm" />
+                  <time className="meta-text" dateTime={post.publishedAt}>
+                    {formatDate(post.publishedAt)}
+                  </time>
+                </div>
+                
+                {post.readTime ? (
+                  <div className="meta-item">
+                    <Clock className="icon-sm" />
+                    <span className="meta-text">
+                      {blogUI.post.meta.readTime(post.readTime)}
+                    </span>
+                  </div>
+                ) : null}
+
+                <div className="meta-item">
+                  <Eye className="icon-sm" />
+                  <span className="meta-text">
+                    {views.toLocaleString()} views
+                  </span>
+                </div>
+              </div>
+            </header>
+
+            {post.featuredImage ? (
+              <div className="blog-article__image-container">
+                <OptimizedImage
+                  src={post.featuredImage.url}
+                  alt={post.featuredImage.alt || post.title}
+                  className="blog-article__image"
+                  preset="content"
+                />
+              </div>
+            ) : null}
+
+            <div className="blog-article__content">
+              {post.excerpt ? (
+                <div className="blog-article__excerpt">
+                  {post.excerpt}
+                </div>
+              ) : null}
+
+              <div 
+                className="rich-text-content"
+                dangerouslySetInnerHTML={{ __html: htmlContent }}
+                onClick={handleContentClick}
+              />
+            </div>
+
+            <div className="blog-article__engagement">
+              <button 
+                type="button"
+                onClick={handleLike}
+                className={'engagement-btn ' + (isLiked ? 'engagement-btn--liked' : '')}
+                aria-label={isLiked ? 'Unlike this post' : 'Like this post'}
+              >
+                <Heart className={'icon-md ' + (isLiked ? 'engagement-btn__icon--filled' : '')} />
+                <span>{likes}</span>
               </button>
             </div>
-          </section>
-        </article>
+
+            <section className="blog-article__footer">
+              <div className="tags-share-container">
+                
+                {/* Tags Section */}
+                <div className="tags-section">
+                  <div className="section-label mb-fluid-sm">
+                    <Tag className="icon-sm text-neon-purple" />
+                    <span>Tags:</span>
+                  </div>
+                  
+                  {post.tags && post.tags.length > 0 ? (
+                    <div className="tags-list">
+                      {post.tags.map(function (tag, index) {
+                        return (
+                          <button
+                            type="button"
+                            key={index}
+                            onClick={function () { handleTagClick(tag); }}
+                            className="tag-badge clickable"
+                            aria-label={'View posts tagged ' + tag}
+                          >
+                            {tag}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <p className="no-tags-text">
+                      {blogUI.post.sections.tags.noTags}
+                    </p>
+                  )}
+                </div>
+
+                {/* Share Section */}
+                <div className="share-section">
+                  <div className="section-label mb-fluid-sm">
+                    <Share2 className="icon-sm text-neon-purple" />
+                    <span>Share this:</span>
+                  </div>
+                  <div className="share-buttons">
+                    <ShareComponent
+                      label=""
+                      title={post.title}
+                      description={post.excerpt || post.title}
+                      url={typeof window !== 'undefined' ? window.location.href : 'https://ashshaw.makeup/blog/' + slug}
+                      imageUrl={post.featuredImage ? post.featuredImage.url : undefined}
+                      variant="inline"
+                      align="left"
+                    />
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Per-item FAQs — shown only if the post has item-level FAQs */}
+            {post.faqs && post.faqs.length > 0 ? (
+              <FaqSection items={post.faqs} />
+            ) : null}
+
+            {/* Author Section — content from /data/mock/pages/blog.ts authorBio */}
+            <section className="author-section">
+              <h2 className="text-section-h2">
+                {blogUI.post.sections.author.title}
+              </h2>
+              <div className="author-card">
+                <OptimizedImage
+                  src={AUTHOR_PROFILE.avatar}
+                  alt={AUTHOR_PROFILE.name + ' profile photo'}
+                  className="author-avatar"
+                  preset="thumbnail"
+                />
+                <div className="author-info">
+                  <h3 className="author-name">
+                    {AUTHOR_PROFILE.name}
+                  </h3>
+                  <p className="author-bio">
+                    {AUTHOR_PROFILE.bio}
+                  </p>
+                  
+                  {/* Social Links */}
+                  <div className="author-socials">
+                    {AUTHOR_PROFILE.socials.map(function (social) {
+                      const SocialIcon = social.icon;
+                      return (
+                        <a 
+                          key={social.name}
+                          href={social.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="author-social-link"
+                          aria-label={'Follow ' + AUTHOR_PROFILE.name + ' on ' + social.name}
+                        >
+                          <SocialIcon className="icon-md" />
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section className="related-posts-section">
+              <h2 className="text-section-h2 text-center">
+                {blogUI.post.sections.related.title}
+              </h2>
+              <div className="related-posts-container">
+                <p className="related-posts-description">
+                  {blogUI.post.sections.related.description}
+                </p>
+                <button
+                  type="button"
+                  onClick={handleBackToBlog}
+                  className="btn btn--neon-primary inline-flex-center gap-fluid-sm"
+                >
+                  {blogUI.post.sections.related.viewAllButton}
+                  <BookOpen className="icon-md" />
+                </button>
+              </div>
+            </section>
+          </article>
+        </div>
       </main>
     </div>
   );

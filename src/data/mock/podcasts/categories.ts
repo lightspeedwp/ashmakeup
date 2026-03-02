@@ -12,6 +12,6 @@ export const podcastCategories: PodcastCategory[] = [
     slug: 'introduction',
     description: 'Meet Ash Shaw and learn about the podcast',
     count: 1,
-    color: '#FF10F0'
+    color: 'var(--wp--preset--color--neon-pink)'
   },
 ];

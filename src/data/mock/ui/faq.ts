@@ -5,7 +5,7 @@
  */
 
 export const faqPageUI = {
-  title: 'Frequently Asked Questions',
+  title: 'Frequently asked questions',
   subtitle: 'Everything you need to know about Ash\u2019s art, process, and this site \u2014 all in one place.',
   searchPlaceholder: 'Search questions\u2026',
   searchAriaLabel: 'Search FAQs',

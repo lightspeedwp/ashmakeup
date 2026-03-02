@@ -15,6 +15,7 @@ import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { PullQuote } from '../../ui/PullQuote';
+import { StatCard } from '../../ui/StatCard';
 import { ContentSection } from '../../sections/ContentSection';
 import '../../../styles/blocks/about-subpage.css';
 
@@ -33,8 +34,8 @@ export function AdhdPage() {
       className="about-subpage about-subpage--adhd bg-atomic-noise"
     >
       {/* ── Hero ── */}
-      <header className="about-subpage__hero">
-        <div className="about-subpage__hero-content">
+      <header className="about-subpage__hero section-spacing px-horizontal-section">
+        <div className="about-subpage__hero-content section-container">
           <Breadcrumbs items={data.breadcrumbs} centered />
 
           <span className="about-subpage__hero-badge">
@@ -52,35 +53,28 @@ export function AdhdPage() {
       </header>
 
       {/* ── Pull Quote (Phase 3 component) ── */}
-      <div className="about-subpage__body">
-        <div className="entrance-fade-up">
-          <PullQuote
-            quote={data.pullQuote}
-            variant="center"
-            neonColor="yellow"
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          <div className="entrance-fade-up">
+            <PullQuote
+              quote={data.pullQuote}
+              variant="center"
+              neonColor="yellow"
+            />
+          </div>
+
+          {/* ── Quick Facts ── */}
+          <StatCard
+            items={data.quickFacts}
+            ariaLabel="ADHD quick facts"
           />
         </div>
       </div>
 
-      {/* ── Quick Facts ── */}
-      <div
-        className="about-subpage__facts"
-        role="list"
-        aria-label="ADHD quick facts"
-      >
-        {data.quickFacts.map(function (fact) {
-          return (
-            <div key={fact.id} className="about-subpage__fact" role="listitem">
-              <span className="about-subpage__fact-label">{fact.label}</span>
-              <span className="about-subpage__fact-value">{fact.value}</span>
-            </div>
-          );
-        })}
-      </div>
-
       {/* ── Sections (wrapped in ContentSection) ── */}
-      <div className="about-subpage__body">
-        {data.sections.map(function (section, idx) {
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          {data.sections.map(function (section, idx) {
           var delayClass = idx < 6 ? ' entrance-fade-up--delay-' + (idx + 1) : '';
 
           return (
@@ -102,6 +96,7 @@ export function AdhdPage() {
             </div>
           );
         })}
+        </div>
       </div>
     </main>
   );

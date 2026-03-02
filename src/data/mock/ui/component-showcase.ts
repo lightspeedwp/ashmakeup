@@ -17,12 +17,12 @@ export const componentShowcaseUI = {
   seo: { title: 'Component Showcase | Developer Tools | Ash Shaw' },
   breadcrumbs: [
     { label: 'Home', href: '/' },
-    { label: 'Developer Tools', href: '/dev-tools' },
-    { label: 'Component Showcase' },
+    { label: 'Developer tools', href: '/dev-tools' },
+    { label: 'Component showcase' },
   ] as BreadcrumbItem[],
   hero: {
     badge: 'Visual Preview',
-    title: 'Component Showcase',
+    title: 'Component showcase',
     description:
       'Live previews of every reusable UI component in the design system. See components rendered in isolation with their default props.',
   },

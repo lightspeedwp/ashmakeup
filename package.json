@@ -5,6 +5,7 @@
       "private": true,
       "dependencies": {
           "@vitejs/plugin-react": "*",
+          "clsx": "*",
           "fs": "*",
           "glob": "*",
           "lucide-react": "*",

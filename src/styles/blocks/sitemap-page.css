@@ -6,9 +6,6 @@
 .sitemap {
   position: relative;
   min-height: 100vh;
-  padding: var(--wp--preset--spacing--section-horizontal);
-  padding-top: calc(var(--wp--preset--spacing--fluid-2xl) + 5rem);
-  padding-bottom: var(--wp--preset--spacing--fluid-2xl);
   overflow: hidden;
   background-color: var(--wp--preset--color--base);
   color: var(--wp--preset--color--contrast);

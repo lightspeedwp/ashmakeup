@@ -86,8 +86,8 @@ function InstagramFeedContent() {
   }, []);
 
   return (
-    <section id="instagram-feed" className="instagram-feed">
-      <div className="container-wide">
+    <section id="instagram-feed" className="instagram-feed section-spacing px-horizontal-section">
+      <div className="container-wide section-container">
         <div className="instagram-feed__grid">
 
           {/* Left Column - Header Info */}
@@ -124,7 +124,7 @@ function InstagramFeedContent() {
 export function InstagramFeed() {
   return (
     <ErrorBoundary>
-      
+      <InstagramFeedContent />
     </ErrorBoundary>
   );
 }

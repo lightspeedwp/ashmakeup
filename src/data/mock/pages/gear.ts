@@ -4,7 +4,7 @@
 
 export const gearPageData = {
   hero: {
-    title: 'The Toolkit',
+    title: 'The toolkit',
     subtitle: 'What’s In My Bag',
     description: 'A curated list of the tools, pigments, and tech that power every festival look and creative project.',
     image: 'https://images.unsplash.com/photo-1690627931183-991bd45dc2f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZW9uJTIwY2FtZXJhJTIwZ2VhciUyMHBob3RvZ3JhcGh5JTIwdG9vbHMlMjBjeWJlcnB1bmt8ZW58MXx8fHwxNzcxNjg3MTA0fDA&ixlib=rb-4.1.0&q=80&w=1080'
@@ -13,7 +13,7 @@ export const gearPageData = {
   categories: [
     {
       id: 'paints',
-      title: 'Neon Pigments & Paints',
+      title: 'Neon pigments & paints',
       description: 'UV-reactive essentials for maximum glow.',
       items: [
         { name: 'Kryolan Aqua Color', desc: 'Professional water-based face paint', usage: 'Base layers' },
@@ -46,7 +46,7 @@ export const gearPageData = {
     },
     {
       id: 'survival',
-      title: 'Festival Survival',
+      title: 'Festival survival',
       description: 'Essentials for 5-day desert marathons.',
       items: [
         { name: 'Hydration Pack', desc: '3L reservoir', usage: 'Stay hydrated' },

@@ -2,9 +2,9 @@
 
 This document defines the core design, development, and technical guidelines for building and maintaining the Ash Shaw Makeup Portfolio in **Figma Make**. It serves as the entry point to a comprehensive design system with detailed documentation organized in separate files.
 
-**Version:** 7.4.0
-**Last Updated:** February 2026
-**Last Reviewed:** February 25,2026
+**Version:** 7.5.0
+**Last Updated:** March 2026
+**Last Reviewed:** March 2,2026
 
 ## 🚨 CRITICAL: Project Workflow & File Organization (MUST READ FIRST)
 
@@ -235,6 +235,40 @@ import { heroContent } from "@/data/mock";
 
 **NEVER USE INLINE STYLES.** All styling must be done through CSS classes defined in `/styles/globals.css`.
 
+### 🔤 SENTENCE CASE FOR ALL HEADINGS - CRITICAL RULE
+
+**ALL headings, titles, and labels MUST use sentence case.** This applies everywhere: page titles, section headings, ebook chapter titles, TOC entries, navigation labels, card titles, hero text, breadcrumbs, and button labels.
+
+**Sentence case** = Capitalise ONLY the first word and proper nouns (names, places, brand names).
+
+```
+✅ CORRECT — Sentence case
+"The dancefloor gave me everything"
+"Neon revelations"
+"Six Cats: the green garden"
+"Twenty-three years"
+"Berlin calling"
+"Eighty-six hours"
+"The artist's lifestyle"
+"Koh Phangan Muay Thai crew"
+"About the author"
+
+❌ WRONG — Title Case / capitalised headings
+"The Dancefloor Gave Me Everything"
+"Neon Revelations"
+"Six Cats: The Green Garden"
+"Twenty-Three Years"
+"Berlin Calling"
+"Eighty-Six Hours"
+"The Artist's Lifestyle"
+"Koh Phangan Muay Thai Crew"
+"About The Author"
+```
+
+**Proper nouns that stay capitalised:** Ash, Berlin, Cape Town, Koh Phangan, LightSpeed, WordPress, BarCamp, Six Cats (brand name), Aquarius/Aquarian, ADHD, Lucy (the cat or the experience), Origin (festival name), Solipse (festival), Vortex (festival), UV.
+
+**This rule applies to all data files** in `/data/mock/`, all component JSX output, and all ebook content in `/data/mock/pages/ebook-pages.ts`. When expanding content, always write headings in sentence case.
+
 ---
 
 ## 1. 📁 Project Structure & Architecture
@@ -394,14 +428,29 @@ The Ash Shaw Makeup Portfolio uses a bold **Neon vs Atomic Black** design system
 - **[animations.md](./design-tokens/animations.md)** - All 26 animations documented
 
 ### Responsive Breakpoints & Fluid Typography
-(See [design-tokens/typography.md](./design-tokens/typography.md) for full details)
+(See [design-tokens/typography.md](./design-tokens/typography.md) and [design-tokens/spacing.md](./design-tokens/spacing.md) for full details)
 
-**Fluid Width System:**
-- Mobile Compact: >320px
-- Mobile: >420px
-- Tablet Portrait: >768px
-- Tablet Landscape: >1024px
-- Desktop: >1440px
+**Fluid Width System (Updated v7.5.0):**
+- Mobile Compact: >320px (1 column)
+- Mobile: >480px (1-2 columns)
+- Small: >600px (2 columns)
+- Tablet Portrait: >768px (2-3 columns)
+- Tablet Landscape: >1024px (3 columns)
+- Wide: >1280px (3-4 columns)
+- Desktop: >1440px (3-4 columns)
+- **Desktop Wide: >1568px (4 columns optimized)**
+- **Desktop Ultra-wide: >1768px (4-5 columns)**
+- **Desktop XL: >1800px (5 columns optimized)** ← NEW v7.5.1
+- **Full HD: >1920px (5-6 columns optimized)**
+
+**Container Max Widths:**
+- Content: 800px (reading width)
+- Wide: 1440px (standard desktop)
+- Desktop Wide: 1568px
+- Ultra-wide: 1768px
+- Desktop XL: 1800px ← NEW v7.5.1
+- Full HD: 1920px
+- Full: 100% (viewport)
 
 **Fluid Typography:**
 - H1: 36px → 120px (`.text-hero-h1`)

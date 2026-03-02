@@ -29,15 +29,15 @@ export const shankraWork: PortfolioEntry[] = [
   {
     id: 'festival-connection',
     slug: 'shankra-festival-connection',
-    title: 'Festival Connection',
+    title: 'Festival connection',
     category: 'Festival Makeup',
     subcategory: 'Shankra Festival 2023',
     images: [
       {
         src: festivalConnectionImg,
         alt: 'Festival Connection - turquoise eye design at Shankra Festival 2023, Switzerland',
-        title: 'Festival Connection',
-        caption: 'Turquoise Eyes',
+        title: 'Festival connection',
+        caption: 'Turquoise eyes',
         description: 'Joyful festival moment with turquoise eye design and infectious energy',
         position: 'center',
         aspectRatio: '4:3'
@@ -55,15 +55,15 @@ export const shankraWork: PortfolioEntry[] = [
   {
     id: 'alpine-bliss',
     slug: 'shankra-alpine-bliss',
-    title: 'Alpine Bliss',
+    title: 'Alpine bliss',
     category: 'Festival Makeup',
     subcategory: 'Shankra Festival 2023',
     images: [
       {
         src: alpineBlissImg,
         alt: 'Alpine Bliss - golden face paint with turquoise accents at Shankra Festival 2023, Switzerland',
-        title: 'Alpine Bliss',
-        caption: 'Golden Serenity',
+        title: 'Alpine bliss',
+        caption: 'Golden serenity',
         description: 'Serene golden face paint with turquoise accents',
         position: 'center',
         aspectRatio: '3:4'
@@ -81,15 +81,15 @@ export const shankraWork: PortfolioEntry[] = [
   {
     id: 'mountain-rainbow',
     slug: 'shankra-mountain-rainbow',
-    title: 'Mountain Rainbow',
+    title: 'Mountain rainbow',
     category: 'Festival Makeup',
     subcategory: 'Shankra Festival 2023',
     images: [
       {
         src: mountainRainbowImg,
         alt: 'Mountain Rainbow - vibrant rainbow face art at Shankra Festival 2023, Switzerland',
-        title: 'Mountain Rainbow',
-        caption: 'Rainbow Patterns',
+        title: 'Mountain rainbow',
+        caption: 'Rainbow patterns',
         description: 'Vibrant rainbow face art with intricate patterns',
         position: 'center',
         aspectRatio: '4:3'
@@ -116,15 +116,15 @@ export const reiserfieberWork: PortfolioEntry[] = [
   {
     id: 'alpine-glow',
     slug: 'reiserfieber-alpine-glow',
-    title: 'Alpine Glow',
+    title: 'Alpine glow',
     category: 'Festival Makeup',
     subcategory: 'Reiserfieber Switzerland',
     images: [
       {
         src: alpineGlowImg,
         alt: 'Alpine Glow - turquoise and purple face art at Reiserfieber, Switzerland',
-        title: 'Alpine Glow',
-        caption: 'Delicate Glow',
+        title: 'Alpine glow',
+        caption: 'Delicate glow',
         description: 'Delicate turquoise and purple face art with glitter accents',
         position: 'center',
         aspectRatio: '4:3'
@@ -142,15 +142,15 @@ export const reiserfieberWork: PortfolioEntry[] = [
   {
     id: 'mountain-spirit',
     slug: 'reiserfieber-mountain-spirit',
-    title: 'Mountain Spirit',
+    title: 'Mountain spirit',
     category: 'Festival Makeup',
     subcategory: 'Reiserfieber Switzerland',
     images: [
       {
         src: mountainSpiritImg,
         alt: 'Mountain Spirit - rainbow face stripe at Reiserfieber, Switzerland',
-        title: 'Mountain Spirit',
-        caption: 'Rainbow Stripe',
+        title: 'Mountain spirit',
+        caption: 'Rainbow stripe',
         description: 'Bold rainbow face stripe with Swiss mountain energy',
         position: 'center',
         aspectRatio: '3:4'
@@ -168,15 +168,15 @@ export const reiserfieberWork: PortfolioEntry[] = [
   {
     id: 'festival-joy',
     slug: 'reiserfieber-festival-joy',
-    title: 'Festival Joy',
+    title: 'Festival joy',
     category: 'Festival Makeup',
     subcategory: 'Reiserfieber Switzerland',
     images: [
       {
         src: festivalJoyImg,
         alt: 'Festival Joy - purple and turquoise eye design at Reiserfieber, Switzerland',
-        title: 'Festival Joy',
-        caption: 'Joyful Eyes',
+        title: 'Festival joy',
+        caption: 'Joyful eyes',
         description: 'Joyful purple and turquoise eye design',
         position: 'center',
         aspectRatio: '4:3'

@@ -25,6 +25,7 @@ export * from './nail-art';
 export * from './swiss-festivals';
 export * from './categories';
 export * from './tags';
+export * from './editorial';
 
 // Re-import for aggregation
 import { featuredWork } from './featured';
@@ -33,6 +34,7 @@ import { festivalWork } from './festivals';
 import { uvMakeupWork } from './uv-makeup';
 import { nailArtWork } from './nail-art';
 import { shankraWork, reiserfieberWork, swissFestivalWork } from './swiss-festivals';
+import { editorialWork } from './editorial';
 
 /**
  * All Portfolio Work Combined
@@ -46,7 +48,8 @@ export const allPortfolioWork: PortfolioEntry[] = [
   ...festivalWork,
   ...uvMakeupWork,
   ...nailArtWork,
-  ...swissFestivalWork
+  ...swissFestivalWork,
+  ...editorialWork
 ];
 
 /**
@@ -58,7 +61,7 @@ export const allPortfolioWork: PortfolioEntry[] = [
 export const portfolioSections: PortfolioSection[] = [
   {
     id: 'featured-work',
-    title: 'Featured Psytrance Art',
+    title: 'Featured psytrance art',
     description: 'Standout UV and neon pieces that capture the high-energy essence of global psytrance festivals.',
     entries: featuredWork,
     order: 1,
@@ -66,7 +69,7 @@ export const portfolioSections: PortfolioSection[] = [
   },
   {
     id: 'festivals',
-    title: 'Global Festival Circuit',
+    title: 'Global festival circuit',
     description: 'From explosive main stages to intimate chill-out zones — capturing the diverse spirit of international psytrance culture through bold face art.',
     entries: festivalWork,
     order: 2,
@@ -74,7 +77,7 @@ export const portfolioSections: PortfolioSection[] = [
   },
   {
     id: 'thailand',
-    title: 'Thailand Psytrance Season',
+    title: 'Thailand psytrance season',
     description: 'Neon jungle vibes and island moon parties. Tropical makeup exploration during the Southeast Asian psytrance season.',
     entries: thailandWork,
     order: 3,
@@ -82,7 +85,7 @@ export const portfolioSections: PortfolioSection[] = [
   },
   {
     id: 'shankra-2023',
-    title: 'Shankra Festival Switzerland',
+    title: 'Shankra festival Switzerland',
     description: 'Alpine psytrance magic. Mountain celebration makeup showcasing the vibrant energy of Swiss outdoor festival culture.',
     entries: shankraWork,
     order: 4,
@@ -98,7 +101,7 @@ export const portfolioSections: PortfolioSection[] = [
   },
   {
     id: 'uv-makeup',
-    title: 'UV & Blacklight',
+    title: 'UV & blacklight',
     description: 'Neon and glow-in-the-dark makeup for club and rave environments, designed to come alive under the UV lights of the trance floor.',
     entries: uvMakeupWork,
     order: 6,
@@ -106,10 +109,18 @@ export const portfolioSections: PortfolioSection[] = [
   },
   {
     id: 'nail-art',
-    title: 'Psychedelic Fusion Nails',
+    title: 'Psychedelic fusion nails',
     description: 'Creative nail designs and fusion nail artistry showcasing color, texture, and trippy artistic expression.',
     entries: nailArtWork,
     order: 7,
     decorativeColors: ['#ec4899', '#d946ef', '#c026d3', '#a21caf']
+  },
+  {
+    id: 'editorial-experimental',
+    title: 'Editorial & experimental',
+    description: 'Studio-based editorial work and avant-garde experimental makeup art, exploring the boundaries of UV artistry beyond festivals.',
+    entries: editorialWork,
+    order: 8,
+    decorativeColors: ['#9D00FF', '#FF10F0', '#00FFFF', '#39FF14']
   }
 ];

@@ -90,14 +90,14 @@ export function FestivalCountdown() {
   const isFestivalHappening = timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0;
   
   return (
-    <section id="festival-countdown" className="festival-countdown">
+    <section id="festival-countdown" className="festival-countdown section-spacing px-horizontal-section">
       {/* Animated Background Elements */}
       <div className="festival-countdown__bg">
         <div className="festival-countdown__bg-effect festival-countdown__bg-effect--1" />
         <div className="festival-countdown__bg-effect festival-countdown__bg-effect--2" />
       </div>
       
-      <div className="container-6xl festival-countdown__inner">
+      <div className="container-6xl festival-countdown__inner section-container">
         {isFestivalHappening ? (
           // Festival is happening NOW!
           <div className="festival-countdown__content">

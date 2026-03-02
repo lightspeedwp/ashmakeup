@@ -105,7 +105,7 @@ export function FaqSection({ pageId, items, variant = 'default' }: FaqSectionPro
   if (faqs.length === 0) return null;
 
   return (
-    <section id="faq-section" className={`faq-section${variant === 'hero' ? ' faq-section--hero' : ''}`}>
+    <section id="faq-section" className={`faq-section${variant === 'hero' ? ' faq-section--hero' : ''} section-spacing px-horizontal-section`}>
       <div className="faq-layout">
         <div className="faq-card">
           <div className="faq-header">

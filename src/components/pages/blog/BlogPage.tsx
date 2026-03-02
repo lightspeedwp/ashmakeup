@@ -66,37 +66,44 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
   const [activeCategories, setActiveCategories] = useState(activeCategoriesInit);
   const [sortBy, setSortBy] = useState('recent');
 
-  useEffect(() => {
+  useEffect(function () {
     if (initialCategory && initialCategory !== blogState.category) {
-      setBlogState(prev => ({
-        ...prev,
-        category: initialCategory,
-        page: 1,
-      }));
+      setBlogState(function (prev) {
+        return {
+          page: 1,
+          category: initialCategory,
+          tags: prev.tags,
+          searchQuery: prev.searchQuery,
+          limit: prev.limit
+        };
+      });
       setActiveCategories(initialCategory ? [initialCategory] : []);
     }
   }, [initialCategory]);
 
-  const blogFilterCategories = useMemo(() =>
-    blogCategories.map(c => ({
-      id: c.id,
-      name: c.name,
-      slug: c.slug,
-      count: getBlogCategoryCount(c.name),
-    })),
-    []
-  );
+  const blogFilterCategories = useMemo(function () {
+    return blogCategories.map(function (c) {
+      return {
+        id: c.id,
+        name: c.name,
+        slug: c.slug,
+        count: getBlogCategoryCount(c.name),
+      };
+    });
+  }, []);
 
-  const BLOG_SORT_OPTIONS = useMemo(() => [
-    { value: 'recent', label: 'Most Recent' },
-    { value: 'alphabetical', label: 'A-Z' },
-    { value: 'featured', label: 'Featured' },
-  ], []);
+  const BLOG_SORT_OPTIONS = useMemo(function () {
+    return [
+      { value: 'recent', label: 'Most Recent' },
+      { value: 'alphabetical', label: 'A-Z' },
+      { value: 'featured', label: 'Featured' },
+    ];
+  }, []);
 
-  const handleBlogCategoryToggle = useCallback((slug: string) => {
-    setActiveCategories(prev =>
-      prev.includes(slug) ? prev.filter(s => s !== slug) : [...prev, slug]
-    );
+  const handleBlogCategoryToggle = useCallback(function (slug) {
+    setActiveCategories(function (prev) {
+      return prev.indexOf(slug) !== -1 ? prev.filter(function (s) { return s !== slug; }) : [slug];
+    });
   }, []);
 
   const [debouncedSearch, setDebouncedSearch] = useState(blogState.searchQuery);
@@ -117,49 +124,54 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
     refreshInterval: 600000,
   });
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
+  useEffect(function () {
+    const timer = setTimeout(function () {
       setDebouncedSearch(blogState.searchQuery);
     }, 300);
 
-    return () => clearTimeout(timer);
+    return function () { clearTimeout(timer); };
   }, [blogState.searchQuery]);
 
-  const filteredPosts = useMemo(() => {
+  const filteredPosts = useMemo(function () {
     const blogPosts = blogData ? blogData.posts : [];
-    let posts = blogPosts || [];
+    let posts = [];
+    if (blogPosts) {
+      for (var i = 0; i < blogPosts.length; i++) {
+        posts.push(blogPosts[i]);
+      }
+    }
 
     // Filter by search query
     if (debouncedSearch.trim()) {
       const query = debouncedSearch.toLowerCase();
-      posts = posts.filter(post =>
-        post.title.toLowerCase().includes(query) ||
-        post.excerpt.toLowerCase().includes(query) ||
-        post.tags.some(tag => tag.toLowerCase().includes(query)) ||
-        post.category.toLowerCase().includes(query)
-      );
+      posts = posts.filter(function (post) {
+        return post.title.toLowerCase().indexOf(query) !== -1 ||
+          post.excerpt.toLowerCase().indexOf(query) !== -1 ||
+          post.tags.some(function (tag) { return tag.toLowerCase().indexOf(query) !== -1; }) ||
+          post.category.toLowerCase().indexOf(query) !== -1;
+      });
     }
 
     // Filter by active categories from ArchiveFilters
     if (activeCategories.length > 0) {
-      posts = posts.filter(post => {
+      posts = posts.filter(function (post) {
         const postCatSlug = post.category
           .toLowerCase()
           .replace(/\s+/g, '-')
           .replace(/[^a-z0-9-]/g, '');
-        return activeCategories.some(slug =>
-          postCatSlug.includes(slug) || post.category.toLowerCase().includes(slug)
-        );
+        return activeCategories.some(function (slug) {
+          return postCatSlug.indexOf(slug) !== -1 || post.category.toLowerCase().indexOf(slug) !== -1;
+        });
       });
     }
 
     // Sort by sortBy option
     switch (sortBy) {
       case 'alphabetical':
-        posts = [...posts].sort((a, b) => a.title.localeCompare(b.title));
+        posts = posts.sort(function (a, b) { return a.title.localeCompare(b.title); });
         break;
       case 'featured':
-        posts = [...posts].sort((a, b) => {
+        posts = posts.sort(function (a, b) {
           if (a.featured && !b.featured) return -1;
           if (!a.featured && b.featured) return 1;
           return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
@@ -167,43 +179,53 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
         break;
       case 'recent':
       default:
-        posts = [...posts].sort((a, b) =>
-          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-        );
+        posts = posts.sort(function (a, b) {
+          return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+        });
         break;
     }
 
     return posts;
   }, [blogData, debouncedSearch, activeCategories, sortBy]);
 
-  const updateBlogState = useCallback((updates: Partial<BlogPageState>) => {
-    setBlogState(prev => ({
-      ...prev,
-      ...updates,
-      ...(updates.category !== undefined || updates.tags !== undefined || updates.searchQuery !== undefined 
-        ? { page: 1 } 
-        : {})
-    }));
+  const updateBlogState = useCallback(function (updates) {
+    setBlogState(function (prev) {
+      var next = {
+        page: prev.page,
+        category: prev.category,
+        tags: prev.tags,
+        searchQuery: prev.searchQuery,
+        limit: prev.limit
+      };
+      var keys = Object.keys(updates);
+      for (var k = 0; k < keys.length; k++) {
+        next[keys[k]] = updates[keys[k]];
+      }
+      if (updates.category !== undefined || updates.tags !== undefined || updates.searchQuery !== undefined) {
+        next.page = 1;
+      }
+      return next;
+    });
   }, []);
 
-  const viewBlogPost = useCallback((slug: string) => {
+  const viewBlogPost = useCallback(function (slug) {
     // Explicitly navigate to the blog post page route
     // This triggers App.tsx to update the URL and switch components
     setCurrentPage('blog-post', slug);
     
     const announcement = document.getElementById('announcements');
     if (announcement) {
-      announcement.textContent = `Navigating to blog post: ${slug}`;
+      announcement.textContent = 'Navigating to blog post: ' + slug;
     }
   }, [setCurrentPage]);
 
-  const goToPage = useCallback((page: number) => {
+  const goToPage = useCallback(function (page) {
     if (page === blogState.page) return;
     
-    updateBlogState({ page });
+    updateBlogState({ page: page });
     
-    setTimeout(() => {
-      const scrollBehavior = prefersReduced ? 'auto' as const : 'smooth' as const;
+    setTimeout(function () {
+      const scrollBehavior = prefersReduced ? 'auto' : 'smooth';
       const blogHeader = document.querySelector('[data-blog-header]');
       if (blogHeader) {
         blogHeader.scrollIntoView({ behavior: scrollBehavior, block: 'start' });
@@ -214,12 +236,12 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
     
     const announcement = document.getElementById('announcements');
     if (announcement) {
-      announcement.textContent = `Loading page ${page} of blog posts`;
+      announcement.textContent = 'Loading page ' + page + ' of blog posts';
     }
   }, [updateBlogState, blogState.page, prefersReduced]);
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
+  useEffect(function () {
+    const handleKeyDown = function (event) {
       if (
         event.target instanceof HTMLInputElement ||
         event.target instanceof HTMLTextAreaElement ||
@@ -232,7 +254,7 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
         case 'f':
         case 'F':
           event.preventDefault();
-          const searchInput = document.querySelector('input[type="text"]') as HTMLInputElement;
+          const searchInput = document.querySelector('input[type="text"]');
           if (searchInput) {
             searchInput.focus();
           }
@@ -266,10 +288,10 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
     };
 
     document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    return function () { document.removeEventListener('keydown', handleKeyDown); };
   }, [setCurrentPage, goToPage, blogState.page, blogData]);
 
-  useEffect(() => {
+  useEffect(function () {
     setSEO(pageSEO.blog);
     const paginationData = blogData ? blogData.pagination : null;
     const totalItems = paginationData ? (paginationData.total || 0) : 0;
@@ -279,7 +301,7 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
       '/blog',
       totalItems,
     ));
-    return () => {
+    return function () {
       removeSchema(SCHEMA_IDS.collection);
     };
   }, [blogData]);
@@ -287,23 +309,23 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
   return (
     <main id="main-content" role="main" tabIndex={-1} className="blog-list-view bg-atomic-noise">
       <div 
-        className="blog-list-header" 
+        className="blog-list-header section-spacing px-horizontal-section" 
         data-blog-header
       >
-        <div className="container-7xl">
+        <div className="container-wide section-container">
           <div className="blog-list-header__content">
             <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-fluid-md">
               {blogUI.listing.header.title}
             </h1>
-            <p className="text-body-guideline mb-fluid-lg">
+            <p className="text-body-guideline mb-0">
               {blogUI.listing.header.description}
             </p>
           </div>
         </div>
       </div>
 
-      <div className="blog-list-content">
-        <div className="container-7xl py-fluid-lg">
+      <div className="blog-list-content section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
           {/* Archive Filters */}
           <ArchiveFilters
             contentType="blog"
@@ -314,7 +336,7 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
             resultCount={filteredPosts.length}
             onCategoryToggle={handleBlogCategoryToggle}
             onSortChange={setSortBy}
-            onClearAll={() => {
+            onClearAll={function () {
               setActiveCategories([]);
               setSortBy('recent');
             }}
@@ -322,71 +344,75 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
 
           {postsLoading ? (
             <div className="blog-preview__grid">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="blog-card-skeleton">
-                  <div className="blog-card-skeleton__image" />
-                  <div className="blog-card-skeleton__content">
-                    <div className="blog-card-skeleton__text blog-card-skeleton__text--h-sm blog-card-skeleton__text--w-25" />
-                    <div className="blog-card-skeleton__text blog-card-skeleton__text--h-md blog-card-skeleton__text--w-75" />
-                    <div className="blog-card-skeleton__text blog-card-skeleton__text--h-sm blog-card-skeleton__text--full" />
-                    <div className="blog-card-skeleton__text blog-card-skeleton__text--h-sm blog-card-skeleton__text--w-66" />
+              {[1, 2, 3, 4, 5, 6].map(function (i) {
+                return (
+                  <div key={i} className="blog-card-skeleton">
+                    <div className="blog-card-skeleton__image" />
+                    <div className="blog-card-skeleton__content">
+                      <div className="blog-card-skeleton__text blog-card-skeleton__text--h-sm blog-card-skeleton__text--w-25" />
+                      <div className="blog-card-skeleton__text blog-card-skeleton__text--h-md blog-card-skeleton__text--w-75" />
+                      <div className="blog-card-skeleton__text blog-card-skeleton__text--h-sm blog-card-skeleton__text--full" />
+                      <div className="blog-card-skeleton__text blog-card-skeleton__text--h-sm blog-card-skeleton__text--w-66" />
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : filteredPosts.length > 0 ? (
-            <div className="blog-preview__grid p-[0px]">
-              {filteredPosts.map((post) => (
-                <article 
-                  key={post.id} 
-                  className="blog-card"
-                  onClick={() => viewBlogPost(post.slug)}
-                >
-                  <div className="blog-card__image-container">
-                    {post.featuredImage ? (
-                      <OptimizedImage
-                        src={post.featuredImage.url}
-                        alt={post.featuredImage.alt}
-                        className="blog-card__image"
-                        preset="thumbnail"
-                      />
-                    ) : (
-                      <div className="blog-card__placeholder">
-                        <BookOpen className="blog-card__placeholder-icon" />
-                      </div>
-                    )}
-                    <div className="blog-card__category">
-                      {post.category}
-                    </div>
-                  </div>
-                  
-                  <div className="blog-card__content">
-                    <h2 className="blog-card__title">
-                      {post.title}
-                    </h2>
-                    
-                    <p className="blog-card__excerpt">
-                      {post.excerpt}
-                    </p>
-                    
-                    <div className="blog-card__footer">
-                      <div className="blog-card__date">
-                        <Calendar className="icon-xs" />
-                        <time dateTime={post.publishedAt}>
-                          {formatDate(post.publishedAt)}
-                        </time>
-                      </div>
-                      
-                      {post.readTime && (
-                        <div className="blog-card__date">
-                          <Clock className="icon-xs" />
-                          <span>{post.readTime} min</span>
+            <div className="blog-preview__grid">
+              {filteredPosts.map(function (post) {
+                return (
+                  <article 
+                    key={post.id} 
+                    className="blog-card"
+                    onClick={function () { viewBlogPost(post.slug); }}
+                  >
+                    <div className="blog-card__image-container">
+                      {post.featuredImage ? (
+                        <OptimizedImage
+                          src={post.featuredImage.url}
+                          alt={post.featuredImage.alt}
+                          className="blog-card__image"
+                          preset="thumbnail"
+                        />
+                      ) : (
+                        <div className="blog-card__placeholder">
+                          <BookOpen className="blog-card__placeholder-icon" />
                         </div>
                       )}
+                      <div className="blog-card__category">
+                        {post.category}
+                      </div>
                     </div>
-                  </div>
-                </article>
-              ))}
+                    
+                    <div className="blog-card__content">
+                      <h2 className="blog-card__title">
+                        {post.title}
+                      </h2>
+                      
+                      <p className="blog-card__excerpt">
+                        {post.excerpt}
+                      </p>
+                      
+                      <div className="blog-card__footer">
+                        <div className="blog-card__date">
+                          <Calendar className="icon-xs" />
+                          <time dateTime={post.publishedAt}>
+                            {formatDate(post.publishedAt)}
+                          </time>
+                        </div>
+                        
+                        {post.readTime ? (
+                          <div className="blog-card__date">
+                            <Clock className="icon-xs" />
+                            <span>{post.readTime} min</span>
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           ) : (
             <div className="error-card">
@@ -401,36 +427,38 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
                <button
                  type="button"
                  className="pagination-btn"
-                 onClick={() => goToPage(blogState.page - 1)}
+                 onClick={function () { goToPage(blogState.page - 1); }}
                  disabled={!blogData.pagination.hasPrevious}
                  aria-label="Previous page"
                >
-                 &lt;
+                 {'<'}
                </button>
                
                <div className="pagination-numbers">
-                 {Array.from({ length: blogData.pagination.totalPages }, (_, i) => i + 1).map((pageNum) => (
-                   <button
-                     type="button"
-                     key={pageNum}
-                     onClick={() => goToPage(pageNum)}
-                     className={`pagination-btn ${blogState.page === pageNum ? 'pagination-btn--active' : ''}`}
-                     aria-label={`Go to page ${pageNum}`}
-                     aria-current={blogState.page === pageNum ? 'page' : undefined}
-                   >
-                     {pageNum}
-                   </button>
-                 ))}
+                 {Array.from({ length: blogData.pagination.totalPages }, function (_, i) { return i + 1; }).map(function (pageNum) {
+                   return (
+                     <button
+                       type="button"
+                       key={pageNum}
+                       onClick={function () { goToPage(pageNum); }}
+                       className={'pagination-btn ' + (blogState.page === pageNum ? 'pagination-btn--active' : '')}
+                       aria-label={'Go to page ' + pageNum}
+                       aria-current={blogState.page === pageNum ? 'page' : undefined}
+                     >
+                       {pageNum}
+                     </button>
+                   );
+                 })}
                </div>
                
                <button
                  type="button"
                  className="pagination-btn"
-                 onClick={() => goToPage(blogState.page + 1)}
+                 onClick={function () { goToPage(blogState.page + 1); }}
                  disabled={!blogData.pagination.hasNext}
                  aria-label="Next page"
                >
-                 &gt;
+                 {'>'}
                </button>
              </div>
           ) : null}

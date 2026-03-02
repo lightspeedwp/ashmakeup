@@ -67,25 +67,25 @@ export function BlogTagPage() {
 
   return (
     <main id="main-content" role="main" tabIndex={-1} className="blog-list-view bg-atomic-noise">
-      <div className="blog-list-header" data-blog-header>
-        <div className="container-7xl">
+      <div className="blog-list-header section-spacing px-horizontal-section" data-blog-header>
+        <div className="container-wide section-container">
           <Breadcrumbs items={blogTagBreadcrumbs(breadcrumbLabel)} centered />
           <div className="blog-list-header__content">
-            <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
+            <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-0">
               Tag: {tagName || slug}
             </h1>
             {tagDesc ? (
-              <p className="text-body-guideline">{tagDesc}</p>
+              <p className="text-body-guideline mb-0">{tagDesc}</p>
             ) : null}
-            <p className="archive-filters__result-count">
+            <p className="archive-filters__result-count mb-0">
               Number of results: <strong>{filteredPosts.length}</strong>
             </p>
           </div>
         </div>
       </div>
 
-      <div className="blog-list-content">
-        <div className="container-7xl py-fluid-lg">
+      <div className="blog-list-content section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
           {filteredPosts.length > 0 ? (
             <div className="blog-preview__grid">
               {filteredPosts.map(post => (

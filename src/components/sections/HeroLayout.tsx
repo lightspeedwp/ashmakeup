@@ -3,9 +3,9 @@
  * Implements strict BEM architecture and responsive design tokens.
  */
 
-import React, { useState } from 'react';
-import { ScrollDownArrow } from '../ui/ScrollDownArrow';
-import { EnhancedLightbox } from '../ui/EnhancedLightbox';
+import React, { useState } from "react";
+import { ScrollDownArrow } from "../ui/ScrollDownArrow";
+import { EnhancedLightbox } from "../ui/EnhancedLightbox";
 
 interface HeroImage {
   src: string;
@@ -24,8 +24,8 @@ interface HeroLayoutProps {
   decorativeElements?: React.ReactNode;
   actions?: React.ReactNode;
   media?: React.ReactNode;
-  layout?: 'center' | 'split' | 'left';
-  align?: 'default' | 'wide' | 'full';
+  layout?: "center" | "split" | "left";
+  align?: "default" | "wide" | "full";
   fullscreen?: boolean;
   showScrollArrow?: boolean;
   scrollArrowTarget?: string;
@@ -33,7 +33,7 @@ interface HeroLayoutProps {
   heroImages?: HeroImage[];
   lightboxTitle?: string;
   enableLightbox?: boolean;
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
 }
 
 export function HeroLayout(props: HeroLayoutProps) {
@@ -52,7 +52,8 @@ export function HeroLayout(props: HeroLayoutProps) {
   var scrollArrowTarget = props.scrollArrowTarget;
   var scrollArrowClassName = props.scrollArrowClassName;
   var heroImages = props.heroImages;
-  var lightboxTitle = props.lightboxTitle || "Portfolio Gallery";
+  var lightboxTitle =
+    props.lightboxTitle || "Portfolio Gallery";
   var enableLightbox = props.enableLightbox || false;
   var size = props.size || "md";
 
@@ -70,40 +71,37 @@ export function HeroLayout(props: HeroLayoutProps) {
   // Helper function to render subtitle with colored words for brand tagline
   function renderSubtitle() {
     if (!subtitle) return null;
-    
+
     // Check if this is the brand tagline that needs individual word colors
-    var subtitleText = typeof subtitle === 'string' ? subtitle : '';
-    var hasColour = subtitleText.includes('colour');
-    var hasEnergy = subtitleText.includes('energy');
-    var hasConnection = subtitleText.includes('connection');
-    var isBrandTagline = hasColour && hasEnergy && hasConnection;
-    
+    var subtitleText =
+      typeof subtitle === "string" ? subtitle : "";
+    var hasColour = subtitleText.includes("colour");
+    var hasEnergy = subtitleText.includes("energy");
+    var hasConnection = subtitleText.includes("connection");
+    var isBrandTagline =
+      hasColour && hasEnergy && hasConnection;
+
     if (isBrandTagline) {
       return (
-        <h2 className="hero__subtitle">
-          &quot;Makeup that shines with{" "}
+        <h2 className="hero__subtitle m-[0px]">
+          {"Makeup that shines with "}
           <span className="hero__subtitle-accent--pink">
             colour
           </span>
-          ,{" "}
+          {", "}
           <span className="hero__subtitle-accent--green">
             energy
           </span>
-          , and{" "}
+          {", and "}
           <span className="hero__subtitle-accent--cyan">
             connection
           </span>
-          .&quot;
         </h2>
       );
     }
-    
+
     // Default rendering for non-tagline subtitles
-    return (
-      <h2 className="hero__subtitle">
-        {subtitle}
-      </h2>
-    );
+    return <h2 className="hero__subtitle">{subtitle}</h2>;
   }
 
   // Prepare hero images for lightbox
@@ -159,27 +157,32 @@ export function HeroLayout(props: HeroLayoutProps) {
     for (var i = 0; i < heroImages.length; i++) {
       var image = heroImages[i];
       var index = i;
-      
+
       // Mosaic tile configurations mapped to BEM classes
       var mosaicClasses = [
         "hero__mosaic-image hero__mosaic-image--1",
         "hero__mosaic-image hero__mosaic-image--2",
-        "hero__mosaic-image hero__mosaic-image--3"
+        "hero__mosaic-image hero__mosaic-image--3",
       ];
 
-      var tileClass = image.className ? image.className : mosaicClasses[index % 3];
+      var tileClass = image.className
+        ? image.className
+        : mosaicClasses[index % 3];
       var bgUrl = image.src;
-      var bgStyle = { backgroundImage: "url(\"" + bgUrl + "\")" };
+      var bgStyle = { backgroundImage: 'url("' + bgUrl + '")' };
       var labelText = image.caption ? image.caption : image.alt;
-      var fullLabel = "View " + labelText + " in portfolio gallery";
+      var fullLabel =
+        "View " + labelText + " in portfolio gallery";
 
       var currentIndex = index;
       function makeClickHandler(idx: number) {
-        return function() { openLightbox(idx); };
+        return function () {
+          openLightbox(idx);
+        };
       }
-      
+
       function makeKeyHandler(idx: number) {
-        return function(e: React.KeyboardEvent) {
+        return function (e: React.KeyboardEvent) {
           var isEnter = e.key === "Enter";
           var isSpace = e.key === " ";
           var isActivationKey = isEnter || isSpace;
@@ -200,7 +203,7 @@ export function HeroLayout(props: HeroLayoutProps) {
           role="button"
           tabIndex={0}
           onKeyDown={makeKeyHandler(currentIndex)}
-        />
+        />,
       );
     }
 
@@ -209,14 +212,20 @@ export function HeroLayout(props: HeroLayoutProps) {
         {imageElements}
       </div>
     );
-  };
+  }
 
   // BEM Classes
-  var sizeClass = size !== 'md' ? 'hero--' + size : '';
+  var sizeClass = size !== "md" ? "hero--" + size : "";
   var fullscreenClass = fullscreen ? "hero--fullscreen" : "";
-  var heroClassList = "hero " + sizeClass + " " + fullscreenClass + " " + className;
-  var heroClasses = heroClassList.replace(/\s+/g, ' ').trim();
-  
+  var heroClassList =
+    "hero " +
+    sizeClass +
+    " " +
+    fullscreenClass +
+    " " +
+    className;
+  var heroClasses = heroClassList.replace(/\s+/g, " ").trim();
+
   // Build content classes without nested ternary
   var contentClassList = "hero__content";
   if (layout === "split") {
@@ -225,29 +234,38 @@ export function HeroLayout(props: HeroLayoutProps) {
     contentClassList += " hero__content--left";
   }
   var contentClasses = contentClassList;
-  
+
   // Container Classes
   var containerClasses = "hero__container";
-  if (align === "wide") containerClasses += " hero__container--wide";
-  if (align === "full") containerClasses += " hero__container--full";
+  if (align === "wide")
+    containerClasses += " hero__container--wide";
+  if (align === "full")
+    containerClasses += " hero__container--full";
 
   // Scroll arrow properties
-  var arrowClass = scrollArrowClassName ? scrollArrowClassName : "hero__scroll-arrow";
-  var targetName = scrollArrowTarget ? scrollArrowTarget.replace("-", " ") : "next";
+  var arrowClass = scrollArrowClassName
+    ? scrollArrowClassName
+    : "hero__scroll-arrow";
+  var targetName = scrollArrowTarget
+    ? scrollArrowTarget.replace("-", " ")
+    : "next";
   var arrowLabel = "Scroll to " + targetName + " section";
 
   return (
     <section id={id} className={heroClasses}>
       {/* Decorative Elements (Orbs/Backgrounds) */}
       {decorativeElements ? (
-        <div className="hero__decorative-wrapper" aria-hidden="true">
+        <div
+          className="hero__decorative-wrapper"
+          aria-hidden="true"
+        >
           {decorativeElements}
         </div>
       ) : (
         <div className="hero__bg-effects" aria-hidden="true">
-           <div className="hero__bg-effect hero__bg-effect--1" />
-           <div className="hero__bg-effect hero__bg-effect--2" />
-           <div className="hero__bg-effect hero__bg-effect--3" />
+          <div className="hero__bg-effect hero__bg-effect--1" />
+          <div className="hero__bg-effect hero__bg-effect--2" />
+          <div className="hero__bg-effect hero__bg-effect--3" />
         </div>
       )}
 
@@ -263,22 +281,18 @@ export function HeroLayout(props: HeroLayoutProps) {
             {renderSubtitle()}
 
             {description && (
-              <p className="hero__description">
-                {description}
-              </p>
+              <p className="hero__description">{description}</p>
             )}
 
             {actions && (
-              <div className="hero__actions">
-                {actions}
-              </div>
+              <div className="hero__actions">{actions}</div>
             )}
           </div>
 
           {/* Enhanced Media Content for Split Layout */}
           {layout === "split" && (
             <div className="hero__media-wrapper">
-               <HeroMediaWithLightbox />
+              <HeroMediaWithLightbox />
             </div>
           )}
         </div>

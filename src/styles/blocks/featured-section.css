@@ -9,14 +9,16 @@
 .featured-section__header {
   text-align: center;
   max-width: var(--wp--preset--layout--content);
-  margin: 0 auto 3rem;
+  margin: 0 auto;
   position: relative;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--fluid-md);
 }
 
 .featured-section__title {
   /* Inherits text-section-h2 styles */
-  margin-bottom: var(--wp--preset--spacing--fluid-md);
 }
 
 .featured-section__description {

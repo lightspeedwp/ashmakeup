@@ -4,7 +4,7 @@
  * 
  * @module data/mock/portfolio/festivals
  * @author Ash Shaw Portfolio Team
- * @version 2.2.0 - Fixed figma:asset imports
+ * @version 3.0.0 - Added 9 international festival entries (2019-2024)
  */
 
 import { PortfolioEntry } from '../../types';
@@ -27,15 +27,15 @@ export const festivalWork: PortfolioEntry[] = [
   {
     id: 'nation-of-gondwana',
     slug: 'nation-of-gondwana-festival',
-    title: 'Nation of Gondwana Festival',
+    title: 'Nation of Gondwana festival',
     category: 'Festival Makeup',
     date: '2024-07-19',
     images: [
       {
         src: gondwanaRainbow,
         alt: 'Nation of Gondwana Festival - beautiful woman with rainbow UV face paint streaks and bright smile',
-        title: 'Rainbow Festival Magic',
-        caption: 'Rainbow Festival Magic',
+        title: 'Rainbow festival magic',
+        caption: 'Rainbow festival magic',
         description: 'Vibrant rainbow UV face paint creating pure festival joy',
         position: 'center',
         aspectRatio: '4:3'
@@ -43,8 +43,8 @@ export const festivalWork: PortfolioEntry[] = [
       {
         src: gondwanaUvDots,
         alt: 'Nation of Gondwana Festival - redhead with UV dots under eyes and rainbow body paint',
-        title: 'Electric UV Artistry',
-        caption: 'Electric UV Artistry',
+        title: 'Electric UV artistry',
+        caption: 'Electric UV artistry',
         description: 'UV reactive dots and rainbow body paint',
         position: 'right',
         aspectRatio: '3:4'
@@ -52,8 +52,8 @@ export const festivalWork: PortfolioEntry[] = [
       {
         src: gondwanaCosmicWarrior,
         alt: 'Nation of Gondwana Festival - man with rainbow UV face paint and jellyfish ear accessory',
-        title: 'Cosmic Festival Warrior',
-        caption: 'Cosmic Festival Warrior',
+        title: 'Cosmic festival warrior',
+        caption: 'Cosmic festival warrior',
         description: 'Bold rainbow UV patterns with creative accessories',
         position: 'left',
         aspectRatio: '4:3'
@@ -103,14 +103,14 @@ Every face became a unique piece of art. No two designs were the same — each o
   {
     id: 'origin-festival-2025',
     slug: 'origin-festival-2025',
-    title: 'Origin Festival 2026: Birthday Adventure',
+    title: 'Origin festival 2026: birthday adventure',
     category: 'Festival Makeup',
     date: '2026-02-06',
     images: [
       {
         src: originPinkMohawk,
         alt: 'Origin Festival Birthday - Pink Mohawk and Neon Eyes',
-        title: 'Festival Birthday Joy',
+        title: 'Festival birthday joy',
         caption: 'Celebrating life and color',
         description: 'Vibrant birthday celebration look with neon accents',
         position: 'center',
@@ -119,7 +119,7 @@ Every face became a unique piece of art. No two designs were the same — each o
       {
         src: originGeometric,
         alt: 'Origin Festival - Geometric Face Paint Profile',
-        title: 'Geometric Neon Art',
+        title: 'Geometric neon art',
         caption: 'Precision lines and vibrant colors',
         description: 'Intricate geometric face paint design',
         position: 'left',
@@ -128,7 +128,7 @@ Every face became a unique piece of art. No two designs were the same — each o
       {
         src: originNeonGrid,
         alt: 'Origin Festival - Neon Grid Makeup',
-        title: 'Neon Night Vibes',
+        title: 'Neon night vibes',
         caption: 'Glowing in the festival lights',
         description: 'Neon grid patterns coming alive at night',
         position: 'right',
@@ -174,5 +174,230 @@ Two days of cycling after three days of dancing. My legs were destroyed but my h
         answer: 'Yes! Everything fits into my bike panniers — paints, brushes, stickers, and a hammock. The gravel bike handles the mountain passes and the makeup kit adds about 2kg to the load. Travelling light is part of the adventure.'
       }
     ]
+  },
+  {
+    id: 'vortex-tribal-fusion',
+    slug: 'vortex-tribal-fusion',
+    title: 'Vortex tribal fusion',
+    category: 'Festival Makeup',
+    images: [
+      {
+        src: 'https://images.unsplash.com/photo-1544928147-79a2dbc1f389?w=800&q=90&fit=crop',
+        alt: 'Hot pink and violet purple tribal-inspired patterns across face and shoulders with sacred geometry and fractal elements',
+        title: 'Vortex tribal fusion - main',
+        caption: 'Tribal sacred geometry',
+        position: 'center',
+        aspectRatio: '4:3',
+        description: 'Hot pink and violet purple tribal patterns for first major South African psytrance gathering'
+      }
+    ],
+    location: 'Vortex Festival, South Africa',
+    event: 'Vortex Festival',
+    date: '2019-12-28',
+    description: 'Hot pink and violet purple tribal-inspired patterns across the face and shoulders, created during his first major South African psytrance gathering. The design incorporated sacred geometry and fractal elements. This piece marked his introduction to the transformative power of the South African psytrance scene.',
+    excerpt: 'Tribal sacred geometry for first South African gathering',
+    tags: ['Vortex', 'South Africa', 'Tribal', 'Sacred Geometry', 'Psytrance'],
+    featured: true,
+    order: 15
+  },
+  {
+    id: 'rainbow-serpent-dreams',
+    slug: 'rainbow-serpent-dreams',
+    title: 'Rainbow serpent dreams',
+    category: 'Festival Makeup',
+    images: [
+      {
+        src: 'https://images.unsplash.com/photo-1502224562085-639556652f33?w=800&q=90&fit=crop',
+        alt: 'Multi-color serpentine patterns flowing across face with electric green hot pink royal blue and pure yellow in organic shapes',
+        title: 'Rainbow serpent dreams - main',
+        caption: 'Serpentine flow patterns',
+        position: 'center',
+        aspectRatio: '4:3',
+        description: 'Multi-color serpentine patterns inspired by festival branding and Aboriginal art'
+      }
+    ],
+    location: 'Rainbow Serpent Festival, Australia',
+    event: 'Rainbow Serpent Festival',
+    date: '2020-01-25',
+    description: 'Multi-color serpentine patterns flowing across the face, inspired by the festival\'s iconic branding and Australian Aboriginal art. Electric green, hot pink, royal blue, and pure yellow combined in flowing organic shapes. This piece honors Indigenous Australian visual culture while celebrating psychedelic festival expression.',
+    excerpt: 'Serpentine flow inspired by Aboriginal art and festival culture',
+    tags: ['Rainbow Serpent', 'Australia', 'Multi-color', 'Serpentine', 'Aboriginal'],
+    featured: false,
+    order: 16
+  },
+  {
+    id: 'solipse-sunrise',
+    slug: 'solipse-sunrise',
+    title: 'Solipse sunrise',
+    category: 'Festival Makeup',
+    images: [
+      {
+        src: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=800&q=90&fit=crop',
+        alt: 'Pure yellow and blazing orange radiating patterns emanating from third eye with sun symbolism and light ray patterns',
+        title: 'Solipse sunrise - main',
+        caption: 'Solar solstice rays',
+        position: 'center',
+        aspectRatio: '4:3',
+        description: 'Yellow and orange radiating patterns mirroring summer solstice sunrise'
+      }
+    ],
+    location: 'Solipse Festival, Germany',
+    event: 'Solipse Festival',
+    date: '2022-06-17',
+    description: 'Pure yellow and blazing orange radiating patterns emanating from the third eye, designed to mirror the summer solstice sunrise. The piece incorporated sun symbolism and light ray patterns. Created during the longest day of the year at a festival celebrating solar energy and transformation.',
+    excerpt: 'Solar rays for summer solstice celebration',
+    tags: ['Solipse', 'Germany', 'Solar', 'Solstice', 'Radiating'],
+    featured: false,
+    order: 17
+  },
+  {
+    id: 'boom-festival-cosmic-connection',
+    slug: 'boom-festival-cosmic-connection',
+    title: 'Boom festival cosmic connection',
+    category: 'Festival Makeup',
+    images: [
+      {
+        src: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=90&fit=crop',
+        alt: 'Violet purple and aqua cyan cosmic patterns with starburst accents radiating from eyes for transformational festival',
+        title: 'Boom festival cosmic connection - main',
+        caption: 'Cosmic unity patterns',
+        position: 'center',
+        aspectRatio: '4:3',
+        description: 'Violet purple and aqua cyan cosmic patterns with starburst effects'
+      }
+    ],
+    location: 'Boom Festival, Portugal',
+    event: 'Boom Festival',
+    date: '2022-07-28',
+    description: 'Violet purple and aqua cyan cosmic patterns with starburst accents radiating from the eyes. Created during one of the world\'s largest transformational festivals, incorporating themes of unity and cosmic consciousness. Boom Festival\'s energy demands designs that honor interconnection and spiritual exploration.',
+    excerpt: 'Cosmic starburst for world\'s largest transformational gathering',
+    tags: ['Boom', 'Portugal', 'Cosmic', 'Starburst', 'Transformational'],
+    featured: true,
+    order: 18
+  },
+  {
+    id: 'lost-theory-portugal',
+    slug: 'lost-theory-portugal',
+    title: 'Lost theory festival Portugal',
+    category: 'Festival Makeup',
+    images: [
+      {
+        src: 'https://images.unsplash.com/photo-1552058544-f2b08422138a?w=800&q=90&fit=crop',
+        alt: 'Royal blue and electric green flowing patterns inspired by Portuguese ocean waves and coastal psytrance culture',
+        title: 'Lost theory festival Portugal - main',
+        caption: 'Ocean wave flow',
+        position: 'center',
+        aspectRatio: '4:3',
+        description: 'Royal blue and electric green fluid wave patterns inspired by Portuguese coast'
+      }
+    ],
+    location: 'Lost Theory Festival, Portugal',
+    event: 'Lost Theory Festival',
+    date: '2023-06-24',
+    description: 'Royal blue and electric green flowing patterns inspired by Portuguese ocean waves and coastal psytrance culture. The design featured fluid wave-like movements across the face. Portugal\'s coastal festivals have a unique energy — the Atlantic Ocean meets psychedelic trance in perfect harmony.',
+    excerpt: 'Fluid wave patterns for Portuguese coastal psytrance',
+    tags: ['Lost Theory', 'Portugal', 'Ocean', 'Waves', 'Coastal'],
+    featured: false,
+    order: 19
+  },
+  {
+    id: 'ozora-tribal-awakening',
+    slug: 'ozora-tribal-awakening',
+    title: 'Ozora tribal awakening',
+    category: 'Festival Makeup',
+    images: [
+      {
+        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=90&fit=crop',
+        alt: 'Hot red and electric green tribal symmetrical design inspired by Hungarian folk patterns and psytrance culture with geometric shapes',
+        title: 'Ozora tribal awakening - main',
+        caption: 'Hungarian tribal fusion',
+        position: 'center',
+        aspectRatio: '4:3',
+        description: 'Hot red and electric green tribal symmetry inspired by Hungarian folk art'
+      }
+    ],
+    location: 'Ozora Festival, Hungary',
+    event: 'Ozora Festival',
+    date: '2023-08-04',
+    description: 'Hot red and electric green tribal symmetrical design inspired by Hungarian folk patterns and psytrance culture. The piece featured bold geometric shapes and repeating mandala elements. Ozora Festival is a pilgrimage site for psytrance culture — every design must honor that sacred energy.',
+    excerpt: 'Symmetrical tribal honoring Hungarian folk art tradition',
+    tags: ['Ozora', 'Hungary', 'Tribal', 'Symmetrical', 'Folk Art'],
+    featured: false,
+    order: 20
+  },
+  {
+    id: 'universo-paralello-jungle',
+    slug: 'universo-paralello-jungle',
+    title: 'Universo Paralello jungle magic',
+    category: 'Festival Makeup',
+    images: [
+      {
+        src: 'https://images.unsplash.com/photo-1531256456869-ce942a665e80?w=800&q=90&fit=crop',
+        alt: 'Electric green and blazing orange jungle-inspired patterns with organic leaf and vine motifs for Brazilian beach gathering',
+        title: 'Universo Paralello jungle magic - main',
+        caption: 'Tropical jungle vines',
+        position: 'center',
+        aspectRatio: '4:3',
+        description: 'Electric green and blazing orange jungle patterns with leaf and vine motifs'
+      }
+    ],
+    location: 'Universo Paralello, Brazil',
+    event: 'Universo Paralello',
+    date: '2023-12-29',
+    description: 'Electric green and blazing orange jungle-inspired patterns with organic leaf and vine motifs. Created on the Brazilian beach during the legendary New Year\'s psytrance gathering. The tropical environment demands designs that merge with the lush jungle backdrop.',
+    excerpt: 'Jungle leaf motifs for Brazilian beach New Year gathering',
+    tags: ['Universo Paralello', 'Brazil', 'Jungle', 'Tropical', 'New Year'],
+    featured: false,
+    order: 21
+  },
+  {
+    id: 'antaris-project-germany',
+    slug: 'antaris-project-germany',
+    title: 'Antaris Project Germany',
+    category: 'Festival Makeup',
+    images: [
+      {
+        src: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&q=90&fit=crop',
+        alt: 'Blazing orange and hot red sunset-inspired design with radiating sun patterns and tribal accents during summer festival',
+        title: 'Antaris Project Germany - main',
+        caption: 'Sunset tribal rays',
+        position: 'center',
+        aspectRatio: '4:3',
+        description: 'Blazing orange and hot red radiating sun patterns with tribal fusion'
+      }
+    ],
+    location: 'Antaris Project, Germany',
+    event: 'Antaris Project',
+    date: '2024-07-19',
+    description: 'Blazing orange and hot red sunset-inspired design created during the peak of summer festival season. The piece featured radiating sun patterns with tribal accents. Antaris Project represents the heart of Germany\'s outdoor psytrance culture — always bold, always energetic.',
+    excerpt: 'Summer sunset rays for German psytrance peak season',
+    tags: ['Antaris', 'Germany', 'Sunset', 'Tribal', 'Summer'],
+    featured: false,
+    order: 22
+  },
+  {
+    id: 'shankra-switzerland-2024',
+    slug: 'shankra-switzerland-2024',
+    title: 'Shankra Switzerland 2024',
+    category: 'Festival Makeup',
+    images: [
+      {
+        src: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800&q=90&fit=crop',
+        alt: 'Aqua cyan and violet purple alpine-inspired design with mountain peak geometric patterns for Swiss festival return',
+        title: 'Shankra Switzerland 2024 - main',
+        caption: 'Alpine mountain geometry',
+        position: 'center',
+        aspectRatio: '4:3',
+        description: 'Aqua cyan and violet purple mountain peak geometric patterns'
+      }
+    ],
+    location: 'Shankra Festival, Switzerland',
+    event: 'Shankra Festival',
+    date: '2024-07-27',
+    description: 'Aqua cyan and violet purple alpine-inspired design with mountain peak geometric patterns. Return visit to the Swiss festival with evolved technique and bolder color choices. The Swiss Alps demand designs that echo their majesty — sharp peaks, crystalline clarity, elevated energy.',
+    excerpt: 'Alpine geometry for Swiss festival return with evolved technique',
+    tags: ['Shankra', 'Switzerland', 'Alpine', 'Geometric', 'Mountains'],
+    featured: false,
+    order: 23
   }
 ];

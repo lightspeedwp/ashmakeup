@@ -24,7 +24,7 @@ export const blogCategories: BlogCategory[] = [
     slug: 'makeup-tips',
     description: 'Expert tips and tricks for creating stunning makeup looks',
     count: 0,
-    color: '#ec4899'
+    color: 'var(--wp--preset--color--neon-pink)'
   },
   {
     id: 'tutorials',
@@ -32,7 +32,7 @@ export const blogCategories: BlogCategory[] = [
     slug: 'tutorials',
     description: 'Step-by-step guides for mastering makeup techniques',
     count: 0,
-    color: '#a855f7'
+    color: 'var(--wp--preset--color--neon-purple)'
   },
   {
     id: 'festival-tips',
@@ -40,7 +40,7 @@ export const blogCategories: BlogCategory[] = [
     slug: 'festival-tips',
     description: 'Everything you need for festival makeup success',
     count: 0,
-    color: '#f97316'
+    color: 'var(--wp--preset--color--neon-orange)'
   },
   {
     id: 'travel',
@@ -48,7 +48,7 @@ export const blogCategories: BlogCategory[] = [
     slug: 'travel',
     description: 'Makeup adventures and experiences from around the world',
     count: 0,
-    color: '#14b8a6'
+    color: 'var(--wp--preset--color--neon-cyan)'
   },
   {
     id: 'education',
@@ -56,7 +56,7 @@ export const blogCategories: BlogCategory[] = [
     slug: 'education',
     description: 'Learn the theory and science behind great makeup',
     count: 0,
-    color: '#3b82f6'
+    color: 'var(--wp--preset--color--neon-blue)'
   },
 ];
 

@@ -54,8 +54,8 @@ export function ManifestoPage() {
       className="manifesto-page bg-atomic-noise"
     >
       {/* ── Hero ── */}
-      <header className="manifesto-page__hero">
-        <div className="manifesto-page__hero-inner">
+      <header className="manifesto-page__hero section-spacing px-horizontal-section">
+        <div className="manifesto-page__hero-inner section-container">
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
@@ -74,35 +74,39 @@ export function ManifestoPage() {
       </header>
 
       {/* ── Manifesto Sections ── */}
-      <div className="manifesto-scroll-container">
-        {sections.map(function (section) {
-          var accent = themeToAccent(section.theme);
+      <div className="manifesto-scroll-container section-spacing px-horizontal-section">
+        <div className="section-container">
+          {sections.map(function (section) {
+            var accent = themeToAccent(section.theme);
 
-          return (
-            <div key={section.id} className="entrance-fade-up">
-              <ContentSection
-                id={section.id}
-                title={section.title}
-                variant="callout"
-                colorAccent={accent}
-                backgroundPattern="noise"
-              >
-                <p className="manifesto-content">
-                  {section.content}
-                </p>
-              </ContentSection>
-            </div>
-          );
-        })}
+            return (
+              <div key={section.id} className="entrance-fade-up">
+                <ContentSection
+                  id={section.id}
+                  title={section.title}
+                  variant="callout"
+                  colorAccent={accent}
+                  backgroundPattern="noise"
+                >
+                  <p className="manifesto-content">
+                    {section.content}
+                  </p>
+                </ContentSection>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {/* ── Footer Quote ── */}
-      <div className="manifesto-footer-section">
-        <PullQuote
-          quote={footerQuote}
-          variant="center"
-          neonColor="pink"
-        />
+      <div className="manifesto-footer-section section-spacing px-horizontal-section">
+        <div className="section-container">
+          <PullQuote
+            quote={footerQuote}
+            variant="center"
+            neonColor="pink"
+          />
+        </div>
       </div>
     </main>
   );

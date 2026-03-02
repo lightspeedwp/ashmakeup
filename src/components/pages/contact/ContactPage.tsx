@@ -26,7 +26,7 @@ import { pageSEO } from '../../../data/mock/seo';
  * Uses the shared global Footer from RootLayout (no inline footer)
  */
 export function ContactPage() {
-  useEffect(() => {
+  useEffect(function () {
     setSEO(pageSEO.contact);
   }, []);
 
@@ -41,48 +41,52 @@ export function ContactPage() {
         className="contact-page-main"
       >
         {/* Page Header */}
-        <div className="contact-page-header">
-          <Breadcrumbs items={contactBreadcrumbs} centered />
-          <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-fluid-md">
-            {contactUI.header.title}
-          </h1>
-          <p className="text-body-guideline text-contact-body">
-            {contactUI.header.description}
-          </p>
+        <div className="contact-page-header section-spacing px-horizontal-section">
+          <div className="section-container">
+            <Breadcrumbs items={contactBreadcrumbs} centered />
+            <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-0">
+              {contactUI.header.title}
+            </h1>
+            <p className="text-body-guideline text-contact-body mb-0">
+              {contactUI.header.description}
+            </p>
+          </div>
         </div>
 
         {/* Two Column Layout */}
-        <div className="contact-page-grid">
-          {/* Left Column - About, Social */}
-          <div className="contact-page-about">
-            <h2 className="text-section-h2 text-gradient-blue-teal-green mb-fluid-sm">
-              {contactUI.about.title}
-            </h2>
-            <p className="text-body-guideline text-contact-body mb-fluid-sm">
-              {contactUI.about.description}
-            </p>
-            <p className="contact-page-quote text-gradient-pink-purple-blue">
-              {contactUI.about.quote}
-            </p>
+        <div className="contact-page-grid section-spacing px-horizontal-section">
+          <div className="container-wide section-container split-layout">
+            {/* Left Column - About, Social */}
+            <div className="contact-page-about section-container">
+              <h2 className="text-section-h2 text-gradient-blue-teal-green mb-0">
+                {contactUI.about.title}
+              </h2>
+              <p className="text-body-guideline text-contact-body mb-0">
+                {contactUI.about.description}
+              </p>
+              <p className="contact-page-quote text-gradient-pink-purple-blue">
+                {contactUI.about.quote}
+              </p>
 
-            {/* Social Links */}
-            <div>
-              <h3 className="contact-page-connect-title text-contact-heading">
-                {contactUI.connect.title}
-              </h3>
-              <SocialLinks className="contact-page-social-links" />
+              {/* Social Links */}
+              <div className="section-container">
+                <h3 className="contact-page-connect-title text-contact-heading mb-0">
+                  {contactUI.connect.title}
+                </h3>
+                <SocialLinks className="contact-page-social-links" />
+              </div>
             </div>
-          </div>
 
-          {/* Right Column - Contact Form */}
-          <div className="contact-page-form">
-            <h2 className="text-section-h2 text-gradient-gold-peach-coral mb-fluid-sm">
-              {contactUI.form.title}
-            </h2>
-            <TypeformEmbed 
-              formId="01KGP965M86E2TCRWEVS0WJX57"
-              height="600px"
-            />
+            {/* Right Column - Contact Form */}
+            <div className="contact-page-form section-container">
+              <h2 className="text-section-h2 text-gradient-gold-peach-coral mb-0">
+                {contactUI.form.title}
+              </h2>
+              <TypeformEmbed 
+                formId="01KGP965M86E2TCRWEVS0WJX57"
+                height="600px"
+              />
+            </div>
           </div>
         </div>
 

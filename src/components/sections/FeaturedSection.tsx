@@ -71,8 +71,8 @@ export function FeaturedSection({
 
   return (
     <div className="featured-section-wrapper">
-      <section id="work" className="featured-section">
-        <div className="container-wide">
+      <section id="work" className="featured-section section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
           {/* Section Header */}
           <div className="featured-section__header">
             <h2 className="text-section-h2 featured-section__title">

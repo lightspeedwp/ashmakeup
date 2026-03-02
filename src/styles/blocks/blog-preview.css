@@ -12,7 +12,9 @@
 
 .blog-preview__header {
   text-align: center;
-  margin-bottom: var(--wp--preset--spacing--fluid-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--fluid-md);
 }
 
 /* Slider Wrapper */

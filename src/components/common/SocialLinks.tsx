@@ -71,7 +71,7 @@ export function SocialLinks({
 
   /* clean + minimal both use foreground-aware currentColor;
      default keeps white because the backgrounds are platform-colored */
-  const iconFill = variant === "default" ? "#ffffff" : "currentColor";
+  const iconFill = variant === "default" ? "var(--wp--preset--color--base)" : "currentColor";
 
   const filteredLinks = exclude.length > 0
     ? socialLinks.filter((s) => !exclude.includes(s.platform))

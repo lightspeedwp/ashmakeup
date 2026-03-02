@@ -19,7 +19,7 @@
    ══════════════════════════════════════ */
 
 .about-subpage__hero {
-  padding-top: calc(5rem + clamp(1.5rem, 1.35rem + 0.714vw, 2rem));
+  padding-top: calc(5rem + var(--wp--preset--spacing--section-horizontal));
   padding-bottom: var(--wp--preset--spacing--fluid-lg);
   text-align: center;
   background:
@@ -216,6 +216,18 @@
 
 .dark .about-subpage__section-text {
   color: var(--wp--preset--color--neutral-400);
+}
+
+/* ── Section Subtitle (h3 within content) ── */
+.about-subpage__section-subtitle {
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-size: var(--wp--preset--font-size--300);
+  color: var(--foreground);
+  margin-top: var(--wp--preset--spacing--fluid-sm);
+}
+
+.dark .about-subpage__section-subtitle {
+  color: var(--wp--preset--color--neutral-100);
 }
 
 /* ══════════════════════════════════════
@@ -1103,4 +1115,26 @@
 }
 .dark .about-subpage--fitness .about-subpage__destination-region {
   color: var(--wp--preset--color--neon-green);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TRIBES page — Neon Purple accent, dark/light overrides
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.about-subpage--tribes .about-subpage__hero {
+  background: linear-gradient(180deg, rgba(190, 0, 254, 0.03) 0%, transparent 100%);
+}
+.dark .about-subpage--tribes .about-subpage__hero {
+  background: linear-gradient(180deg, rgba(190, 0, 254, 0.06) 0%, transparent 100%);
+}
+
+.about-subpage--tribes .about-subpage__hero-badge {
+  color: var(--wp--preset--color--neon-purple-text);
+  background: rgba(190, 0, 254, 0.08);
+  border-color: rgba(190, 0, 254, 0.15);
+}
+.dark .about-subpage--tribes .about-subpage__hero-badge {
+  color: var(--wp--preset--color--neon-purple);
+  background: rgba(190, 0, 254, 0.12);
+  border-color: rgba(190, 0, 254, 0.3);
 }

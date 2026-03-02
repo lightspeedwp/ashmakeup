@@ -28,14 +28,14 @@ export const accessibilityTesterUI = {
   },
   hero: {
     badge: 'WCAG 2.1 AA',
-    title: 'Accessibility Tester',
+    title: 'Accessibility tester',
     description:
       'Run a live audit against the current page to check for common accessibility issues. Scans for missing alt text, ARIA labels, heading hierarchy, form labels, landmark roles, focus indicators, and more.',
   },
   breadcrumbs: [
     { label: 'Home', href: '/' },
-    { label: 'Developer Tools', href: '/dev-tools' },
-    { label: 'Accessibility Tester' },
+    { label: 'Developer tools', href: '/dev-tools' },
+    { label: 'Accessibility tester' },
   ] as BreadcrumbItem[],
   actions: {
     runAudit: 'Run Audit',
@@ -44,7 +44,7 @@ export const accessibilityTesterUI = {
     clear: 'Clear Results',
   },
   summary: {
-    title: 'Audit Summary',
+    title: 'Audit summary',
     passed: 'Checks Passed',
     issues: 'Issues Found',
     score: 'Score',

@@ -27,24 +27,24 @@ export interface DevToolCategory {
 
 export const devToolsPageUI = {
   seo: {
-    title: 'Developer Tools | Ash Shaw',
+    title: 'Developer tools | Ash Shaw',
   },
   hero: {
     badge: 'Internal Tools',
-    title: 'Developer Tools',
+    title: 'Developer tools',
     description:
       'A collection of internal tools and references for developing and maintaining the Ash Shaw Makeup Portfolio. Browse design tokens, audit accessibility, measure performance, and explore every component in the design system.',
   },
   breadcrumbs: [
     { label: 'Home', href: '/' },
-    { label: 'Developer Tools' },
+    { label: 'Developer tools' },
   ] as BreadcrumbItem[],
 
   /** Flat list kept for backward-compat (routes, etc.) */
   tools: [
     {
       id: 'style-guide',
-      title: 'Style Guide',
+      title: 'Style guide',
       description:
         'Comprehensive design-system reference — colours, typography, spacing tokens, gradients, and component previews all in one place.',
       href: '/dev-tools/style-guide',
@@ -53,7 +53,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'typography',
-      title: 'Typography Specimens',
+      title: 'Typography specimens',
       description:
         'Every font family, fluid font-size token, heading class, and weight variant rendered live with CSS variable names.',
       href: '/dev-tools/typography',
@@ -62,7 +62,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'spacing',
-      title: 'Spacing Scale',
+      title: 'Spacing scale',
       description:
         'Visual bars for every spacing token — fluid, section, and block gap values with CSS clamp() definitions.',
       href: '/dev-tools/spacing',
@@ -80,7 +80,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'radius',
-      title: 'Border Radius Specimens',
+      title: 'Border radius specimens',
       description:
         'Every border-radius token from subtle rounding to full pill shapes, with side-by-side comparison and legacy aliases.',
       href: '/dev-tools/radius',
@@ -89,7 +89,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'buttons',
-      title: 'Button Variants',
+      title: 'Button variants',
       description:
         'Primary gradients, ghost outlines, icon buttons, pill chips, and disabled states — hover and focus each to see interactions.',
       href: '/dev-tools/buttons',
@@ -98,7 +98,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'cards',
-      title: 'Card Interactions',
+      title: 'Card interactions',
       description:
         'Every card pattern — blog, video, podcast, tool, and tip cards with hover lift, neon border glow, and focus ring effects.',
       href: '/dev-tools/cards',
@@ -107,7 +107,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'neon',
-      title: 'Neon Animations',
+      title: 'Neon animations',
       description:
         'All CSS keyframe animations — spin, pulse, bounce, float, neon glow, gradient shift, and more with interactive play/pause controls.',
       href: '/dev-tools/neon',
@@ -116,7 +116,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'tokens',
-      title: 'Design Tokens Reference',
+      title: 'Design tokens reference',
       description:
         'Complete reference of every CSS custom property — colours, typography, spacing, shadows, radii, z-index, opacity, and more.',
       href: '/dev-tools/tokens',
@@ -125,7 +125,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'icons',
-      title: 'Icon Library',
+      title: 'Icon library',
       description:
         'Searchable grid of every Lucide icon used across the site, grouped by category with size toggle and copy-to-clipboard import statements.',
       href: '/dev-tools/icons',
@@ -143,7 +143,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'playground',
-      title: 'Design System Playground',
+      title: 'Design system playground',
       description:
         'Interactive experimentation with design tokens — adjust colours, typography, radius, shadows, and gradients with live preview.',
       href: '/dev-tools/playground',
@@ -152,7 +152,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'code-quality',
-      title: 'Code Quality Dashboard',
+      title: 'Code quality dashboard',
       description:
         'Code health metrics — live DOM complexity, CSS stats, component dependency tree, file sizes, and lint summary.',
       href: '/dev-tools/code-quality',
@@ -161,7 +161,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'deployment',
-      title: 'Deployment Readiness',
+      title: 'Deployment readiness',
       description:
         'Pre-deployment validation — performance, accessibility, SEO, security, and code quality checks with overall score gauge.',
       href: '/dev-tools/deployment',
@@ -170,7 +170,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'analytics',
-      title: 'Analytics Dashboard',
+      title: 'Analytics dashboard',
       description:
         'Track page views, content engagement, popular posts, search queries, and visitor behaviour with live session data and trend charts.',
       href: '/dev-tools/analytics',
@@ -179,7 +179,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'components',
-      title: 'Component Showcase',
+      title: 'Component showcase',
       description:
         'Live visual previews of every reusable UI component — Logo, SocialLinks, Breadcrumbs, ReadMore, Share, and more rendered in isolation.',
       href: '/dev-tools/components',
@@ -188,7 +188,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'snippets',
-      title: 'Snippet Generator',
+      title: 'Snippet generator',
       description:
         'Generate BEM-compliant CSS and JSX scaffolding for new components. Pick a template, name it, and copy the output.',
       href: '/dev-tools/snippets',
@@ -197,7 +197,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'docs',
-      title: 'Documentation Generator',
+      title: 'Documentation generator',
       description:
         'Auto-generated markdown documentation for every public component — props, imports, and descriptions ready to copy.',
       href: '/dev-tools/docs',
@@ -206,7 +206,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'visual-regression',
-      title: 'Visual Regression Tester',
+      title: 'Visual regression tester',
       description:
         'Side-by-side and overlay comparison of component rendering across themes, states, and viewport sizes.',
       href: '/dev-tools/visual-regression',
@@ -215,7 +215,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'integration',
-      title: 'Integration Tester',
+      title: 'Integration tester',
       description:
         'Simulated user flow tests — navigation, theming, accessibility, analytics, performance, and PWA checks with live pass/fail results.',
       href: '/dev-tools/integration',
@@ -224,7 +224,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'stickers',
-      title: 'Sticker Designs',
+      title: 'Sticker designs',
       description:
         'Browse the full library of hand-crafted neon sticker graphics used as decorative flourishes throughout the site.',
       href: '/dev-tools/stickers',
@@ -233,7 +233,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'accessibility',
-      title: 'Accessibility Tester',
+      title: 'Accessibility tester',
       description:
         'Run a live WCAG 2.1 AA audit against the current page. Checks for missing alt text, heading hierarchy, ARIA labels, and more.',
       href: '/dev-tools/accessibility',
@@ -242,7 +242,7 @@ export const devToolsPageUI = {
     },
     {
       id: 'performance',
-      title: 'Performance Tester',
+      title: 'Performance tester',
       description:
         'Measure real-time performance metrics using the browser Performance API. View Core Web Vitals, resource breakdowns, and image audit.',
       href: '/dev-tools/performance',
@@ -257,7 +257,7 @@ export const devToolsPageUI = {
   categories: [
     {
       id: 'specimens',
-      title: 'Design Specimens',
+      title: 'Design specimens',
       description:
         'Visual references for every design token — typography, colour, spacing, shadows, radii, and interactive component specimens.',
       accent: 'green',

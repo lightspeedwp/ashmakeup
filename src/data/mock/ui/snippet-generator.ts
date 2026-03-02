@@ -19,12 +19,12 @@ export const snippetGeneratorUI = {
   seo: { title: 'Snippet Generator | Developer Tools | Ash Shaw' },
   breadcrumbs: [
     { label: 'Home', href: '/' },
-    { label: 'Developer Tools', href: '/dev-tools' },
-    { label: 'Snippet Generator' },
+    { label: 'Developer tools', href: '/dev-tools' },
+    { label: 'Snippet generator' },
   ] as BreadcrumbItem[],
   hero: {
     badge: 'Builder',
-    title: 'Snippet Generator',
+    title: 'Snippet generator',
     description:
       'Generate BEM-compliant CSS and JSX scaffolding for new components. Pick a template, customise the block name, and copy the output.',
   },

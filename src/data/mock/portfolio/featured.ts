@@ -24,14 +24,14 @@ export const featuredWork: PortfolioEntry[] = [
   {
     id: 'festival-eye-art',
     slug: 'festival-eye-art',
-    title: 'Psytrance Eye Art',
+    title: 'Psytrance eye art',
     category: 'Festival Makeup',
     images: [
       {
         src: festivalEyeArt,
         alt: 'Close-up artistic eye makeup with vibrant purple stripe, red metallic lashes and colorful crystal gems',
-        title: 'Psytrance Eye Art - Main',
-        caption: 'Festival Eye Art',
+        title: 'Psytrance eye art - main',
+        caption: 'Festival eye art',
         position: 'center',
         aspectRatio: '4:3'
       }
@@ -48,14 +48,14 @@ export const featuredWork: PortfolioEntry[] = [
   {
     id: 'rainbow-heart-love',
     slug: 'rainbow-heart-love',
-    title: 'Rainbow Heart Love',
+    title: 'Rainbow heart love',
     category: 'Body Art',
     images: [
       {
         src: rainbowHeart,
         alt: 'Joyful festival participant with rainbow heart body paint on chest, smiling radiantly in colorful festival environment',
-        title: 'Rainbow Heart Love - Main',
-        caption: 'Rainbow Heart Love',
+        title: 'Rainbow heart love - main',
+        caption: 'Rainbow heart love',
         position: 'center',
         aspectRatio: '4:3'
       }
@@ -72,14 +72,14 @@ export const featuredWork: PortfolioEntry[] = [
   {
     id: 'vibrant-face-art',
     slug: 'vibrant-face-art',
-    title: 'Neon Tribal Geometry',
+    title: 'Neon tribal geometry',
     category: 'Festival Makeup',
     images: [
       {
         src: vibrantFaceArt,
         alt: 'Portrait of person with blonde hair and colorful face paint featuring blue and pink stripes in outdoor festival setting',
-        title: 'Neon Tribal Geometry - Main',
-        caption: 'Vibrant Face Art',
+        title: 'Neon tribal geometry - main',
+        caption: 'Vibrant face art',
         position: 'center',
         aspectRatio: '3:4'
       }

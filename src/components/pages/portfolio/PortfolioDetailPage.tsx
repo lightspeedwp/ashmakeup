@@ -57,7 +57,7 @@ export function PortfolioDetailPage({
   const setCurrentPage = useAppNavigate();
   const navigate = useNavigate();
 
-  const portfolioEntry = useMemo(() => {
+  const portfolioEntry = useMemo(function () {
     return getPortfolioEntryById(portfolioId);
   }, [portfolioId]);
 
@@ -77,30 +77,32 @@ export function PortfolioDetailPage({
   };
   const [lightbox, setLightbox] = useState(lightboxInit);
 
-  const categories = useMemo(() => getPortfolioCategories(), []);
+  const categories = useMemo(function () { return getPortfolioCategories(); }, []);
 
-  const relatedPortfolioItems = useMemo(() => {
+  const relatedPortfolioItems = useMemo(function () {
     if (!portfolioEntry) return [];
     // Get items from same category
     let items = getPortfolioByCategory(portfolioEntry.category);
     // Filter out current
-    items = items.filter(item => item.id !== portfolioEntry.id);
+    items = items.filter(function (item) { return item.id !== portfolioEntry.id; });
     
     // If less than 2, fetch from all (excluding current)
     if (items.length < 2) {
          const allItems = getPortfolioByCategory('all');
-         const moreItems = allItems.filter(item => item.id !== portfolioEntry.id && !items.find(existing => existing.id === item.id));
-         items = [...items, ...moreItems];
+         const moreItems = allItems.filter(function (item) {
+           return item.id !== portfolioEntry.id && !items.find(function (existing) { return existing.id === item.id; });
+         });
+         items = items.concat(moreItems);
     }
     
     return items.slice(0, 2);
   }, [portfolioEntry]);
 
-  const handleBackClick = useCallback(() => {
+  const handleBackClick = useCallback(function () {
     setCurrentPage('portfolio');
   }, [setCurrentPage]);
 
-  const handleImageClick = useCallback((imageIndex: number) => {
+  const handleImageClick = useCallback(function (imageIndex) {
     if (!portfolioEntry) return;
     
     setLightbox({
@@ -111,18 +113,25 @@ export function PortfolioDetailPage({
     });
   }, [portfolioEntry]);
 
-  const handleLightboxClose = useCallback(() => {
-    setLightbox(prev => ({ ...prev, isOpen: false }));
+  const handleLightboxClose = useCallback(function () {
+    setLightbox(function (prev) {
+      return {
+        isOpen: false,
+        currentIndex: prev.currentIndex,
+        images: prev.images,
+        title: prev.title
+      };
+    });
   }, []);
 
   // Handle clickable chips for Categories and Tags
-  const handleCategoryClick = useCallback((categoryName: string) => {
-    const category = categories.find(c => c.name === categoryName || c.id === categoryName);
+  const handleCategoryClick = useCallback(function (categoryName) {
+    const category = categories.find(function (c) { return c.name === categoryName || c.id === categoryName; });
     if (category) {
       setCurrentPage('portfolio', undefined, category.id);
     } else {
-      const categoryId = (() => {
-        const found = categories.find(c => c.name.toLowerCase() === categoryName.toLowerCase());
+      const categoryId = (function () {
+        const found = categories.find(function (c) { return c.name.toLowerCase() === categoryName.toLowerCase(); });
         return found ? found.id : undefined;
       })();
       if (categoryId) {
@@ -133,30 +142,32 @@ export function PortfolioDetailPage({
     }
   }, [categories, setCurrentPage]);
   
-  const handleTagClick = useCallback((tag: string) => {
+  const handleTagClick = useCallback(function (tag) {
     const tagSlug = tag.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-    navigate(`/portfolio/tag/${tagSlug}`);
+    navigate('/portfolio/tag/' + tagSlug);
   }, [navigate]);
 
-  const eventDetails = useMemo(() => {
+  const eventDetails = useMemo(function () {
     if (!portfolioEntry) return null;
     
     const tags = portfolioEntry.tags || [];
     
     return {
       date: portfolioEntry.date ? formatDate(portfolioEntry.date) : null,
-      location: tags.find(tag => tag.includes('gondwana') || tag.includes('koh-phangan') || tag.includes('ireland')),
+      location: tags.find(function (tag) {
+        return tag.indexOf('gondwana') !== -1 || tag.indexOf('koh-phangan') !== -1 || tag.indexOf('ireland') !== -1;
+      }),
       category: portfolioEntry.category,
       tags: tags.slice(0, 4)
     };
   }, [portfolioEntry]);
 
-  useEffect(() => {
+  useEffect(function () {
     if (portfolioEntry) {
       setSEO(portfolioEntrySEO(portfolioEntry.title, portfolioEntry.description || ''));
       injectSchema(SCHEMA_IDS.portfolio, buildPortfolioItemSchema(portfolioEntry));
     }
-    return () => {
+    return function () {
       removeSchema(SCHEMA_IDS.portfolio);
     };
   }, [portfolioEntry]);
@@ -167,22 +178,24 @@ export function PortfolioDetailPage({
         <main 
           id="main-content"
           tabIndex={-1}
-          className="container-wide text-center py-section-xl"
+          className="container-wide text-center section-spacing px-horizontal-section"
         >
-          <h1 className="text-hero-h1 mb-fluid-lg">
-            {portfolioUI.detail.notFound.title}
-          </h1>
-          <p className="text-body-p portfolio-detail__not-found-message mb-fluid-xl">
-            {portfolioUI.detail.notFound.message}
-          </p>
-          <button
-            type="button"
-            onClick={handleBackClick}
-            className="btn btn--neon-primary inline-flex-center gap-fluid-sm"
-          >
-            <ArrowLeft className="icon-md" />
-            {portfolioUI.detail.notFound.backButton}
-          </button>
+          <div className="section-container">
+            <h1 className="text-hero-h1 mb-fluid-lg">
+              {portfolioUI.detail.notFound.title}
+            </h1>
+            <p className="text-body-p portfolio-detail__not-found-message mb-fluid-xl">
+              {portfolioUI.detail.notFound.message}
+            </p>
+            <button
+              type="button"
+              onClick={handleBackClick}
+              className="btn btn--neon-primary inline-flex-center gap-fluid-sm"
+            >
+              <ArrowLeft className="icon-md" />
+              {portfolioUI.detail.notFound.backButton}
+            </button>
+          </div>
         </main>
       </div>
     );
@@ -191,7 +204,7 @@ export function PortfolioDetailPage({
   const [visibleFeedbackCount, setVisibleFeedbackCount] = useState(3);
 
   // Reset visible count when portfolio entry changes
-  useEffect(() => {
+  useEffect(function () {
     setVisibleFeedbackCount(3);
   }, [portfolioId]);
 
@@ -199,8 +212,8 @@ export function PortfolioDetailPage({
     <div className="portfolio-detail-page bg-atomic-noise">
       
       {/* Top Header Section with Back Button and Title */}
-      <section className="portfolio-header-wide">
-        <div className="container-wide">
+      <section className="portfolio-header-wide section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
           <Breadcrumbs items={portfolioDetailBreadcrumbs(portfolioEntry.title)} centered />
 
           {/* Back Navigation */}
@@ -222,48 +235,49 @@ export function PortfolioDetailPage({
           </h1>
 
           {/* Event Details as Chips */}
-          {eventDetails && (
+          {eventDetails ? (
             <div className="event-details-chips">
-              {eventDetails.date && (
+              {eventDetails.date ? (
                 <div className="chip chip--date">
                   <Calendar className="icon-sm" />
                   <span>{eventDetails.date}</span>
                 </div>
-              )}
+              ) : null}
               
-              {eventDetails.location && (
+              {eventDetails.location ? (
                 <div className="chip chip--location">
                   <MapPin className="icon-sm" />
                   <span>{eventDetails.location}</span>
                 </div>
-              )}
+              ) : null}
               
               <a 
-                href={(() => {
-                  const cat = categories.find(c => c.id === eventDetails.category);
-                  return cat && cat.slug ? `/portfolio/category/${cat.slug}` : '/portfolio';
+                href={(function () {
+                  const cat = categories.find(function (c) { return c.id === eventDetails.category; });
+                  return cat && cat.slug ? '/portfolio/category/' + cat.slug : '/portfolio';
                 })()}
                 className="chip chip--category clickable"
-                onClick={(e) => {
+                onClick={function (e) {
                   e.preventDefault();
                   handleCategoryClick(eventDetails.category);
                 }}
               >
                 <Tag className="icon-sm" />
                 <span>
-                  {(() => {
-                    const foundCat = categories.find(c => c.id === eventDetails.category);
+                  {(function () {
+                    const foundCat = categories.find(function (c) { return c.id === eventDetails.category; });
                     return foundCat ? foundCat.name : eventDetails.category;
                   })()}
                 </span>
               </a>
             </div>
-          )}
+          ) : null}
         </div>
       </section>
 
       {/* Main Content */}
-      <main id="main-content" tabIndex={-1} className="container-wide py-section-md portfolio-detail__content">
+      <main id="main-content" tabIndex={-1} className="portfolio-detail-main section-spacing px-horizontal-section">
+        <div className="container-wide section-container portfolio-detail__content">
         
         {/* Visual Gallery Section - Now prominent at top below title */}
         <section>
@@ -273,9 +287,9 @@ export function PortfolioDetailPage({
             <div className="gallery-main-wrapper">
               <button
                 type="button"
-                onClick={() => handleImageClick(selectedImageIndex)}
+                onClick={function () { handleImageClick(selectedImageIndex); }}
                 className="gallery-main-image"
-                aria-label={`View ${portfolioEntry.images[selectedImageIndex] ? portfolioEntry.images[selectedImageIndex].alt : ''} in full size`}
+                aria-label={'View ' + (portfolioEntry.images[selectedImageIndex] ? portfolioEntry.images[selectedImageIndex].alt : '') + ' in full size'}
               >
                 <OptimizedImage
                   src={usePortfolioImageUrl(portfolioEntry.images[selectedImageIndex] ? portfolioEntry.images[selectedImageIndex].src : '')}
@@ -293,29 +307,31 @@ export function PortfolioDetailPage({
             </div>
 
             {/* Image Thumbnails - Moved below main image */}
-            {portfolioEntry.images.length > 1 && (
+            {portfolioEntry.images.length > 1 ? (
               <div className="gallery-thumbnails">
-                {portfolioEntry.images.map((image, index) => (
-                  <button
-                    type="button"
-                    key={index}
-                    onClick={() => setSelectedImageIndex(index)}
-                    className={`gallery-thumbnail ${selectedImageIndex === index ? 'gallery-thumbnail--active' : ''}`}
-                    aria-label={`Select image ${index + 1}: ${image.alt}`}
-                  >
-                    <OptimizedImage
-                      src={usePortfolioImageUrl(image.src)}
-                      alt={image.alt}
-                      className="gallery-thumbnail__img"
-                      preset="thumbnail"
-                    />
-                    {selectedImageIndex !== index && (
-                      <div className="gallery-thumbnail__overlay" />
-                    )}
-                  </button>
-                ))}
+                {portfolioEntry.images.map(function (image, index) {
+                  return (
+                    <button
+                      type="button"
+                      key={index}
+                      onClick={function () { setSelectedImageIndex(index); }}
+                      className={'gallery-thumbnail ' + (selectedImageIndex === index ? 'gallery-thumbnail--active' : '')}
+                      aria-label={'Select image ' + (index + 1) + ': ' + image.alt}
+                    >
+                      <OptimizedImage
+                        src={usePortfolioImageUrl(image.src)}
+                        alt={image.alt}
+                        className="gallery-thumbnail__img"
+                        preset="thumbnail"
+                      />
+                      {selectedImageIndex !== index ? (
+                        <div className="gallery-thumbnail__overlay" />
+                      ) : null}
+                    </button>
+                  );
+                })}
               </div>
-            )}
+            ) : null}
           </div>
         </section>
 
@@ -334,15 +350,17 @@ export function PortfolioDetailPage({
             </h2>
             
             <div className="portfolio-story">
-              <div className={`story-expand story-expand--visible`}> 
-                {portfolioUI.detail.sections.story.extendedDescription.map((paragraph, index) => (
-                  <p key={index} className="text-body-p portfolio-detail__story-paragraph mb-fluid-md">
-                    {paragraph}
-                  </p>
-                ))}
+              <div className="story-expand story-expand--visible"> 
+                {portfolioUI.detail.sections.story.extendedDescription.map(function (paragraph, index) {
+                  return (
+                    <p key={index} className="text-body-p portfolio-detail__story-paragraph mb-fluid-md">
+                      {paragraph}
+                    </p>
+                  );
+                })}
                 
                 <blockquote className="story-quote">
-                  "{portfolioUI.detail.sections.story.quote}"
+                  {'"' + portfolioUI.detail.sections.story.quote + '"'}
                 </blockquote>
               </div>
             </div>
@@ -350,14 +368,14 @@ export function PortfolioDetailPage({
         </section>
 
         {/* Rich-Text Content — Toxic Lime theme (only shown when entry has markdown content) */}
-        {portfolioEntry.content && (
+        {portfolioEntry.content ? (
           <section className="container-3xl">
             <div
               className="portfolio-rich-text"
               dangerouslySetInnerHTML={{ __html: markdownToHtml(portfolioEntry.content) }}
             />
           </section>
-        )}
+        ) : null}
 
         {/* Tags and Share Row (Moved from separate sections) */}
         <section className="container-3xl portfolio-footer-row">
@@ -372,16 +390,18 @@ export function PortfolioDetailPage({
                 
                 {eventDetails && eventDetails.tags.length > 0 ? (
                   <div className="tags-list">
-                    {eventDetails.tags.map((tag, index) => (
-                      <button
-                        type="button"
-                        key={index}
-                        className="tag-badge clickable"
-                        onClick={() => handleTagClick(tag)}
-                      >
-                        {tag}
-                      </button>
-                    ))}
+                    {eventDetails.tags.map(function (tag, index) {
+                      return (
+                        <button
+                          type="button"
+                          key={index}
+                          className="tag-badge clickable"
+                          onClick={function () { handleTagClick(tag); }}
+                        >
+                          {tag}
+                        </button>
+                      );
+                    })}
                   </div>
                 ) : (
                   <p className="no-tags-text">
@@ -401,7 +421,7 @@ export function PortfolioDetailPage({
                     label=""
                     title={portfolioEntry.title}
                     description={portfolioEntry.description}
-                    url={typeof window !== 'undefined' ? window.location.href : `https://ashshaw.makeup/portfolio-detail/${portfolioId}`}
+                    url={typeof window !== 'undefined' ? window.location.href : 'https://ashshaw.makeup/portfolio-detail/' + portfolioId}
                     imageUrl={portfolioEntry.images[0] ? portfolioEntry.images[0].src : undefined}
                     variant="inline"
                     align="left"
@@ -412,12 +432,12 @@ export function PortfolioDetailPage({
         </section>
 
         {/* Per-item FAQs — shown only if the portfolio entry has item-level FAQs */}
-        {portfolioEntry.faqs && portfolioEntry.faqs.length > 0 && (
+        {portfolioEntry.faqs && portfolioEntry.faqs.length > 0 ? (
           <FaqSection items={portfolioEntry.faqs} />
-        )}
+        ) : null}
 
         {/* Related Portfolio Section */}
-        {relatedPortfolioItems.length > 0 && (
+        {relatedPortfolioItems.length > 0 ? (
           <section>
               <h2 className="text-section-h2 text-center mb-fluid-lg">
                 Related Work
@@ -426,32 +446,35 @@ export function PortfolioDetailPage({
               <ResponsiveGridSlider
                 items={relatedPortfolioItems}
                 desktopColumns={2}
-                keyExtractor={(item) => item.id}
-                renderItem={(item) => (
-                  <div className="portfolio-detail__related-card-wrapper">
-                    <SliderCard
-                      data={item}
-                      onImageClick={(imageIndex) => {
-                         setLightbox({
-                           isOpen: true,
-                           currentIndex: imageIndex,
-                           images: item.images,
-                           title: item.title,
-                         });
-                      }}
-                      onReadMore={() => setCurrentPage('portfolio-detail', item.id)}
-                    />
-                  </div>
-                )}
+                keyExtractor={function (item) { return item.id; }}
+                renderItem={function (item) {
+                  return (
+                    <div className="portfolio-detail__related-card-wrapper">
+                      <SliderCard
+                        data={item}
+                        onImageClick={function (imageIndex) {
+                           setLightbox({
+                             isOpen: true,
+                             currentIndex: imageIndex,
+                             images: item.images,
+                             title: item.title,
+                           });
+                        }}
+                        onReadMore={function () { setCurrentPage('portfolio-detail', item.id); }}
+                      />
+                    </div>
+                  );
+                }}
                 className="mb-fluid-xl"
               />
           </section>
-        )}
+        ) : null}
 
+        </div>
       </main>
 
       {/* Dynamic Feedback from matching category/tags */}
-      {(() => {
+      {(function () {
         const feedback = getFeedbackForPortfolioEntry(
           portfolioEntry.category,
           portfolioEntry.tags || []
@@ -463,50 +486,54 @@ export function PortfolioDetailPage({
 
         return (
           <section className="portfolio-feedback-section">
-            <div className="container-7xl p-[0px]">
-              <h2 className="text-section-h2 text-center mb-fluid-lg">
-                What People Say
+            <div className="container-7xl portfolio-feedback__container">
+              <h2 className="text-section-h2 portfolio-feedback__heading mb-fluid-lg">
+                {portfolioUI.detail.sections.feedback.heading}
               </h2>
               <div className="portfolio-feedback__grid">
-                {shown.map(fb => (
-                  <article key={fb.id} className={`portfolio-feedback__card${fb.featured ? ' portfolio-feedback__card--featured' : ''}`}>
-                    <MessageSquare className="portfolio-feedback__quote-icon" aria-hidden="true" />
-                    <blockquote className="portfolio-feedback__quote">
-                      {fb.quote}
-                    </blockquote>
-                    <div className="portfolio-feedback__rating" aria-label={`${fb.rating} out of 5 stars`}>
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`portfolio-feedback__star ${i < fb.rating ? 'portfolio-feedback__star--filled' : ''}`}
-                        />
-                      ))}
-                    </div>
-                    <div className="portfolio-feedback__author">
-                      <span className="portfolio-feedback__name">{fb.name}</span>
-                      <span className="portfolio-feedback__meta">
-                        {fb.location}
-                        {fb.event ? ` \u00B7 ${fb.event}` : ''}
-                      </span>
-                    </div>
-                  </article>
-                ))}
+                {shown.map(function (fb) {
+                  return (
+                    <article key={fb.id} className={'portfolio-feedback__card' + (fb.featured ? ' portfolio-feedback__card--featured' : '')}>
+                      <MessageSquare className="portfolio-feedback__quote-icon" aria-hidden="true" />
+                      <blockquote className="portfolio-feedback__quote">
+                        {fb.quote}
+                      </blockquote>
+                      <div className="portfolio-feedback__rating" aria-label={fb.rating + ' out of 5 stars'}>
+                        {[0, 1, 2, 3, 4].map(function (i) {
+                          return (
+                            <Star
+                              key={i}
+                              className={'portfolio-feedback__star ' + (i < fb.rating ? 'portfolio-feedback__star--filled' : '')}
+                            />
+                          );
+                        })}
+                      </div>
+                      <div className="portfolio-feedback__author">
+                        <span className="portfolio-feedback__name">{fb.name}</span>
+                        <span className="portfolio-feedback__meta">
+                          {fb.location}
+                          {fb.event ? ' \u00B7 ' + fb.event : ''}
+                        </span>
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
               
               <div className="portfolio-feedback__actions">
-                {hasMore && (
+                {hasMore ? (
                   <button
                     type="button"
-                    onClick={() => setVisibleFeedbackCount(prev => prev + 3)}
+                    onClick={function () { setVisibleFeedbackCount(function (prev) { return prev + 3; }); }}
                     className="btn btn--neon-primary btn--outline inline-flex-center gap-fluid-sm"
                   >
                     Load More Feedback ({feedback.length - visibleFeedbackCount} remaining)
                   </button>
-                )}
+                ) : null}
                 
                 <a
                   href="/feedback"
-                  onClick={(e) => {
+                  onClick={function (e) {
                     e.preventDefault();
                     navigate('/feedback');
                   }}
@@ -535,7 +562,7 @@ export function PortfolioDetailPage({
         currentIndex={lightbox.currentIndex}
         images={lightbox.images}
         title={lightbox.title}
-        onNavigate={(index) => setLightbox(prev => ({ ...prev, currentIndex: index }))}
+        onNavigate={function (index) { setLightbox(function (prev) { return { isOpen: prev.isOpen, currentIndex: index, images: prev.images, title: prev.title }; }); }}
       />
     </div>
   );

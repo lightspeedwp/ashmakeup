@@ -9,7 +9,7 @@ export const errorMessages = {
     message: 'An unexpected error occurred. Please try again.',
   },
   browserExtension: {
-    title: 'Browser Extension Interference',
+    title: 'Browser extension interference',
     message: 'A browser extension may be interfering with the page. This is a common issue with ad blockers or privacy extensions.',
     suggestions: [
       'Try disabling browser extensions temporarily',
@@ -19,7 +19,7 @@ export const errorMessages = {
     ]
   },
   timeout: {
-    title: 'Request Timeout',
+    title: 'Request timeout',
     message: 'The request took too long to complete. This might be due to a slow connection or server issues.',
     suggestions: [
       'Check your internet connection',
@@ -28,7 +28,7 @@ export const errorMessages = {
     ]
   },
   network: {
-    title: 'Network Error',
+    title: 'Network error',
     message: 'Unable to connect to the server. Please check your internet connection.',
     suggestions: [
       'Check your internet connection',
@@ -37,7 +37,7 @@ export const errorMessages = {
     ]
   },
   content: {
-    title: 'Content Loading Error',
+    title: 'Content loading error',
     message: 'Unable to load content from the content management system. The site will use static content instead.',
     suggestions: [
       'The page should still function with static content',
@@ -98,7 +98,7 @@ export const emptyStateMessages = {
  */
 export const notFoundUI = {
   code: '404',
-  title: 'Page Not Found',
+  title: 'Page not found',
   description:
     'The page you are looking for might have been removed, had its name changed, or is temporarily unavailable. Let\u2019s get you back to the colorful world of makeup.',
   actions: {

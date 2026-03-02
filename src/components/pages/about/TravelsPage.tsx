@@ -31,8 +31,8 @@ export function TravelsPage() {
       className="about-subpage about-subpage--travels bg-atomic-noise"
     >
       {/* ── Hero ── */}
-      <header className="about-subpage__hero">
-        <div className="about-subpage__hero-content">
+      <header className="about-subpage__hero section-spacing px-horizontal-section">
+        <div className="about-subpage__hero-content section-container">
           <Breadcrumbs items={data.breadcrumbs} centered />
 
           <span className="about-subpage__hero-badge">
@@ -50,8 +50,9 @@ export function TravelsPage() {
       </header>
 
       {/* ── Destinations Grid ── */}
-      <div className="about-subpage__destinations" aria-label="Destinations">
-        {data.destinations.map(function (dest) {
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container about-subpage__destinations" aria-label="Destinations">
+          {data.destinations.map(function (dest) {
           return (
             <article key={dest.id} className="about-subpage__destination">
               <h2 className="about-subpage__destination-name">
@@ -66,11 +67,13 @@ export function TravelsPage() {
             </article>
           );
         })}
+        </div>
       </div>
 
       {/* ── Sections (Phase 3 ContentSection) ── */}
-      <div className="about-subpage__body">
-        {data.sections.map(function (section, idx) {
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          {data.sections.map(function (section, idx) {
           var delayClass = idx < 6 ? ' entrance-fade-up--delay-' + (idx + 1) : '';
 
           return (
@@ -92,6 +95,7 @@ export function TravelsPage() {
             </div>
           );
         })}
+        </div>
       </div>
     </main>
   );

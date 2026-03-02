@@ -47,42 +47,43 @@ export function VideoTagPage() {
   const tag = findVideoTagBySlug(slug ? slug : '');
   const [sortBy, setSortBy] = React.useState('recent');
 
-  useEffect(() => {
+  useEffect(function () {
     if (tag) {
       setSEO(videoTagSEO(tag.name));
       const vidCount = filteredVideos ? filteredVideos.length : 0;
       injectSchema(SCHEMA_IDS.collection, buildCollectionSchema(
-        `${tag.name} | Videos`,
+        tag.name + ' | Videos',
         videoTagSEO(tag.name).description,
-        `/videos/tag/${slug}`,
+        '/videos/tag/' + slug,
         vidCount,
       ));
     }
-    return () => {
+    return function () {
       removeSchema(SCHEMA_IDS.collection);
     };
   }, [tag, slug]);
 
-  const filteredVideos = useMemo(() => {
+  const filteredVideos = useMemo(function () {
     if (!slug) return [];
     const tagName = tag ? tag.name : slug.replace(/-/g, ' ');
-    let vids = videos.filter(v => {
+    let vids = videos.filter(function (v) {
       const vTags = v.tags ? v.tags : [];
-      return vTags.some(t => t.toLowerCase() === tagName.toLowerCase());
+      return vTags.some(function (t) { return t.toLowerCase() === tagName.toLowerCase(); });
     });
 
     switch (sortBy) {
       case 'recent':
         vids.sort(
-          (a, b) =>
-            new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+          function (a, b) {
+            return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+          }
         );
         break;
       case 'alphabetical':
-        vids.sort((a, b) => a.title.localeCompare(b.title));
+        vids.sort(function (a, b) { return a.title.localeCompare(b.title); });
         break;
       case 'featured':
-        vids.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+        vids.sort(function (a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0); });
         break;
     }
 
@@ -90,12 +91,12 @@ export function VideoTagPage() {
   }, [slug, tag, sortBy]);
 
   /** Related tags from the matching videos */
-  const relatedTags = useMemo(() => {
+  const relatedTags = useMemo(function () {
     const tagSet = new Set();
     const currentTagName = tag ? tag.name : '';
-    filteredVideos.forEach(v => {
+    filteredVideos.forEach(function (v) {
       const vTags = v.tags ? v.tags : [];
-      vTags.forEach(t => {
+      vTags.forEach(function (t) {
         if (t.toLowerCase() !== currentTagName.toLowerCase()) {
           tagSet.add(t);
         }
@@ -107,24 +108,25 @@ export function VideoTagPage() {
   return (
     <main id="main-content" role="main" tabIndex={-1} className="videos-page bg-atomic-noise">
       {/* Header */}
-      <div className="videos-header">
-        <div className="videos-header__content">
+      <div className="videos-header section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
           <Breadcrumbs items={videoTagBreadcrumbs(tag ? tag.name : (slug ? slug : ''))} centered />
           <Tag className="icon-xl" aria-hidden="true" />
-          <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
+          <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-0">
             {tag ? tag.name : slug}
           </h1>
           {tag && tag.description && (
-            <p className="text-body-guideline">{tag.description}</p>
+            <p className="text-body-guideline mb-0">{tag.description}</p>
           )}
-          <p className="text-body-p">
+          <p className="text-body-p mb-0">
             {filteredVideos.length} video{filteredVideos.length === 1 ? '' : 's'}
           </p>
         </div>
       </div>
 
-      <div className="container-7xl py-fluid-lg">
-        {/* Sort pills */}
+      <div className="videos-content-section section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
+          {/* Sort pills */}
         <div className="archive-filters__sort">
           {SORT_OPTIONS.map(opt => (
             <button
@@ -139,65 +141,69 @@ export function VideoTagPage() {
         </div>
 
         {/* Related tags */}
-        {relatedTags.length > 0 && (
+        {relatedTags.length > 0 ? (
           <div className="archive-filters__categories">
-            {relatedTags.map(rt => (
-              <button
-                type="button"
-                key={rt}
-                className="archive-filters__chip"
-                onClick={() =>
-                  navigate(
-                    `/videos/tag/${rt.toLowerCase().replace(/\s+/g, '-')}`,
-                  )
-                }
-              >
-                {rt}
-              </button>
-            ))}
+            {relatedTags.map(function (rt) {
+              return (
+                <button
+                  type="button"
+                  key={rt}
+                  className="archive-filters__chip"
+                  onClick={function () {
+                    navigate(
+                      '/videos/tag/' + rt.toLowerCase().replace(/\s+/g, '-')
+                    );
+                  }}
+                >
+                  {rt}
+                </button>
+              );
+            })}
           </div>
-        )}
+        ) : null}
 
         {/* Grid */}
         {filteredVideos.length > 0 ? (
           <div className="videos-grid">
-            {filteredVideos.map(video => (
-              <article
-                key={video.id}
-                className="video-card"
-                onClick={() => navigate(`/video/${video.slug}`)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    navigate(`/video/${video.slug}`);
-                  }
-                }}
-                aria-label={`Play video: ${video.title}`}
-              >
-                <div className="video-card__thumbnail-container">
-                  <OptimizedImage
-                    src={videoThumbnails[video.id] ? videoThumbnails[video.id] : video.thumbnailUrl}
-                    alt={video.title}
-                    className="video-card__thumbnail"
-                    preset="thumbnail"
-                  />
-                  <div className="video-card__play-button">
-                    <Play className="video-card__play-icon" />
+            {filteredVideos.map(function (video) {
+              return (
+                <article
+                  key={video.id}
+                  className="video-card"
+                  onClick={function () { navigate('/video/' + video.slug); }}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      navigate('/video/' + video.slug);
+                    }
+                  }}
+                  aria-label={'Play video: ' + video.title}
+                >
+                  <div className="video-card__thumbnail-container">
+                    <OptimizedImage
+                      src={videoThumbnails[video.id] ? videoThumbnails[video.id] : video.thumbnailUrl}
+                      alt={video.title}
+                      className="video-card__thumbnail"
+                      preset="thumbnail"
+                    />
+                    <div className="video-card__play-button">
+                      <Play className="video-card__play-icon" />
+                    </div>
+                    <div className="video-card__duration">{video.duration}</div>
                   </div>
-                  <div className="video-card__duration">{video.duration}</div>
-                </div>
-                <div className="video-card__content">
-                  <h3 className="video-card__title">{video.title}</h3>
-                  <div className="video-card__meta">
-                    <span>{video.category}</span>
-                    <time dateTime={video.publishedAt}>{formatDate(video.publishedAt)}</time>
+                  <div className="video-card__content">
+                    <h3 className="video-card__title">{video.title}</h3>
+                    <div className="video-card__meta">
+                      <span>{video.category}</span>
+                      <time dateTime={video.publishedAt}>{formatDate(video.publishedAt)}</time>
+                    </div>
+                    <p className="video-card__description">{video.description}</p>
                   </div>
-                  <p className="video-card__description">{video.description}</p>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         ) : (
           <div className="error-card">
@@ -208,6 +214,7 @@ export function VideoTagPage() {
             </p>
           </div>
         )}
+      </div>
       </div>
 
       <FaqSection pageId="videos" />

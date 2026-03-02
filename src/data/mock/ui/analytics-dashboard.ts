@@ -47,12 +47,12 @@ export const analyticsDashboardUI = {
   seo: { title: 'Analytics Dashboard | Developer Tools | Ash Shaw' },
   breadcrumbs: [
     { label: 'Home', href: '/' },
-    { label: 'Developer Tools', href: '/dev-tools' },
-    { label: 'Analytics Dashboard' },
+    { label: 'Developer tools', href: '/dev-tools' },
+    { label: 'Analytics dashboard' },
   ] as BreadcrumbItem[],
   hero: {
     badge: 'Analytics',
-    title: 'Analytics Dashboard',
+    title: 'Analytics dashboard',
     description:
       'Track page views, content engagement, popular posts, search queries, and visitor behaviour. Session data is stored locally in the browser — no external tracking scripts.',
   },
@@ -80,14 +80,14 @@ export const analyticsDashboardUI = {
 
   /** Mock top content (seeded from real mock data slugs) */
   topContent: [
-    { slug: 'neon-face-paint-festival', title: 'Neon Face Paint Festival', type: 'portfolio' as const, views: 187, likes: 34, avgTimeSeconds: 45 },
-    { slug: 'getting-started-with-uv-makeup', title: 'Getting Started with UV Makeup', type: 'blog' as const, views: 156, likes: 28, avgTimeSeconds: 180 },
-    { slug: 'berlin-nightlife-neon', title: 'Berlin Nightlife Neon', type: 'portfolio' as const, views: 142, likes: 22, avgTimeSeconds: 38 },
-    { slug: 'festival-season-essentials', title: 'Festival Season Essentials', type: 'blog' as const, views: 128, likes: 19, avgTimeSeconds: 210 },
-    { slug: 'behind-the-scenes-editorial', title: 'Behind the Scenes: Editorial', type: 'video' as const, views: 115, likes: 16, avgTimeSeconds: 320 },
-    { slug: 'neon-vs-atomic-ep1', title: 'Neon vs Atomic Black — Ep 1', type: 'podcast' as const, views: 98, likes: 12, avgTimeSeconds: 1800 },
-    { slug: 'swiss-festival-highlights', title: 'Swiss Festival Highlights', type: 'portfolio' as const, views: 91, likes: 15, avgTimeSeconds: 42 },
-    { slug: 'color-theory-for-makeup', title: 'Colour Theory for Makeup Artists', type: 'blog' as const, views: 87, likes: 11, avgTimeSeconds: 240 },
+    { slug: 'neon-face-paint-festival', title: 'Neon face paint festival', type: 'portfolio' as const, views: 187, likes: 34, avgTimeSeconds: 45 },
+    { slug: 'getting-started-with-uv-makeup', title: 'Getting started with UV makeup', type: 'blog' as const, views: 156, likes: 28, avgTimeSeconds: 180 },
+    { slug: 'berlin-nightlife-neon', title: 'Berlin nightlife neon', type: 'portfolio' as const, views: 142, likes: 22, avgTimeSeconds: 38 },
+    { slug: 'festival-season-essentials', title: 'Festival season essentials', type: 'blog' as const, views: 128, likes: 19, avgTimeSeconds: 210 },
+    { slug: 'behind-the-scenes-editorial', title: 'Behind the scenes: editorial', type: 'video' as const, views: 115, likes: 16, avgTimeSeconds: 320 },
+    { slug: 'neon-vs-atomic-ep1', title: 'Neon vs Atomic Black \u2014 Ep 1', type: 'podcast' as const, views: 98, likes: 12, avgTimeSeconds: 1800 },
+    { slug: 'swiss-festival-highlights', title: 'Swiss festival highlights', type: 'portfolio' as const, views: 91, likes: 15, avgTimeSeconds: 42 },
+    { slug: 'color-theory-for-makeup', title: 'Colour theory for makeup artists', type: 'blog' as const, views: 87, likes: 11, avgTimeSeconds: 240 },
   ] as ContentMetric[],
 
   /** Mock device breakdown */

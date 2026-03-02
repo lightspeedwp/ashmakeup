@@ -71,8 +71,8 @@ export function BookPage() {
       className="about-subpage about-subpage--book bg-atomic-noise"
     >
       {/* ── Hero ── */}
-      <header className="about-subpage__hero">
-        <div className="about-subpage__hero-content">
+      <header className="about-subpage__hero section-spacing px-horizontal-section">
+        <div className="about-subpage__hero-content section-container">
           <Breadcrumbs items={breadcrumbs} centered />
 
           <span className="about-subpage__hero-badge">
@@ -90,8 +90,9 @@ export function BookPage() {
       </header>
 
       {/* ── Book Cover Visualisation ── */}
-      <div className="about-subpage__body">
-        <div className="book-cover" aria-label="Book cover preview">
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          <div className="book-cover" aria-label="Book cover preview">
           <span className="book-cover__status">{book.status}</span>
           <h2 className="book-cover__title">{book.title}</h2>
           <p className="book-cover__subtitle">{book.subtitle}</p>
@@ -132,11 +133,13 @@ export function BookPage() {
             </div>
           );
         })}
+        </div>
       </div>
 
       {/* ── Chapter Previews as Accordion (Phase 3) ── */}
-      <div className="about-subpage__body">
-        <div className="entrance-fade-up entrance-fade-up--delay-2">
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          <div className="entrance-fade-up entrance-fade-up--delay-2">
           <ContentSection
             id="chapter-previews"
             title={book.chaptersHeading}
@@ -166,6 +169,7 @@ export function BookPage() {
             {book.sampleCta}
           </button>
         </section>
+        </div>
       </div>
     </main>
   );

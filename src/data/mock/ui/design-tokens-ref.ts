@@ -20,22 +20,22 @@ export interface TokenSection {
 }
 
 export const designTokensRefUI = {
-  seo: { title: 'Design Tokens Reference | Developer Tools | Ash Shaw' },
+  seo: { title: 'Design tokens reference | Developer tools | Ash Shaw' },
   breadcrumbs: [
     { label: 'Home', href: '/' },
-    { label: 'Developer Tools', href: '/dev-tools' },
-    { label: 'Design Tokens Reference' },
+    { label: 'Developer tools', href: '/dev-tools' },
+    { label: 'Design tokens reference' },
   ] as BreadcrumbItem[],
   hero: {
     badge: 'Design System',
-    title: 'Design Tokens Reference',
+    title: 'Design tokens reference',
     description:
       'Complete reference of every CSS custom property in the Ash Shaw design system. Click any section to expand. Use the sidebar to jump between categories.',
   },
   sections: [
     {
       id: 'neon-colors',
-      title: 'Neon Colors',
+      title: 'Neon colors',
       description: '8 high-saturation neon colours for dark mode and decorative use.',
       tokens: [
         { token: '--wp--preset--color--neon-green', value: '#39FF14', label: 'Neon Green' },
@@ -50,7 +50,7 @@ export const designTokensRefUI = {
     },
     {
       id: 'accessible-text',
-      title: 'Accessible Text Colors',
+      title: 'Accessible text colors',
       description: 'WCAG AA compliant darker variants for readability on white backgrounds.',
       tokens: [
         { token: '--wp--preset--color--neon-green-text', value: '#008f00', label: 'Green Text (5.2:1)' },
@@ -65,7 +65,7 @@ export const designTokensRefUI = {
     },
     {
       id: 'neutral-ramp',
-      title: 'Neutral Ramp',
+      title: 'Neutral ramp',
       description: 'Grey scale from 50 (lightest) to Atomic Black.',
       tokens: [
         { token: '--wp--preset--color--neutral-50', value: '#f9fafb', label: 'Neutral 50' },
@@ -84,7 +84,7 @@ export const designTokensRefUI = {
     },
     {
       id: 'semantic-roles',
-      title: 'Semantic Roles',
+      title: 'Semantic roles',
       description: 'Named semantic colour aliases for site-wide usage.',
       tokens: [
         { token: '--wp--preset--color--base', value: '#ffffff', label: 'Base (Background)' },
@@ -96,7 +96,7 @@ export const designTokensRefUI = {
     },
     {
       id: 'gradients',
-      title: 'Gradient Presets',
+      title: 'Gradient presets',
       description: '4 signature gradient presets used across the site.',
       tokens: [
         { token: '--wp--preset--gradient--cyberpunk', value: 'linear-gradient(135deg, #FF10F0, #1F51FF)', label: 'Cyberpunk' },
@@ -154,7 +154,7 @@ export const designTokensRefUI = {
     },
     {
       id: 'border-radius',
-      title: 'Border Radius',
+      title: 'Border radius',
       description: '6 radius tokens from subtle to full pill.',
       tokens: [
         { token: '--wp--preset--border-radius--sm', value: '0.25rem', label: 'Small' },
@@ -218,7 +218,7 @@ export const designTokensRefUI = {
     },
     {
       id: 'aspect-ratio',
-      title: 'Aspect Ratio',
+      title: 'Aspect ratio',
       description: 'Preset aspect ratio tokens for media containers.',
       tokens: [
         { token: '--wp--preset--aspect-ratio--square', value: '1 / 1', label: 'Square' },
@@ -228,7 +228,7 @@ export const designTokensRefUI = {
     },
     {
       id: 'animation',
-      title: 'Animation Timing',
+      title: 'Animation timing',
       description: 'Duration and easing tokens for transitions.',
       tokens: [
         { token: '--wp--custom--animation--slow', value: '500ms', label: 'Slow' },

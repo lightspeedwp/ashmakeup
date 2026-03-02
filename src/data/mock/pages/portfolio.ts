@@ -14,7 +14,7 @@
  */
 export const portfolioHero = {
   title: 'Portfolio',
-  subtitle: 'Festival Artistry & Creative Makeup',
+  subtitle: 'Festival artistry & creative makeup',
   description: 'Explore a vibrant collection of festival makeup, UV artistry, and creative looks from events around the world.'
 };
 
@@ -24,7 +24,7 @@ export const portfolioHero = {
  * @constant
  */
 export const portfolioIntro = {
-  title: 'Makeup That Shines',
+  title: 'Makeup that shines',
   content: 'From explosive festival energy to peaceful mountain celebrations, each look tells a story of colour, connection, and creative expression. Browse through my work spanning festivals in Thailand, Switzerland, and beyond.'
 };
 
@@ -36,28 +36,28 @@ export const portfolioIntro = {
 export const portfolioCategories = [
   {
     id: 'featured-work',
-    title: 'Featured Work',
+    title: 'Featured work',
     description: 'Standout pieces that capture the essence of festival artistry and creative expression.',
     icon: '⭐',
     gradient: 'from-pink-600 via-purple-600 to-blue-500'
   },
   {
     id: 'festivals',
-    title: 'Festival Adventures',
+    title: 'Festival adventures',
     description: 'Bold face art and vibrant self-expression from festivals around the world.',
     icon: '🎪',
     gradient: 'from-orange-600 via-yellow-600 to-green-500'
   },
   {
     id: 'thailand',
-    title: 'Thailand Adventures',
+    title: 'Thailand adventures',
     description: 'Tropical makeup exploration blending local culture with artistic expression.',
     icon: '🌴',
     gradient: 'from-yellow-600 via-orange-600 to-red-500'
   },
   {
     id: 'shankra-2023',
-    title: 'Shankra Festival 2023',
+    title: 'Shankra festival 2023',
     description: 'Alpine-inspired makeup in breathtaking Swiss mountain settings.',
     icon: '🏔️',
     gradient: 'from-green-600 via-emerald-600 to-teal-500'
@@ -71,14 +71,14 @@ export const portfolioCategories = [
   },
   {
     id: 'uv-makeup',
-    title: 'UV & Blacklight',
+    title: 'UV & blacklight',
     description: 'Neon and glow-in-the-dark makeup designed to shine under UV lights.',
     icon: '💡',
     gradient: 'from-cyan-600 via-blue-600 to-indigo-500'
   },
   {
     id: 'nail-art',
-    title: 'Fusion Nails',
+    title: 'Fusion nails',
     description: 'Creative nail designs showcasing color, texture, and artistic expression.',
     icon: '💅',
     gradient: 'from-pink-600 via-rose-600 to-red-500'
@@ -103,8 +103,8 @@ export const portfolioStats = {
  * @constant
  */
 export const portfolioCTA = {
-  title: 'Love What You See?',
+  title: 'Love what you see?',
   description: 'Ready to create your own unique look? Get in touch to discuss your vision.',
-  buttonText: 'Book a Consultation',
+  buttonText: 'Book a consultation',
   buttonLink: '#contact'
 };

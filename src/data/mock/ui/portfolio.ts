@@ -35,6 +35,9 @@ export const portfolioUI = {
       related: {
         title: "Related Work",
         readArticle: "Read Article"
+      },
+      feedback: {
+        heading: "What people say"
       }
     },
     share: {

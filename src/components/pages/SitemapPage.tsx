@@ -146,19 +146,20 @@ export function SitemapPage() {
       <div className="sitemap__rainbow" aria-hidden="true" />
       <div className="sitemap__rainbow-glow" aria-hidden="true" />
 
-      <main id="main-content" tabIndex={-1}>
-        {/* Header */}
-        <header className="sitemap__header">
-          <Breadcrumbs items={sitemapContent.breadcrumbs} centered />
-          <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
-            {sitemapContent.title}
-          </h1>
-          <p className="text-body-p sitemap__subtitle">
-            {sitemapContent.subtitle}
-          </p>
-        </header>
+      <main id="main-content" tabIndex={-1} className="section-spacing--with-header px-horizontal-section">
+        <div className="container-wide section-container">
+          {/* Header */}
+          <header className="sitemap__header">
+            <Breadcrumbs items={sitemapContent.breadcrumbs} centered />
+            <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
+              {sitemapContent.title}
+            </h1>
+            <p className="text-body-p sitemap__subtitle">
+              {sitemapContent.subtitle}
+            </p>
+          </header>
 
-        {/* ──────────── 1. Pages ──────────── */}
+          {/* ──────────── 1. Pages ──────────── */}
         <section className="sitemap__section" aria-labelledby="sitemap-pages">
           <div className="sitemap__section-header">
             <div className="sitemap__section-accent sitemap__section-accent--pink" />
@@ -862,7 +863,8 @@ export function SitemapPage() {
             })}
           </ul>
         </section>
-      </main>
-    </div>
-  );
+      </div>
+    </main>
+  </div>
+);
 }

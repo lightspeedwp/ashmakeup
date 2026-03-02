@@ -73,7 +73,7 @@ export function ContentSection(props: ContentSectionProps) {
   var accentClasses = colorAccent ? getAccentClasses(colorAccent) : null;
 
   // Build root class
-  var classes = ['content-section'];
+  var classes = ['content-section', 'section-spacing', 'px-horizontal-section'];
   classes.push('content-section--' + variant);
 
   if (variant === 'callout' && accentClasses) {
@@ -99,23 +99,25 @@ export function ContentSection(props: ContentSectionProps) {
       id={sectionId}
       aria-labelledby={hasTitle ? titleId : undefined}
     >
-      {hasTitle && (
-        <div className="content-section__header">
-          {subtitle && (
-            <p className={
-              'content-section__subtitle' +
-              (accentClasses ? ' ' + accentClasses.text : '')
-            }>
-              {subtitle}
-            </p>
-          )}
-          <h2 className="content-section__title" id={titleId}>
-            {title}
-          </h2>
+      <div className="section-container">
+        {hasTitle && (
+          <div className="content-section__header">
+            {subtitle && (
+              <p className={
+                'content-section__subtitle' +
+                (accentClasses ? ' ' + accentClasses.text : '')
+              }>
+                {subtitle}
+              </p>
+            )}
+            <h2 className="content-section__title" id={titleId}>
+              {title}
+            </h2>
+          </div>
+        )}
+        <div className="content-section__body">
+          {children}
         </div>
-      )}
-      <div className="content-section__body">
-        {children}
       </div>
     </section>
   );

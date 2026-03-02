@@ -24,12 +24,12 @@ export const deploymentReadinessUI = {
   seo: { title: 'Deployment Readiness | Developer Tools | Ash Shaw' },
   breadcrumbs: [
     { label: 'Home', href: '/' },
-    { label: 'Developer Tools', href: '/dev-tools' },
-    { label: 'Deployment Readiness' },
+    { label: 'Developer tools', href: '/dev-tools' },
+    { label: 'Deployment readiness' },
   ] as BreadcrumbItem[],
   hero: {
     badge: 'Deployment',
-    title: 'Deployment Readiness',
+    title: 'Deployment readiness',
     description:
       'Pre-deployment validation checklist covering performance, accessibility, SEO, security, and code quality.',
   },
@@ -84,7 +84,7 @@ export const deploymentReadinessUI = {
     },
     {
       id: 'code-quality',
-      title: 'Code Quality',
+      title: 'Code quality',
       icon: 'Code',
       checks: [
         { id: 'cq-1', name: 'TypeScript strict mode', status: 'pass', recommendation: 'All files type-safe with no any types.' },

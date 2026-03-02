@@ -15,8 +15,8 @@ import { HeroImage, AboutSection } from '../../types';
  * @constant
  */
 export const aboutHero = {
-  title: 'Global Psytrance Artist',
-  subtitle: 'UV Makeup Specialist',
+  title: 'Global psytrance artist',
+  subtitle: 'UV makeup specialist',
   description: 'A journey through sound and color. Based in Cape Town, chasing summers in Berlin and Thailand. I bring neon visions to life on the world\'s biggest psytrance dancefloors.'
 };
 
@@ -27,7 +27,7 @@ export const aboutHero = {
  */
 export const journeySection: AboutSection = {
   id: 'journey-section',
-  title: 'My Global Journey',
+  title: 'My global journey',
   content: [
     {
       type: 'paragraph',
@@ -57,11 +57,11 @@ export const journeySection: AboutSection = {
  */
 export const philosophySection: AboutSection = {
   id: 'philosophy-section',
-  title: 'Trance Philosophy',
+  title: 'Trance philosophy',
   content: [
     {
       type: 'heading',
-      text: 'Spontaneous & Electric'
+      text: 'Spontaneous & electric'
     },
     {
       type: 'paragraph',
@@ -69,7 +69,7 @@ export const philosophySection: AboutSection = {
     },
     {
       type: 'heading',
-      text: 'The UV Process'
+      text: 'The UV process'
     },
     {
       type: 'paragraph',
@@ -77,7 +77,7 @@ export const philosophySection: AboutSection = {
     },
     {
       type: 'heading',
-      text: 'Fast & Fluid'
+      text: 'Fast & fluid'
     },
     {
       type: 'paragraph',
@@ -94,7 +94,7 @@ export const philosophySection: AboutSection = {
  */
 export const skillsSection: AboutSection = {
   id: 'skills-section',
-  title: 'Psytrance Specialties',
+  title: 'Psytrance specialties',
   content: [
     {
       type: 'list',
@@ -151,9 +151,9 @@ export const experienceHighlights = [
  * @constant
  */
 export const aboutCTA = {
-  title: 'Meet Me On The Trance Floor',
+  title: 'Meet me on the trance floor',
   description: 'I\'m always where the music is. Check my schedule or connect before your next festival.',
-  buttonText: 'Check Schedule',
+  buttonText: 'Check schedule',
   buttonLink: '#contact'
 };
 

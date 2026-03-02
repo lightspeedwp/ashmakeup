@@ -4,10 +4,10 @@
  * and ADHD regulation. Cycling, dance, yoga, running, triathlon, Muay Thai.
  *
  * Neon accent: Green
- * Phase 5 Polish — PullQuote + ContentSection, bundler-safe syntax
+ * Phase 7 Enrichment — Koh Phangan training base, intersection model
  *
  * @component FitnessPage
- * @version 2.0.0
+ * @version 3.0.0
  */
 
 import React, { useEffect } from 'react';
@@ -16,6 +16,7 @@ import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { PullQuote } from '../../ui/PullQuote';
+import { StatCard } from '../../ui/StatCard';
 import { ContentSection } from '../../sections/ContentSection';
 import '../../../styles/blocks/about-subpage.css';
 
@@ -34,8 +35,8 @@ export function FitnessPage() {
       className="about-subpage about-subpage--fitness bg-atomic-noise"
     >
       {/* ── Hero ── */}
-      <header className="about-subpage__hero">
-        <div className="about-subpage__hero-content">
+      <header className="about-subpage__hero section-spacing px-horizontal-section">
+        <div className="about-subpage__hero-content section-container">
           <Breadcrumbs items={data.breadcrumbs} centered />
 
           <span className="about-subpage__hero-badge">
@@ -53,54 +54,116 @@ export function FitnessPage() {
       </header>
 
       {/* ── Pull Quote (Phase 3) ── */}
-      <div className="about-subpage__body">
-        <div className="entrance-fade-up">
-          <PullQuote
-            quote={data.pullQuote}
-            variant="center"
-            neonColor="green"
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          <div className="entrance-fade-up">
+            <PullQuote
+              quote={data.pullQuote}
+              variant="center"
+              neonColor="green"
+            />
+          </div>
+
+          {/* ── Stats Grid ── */}
+          <StatCard
+            items={data.stats}
+            ariaLabel="Fitness stats"
           />
         </div>
       </div>
 
-      {/* ── Stats Grid ── */}
-      <div
-        className="about-subpage__facts"
-        role="list"
-        aria-label="Fitness stats"
-      >
-        {data.stats.map(function (stat) {
-          return (
-            <div key={stat.id} className="about-subpage__fact" role="listitem">
-              <span className="about-subpage__fact-label">{stat.label}</span>
-              <span className="about-subpage__fact-value">{stat.value}</span>
-            </div>
-          );
-        })}
+      {/* ── Sports Grid ── */}
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container about-subpage__destinations" aria-label="Sport disciplines">
+          {data.sports.map(function (sport) {
+            return (
+              <article key={sport.id} className="about-subpage__destination">
+                <div className="about-subpage__destination-name">
+                  {sport.name}
+                </div>
+                <span className="about-subpage__destination-region">
+                  {'Since ' + sport.since}
+                </span>
+                <p className="about-subpage__destination-desc">
+                  {sport.description}
+                </p>
+              </article>
+            );
+          })}
+        </div>
       </div>
 
-      {/* ── Sports Grid ── */}
-      <div className="about-subpage__destinations" aria-label="Sport disciplines">
-        {data.sports.map(function (sport) {
-          return (
-            <article key={sport.id} className="about-subpage__destination">
-              <div className="about-subpage__destination-name">
-                {sport.name}
-              </div>
-              <span className="about-subpage__destination-region">
-                {'Since ' + sport.since}
-              </span>
-              <p className="about-subpage__destination-desc">
-                {sport.description}
+      {/* ── Koh Phangan Training Base (from ebook Ch9) ── */}
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          <div className="entrance-fade-up">
+            <ContentSection
+              id={data.kohPhanganTraining.id}
+              title={data.kohPhanganTraining.title}
+              variant="callout"
+              colorAccent="blue"
+            >
+              {data.kohPhanganTraining.paragraphs.map(function (p, i) {
+                return (
+                  <p
+                    key={'kp-p-' + i}
+                    className="about-subpage__section-text"
+                  >
+                    {p}
+                  </p>
+                );
+              })}
+            </ContentSection>
+          </div>
+
+          {/* ── Intersection Model (from ebook Ch15) ── */}
+          <div className="entrance-fade-up entrance-fade-up--delay-1">
+            <ContentSection
+              id={data.intersectionModel.id}
+              title={data.intersectionModel.title}
+              variant="default"
+              colorAccent="pink"
+            >
+              <p className="about-subpage__section-text">
+                {data.intersectionModel.intro}
               </p>
-            </article>
-          );
-        })}
+
+              <div
+                role="list"
+                aria-label="How each discipline feeds the next"
+              >
+                {data.intersectionModel.connections.map(function (conn) {
+                  return (
+                    <div
+                      key={conn.id}
+                      className="about-subpage__section"
+                      role="listitem"
+                    >
+                      <h3 className="about-subpage__section-subtitle">
+                        {conn.from + ' \u2192 ' + conn.to}
+                      </h3>
+                      <p className="about-subpage__section-text">
+                        {conn.connection}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <PullQuote
+                quote={data.intersectionModel.closing}
+                variant="center"
+                neonColor="pink"
+              />
+            </ContentSection>
+          </div>
+        </div>
       </div>
 
       {/* ── Sections (Phase 3 ContentSection) ── */}
-      <div className="about-subpage__body">
-        {data.sections.map(function (section, idx) {
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          {data.sections.map(function (section, idx) {
           var delayClass = idx < 6 ? ' entrance-fade-up--delay-' + (idx + 1) : '';
 
           return (
@@ -122,6 +185,7 @@ export function FitnessPage() {
             </div>
           );
         })}
+        </div>
       </div>
     </main>
   );

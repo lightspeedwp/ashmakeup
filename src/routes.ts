@@ -28,6 +28,7 @@
  * /about/fitness                 → FitnessPage (the moving body)
  * /about/six-cats                → SixCatsPage (Six Cats Cannabis Club)
  * /about/manifesto               → ManifestoPage (creative manifesto)
+ * /about/tribes                  → TribesPage (tribes & community)
  * /about/accessibility           → AccessibilityStatementPage (accessibility statement)
  * /events                        → EventsPage (events listing)
  * /events/category/:slug         → EventCategoryPage (category archive)
@@ -115,6 +116,7 @@ import { PartnersPage } from './components/pages/about/PartnersPage';
 import { FitnessPage } from './components/pages/about/FitnessPage';
 import { SixCatsPage } from './components/pages/about/SixCatsPage';
 import { ManifestoPage } from './components/pages/about/ManifestoPage';
+import { TribesPage } from './components/pages/about/TribesPage';
 import { AccessibilityStatementPage } from './components/pages/legal/AccessibilityStatementPage';
 import { EventsPage } from './components/pages/events/EventsPage';
 import { EventCategoryPage } from './components/pages/events/EventCategoryPage';
@@ -199,6 +201,7 @@ export const router = createBrowserRouter([
       { path: 'about/fitness', Component: FitnessPage },
       { path: 'about/six-cats', Component: SixCatsPage },
       { path: 'about/manifesto', Component: ManifestoPage },
+      { path: 'about/tribes', Component: TribesPage },
       { path: 'about/accessibility', Component: AccessibilityStatementPage },
       { path: 'events', Component: EventsPage },
       { path: 'events/category/:slug', Component: EventCategoryPage },

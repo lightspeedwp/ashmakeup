@@ -20,14 +20,14 @@ export const performanceTesterUI = {
   },
   hero: {
     badge: 'Web Vitals',
-    title: 'Performance Tester',
+    title: 'Performance tester',
     description:
       'Measure real-time performance metrics using the browser Performance API. View navigation timing, resource breakdowns, DOM complexity, image audit results, and Core Web Vitals estimates.',
   },
   breadcrumbs: [
     { label: 'Home', href: '/' },
-    { label: 'Developer Tools', href: '/dev-tools' },
-    { label: 'Performance Tester' },
+    { label: 'Developer tools', href: '/dev-tools' },
+    { label: 'Performance tester' },
   ] as BreadcrumbItem[],
   actions: {
     runTest: 'Run Test',
@@ -103,7 +103,7 @@ export const performanceTesterUI = {
     commentNodes: 'Comment Nodes',
   },
   imageAudit: {
-    title: 'Image Audit',
+    title: 'Image audit',
     total: 'Total Images',
     missingLazy: 'Missing lazy loading',
     missingAlt: 'Missing alt text',

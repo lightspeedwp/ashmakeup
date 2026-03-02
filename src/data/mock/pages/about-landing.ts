@@ -61,8 +61,8 @@ export interface AboutLandingData {
 
 export var aboutLandingData: AboutLandingData = {
   hero: {
-    title: 'Global Psytrance Artist',
-    tagline: 'UV Makeup Specialist',
+    title: 'Global psytrance artist',
+    tagline: 'UV makeup specialist',
     description:
       'A journey through sound and colour. Based in Cape Town, chasing summers in Berlin and Thailand. He brings neon visions to life on the world\u2019s biggest psytrance dancefloors.',
     pullQuote:
@@ -70,7 +70,7 @@ export var aboutLandingData: AboutLandingData = {
   },
 
   aquarianBlueprint: {
-    title: 'The Aquarian Blueprint',
+    title: 'The Aquarian blueprint',
     paragraphs: [
       'Ash has always questioned everything. The Aquarian need to reject convention, to see patterns others miss, to insist on doing things his own way even when the easy path is right there \u2014 this isn\u2019t stubbornness, it\u2019s operating system. He sees connections across disciplines, cultures, and altered states that other people don\u2019t see because they\u2019re not looking from the same angle.',
       'Combined with ADHD, this becomes amplified. The conventional world felt like running incompatible software. School, offices, 9-to-5 routines \u2014 none of it matched the way his brain processed information. It took him twenty years to understand that this wasn\u2019t broken. It was a feature, not a bug. He just needed to find the right operating system.',
@@ -80,7 +80,7 @@ export var aboutLandingData: AboutLandingData = {
   },
 
   adhdSection: {
-    title: 'ADHD \u2014 Wired Different',
+    title: 'ADHD \u2014 wired different',
     intro:
       'It\u2019s not a deficit of attention. It\u2019s a surplus of it, all going in directions that school wasn\u2019t designed to handle.',
     artHeading: 'How ADHD shows up in the art',
@@ -98,33 +98,33 @@ export var aboutLandingData: AboutLandingData = {
   },
 
   costumeEvolution: {
-    title: 'The Costume Evolution',
+    title: 'The costume evolution',
     events: [
       {
         year: '1999',
-        title: 'The Yellow Suit',
+        title: 'The yellow suit',
         description:
           'Found at a charity shop. First worn at Vortex 1999. Earned him the nickname "the Chicken Man." The beginning of standing out on purpose.',
       },
       {
         year: 'Early 2000s',
-        title: 'The Red Suit',
+        title: 'The red suit',
         description: 'Escalation. Brighter, bolder, louder.',
       },
       {
         year: 'Mid-2000s',
-        title: 'White & Black Cow Suit',
+        title: 'White & black cow suit',
         description: 'The pivot to character. Festival identity took shape.',
       },
       {
         year: 'Late 2000s',
-        title: 'Brown & Beige Cow Suit',
+        title: 'Brown & beige cow suit',
         description:
           'Became known as "the Cow Man" for years. People at festivals STILL ask if he\u2019s the guy who used to dress as the cow man.',
       },
       {
         year: 'July 2019',
-        title: 'UV Paint',
+        title: 'UV paint',
         description:
           'The final evolution. The costume became the art became the identity. No longer wearing something outrageous \u2014 now MAKING other people outrageous.',
       },
@@ -142,8 +142,8 @@ export var aboutLandingData: AboutLandingData = {
 
   chapters: [
     { id: 'aquarian-section', label: 'Aquarius & ADHD' },
-    { id: 'adhd-section', label: 'Wired Different' },
-    { id: 'costume-section', label: 'Costume Evolution' },
-    { id: 'shine-section', label: 'Making Others Shine' },
+    { id: 'adhd-section', label: 'Wired different' },
+    { id: 'costume-section', label: 'Costume evolution' },
+    { id: 'shine-section', label: 'Making others shine' },
   ],
 };

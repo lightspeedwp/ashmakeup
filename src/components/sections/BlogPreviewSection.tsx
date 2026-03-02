@@ -67,8 +67,8 @@ export function BlogPreviewSection({
   }
 
   return (
-    <section id="blog-preview" className="blog-preview">
-      <div className="container-wide">
+    <section id="blog-preview" className="blog-preview section-spacing px-horizontal-section">
+      <div className="container-wide section-container">
         {/* Section header */}
         <div className="blog-preview__header">
           <h2 className="text-section-h2">

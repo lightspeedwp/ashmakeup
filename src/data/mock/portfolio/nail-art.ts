@@ -24,7 +24,7 @@ export const nailArtWork: PortfolioEntry[] = [
   {
     id: 'rainbow-fusion',
     slug: 'rainbow-fusion-nails',
-    title: 'Rainbow Fusion',
+    title: 'Rainbow fusion',
     category: 'Nail Art',
     subcategory: 'Sticker Art Collection',
     date: '2025-01-10',
@@ -32,8 +32,8 @@ export const nailArtWork: PortfolioEntry[] = [
       {
         src: rainbowFusionImg,
         alt: 'Rainbow Fusion nail art with colorful sticker art and holographic details',
-        title: 'Rainbow Fusion',
-        caption: 'Full Set',
+        title: 'Rainbow fusion',
+        caption: 'Full set',
         description: 'Vibrant multi-color rainbow design using creative sticker art techniques',
         position: 'center',
         aspectRatio: '4:3'
@@ -48,7 +48,7 @@ export const nailArtWork: PortfolioEntry[] = [
   {
     id: 'galaxy-nails',
     slug: 'galaxy-nails',
-    title: 'Galaxy Nails',
+    title: 'Galaxy nails',
     category: 'Nail Art',
     subcategory: 'Fusion Nails',
     date: '2025-02-14',
@@ -56,8 +56,8 @@ export const nailArtWork: PortfolioEntry[] = [
       {
         src: galaxyNailsImg,
         alt: 'Galaxy Nails with iridescent blues and greens with cosmic shimmer',
-        title: 'Galaxy Nails',
-        caption: 'Galaxy Effect',
+        title: 'Galaxy nails',
+        caption: 'Galaxy effect',
         description: 'Cosmic-inspired design with iridescent finish and beautiful shimmer effects',
         position: 'center',
         aspectRatio: '3:4'
@@ -72,7 +72,7 @@ export const nailArtWork: PortfolioEntry[] = [
   {
     id: 'gradient-dreams',
     slug: 'gradient-dreams-nails',
-    title: 'Gradient Dreams',
+    title: 'Gradient dreams',
     category: 'Nail Art',
     subcategory: 'Fusion Nails',
     date: '2025-03-08',
@@ -80,8 +80,8 @@ export const nailArtWork: PortfolioEntry[] = [
       {
         src: gradientDreamsImg,
         alt: 'Gradient Dreams nail art with purple to green ombre and metallic finish',
-        title: 'Gradient Dreams',
-        caption: 'Ombre Effect',
+        title: 'Gradient dreams',
+        caption: 'Ombre effect',
         description: 'Smooth color transition with metallic topcoat showing beautiful color shifts',
         position: 'center',
         aspectRatio: '4:3'

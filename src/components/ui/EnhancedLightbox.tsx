@@ -415,7 +415,7 @@ export function EnhancedLightbox({
         <div className="lightbox-footer">
           <p className="lightbox-footer-content">
             {hasMultipleItems && (
-              <React.Fragment>
+              <span className="lightbox-nav-hint-block">
                 <span className="lightbox-nav-hint-wrapper">
                   <svg className="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
@@ -427,13 +427,13 @@ export function EnhancedLightbox({
                   </svg>
                 </span>
                 <span className="lightbox-separator">•</span>
-              </React.Fragment>
+              </span>
             )}
             {!isVideo && (
-              <React.Fragment>
+              <span className="lightbox-zoom-hint-block">
                 <span>{portfolioUI.lightbox.navigation.hintZoom}</span>
                 <span className="lightbox-separator">•</span>
-              </React.Fragment>
+              </span>
             )}
             <span className="lightbox-hint-desktop">{portfolioUI.lightbox.navigation.hintKeyboard}</span>
             <span>{portfolioUI.lightbox.navigation.hintClose}</span>

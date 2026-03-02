@@ -39,52 +39,58 @@ export function PodcastCategoryPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
 
-  const category = podcastCategories.find(c => c.slug === slug);
+  const category = podcastCategories.find(function (c) { return c.slug === slug; });
   const activeCategoriesInit: string[] = slug ? [slug] : [];
   const [activeCategories, setActiveCategories] = useState(activeCategoriesInit);
   const [sortBy, setSortBy] = useState('recent');
 
-  useEffect(() => {
+  useEffect(function () {
     setActiveCategories(slug ? [slug] : []);
   }, [slug]);
 
-  useEffect(() => {
+  useEffect(function () {
     if (category) {
       setSEO(podcastCategorySEO(category.name));
       const epCount = filteredEpisodes ? filteredEpisodes.length : 0;
       injectSchema(SCHEMA_IDS.collection, buildCollectionSchema(
-        `${category.name} | Podcasts`,
+        category.name + ' | Podcasts',
         podcastCategorySEO(category.name).description,
-        `/podcasts/category/${slug}`,
+        '/podcasts/category/' + slug,
         epCount,
       ));
     }
-    return () => {
+    return function () {
       removeSchema(SCHEMA_IDS.collection);
     };
   }, [category, slug]);
 
   const categories = useMemo(
-    () =>
-      podcastCategories.map(c => ({
-        id: c.id,
-        name: c.name,
-        slug: c.slug,
-        count: getPodcastCategoryCount(c.name),
-      })),
+    function () {
+      return podcastCategories.map(function (c) {
+        return {
+          id: c.id,
+          name: c.name,
+          slug: c.slug,
+          count: getPodcastCategoryCount(c.name),
+        };
+      });
+    },
     [],
   );
 
-  const filteredEpisodes = useMemo(() => {
-    let eps = [...podcastEpisodes];
+  const filteredEpisodes = useMemo(function () {
+    let eps = [];
+    for (var i = 0; i < podcastEpisodes.length; i++) {
+      eps.push(podcastEpisodes[i]);
+    }
 
     if (activeCategories.length > 0) {
       const activeCat = podcastCategories.find(
-        c => c.slug === activeCategories[0],
+        function (c) { return c.slug === activeCategories[0]; }
       );
       if (activeCat) {
         eps = eps.filter(
-          ep => ep.category.toLowerCase() === activeCat.name.toLowerCase(),
+          function (ep) { return ep.category.toLowerCase() === activeCat.name.toLowerCase(); }
         );
       }
     }
@@ -92,15 +98,16 @@ export function PodcastCategoryPage() {
     switch (sortBy) {
       case 'recent':
         eps.sort(
-          (a, b) =>
-            new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+          function (a, b) {
+            return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+          }
         );
         break;
       case 'alphabetical':
-        eps.sort((a, b) => a.title.localeCompare(b.title));
+        eps.sort(function (a, b) { return a.title.localeCompare(b.title); });
         break;
       case 'featured':
-        eps.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+        eps.sort(function (a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0); });
         break;
     }
 
@@ -108,11 +115,11 @@ export function PodcastCategoryPage() {
   }, [activeCategories, sortBy]);
 
   const handleCategoryToggle = useCallback(
-    (catSlug: string) => {
-      const isActive = activeCategories.includes(catSlug);
+    function (catSlug) {
+      const isActive = activeCategories.indexOf(catSlug) !== -1;
       // Toggle logic: single select behavior implied by routing
       const newCategories = isActive 
-        ? activeCategories.filter(s => s !== catSlug) 
+        ? activeCategories.filter(function (s) { return s !== catSlug; }) 
         : [catSlug];
 
       setActiveCategories(newCategories);
@@ -120,7 +127,7 @@ export function PodcastCategoryPage() {
       if (newCategories.length === 0) {
         navigate('/podcasts');
       } else {
-        navigate(`/podcasts/category/${catSlug}`);
+        navigate('/podcasts/category/' + catSlug);
       }
     },
     [navigate, activeCategories],
@@ -129,92 +136,98 @@ export function PodcastCategoryPage() {
   return (
     <main id="main-content" role="main" tabIndex={-1} className="podcasts-archive bg-atomic-noise">
       {/* Header */}
-      <div className="podcasts-archive__header">
-        <Breadcrumbs items={podcastCategoryBreadcrumbs(category ? category.name : 'Category')} centered />
-        <Mic className="icon-xl" aria-hidden="true" />
-        <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
-          {category ? category.name : 'Podcasts'}
-        </h1>
-        {category && category.description && (
-          <p className="text-body-guideline">{category.description}</p>
-        )}
+      <div className="podcasts-archive__header section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
+          <Breadcrumbs items={podcastCategoryBreadcrumbs(category ? category.name : 'Category')} centered />
+          <Mic className="icon-xl" aria-hidden="true" />
+          <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-0">
+            {category ? category.name : 'Podcasts'}
+          </h1>
+          {category && category.description ? (
+            <p className="text-body-guideline mb-0">{category.description}</p>
+          ) : null}
+        </div>
       </div>
 
       {/* Content */}
-      <div className="container-7xl py-fluid-lg">
-        <ArchiveFilters
-          contentType="podcast"
-          categories={categories}
-          activeCategories={activeCategories}
-          sortBy={sortBy}
-          sortOptions={SORT_OPTIONS}
-          resultCount={filteredEpisodes.length}
-          onCategoryToggle={handleCategoryToggle}
-          onSortChange={setSortBy}
-          onClearAll={() => {
-            setActiveCategories([]);
-            navigate('/podcasts');
-          }}
-        />
+      <div className="podcasts-archive-content section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
+          <ArchiveFilters
+            contentType="podcast"
+            categories={categories}
+            activeCategories={activeCategories}
+            sortBy={sortBy}
+            sortOptions={SORT_OPTIONS}
+            resultCount={filteredEpisodes.length}
+            onCategoryToggle={handleCategoryToggle}
+            onSortChange={setSortBy}
+            onClearAll={function () {
+              setActiveCategories([]);
+              navigate('/podcasts');
+            }}
+          />
 
-        {filteredEpisodes.length > 0 ? (
-          <div className="podcasts-archive__grid">
-            {filteredEpisodes.map(ep => (
-              <article
-                key={ep.id}
-                className="podcast-card"
-                onClick={() => navigate(`/podcast/${ep.slug}`)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    navigate(`/podcast/${ep.slug}`);
-                  }
-                }}
-                aria-label={`${ep.title} — Episode ${ep.episodeNumber}`}
-              >
-                <div className="podcast-card__image-wrap">
-                  <OptimizedImage
-                    src={ep.coverImage.src}
-                    alt={ep.coverImage.alt}
-                    className="podcast-card__image"
-                    preset="content"
-                  />
-                  <div className="podcast-card__play-overlay" aria-hidden="true">
-                    <CirclePlay className="podcast-card__play-icon" />
-                  </div>
-                  <span className="podcast-card__episode-badge">
-                    EP {ep.episodeNumber}
-                  </span>
-                </div>
+          {filteredEpisodes.length > 0 ? (
+            <div className="podcasts-archive__grid">
+              {filteredEpisodes.map(function (ep) {
+                return (
+                  <article
+                    key={ep.id}
+                    className="podcast-card"
+                    onClick={function () { navigate('/podcast/' + ep.slug); }}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={function (e) {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        navigate('/podcast/' + ep.slug);
+                      }
+                    }}
+                    aria-label={ep.title + ' \u2014 Episode ' + ep.episodeNumber}
+                  >
+                    <div className="podcast-card__image-wrap">
+                      <OptimizedImage
+                        src={ep.coverImage.src}
+                        alt={ep.coverImage.alt}
+                        className="podcast-card__image"
+                        preset="content"
+                      />
+                      <div className="podcast-card__play-overlay" aria-hidden="true">
+                        <CirclePlay className="podcast-card__play-icon" />
+                      </div>
+                      <span className="podcast-card__episode-badge">
+                        EP {ep.episodeNumber}
+                      </span>
+                    </div>
 
-                <div className="podcast-card__body">
-                  <h2 className="podcast-card__title">{ep.title}</h2>
-                  <p className="podcast-card__excerpt">{ep.description}</p>
-                  <div className="podcast-card__meta">
-                    <span className="podcast-card__category-chip">
-                      {ep.category}
-                    </span>
-                    <time dateTime={ep.publishedAt}>
-                      <Calendar className="icon-xs" aria-hidden="true" />{' '}
-                      {formatDate(ep.publishedAt)}
-                    </time>
-                    <span>
-                      <Clock className="icon-xs" aria-hidden="true" />{' '}
-                      {ep.duration}
-                    </span>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <div className="error-card">
-            <Mic className="icon-xl" aria-hidden="true" />
-            <h3 className="error-title">{podcastsUI.archive.emptyState}</h3>
-          </div>
-        )}
+                    <div className="podcast-card__body">
+                      <h2 className="podcast-card__title">{ep.title}</h2>
+                      <p className="podcast-card__excerpt">{ep.description}</p>
+                      <div className="podcast-card__meta">
+                        <span className="podcast-card__category-chip">
+                          {ep.category}
+                        </span>
+                        <time dateTime={ep.publishedAt}>
+                          <Calendar className="icon-xs" aria-hidden="true" />{' '}
+                          {formatDate(ep.publishedAt)}
+                        </time>
+                        <span>
+                          <Clock className="icon-xs" aria-hidden="true" />{' '}
+                          {ep.duration}
+                        </span>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="error-card">
+              <Mic className="icon-xl" aria-hidden="true" />
+              <h3 className="error-title">{podcastsUI.archive.emptyState}</h3>
+            </div>
+          )}
+        </div>
       </div>
 
       <FaqSection pageId="podcasts" />

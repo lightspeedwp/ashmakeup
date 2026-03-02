@@ -40,50 +40,53 @@ const SORT_OPTIONS = [
 ];
 
 export function PortfolioTagPage() {
-  const { slug } = useParams();
-  const navigate = useNavigate();
+  var params = useParams();
+  var slug = params.slug;
+  var navigate = useNavigate();
 
-  const tag = findPortfolioTagBySlug(slug ? slug : '');
-  const [sortBy, setSortBy] = useState('recent');
+  var tag = findPortfolioTagBySlug(slug ? slug : '');
+  var sortByState = useState('recent');
+  var sortBy = sortByState[0];
+  var setSortBy = sortByState[1];
 
-  useEffect(() => {
+  useEffect(function () {
     if (tag) {
       setSEO(portfolioTagSEO(tag.name));
-      const entryCount = filteredEntries ? filteredEntries.length : 0;
+      var entryCount = filteredEntries ? filteredEntries.length : 0;
       injectSchema(SCHEMA_IDS.collection, buildCollectionSchema(
-        `${tag.name} | Portfolio`,
+        tag.name + ' | Portfolio',
         portfolioTagSEO(tag.name).description,
-        `/portfolio/tag/${slug}`,
+        '/portfolio/tag/' + slug,
         entryCount,
       ));
     }
-    return () => {
+    return function () {
       removeSchema(SCHEMA_IDS.collection);
     };
   }, [tag, slug]);
 
-  const filteredEntries = useMemo(() => {
-    const tagName = tag ? tag.name : (slug ? slug : '');
-    let entries = UNIFIED_PORTFOLIO_DATA.filter(entry => {
-      const entryTags = entry.tags ? entry.tags : [];
+  var filteredEntries = useMemo(function () {
+    var tagName = tag ? tag.name : (slug ? slug : '');
+    var entries = UNIFIED_PORTFOLIO_DATA.filter(function (entry) {
+      var entryTags = entry.tags ? entry.tags : [];
       return entryTags.some(
-        t => t.toLowerCase() === tagName.toLowerCase(),
+        function (t) { return t.toLowerCase() === tagName.toLowerCase(); },
       );
     });
 
     switch (sortBy) {
       case 'recent':
-        entries.sort((a, b) => {
-          const da = a.date ? new Date(a.date).getTime() : 0;
-          const db = b.date ? new Date(b.date).getTime() : 0;
+        entries.sort(function (a, b) {
+          var da = a.date ? new Date(a.date).getTime() : 0;
+          var db = b.date ? new Date(b.date).getTime() : 0;
           return db - da;
         });
         break;
       case 'alphabetical':
-        entries.sort((a, b) => a.title.localeCompare(b.title));
+        entries.sort(function (a, b) { return a.title.localeCompare(b.title); });
         break;
       case 'featured':
-        entries.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+        entries.sort(function (a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0); });
         break;
     }
 
@@ -91,12 +94,12 @@ export function PortfolioTagPage() {
   }, [tag, slug, sortBy]);
 
   /** Related tags from the matching entries */
-  const relatedTags = useMemo(() => {
-    const tagSet = new Set();
-    const currentTagName = tag ? tag.name : '';
-    filteredEntries.forEach(e => {
-      const eTags = e.tags ? e.tags : [];
-      eTags.forEach(t => {
+  var relatedTags = useMemo(function () {
+    var tagSet = new Set();
+    var currentTagName = tag ? tag.name : '';
+    filteredEntries.forEach(function (e) {
+      var eTags = e.tags ? e.tags : [];
+      eTags.forEach(function (t) {
         if (t.toLowerCase() !== currentTagName.toLowerCase()) {
           tagSet.add(t);
         }
@@ -113,17 +116,17 @@ export function PortfolioTagPage() {
       className="portfolio-main bg-atomic-noise"
     >
       {/* ── Hero header ── */}
-      <div className="portfolio-main__header">
-        <div className="container-7xl">
+      <div className="portfolio-main__header section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
           <Breadcrumbs items={portfolioTagBreadcrumbs(tag ? tag.name : (slug ? slug : ''))} centered />
           <Tag className="portfolio-main__header-icon" aria-hidden="true" />
-          <h1 className="text-hero-h1 text-gradient-pink-purple-blue">
+          <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-0">
             {tag ? tag.name : slug}
           </h1>
-          {tag && tag.description && (
-            <p className="text-body-guideline">{tag.description}</p>
-          )}
-          <p className="portfolio-main__count">
+          {tag && tag.description ? (
+            <p className="text-body-guideline mb-0">{tag.description}</p>
+          ) : null}
+          <p className="portfolio-main__count mb-0">
             <strong>{filteredEntries.length}</strong>{' '}
             {filteredEntries.length === 1 ? 'entry' : 'entries'}
           </p>
@@ -131,48 +134,53 @@ export function PortfolioTagPage() {
       </div>
 
       {/* ── Content area ── */}
-      <div className="container-7xl py-fluid-lg">
+      <div className="portfolio-main-content section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
 
-        {/* Sort & related tags toolbar */}
+          {/* Sort & related tags toolbar */}
         <div className="portfolio-main__toolbar">
           {/* Sort pills */}
           <div className="portfolio-main__sort-chips" role="group" aria-label="Sort portfolio entries">
             <span className="portfolio-main__sort-label">Sort by</span>
-            {SORT_OPTIONS.map(opt => (
-              <button
-                type="button"
-                key={opt.value}
-                className={`archive-filters__chip ${sortBy === opt.value ? 'archive-filters__chip--active' : ''}`}
-                onClick={() => setSortBy(opt.value)}
-                aria-pressed={sortBy === opt.value}
-              >
-                {opt.label}
-              </button>
-            ))}
+            {SORT_OPTIONS.map(function (opt) {
+              return (
+                <button
+                  type="button"
+                  key={opt.value}
+                  className={'archive-filters__chip ' + (sortBy === opt.value ? 'archive-filters__chip--active' : '')}
+                  onClick={function () { setSortBy(opt.value); }}
+                  aria-pressed={sortBy === opt.value}
+                >
+                  {opt.label}
+                </button>
+              );
+            })}
           </div>
 
           {/* Related tags */}
-          {relatedTags.length > 0 && (
+          {relatedTags.length > 0 ? (
             <div className="portfolio-main__related-tags">
               <span className="portfolio-main__related-label">Related tags</span>
               <div className="portfolio-main__related-chips">
-                {relatedTags.map(rt => (
-                  <button
-                    type="button"
-                    key={rt}
-                    className="archive-filters__chip"
-                    onClick={() =>
-                      navigate(
-                        `/portfolio/tag/${rt.toLowerCase().replace(/\s+/g, '-')}`,
-                      )
-                    }
-                  >
-                    {rt}
-                  </button>
-                ))}
+                {relatedTags.map(function (rt) {
+                  return (
+                    <button
+                      type="button"
+                      key={rt}
+                      className="archive-filters__chip"
+                      onClick={function () {
+                        navigate(
+                          '/portfolio/tag/' + rt.toLowerCase().replace(/\s+/g, '-'),
+                        );
+                      }}
+                    >
+                      {rt}
+                    </button>
+                  );
+                })}
               </div>
             </div>
-          )}
+          ) : null}
         </div>
 
         <hr className="portfolio-main__divider" aria-hidden="true" />
@@ -180,61 +188,63 @@ export function PortfolioTagPage() {
         {/* Card grid */}
         {filteredEntries.length > 0 ? (
           <div className="portfolio-card-grid">
-            {filteredEntries.map(entry => (
-              <article
-                key={entry.id}
-                className="portfolio-card"
-                onClick={() => navigate(`/portfolio/${entry.id}`)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    navigate(`/portfolio/${entry.id}`);
-                  }
-                }}
-                aria-label={entry.title}
-              >
-                <div className="portfolio-card__image-container">
-                  {entry.images[0] ? (
-                    <OptimizedImage
-                      src={entry.images[0].src}
-                      alt={entry.images[0].alt}
-                      className="portfolio-card__image"
-                      preset="thumbnail"
-                    />
-                  ) : (
-                    <div className="portfolio-card__placeholder">
-                      <Image className="icon-xl" />
+            {filteredEntries.map(function (entry) {
+              return (
+                <article
+                  key={entry.id}
+                  className="portfolio-card"
+                  onClick={function () { navigate('/portfolio/' + entry.id); }}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      navigate('/portfolio/' + entry.id);
+                    }
+                  }}
+                  aria-label={entry.title}
+                >
+                  <div className="portfolio-card__image-container">
+                    {entry.images[0] ? (
+                      <OptimizedImage
+                        src={entry.images[0].src}
+                        alt={entry.images[0].alt}
+                        className="portfolio-card__image"
+                        preset="thumbnail"
+                      />
+                    ) : (
+                      <div className="portfolio-card__placeholder">
+                        <Image className="icon-xl" />
+                      </div>
+                    )}
+                    <div className="portfolio-card__overlay">
+                      <a
+                        href={(function () {
+                          var cat = PORTFOLIO_CATEGORIES.find(function (c) { return c.id === entry.category; });
+                          return cat && cat.slug ? '/portfolio/category/' + cat.slug : '/portfolio';
+                        })()}
+                        className="portfolio-card__category clickable"
+                        onClick={function (e) {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          var cat = PORTFOLIO_CATEGORIES.find(function (c) { return c.id === entry.category; });
+                          if (cat && cat.slug) {
+                            navigate('/portfolio/category/' + cat.slug);
+                          }
+                        }}
+                        aria-label={'View all ' + entry.category + ' portfolio entries'}
+                      >
+                        {entry.category}
+                      </a>
                     </div>
-                  )}
-                  <div className="portfolio-card__overlay">
-                    <a
-                      href={(() => {
-                        const cat = PORTFOLIO_CATEGORIES.find(c => c.id === entry.category);
-                        return cat && cat.slug ? `/portfolio/category/${cat.slug}` : '/portfolio';
-                      })()}
-                      className="portfolio-card__category clickable"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        const cat = PORTFOLIO_CATEGORIES.find(c => c.id === entry.category);
-                        if (cat && cat.slug) {
-                          navigate(`/portfolio/category/${cat.slug}`);
-                        }
-                      }}
-                      aria-label={`View all ${entry.category} portfolio entries`}
-                    >
-                      {entry.category}
-                    </a>
                   </div>
-                </div>
-                <div className="portfolio-card__content">
-                  <h2 className="portfolio-card__title">{entry.title}</h2>
-                  <p className="portfolio-card__subtitle">{entry.subtitle}</p>
-                </div>
-              </article>
-            ))}
+                  <div className="portfolio-card__content">
+                    <h2 className="portfolio-card__title">{entry.title}</h2>
+                    <p className="portfolio-card__subtitle">{entry.subtitle}</p>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         ) : (
           <div className="error-card">
@@ -245,6 +255,7 @@ export function PortfolioTagPage() {
             </p>
           </div>
         )}
+      </div>
       </div>
 
       <FaqSection pageId="portfolio" />

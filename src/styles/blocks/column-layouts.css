@@ -31,6 +31,45 @@
   }
 }
 
+@media (min-width: 1568px) {
+  .layout-grid--wide-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .layout-grid--wide-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (min-width: 1768px) {
+  .layout-grid--ultra-wide-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .layout-grid--ultra-wide-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (min-width: 1800px) {
+  .layout-grid--xl-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .layout-grid--xl-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .layout-grid--xl-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (min-width: 1920px) {
+  .layout-grid--full-hd-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .layout-grid--full-hd-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
 /* Ratios for Two Column Layout */
 @media (min-width: 1024px) {
   .layout-grid--ratio-2-1 {

@@ -46,14 +46,14 @@ export interface HiddenAboutData {
 export const hiddenAboutData: HiddenAboutData = {
   hero: {
     greeting: 'You found it.',
-    title: 'The Whole Story',
+    title: 'The whole story',
     subtitle: 'Everything you didn\u2019t know you needed to know about Ash Shaw.',
     description:
       'South African-born, Berlin-based. He/him. Aquarius. ADHD. Cyclist. Festival soul. Neon and UV makeup artist since July 2019. This is the hidden map to every corner of his world.',
   },
 
   story: {
-    title: 'The Short Version',
+    title: 'The short version',
     paragraphs: [
       'Ash Shaw picked up a UV paintbrush for the first time at a park gathering in Berlin in July 2019. What started as a spontaneous experiment became an obsession, then a practice, then a whole identity. He\u2019s been painting faces at psytrance festivals, techno clubs, and open-airs across Europe, South Africa, and Thailand ever since.',
       'He doesn\u2019t do weddings. He doesn\u2019t do corporate events. He doesn\u2019t do commissions. This is a personal art project \u2014 always has been, always will be. The dancefloor is his gallery, blacklight is his medium, and bass is his muse.',
@@ -104,7 +104,7 @@ export const hiddenAboutData: HiddenAboutData = {
   subpages: [
     {
       id: 'journey',
-      label: 'The Journey',
+      label: 'The journey',
       tagline: 'From corporate creative to neon artist \u2014 the philosophy behind the paint',
       href: '/about/journey',
       accent: 'pink',
@@ -128,7 +128,7 @@ export const hiddenAboutData: HiddenAboutData = {
     },
     {
       id: 'process',
-      label: 'Creative Process',
+      label: 'Creative process',
       tagline: 'From blank canvas to blacklight masterpiece',
       href: '/about/process',
       accent: 'green',
@@ -136,7 +136,7 @@ export const hiddenAboutData: HiddenAboutData = {
     },
     {
       id: 'book',
-      label: 'The Book',
+      label: 'The book',
       tagline: 'This one time on acid\u2026 \u2014 the memoir in progress',
       href: '/about/book',
       accent: 'pink',
@@ -144,7 +144,7 @@ export const hiddenAboutData: HiddenAboutData = {
     },
     {
       id: 'lucy',
-      label: 'Lucy in the Sky',
+      label: 'Lucy in the sky',
       tagline: 'The psychedelic lens that changed everything',
       href: '/about/lucy-in-the-sky-with-diamonds',
       accent: 'cyan',
@@ -176,7 +176,7 @@ export const hiddenAboutData: HiddenAboutData = {
     },
     {
       id: 'ebook',
-      label: 'eBook Preview',
+      label: 'eBook preview',
       tagline: 'Read the first chapters before anyone else',
       href: '/ebook',
       accent: 'pink',
@@ -184,7 +184,7 @@ export const hiddenAboutData: HiddenAboutData = {
     },
     {
       id: 'adhd',
-      label: 'ADHD \u2014 Wired Different',
+      label: 'ADHD \u2014 Wired different',
       tagline: 'Not a deficit \u2014 a surplus of attention',
       href: '/about/adhd',
       accent: 'yellow',
@@ -200,7 +200,7 @@ export const hiddenAboutData: HiddenAboutData = {
     },
     {
       id: 'aquarius',
-      label: 'Aquarius \u2014 The Aquarian Blueprint',
+      label: 'Aquarius \u2014 The Aquarian blueprint',
       tagline: 'The cosmic wiring of a born questioner',
       href: '/about/aquarius',
       accent: 'cyan',
@@ -208,7 +208,7 @@ export const hiddenAboutData: HiddenAboutData = {
     },
     {
       id: 'music',
-      label: 'Music \u2014 140 BPM Heartbeat',
+      label: 'Music \u2014 140 BPM heartbeat',
       tagline: 'When the bass drops, the brushes rise',
       href: '/about/music',
       accent: 'purple',
@@ -216,7 +216,7 @@ export const hiddenAboutData: HiddenAboutData = {
     },
     {
       id: 'lightspeed',
-      label: 'LightSpeed \u2014 The Day Job',
+      label: 'LightSpeed \u2014 The day job',
       tagline: 'WordPress by day, neon by night',
       href: '/about/lightspeed',
       accent: 'blue',
@@ -224,7 +224,7 @@ export const hiddenAboutData: HiddenAboutData = {
     },
     {
       id: 'education',
-      label: 'Education \u2014 The Unconventional Classroom',
+      label: 'Education \u2014 The unconventional classroom',
       tagline: 'Life taught more than any lecture hall',
       href: '/about/education',
       accent: 'orange',
@@ -232,7 +232,7 @@ export const hiddenAboutData: HiddenAboutData = {
     },
     {
       id: 'partners',
-      label: 'Partners \u2014 The People Along the Way',
+      label: 'Partners \u2014 The people along the way',
       tagline: 'No artist creates alone',
       href: '/about/partners',
       accent: 'pink',
@@ -240,7 +240,7 @@ export const hiddenAboutData: HiddenAboutData = {
     },
     {
       id: 'fitness',
-      label: 'Fitness \u2014 The Moving Body',
+      label: 'Fitness \u2014 The moving body',
       tagline: 'Movement is the first act of creation',
       href: '/about/fitness',
       accent: 'green',
@@ -249,18 +249,26 @@ export const hiddenAboutData: HiddenAboutData = {
     {
       id: 'manifesto',
       label: 'Manifesto',
-      tagline: 'Neon vs Atomic Black — The Philosophy',
+      tagline: 'Neon vs Atomic Black \u2014 the philosophy',
       href: '/about/manifesto',
       accent: 'red',
       icon: 'BookOpenCheck',
     },
     {
       id: 'six-cats',
-      label: 'Six Cats Club',
+      label: 'Six Cats club',
       tagline: 'Craft cannabis, consciously cultivated in Cape Town',
       href: '/about/six-cats',
       accent: 'green',
       icon: 'Leaf',
+    },
+    {
+      id: 'tribes',
+      label: 'The tribes',
+      tagline: 'The communities that shaped a neon soul',
+      href: '/about/tribes',
+      accent: 'purple',
+      icon: 'Users',
     },
   ],
 };

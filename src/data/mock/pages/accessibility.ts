@@ -4,17 +4,17 @@
 
 export const accessibilityPageData = {
   hero: {
-    title: 'Accessibility Statement',
+    title: 'Accessibility statement',
     description: 'We are committed to providing a website that is accessible to the widest possible audience, regardless of technology or ability.',
   },
   
   content: [
     {
-      title: 'Our Commitment',
+      title: 'Our commitment',
       text: 'Ash Shaw Makeup Portfolio is built with inclusion in mind. We strive to adhere to the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA standards. Accessibility is an ongoing process, and we continuously test and improve our digital presence.'
     },
     {
-      title: 'Features Implemented',
+      title: 'Features implemented',
       items: [
         'High Contrast Mode: A dedicated "Atomic Black" theme designed for optimal readability and reduced eye strain.',
         'Reduced Motion Support: Respects system preferences for reduced motion, disabling non-essential animations.',
@@ -35,7 +35,7 @@ export const accessibilityPageData = {
   ],
 
   contact: {
-    title: 'Contact Us',
+    title: 'Contact us',
     emailLabel: 'Email: ',
     email: 'accessibility@ashshaw.makeup',
     response_time: 'We aim to respond to accessibility feedback within 3 business days.'

@@ -30,8 +30,8 @@ export function BerlinPage() {
       className="about-subpage about-subpage--berlin bg-atomic-noise"
     >
       {/* ── Hero ── */}
-      <header className="about-subpage__hero">
-        <div className="about-subpage__hero-content">
+      <header className="about-subpage__hero section-spacing px-horizontal-section">
+        <div className="about-subpage__hero-content section-container">
           <Breadcrumbs items={data.breadcrumbs} centered />
 
           <span className="about-subpage__hero-badge">
@@ -49,8 +49,9 @@ export function BerlinPage() {
       </header>
 
       {/* ── Sections (Phase 3 ContentSection) ── */}
-      <div className="about-subpage__body">
-        {data.sections.map(function (section, idx) {
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          {data.sections.map(function (section, idx) {
           var delayClass = idx < 6 ? ' entrance-fade-up--delay-' + (idx + 1) : '';
 
           return (
@@ -72,6 +73,7 @@ export function BerlinPage() {
             </div>
           );
         })}
+        </div>
       </div>
     </main>
   );

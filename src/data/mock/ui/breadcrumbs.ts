@@ -30,8 +30,8 @@ const SECTIONS = {
   videos: { label: "Videos", href: "/videos" } as BreadcrumbEntry,
   events: { label: "Events", href: "/events" } as BreadcrumbEntry,
   podcasts: { label: "Podcasts", href: "/podcasts" } as BreadcrumbEntry,
-  devTools: { label: "Developer Tools", href: "/dev-tools" } as BreadcrumbEntry,
-  book: { label: "The Book", href: "/about/book" } as BreadcrumbEntry,
+  devTools: { label: "Developer tools", href: "/dev-tools" } as BreadcrumbEntry,
+  book: { label: "The book", href: "/about/book" } as BreadcrumbEntry,
 };
 
 /* ────────────────────────────────────────────────
@@ -65,7 +65,7 @@ export const searchBreadcrumbs: BreadcrumbEntry[] = [
 /** /stickers */
 export const stickersBreadcrumbs: BreadcrumbEntry[] = [
   HOME,
-  { label: "Sticker Gallery" },
+  { label: "Sticker gallery" },
 ];
 
 /** /sitemap */
@@ -77,20 +77,20 @@ export const sitemapBreadcrumbs: BreadcrumbEntry[] = [
 /** /terms */
 export const termsBreadcrumbs: BreadcrumbEntry[] = [
   HOME,
-  { label: "Terms & Conditions" },
+  { label: "Terms & conditions" },
 ];
 
 /** /privacy */
 export const privacyBreadcrumbs: BreadcrumbEntry[] = [
   HOME,
-  { label: "Privacy Policy" },
+  { label: "Privacy policy" },
 ];
 
 /** /style-guide (public route) */
 export const styleGuideBreadcrumbs: BreadcrumbEntry[] = [
   HOME,
   SECTIONS.devTools,
-  { label: "Style Guide" },
+  { label: "Style guide" },
 ];
 
 /* ────────────────────────────────────────────────
@@ -209,7 +209,7 @@ export function ebookBreadcrumbs(): BreadcrumbEntry[] {
 /** /dev-tools */
 export const devToolsHubBreadcrumbs: BreadcrumbEntry[] = [
   HOME,
-  { label: "Developer Tools" },
+  { label: "Developer tools" },
 ];
 
 /** /dev-tools/:tool */

@@ -45,31 +45,33 @@ export function PodcastDetailPage() {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const episode = useMemo(
-    () => podcastEpisodes.find(ep => ep.slug === slug),
+    function () {
+      return podcastEpisodes.find(function (ep) { return ep.slug === slug; });
+    },
     [slug],
   );
 
-  useEffect(() => {
+  useEffect(function () {
     if (episode) {
       setSEO(podcastSEO(episode.title, episode.description));
       injectSchema(SCHEMA_IDS.podcast, buildPodcastEpisodeSchema(episode));
     } else {
       setSEO(pageSEO.notFound);
     }
-    return () => {
+    return function () {
       removeSchema(SCHEMA_IDS.podcast);
     };
   }, [episode]);
 
-  useEffect(() => {
+  useEffect(function () {
     window.scrollTo(0, 0);
   }, [slug]);
 
   /** Resolve category slug for the link */
-  const categorySlug = useMemo(() => {
+  const categorySlug = useMemo(function () {
     if (!episode) return '';
     const cat = podcastCategories.find(
-      c => c.name.toLowerCase() === episode.category.toLowerCase(),
+      function (c) { return c.name.toLowerCase() === episode.category.toLowerCase(); }
     );
     const catSlug = cat ? cat.slug : episode.category.toLowerCase().replace(/\s+/g, '-');
     return catSlug;
@@ -88,7 +90,7 @@ export function PodcastDetailPage() {
           <button
             type="button"
             className="podcast-detail__back"
-            onClick={() => navigate('/podcasts')}
+            onClick={function () { navigate('/podcasts'); }}
           >
             <ArrowLeft className="icon-sm" />
             {podcastsUI.detail.backLabel}
@@ -104,18 +106,19 @@ export function PodcastDetailPage() {
   return (
     <main id="main-content" role="main" tabIndex={-1} className="podcast-detail bg-atomic-noise">
       {/* Header */}
-      <div className="podcast-detail__header">
-        <Breadcrumbs items={podcastDetailBreadcrumbs(episode.title)} centered />
-        <button
-          type="button"
-          className="podcast-detail__back"
-          onClick={() => navigate('/podcasts')}
-        >
-          <ArrowLeft className="icon-sm" />
-          {podcastsUI.detail.backLabel}
-        </button>
+      <div className="podcast-detail__header section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
+          <Breadcrumbs items={podcastDetailBreadcrumbs(episode.title)} centered />
+          <button
+            type="button"
+            className="podcast-detail__back"
+            onClick={function () { navigate('/podcasts'); }}
+          >
+            <ArrowLeft className="icon-sm" />
+            {podcastsUI.detail.backLabel}
+          </button>
 
-        <div className="podcast-detail__cover">
+          <div className="podcast-detail__cover">
           <OptimizedImage
             src={episode.coverImage.src}
             alt={episode.coverImage.alt}
@@ -127,7 +130,7 @@ export function PodcastDetailPage() {
         <button
           type="button"
           className="podcast-detail__category-link"
-          onClick={() => navigate(`/podcasts/category/${categorySlug}`)}
+          onClick={function () { navigate('/podcasts/category/' + categorySlug); }}
         >
           {episode.category}
         </button>
@@ -138,9 +141,9 @@ export function PodcastDetailPage() {
           <span className="podcast-detail__meta-item">
             <Mic className="icon-xs" aria-hidden="true" />
             {podcastsUI.detail.episodeLabel} {episode.episodeNumber}
-            {episode.seasonNumber && (
-              <> &middot; {podcastsUI.detail.seasonLabel} {episode.seasonNumber}</>
-            )}
+            {episode.seasonNumber ? (
+              ' \u00b7 ' + podcastsUI.detail.seasonLabel + ' ' + episode.seasonNumber
+            ) : null}
           </span>
           <time dateTime={episode.publishedAt} className="podcast-detail__meta-item">
             <Calendar className="icon-xs" aria-hidden="true" />
@@ -149,18 +152,20 @@ export function PodcastDetailPage() {
           <span className="podcast-detail__meta-item">
             <Clock className="icon-xs" aria-hidden="true" />
             {episode.duration}
-          </span>
+            </span>
+          </div>
         </div>
       </div>
 
       {/* Body */}
-      <div className="podcast-detail__body">
-        {/* Audio Player */}
+      <div className="podcast-detail__body section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
+          {/* Audio Player */}
         <div className="audio-player" role="region" aria-label="Audio player">
           <button
             type="button"
             className="audio-player__play-btn"
-            onClick={() => setIsPlaying(!isPlaying)}
+            onClick={function () { setIsPlaying(!isPlaying); }}
             aria-label={isPlaying ? 'Pause' : 'Play'}
           >
             <CirclePlay className="icon-lg" />
@@ -194,18 +199,20 @@ export function PodcastDetailPage() {
         </section>
 
         {/* Guests */}
-        {episode.guests && episode.guests.length > 0 && (
+        {episode.guests && episode.guests.length > 0 ? (
           <section aria-labelledby="guests-heading">
             <h2 id="guests-heading" className="text-card-h3">
               {podcastsUI.detail.guestsLabel}
             </h2>
-            {episode.guests.map((guest, idx) => (
-              <p key={idx} className="text-body-p">
-                <strong>{guest.name}</strong> — {guest.role}
-              </p>
-            ))}
+            {episode.guests.map(function (guest, idx) {
+              return (
+                <p key={idx} className="text-body-p">
+                  <strong>{guest.name}</strong> \u2014 {guest.role}
+                </p>
+              );
+            })}
           </section>
-        )}
+        ) : null}
 
         {/* ── Tags + Share Footer ── */}
         <section className="podcast-detail__footer">
@@ -220,19 +227,21 @@ export function PodcastDetailPage() {
 
               {episode.tags && episode.tags.length > 0 ? (
                 <div className="tags-list">
-                  {episode.tags.map(tag => (
-                    <button
-                      type="button"
-                      key={tag}
-                      onClick={() =>
-                        navigate(`/podcasts/tag/${encodeURIComponent(tag.toLowerCase().replace(/\s+/g, '-'))}`)
-                      }
-                      className="tag-badge clickable"
-                      aria-label={`View podcasts tagged ${tag}`}
-                    >
-                      {tag}
-                    </button>
-                  ))}
+                  {episode.tags.map(function (tag) {
+                    return (
+                      <button
+                        type="button"
+                        key={tag}
+                        onClick={function () {
+                          navigate('/podcasts/tag/' + encodeURIComponent(tag.toLowerCase().replace(/\s+/g, '-')));
+                        }}
+                        className="tag-badge clickable"
+                        aria-label={'View podcasts tagged ' + tag}
+                      >
+                        {tag}
+                      </button>
+                    );
+                  })}
                 </div>
               ) : (
                 <p className="no-tags-text">No tags available</p>
@@ -250,7 +259,7 @@ export function PodcastDetailPage() {
                   label=""
                   title={episode.title}
                   description={episode.description}
-                  url={typeof window !== 'undefined' ? window.location.href : `https://ashshaw.makeup/podcast/${slug}`}
+                  url={typeof window !== 'undefined' ? window.location.href : 'https://ashshaw.makeup/podcast/' + slug}
                   imageUrl={episode.coverImage.src}
                   variant="inline"
                   align="left"
@@ -259,6 +268,7 @@ export function PodcastDetailPage() {
             </div>
           </div>
         </section>
+        </div>
       </div>
 
       {/* Per-item FAQs — shown only if the episode has item-level FAQs */}

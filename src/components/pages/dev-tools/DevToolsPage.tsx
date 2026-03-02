@@ -107,8 +107,8 @@ export function DevToolsPage() {
       className="dev-tools-page bg-atomic-noise"
     >
       {/* ── Hero ── */}
-      <header className="dev-tools-page__hero">
-        <div className="dev-tools-page__hero-content">
+      <header className="dev-tools-page__hero section-spacing px-horizontal-section">
+        <div className="dev-tools-page__hero-content container-wide section-container">
           <Breadcrumbs items={devToolsPageUI.breadcrumbs} centered />
 
           <span className="dev-tools-page__hero-badge">
@@ -127,10 +127,10 @@ export function DevToolsPage() {
 
       {/* ── Sticky Category Jump-Nav ── */}
       <nav
-        className="dev-tools-jumpnav"
+        className="dev-tools-jumpnav px-horizontal-section"
         aria-label="Jump to category"
       >
-        <div className="dev-tools-jumpnav__inner">
+        <div className="dev-tools-jumpnav__inner container-wide section-container">
           {devToolsPageUI.categories.map((category) => (
             <button
               key={category.id}
@@ -145,7 +145,7 @@ export function DevToolsPage() {
       </nav>
 
       {/* ── Grouped Categories ── */}
-      <div className="dev-tools-page__categories">
+      <div className="dev-tools-page__categories section-spacing px-horizontal-section">
         {devToolsPageUI.categories.map((category) => {
           const resolvedTools = category.tools
             .map((id) => toolMap.get(id))
@@ -154,59 +154,61 @@ export function DevToolsPage() {
           return (
             <section
               key={category.id}
-              className={`dev-tools-category dev-tools-category--${category.accent}`}
+              className={`dev-tools-category dev-tools-category--${category.accent} section-container`}
               id={`category-${category.id}`}
               aria-labelledby={`category-heading-${category.id}`}
             >
-              <div className="dev-tools-category__header">
-                <h2
-                  id={`category-heading-${category.id}`}
-                  className="dev-tools-category__title"
-                >
-                  {category.title}
-                </h2>
-                <p className="dev-tools-category__desc">
-                  {category.description}
-                </p>
-              </div>
+              <div className="container-wide">
+                <div className="dev-tools-category__header">
+                  <h2
+                    id={`category-heading-${category.id}`}
+                    className="dev-tools-category__title"
+                  >
+                    {category.title}
+                  </h2>
+                  <p className="dev-tools-category__desc">
+                    {category.description}
+                  </p>
+                </div>
 
-              <div className="dev-tools-category__grid">
-                {resolvedTools.map((tool) => {
-                  const Icon = TOOL_ICONS[tool.icon] || Palette;
+                <div className="dev-tools-category__grid">
+                  {resolvedTools.map((tool) => {
+                    const Icon = TOOL_ICONS[tool.icon] || Palette;
 
-                  return (
-                    <button
-                      key={tool.id}
-                      className={`dev-tools-card dev-tools-card--${category.accent}`}
-                      onClick={() => navigate(tool.href)}
-                      aria-label={`Open ${tool.title}`}
-                    >
-                      <div className="dev-tools-card__header">
-                        <div className="dev-tools-card__icon-wrapper">
-                          <Icon
-                            className="dev-tools-card__icon"
+                    return (
+                      <button
+                        key={tool.id}
+                        className={`dev-tools-card dev-tools-card--${category.accent}`}
+                        onClick={() => navigate(tool.href)}
+                        aria-label={`Open ${tool.title}`}
+                      >
+                        <div className="dev-tools-card__header">
+                          <div className="dev-tools-card__icon-wrapper">
+                            <Icon
+                              className="dev-tools-card__icon"
+                              aria-hidden="true"
+                            />
+                          </div>
+                          <h3 className="dev-tools-card__title">{tool.title}</h3>
+                        </div>
+
+                        <span className="dev-tools-card__badge">
+                          {tool.badge}
+                        </span>
+
+                        <p className="dev-tools-card__desc">{tool.description}</p>
+
+                        <span className="dev-tools-card__cta" aria-hidden="true">
+                          Explore
+                          <ArrowRight
+                            className="dev-tools-card__cta-icon"
                             aria-hidden="true"
                           />
-                        </div>
-                        <h3 className="dev-tools-card__title">{tool.title}</h3>
-                      </div>
-
-                      <span className="dev-tools-card__badge">
-                        {tool.badge}
-                      </span>
-
-                      <p className="dev-tools-card__desc">{tool.description}</p>
-
-                      <span className="dev-tools-card__cta" aria-hidden="true">
-                        Explore
-                        <ArrowRight
-                          className="dev-tools-card__cta-icon"
-                          aria-hidden="true"
-                        />
-                      </span>
-                    </button>
-                  );
-                })}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </section>
           );

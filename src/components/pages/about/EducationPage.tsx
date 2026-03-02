@@ -17,6 +17,7 @@ import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { PullQuote } from '../../ui/PullQuote';
 import { Timeline } from '../../ui/Timeline';
+import { StatCard } from '../../ui/StatCard';
 import { ContentSection } from '../../sections/ContentSection';
 import '../../../styles/blocks/about-subpage.css';
 
@@ -53,8 +54,8 @@ export function EducationPage() {
       className="about-subpage about-subpage--education bg-atomic-noise"
     >
       {/* ── Hero ── */}
-      <header className="about-subpage__hero">
-        <div className="about-subpage__hero-content">
+      <header className="about-subpage__hero section-spacing px-horizontal-section">
+        <div className="about-subpage__hero-content section-container">
           <Breadcrumbs items={data.breadcrumbs} centered />
 
           <span className="about-subpage__hero-badge">
@@ -72,51 +73,44 @@ export function EducationPage() {
       </header>
 
       {/* ── Pull Quote (Phase 3) ── */}
-      <div className="about-subpage__body">
-        <div className="entrance-fade-up">
-          <PullQuote
-            quote={data.pullQuote}
-            variant="center"
-            neonColor="yellow"
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          <div className="entrance-fade-up">
+            <PullQuote
+              quote={data.pullQuote}
+              variant="center"
+              neonColor="yellow"
+            />
+          </div>
+
+          {/* ── Stats Grid ── */}
+          <StatCard
+            items={data.stats}
+            ariaLabel="Education stats"
           />
         </div>
       </div>
 
-      {/* ── Stats Grid ── */}
-      <div
-        className="about-subpage__facts"
-        role="list"
-        aria-label="Education stats"
-      >
-        {data.stats.map(function (stat) {
-          return (
-            <div key={stat.id} className="about-subpage__fact" role="listitem">
-              <span className="about-subpage__fact-label">{stat.label}</span>
-              <span className="about-subpage__fact-value">{stat.value}</span>
-            </div>
-          );
-        })}
-      </div>
-
       {/* ── Formal Education Timeline (Phase 3) ── */}
-      <div className="about-subpage__body">
-        <div className="entrance-fade-up entrance-fade-up--delay-1">
-          <ContentSection
-            id="formal-education"
-            title="The Formal Path"
-            variant="callout"
-            colorAccent="pink"
-          >
-            <Timeline
-              events={educationTimeline}
-              variant="vertical"
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          <div className="entrance-fade-up entrance-fade-up--delay-1">
+            <ContentSection
+              id="formal-education"
+              title="The Formal Path"
+              variant="callout"
               colorAccent="pink"
-            />
-          </ContentSection>
-        </div>
+            >
+              <Timeline
+                events={educationTimeline}
+                variant="vertical"
+                colorAccent="pink"
+              />
+            </ContentSection>
+          </div>
 
-        {/* ── Sections (Phase 3 ContentSection) ── */}
-        {data.sections.map(function (section, idx) {
+          {/* ── Sections (Phase 3 ContentSection) ── */}
+          {data.sections.map(function (section, idx) {
           var delayClass = idx < 6 ? ' entrance-fade-up--delay-' + (idx + 2) : '';
 
           return (
@@ -138,6 +132,7 @@ export function EducationPage() {
             </div>
           );
         })}
+        </div>
       </div>
     </main>
   );

@@ -54,20 +54,36 @@
 /* Blog Cards Grid */
 .blog-preview__grid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: var(--wp--preset--spacing--block-gap);
-  padding: 0 var(--wp--preset--spacing--section-horizontal);
+  grid-template-columns: 1fr;
+  gap: var(--wp--preset--spacing--fluid-md);
+  padding: 0;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 600px) {
   .blog-preview__grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--wp--preset--spacing--fluid-lg);
   }
 }
 
 @media (min-width: 1024px) {
   .blog-preview__grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: var(--wp--preset--spacing--fluid-lg);
+  }
+}
+
+@media (min-width: 1440px) {
+  .blog-preview__grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--wp--preset--spacing--fluid-xl);
+  }
+}
+
+@media (min-width: 1800px) {
+  .blog-preview__grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--wp--preset--spacing--fluid-2xl);
   }
 }
 

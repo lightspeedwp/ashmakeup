@@ -330,25 +330,35 @@
 /* ── Grid ── */
 .stickers-page__grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: var(--wp--preset--spacing--fluid-md);
 }
 
-@media (min-width: 580px) {
+@media (min-width: 600px) {
+  .stickers-page__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--wp--preset--spacing--fluid-lg);
+  }
+}
+
+@media (min-width: 1024px) {
   .stickers-page__grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: var(--wp--preset--spacing--fluid-lg);
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1440px) {
   .stickers-page__grid {
     grid-template-columns: repeat(4, 1fr);
+    gap: var(--wp--preset--spacing--fluid-xl);
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1800px) {
   .stickers-page__grid {
     grid-template-columns: repeat(5, 1fr);
+    gap: var(--wp--preset--spacing--fluid-2xl);
   }
 }
 

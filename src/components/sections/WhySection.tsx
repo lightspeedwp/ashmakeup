@@ -37,17 +37,18 @@ export function WhySection() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [slidesPerView, setSlidesPerView] = useState(1);
 
-  // Handle Resize Logic for Hybrid Layout
+  // Handle Resize Logic for Hybrid Layout (max 3 columns per design guidelines)
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      if (width < 768) {
+      if (width < 600) {
         setSlidesPerView(1);
         setIsDesktop(false);
       } else if (width < 1024) {
         setSlidesPerView(2);
         setIsDesktop(false);
       } else {
+        // Desktop: always 3 columns (max per guidelines)
         setSlidesPerView(3);
         setIsDesktop(true);
       }
@@ -79,8 +80,8 @@ export function WhySection() {
   };
 
   return (
-    <section id="why-section" className="why-section">
-      <div className="container-wide">
+    <section id="why-section" className="why-section section-spacing px-horizontal-section">
+      <div className="container-wide section-container">
         {/* Header */}
         <div className="why-section__header">
           <h2 className="why-section__title">

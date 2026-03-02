@@ -12,14 +12,15 @@
 
 .why-section__header {
   text-align: center;
-  margin-bottom: var(--wp--preset--spacing--fluid-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--fluid-sm);
 }
 
 .why-section__title {
   font-family: var(--wp--preset--font-family--brand-heading);
   font-size: var(--wp--preset--font-size--section);
   font-weight: 700;
-  margin-bottom: var(--wp--preset--spacing--fluid-sm);
   color: var(--foreground);
 }
 
@@ -40,6 +41,31 @@
   grid-template-columns: repeat(3, 1fr);
   gap: var(--wp--preset--spacing--block-gap);
   margin-bottom: var(--wp--preset--spacing--fluid-xl);
+}
+
+/* Responsive grid gap scaling for ultra-wide displays */
+@media (min-width: 1440px) {
+  .why-section__grid {
+    gap: var(--wp--preset--spacing--fluid-lg);
+  }
+}
+
+@media (min-width: 1568px) {
+  .why-section__grid {
+    gap: var(--wp--preset--spacing--fluid-xl);
+  }
+}
+
+@media (min-width: 1800px) {
+  .why-section__grid {
+    gap: calc(var(--wp--preset--spacing--fluid-xl) * 1.15);
+  }
+}
+
+@media (min-width: 1920px) {
+  .why-section__grid {
+    gap: var(--wp--preset--spacing--fluid-2xl);
+  }
 }
 
 /* Wrapper for Grid Layout */

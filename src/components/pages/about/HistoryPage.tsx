@@ -51,8 +51,8 @@ export function HistoryPage() {
       className="history-page bg-atomic-noise"
     >
       {/* ── Hero ── */}
-      <header className="history-page__hero">
-        <div className="history-page__hero-content">
+      <header className="history-page__hero section-spacing px-horizontal-section">
+        <div className="history-page__hero-content section-container">
           <Breadcrumbs items={historyPageData.breadcrumbs} centered />
 
           <span className="history-page__hero-badge">
@@ -70,28 +70,30 @@ export function HistoryPage() {
       </header>
 
       {/* ── Timeline (Phase 3 component) ── */}
-      <div className="history-page__body">
-        <div className="entrance-fade-up">
-          <ContentSection
-            id="milestones"
-            title="The Journey So Far"
-            subtitle="Key milestones from Berlin to international stages"
-            variant="default"
-            colorAccent="pink"
-          >
-            <Timeline
-              events={timelineEvents}
-              variant="vertical"
+      <div className="history-page__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          <div className="entrance-fade-up">
+            <ContentSection
+              id="milestones"
+              title="The Journey So Far"
+              subtitle="Key milestones from Berlin to international stages"
+              variant="default"
               colorAccent="pink"
-            />
-          </ContentSection>
-        </div>
+            >
+              <Timeline
+                events={timelineEvents}
+                variant="vertical"
+                colorAccent="pink"
+              />
+            </ContentSection>
+          </div>
 
-        {/* ── Coming Soon ── */}
-        <div className="history-page__coming-soon entrance-fade-up entrance-fade-up--delay-1">
-          <p className="history-page__coming-soon-text">
-            {historyPageData.comingSoon}
-          </p>
+          {/* ── Coming Soon ── */}
+          <div className="history-page__coming-soon entrance-fade-up entrance-fade-up--delay-1">
+            <p className="history-page__coming-soon-text">
+              {historyPageData.comingSoon}
+            </p>
+          </div>
         </div>
       </div>
     </main>

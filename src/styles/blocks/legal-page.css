@@ -22,7 +22,7 @@
   border: 1px solid var(--wp--preset--color--neutral-200);
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: var(--wp--preset--spacing--block-gap);
 }
 
 .dark .legal-page-body {

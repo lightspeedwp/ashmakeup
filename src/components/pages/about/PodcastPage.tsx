@@ -58,8 +58,8 @@ export function PodcastPage() {
       className="about-subpage about-subpage--podcast bg-atomic-noise"
     >
       {/* ── Hero ── */}
-      <header className="about-subpage__hero">
-        <div className="about-subpage__hero-content">
+      <header className="about-subpage__hero section-spacing px-horizontal-section">
+        <div className="about-subpage__hero-content section-container">
           <Breadcrumbs items={breadcrumbs} centered />
 
           <span className="about-subpage__hero-badge">
@@ -77,72 +77,76 @@ export function PodcastPage() {
       </header>
 
       {/* ── Show Info ── */}
-      <div className="about-subpage__body">
-        <section className="about-subpage__section">
-          <h2 className="about-subpage__section-title">
-            <Mic className="about-subpage__inline-icon" aria-hidden="true" />
-            {data.showName}
-          </h2>
-          <p className="about-subpage__section-text">{data.tagline}</p>
-        </section>
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          <section className="about-subpage__section">
+            <h2 className="about-subpage__section-title">
+              <Mic className="about-subpage__inline-icon" aria-hidden="true" />
+              {data.showName}
+            </h2>
+            <p className="about-subpage__section-text">{data.tagline}</p>
+          </section>
 
-        {/* ── Format ── */}
-        <div className="entrance-fade-up">
-          <ContentSection
-            id="podcast-format"
-            title="Format"
-            variant="default"
-            colorAccent="pink"
-          >
-            {data.format.map(function (line, i) {
-              return (
-                <p key={'format-' + i} className="about-subpage__section-text">
-                  {line}
-                </p>
-              );
-            })}
-          </ContentSection>
+          {/* ── Format ── */}
+          <div className="entrance-fade-up">
+            <ContentSection
+              id="podcast-format"
+              title="Format"
+              variant="default"
+              colorAccent="pink"
+            >
+              {data.format.map(function (line, i) {
+                return (
+                  <p key={'format-' + i} className="about-subpage__section-text">
+                    {line}
+                  </p>
+                );
+              })}
+            </ContentSection>
+          </div>
+
+          {/* ── Body Sections (Phase 3 ContentSection) ── */}
+          {sections.map(function (section, idx) {
+            var delayClass = idx < 6 ? ' entrance-fade-up--delay-' + (idx + 1) : '';
+
+            return (
+              <div key={section.id} className={'entrance-fade-up' + delayClass}>
+                <ContentSection
+                  id={section.id}
+                  title={section.title}
+                  variant="default"
+                  colorAccent="pink"
+                >
+                  {section.paragraphs.map(function (p, i) {
+                    return (
+                      <p key={section.id + '-p-' + i} className="about-subpage__section-text">
+                        {p}
+                      </p>
+                    );
+                  })}
+                </ContentSection>
+              </div>
+            );
+          })}
         </div>
-
-        {/* ── Body Sections (Phase 3 ContentSection) ── */}
-        {sections.map(function (section, idx) {
-          var delayClass = idx < 6 ? ' entrance-fade-up--delay-' + (idx + 1) : '';
-
-          return (
-            <div key={section.id} className={'entrance-fade-up' + delayClass}>
-              <ContentSection
-                id={section.id}
-                title={section.title}
-                variant="default"
-                colorAccent="pink"
-              >
-                {section.paragraphs.map(function (p, i) {
-                  return (
-                    <p key={section.id + '-p-' + i} className="about-subpage__section-text">
-                      {p}
-                    </p>
-                  );
-                })}
-              </ContentSection>
-            </div>
-          );
-        })}
       </div>
 
       {/* ── Episode Previews as Accordion (Phase 3) ── */}
-      <div className="about-subpage__body">
-        <div className="entrance-fade-up entrance-fade-up--delay-2">
-          <ContentSection
-            id="upcoming-episodes"
-            title="Upcoming Episodes"
-            variant="default"
-            colorAccent="pink"
-          >
-            <Accordion
-              items={episodeAccordionItems}
-              allowMultiple={true}
-            />
-          </ContentSection>
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          <div className="entrance-fade-up entrance-fade-up--delay-2">
+            <ContentSection
+              id="upcoming-episodes"
+              title="Upcoming Episodes"
+              variant="default"
+              colorAccent="pink"
+            >
+              <Accordion
+                items={episodeAccordionItems}
+                allowMultiple={true}
+              />
+            </ContentSection>
+          </div>
         </div>
       </div>
     </main>

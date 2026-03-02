@@ -18,13 +18,51 @@
 .uv-makeup-section__content {
   position: relative;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* Responsive gap scaling for ultra-wide displays */
+@media (min-width: 1024px) {
+  .uv-makeup-section__content {
+    gap: 4rem;
+  }
+}
+
+@media (min-width: 1568px) {
+  .uv-makeup-section__grid {
+    gap: var(--wp--preset--spacing--fluid-xl);
+  }
+  
+  .uv-makeup-section__content {
+    gap: 4.5rem;
+  }
+}
+
+@media (min-width: 1800px) {
+  .uv-makeup-section__grid {
+    gap: calc(var(--wp--preset--spacing--fluid-xl) * 1.15);
+  }
+  
+  .uv-makeup-section__content {
+    gap: 4.75rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .uv-makeup-section__grid {
+    gap: var(--wp--preset--spacing--fluid-2xl);
+  }
 }
 
 .uv-makeup-section__header {
   text-align: center;
-  margin-bottom: var(--wp--preset--spacing--fluid-2xl);
   position: relative;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .uv-makeup-section__description {
@@ -41,7 +79,39 @@
 /* Slider Wrapper */
 .uv-makeup-section__slider-wrapper {
   position: relative;
-  margin-bottom: var(--wp--preset--spacing--fluid-xl);
+}
+
+/* Desktop Grid Layout with Responsive Gaps */
+.uv-makeup-section__grid {
+  gap: var(--wp--preset--spacing--block-gap);
+}
+
+@media (min-width: 1440px) {
+  .uv-makeup-section__grid {
+    gap: var(--wp--preset--spacing--fluid-lg);
+  }
+}
+
+@media (min-width: 1568px) {
+  .uv-makeup-section__grid {
+    gap: var(--wp--preset--spacing--fluid-xl);
+  }
+}
+
+@media (min-width: 1800px) {
+  .uv-makeup-section__grid {
+    gap: calc(var(--wp--preset--spacing--fluid-xl) * 1.15);
+  }
+  
+  .uv-makeup-section__content {
+    gap: 4.75rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .uv-makeup-section__grid {
+    gap: var(--wp--preset--spacing--fluid-2xl);
+  }
 }
 
 /* Nav Buttons */
@@ -211,7 +281,6 @@
 .uv-makeup-section__cta {
   display: flex;
   justify-content: center;
-  margin-top: var(--wp--preset--spacing--fluid-xl);
 }
 
 .uv-makeup-cta-btn {

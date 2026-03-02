@@ -16,6 +16,7 @@ import { setSEO } from '../../../utils/seo';
 import { pageSEO } from '../../../data/mock/seo';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { PullQuote } from '../../ui/PullQuote';
+import { StatCard } from '../../ui/StatCard';
 import { ContentSection } from '../../sections/ContentSection';
 import '../../../styles/blocks/about-subpage.css';
 
@@ -34,8 +35,8 @@ export function AquariusPage() {
       className="about-subpage about-subpage--aquarius bg-atomic-noise"
     >
       {/* ── Hero ── */}
-      <header className="about-subpage__hero">
-        <div className="about-subpage__hero-content">
+      <header className="about-subpage__hero section-spacing px-horizontal-section">
+        <div className="about-subpage__hero-content section-container">
           <Breadcrumbs items={data.breadcrumbs} centered />
 
           <span className="about-subpage__hero-badge">
@@ -53,51 +54,46 @@ export function AquariusPage() {
       </header>
 
       {/* ── Pull Quote (Phase 3 component) ── */}
-      <div className="about-subpage__body">
-        <div className="entrance-fade-up">
-          <PullQuote
-            quote={data.pullQuote}
-            variant="center"
-            neonColor="blue"
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          <div className="entrance-fade-up">
+            <PullQuote
+              quote={data.pullQuote}
+              variant="center"
+              neonColor="blue"
+            />
+          </div>
+
+          {/* ── Traits Grid ── */}
+          <StatCard
+            items={data.traits}
+            ariaLabel="Aquarian traits"
           />
         </div>
       </div>
 
-      {/* ── Traits Grid ── */}
-      <div
-        className="about-subpage__facts"
-        role="list"
-        aria-label="Aquarian traits"
-      >
-        {data.traits.map(function (trait) {
-          return (
-            <div key={trait.id} className="about-subpage__fact" role="listitem">
-              <span className="about-subpage__fact-label">{trait.label}</span>
-              <span className="about-subpage__fact-value">{trait.value}</span>
-            </div>
-          );
-        })}
-      </div>
-
       {/* ── Thread Cards (Aquarius x ...) ── */}
-      <div className="about-subpage__destinations" aria-label="Aquarian threads">
-        {data.threads.map(function (thread) {
-          return (
-            <article key={thread.id} className="about-subpage__destination">
-              <div className="about-subpage__destination-name">
-                {thread.title}
-              </div>
-              <p className="about-subpage__destination-desc">
-                {thread.description}
-              </p>
-            </article>
-          );
-        })}
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container about-subpage__destinations" aria-label="Aquarian threads">
+          {data.threads.map(function (thread) {
+            return (
+              <article key={thread.id} className="about-subpage__destination">
+                <div className="about-subpage__destination-name">
+                  {thread.title}
+                </div>
+                <p className="about-subpage__destination-desc">
+                  {thread.description}
+                </p>
+              </article>
+            );
+          })}
+        </div>
       </div>
 
       {/* ── Sections (wrapped in ContentSection) ── */}
-      <div className="about-subpage__body">
-        {data.sections.map(function (section, idx) {
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          {data.sections.map(function (section, idx) {
           var delayClass = idx < 6 ? ' entrance-fade-up--delay-' + (idx + 1) : '';
 
           return (
@@ -119,6 +115,7 @@ export function AquariusPage() {
             </div>
           );
         })}
+        </div>
       </div>
     </main>
   );

@@ -49,18 +49,27 @@ export function ResponsiveGridSlider<T extends { id?: string }>({
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [slidesPerView, setSlidesPerView] = useState(desktopColumns);
 
-  // Handle Resize Logic
+  // Handle Resize Logic with unified breakpoints (600px, 1024px, 1440px, 1800px)
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      if (width < 768) {
+      if (width < 600) {
         setSlidesPerView(1);
         setIsDesktop(false);
       } else if (width < 1024) {
         setSlidesPerView(2);
         setIsDesktop(false);
+      } else if (width < 1440) {
+        // Desktop small: Use 3 columns by default, or respect desktopColumns if it's 2 or 4
+        setSlidesPerView(desktopColumns === 2 ? 2 : 3);
+        setIsDesktop(true);
+      } else if (width < 1800) {
+        // Desktop wide: Use 4 columns or respect desktopColumns
+        setSlidesPerView(desktopColumns === 2 ? 3 : 4);
+        setIsDesktop(true);
       } else {
-        setSlidesPerView(desktopColumns);
+        // Ultra-wide: Use 5 columns or cap at desktopColumns if smaller
+        setSlidesPerView(Math.min(5, desktopColumns === 2 ? 4 : 5));
         setIsDesktop(true);
       }
     };

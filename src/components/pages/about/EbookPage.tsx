@@ -13,11 +13,12 @@
  * Touch swipe, keyboard arrows, and button navigation all supported.
  *
  * @component EbookPage
- * @version 4.3.0 - Audit fixes: hardcoded strings centralised, redundant role removed, font sizes increased
+ * @version 4.5.0 - Collapsible drawer groups, optional chaining fix, role=main
  */
 
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { ChevronLeft, ChevronRight, List, X, Maximize, Minimize, SlidersHorizontal } from '../../../lib/icons';
+import { ChevronDown } from '../../../lib/icons';
 import { bookPages } from '../../../data/mock/pages/ebook-pages';
 import type { BookPage } from '../../../data/mock/pages/ebook-pages';
 import { ebookUI } from '../../../data/mock/ui/ebook';
@@ -110,6 +111,75 @@ function buildChapterIndex(pages: BookPage[]): ChapterEntry[] {
 const chapterIndex = buildChapterIndex(bookPages);
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DRAWER GROUPS (collapsible parts)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+interface DrawerGroup {
+  id: string;
+  label: string;
+  collapsible: boolean;
+  entries: Array<{ entry: ChapterEntry; globalIdx: number }>;
+}
+
+function buildDrawerGroups(): DrawerGroup[] {
+  var groups: DrawerGroup[] = [];
+  var currentGroup: DrawerGroup = {
+    id: 'front-matter',
+    label: 'Front matter',
+    collapsible: false,
+    entries: [],
+  };
+
+  for (var i = 0; i < chapterIndex.length; i++) {
+    var entry = chapterIndex[i];
+
+    // Part titles start a new collapsible group
+    if (!entry.indent && entry.label.indexOf('Part ') === 0) {
+      // Push the previous group if it has entries
+      if (currentGroup.entries.length > 0) {
+        groups.push(currentGroup);
+      }
+      currentGroup = {
+        id: 'group-' + i,
+        label: entry.label,
+        collapsible: true,
+        entries: [{ entry: entry, globalIdx: i }],
+      };
+    } else if (!entry.indent && (
+      entry.label.indexOf('Appendix') === 0 ||
+      entry.label === ebookUI.chapterIndex.afterword ||
+      entry.label === ebookUI.chapterIndex.aboutAuthor ||
+      entry.label === ebookUI.chapterIndex.backCover
+    )) {
+      // Back matter entries go into a non-collapsible group
+      if (currentGroup.id !== 'back-matter') {
+        if (currentGroup.entries.length > 0) {
+          groups.push(currentGroup);
+        }
+        currentGroup = {
+          id: 'back-matter',
+          label: 'Back matter',
+          collapsible: false,
+          entries: [],
+        };
+      }
+      currentGroup.entries.push({ entry: entry, globalIdx: i });
+    } else {
+      currentGroup.entries.push({ entry: entry, globalIdx: i });
+    }
+  }
+
+  // Push the final group
+  if (currentGroup.entries.length > 0) {
+    groups.push(currentGroup);
+  }
+
+  return groups;
+}
+
+var drawerGroups = buildDrawerGroups();
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    PAGE CONTENT RENDERER
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
@@ -194,12 +264,18 @@ function PageContent(props: { page: BookPage }) {
                 <li key={`part-${item.partLabel}-${idx}`} className="ebook-page__toc-part-label">
                   <span className="ebook-page__toc-part-numeral">{item.partLabel}</span>
                   <span>{item.title}</span>
+                  {item.page != null ? (
+                    <span className="ebook-page__toc-page">{item.page}</span>
+                  ) : null}
                 </li>
               ) : (
                 <li key={`ch-${item.number}-${idx}`} className="ebook-page__toc-item">
                   <span className="ebook-page__toc-number">{item.number}</span>
                   <span>{item.title}</span>
                   <span className="ebook-page__toc-dots" aria-hidden="true" />
+                  {item.page != null ? (
+                    <span className="ebook-page__toc-page">{item.page}</span>
+                  ) : null}
                 </li>
               )
             ) : null}
@@ -462,6 +538,34 @@ export function EbookPage() {
   /* ── Chapter drawer state ── */
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  /* ── Collapsed drawer groups state ── */
+  const [collapsedGroups, setCollapsedGroups] = useState(function () {
+    // Start with all collapsible groups collapsed
+    var initial: Record<string, boolean> = {};
+    for (var i = 0; i < drawerGroups.length; i++) {
+      if (drawerGroups[i].collapsible) {
+        initial[drawerGroups[i].id] = true;
+      }
+    }
+    return initial;
+  });
+
+  /* ── Toggle drawer group ── */
+  function toggleDrawerGroup(groupId: string) {
+    setCollapsedGroups(function (prev) {
+      var next: Record<string, boolean> = {};
+      var keys = Object.keys(prev);
+      for (var k = 0; k < keys.length; k++) {
+        if (keys[k] === groupId) {
+          next[keys[k]] = !prev[keys[k]];
+        } else {
+          next[keys[k]] = prev[keys[k]];
+        }
+      }
+      return next;
+    });
+  }
+
   /* ── Settings modal state ── */
   const [settingsOpen, setSettingsOpen] = useState(false);
 
@@ -494,6 +598,10 @@ export function EbookPage() {
   const readerRefInit: HTMLDivElement | null = null;
   const readerRef = useRef(readerRefInit);
 
+  /* ── Scroll passthrough ref for spread mode ── */
+  const bookRefInit: HTMLDivElement | null = null;
+  const bookRef = useRef(bookRefInit);
+
   /* ── Swipe zone visual feedback ── */
   const [leftSwipeActive, setLeftSwipeActive] = useState(false);
   const [rightSwipeActive, setRightSwipeActive] = useState(false);
@@ -509,6 +617,16 @@ export function EbookPage() {
 
   /* ── Derived spread index ── */
   const currentSpread = pageToSpread(currentPage);
+
+  /* ── Reset scroll position on page change (spread mode) ── */
+  useEffect(() => {
+    if (bookRef.current) {
+      var pageInners = bookRef.current.querySelectorAll('.ebook-reader__page-inner');
+      for (var i = 0; i < pageInners.length; i++) {
+        pageInners[i].scrollTop = 0;
+      }
+    }
+  }, [currentSpread]);
 
   /* ── Navigation ── */
   const canGoForwardSingle = currentPage < totalPages - 1;
@@ -707,6 +825,23 @@ export function EbookPage() {
   const nextSpread = currentSpread < totalSpreads - 1 ? spreads[currentSpread + 1] : null;
   const prevSpread = currentSpread > 0 ? spreads[currentSpread - 1] : null;
 
+  /* ── Scroll passthrough for spread click zones ── */
+  const handleBookWheel = useCallback((e: React.WheelEvent) => {
+    if (!bookRef.current) return;
+    var bookRect = bookRef.current.getBoundingClientRect();
+    var midX = bookRect.left + bookRect.width / 2;
+    var isLeftSide = e.clientX < midX;
+
+    var targetSelector = isLeftSide
+      ? '.ebook-reader__page--left .ebook-reader__page-inner'
+      : '.ebook-reader__page--right .ebook-reader__page-inner';
+    var scrollTarget = bookRef.current.querySelector(targetSelector);
+
+    if (scrollTarget) {
+      scrollTarget.scrollTop = scrollTarget.scrollTop + e.deltaY;
+    }
+  }, []);
+
   /* ── Progress ── */
   const progressSingle = currentPage / Math.max(totalPages - 1, 1);
   const progressSpread = currentSpread / Math.max(totalSpreads - 1, 1);
@@ -763,6 +898,35 @@ export function EbookPage() {
     return idx;
   }, [currentPage]);
 
+  /* ── Auto-expand group containing current chapter ── */
+  useEffect(function () {
+    for (var g = 0; g < drawerGroups.length; g++) {
+      var group = drawerGroups[g];
+      if (!group.collapsible) continue;
+      for (var e = 0; e < group.entries.length; e++) {
+        if (group.entries[e].globalIdx === currentChapterIdx) {
+          var targetGroupId = group.id;
+          setCollapsedGroups(function (prev) {
+            if (prev[targetGroupId]) {
+              var next: Record<string, boolean> = {};
+              var keys = Object.keys(prev);
+              for (var k = 0; k < keys.length; k++) {
+                if (keys[k] === targetGroupId) {
+                  next[keys[k]] = false;
+                } else {
+                  next[keys[k]] = prev[keys[k]];
+                }
+              }
+              return next;
+            }
+            return prev;
+          });
+          return;
+        }
+      }
+    }
+  }, [currentChapterIdx]);
+
   // Extract || operators to avoid bundler issues
   const cannotGoBackward = !canGoBackwardSpread || flipState !== 'idle';
   const cannotGoForward = !canGoForwardSpread || flipState !== 'idle';
@@ -776,6 +940,7 @@ export function EbookPage() {
       tabIndex={-1}
       className={`ebook-reader bg-atomic-noise ${minimalMode ? 'ebook-reader--minimal' : ''}`}
       aria-label={ebookUI.readerAriaLabel}
+      role="main"
     >
       {/* ── Slim Hero ── */}
       {!isFullScreen && (
@@ -862,6 +1027,8 @@ export function EbookPage() {
             aria-live="polite"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
+            ref={bookRef}
+            onWheel={handleBookWheel}
           >
             <div className="ebook-reader__spine" aria-hidden="true" />
 
@@ -1056,21 +1223,42 @@ export function EbookPage() {
           </button>
         </div>
         <nav className="ebook-drawer__list" aria-label={ebookUI.drawer.listAriaLabel}>
-          {chapterIndex.map((entry, idx) => {
-            // Extract nested ternaries to avoid bundler issues
-            const indentClass = entry.indent ? 'ebook-drawer__item--indent' : 'ebook-drawer__item--section';
-            const activeClass = idx === currentChapterIdx ? 'ebook-drawer__item--active' : '';
-            return (
-              <button
-                type="button"
-                key={`ch-idx-${idx}`}
-                className={`ebook-drawer__item ${indentClass} ${activeClass}`}
-                onClick={() => jumpToPage(entry.pageIndex)}
-              >
-                {entry.label}
-              </button>
-            );
-          })}
+          {drawerGroups.map((group) => (
+            <div key={group.id} className={`ebook-drawer__group${collapsedGroups[group.id] ? ' ebook-drawer__group--collapsed' : ''}`}>
+              <div className="ebook-drawer__group-header">
+                <span className="ebook-drawer__group-title">{group.label}</span>
+                {group.collapsible && (
+                  <button
+                    type="button"
+                    className="ebook-drawer__group-toggle"
+                    aria-label={`Toggle ${group.label}`}
+                    onClick={() => toggleDrawerGroup(group.id)}
+                  >
+                    <ChevronDown className="ebook-reader__nav-icon" aria-hidden="true" />
+                  </button>
+                )}
+              </div>
+              <div className="ebook-drawer__group-content">
+                {(!group.collapsible || !collapsedGroups[group.id]) && group.entries.map((entry) => {
+                  // Extract nested ternaries to avoid bundler issues
+                  const indentClass = entry.entry.indent ? 'ebook-drawer__item--indent' : 'ebook-drawer__item--section';
+                  const activeClass = entry.globalIdx === currentChapterIdx ? 'ebook-drawer__item--active' : '';
+                  const isActive = entry.globalIdx === currentChapterIdx;
+                  return (
+                    <button
+                      type="button"
+                      key={`ch-idx-${entry.globalIdx}`}
+                      className={`ebook-drawer__item ${indentClass} ${activeClass}`}
+                      onClick={() => jumpToPage(entry.entry.pageIndex)}
+                      aria-current={isActive ? 'true' : undefined}
+                    >
+                      {entry.entry.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </nav>
       </aside>
 
@@ -1088,7 +1276,7 @@ export function EbookPage() {
         onFontSizeChange={setFontSize}
         onMinimalModeToggle={() => setMinimalMode(!minimalMode)}
         progressPercent={progress * 100}
-        currentChapterTitle={chapterIndex[currentChapterIdx]?.label}
+        currentChapterTitle={chapterIndex[currentChapterIdx] != null ? chapterIndex[currentChapterIdx].label : undefined}
       />
 
       {/* ══════════════════════════════════════

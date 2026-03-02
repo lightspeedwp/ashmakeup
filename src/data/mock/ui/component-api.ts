@@ -28,8 +28,8 @@ export const componentApiUI = {
   seo: { title: 'Component API Reference | Developer Tools | Ash Shaw' },
   breadcrumbs: [
     { label: 'Home', href: '/' },
-    { label: 'Developer Tools', href: '/dev-tools' },
-    { label: 'Component API Reference' },
+    { label: 'Developer tools', href: '/dev-tools' },
+    { label: 'Component API reference' },
   ] as BreadcrumbItem[],
   hero: {
     badge: 'Reference',

@@ -28,39 +28,39 @@ export interface LintResult {
 }
 
 export const codeQualityUI = {
-  seo: { title: 'Code Quality Dashboard | Developer Tools | Ash Shaw' },
+  seo: { title: 'Code quality dashboard | Developer tools | Ash Shaw' },
   breadcrumbs: [
     { label: 'Home', href: '/' },
-    { label: 'Developer Tools', href: '/dev-tools' },
-    { label: 'Code Quality Dashboard' },
+    { label: 'Developer tools', href: '/dev-tools' },
+    { label: 'Code quality dashboard' },
   ] as BreadcrumbItem[],
   hero: {
     badge: 'Testing',
-    title: 'Code Quality Dashboard',
+    title: 'Code quality dashboard',
     description:
       'Code health metrics, DOM complexity, CSS stats, component dependency map, and lint summaries for the Ash Shaw portfolio.',
   },
   overallScore: 94,
   domComplexity: {
-    title: 'DOM Complexity',
+    title: 'DOM complexity',
     description: 'Live metrics measured from the current page DOM.',
     metrics: [
-      { id: 'total-elements', label: 'Total Elements', value: '—', trend: 'stable' as const, detail: 'Measured at runtime' },
-      { id: 'max-depth', label: 'Max Nesting Depth', value: '—', trend: 'stable' as const, detail: 'Measured at runtime' },
+      { id: 'total-elements', label: 'Total elements', value: '—', trend: 'stable' as const, detail: 'Measured at runtime' },
+      { id: 'max-depth', label: 'Max nesting depth', value: '—', trend: 'stable' as const, detail: 'Measured at runtime' },
     ],
   },
   cssStats: {
-    title: 'CSS Stats',
+    title: 'CSS stats',
     description: 'Static analysis of the stylesheet architecture.',
     metrics: [
-      { id: 'custom-props', label: 'Custom Properties', value: '85+', trend: 'up' as const, detail: 'Colours, spacing, shadows, radii, typography' },
-      { id: 'bem-compliance', label: 'BEM Compliance', value: '100%', trend: 'stable' as const, detail: 'All classes follow Block__Element--Modifier' },
-      { id: 'block-stylesheets', label: 'Block CSS Files', value: '18', trend: 'up' as const, detail: '/styles/blocks/*.css' },
-      { id: 'tailwind-usage', label: 'Tailwind Utilities', value: '0', trend: 'stable' as const, detail: 'Fully migrated to BEM' },
+      { id: 'custom-props', label: 'Custom properties', value: '85+', trend: 'up' as const, detail: 'Colours, spacing, shadows, radii, typography' },
+      { id: 'bem-compliance', label: 'BEM compliance', value: '100%', trend: 'stable' as const, detail: 'All classes follow Block__Element--Modifier' },
+      { id: 'block-stylesheets', label: 'Block CSS files', value: '18', trend: 'up' as const, detail: '/styles/blocks/*.css' },
+      { id: 'tailwind-usage', label: 'Tailwind utilities', value: '0', trend: 'stable' as const, detail: 'Fully migrated to BEM' },
     ] as MetricCard[],
   },
   componentTree: {
-    title: 'Component Dependency Tree',
+    title: 'Component dependency tree',
     description: 'Top-level component import graph.',
     tree: [
       {
@@ -88,7 +88,7 @@ export const codeQualityUI = {
     ] as DependencyNode[],
   },
   fileSizes: {
-    title: 'File Size Estimates',
+    title: 'File size estimates',
     description: 'Approximate uncompressed sizes for key source files.',
     files: [
       { name: 'globals.css', size: '28 KB', category: 'styles' },
@@ -102,7 +102,7 @@ export const codeQualityUI = {
     ],
   },
   lintSummary: {
-    title: 'Lint Summary',
+    title: 'Lint summary',
     description: 'Static analysis results (mock data).',
     results: [
       { tool: 'TypeScript', errors: 0, warnings: 0, status: 'pass' as const },
@@ -112,7 +112,7 @@ export const codeQualityUI = {
     ] as LintResult[],
   },
   externalDeps: {
-    title: 'External Dependencies',
+    title: 'External dependencies',
     description: 'Only 4 external packages in the entire codebase.',
     deps: ['react', 'react-dom', 'react-router', 'lucide-react'],
   },

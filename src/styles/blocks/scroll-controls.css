@@ -1,5 +1,3 @@
-/* Scroll Controls Block Styles */
-
 /* Scroll Down Arrow */
 .scroll-down-arrow {
   position: absolute;
@@ -17,6 +15,27 @@
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+/* Tablet: Increase bottom spacing to prevent button overlay */
+@media (max-width: 1023px) {
+  .scroll-down-arrow {
+    bottom: 12rem;
+  }
+}
+
+/* Mobile: Even more spacing to clear button and text */
+@media (max-width: 767px) {
+  .scroll-down-arrow {
+    bottom: 16rem;
+  }
+}
+
+/* Mobile Compact: Maximum spacing for very small screens */
+@media (max-width: 420px) {
+  .scroll-down-arrow {
+    bottom: 18rem;
+  }
 }
 
 .scroll-down-arrow__border {

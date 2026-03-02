@@ -27,7 +27,7 @@ export const eventsPageData = {
     items: [
       { label: 'Events', labelSingular: 'Event', key: 'events' },
       { label: 'Editions', key: 'editions' },
-      { label: 'Km Cycled', key: 'kmCycled' },
+      { label: 'Km cycled', key: 'kmCycled' },
       { label: 'Countries', labelSingular: 'Country', key: 'countries' },
     ],
   },

@@ -53,17 +53,17 @@ export function VideosPage() {
   const [sortBy, setSortBy] = useState('recent');
 
   /** Seed activeCategories from ?category= query param on mount */
-  useEffect(() => {
+  useEffect(function () {
     // Only set initial state if we are truly mounting/param changed,
     // though navigating to this page usually means empty state.
     const catParam = searchParams.get('category');
     if (catParam) {
       // If we support query params, we should navigate to the route.
-      navigate(`/videos/category/${catParam}`, { replace: true });
+      navigate('/videos/category/' + catParam, { replace: true });
     }
   }, [searchParams, navigate]);
 
-  useEffect(() => {
+  useEffect(function () {
     setSEO(pageSEO.videos);
     injectSchema(SCHEMA_IDS.collection, buildCollectionSchema(
       'Videos | Makeup Tutorials & Festival Art',
@@ -71,157 +71,166 @@ export function VideosPage() {
       '/videos',
       videos.length,
     ));
-    return () => {
+    return function () {
       removeSchema(SCHEMA_IDS.collection);
     };
   }, []);
 
   const categories = useMemo(
-    () =>
-      videoCategories.map(c => ({
-        id: c.id,
-        name: c.name,
-        slug: c.slug,
-        count: getVideoCategoryCount(c.name),
-      })),
+    function () {
+      return videoCategories.map(function (c) {
+        return {
+          id: c.id,
+          name: c.name,
+          slug: c.slug,
+          count: getVideoCategoryCount(c.name),
+        };
+      });
+    },
     [],
   );
 
-  const filteredVideos = useMemo(() => {
-    let vids = [...videos];
+  const filteredVideos = useMemo(function () {
+    let vids = [];
+    for (var i = 0; i < videos.length; i++) {
+      vids.push(videos[i]);
+    }
 
     if (activeCategories.length > 0) {
-      vids = vids.filter(v =>
-        activeCategories.some(
-          slug => {
-            const found = videoCategories.find(c => c.slug === slug);
+      vids = vids.filter(function (v) {
+        return activeCategories.some(
+          function (slug) {
+            const found = videoCategories.find(function (c) { return c.slug === slug; });
             const catName = found ? found.name : slug;
             return v.category.toLowerCase() === catName.toLowerCase();
-          },
-        ),
-      );
+          }
+        );
+      });
     }
 
     switch (sortBy) {
       case 'recent':
         vids.sort(
-          (a, b) =>
-            new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+          function (a, b) {
+            return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+          }
         );
         break;
       case 'alphabetical':
-        vids.sort((a, b) => a.title.localeCompare(b.title));
+        vids.sort(function (a, b) { return a.title.localeCompare(b.title); });
         break;
       case 'featured':
-        vids.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+        vids.sort(function (a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0); });
         break;
     }
 
     return vids;
   }, [activeCategories, sortBy]);
 
-  const handleCategoryToggle = useCallback((slug: string) => {
-    navigate(`/videos/category/${slug}`);
+  const handleCategoryToggle = useCallback(function (slug) {
+    navigate('/videos/category/' + slug);
   }, [navigate]);
 
-  const handleVideoClick = (video: Video) => {
+  const handleVideoClick = function (video) {
     setSelectedVideo(video);
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
+  const closeModal = function () {
     setIsModalOpen(false);
     // Tiny delay to clear video after animation
-    setTimeout(() => setSelectedVideo(null), 300);
+    setTimeout(function () { setSelectedVideo(null); }, 300);
   };
 
   return (
     <main id="main-content" role="main" tabIndex={-1} className="videos-page bg-atomic-noise">
-      <div className="videos-header">
-        <div className="videos-header__content">
-          <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-fluid-md">
+      <div className="videos-header section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
+          <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-0">
             {videosUI.archive.title}
           </h1>
-          <p className="text-body-guideline mb-fluid-lg videos-header__description">
+          <p className="text-body-guideline mb-0 videos-header__description">
             {videosUI.archive.description}
           </p>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="container-7xl py-fluid-lg">
-        {/* Filters */}
-        <ArchiveFilters
-          contentType="video"
-          categories={categories}
-          activeCategories={activeCategories}
-          sortBy={sortBy}
-          sortOptions={SORT_OPTIONS}
-          resultCount={filteredVideos.length}
-          onCategoryToggle={handleCategoryToggle}
-          onSortChange={setSortBy}
-          onClearAll={() => {
-            setActiveCategories([]);
-            setSortBy('recent');
-          }}
-        />
+      <div className="videos-content-section section-spacing px-horizontal-section">
+        <div className="container-wide section-container">
+          {/* Filters */}
+          <ArchiveFilters
+            contentType="video"
+            categories={categories}
+            activeCategories={activeCategories}
+            sortBy={sortBy}
+            sortOptions={SORT_OPTIONS}
+            resultCount={filteredVideos.length}
+            onCategoryToggle={handleCategoryToggle}
+            onSortChange={setSortBy}
+            onClearAll={function () {
+              setActiveCategories([]);
+              setSortBy('recent');
+            }}
+          />
 
-        {/* Video Grid */}
-        {filteredVideos.length > 0 ? (
-          <section className="videos-grid-section">
+          {/* Video Grid */}
+          {filteredVideos.length > 0 ? (
+            <section className="videos-grid-section section-container">
             <ResponsiveGridSlider
               items={filteredVideos}
-              keyExtractor={(video) => video.id}
+              keyExtractor={function (video) { return video.id; }}
               desktopColumns={3}
-              renderItem={(video) => (
-                <div 
-                  className="video-card"
-                  onClick={() => handleVideoClick(video)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      handleVideoClick(video);
-                    }
-                  }}
-                  aria-label={`Play video: ${video.title}`}
-                >
-                  <div className="video-card__thumbnail-container">
-                    <OptimizedImage 
-                      src={videoThumbnails[video.id] ? videoThumbnails[video.id] : video.thumbnailUrl} 
-                      alt={video.title} 
-                      className="video-card__thumbnail"
-                      preset="thumbnail"
-                    />
-                    <div className="video-card__play-button">
-                      <Play className="video-card__play-icon" />
+              renderItem={function (video) {
+                return (
+                  <div 
+                    className="video-card"
+                    onClick={function () { handleVideoClick(video); }}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={function (e) {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        handleVideoClick(video);
+                      }
+                    }}
+                    aria-label={'Play video: ' + video.title}
+                  >
+                    <div className="video-card__thumbnail-container">
+                      <OptimizedImage 
+                        src={videoThumbnails[video.id] ? videoThumbnails[video.id] : video.thumbnailUrl} 
+                        alt={video.title} 
+                        className="video-card__thumbnail"
+                        preset="thumbnail"
+                      />
+                      <div className="video-card__play-button">
+                        <Play className="video-card__play-icon" />
+                      </div>
+                      <div className="video-card__duration">
+                        {video.duration}
+                      </div>
                     </div>
-                    <div className="video-card__duration">
-                      {video.duration}
+                    <div className="video-card__content">
+                      <h3 className="video-card__title">{video.title}</h3>
+                      <div className="video-card__meta">
+                        <span>{video.category}</span>
+                        <time dateTime={video.publishedAt}>{formatDate(video.publishedAt)}</time>
+                      </div>
+                      <p className="video-card__description">{video.description}</p>
+                      <button
+                        type="button"
+                        className="video-card__read-more"
+                        onClick={function (e) {
+                          e.stopPropagation();
+                          navigate('/video/' + video.slug);
+                        }}
+                        aria-label={filtersUI.readFullPost + ': ' + video.title}
+                      >
+                        {filtersUI.readFullPost}
+                        <ArrowRight className="icon-xs" aria-hidden="true" />
+                      </button>
                     </div>
                   </div>
-                  <div className="video-card__content">
-                    <h3 className="video-card__title">{video.title}</h3>
-                    <div className="video-card__meta">
-                      <span>{video.category}</span>
-                      <time dateTime={video.publishedAt}>{formatDate(video.publishedAt)}</time>
-                    </div>
-                    <p className="video-card__description">{video.description}</p>
-                    <button
-                      type="button"
-                      className="video-card__read-more"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(`/video/${video.slug}`);
-                      }}
-                      aria-label={`${filtersUI.readFullPost}: ${video.title}`}
-                    >
-                      {filtersUI.readFullPost}
-                      <ArrowRight className="icon-xs" aria-hidden="true" />
-                    </button>
-                  </div>
-                </div>
-              )}
+                );
+              }}
             />
           </section>
         ) : (
@@ -230,6 +239,7 @@ export function VideosPage() {
             <h3 className="error-title">{videosUI.archive.emptyState}</h3>
           </div>
         )}
+      </div>
       </div>
 
       <VideoModal 

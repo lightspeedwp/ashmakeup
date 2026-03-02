@@ -56,7 +56,7 @@ export function SplitContent(props: SplitContentProps) {
 
   var variantClass = variant === 'image-emphasis' ? 'split-layout--image-emphasis' : '';
   var sideClass = imageSide === 'right' ? 'split-layout--right' : '';
-  var rootClass = ['split-layout', variantClass, sideClass].filter(Boolean).join(' ');
+  var rootClass = ['split-layout', 'section-container', variantClass, sideClass].filter(Boolean).join(' ');
 
   return (
     <div className={rootClass}>
@@ -68,7 +68,7 @@ export function SplitContent(props: SplitContentProps) {
           decoding="async"
         />
       </div>
-      <div className="split-layout__content">
+      <div className="split-layout__content section-container">
         {children}
       </div>
     </div>

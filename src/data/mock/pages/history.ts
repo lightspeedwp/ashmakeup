@@ -35,42 +35,42 @@ export const historyPageData = {
     {
       id: 'origin',
       date: 'July 2019',
-      title: 'Started Makeup',
+      title: 'Started makeup',
       description:
         'Ash picked up his first UV-reactive face paint at a Berlin psytrance gathering and discovered a passion for neon artistry.',
     },
     {
       id: 'first-festival',
       date: 'August 2020',
-      title: 'First Festival Gig',
+      title: 'First festival gig',
       description:
         'Invited to a small local gathering, painting faces for 12 hours straight. The energy was electric.',
     },
     {
       id: 'ozora-2022',
       date: 'August 2022',
-      title: 'Ozora Festival',
+      title: 'Ozora festival',
       description:
         'A milestone performance at one of the world\'s largest psychedelic gatherings in Hungary. Painted over 50 unique designs.',
     },
     {
       id: 'modem-2023',
       date: 'August 2023',
-      title: 'MoDem Festival',
+      title: 'MoDem festival',
       description:
         'Showcased the "Atomic Black" style on the main stage dancers. Defined the signature high-contrast aesthetic.',
     },
     {
       id: 'book-concept',
       date: 'January 2024',
-      title: 'Book Concept Born',
+      title: 'Book concept born',
       description:
         'Started outlining "Neon vs Atomic Black", a visual guide to the philosophy and technique of UV makeup.',
     },
     {
       id: 'site-launch',
       date: 'February 2026',
-      title: 'Portfolio V7 Launch',
+      title: 'Portfolio v7 launch',
       description:
         'Launched the definitive digital home for the Ash Shaw brand, featuring a complete design system and accessibility focus.',
     },

@@ -9,6 +9,62 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.1.0] - 2026-03-02
+
+### Added
+
+#### Content Expansion Phase 6 — Multi-Content Growth
+
+- **18 new portfolio entries** (42 total, up from 24):
+  - 5 Berlin club/warehouse entries in `/data/mock/portfolio/uv-makeup.ts` — Berghain, About Blank, ://about blank, Griessmuehle, Sisyphos (2019–2023)
+  - 9 international festival entries in `/data/mock/portfolio/festivals.ts` — Vortex (South Africa), Rainbow Serpent (Australia), Solipse (Germany), Boom Festival (Portugal), Lost Theory (Portugal), Ozora (Hungary), Universo Paralello (Brazil), Antaris Project (Germany), Shankra (Switzerland) (2019–2024)
+  - 1 Chiang Mai mountain temple entry in `/data/mock/portfolio/thailand.ts` (2024)
+  - 3 editorial/experimental entries in new `/data/mock/portfolio/editorial.ts` — Neon architecture series 1, Abstract expressionism face, Cyborg renaissance (2021–2024)
+  - New "Editorial & experimental" section added to `portfolioSections` in `/data/mock/portfolio/index.ts`
+- **7 new blog posts** (18 total, up from 11) in `/data/mock/blog/posts.ts`:
+  - "The dancefloor gave me everything" (2020-12-15)
+  - "Neon revelations: birth of a UV art form" (2024-10-15)
+  - "Six Cats: the green garden begins" (2026-02-20)
+  - "Twenty-three years at LightSpeed" (2026-01-15)
+  - "Berlin called, I answered" (2019-07-28)
+  - "Eighty-six hours: Solar eclipse festival Zambia" (2021-06-10)
+  - "The tribes that made me" (2026-02-04)
+- **10 new video entries** (11 total, up from 1) in `/data/mock/videos/entries.ts`:
+  - vid-2: Origin Festival 2026 UV painting highlight reel (FEATURED)
+  - vid-3: Ambidextrous painting technique tutorial
+  - vid-4: 300km cycle to Origin Festival time-lapse (FEATURED)
+  - vid-5: UV colour theory: what you see vs what glows
+  - vid-6: Behind the scenes: Reiser Festival Czech Republic
+  - vid-7: Berlin summer 2023: cycling between festivals
+  - vid-8: Six Cats garden tour: harvest season 2024
+  - vid-9: WordPress design system build time-lapse
+  - vid-10: Thailand Muay Thai training montage
+  - vid-11: The Cow Man era: throwback festival footage
+- **13 new sticker designs** (40 total, up from 27) in `/data/mock/images/sticker-graphics.ts`:
+  - Sacred Geometry: Flower of life mandala, Metatron's cube, Sri Yantra fractal
+  - Festival Typography: Dance until sunrise, 138 BPM heartbeat, Good vibes only
+  - Neurodivergent Pride: ADHD brain on fire, Wired different
+  - Cycling & Endurance: Gravel bike adventure, Two wheels to the dancefloor
+  - Six Cats Branding: Six Cats green garden
+  - Berlin Scene: Berlin calling
+  - Abstract: Hypnotic spiral
+- 7 new sticker theme categories in `/data/mock/ui/stickers.ts` (Sacred geometry, Festival phrases, Neurodivergent pride, Cycling & endurance, Six Cats & branding, Berlin scene, Abstract)
+
+### Fixed
+
+- **Header light mode nav link contrast** — `.header--at-top` white text now scoped to `.dark` only; `html:not(.dark)` overrides added for dark text and accessible hover states in `/styles/blocks/header.css`
+
+### Documentation
+
+- QA Testing Phase 6 prompt created at `/prompts/qa-testing-phase6.md`
+- QA report at `/reports/qa-testing-phase6/qa-report.md` (v1.1.0) — 13/13 data integrity tests passed, 0 critical issues, header fix applied, portfolio count corrected to 42
+- Content Expansion Phase 6 task list at `/tasks/content-expansion-phase6-tasks.md` (v1.2.0)
+- 4 sub-audit reports in `/reports/content-expansion-phase6/` (blog, video, portfolio, sticker)
+- README.md updated with v8.1.0 content counts table
+- `/data/README.md` updated with editorial portfolio category and expanded directory structure
+
+---
+
 ## [8.0.0] - 2026-03-01
 
 ### Added
@@ -175,6 +231,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive Cleanup Audit 4 report — `/reports/comprehensive-cleanup/04-unused-imports.md`
 - Comprehensive Cleanup Audit 5 report — `/reports/comprehensive-cleanup/05-css-hygiene.md` (87 CSS files verified, zero orphans)
 - Comprehensive Cleanup Audit 6 report — `/reports/comprehensive-cleanup/06-folder-hygiene.md`
+- Design System Audit report — `/reports/design-system-audit/report.md` (9 violations found, 8 accepted exceptions, all violations resolved)
+- Content Audit Phase 3 report — `/reports/content-audit-phase3/report.md` (8 factual errors found and corrected)
+- Social media guidelines — `/docs/social-media-guidelines.md` (12,500+ word comprehensive voice/tone guide)
+- Social media content calendar template — `/docs/social-media-content-calendar-template.md` (6,000+ word planning framework)
+- **4 new backdated blog posts** (total posts: 11, up from 7):
+  - "Six Cats: the green garden begins" (May 22, 2019) — 5min read, Education category
+  - "Berlin called, I answered" (July 28, 2019) — 4min read, Travel category
+  - "Twenty-three years of LightSpeed" (Jan 15, 2026) — 6min read, Education category, FEATURED
+  - "The tribes that made me" (Feb 20, 2026) — 5min read, Education category
 
 ### Changed
 
@@ -193,6 +258,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `/guidelines/overview-components.md`, `/guidelines/components/PortfolioCard.md`, `/guidelines/components/BlogCard.md` — Contentful CMS references updated to WordPress/useContent
 - `/tasks/task-list.md` and `/tasks/comprehensive-cleanup-tasks.md` — all post-audit follow-up items resolved and ticked; dead report links replaced with `_(report archived)_` notation
 - UI Primitives Decision documented: Option A (keep all 45 shadcn stubs) — CSS cascade dependency confirmed, project feature-complete, stubs tree-shaken from production bundle
+- **Design System Audit resolutions (9 violations fixed):**
+  - `BlogPage.tsx` — removed `p-[0px]` arbitrary value; added `padding: 0` to `.blog-preview__grid` in block CSS
+  - `PortfolioDetailPage.tsx` — replaced `p-[0px]` with BEM class `.portfolio-feedback__container`; replaced `text-center` with `.portfolio-feedback__heading`
+  - `SocialLinks.tsx` — hardcoded `"#ffffff"` replaced with CSS token `"var(--wp--preset--color--base)"`
+  - `portfolio-card.css` — added comprehensive `@media (prefers-reduced-motion: reduce)` block (13 rules)
+  - `videos-page.css` — added `@media (prefers-reduced-motion: reduce)` block (6 rules)
+  - `BlogPostPage.tsx` — hardcoded author bio migrated to `/data/mock/pages/blog.ts` `authorBio` export
+  - `blog/categories.ts` — all 5 category colors converted from hex to CSS variable strings (`var(--wp--preset--color--neon-*)`)
+  - `podcasts/categories.ts` — introduction category color updated to CSS variable
+  - `portfolio.ts` — hardcoded "What People Say" migrated to `portfolioUI.detail.sections.feedback.heading` (sentence case)
+- **Content Audit Phase 3 corrections (8 factual errors fixed):**
+  - `berlinPageData` — arrival year corrected 2016 → 2019; one-way ticket framing removed; seasonal rhythm updated; covid-return section added; Sisyphos mention added
+  - `bioPageData` — "Berlin-based" corrected to "Cape Town-based"; `quickFacts.based` corrected to "Cape Town (home base) / Berlin (summers)"
+  - `lightspeedPageData` — company age corrected "22+ years" → "23 years" in hero and stats
+- **Ebook expansion (Phase 2):**
+  - Chapter 19 "Twenty-three years" added (3 content pages, LightSpeed history from `/content/lightspeed/company-history.md`)
+  - Appendix B "The tribes" added (6 content pages, global + location-specific tribal identity)
+  - Chapter 20 "The cumulative effect" renumbered from Chapter 18
+  - All page numbers updated; duplicate Chapter 18 entries fixed
+  - Total ebook now 82 pages (was 69), 20 chapters (was 18), 2 appendices (was 1)
 
 ### Removed
 
@@ -202,6 +287,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `/dist/wordpress-export.json` — stale build artifact deleted
 - `.contact-page-faq-inline` rule removed from `/styles/blocks/contact-page.css` (confirmed unused — zero references in codebase)
 - `/reports/root-cleanup/` — all 8 audit reports deleted (lifecycle rule: reports older than a few days; all items fully resolved)
+
+### Documentation
+
+- **Content Migration & Expansion — All 5 phases complete (March 2, 2026):**
+  - Phase 1: Content Organization — 16 reference files created across `/content/personal/`, `/content/lightspeed/`, `/content/book/`
+  - Phase 2: Ebook Expansion — 82-page ebook with 20 chapters + 2 appendices (13 pages added)
+  - Phase 3: Content Audit — 8 factual errors corrected across Berlin, Bio, LightSpeed pages
+  - Phase 4: Blog Topic Generation — 4 backdated posts (~2,300 words) from ebook chapters 10, 11, 19, and Appendix B
+  - Phase 5: Social Media Guidelines — comprehensive voice guide (12,500 words) + content calendar template (6,000 words)
+- **Social media deliverables:**
+  - 5 content pillars: UV makeup (40%), cycling (20%), WordPress (20%), Six Cats (10%), tribes (10%)
+  - Platform strategies: Instagram 3–5/week, Facebook 2–3/week, LinkedIn 1–2/week
+  - Voice attributes: authentic, energetic, educational, community-focused, unapologetically neon
+  - Hashtag strategy, engagement guidelines, crisis management, legal/ethical boundaries
+  - 4 sample post templates + monthly planning framework + batching/repurposing workflows
+
+---
 
 ## [7.4.0] - 2026-02-25
 

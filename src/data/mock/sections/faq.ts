@@ -67,7 +67,7 @@ export const faqData: FaqItem[] = [
 export const pageFaqGroups: FaqGroup[] = [
   {
     pageId: 'home',
-    title: 'Frequently Asked Questions',
+    title: 'Frequently asked questions',
     description: 'Quick answers about this site and Ash\'s work.',
     faqs: [
       {

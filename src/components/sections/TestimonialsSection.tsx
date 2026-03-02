@@ -23,8 +23,8 @@ export function TestimonialsSection() {
   }, []);
   
   return (
-    <section id="testimonials" className="testimonials-section">
-      <div className="testimonials-section__container">
+    <section id="testimonials" className="testimonials-section section-spacing px-horizontal-section">
+      <div className="testimonials-section__container section-container">
         {/* Section Header */}
         <div className="testimonials-section__header">
           <h2 className="testimonials-section__title text-section-h2">

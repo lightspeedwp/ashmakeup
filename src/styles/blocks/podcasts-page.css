@@ -27,15 +27,31 @@
   gap: var(--wp--preset--spacing--fluid-md);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 600px) {
   .podcasts-archive__grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--wp--preset--spacing--fluid-lg);
   }
 }
 
 @media (min-width: 1024px) {
   .podcasts-archive__grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: var(--wp--preset--spacing--fluid-lg);
+  }
+}
+
+@media (min-width: 1440px) {
+  .podcasts-archive__grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--wp--preset--spacing--fluid-xl);
+  }
+}
+
+@media (min-width: 1800px) {
+  .podcasts-archive__grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--wp--preset--spacing--fluid-2xl);
   }
 }
 

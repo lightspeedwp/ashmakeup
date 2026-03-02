@@ -49,8 +49,8 @@ export function ProcessPage() {
       className="about-subpage about-subpage--process bg-atomic-noise"
     >
       {/* ── Hero ── */}
-      <header className="about-subpage__hero">
-        <div className="about-subpage__hero-content">
+      <header className="about-subpage__hero section-spacing px-horizontal-section">
+        <div className="about-subpage__hero-content section-container">
           <Breadcrumbs items={data.breadcrumbs} centered />
 
           <span className="about-subpage__hero-badge">
@@ -68,8 +68,9 @@ export function ProcessPage() {
       </header>
 
       {/* ── Creative Process Steps as Timeline (Phase 3) ── */}
-      <div className="about-subpage__body">
-        <div className="entrance-fade-up">
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          <div className="entrance-fade-up">
           <ContentSection
             id="process-steps"
             title="The Creative Process"
@@ -107,6 +108,7 @@ export function ProcessPage() {
             </div>
           );
         })}
+        </div>
       </div>
     </main>
   );

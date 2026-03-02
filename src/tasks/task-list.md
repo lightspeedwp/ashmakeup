@@ -1,17 +1,115 @@
 # Master Task List
 
 **Created:** February 25, 2026
-**Last Updated:** March 1, 2026 (18:30)
+**Last Updated:** March 2, 2026 (18:00)
 **Source Prompts:**
 - [root-cleanup-audit.md](../prompts/root-cleanup-audit.md)
 - [comprehensive-cleanup orchestrator](../prompts/comprehensive-cleanup/orchestrator.md)
 - Content migration and ebook expansion (ongoing)
-
+- [content-expansion-phase6 orchestrator](../prompts/content-expansion-phase6/orchestrator.md)
+- [design-system-audit-full.md](../prompts/design-system-audit-full.md)
 **Reports:**
-- `/reports/root-cleanup/` — ~~8 reports~~ **Deleted March 1, 2026** (lifecycle rule: reports older than a few days; all items resolved)
-- [/reports/comprehensive-cleanup/](../reports/comprehensive-cleanup/) — active
+- `/reports/root-cleanup/` — _(archived March 1, 2026)_
+- `/reports/comprehensive-cleanup/` — _(archived March 2, 2026)_
+- `/reports/content-expansion/` — _(archived March 2, 2026)_
+- `/reports/content-audit-phase3/` — _(archived March 2, 2026)_
+- `/reports/content-expansion-phase6/` — ✅ **COMPLETE** (all 4 sub-audits done, QA 13/13 PASS, documentation updated)
+- `/reports/design-system-audit/` — _(archived March 2, 2026)_
+- `/reports/accessibility-audit/` — retained as reference (protected `/about/journey/` page documentation)
 
-> This is the all-purpose general task list. **Do not delete this file.**
+**📊 Project Status:** ✅ **AUDIT-CLEAN, FEATURE-COMPLETE, CONTENT-EXPANDED**
+
+**📖 Full status summary:** See `/docs/project-status-march-2026.md`
+
+---
+
+## Design System Audit — March 2, 2026
+
+> Source: [/reports/design-system-audit/report.md](../reports/design-system-audit/report.md)
+> Prompt: [/prompts/design-system-audit-full.md](../prompts/design-system-audit-full.md)
+> 9 violations found (0 Critical · 3 High · 4 Medium · 2 Low) · 8 accepted exceptions
+
+### P1 High — Fix `p-[0px]` Tailwind arbitrary values (V-02, V-03)
+
+**Status:** ✅ DONE — March 2, 2026
+**Files:** `/components/pages/blog/BlogPage.tsx`, `/components/pages/portfolio/PortfolioDetailPage.tsx`
+
+- [x] **`BlogPage.tsx:338`** — removed `p-[0px]`; added `padding: 0` to `.blog-preview__grid` in `/styles/blocks/blog-page.css`
+- [x] **`PortfolioDetailPage.tsx:466`** — replaced `p-[0px]` with `.portfolio-feedback__container` BEM class; added `padding: 0` rule to `/styles/blocks/portfolio-detail-page.css`
+
+---
+
+### P1 High — Add `prefers-reduced-motion` transition suppression to priority block CSS files (V-04)
+
+**Status:** ✅ DONE — March 2, 2026
+**Files:** `/styles/blocks/` — 8 files checked, 2 fixed, 6 confirmed already compliant
+
+- [x] `/styles/blocks/header.css` — confirmed: 2 existing `prefers-reduced-motion` blocks ✅
+- [x] `/styles/blocks/mega-menu.css` — confirmed: 1 existing block ✅
+- [x] `/styles/blocks/portfolio-card.css` — **FIXED**: added comprehensive `@media (prefers-reduced-motion: reduce)` block (13 rules covering all card transitions and transforms)
+- [x] `/styles/blocks/stickers-page.css` — confirmed: 2 existing blocks ✅
+- [x] `/styles/blocks/blog-page.css` — confirmed: 1 existing block ✅
+- [x] `/styles/blocks/videos-page.css` — **FIXED**: added `@media (prefers-reduced-motion: reduce)` block (6 rules covering card and link transitions)
+- [x] `/styles/blocks/footer.css` — confirmed: 1 existing block ✅
+- [x] `/styles/blocks/enhanced-lightbox.css` — confirmed: 1 existing block ✅
+
+---
+
+### P2 Medium — Move hardcoded author bio to mock data (V-05, V-08)
+
+**Status:** ✅ DONE — March 2, 2026
+**Files:** `/components/pages/blog/BlogPostPage.tsx`, `/data/mock/pages/blog.ts`
+
+- [x] Added `authorBio` export to `/data/mock/pages/blog.ts` with `name`, `bio`, and `socials` fields (URLs only — icons stay in component as code concerns)
+- [x] Imported `authorBio` in `BlogPostPage.tsx`; `AUTHOR_PROFILE` constant now sources `name`, `bio`, and social `url`/`name` from mock data; `avatar` (figma:asset) and social icons (Camera, ExternalLink) remain as component-level code
+- [x] Updated stale "Hardcoded as requested" comment to "Author Section — content from /data/mock/pages/blog.ts authorBio"
+- [x] All data field values are in sentence case
+
+---
+
+### P2 Medium — Replace sitemap dynamic inline `backgroundColor` with token-based CSS class lookup (V-07)
+
+**Status:** ✅ DONE — March 2, 2026
+**Files:** `/data/mock/blog/categories.ts`, `/data/mock/podcasts/categories.ts`
+
+- [x] All 5 blog category `color` fields updated from raw hex to neon CSS variable strings:
+  - `makeup-tips` → `var(--wp--preset--color--neon-pink)`
+  - `tutorials` → `var(--wp--preset--color--neon-purple)`
+  - `festival-tips` → `var(--wp--preset--color--neon-orange)`
+  - `travel` → `var(--wp--preset--color--neon-cyan)`
+  - `education` → `var(--wp--preset--color--neon-blue)`
+- [x] Podcast `introduction` category color updated: `#FF10F0` → `var(--wp--preset--color--neon-pink)`
+- [x] `SitemapPage.tsx` inline `style={{ backgroundColor: cat.color }}` pattern retained — now correctly passes CSS variable strings from data (no raw hex leaks into rendered attributes); `NEON_DOT_COLORS` array already used token strings — confirmed already compliant
+
+---
+
+### P3 Low — Replace hardcoded hex in `SocialLinks.tsx` with CSS token (V-01)
+
+**Status:** ✅ DONE — March 2, 2026
+**File:** `/components/common/SocialLinks.tsx:74`
+
+- [x] `"#ffffff"` replaced with `"var(--wp--preset--color--base)"` in `iconFill` logic — resolves to white in both themes via the CSS custom property
+
+---
+
+### P3 Low — Replace `text-center` utility with BEM modifier on portfolio detail page (V-06)
+
+**Status:** ✅ DONE — March 2, 2026
+**Files:** `/components/pages/portfolio/PortfolioDetailPage.tsx`, `/styles/blocks/portfolio-detail-page.css`, `/data/mock/ui/portfolio.ts`
+
+- [x] Added `.portfolio-feedback__heading { text-align: center; }` to `portfolio-detail-page.css`
+- [x] Replaced `className="text-section-h2 text-center mb-fluid-lg"` with `className="text-section-h2 portfolio-feedback__heading mb-fluid-lg"` in `PortfolioDetailPage.tsx`
+- [x] Bonus: hardcoded `"What People Say"` string migrated to `portfolioUI.detail.sections.feedback.heading` in `/data/mock/ui/portfolio.ts` (sentence case: "What people say")
+
+---
+
+### Passive Monitor — Protected files with known exceptions
+
+**Status:** No action required — monitor only
+
+- [ ] `/components/figma/ImageWithFallback.tsx` — Tailwind classes (`flex items-center justify-center w-full h-full`) — **protected file, cannot modify**
+- [ ] `/components/pages/about/EbookPage.tsx` — dynamic inline transform and progress width — **accepted pattern, no CSS alternative**
+- [ ] Dev-tool pages (`StyleGuidePage`, `PlaygroundPage`, `AnalyticsDashboardPage`) — inline styles for live token demos — **accepted dev-tool context**
 
 ---
 
@@ -60,61 +158,33 @@
 
 ---
 
-## Content Migration & Expansion (Ongoing)
+## Content Migration & Expansion — Status Summary
 
-### ✅ Phase 1: Content Organization (COMPLETE — March 1, 2026)
-- [x] Break up `RESTORE-FROM-GIT.md` into organized content files
-- [x] Create `/content/personal/` folder with 10 reference files:
-  - `artists-lifestyle.md`, `berlin.md`, `cape-town.md`, `education.md`, `fitness.md`
-  - `identity.md`, `lucy.md`, `profile.md`, `six-cats.md`, `thailand.md`
-- [x] Create `/content/lightspeed/` folder with 5 reference files:
-  - `company-history.md`, `internship.md`, `jose-abreu.md`, `team-workflow.md`, `team.md`
-- [x] Create `/content/book/` folder with 1 file:
-  - `this-one-time.md` (ebook master content)
+**All 5 phases complete!** (March 2, 2026)
 
-### ✅ Phase 2: Ebook Expansion (COMPLETE — March 1, 2026)
-- [x] Fix duplicate Chapter 18 entries in `/data/mock/pages/ebook-pages.ts`
-- [x] Fix misplaced `ch17-content-2` block (merged into ch18-content-2)
-- [x] Add **Chapter 19: Twenty-Three Years** (3 content pages, pages 65-68)
-  - Content about LightSpeed's 23-year history sourced from `/content/lightspeed/company-history.md`
-  - BarCamp Cape Town 2006 pivot story
-  - Team evolution and WordPress community
-  - Lessons from 23 years of entrepreneurship
-- [x] Renumber "The Cumulative Effect" from Chapter 18 to **Chapter 20** (pages 69-71)
-- [x] Add **Appendix B: The Tribes** (6 content pages, pages 76-81)
-  - Global tribes: Psytrance/140 BPM, WordPress Community, Techno & House Music Scene
-  - Location-specific tribes: Cape Town Psytrance, Berlin Club Scene, Cape Town WordPress/Tech, Trail Running, Mountain Biking, Triathlon
-  - "The Overlap" section on multi-tribal identity
-- [x] Update all page numbers for Afterword (72), Appendix A (73-75), About the Author (82)
-- [x] Correct all company age references from "twenty-two years" to "twenty-three years"
+**Phase 6 COMPLETE:** All content implemented, QA passed, documentation updated (v8.1.0)
 
-**Ebook stats after expansion:**
-- **Total pages:** 82 (was 69)
-- **Chapters:** 20 (was 18, but one was duplicated)
-- **Appendices:** 2 (was 1)
-- **New content:** 13 pages added (3 for Chapter 19, 6 for Appendix B, 4 from page renumbering)
+### Phase completion timeline:
+- ✅ **Phase 1:** Content Organization — March 1, 2026
+- ✅ **Phase 2:** Ebook Expansion (82 pages, 20 chapters, 2 appendices) — March 1, 2026
+- ✅ **Phase 3:** Content Audit & Website Updates (8 errors fixed) — March 2, 2026
+- ✅ **Phase 4:** Blog Topic Generation (4 backdated posts, 11 total) — March 2, 2026
+- ✅ **Phase 5:** Social Media Guidelines (comprehensive voice guide + calendar templates) — March 2, 2026
+- ✅ **Phase 6:** Multi-Content Expansion — March 2, 2026
+  - 18 portfolio entries (42 total), 7 blog posts (18 total), 10 videos (11 total), 13 stickers (40 total)
+  - Header light mode fix applied
+  - QA: 13/13 data integrity tests passed, 0 critical issues
+  - Documentation: README v8.1.0, CHANGELOG [8.1.0], /data/README v3.0.0
 
-### 🔄 Phase 3: Content Audit & Website Updates (TODO)
-- [ ] Audit `/content/` files against `/data/mock/pages/` to identify update opportunities
-- [ ] Update `AboutPage`, `BerlinPage`, `LightSpeedPage`, `SixCatsPage` with new content from reference files
-- [ ] Review `BioPage`, `HistoryPage`, `TravelsPage` for consistency with ebook content
-- [ ] Update `/data/mock/pages/about-subpages.ts` with enhanced content
-- [ ] Sync `/content/personal/berlin.md` with `/data/mock/pages/about-subpages.ts` Berlin section
-- [ ] Sync `/content/lightspeed/company-history.md` with `/data/mock/pages/about-subpages.ts` LightSpeed section
-
-### 🔄 Phase 4: Blog Topic Generation (TODO)
-- [ ] Review ebook chapters for backdated blog post ideas
-- [ ] Create blog post proposals from:
-  - Chapter 10: Six Cats (May 2019 backdated post)
-  - Chapter 11: Berlin Calling (July 2019 discovery backdated post)
-  - Chapter 19: Twenty-Three Years (Jan 2026 retrospective post)
-  - Appendix B: The Tribes (multi-part series idea)
-- [ ] Draft 3-5 backdated blog posts for `/data/mock/blog/posts.ts`
-
-### 🔄 Phase 5: Social Media Guidelines Update (TODO)
-- [ ] Review `/content/social-profiles/` for updates needed
-- [ ] Update social media voice/tone guidelines to reflect tribal identity
-- [ ] Create content calendar templates for cross-platform posting
+**Total deliverables:**
+- 82-page ebook with 20 chapters + 2 appendices
+- 18 blog posts (7 new backdated from ebook content in Phase 6)
+- 11 videos (10 new backdated in Phase 6)
+- 42 portfolio entries (18 new in Phase 6 — baseline corrected from 20 to 24 original)
+- 40 sticker designs (13 new in Phase 6)
+- 8 factual errors corrected across Berlin, Bio, and LightSpeed pages
+- 2 comprehensive social media strategy documents (guidelines + calendar template)
+- Header light mode nav link contrast fix (WCAG AA)
 
 ---
 

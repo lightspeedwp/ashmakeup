@@ -850,6 +850,17 @@
   );
 }
 
+/* V-03 fix: container inside feedback section needs zero padding
+   (was previously overridden with Tailwind p-[0px] in JSX) */
+.portfolio-feedback__container {
+  padding: 0;
+}
+
+/* V-06 fix: centred heading in feedback section — alignment lives in CSS, not in a utility class */
+.portfolio-feedback__heading {
+  text-align: center;
+}
+
 .portfolio-feedback__grid {
   display: grid;
   grid-template-columns: 1fr;

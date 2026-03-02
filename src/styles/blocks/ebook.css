@@ -292,6 +292,7 @@ body.ebook-fullscreen .ebook-reader__hero {
 .ebook-reader__page-inner {
   flex: 1;
   overflow-y: auto;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   padding: clamp(0.75rem, 0.5rem + 1.5vw, 2.5rem) clamp(0.75rem, 0.5rem + 2vw, 2.5rem);
@@ -304,6 +305,24 @@ body.ebook-fullscreen .ebook-reader__hero {
 .dark .ebook-reader__page-inner {
   background: var(--wp--preset--color--atomic-black);
   color: var(--wp--preset--color--neutral-200);
+}
+
+/* Thin custom scrollbar for page content */
+.ebook-reader__page-inner::-webkit-scrollbar {
+  width: 4px;
+}
+
+.ebook-reader__page-inner::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ebook-reader__page-inner::-webkit-scrollbar-thumb {
+  background: var(--wp--preset--color--neutral-300);
+  border-radius: 2px;
+}
+
+.dark .ebook-reader__page-inner::-webkit-scrollbar-thumb {
+  background: var(--wp--preset--color--neutral-700);
 }
 
 /* Inner shadow on the spine edge (spread mode only) */
@@ -327,16 +346,34 @@ body.ebook-fullscreen .ebook-reader__hero {
 
 /* ── Page number ── */
 .ebook-reader__page-number {
-  margin-top: auto;
-  padding-top: 0.75rem;
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  flex-shrink: 0;
+  padding: 0.5rem 0 0.25rem;
   font-family: var(--wp--preset--font-family--brand-body);
   font-size: var(--ebook-page-number-size);
   letter-spacing: 0.05em;
   color: var(--wp--preset--color--neutral-400);
   text-align: center;
+  background: #FAFAF7;
 }
 
 .dark .ebook-reader__page-number {
+  color: var(--wp--preset--color--neutral-600);
+  background: var(--wp--preset--color--atomic-black);
+}
+
+/* Page number background matches special page types */
+.ebook-page--cover .ebook-reader__page-number,
+.ebook-page--back-cover .ebook-reader__page-number {
+  background: var(--wp--preset--color--neon-pink);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.ebook-page--part-title .ebook-reader__page-number,
+.ebook-page--appendix-title .ebook-reader__page-number {
+  background: var(--wp--preset--color--atomic-black);
   color: var(--wp--preset--color--neutral-600);
 }
 
@@ -841,6 +878,24 @@ body.ebook-fullscreen .ebook-reader__hero {
   color: var(--wp--preset--color--neon-pink);
 }
 
+/* TOC page numbers */
+.ebook-page__toc-page {
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-size: clamp(0.65rem, 0.55rem + 0.25vw, 0.8rem);
+  color: var(--wp--preset--color--neutral-500);
+  min-width: 1.5rem;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.dark .ebook-page__toc-page {
+  color: var(--wp--preset--color--neutral-500);
+}
+
+.ebook-page__toc-part-label .ebook-page__toc-page {
+  margin-left: auto;
+}
+
 /* ── Foreword / Afterword ── */
 .ebook-page--foreword .ebook-reader__page-inner,
 .ebook-page--afterword .ebook-reader__page-inner {
@@ -1178,6 +1233,82 @@ body.ebook-fullscreen .ebook-reader__hero {
 .dark .ebook-drawer__item--active {
   color: var(--wp--preset--color--neon-pink);
   background: rgba(255, 16, 240, 0.06);
+}
+
+/* ── Drawer Groups (collapsible parts) ── */
+.ebook-drawer__group {
+  border-bottom: 1px solid var(--wp--preset--color--neutral-200);
+}
+
+.ebook-drawer__group:last-child {
+  border-bottom: 0;
+}
+
+.dark .ebook-drawer__group {
+  border-bottom-color: var(--wp--preset--color--neutral-800);
+}
+
+.ebook-drawer__group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(0.5rem, 0.4rem + 0.2vw, 0.7rem) clamp(1rem, 0.8rem + 0.5vw, 1.25rem);
+}
+
+.ebook-drawer__group-title {
+  font-family: var(--wp--preset--font-family--brand-heading);
+  font-size: clamp(0.7rem, 0.6rem + 0.2vw, 0.8rem);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--wp--preset--color--neutral-500);
+}
+
+.dark .ebook-drawer__group-title {
+  color: var(--wp--preset--color--neutral-500);
+}
+
+.ebook-drawer__group-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--wp--preset--color--neutral-500);
+  border-radius: var(--wp--preset--border-radius--sm);
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.ebook-drawer__group-toggle:hover {
+  background: var(--wp--preset--color--neutral-100);
+  color: var(--foreground);
+}
+
+.dark .ebook-drawer__group-toggle:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--wp--preset--color--neutral-200);
+}
+
+.ebook-drawer__group-toggle:focus-visible {
+  outline: 3px solid var(--wp--preset--color--neon-pink);
+  outline-offset: -3px;
+}
+
+/* Chevron rotation for collapse state */
+.ebook-drawer__group-toggle .ebook-reader__nav-icon {
+  transition: transform 200ms ease;
+}
+
+.ebook-drawer__group--collapsed .ebook-drawer__group-toggle .ebook-reader__nav-icon {
+  transform: rotate(-90deg);
+}
+
+/* Remove section-header border/margin for items inside groups */
+.ebook-drawer__group .ebook-drawer__item--section {
+  border-top: 0;
+  margin-top: 0;
 }
 
 /* ══════════════════════════════════════

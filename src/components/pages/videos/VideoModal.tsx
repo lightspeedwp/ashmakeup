@@ -24,18 +24,22 @@ interface VideoModalProps {
  * VideoModal — full-screen overlay for playing a selected video.
  * Uses CSS classes from /styles/blocks/videos-page.css.
  */
-export function VideoModal({ video, isOpen, onClose }: VideoModalProps) {
-  const overlayRefInit: HTMLDivElement | null = null;
-  const overlayRef = useRef(overlayRefInit);
-  const closeBtnRefInit: HTMLButtonElement | null = null;
-  const closeBtnRef = useRef(closeBtnRefInit);
-  const prefersReduced = useReducedMotion();
+export function VideoModal(props: VideoModalProps) {
+  var video = props.video;
+  var isOpen = props.isOpen;
+  var onClose = props.onClose;
+
+  var overlayRefInit: HTMLDivElement | null = null;
+  var overlayRef = useRef(overlayRefInit);
+  var closeBtnRefInit: HTMLButtonElement | null = null;
+  var closeBtnRef = useRef(closeBtnRefInit);
+  var prefersReduced = useReducedMotion();
 
   /** Focus the close button when the modal opens */
-  useEffect(() => {
+  useEffect(function () {
     if (isOpen) {
-      setTimeout(() => {
-        const btn = closeBtnRef.current;
+      setTimeout(function () {
+        var btn = closeBtnRef.current;
         if (btn) {
           btn.focus();
         }
@@ -44,24 +48,26 @@ export function VideoModal({ video, isOpen, onClose }: VideoModalProps) {
     } else {
       document.body.classList.remove('modal-open');
     }
-    return () => {
+    return function () {
       document.body.classList.remove('modal-open');
     };
   }, [isOpen]);
 
   /** Close on Escape */
-  useEffect(() => {
+  useEffect(function () {
     if (!isOpen) return;
-    const handler = (e: KeyboardEvent) => {
+    function handler(e: KeyboardEvent) {
       if (e.key === 'Escape') onClose();
-    };
+    }
     document.addEventListener('keydown', handler);
-    return () => document.removeEventListener('keydown', handler);
+    return function () {
+      document.removeEventListener('keydown', handler);
+    };
   }, [isOpen, onClose]);
 
   /** Close when clicking the backdrop */
-  const handleBackdropClick = useCallback(
-    (e: React.MouseEvent) => {
+  var handleBackdropClick = useCallback(
+    function (e: React.MouseEvent) {
       if (e.target === overlayRef.current) {
         onClose();
       }
@@ -75,23 +81,23 @@ export function VideoModal({ video, isOpen, onClose }: VideoModalProps) {
    * Build an embed URL from the video's platform + videoUrl.
    * Falls back to the raw URL.
    */
-  const getEmbedUrl = (): string => {
-    const url = video.videoUrl;
+  function getEmbedUrl(): string {
+    var url = video!.videoUrl;
 
-    if (video.platform === 'youtube') {
-      const match = url.match(
+    if (video!.platform === 'youtube') {
+      var ytMatch = url.match(
         /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([A-Za-z0-9_-]{11})/,
       );
-      if (match) return `https://www.youtube.com/embed/${match[1]}?autoplay=1&rel=0`;
+      if (ytMatch) return 'https://www.youtube.com/embed/' + ytMatch[1] + '?autoplay=1&rel=0';
     }
 
-    if (video.platform === 'vimeo') {
-      const match = url.match(/vimeo\.com\/(\d+)/);
-      if (match) return `https://player.vimeo.com/video/${match[1]}?autoplay=1`;
+    if (video!.platform === 'vimeo') {
+      var vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+      if (vimeoMatch) return 'https://player.vimeo.com/video/' + vimeoMatch[1] + '?autoplay=1';
     }
 
     return url;
-  };
+  }
 
   return (
     <div
@@ -99,7 +105,7 @@ export function VideoModal({ video, isOpen, onClose }: VideoModalProps) {
       className="video-modal-overlay"
       role="dialog"
       aria-modal="true"
-      aria-label={`Playing: ${video.title}`}
+      aria-label={'Playing: ' + video.title}
       onClick={handleBackdropClick}
     >
       <div className="video-modal-content">

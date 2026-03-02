@@ -108,6 +108,8 @@ export function SixCatsPage() {
   var website = data.website;
   var vision = data.vision;
   var mission = data.mission;
+  var originStory = data.originStory;
+  var philosophy = data.philosophy;
   var values = data.values;
   var cultivation = data.cultivation;
   var harvest = data.harvest;
@@ -131,8 +133,8 @@ export function SixCatsPage() {
       className="about-subpage about-subpage--six-cats six-cats-page bg-atomic-noise"
     >
       {/* ── Hero ── */}
-      <header className="about-subpage__hero">
-        <div className="about-subpage__hero-content">
+      <header className="about-subpage__hero section-spacing px-horizontal-section">
+        <div className="about-subpage__hero-content section-container">
           <Breadcrumbs items={breadcrumbs} centered />
 
           <span className="about-subpage__hero-badge">
@@ -164,10 +166,10 @@ export function SixCatsPage() {
 
       {/* ── Vision & Mission ── */}
       <section
-        className="six-cats-page__vision-mission"
+        className="six-cats-page__vision-mission section-spacing px-horizontal-section"
         aria-label={a11y.visionMissionLabel}
       >
-        <div className="six-cats-page__vm-card">
+        <div className="section-container six-cats-page__vm-card">
           <h2 className="six-cats-page__vm-heading">
             {website.name} &mdash; {website.tagline}
           </h2>
@@ -184,9 +186,38 @@ export function SixCatsPage() {
         </div>
       </section>
 
+      {/* ── Origin Story (from ebook Ch10) ── */}
+      <section
+        className="six-cats-page__origin-story section-spacing px-horizontal-section"
+        aria-label={a11y.originStoryLabel}
+      >
+        <div className="section-container about-subpage__body">
+          <div className="entrance-fade-up">
+            <ContentSection
+              id={originStory.id}
+              title={originStory.title}
+              variant="default"
+              colorAccent="green"
+            >
+              {originStory.paragraphs.map(function (p, i) {
+                return (
+                  <p
+                    key={'origin-p-' + i}
+                    className="about-subpage__section-text"
+                  >
+                    {p}
+                  </p>
+                );
+              })}
+            </ContentSection>
+          </div>
+        </div>
+      </section>
+
       {/* ── Body Sections (Phase 3 ContentSection) ── */}
-      <div className="about-subpage__body">
-        {sections.map(function (section, idx) {
+      <div className="about-subpage__body section-spacing px-horizontal-section">
+        <div className="section-container">
+          {sections.map(function (section, idx) {
           var delayClass = idx < 6 ? ' entrance-fade-up--delay-' + (idx + 1) : '';
 
           return (
@@ -211,100 +242,131 @@ export function SixCatsPage() {
             </div>
           );
         })}
+        </div>
       </div>
 
-      {/* ── The Cats ── */}
-      <section className="six-cats-page__cats" aria-label={a11y.catsListLabel}>
-        <h2 className="six-cats-page__section-heading">
-          <Layers className="six-cats-page__heading-icon" aria-hidden="true" />
-          The Current Pack
-        </h2>
-        <div className="six-cats-page__cats-grid" role="list">
-          {livingCats.map(function (cat) {
-            return (
-              <article
-                key={cat.id}
-                className="six-cats-page__cat-card"
-                role="listitem"
-              >
-                <div className="six-cats-page__cat-header">
-                  <h3 className="six-cats-page__cat-name">{cat.name}</h3>
-                  <span className="six-cats-page__cat-nickname">
-                    {cat.nickname}
-                  </span>
-                </div>
-                <span className="six-cats-page__cat-role">{cat.role}</span>
-                <p className="six-cats-page__cat-bio">{cat.bio}</p>
-              </article>
-            );
-          })}
-        </div>
-
-        {/* ── Memorial ── */}
-        <div className="six-cats-page__memorial">
-          <button
-            type="button"
-            className="six-cats-page__memorial-toggle"
-            onClick={handleToggleMemorial}
-            aria-expanded={showMemorial}
-            aria-controls="memorial-section"
-          >
-            <Heart
-              className="six-cats-page__memorial-icon"
-              aria-hidden="true"
-            />
-            In Memoriam
-            {showMemorial ? (
-              <ChevronUp
-                className="six-cats-page__chevron"
-                aria-hidden="true"
-              />
-            ) : (
-              <ChevronDown
-                className="six-cats-page__chevron"
-                aria-hidden="true"
-              />
-            )}
-          </button>
-
-          {showMemorial && (
-            <div
-              id="memorial-section"
-              className="six-cats-page__cats-grid six-cats-page__cats-grid--memorial"
-              role="list"
-              aria-label={a11y.memorialLabel}
+      {/* ── Philosophy (from ebook Ch10) ── */}
+      <section
+        className="six-cats-page__philosophy section-spacing px-horizontal-section"
+        aria-label={a11y.philosophyLabel}
+      >
+        <div className="section-container about-subpage__body">
+          <div className="entrance-fade-up">
+            <ContentSection
+              id={philosophy.id}
+              title={philosophy.title}
+              variant="default"
+              colorAccent="green"
             >
-              {memorialCats.map(function (cat) {
+              {philosophy.paragraphs.map(function (p, i) {
                 return (
-                  <article
-                    key={cat.id}
-                    className="six-cats-page__cat-card six-cats-page__cat-card--memorial"
-                    role="listitem"
+                  <p
+                    key={'philosophy-p-' + i}
+                    className="about-subpage__section-text"
                   >
-                    <div className="six-cats-page__cat-header">
-                      <h3 className="six-cats-page__cat-name">{cat.name}</h3>
-                      <span className="six-cats-page__cat-nickname">
-                        {cat.nickname}
-                      </span>
-                    </div>
-                    <span className="six-cats-page__cat-role">{cat.role}</span>
-                    {cat.datePassed && (
-                      <time className="six-cats-page__cat-date">
-                        {cat.datePassed}
-                      </time>
-                    )}
-                    <p className="six-cats-page__cat-bio">{cat.bio}</p>
-                  </article>
+                    {p}
+                  </p>
                 );
               })}
-            </div>
-          )}
+            </ContentSection>
+          </div>
+        </div>
+      </section>
+
+      {/* ── The Cats ── */}
+      <section className="six-cats-page__cats section-spacing px-horizontal-section" aria-label={a11y.catsListLabel}>
+        <div className="section-container">
+          <h2 className="six-cats-page__section-heading">
+            <Layers className="six-cats-page__heading-icon" aria-hidden="true" />
+            The Current Pack
+          </h2>
+          <div className="six-cats-page__cats-grid" role="list">
+            {livingCats.map(function (cat) {
+              return (
+                <article
+                  key={cat.id}
+                  className="six-cats-page__cat-card"
+                  role="listitem"
+                >
+                  <div className="six-cats-page__cat-header">
+                    <h3 className="six-cats-page__cat-name">{cat.name}</h3>
+                    <span className="six-cats-page__cat-nickname">
+                      {cat.nickname}
+                    </span>
+                  </div>
+                  <span className="six-cats-page__cat-role">{cat.role}</span>
+                  <p className="six-cats-page__cat-bio">{cat.bio}</p>
+                </article>
+              );
+            })}
+          </div>
+
+          {/* ── Memorial ── */}
+          <div className="six-cats-page__memorial">
+            <button
+              type="button"
+              className="six-cats-page__memorial-toggle"
+              onClick={handleToggleMemorial}
+              aria-expanded={showMemorial}
+              aria-controls="memorial-section"
+            >
+              <Heart
+                className="six-cats-page__memorial-icon"
+                aria-hidden="true"
+              />
+              In Memoriam
+              {showMemorial ? (
+                <ChevronUp
+                  className="six-cats-page__chevron"
+                  aria-hidden="true"
+                />
+              ) : (
+                <ChevronDown
+                  className="six-cats-page__chevron"
+                  aria-hidden="true"
+                />
+              )}
+            </button>
+
+            {showMemorial && (
+              <div
+                id="memorial-section"
+                className="six-cats-page__cats-grid six-cats-page__cats-grid--memorial"
+                role="list"
+                aria-label={a11y.memorialLabel}
+              >
+                {memorialCats.map(function (cat) {
+                  return (
+                    <article
+                      key={cat.id}
+                      className="six-cats-page__cat-card six-cats-page__cat-card--memorial"
+                      role="listitem"
+                    >
+                      <div className="six-cats-page__cat-header">
+                        <h3 className="six-cats-page__cat-name">{cat.name}</h3>
+                        <span className="six-cats-page__cat-nickname">
+                          {cat.nickname}
+                        </span>
+                      </div>
+                      <span className="six-cats-page__cat-role">{cat.role}</span>
+                      {cat.datePassed && (
+                        <time className="six-cats-page__cat-date">
+                          {cat.datePassed}
+                        </time>
+                      )}
+                      <p className="six-cats-page__cat-bio">{cat.bio}</p>
+                    </article>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
       {/* ── Grading System (Phase 3 Accordion) ── */}
-      <section className="six-cats-page__grades" aria-label={a11y.gradesLabel}>
-        <div className="about-subpage__body">
+      <section className="six-cats-page__grades section-spacing px-horizontal-section" aria-label={a11y.gradesLabel}>
+        <div className="section-container about-subpage__body">
           <div className="entrance-fade-up">
             <ContentSection
               id="grading-system"
@@ -323,136 +385,144 @@ export function SixCatsPage() {
 
       {/* ── Cultivation ── */}
       <section
-        className="six-cats-page__cultivation"
+        className="six-cats-page__cultivation section-spacing px-horizontal-section"
         aria-label={a11y.cultivationLabel}
       >
-        <h2 className="six-cats-page__section-heading">
-          <Leaf className="six-cats-page__heading-icon" aria-hidden="true" />
-          Cultivation
-        </h2>
-        <div className="six-cats-page__cultivation-grid" role="list">
-          {cultivation.map(function (method) {
-            var IconComp = getCultivationIcon(method.id);
-            return (
-              <article
-                key={method.id}
-                className="six-cats-page__cultivation-card"
-                role="listitem"
-              >
-                <IconComp
-                  className="six-cats-page__cultivation-icon"
-                  aria-hidden="true"
-                />
-                <h3 className="six-cats-page__cultivation-title">
-                  {method.title}
-                </h3>
-                <p className="six-cats-page__cultivation-desc">
-                  {method.description}
-                </p>
-              </article>
-            );
-          })}
+        <div className="section-container">
+          <h2 className="six-cats-page__section-heading">
+            <Leaf className="six-cats-page__heading-icon" aria-hidden="true" />
+            Cultivation
+          </h2>
+          <div className="six-cats-page__cultivation-grid" role="list">
+            {cultivation.map(function (method) {
+              var IconComp = getCultivationIcon(method.id);
+              return (
+                <article
+                  key={method.id}
+                  className="six-cats-page__cultivation-card"
+                  role="listitem"
+                >
+                  <IconComp
+                    className="six-cats-page__cultivation-icon"
+                    aria-hidden="true"
+                  />
+                  <h3 className="six-cats-page__cultivation-title">
+                    {method.title}
+                  </h3>
+                  <p className="six-cats-page__cultivation-desc">
+                    {method.description}
+                  </p>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* ── Harvest ── */}
-      <section className="six-cats-page__harvest" aria-label={a11y.harvestLabel}>
-        <h2 className="six-cats-page__section-heading">
-          <Scissors className="six-cats-page__heading-icon" aria-hidden="true" />
-          Harvest Phases
-        </h2>
-        <div className="six-cats-page__harvest-timeline" role="list">
-          {harvest.map(function (phase, idx) {
-            var IconComp = getHarvestIcon(phase.id);
-            return (
-              <article
-                key={phase.id}
-                className="six-cats-page__harvest-phase"
-                role="listitem"
-              >
-                <div className="six-cats-page__harvest-marker">
-                  <span className="six-cats-page__harvest-number">
-                    {idx + 1}
-                  </span>
-                  <IconComp
-                    className="six-cats-page__harvest-icon"
-                    aria-hidden="true"
-                  />
-                </div>
-                <div className="six-cats-page__harvest-body">
-                  <h3 className="six-cats-page__harvest-title">
-                    {phase.title}
-                  </h3>
-                  {phase.paragraphs.map(function (p, i) {
-                    return (
-                      <p
-                        key={phase.id + '-p-' + i}
-                        className="six-cats-page__harvest-text"
-                      >
-                        {p}
-                      </p>
-                    );
-                  })}
-                </div>
-              </article>
-            );
-          })}
+      <section className="six-cats-page__harvest section-spacing px-horizontal-section" aria-label={a11y.harvestLabel}>
+        <div className="section-container">
+          <h2 className="six-cats-page__section-heading">
+            <Scissors className="six-cats-page__heading-icon" aria-hidden="true" />
+            Harvest Phases
+          </h2>
+          <div className="six-cats-page__harvest-timeline" role="list">
+            {harvest.map(function (phase, idx) {
+              var IconComp = getHarvestIcon(phase.id);
+              return (
+                <article
+                  key={phase.id}
+                  className="six-cats-page__harvest-phase"
+                  role="listitem"
+                >
+                  <div className="six-cats-page__harvest-marker">
+                    <span className="six-cats-page__harvest-number">
+                      {idx + 1}
+                    </span>
+                    <IconComp
+                      className="six-cats-page__harvest-icon"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <div className="six-cats-page__harvest-body">
+                    <h3 className="six-cats-page__harvest-title">
+                      {phase.title}
+                    </h3>
+                    {phase.paragraphs.map(function (p, i) {
+                      return (
+                        <p
+                          key={phase.id + '-p-' + i}
+                          className="six-cats-page__harvest-text"
+                        >
+                          {p}
+                        </p>
+                      );
+                    })}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* ── Packaging ── */}
       <section
-        className="six-cats-page__packaging"
+        className="six-cats-page__packaging section-spacing px-horizontal-section"
         aria-label={a11y.packagingLabel}
       >
-        <h2 className="six-cats-page__section-heading">
-          <Layers className="six-cats-page__heading-icon" aria-hidden="true" />
-          Packaging &amp; Sustainability
-        </h2>
-        <div className="six-cats-page__packaging-grid">
-          {packaging.map(function (pkg) {
-            var PkgIcon = pkg.id === 'glass' ? RefreshCw : Leaf;
-            return (
-              <article key={pkg.id} className="six-cats-page__packaging-card">
-                <PkgIcon
-                  className="six-cats-page__packaging-icon"
-                  aria-hidden="true"
-                />
-                <h3 className="six-cats-page__packaging-title">{pkg.title}</h3>
-                {pkg.paragraphs.map(function (p, i) {
-                  return (
-                    <p
-                      key={pkg.id + '-p-' + i}
-                      className="six-cats-page__packaging-text"
-                    >
-                      {p}
-                    </p>
-                  );
-                })}
-              </article>
-            );
-          })}
+        <div className="section-container">
+          <h2 className="six-cats-page__section-heading">
+            <Layers className="six-cats-page__heading-icon" aria-hidden="true" />
+            Packaging &amp; Sustainability
+          </h2>
+          <div className="six-cats-page__packaging-grid">
+            {packaging.map(function (pkg) {
+              var PkgIcon = pkg.id === 'glass' ? RefreshCw : Leaf;
+              return (
+                <article key={pkg.id} className="six-cats-page__packaging-card">
+                  <PkgIcon
+                    className="six-cats-page__packaging-icon"
+                    aria-hidden="true"
+                  />
+                  <h3 className="six-cats-page__packaging-title">{pkg.title}</h3>
+                  {pkg.paragraphs.map(function (p, i) {
+                    return (
+                      <p
+                        key={pkg.id + '-p-' + i}
+                        className="six-cats-page__packaging-text"
+                      >
+                        {p}
+                      </p>
+                    );
+                  })}
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* ── Values ── */}
-      <section className="six-cats-page__values" aria-label={a11y.valuesLabel}>
-        <h2 className="six-cats-page__section-heading">
-          Our Values
-        </h2>
-        <div className="six-cats-page__values-grid" role="list">
-          {values.map(function (value) {
-            return (
-              <article
-                key={value.id}
-                className="six-cats-page__value-card"
-                role="listitem"
-              >
-                <h3 className="six-cats-page__value-title">{value.title}</h3>
-                <p className="six-cats-page__value-desc">{value.description}</p>
-              </article>
-            );
-          })}
+      <section className="six-cats-page__values section-spacing px-horizontal-section" aria-label={a11y.valuesLabel}>
+        <div className="section-container">
+          <h2 className="six-cats-page__section-heading">
+            Our Values
+          </h2>
+          <div className="six-cats-page__values-grid" role="list">
+            {values.map(function (value) {
+              return (
+                <article
+                  key={value.id}
+                  className="six-cats-page__value-card"
+                  role="listitem"
+                >
+                  <h3 className="six-cats-page__value-title">{value.title}</h3>
+                  <p className="six-cats-page__value-desc">{value.description}</p>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
     </main>

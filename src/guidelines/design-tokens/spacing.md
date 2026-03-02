@@ -1,10 +1,10 @@
 # Spacing Design Tokens
 
-**Version:** 5.1.0  
-**Last Updated:** January 2025  
+**Version:** 5.2.0  
+**Last Updated:** March 2026  
 **WordPress Theme.json Compatible:** ✅
 
-Complete spacing system for the Ash Shaw Makeup Portfolio, aligned with WordPress block theme standards using numeric spacing scale (10-100).
+Complete spacing system for the Ash Shaw Makeup Portfolio, aligned with WordPress block theme standards using numeric spacing scale (10-100) with extended ultra-wide breakpoint support.
 
 ## ✅ IMPLEMENTATION COMPLETE (v5.0.0)
 
@@ -61,6 +61,66 @@ All spacing uses **numeric slugs (10-100)** with increments of 10:
 --wp--preset--spacing--80: 5rem;       /* 80px */
 --wp--preset--spacing--90: 5.625rem;   /* 90px */
 --wp--preset--spacing--100: 6.25rem;   /* 100px */
+```
+
+### Responsive Breakpoints (v5.2.0)
+
+The project now supports **extended ultra-wide breakpoints** for 4-6 column layouts on large displays:
+
+| Breakpoint | Min Width | Use Case | Typical Columns |
+|------------|-----------|----------|--------------------|
+| Mobile Compact | >320px | Small phones | 1 column |
+| Mobile | >480px | Standard phones | 1-2 columns |
+| Small | >600px | Phablets | 2 columns |
+| Tablet Portrait | >768px | Tablets, small laptops | 2-3 columns |
+| Tablet Landscape | >1024px | Landscape tablets, laptops | 3 columns |
+| Wide | >1280px | Standard laptops | 3-4 columns |
+| Desktop | >1440px | Standard desktops | 3-4 columns |
+| **Desktop Wide** | **>1568px** | **Wide displays** | **4 columns** |
+| **Desktop Ultra-wide** | **>1768px** | **Ultra-wide monitors** | **4-5 columns** |
+| **Desktop XL** | **>1800px** | **Extra-large displays** | **5 columns optimized** |
+| **Full HD** | **>1920px** | **1920×1080+ displays** | **5-6 columns** |
+
+**Layout Width Variables:**
+```css
+--wp--preset--layout--content: 800px;        /* Reading width */
+--wp--preset--layout--wide: 1440px;          /* Standard desktop */
+--wp--preset--layout--desktop-wide: 1568px;  /* Wide desktop */
+--wp--preset--layout--ultra-wide: 1768px;    /* Ultra-wide */
+--wp--preset--layout--desktop-xl: 1800px;    /* Extra-large (NEW v5.2.1) */
+--wp--preset--layout--full-hd: 1920px;       /* Full HD */
+--wp--preset--layout--full: 100%;            /* Full viewport */
+```
+
+**Media Query Examples:**
+```css
+/* Standard Desktop (3-4 columns) */
+@media (min-width: 1440px) {
+  .grid-portfolio {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Desktop Wide (4 columns optimized) */
+@media (min-width: 1568px) {
+  .grid-portfolio {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Desktop Ultra-wide (5 columns) */
+@media (min-width: 1768px) {
+  .grid-portfolio {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Full HD (5-6 columns optimized) */
+@media (min-width: 1920px) {
+  .grid-portfolio {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
 ```
 
 ### Visual Spacing Scale
@@ -804,8 +864,8 @@ Always ensure interactive elements meet WCAG minimum touch target size:
 
 ---
 
-**Version:** 5.1.0 (WordPress Numeric Scale)  
-**Last Updated:** January 2025  
+**Version:** 5.2.0 (WordPress Numeric Scale)  
+**Last Updated:** March 2026  
 **Maintained By:** Ash Shaw Portfolio Team
 
 **Related Documentation:**
