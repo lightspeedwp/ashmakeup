@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+#### Memory Reduction — Data File Splitting (T18)
+
+- **eBook data split complete** (`/data/mock/pages/ebook-pages.ts` — 1,548 lines → 7 files):
+  - Created `/data/mock/pages/ebook/` subfolder structure
+  - `types.ts` — Shared BookPageType and BookPage interfaces
+  - `front-matter.ts` (~80 lines) — Cover, preface, dedication, TOC, foreword
+  - `part-1.ts` (~100 lines) — Part 1: Early foundations (chapters 1-4)
+  - `part-2.ts` (~210 lines) — Part 2: The festival years (chapters 5-9)
+  - `part-3.ts` (~470 lines) — Part 3: Nomadic life begins BC (chapters 10-14)
+  - `part-4.ts` (~580 lines) — Part 4: Re-emergence (chapters 15-20)
+  - `back-matter.ts` (~200 lines) — Afterword, appendices, about author
+  - Main `ebook-pages.ts` converted to barrel export (~40 lines)
+  - All 2 consumer imports unchanged (`EbookPage.tsx`, `EbookPageContent.tsx`)
+
 ---
 
 ## [8.1.0] - 2026-03-02

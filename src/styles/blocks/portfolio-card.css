@@ -1,6 +1,144 @@
 /* ==========================================================================
    Archive Page Card Variants (Category/Tag pages)
    ========================================================================== */
+
+/* ==========================================================================
+   Portfolio Card Base Styles
+   ========================================================================== */
+.portfolio-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--wp--preset--color--base);
+  border-radius: var(--wp--preset--border-radius--lg);
+  overflow: hidden;
+  box-shadow: var(--wp--preset--shadow--card);
+  border: 1px solid var(--wp--preset--color--neutral-200);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.dark .portfolio-card {
+  background-color: var(--wp--preset--color--neutral-900);
+  border-color: var(--wp--preset--color--neutral-800);
+}
+
+.portfolio-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--wp--preset--shadow--card-hover);
+}
+
+/* Image Container */
+.portfolio-card__image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: var(--wp--preset--color--neutral-200);
+}
+
+.dark .portfolio-card__image-container {
+  background-color: var(--wp--preset--color--neutral-800);
+}
+
+/* Video Overlay */
+.portfolio-card__video-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.4));
+  transition: background 0.3s ease;
+}
+
+.portfolio-card:hover .portfolio-card__video-overlay {
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.6));
+}
+
+.portfolio-card__play-button {
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(190, 0, 254, 0.9);
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(190, 0, 254, 0.4);
+  transition: all 0.3s ease;
+}
+
+.portfolio-card:hover .portfolio-card__play-button {
+  transform: scale(1.1);
+  background-color: var(--wp--preset--color--neon-purple);
+}
+
+.portfolio-card__play-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #fff;
+  margin-left: 0.25rem;
+}
+
+/* Category Tags */
+.portfolio-card__category-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 15;
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: var(--wp--preset--border-radius--full);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #fff;
+  backdrop-filter: blur(4px);
+  background-color: rgba(15, 15, 15, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.portfolio-card__category-tag:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+  box-shadow: var(--wp--preset--shadow--neon-sm);
+}
+
+/* Category tag variants */
+.portfolio-card__category-tag--festival {
+  background-color: rgba(255, 16, 240, 0.9);
+}
+
+.portfolio-card__category-tag--uv {
+  background-color: rgba(16, 254, 143, 0.9);
+}
+
+.portfolio-card__category-tag--swiss {
+  background-color: rgba(22, 163, 255, 0.9);
+}
+
+.portfolio-card__category-tag--nail {
+  background-color: rgba(254, 109, 0, 0.9);
+}
+
+.portfolio-card__category-tag--gold {
+  background-color: rgba(255, 224, 0, 0.9);
+  color: #0F0F0F;
+}
+
+.portfolio-card__category-tag--default {
+  background-color: rgba(190, 0, 254, 0.9);
+}
+
+/* ==========================================================================
+   Archive Page Card Variants (Category/Tag pages)
+   ========================================================================== */
 .portfolio-card-grid {
   display: grid;
   grid-template-columns: 1fr;

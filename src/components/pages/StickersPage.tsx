@@ -26,6 +26,7 @@ import { Breadcrumbs } from '../ui/Breadcrumbs';
 import { OptimizedImage } from '../ui/OptimizedImage';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import '../../styles/blocks/stickers-page.css';
+import '../../styles/blocks/sticker-lightbox.css';
 
 import { setSEO } from '../../utils/seo';
 import { pageSEO } from '../../data/mock/seo';

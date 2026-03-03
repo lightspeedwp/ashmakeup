@@ -133,6 +133,15 @@ export const devToolsPageUI = {
       badge: 'Reference',
     },
     {
+      id: 'phosphor-icons',
+      title: 'Phosphor icons',
+      description:
+        'Side-by-side comparison of every Lucide icon and its Phosphor equivalent. Preview all 6 weight variants with live WCAG accessibility badges.',
+      href: '/dev-tools/phosphor-icons',
+      icon: 'Sparkles',
+      badge: 'Migration',
+    },
+    {
       id: 'api',
       title: 'Component API',
       description:
@@ -281,6 +290,7 @@ export const devToolsPageUI = {
       tools: [
         'tokens',
         'icons',
+        'phosphor-icons',
         'api',
         'components',
         'docs',

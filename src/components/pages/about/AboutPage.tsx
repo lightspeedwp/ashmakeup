@@ -13,6 +13,8 @@ import React, { useEffect, useState, useCallback } from "react";
 import "../../../styles/globals.css";
 import "../../../styles/blocks/about-page.css";
 import "../../../styles/blocks/artistry-page.css";
+import "../../../styles/blocks/chapter-nav.css";
+import "../../../styles/blocks/split-layout.css";
 
 /* ── Layout / Section Components ── */
 import { HeroLayout } from "../../sections/HeroLayout";

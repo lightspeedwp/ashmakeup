@@ -32,7 +32,7 @@ export const pageSEO: Record<string, SEOData> = {
   about: {
     title: 'About Ash Shaw | Aquarian, ADHD creative & UV makeup artist',
     description:
-      'Meet Ash Shaw \u2014 an Aquarian ADHD creative based in Berlin, painting bold neon and UV face art at psytrance festivals worldwide since 2019. His story, his wiring, his evolution.',
+      'Meet Ash Shaw \u2014 an Aquarian ADHD creative based in Cape Town, South Africa, painting bold neon and UV face art at psytrance festivals worldwide since 2019. His story, his wiring, his evolution.',
   },
 
   artistry: {
@@ -72,9 +72,9 @@ export const pageSEO: Record<string, SEOData> = {
   },
 
   bio: {
-    title: 'Bio | Ash Shaw \u2014 neon & UV makeup artist',
+    title: 'Bio | Ash Shaw — neon & UV makeup artist',
     description:
-      'The full biography of Ash Shaw \u2014 South African-born, Berlin-based male makeup artist (he/him), Aquarius, ADHD creative, cyclist, and festival soul since 2019.',
+      'The full biography of Ash Shaw — South African-born, Cape Town-based male makeup artist (he/him), Aquarius, ADHD creative, cyclist, and festival soul since 2019.',
   },
 
   process: {
@@ -132,9 +132,9 @@ export const pageSEO: Record<string, SEOData> = {
   },
 
   lightspeed: {
-    title: 'LightSpeed | The day job \u2014 Ash Shaw',
+    title: 'LightSpeed | The day job — Ash Shaw',
     description:
-      'LightSpeedDevelopment \u2014 the WordPress agency Ash Shaw founded in 2003. 22+ years of web development, design systems, open-source community, and a team of 13 building exceptional websites.',
+      'LightSpeedDevelopment — the WordPress agency Ash Shaw founded in 2003. 23 years of web development, design systems, open-source community, and a team of 13 building exceptional websites.',
   },
 
   education: {
@@ -188,7 +188,7 @@ export const pageSEO: Record<string, SEOData> = {
   contact: {
     title: 'Contact Ash Shaw | Collaborate on festival & neon art',
     description:
-      'Get in touch with Ash Shaw for festival makeup collaborations, art projects, and creative partnerships. Based in Berlin, available internationally.',
+      'Get in touch with Ash Shaw for festival makeup collaborations, art projects, and creative partnerships. Based in Cape Town, South Africa, available internationally.',
   },
 
   faq: {
@@ -272,6 +272,12 @@ export const devToolsSEO: Record<string, SEOData> = {
     title: 'Icon library | Dev tools \u2014 Ash Shaw',
     description:
       'Search and preview every Lucide icon used in the Ash Shaw portfolio. Copy import statements and see usage context for each icon.',
+  },
+
+  phosphorIcons: {
+    title: 'Phosphor icons | Dev tools \u2014 Ash Shaw',
+    description:
+      'Side-by-side comparison of Lucide and Phosphor icons. Preview all 6 weight variants, check WCAG accessibility, and track migration progress.',
   },
 
   api: {

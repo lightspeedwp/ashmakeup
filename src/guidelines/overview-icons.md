@@ -2,29 +2,51 @@
 
 Complete guide to using icons in the Ash Shaw Makeup Portfolio project. **CRITICAL:** Always verify icons exist before using them!
 
-**Version:** 4.0.0  
-**Last Updated:** February 2026  
-**Last Reviewed:** February 21, 2026
+**Version:** 5.0.0  
+**Last Updated:** March 2026  
+**Last Reviewed:** March 3, 2026
 
 ---
 
 ## Icon Library
 
-### Lucide React
+### Lucide React (legacy — being replaced)
 
-The project uses **[Lucide React](https://lucide.dev/)** as the primary icon library, providing 1000+ high-quality, customizable icons.
+The project currently uses hand-rolled SVG wrappers based on **[Lucide React](https://lucide.dev/)** icon paths, located in `/lib/icons-set-*.tsx`. These are re-exported through `/lib/icons.ts`.
 
-**Key Features:**
-- 🎨 Consistent design language
-- 📦 Tree-shakeable (only imports used icons)
-- 🎯 24px default size, fully scalable
-- ♿ Accessibility-friendly
-- 🎨 Easily styled with CSS classes
+**Status:** Legacy. Being replaced by Phosphor Icons in a phased migration.
 
-**Installation:**
-```bash
-npm install lucide-react
+**Import pattern (existing components):**
+```tsx
+import { Search, Menu, ChevronDown } from '../../lib/icons';
 ```
+
+### Phosphor Icons (new — primary library)
+
+The project is migrating to **[Phosphor Icons](https://phosphoricons.com/)** (`@phosphor-icons/react`) as the primary icon library. Phosphor provides 1,200+ icons with **6 weight variants** per icon.
+
+**Key features:**
+- 6 weight variants: thin, light, regular, bold, fill, duotone
+- 1,200+ icons with consistent design language
+- `aria-hidden="true"` by default (correct for decorative icons)
+- `weight` prop for style variants (replaces Lucide's stroke-only approach)
+- `size` prop for dimensions (number or string)
+- Inherits `currentColor` for CSS-based colouring
+
+**Import pattern (new components):**
+```tsx
+import { MagnifyingGlass, CaretDown, Star } from '@phosphor-icons/react';
+
+<MagnifyingGlass size={24} weight="regular" />
+<CaretDown size={20} weight="bold" />
+<Star size={16} weight="fill" />
+```
+
+**Design tokens:** See [iconography.md](./design-tokens/iconography.md) for the complete weight system, size scale, colour tokens, and accessibility matrix.
+
+**Dev tool:** Visit [/dev-tools/phosphor-icons](/dev-tools/phosphor-icons) for a live side-by-side comparison of all Lucide → Phosphor icon mappings.
+
+**Migration status:** Phase 1 complete (parallel operation). Phase 2 (file-by-file replacement) tracked in [/tasks/phosphor-migration-tasks.md](../tasks/phosphor-migration-tasks.md).
 
 ---
 

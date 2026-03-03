@@ -13,7 +13,7 @@ export const podcastTags: PodcastTag[] = [
   { id: 'introduction', name: 'Introduction', slug: 'introduction', description: 'Introductory episodes and welcome content' },
   { id: 'psytrance', name: 'Psytrance', slug: 'psytrance', description: 'Psytrance culture and music' },
   { id: 'uv-makeup', name: 'UV Makeup', slug: 'uv-makeup', description: 'UV-reactive and blacklight makeup artistry' },
-  { id: 'berlin', name: 'Berlin', slug: 'berlin', description: 'Berlin-based stories and club culture' },
+  { id: 'berlin', name: 'Berlin', slug: 'berlin', description: 'Berlin club culture and seasonal adventures' },
 ];
 
 /**

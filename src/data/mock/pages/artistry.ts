@@ -251,7 +251,7 @@ export var artistryPageData: ArtistryPageData = {
     {
       id: 'artistry-faq-1',
       question: 'Where is Ash based?',
-      answer: 'Ash is based in Berlin, Germany. He uses the city as his home base between international festival trips across Europe, Southeast Asia, and beyond.',
+      answer: 'Ash is based in Cape Town, South Africa, where he owns a house in Woodstock. He travels annually to Berlin in May, then to Koh Phangan, Thailand (Sep-Nov) for Muay Thai training, triathlon, and remote work, before returning to South Africa for summer festival season. This yearly cycle fuels his creative energy and artistic inspiration.',
     },
     {
       id: 'artistry-faq-2',

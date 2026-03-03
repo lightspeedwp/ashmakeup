@@ -624,11 +624,11 @@ Pack smart, travel light, and see you on the road! 🚴‍♂️✨
     id: 'thailand-festival-experience',
     slug: 'makeup-artistry-thailand-festivals',
     title: 'Neon jungle: my Thailand festival season',
-    excerpt: 'Living in Thailand from August to November. Behind the scenes of creating vibrant UV looks in the tropical paradise of Koh Phangan.',
+    excerpt: 'Living in Thailand from September to November. Behind the scenes of creating vibrant UV looks in the tropical paradise of Koh Phangan.',
     content: `
 # Neon Jungle: My Thailand Festival Season
 
-Thailand. The Land of Smiles. And from August to November, my psychedelic playground.
+Thailand. The Land of Smiles. And from September to November, my psychedelic playground.
 
 While Berlin gives me the dark, industrial techno edge, Thailand is where I reconnect with color, nature, and flow. From the Full Moon Parties on Koh Phangan to the deep Jungle Experience, the energy here is pulsating.
 

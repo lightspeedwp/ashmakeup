@@ -10,7 +10,7 @@
  */
 
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { ArrowLeft, Calendar, MapPin, Eye, Tag, Share2, Star, MessageSquare } from '../../../lib/icons';
+import { ArrowLeft, Calendar, MapPin, Eye, Tag, Share2 } from '../../../lib/icons';
 
 import { EnhancedLightbox } from '../../ui/EnhancedLightbox';
 import { ShareComponent } from '../../ui/ShareComponent';
@@ -21,7 +21,7 @@ import { usePortfolioImageUrl } from '../../ui/PortfolioImage';
 import { OptimizedImage } from '../../ui/OptimizedImage';
 import { BlogPreviewSection } from '../../sections/BlogPreviewSection';
 import { FaqSection } from '../../sections/FaqSection';
-import { getFeedbackForPortfolioEntry } from '../../../data/mock/feedback';
+import { PortfolioFeedbackSection } from '../../sections/PortfolioFeedbackSection';
 
 import { 
   getPortfolioEntryById, 
@@ -44,6 +44,7 @@ import {
   buildPortfolioItemSchema,
 } from '../../../utils/schemaService';
 import "../../../styles/blocks/portfolio-detail-page.css";
+import "../../../styles/blocks/portfolio-feedback.css";
 
 import { portfolioDetailBreadcrumbs } from "../../../data/mock/ui/breadcrumbs";
 
@@ -62,7 +63,6 @@ export function PortfolioDetailPage({
   }, [portfolioId]);
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [isStoryExpanded] = useState(false);
 
   const lightboxInit: {
     isOpen: boolean;
@@ -474,80 +474,10 @@ export function PortfolioDetailPage({
       </main>
 
       {/* Dynamic Feedback from matching category/tags */}
-      {(function () {
-        const feedback = getFeedbackForPortfolioEntry(
-          portfolioEntry.category,
-          portfolioEntry.tags || []
-        );
-        if (feedback.length === 0) return null;
-        
-        const shown = feedback.slice(0, visibleFeedbackCount);
-        const hasMore = feedback.length > visibleFeedbackCount;
-
-        return (
-          <section className="portfolio-feedback-section">
-            <div className="container-7xl portfolio-feedback__container">
-              <h2 className="text-section-h2 portfolio-feedback__heading mb-fluid-lg">
-                {portfolioUI.detail.sections.feedback.heading}
-              </h2>
-              <div className="portfolio-feedback__grid">
-                {shown.map(function (fb) {
-                  return (
-                    <article key={fb.id} className={'portfolio-feedback__card' + (fb.featured ? ' portfolio-feedback__card--featured' : '')}>
-                      <MessageSquare className="portfolio-feedback__quote-icon" aria-hidden="true" />
-                      <blockquote className="portfolio-feedback__quote">
-                        {fb.quote}
-                      </blockquote>
-                      <div className="portfolio-feedback__rating" aria-label={fb.rating + ' out of 5 stars'}>
-                        {[0, 1, 2, 3, 4].map(function (i) {
-                          return (
-                            <Star
-                              key={i}
-                              className={'portfolio-feedback__star ' + (i < fb.rating ? 'portfolio-feedback__star--filled' : '')}
-                            />
-                          );
-                        })}
-                      </div>
-                      <div className="portfolio-feedback__author">
-                        <span className="portfolio-feedback__name">{fb.name}</span>
-                        <span className="portfolio-feedback__meta">
-                          {fb.location}
-                          {fb.event ? ' \u00B7 ' + fb.event : ''}
-                        </span>
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
-              
-              <div className="portfolio-feedback__actions">
-                {hasMore ? (
-                  <button
-                    type="button"
-                    onClick={function () { setVisibleFeedbackCount(function (prev) { return prev + 3; }); }}
-                    className="btn btn--neon-primary btn--outline inline-flex-center gap-fluid-sm"
-                  >
-                    Load More Feedback ({feedback.length - visibleFeedbackCount} remaining)
-                  </button>
-                ) : null}
-                
-                <a
-                  href="/feedback"
-                  onClick={function (e) {
-                    e.preventDefault();
-                    navigate('/feedback');
-                  }}
-                  className="btn btn--ghost-neon inline-flex-center gap-fluid-sm"
-                  aria-label="View all feedback"
-                >
-                  <MessageSquare className="icon-sm" />
-                  View all feedback
-                </a>
-              </div>
-            </div>
-          </section>
-        );
-      })()}
+      <PortfolioFeedbackSection 
+        category={portfolioEntry.category}
+        tags={portfolioEntry.tags || []}
+      />
 
       <BlogPreviewSection 
         limit={3}

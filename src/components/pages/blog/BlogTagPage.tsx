@@ -3,7 +3,7 @@
  * Displays blog posts filtered by tag
  *
  * @component BlogTagPage
- * @version 1.0.0
+ * @version 1.1.0 — Bundler-safe syntax (named functions, string concat, no destructuring)
  */
 
 import React, { useMemo, useEffect } from 'react';
@@ -29,41 +29,42 @@ import '../../../styles/blocks/blog-page.css';
 import '../../../styles/blocks/archive-filters.css';
 
 export function BlogTagPage() {
-  const { slug } = useParams();
-  const navigate = useNavigate();
+  var params = useParams();
+  var slug = params.slug;
+  var navigate = useNavigate();
 
-  const slugValue = slug || '';
-  const tag = findBlogTagBySlug(slugValue);
-  const tagName = tag ? tag.name : '';
-  const tagDesc = tag ? tag.description : '';
+  var slugValue = slug ? slug : '';
+  var tag = findBlogTagBySlug(slugValue);
+  var tagName = tag ? tag.name : '';
+  var tagDesc = tag ? tag.description : '';
 
-  useEffect(() => {
+  useEffect(function () {
     if (tag) {
       setSEO(blogTagSEO(tag.name));
       injectSchema(SCHEMA_IDS.collection, buildCollectionSchema(
-        `${tag.name} | Insights`,
+        tag.name + ' | Insights',
         blogTagSEO(tag.name).description,
-        `/blog/tag/${slug}`,
+        '/blog/tag/' + slug,
         filteredPosts.length,
       ));
     }
-    return () => {
+    return function () {
       removeSchema(SCHEMA_IDS.collection);
     };
   }, [tag, slug]);
 
-  const filteredPosts = useMemo(() => {
+  var filteredPosts = useMemo(function () {
     if (!slug) return [];
-    const resolvedTagName = tagName || slug.replace(/-/g, ' ');
+    var resolvedTagName = tagName ? tagName : slug.replace(/-/g, ' ');
     return blogPosts
-      .filter(post => {
-        const postTags = post.tags || [];
-        return postTags.some(t => t.toLowerCase() === resolvedTagName.toLowerCase());
+      .filter(function (post) {
+        var postTags = post.tags ? post.tags : [];
+        return postTags.some(function (t) { return t.toLowerCase() === resolvedTagName.toLowerCase(); });
       })
-      .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+      .sort(function (a, b) { return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(); });
   }, [slug, tag]);
 
-  const breadcrumbLabel = tagName || slugValue;
+  var breadcrumbLabel = tagName ? tagName : slugValue;
 
   return (
     <main id="main-content" role="main" tabIndex={-1} className="blog-list-view bg-atomic-noise">
@@ -72,7 +73,7 @@ export function BlogTagPage() {
           <Breadcrumbs items={blogTagBreadcrumbs(breadcrumbLabel)} centered />
           <div className="blog-list-header__content">
             <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-0">
-              Tag: {tagName || slug}
+              Tag: {tagName ? tagName : slug}
             </h1>
             {tagDesc ? (
               <p className="text-body-guideline mb-0">{tagDesc}</p>
@@ -88,45 +89,47 @@ export function BlogTagPage() {
         <div className="container-wide section-container">
           {filteredPosts.length > 0 ? (
             <div className="blog-preview__grid">
-              {filteredPosts.map(post => (
-                <article
-                  key={post.id}
-                  className="blog-card"
-                  onClick={() => navigate(`/blog/${post.slug}`)}
-                >
-                  <div className="blog-card__image-container">
-                    {post.featuredImage ? (
-                      <OptimizedImage
-                        src={post.featuredImage.src}
-                        alt={post.featuredImage.alt}
-                        className="blog-card__image"
-                        preset="thumbnail"
-                      />
-                    ) : (
-                      <div className="blog-card__placeholder">
-                        <BookOpen className="blog-card__placeholder-icon" />
-                      </div>
-                    )}
-                    <div className="blog-card__category">{post.category}</div>
-                  </div>
-                  <div className="blog-card__content">
-                    <h2 className="blog-card__title">{post.title}</h2>
-                    <p className="blog-card__excerpt">{post.excerpt}</p>
-                    <div className="blog-card__footer">
-                      <div className="blog-card__date">
-                        <Calendar className="icon-xs" />
-                        <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
-                      </div>
-                      {post.readTime && (
-                        <div className="blog-card__date">
-                          <Clock className="icon-xs" />
-                          <span>{post.readTime} min</span>
+              {filteredPosts.map(function (post) {
+                return (
+                  <article
+                    key={post.id}
+                    className="blog-card"
+                    onClick={function () { navigate('/blog/' + post.slug); }}
+                  >
+                    <div className="blog-card__image-container">
+                      {post.featuredImage ? (
+                        <OptimizedImage
+                          src={post.featuredImage.src}
+                          alt={post.featuredImage.alt}
+                          className="blog-card__image"
+                          preset="thumbnail"
+                        />
+                      ) : (
+                        <div className="blog-card__placeholder">
+                          <BookOpen className="blog-card__placeholder-icon" />
                         </div>
                       )}
+                      <div className="blog-card__category">{post.category}</div>
                     </div>
-                  </div>
-                </article>
-              ))}
+                    <div className="blog-card__content">
+                      <h2 className="blog-card__title">{post.title}</h2>
+                      <p className="blog-card__excerpt">{post.excerpt}</p>
+                      <div className="blog-card__footer">
+                        <div className="blog-card__date">
+                          <Calendar className="icon-xs" />
+                          <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+                        </div>
+                        {post.readTime ? (
+                          <div className="blog-card__date">
+                            <Clock className="icon-xs" />
+                            <span>{post.readTime} min</span>
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           ) : (
             <div className="error-card">

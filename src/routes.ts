@@ -86,6 +86,7 @@
  * /dev-tools/stickers            → StickersPage (via dev tools)
  * /dev-tools/accessibility       → AccessibilityTesterPage
  * /dev-tools/performance         → PerformanceTesterPage
+ * /dev-tools/phosphor-icons      → PhosphorIconsPage
  * *                              → NotFoundPage (404)
  * 
  * @author Ash Shaw Portfolio Team
@@ -173,6 +174,7 @@ import { VisualRegressionTesterPage } from './components/pages/dev-tools/VisualR
 import { IntegrationTesterPage } from './components/pages/dev-tools/IntegrationTesterPage';
 import { AccessibilityTesterPage } from './components/pages/dev-tools/AccessibilityTesterPage';
 import { PerformanceTesterPage } from './components/pages/dev-tools/PerformanceTesterPage';
+import { PhosphorIconsPage } from './components/pages/dev-tools/PhosphorIconsPage';
 
 export const router = createBrowserRouter([
   {
@@ -259,6 +261,7 @@ export const router = createBrowserRouter([
       { path: 'dev-tools/stickers', Component: StickersPage },
       { path: 'dev-tools/accessibility', Component: AccessibilityTesterPage },
       { path: 'dev-tools/performance', Component: PerformanceTesterPage },
+      { path: 'dev-tools/phosphor-icons', Component: PhosphorIconsPage },
       { path: '*', Component: NotFoundPage },
     ],
   },

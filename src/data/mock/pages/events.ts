@@ -12,7 +12,7 @@ import type { BreadcrumbItem } from '../../../components/ui/Breadcrumbs';
 export const eventsPageData = {
   hero: {
     badge: 'Events',
-    title: 'Where I\u2019ve Been',
+    title: 'Where I\'ve been',
     description:
       'Festivals, club nights, and creative gatherings where neon art comes alive \u2014 from the Western Cape mountains to Berlin\u2019s underground dancefloors.',
   },

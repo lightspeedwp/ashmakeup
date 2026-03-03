@@ -13,165 +13,241 @@ import { allPortfolioWork, portfolioSections } from '../data/mock/portfolio';
 
 /**
  * Hook for homepage content
- * Returns mock data from /data/mock/pages/home
+ * Returns mock data immediately with simulated loading state
  */
 export function useHomepageContent() {
-  return {
-    data: {
+  var initialData = null;
+  var [data, setData] = useState(initialData);
+  var [loading, setLoading] = useState(true);
+  var [error, setError] = useState(null);
+
+  useEffect(function() {
+    setLoading(true);
+    
+    // Simulate async delay
+    var timer = setTimeout(function() {
+      setData({
+        hero: homepageHero,
+        featuredPortfolio: allPortfolioWork.filter(function(item) {
+          return item.featured === true;
+        }).slice(0, 6),
+        recentBlogPosts: blogPosts.slice(0, 3)
+      });
+      setLoading(false);
+    }, 100);
+
+    return function() {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  function refresh() {
+    setLoading(true);
+    setData({
       hero: homepageHero,
-    },
-    loading: false,
-    isLoading: false,
-    error: null,
-    refresh: () => {}, // No-op refresh function
+      featuredPortfolio: allPortfolioWork.filter(function(item) {
+        return item.featured === true;
+      }).slice(0, 6),
+      recentBlogPosts: blogPosts.slice(0, 3)
+    });
+    setLoading(false);
+  }
+
+  return {
+    data: data,
+    loading: loading,
+    error: error,
+    refresh: refresh
   };
 }
 
 /**
  * Hook for about page content
- * Returns mock data from /data/mock/pages/about
+ * Returns mock data immediately with simulated loading state
  */
 export function useAboutPageContent() {
-  return {
-    data: {
-      hero: aboutHero,
-    },
-    loading: false,
-    isLoading: false,
-    error: null,
-    refresh: () => {},
-  };
-}
+  var initialData = null;
+  var [data, setData] = useState(initialData);
+  var [loading, setLoading] = useState(true);
+  var [error, setError] = useState(null);
 
-/**
- * Hook for portfolio sections
- * Returns mock data from /data/mock/portfolio
- */
-export function usePortfolioSections() {
-  return {
-    data: portfolioSections,
-    loading: false,
-    isLoading: false,
-    error: null,
-    refresh: () => {},
-  };
-}
+  useEffect(function() {
+    setLoading(true);
+    
+    // Simulate async delay
+    var timer = setTimeout(function() {
+      setData({
+        hero: aboutHero
+      });
+      setLoading(false);
+    }, 100);
 
-/**
- * Transform blog post to match expected format
- * Converts mock data structure to match component expectations
- */
-function transformBlogPost(post: any) {
-  return {
-    ...post,
-    // Add url field to featuredImage for compatibility
-    featuredImage: post.featuredImage ? {
-      ...post.featuredImage,
-      url: post.featuredImage.src,
-    } : undefined,
-  };
-}
+    return function() {
+      clearTimeout(timer);
+    };
+  }, []);
 
-/**
- * Hook for blog posts list
- * Returns mock data from /data/mock/blog with pagination
- */
-export function useBlogPosts(options?: {
-  category?: string;
-  tags?: string[];
-  page?: number;
-  limit?: number;
-  sortBy?: string;
-  sortOrder?: 'asc' | 'desc';
-  publishedOnly?: boolean;
-  autoRefresh?: boolean;
-  refreshInterval?: number;
-}) {
-  const page = options ? (options.page || 1) : 1;
-  const limit = options ? (options.limit || 10) : 10;
-  
-  // Filter posts by category if provided
-  let filteredPosts = [...blogPosts];
-  
-  const optCategory = options ? options.category : undefined;
-  if (optCategory) {
-    filteredPosts = filteredPosts.filter(post => {
-      const postCat = post.category ? post.category.toLowerCase() : '';
-      return postCat === optCategory.toLowerCase();
+  function refresh() {
+    setLoading(true);
+    setData({
+      hero: aboutHero
     });
+    setLoading(false);
   }
-  
-  // Filter by tags if provided
-  const optTags = options ? options.tags : undefined;
-  if (optTags && optTags.length > 0) {
-    filteredPosts = filteredPosts.filter(post => {
-      const postTags = post.tags ? post.tags : [];
-      return postTags.some(tag => optTags.includes(tag));
-    });
-  }
-  
-  // Calculate pagination
-  const totalPosts = filteredPosts.length;
-  const totalPages = Math.ceil(totalPosts / limit);
-  const startIndex = (page - 1) * limit;
-  const endIndex = startIndex + limit;
-  const paginatedPosts = filteredPosts.slice(startIndex, endIndex).map(transformBlogPost);
-  
+
   return {
-    data: {
-      posts: paginatedPosts,
-      pagination: {
-        currentPage: page,
-        totalPages: totalPages,
-        totalPosts: totalPosts,
-        hasNext: page < totalPages,
-        hasPrevious: page > 1,
-        perPage: limit,
-      },
-    },
-    loading: false,
-    isLoading: false,
-    error: null,
-    refresh: () => {},
+    data: data,
+    loading: loading,
+    error: error,
+    refresh: refresh
+  };
+}
+
+/**
+ * Hook for blog posts
+ * Returns paginated mock blog posts
+ */
+export function useBlogPosts(options) {
+  var initialData = null;
+  var [data, setData] = useState(initialData);
+  var [loading, setLoading] = useState(true);
+  var [error, setError] = useState(null);
+
+  useEffect(function() {
+    setLoading(true);
+    
+    var timer = setTimeout(function() {
+      var page = options && options.page ? options.page : 1;
+      var perPage = options && options.perPage ? options.perPage : 10;
+      var category = options && options.category ? options.category : null;
+      
+      var filteredPosts = blogPosts;
+      if (category) {
+        filteredPosts = blogPosts.filter(function(post) {
+          return post.category === category;
+        });
+      }
+      
+      var totalPosts = filteredPosts.length;
+      var totalPages = Math.ceil(totalPosts / perPage);
+      var startIndex = (page - 1) * perPage;
+      var endIndex = startIndex + perPage;
+      var paginatedPosts = filteredPosts.slice(startIndex, endIndex);
+      
+      setData({
+        posts: paginatedPosts,
+        pagination: {
+          currentPage: page,
+          totalPages: totalPages,
+          totalPosts: totalPosts,
+          hasNext: page < totalPages,
+          hasPrevious: page > 1,
+          perPage: perPage
+        }
+      });
+      setLoading(false);
+    }, 100);
+
+    return function() {
+      clearTimeout(timer);
+    };
+  }, [options]);
+
+  function refresh() {
+    setLoading(true);
+    // Trigger re-fetch by updating state
+    setLoading(false);
+  }
+
+  return {
+    data: data,
+    loading: loading,
+    error: error,
+    refresh: refresh
   };
 }
 
 /**
  * Hook for single blog post by slug
- * Returns mock data from /data/mock/blog
  */
-export function useBlogPost(slug: string) {
-  const postInit: any = null;
-  const [post, setPost] = useState(postInit);
-  const [isLoading, setIsLoading] = useState(true);
-  const errorInit: Error | null = null;
-  const [error, setError] = useState(errorInit);
+export function useBlogPost(slug) {
+  var initialData = null;
+  var [data, setData] = useState(initialData);
+  var [loading, setLoading] = useState(true);
+  var [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (!slug) {
-      setPost(null);
-      setIsLoading(false);
-      return;
-    }
+  useEffect(function() {
+    setLoading(true);
     
-    setIsLoading(true);
-    setError(null);
-    
-    try {
-      const foundPost = blogPosts.find(p => p.slug === slug);
-      setPost(foundPost ? transformBlogPost(foundPost) : null);
-    } catch (err) {
-      setError(err as Error);
-    } finally {
-      setIsLoading(false);
-    }
+    var timer = setTimeout(function() {
+      var post = blogPosts.find(function(p) {
+        return p.slug === slug;
+      });
+      
+      if (post) {
+        setData(post);
+        setError(null);
+      } else {
+        setData(null);
+        setError('Post not found');
+      }
+      setLoading(false);
+    }, 100);
+
+    return function() {
+      clearTimeout(timer);
+    };
   }, [slug]);
 
+  function refresh() {
+    setLoading(true);
+    var post = blogPosts.find(function(p) {
+      return p.slug === slug;
+    });
+    setData(post || null);
+    setLoading(false);
+  }
+
   return {
-    data: post,
-    loading: isLoading,
-    isLoading,
-    error,
-    refresh: () => {},
+    data: data,
+    loading: loading,
+    error: error,
+    refresh: refresh
+  };
+}
+
+/**
+ * Hook for portfolio sections
+ */
+export function usePortfolioSections() {
+  var initialData = null;
+  var [data, setData] = useState(initialData);
+  var [loading, setLoading] = useState(true);
+  var [error, setError] = useState(null);
+
+  useEffect(function() {
+    setLoading(true);
+    
+    var timer = setTimeout(function() {
+      setData(portfolioSections);
+      setLoading(false);
+    }, 100);
+
+    return function() {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  function refresh() {
+    setLoading(true);
+    setData(portfolioSections);
+    setLoading(false);
+  }
+
+  return {
+    data: data,
+    loading: loading,
+    error: error,
+    refresh: refresh
   };
 }

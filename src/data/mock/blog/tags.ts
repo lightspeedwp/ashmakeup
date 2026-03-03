@@ -21,7 +21,7 @@ export const blogTags: BlogTag[] = [
   { id: 'psytrance', name: 'Psytrance', slug: 'psytrance', description: 'Psytrance festival culture and events' },
   { id: 'neon', name: 'Neon', slug: 'neon', description: 'Neon colour techniques and inspiration' },
   { id: 'cycling', name: 'Cycling', slug: 'cycling', description: 'Adventure cycling and festival journeys' },
-  { id: 'berlin', name: 'Berlin', slug: 'berlin', description: 'Berlin-based art and culture' },
+  { id: 'berlin', name: 'Berlin', slug: 'berlin', description: 'Berlin creative scene and seasonal visits' },
   { id: 'festival', name: 'Festival', slug: 'festival', description: 'Festival culture, tips, and highlights' },
   { id: 'thailand', name: 'Thailand', slug: 'thailand', description: 'Thailand festival season and tropical adventures' },
   { id: 'blacklight', name: 'Blacklight', slug: 'blacklight', description: 'Blacklight and UV-reactive techniques' },

@@ -6,7 +6,7 @@
  * CMS for dynamic content while providing static fallbacks for development.
  * 
  * @author Ash Shaw Portfolio Team
- * @version 2.0.0 - Analytics hook integration
+ * @version 2.1.0 - Analytics hook integration + bundler-safe syntax
  */
 
 import React, { useEffect, useState } from 'react';
@@ -55,25 +55,36 @@ const AUTHOR_PROFILE = {
 };
 
 export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
-  const params = useParams();
-  const slug = slugProp || params.slug || '';
-  const setCurrentPage = useAppNavigate();
-  const navigate = useNavigate();
-  const { data: post, loading, error } = useBlogPost(slug);
-  const { scrollProgress: readingProgress } = useScrollPosition({ throttleMs: 50 });
-  const prefersReduced = useReducedMotion();
-  const [likes, setLikes] = useState(0);
-  const [isLiked, setIsLiked] = useState(false);
-  const [views, setViews] = useState(0);
+  var params = useParams();
+  var slug = slugProp ? slugProp : (params.slug ? params.slug : '');
+  var setCurrentPage = useAppNavigate();
+  var navigate = useNavigate();
+  var blogPostResult = useBlogPost(slug);
+  var post = blogPostResult.data;
+  var loading = blogPostResult.loading;
+  var error = blogPostResult.error;
+  var scrollResult = useScrollPosition({ throttleMs: 50 });
+  var readingProgress = scrollResult.scrollProgress;
+  var prefersReduced = useReducedMotion();
+  var likesState = useState(0);
+  var likes = likesState[0];
+  var setLikes = likesState[1];
+  var isLikedState = useState(false);
+  var isLiked = isLikedState[0];
+  var setIsLiked = isLikedState[1];
+  var viewsState = useState(0);
+  var views = viewsState[0];
+  var setViews = viewsState[1];
 
   /* Analytics: reading time estimation + history tracking */
-  const postTitle = post ? post.title : undefined;
-  const postContent = post ? post.content : undefined;
-  const { readingTime: estimatedReadTime } = useAnalytics('blog', slug, {
+  var postTitle = post ? post.title : undefined;
+  var postContent = post ? post.content : undefined;
+  var analyticsResult = useAnalytics('blog', slug, {
     title: postTitle,
     content: postContent,
     skip: !post,
   });
+  var estimatedReadTime = analyticsResult.readingTime;
 
   useEffect(function () {
     if (post) {

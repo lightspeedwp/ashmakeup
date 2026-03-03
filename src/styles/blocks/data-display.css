@@ -34,82 +34,7 @@
   color: var(--wp--preset--color--neutral-400);
 }
 
-/* --- BADGE --- */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  border-radius: var(--wp--preset--border-radius--full);
-  border: 1px solid transparent;
-  padding: 0.125rem 0.625rem;
-  font-size: 0.75rem; /* text-xs */
-  font-weight: 600;
-  transition: all 0.2s ease-in-out;
-}
-
-.badge:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--wp--preset--color--neon-purple);
-  box-shadow-offset: 2px;
-}
-
-.badge--default {
-  border-color: transparent;
-  background-color: var(--wp--preset--color--contrast);
-  color: var(--wp--preset--color--base);
-}
-
-.badge--default:hover {
-  background-color: var(--wp--preset--color--neutral-800);
-}
-
-.dark .badge--default {
-  background-color: var(--wp--preset--color--base);
-  color: var(--wp--preset--color--contrast);
-}
-
-.dark .badge--default:hover {
-  background-color: var(--wp--preset--color--neutral-200);
-}
-
-.badge--secondary {
-  border-color: transparent;
-  background-color: var(--wp--preset--color--neutral-100);
-  color: var(--wp--preset--color--contrast);
-}
-
-.badge--secondary:hover {
-  background-color: var(--wp--preset--color--neutral-200);
-}
-
-.dark .badge--secondary {
-  background-color: var(--wp--preset--color--neutral-800);
-  color: #fff;
-}
-
-.dark .badge--secondary:hover {
-  background-color: var(--wp--preset--color--neutral-700);
-}
-
-.badge--destructive {
-  border-color: transparent;
-  background-color: var(--wp--preset--color--neon-red);
-  color: #fff;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-}
-
-.badge--destructive:hover {
-  opacity: 0.9;
-}
-
-.badge--outline {
-  color: var(--wp--preset--color--contrast);
-  border-color: var(--wp--preset--color--neutral-200);
-}
-
-.dark .badge--outline {
-  color: #fff;
-  border-color: var(--wp--preset--color--neutral-800);
-}
+/* --- BADGE --- Canonical source: /styles/blocks/badge.css */
 
 /* --- CARD --- */
 .card {
@@ -179,18 +104,7 @@
   width: 1px;
 }
 
-/* --- SKELETON --- */
-.skeleton {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  background-color: var(--wp--preset--color--neutral-200);
-  border-radius: var(--wp--preset--border-radius--md);
-}
-
-.dark .skeleton {
-  background-color: var(--wp--preset--color--neutral-800);
-}
-
-/* Animation moved to /styles/animations.css */
+/* --- SKELETON --- Canonical source: /styles/blocks/skeleton.css */
 
 /* --- TABS --- */
 .tabs-root {

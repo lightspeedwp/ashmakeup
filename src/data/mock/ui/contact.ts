@@ -10,7 +10,7 @@ export const contactUI = {
   },
   about: {
     title: "Global Collabs & Connections",
-    description: "I'm a nomad of the psytrance scene. Based in Berlin, chasing festivals internationally. Open to creative collaborations and spontaneous projects worldwide.",
+    description: "I'm a nomad of the psytrance scene. Based in Cape Town, South Africa, I travel annually to Berlin (May), Koh Phangan, Thailand (Sep-Nov for training), and festivals worldwide. Open to creative collaborations and spontaneous projects across all continents.",
     quote: "Let's paint the world neon."
   },
   connect: {

@@ -39,7 +39,7 @@ export const journeySection: AboutSection = {
     },
     {
       type: 'paragraph',
-      text: 'My life is a continuous loop of summer and sound. Based in Cape Town, I migrate to Berlin (May-Aug) for the techno season, then to Thailand (Aug-Nov) for the island psytrance circuit. I am a nomad of the scene.'
+      text: 'My life is a continuous loop of summer and sound. Based in Cape Town, South Africa, I travel annually to Berlin each May for the techno season, return to swap bicycles in August-September, then relocate to Koh Phangan, Thailand (Sep-Nov) for Muay Thai training, triathlon, remote work, and the island psytrance circuit before returning to Cape Town in November for South African summer. I am a nomad of the scene.'
     }
   ],
   image: {
@@ -169,7 +169,7 @@ export const aboutPageText = {
     "My process is intuitive and electric. I see the potential for neon on your skin, how it will look when the lasers hit. It's fast, intense, and deeply connected to the psychedelic experience."
   ],
   berlin: [
-    "My year is a global chase of summer and sound. From May to August, I base myself in Berlin, diving deep into the techno capital's club culture.",
+    "My year is a global chase of summer and sound. Each May, I travel to Berlin for the techno season, diving deep into the capital's club culture before returning to South Africa in August-September.",
     "The darkness of Berlin's clubs is the perfect canvas for my UV work. I create sharper, edgier looks that cut through the strobe lights and industrial atmosphere."
   ],
   uv: [

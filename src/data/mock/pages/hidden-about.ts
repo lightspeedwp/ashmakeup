@@ -49,7 +49,7 @@ export const hiddenAboutData: HiddenAboutData = {
     title: 'The whole story',
     subtitle: 'Everything you didn\u2019t know you needed to know about Ash Shaw.',
     description:
-      'South African-born, Berlin-based. He/him. Aquarius. ADHD. Cyclist. Festival soul. Neon and UV makeup artist since July 2019. This is the hidden map to every corner of his world.',
+      'South African-born, Cape Town-based. He/him. Aquarius. ADHD. Cyclist. Festival soul. Neon and UV makeup artist since July 2019. This is the hidden map to every corner of his world.',
   },
 
   story: {

@@ -409,6 +409,41 @@ small, .text-body-small-p { font-size: var(--wp--preset--font-size--100); }
 .icon-xl { width: 3rem; height: 3rem; }
 .icon-2xl { width: 4rem; height: 4rem; }
 
+/* Icon Design Tokens (Phosphor Icons) */
+:root {
+  --icon-size-xs: 0.75rem;
+  --icon-size-sm: 1rem;
+  --icon-size-md: 1.25rem;
+  --icon-size-base: 1.5rem;
+  --icon-size-lg: 2rem;
+  --icon-size-xl: 3rem;
+  --icon-color-default: var(--wp--preset--color--neutral-700);
+  --icon-color-muted: var(--wp--preset--color--neutral-500);
+  --icon-color-accent: var(--wp--preset--color--neon-pink-text);
+  --icon-color-interactive: var(--wp--preset--color--neon-blue-text);
+  --icon-color-success: var(--wp--preset--color--neon-green-text);
+  --icon-color-error: var(--wp--preset--color--neon-red-text);
+  --icon-color-warning: var(--wp--preset--color--neon-orange-text);
+  --icon-color-disabled: var(--wp--preset--color--neutral-400);
+  --icon-transition: 200ms ease;
+  --icon-hover-scale: 1.1;
+  --icon-duotone-opacity: 0.2;
+  --icon-btn-gap: 0.5rem;
+  --icon-nav-gap: 0.375rem;
+  --icon-inline-gap: 0.25rem;
+}
+
+.dark {
+  --icon-color-default: var(--wp--preset--color--neutral-200);
+  --icon-color-muted: var(--wp--preset--color--neutral-400);
+  --icon-color-accent: var(--wp--preset--color--neon-pink);
+  --icon-color-interactive: var(--wp--preset--color--neon-blue);
+  --icon-color-success: var(--wp--preset--color--neon-green);
+  --icon-color-error: var(--wp--preset--color--neon-red);
+  --icon-color-warning: var(--wp--preset--color--neon-orange);
+  --icon-color-disabled: var(--wp--preset--color--neutral-600);
+}
+
 /* Spacing Helpers */
 .px-horizontal-section { padding-left: var(--wp--preset--spacing--section-horizontal); padding-right: var(--wp--preset--spacing--section-horizontal); }
 .py-section { padding-top: var(--wp--preset--spacing--section-vertical); padding-bottom: var(--wp--preset--spacing--section-vertical); }

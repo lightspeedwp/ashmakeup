@@ -4,8 +4,8 @@
       "version": "0.1.0",
       "private": true,
       "dependencies": {
+          "@phosphor-icons/react": "*",
           "@vitejs/plugin-react": "*",
-          "clsx": "*",
           "fs": "*",
           "glob": "*",
           "lucide-react": "*",

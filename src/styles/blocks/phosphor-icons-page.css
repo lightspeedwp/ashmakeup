@@ -1,0 +1,493 @@
+/* ==========================================================================
+   Phosphor Icons Dev Tools Page
+   Migration comparison tool with weight/size/background controls
+   ========================================================================== */
+
+/* ── Stats bar ── */
+.ph-page__stats {
+  display: flex;
+  gap: var(--wp--preset--spacing--fluid-sm);
+  flex-wrap: wrap;
+  padding: var(--wp--preset--spacing--fluid-sm) var(--wp--preset--spacing--section-horizontal);
+  max-width: var(--wp--preset--layout--wide);
+  margin: 0 auto;
+}
+
+.ph-page__stat {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  background: var(--wp--preset--color--base);
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--md);
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  color: var(--foreground);
+}
+
+.dark .ph-page__stat {
+  background: rgba(20, 20, 20, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--wp--preset--color--neutral-200);
+}
+
+.ph-page__stat-value {
+  font-weight: 700;
+}
+
+.ph-page__stat-value--total {
+  color: var(--wp--preset--color--neon-purple-text);
+}
+
+.ph-page__stat-value--same {
+  color: var(--wp--preset--color--neon-green-text);
+}
+
+.ph-page__stat-value--renamed {
+  color: var(--wp--preset--color--neon-orange-text);
+}
+
+.ph-page__stat-value--migrated {
+  color: var(--wp--preset--color--neon-cyan-text);
+}
+
+.dark .ph-page__stat-value--total { color: var(--wp--preset--color--neon-purple); }
+.dark .ph-page__stat-value--same { color: var(--wp--preset--color--neon-green); }
+.dark .ph-page__stat-value--renamed { color: var(--wp--preset--color--neon-orange); }
+.dark .ph-page__stat-value--migrated { color: var(--wp--preset--color--neon-cyan); }
+
+/* ── Controls bar ── */
+.ph-page__controls {
+  display: flex;
+  gap: var(--wp--preset--spacing--fluid-sm);
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 var(--wp--preset--spacing--section-horizontal);
+  max-width: var(--wp--preset--layout--wide);
+  margin: 0 auto var(--wp--preset--spacing--fluid-sm);
+}
+
+.ph-page__search {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.625rem 1rem;
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--200);
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--md);
+  background: var(--wp--preset--color--base);
+  color: var(--foreground);
+  transition: border-color 0.2s ease;
+}
+
+.dark .ph-page__search {
+  background: rgba(20, 20, 20, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.ph-page__search:focus {
+  outline: none;
+  border-color: var(--wp--preset--color--neon-pink);
+  box-shadow: 0 0 0 3px rgba(255, 16, 240, 0.15);
+}
+
+.ph-page__search::placeholder {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+/* ── Toggle groups (shared for weight, size, category) ── */
+.ph-page__toggle-group {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+
+.ph-page__toggle-group-label {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--wp--preset--color--neutral-500);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.dark .ph-page__toggle-group-label {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.ph-page__toggle-btn {
+  padding: 0.3125rem 0.625rem;
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--sm);
+  background: transparent;
+  color: var(--wp--preset--color--neutral-600);
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.dark .ph-page__toggle-btn {
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.ph-page__toggle-btn--active {
+  background: var(--wp--preset--color--neon-purple-text);
+  color: #fff;
+  border-color: var(--wp--preset--color--neon-purple-text);
+}
+
+.dark .ph-page__toggle-btn--active {
+  background: var(--wp--preset--color--neon-purple);
+  color: var(--wp--preset--color--atomic-black);
+  border-color: var(--wp--preset--color--neon-purple);
+}
+
+.ph-page__toggle-btn:focus-visible {
+  outline: 2px solid var(--wp--preset--color--neon-pink);
+  outline-offset: 1px;
+}
+
+/* ── Weight info banner ── */
+.ph-page__weight-info {
+  padding: 0.5rem 1rem;
+  background: rgba(190, 0, 254, 0.06);
+  border: 1px solid rgba(190, 0, 254, 0.15);
+  border-radius: var(--wp--preset--border-radius--md);
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  color: var(--wp--preset--color--neutral-600);
+  max-width: var(--wp--preset--layout--wide);
+  margin: 0 auto var(--wp--preset--spacing--fluid-sm);
+  padding-left: var(--wp--preset--spacing--section-horizontal);
+  padding-right: var(--wp--preset--spacing--section-horizontal);
+}
+
+.dark .ph-page__weight-info {
+  background: rgba(190, 0, 254, 0.08);
+  border-color: rgba(190, 0, 254, 0.2);
+  color: var(--wp--preset--color--neutral-300);
+}
+
+.ph-page__weight-info-tag {
+  display: inline-block;
+  padding: 0.125rem 0.375rem;
+  border-radius: var(--wp--preset--border-radius--sm);
+  font-weight: 700;
+  font-size: 0.6875rem;
+  margin-right: 0.375rem;
+}
+
+.ph-page__weight-info-tag--safe {
+  background: rgba(57, 255, 20, 0.12);
+  color: var(--wp--preset--color--neon-green-text);
+}
+
+.ph-page__weight-info-tag--caution {
+  background: rgba(255, 95, 31, 0.12);
+  color: var(--wp--preset--color--neon-orange-text);
+}
+
+.ph-page__weight-info-tag--decorative-only {
+  background: rgba(255, 49, 49, 0.12);
+  color: var(--wp--preset--color--neon-red-text);
+}
+
+.dark .ph-page__weight-info-tag--safe { color: var(--wp--preset--color--neon-green); }
+.dark .ph-page__weight-info-tag--caution { color: var(--wp--preset--color--neon-orange); }
+.dark .ph-page__weight-info-tag--decorative-only { color: var(--wp--preset--color--neon-red); }
+
+/* ── Result count ── */
+.ph-page__count {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  color: var(--wp--preset--color--neutral-500);
+  padding: 0 var(--wp--preset--spacing--section-horizontal);
+  max-width: var(--wp--preset--layout--wide);
+  margin: 0 auto var(--wp--preset--spacing--fluid-xs);
+}
+
+.dark .ph-page__count {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.ph-page__count-num {
+  color: var(--wp--preset--color--neon-purple-text);
+  font-weight: 600;
+}
+
+.dark .ph-page__count-num {
+  color: var(--wp--preset--color--neon-purple);
+}
+
+/* ── Icon grid ── */
+.ph-page__grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: var(--wp--preset--spacing--fluid-xs);
+  padding: 0 var(--wp--preset--spacing--section-horizontal);
+  max-width: var(--wp--preset--layout--wide);
+  margin: 0 auto var(--wp--preset--spacing--fluid-lg);
+}
+
+@media (min-width: 480px) {
+  .ph-page__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 768px) {
+  .ph-page__grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .ph-page__grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 1280px) {
+  .ph-page__grid { grid-template-columns: repeat(5, 1fr); }
+}
+
+/* ── Icon card ── */
+.ph-page__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: var(--wp--preset--spacing--fluid-sm);
+  background: var(--wp--preset--color--base);
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--md);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dark .ph-page__card {
+  background: rgba(20, 20, 20, 0.5);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.ph-page__card:hover {
+  border-color: rgba(190, 0, 254, 0.3);
+}
+
+.dark .ph-page__card:hover {
+  border-color: rgba(190, 0, 254, 0.5);
+  box-shadow: 0 0 12px rgba(190, 0, 254, 0.1);
+}
+
+/* ── Icon preview area ── */
+.ph-page__card-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--wp--preset--spacing--fluid-sm);
+  width: 100%;
+  min-height: 3.5rem;
+}
+
+.ph-page__card-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.ph-page__card-icon-wrap--phosphor {
+  color: var(--wp--preset--color--neon-purple-text);
+}
+
+.dark .ph-page__card-icon-wrap--phosphor {
+  color: var(--wp--preset--color--neon-purple);
+}
+
+.ph-page__card-icon-wrap--lucide {
+  color: var(--wp--preset--color--neutral-400);
+  opacity: 0.6;
+}
+
+.dark .ph-page__card-icon-wrap--lucide {
+  color: var(--wp--preset--color--neutral-500);
+}
+
+.ph-page__card-icon-label {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.6;
+}
+
+.ph-page__card-vs {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: 0.625rem;
+  color: var(--wp--preset--color--neutral-400);
+  font-weight: 600;
+}
+
+/* ── Card names ── */
+.ph-page__card-names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
+  width: 100%;
+}
+
+.ph-page__card-phosphor-name {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: var(--wp--preset--font-size--100);
+  font-weight: 700;
+  color: var(--foreground);
+  text-align: center;
+  word-break: break-word;
+}
+
+.dark .ph-page__card-phosphor-name {
+  color: #fff;
+}
+
+.ph-page__card-lucide-name {
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: 0.6875rem;
+  color: var(--wp--preset--color--neutral-500);
+  text-align: center;
+}
+
+.dark .ph-page__card-lucide-name {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+/* ── Status badge ── */
+.ph-page__card-badge {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ph-page__card-badge--same {
+  background: rgba(57, 255, 20, 0.1);
+  color: var(--wp--preset--color--neon-green-text);
+}
+
+.ph-page__card-badge--renamed {
+  background: rgba(255, 95, 31, 0.1);
+  color: var(--wp--preset--color--neon-orange-text);
+}
+
+.ph-page__card-badge--missing {
+  background: rgba(255, 49, 49, 0.1);
+  color: var(--wp--preset--color--neon-red-text);
+}
+
+.dark .ph-page__card-badge--same { color: var(--wp--preset--color--neon-green); background: rgba(57, 255, 20, 0.08); }
+.dark .ph-page__card-badge--renamed { color: var(--wp--preset--color--neon-orange); background: rgba(255, 95, 31, 0.08); }
+.dark .ph-page__card-badge--missing { color: var(--wp--preset--color--neon-red); background: rgba(255, 49, 49, 0.08); }
+
+/* ── Copy button ── */
+.ph-page__copy-btn {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--wp--preset--border-radius--sm);
+  background: transparent;
+  color: var(--wp--preset--color--neutral-500);
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: 0.625rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.dark .ph-page__copy-btn {
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.ph-page__copy-btn:hover {
+  border-color: var(--wp--preset--color--neon-green-text);
+  color: var(--wp--preset--color--neon-green-text);
+}
+
+.dark .ph-page__copy-btn:hover {
+  border-color: var(--wp--preset--color--neon-green);
+  color: var(--wp--preset--color--neon-green);
+}
+
+.ph-page__copy-btn:focus-visible {
+  outline: 2px solid var(--wp--preset--color--neon-pink);
+  outline-offset: 1px;
+}
+
+/* ── Empty state ── */
+.ph-page__empty {
+  text-align: center;
+  padding: var(--wp--preset--spacing--fluid-xl) var(--wp--preset--spacing--section-horizontal);
+  color: var(--wp--preset--color--neutral-500);
+}
+
+.dark .ph-page__empty {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+/* ── Second controls row (wrap for smaller screens) ── */
+.ph-page__controls-row {
+  display: flex;
+  gap: var(--wp--preset--spacing--fluid-sm);
+  align-items: flex-end;
+  flex-wrap: wrap;
+  padding: 0 var(--wp--preset--spacing--section-horizontal);
+  max-width: var(--wp--preset--layout--wide);
+  margin: 0 auto var(--wp--preset--spacing--fluid-sm);
+}
+
+.ph-page__control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* ── Dark preview toggle area ── */
+.ph-page__card--dark-preview {
+  background: var(--wp--preset--color--atomic-black);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.ph-page__card--dark-preview .ph-page__card-phosphor-name {
+  color: #fff;
+}
+
+.ph-page__card--dark-preview .ph-page__card-lucide-name {
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.ph-page__card--dark-preview .ph-page__card-icon-wrap--phosphor {
+  color: var(--wp--preset--color--neon-purple);
+}
+
+.ph-page__card--dark-preview .ph-page__card-icon-wrap--lucide {
+  color: var(--wp--preset--color--neutral-500);
+}
+
+/* ══════════════════════════════════════
+   REDUCED MOTION
+   ══════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .ph-page__card,
+  .ph-page__search,
+  .ph-page__toggle-btn,
+  .ph-page__copy-btn {
+    transition: none;
+  }
+}

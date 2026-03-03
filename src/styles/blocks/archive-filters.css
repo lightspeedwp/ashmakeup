@@ -198,6 +198,7 @@
   align-items: center;
   gap: 4px;
   padding: 6px 12px;
+  min-height: 2.75rem; /* 44px WCAG touch target minimum */
   border: 1px solid var(--wp--preset--color--neon-pink);
   border-radius: var(--wp--preset--border-radius--full);
   background: transparent;

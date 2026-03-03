@@ -126,7 +126,8 @@ This website is strictly a **personal art portfolio**.
 
 **✅ PERSONAL IDENTITY & CONTENT SCOPE**
 - **Pronouns:** Strict **He/Him** usage. Ash is male. (e.g., "guy with the bike", "he created").
-- **Locations:** Focus strictly on **Berlin** and **International Festivals**.
+- **Locations:** Focus strictly on **Cape Town (home base in Woodstock, South Africa)**, **Berlin (May seasonal visits)**, **Thailand (Koh Phangan training base, Sep-Nov)**, and **International Festivals**.
+- **Yearly Cycle:** Ash follows an annual creative cycle: based in Cape Town, travels to Berlin each May for techno season, returns to South Africa in August-September (bicycle swap), relocates to Koh Phangan, Thailand (Sep-Nov) for Muay Thai training, triathlon, and remote work, then returns to Cape Town in November for South African summer festival season. This cycle fuels his creative inspiration and energy.
 - **Excluded Content:** NO weddings, NO corporate events, NO bridal makeup.
 
 **Migration Impact:**

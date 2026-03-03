@@ -4,7 +4,7 @@
  *
  * Content reflects personal art project identity:
  * - He/him pronouns for Ash
- * - Berlin-based, international festivals
+ * - Cape Town-based, seasonal Berlin visits, international festivals
  * - Non-commercial, personal art project
  *
  * @module data/mock/sections/faq
@@ -56,7 +56,7 @@ export const faqData: FaqItem[] = [
   {
     id: 'location',
     question: "Where can you find Ash?",
-    answer: "He follows the sun and the sound. He's based in Berlin for the techno season and travels internationally for psytrance festivals. Check his social media to see where he is right now!"
+    answer: "He follows the sun and the sound. He's based in Cape Town, South Africa, and travels annually to Berlin (May), Thailand (Sep-Nov for Muay Thai and triathlon training), and international festivals across Europe and Asia. Check his social media to see where he is right now!"
   }
 ];
 
@@ -78,7 +78,7 @@ export const pageFaqGroups: FaqGroup[] = [
       {
         id: 'home-who',
         question: "Who is Ash Shaw?",
-        answer: "Ash is a Berlin-based makeup artist who specialises in UV-reactive and neon face art for psytrance festivals and club events. He travels internationally to bring colour and energy to dancefloors around the world."
+        answer: "Ash is a Cape Town-based makeup artist who specialises in UV-reactive and neon face art for psytrance festivals and club events. He travels internationally to Berlin (seasonal May visits), Thailand (Sep-Nov), and festivals worldwide, bringing colour and energy to dancefloors across the globe."
       },
       {
         id: 'home-contact',
@@ -95,7 +95,7 @@ export const pageFaqGroups: FaqGroup[] = [
       {
         id: 'about-based',
         question: "Where is Ash based?",
-        answer: "Ash is based in Berlin, Germany. He uses the city as his home base between international festival trips across Europe, Southeast Asia, and beyond."
+        answer: "Ash is based in Cape Town, South Africa, where he owns a house in Woodstock. He travels annually to Berlin in May, then to Koh Phangan, Thailand (Sep-Nov) for training and remote work, before returning to South Africa for summer festival season. This yearly cycle fuels his creative energy and artistic inspiration."
       },
       {
         id: 'about-festivals',
