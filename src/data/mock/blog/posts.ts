@@ -24,39 +24,22 @@ export const blogPosts: BlogPost[] = [
     slug: 'origin-festival-2026-cycle-adventure',
     title: 'Origin festival 2026: a psytrance cycle odyssey',
     excerpt: 'A 300km birthday cycle journey to the heart of the psytrance floor. Sunsets, mountain passes, and a weekend of neon connection.',
-    content: `
-# Origin Festival 2026: A Psytrance Cycle Odyssey
-
-For me, the pilgrimage to a psytrance festival is as important as the event itself. This year, for my birthday, I decided to cycle 300km from my home in Woodstock, Cape Town, to Origin Festival and back.
-
-It wasn't just a ride; it was a meditation. A way to cleanse the mind before entering the psychedelic playground.
-
-![Beautiful sunset over Elgin](${sunsetView})
-
-I watched a beautiful sunset over Elgin, feeling the anticipation building. The energy of the coming gathering was palpable even from kilometers away.
-
-## The Journey Begins
-
-Today's ride to Grabouw via Sir Lowry's pass was 80km of pure adrenaline. I crushed that pass and felt on top of the world. Tomorrow, I celebrate my birthday in style, cycling the final 75km to Origin Festival in Helderstroom. Can't wait for a weekend of stomping, UV vibes, and reuniting with my trance family.
-
-![Conquering Houwhoek Pass](${houwhoekPass})
-
-## Festival Magic
-
-I arrived at the party around 11:30 AM on Friday morning, buzzing with endorphins. I skipped the queue, shouted that it was my birthday, and the welcome was overwhelming!
-
-Origin Festival is a staple of the Cape Town psytrance calendar. Thanks to Monique and Reagan for curating such an incredible space—the psychedelic decor, the thumping basslines, and the beautiful souls on the dancefloor were perfection.
-
-I spent the weekend doing what I love most: painting faces in the shade during the day and watching them glow under the UV cannons at night. To my friends, thanks for making me feel so loved. It was a truly magnificent experience.
-
-## The Return Journey
-
-I cycled back to the farm in Elgin on Monday to decompress, and then finally all the way back to Cape Town on Tuesday.
-
-Just conquered the road back to Cape Town after an unforgettable birthday ride. Completed just short of 300km with a 40kg bike pack, 3200m climbing, 14hrs of pure adrenaline and top speed of over 75km/hr.
-
-Time to dive back into work focus and training for the next adventure. The beat goes on! One love & peace out 💚❤️🌈
-    `,
+    content: '# Origin Festival 2026: A Psytrance Cycle Odyssey\n\n' +
+      'For me, the pilgrimage to a psytrance festival is as important as the event itself. This year, for my birthday, I decided to cycle 300km from my home in Woodstock, Cape Town, to Origin Festival and back.\n\n' +
+      'It wasn\'t just a ride; it was a meditation. A way to cleanse the mind before entering the psychedelic playground.\n\n' +
+      '![Beautiful sunset over Elgin](' + sunsetView + ')\n\n' +
+      'I watched a beautiful sunset over Elgin, feeling the anticipation building. The energy of the coming gathering was palpable even from kilometers away.\n\n' +
+      '## The Journey Begins\n\n' +
+      'Today\'s ride to Grabouw via Sir Lowry\'s pass was 80km of pure adrenaline. I crushed that pass and felt on top of the world. Tomorrow, I celebrate my birthday in style, cycling the final 75km to Origin Festival in Helderstroom. Can\'t wait for a weekend of stomping, UV vibes, and reuniting with my trance family.\n\n' +
+      '![Conquering Houwhoek Pass](' + houwhoekPass + ')\n\n' +
+      '## Festival Magic\n\n' +
+      'I arrived at the party around 11:30 AM on Friday morning, buzzing with endorphins. I skipped the queue, shouted that it was my birthday, and the welcome was overwhelming!\n\n' +
+      'Origin Festival is a staple of the Cape Town psytrance calendar. Thanks to Monique and Reagan for curating such an incredible space—the psychedelic decor, the thumping basslines, and the beautiful souls on the dancefloor were perfection.\n\n' +
+      'I spent the weekend doing what I love most: painting faces in the shade during the day and watching them glow under the UV cannons at night. To my friends, thanks for making me feel so loved. It was a truly magnificent experience.\n\n' +
+      '## The Return Journey\n\n' +
+      'I cycled back to the farm in Elgin on Monday to decompress, and then finally all the way back to Cape Town on Tuesday.\n\n' +
+      'Just conquered the road back to Cape Town after an unforgettable birthday ride. Completed just short of 300km with a 40kg bike pack, 3200m climbing, 14hrs of pure adrenaline and top speed of over 75km/hr.\n\n' +
+      'Time to dive back into work focus and training for the next adventure. The beat goes on! One love & peace out 💚❤️🌈',
     author: {
       name: 'Ash Shaw',
       avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400',
@@ -262,7 +245,7 @@ Six Cats is not a side project. It's a mirror.
     category: 'Education',
     tags: ['Six Cats', 'Cannabis', 'Organic', 'Cultivation', 'Cape Town', 'Sustainability'],
     featuredImage: {
-      src: 'https://images.unsplash.com/photo-1584280000731-e55a1b8e9e6f?w=1080',
+      src: 'https://images.unsplash.com/photo-1772187633909-d5f59071cbf2?w=1080',
       alt: 'Cannabis plant growing in organic soil',
       caption: 'The green garden begins'
     },
@@ -333,7 +316,7 @@ Berlin gave me the paintbrush. The dancefloor gave me the canvas. And the art? T
     category: 'Travel',
     tags: ['Berlin', 'UV Makeup', 'Discovery', 'Psytrance', 'Techno', 'Art', 'Creativity'],
     featuredImage: {
-      src: 'https://images.unsplash.com/photo-1559564484-e48bf552270c?w=1080',
+      src: 'https://images.unsplash.com/photo-1617911779552-5a0984271bfb?w=1080',
       alt: 'Berlin street art and graffiti',
       caption: 'Berlin: the city that gave me permission'
     },
@@ -524,7 +507,7 @@ If you see me in Thailand or on a dance floor in Berlin, come find me. I might j
     category: 'Tutorials',
     tags: ['UV Makeup', 'Blacklight', 'Neon', 'Rave', 'Thailand', 'Psytrance'],
     featuredImage: {
-      src: 'https://images.unsplash.com/photo-1566140967404-b8b3932483f5?w=1080',
+      src: 'https://images.unsplash.com/photo-1539035992980-e41ff3f540ed?w=1080',
       alt: 'UV makeup glowing under blacklight',
       caption: 'Neon UV makeup under blacklight'
     },
@@ -757,7 +740,7 @@ Color theory turns makeup from a routine into an art form. It allows me to conne
     category: 'Education',
     tags: ['Color Theory', 'Education', 'Makeup Tips', 'Tutorial', 'Artistry'],
     featuredImage: {
-      src: 'https://images.unsplash.com/photo-1601742162870-46790bce3120?w=1080',
+      src: 'https://images.unsplash.com/photo-1761145275111-e62cbdba6f57?w=1080',
       alt: 'Colorful makeup demonstrating color theory',
       caption: 'Color theory in action'
     },
@@ -821,7 +804,7 @@ Let's protect the playgrounds we love to dance in. 🌍✨
     category: 'Sustainability',
     tags: ['Eco-Friendly', 'Sustainability', 'Glitter', 'Festival', 'Green'],
     featuredImage: {
-      src: 'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=1080',
+      src: 'https://images.unsplash.com/photo-1721937563653-ad6dc7f7ebdf?w=1080',
       alt: 'Eco-friendly biodegradable glitter',
       caption: 'Sustainable sparkle'
     },
@@ -884,7 +867,7 @@ The evolution from psytrance purist to house and techno appreciation was not bet
     category: 'Festival',
     tags: ['Psytrance', 'Festivals', 'Relationships', 'Community', 'ADHD', 'Dancefloor'],
     featuredImage: {
-      src: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1080',
+      src: 'https://images.unsplash.com/photo-1718625168241-82bf46785323?w=1080',
       alt: 'Psytrance dancefloor with UV lights and crowd',
       caption: 'The dancefloor is where real connections happen'
     },
@@ -1010,7 +993,7 @@ I came home knowing two things I hadn't known before: that the world is generous
     category: 'Travel',
     tags: ['Travel', 'Zambia', 'Solar Eclipse', 'Festivals', 'Adventure', 'Solipse'],
     featuredImage: {
-      src: 'https://images.unsplash.com/photo-1566753323558-f4e0952af115?w=1080',
+      src: 'https://images.unsplash.com/photo-1712808261297-0a045f64422f?w=1080',
       alt: 'Solar eclipse with corona visible',
       caption: 'Three and a half minutes that rearranged everything'
     },
@@ -1286,8 +1269,8 @@ Rest well, Lucy. You were loved, and you are missed.
     category: 'Insights',
     tags: ['Six Cats', 'Cats', 'Loss', 'Cape Town', 'Personal'],
     featuredImage: {
-      src: 'https://images.unsplash.com/photo-1573865526739-10c1deaaef5b?w=1080',
-      alt: 'Burmese cat sitting on shelf looking at camera',
+      src: 'https://images.unsplash.com/photo-1765481078996-3564f872dc7b?w=1080',
+      alt: 'Cat sitting in garden looking at camera',
       caption: 'Lucy, the welcoming committee'
     },
     featured: false,

@@ -368,6 +368,7 @@ export function Header() {
                           aria-current={activeNavId === item.id ? "page" : undefined}
                           aria-haspopup="true"
                           aria-expanded={openDropdown === item.id}
+                          data-nav-color={item.neonColor}
                         >
                           <item.icon className="header__nav-icon" aria-hidden="true" />
                           {item.label}
@@ -389,6 +390,7 @@ export function Header() {
                       }`}
                       role="menuitem"
                       aria-current={activeNavId === item.id ? "page" : undefined}
+                      data-nav-color={item.neonColor}
                     >
                       <item.icon className="header__nav-icon" aria-hidden="true" />
                       {item.label}

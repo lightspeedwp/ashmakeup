@@ -4,7 +4,7 @@
  * 
  * @module data/mock/portfolio/editorial
  * @author Ash Shaw Portfolio Team
- * @version 1.0.0
+ * @version 1.1.0 - Updated Unsplash image URLs
  */
 
 import { PortfolioEntry } from '../../types';
@@ -24,7 +24,7 @@ export const editorialWork: PortfolioEntry[] = [
     subcategory: 'Editorial',
     images: [
       {
-        src: 'https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=800&q=90&fit=crop',
+        src: 'https://images.unsplash.com/photo-1658777212671-c899f7df20f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnZW9tZXRyaWMlMjBtYWtldXAlMjBhcmNoaXRlY3R1cmUlMjBwaW5rJTIwYmx1ZSUyMG5lb24lMjBzdHVkaW98ZW58MXx8fHwxNzcyNTQ3ODI3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
         alt: 'Geometric architectural makeup design with sharp angular lines in hot pink and royal blue on model face',
         title: 'Neon architecture series 1 - main',
         caption: 'Architectural geometric design',
@@ -50,7 +50,7 @@ export const editorialWork: PortfolioEntry[] = [
     subcategory: 'Experimental',
     images: [
       {
-        src: 'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=800&q=90&fit=crop',
+        src: 'https://images.unsplash.com/photo-1679141335462-547b83aa99f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMHNwbGF0dGVyJTIwbWFrZXVwJTIwbmVvbiUyMGNvbG9ycyUyMHN0dWRpbyUyMGFydHxlbnwxfHx8fDE3NzI1NDc4MzB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
         alt: 'Avant-garde experimental makeup with chaotic splatter patterns in all 8 neon colors creating abstract art on face',
         title: 'Abstract expressionism face - main',
         caption: 'Abstract splatter art',
@@ -76,7 +76,7 @@ export const editorialWork: PortfolioEntry[] = [
     subcategory: 'Experimental',
     images: [
       {
-        src: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=90&fit=crop',
+        src: 'https://images.unsplash.com/photo-1647129916920-6ab0451b3b06?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmdXR1cmlzdGljJTIwY3lib3JnJTIwbWFrZXVwJTIw2lyY3VpdCUyMGJvYXJkJTIwbmVvbiUyMHB1cnBsZSUyMGN5YW4lMjBzdHVkaW98ZW58MXx8fHwxNzcyNTQ3ODI3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
         alt: 'Futuristic cyborg makeup combining organic skin with geometric circuit board patterns in aqua cyan and violet purple',
         title: 'Cyborg renaissance - main',
         caption: 'Cyborg circuit design',

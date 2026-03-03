@@ -154,6 +154,26 @@
   background-color: rgba(255, 16, 240, 0.08);
 }
 
+/* ── Per-colour footer nav hover (light mode) ── */
+.footer__nav-link[data-nav-color="green"]:hover { color: var(--wp--preset--color--neon-green-text); background-color: rgba(57, 255, 20, 0.06); }
+.footer__nav-link[data-nav-color="pink"]:hover { color: var(--wp--preset--color--neon-pink-text); background-color: rgba(255, 16, 240, 0.06); }
+.footer__nav-link[data-nav-color="purple"]:hover { color: var(--wp--preset--color--neon-purple-text); background-color: rgba(190, 0, 254, 0.06); }
+.footer__nav-link[data-nav-color="cyan"]:hover { color: var(--wp--preset--color--neon-cyan-text); background-color: rgba(0, 247, 255, 0.06); }
+.footer__nav-link[data-nav-color="orange"]:hover { color: var(--wp--preset--color--neon-orange-text); background-color: rgba(255, 95, 31, 0.06); }
+.footer__nav-link[data-nav-color="yellow"]:hover { color: var(--wp--preset--color--neon-yellow-text); background-color: rgba(255, 255, 0, 0.06); }
+.footer__nav-link[data-nav-color="red"]:hover { color: var(--wp--preset--color--neon-red-text); background-color: rgba(255, 49, 49, 0.06); }
+.footer__nav-link[data-nav-color="blue"]:hover { color: var(--wp--preset--color--neon-blue-text); background-color: rgba(31, 81, 255, 0.06); }
+
+/* ── Per-colour footer nav hover (dark mode) ── */
+.dark .footer__nav-link[data-nav-color="green"]:hover { color: var(--wp--preset--color--neon-green); background-color: rgba(57, 255, 20, 0.08); }
+.dark .footer__nav-link[data-nav-color="pink"]:hover { color: var(--wp--preset--color--neon-pink); background-color: rgba(255, 16, 240, 0.08); }
+.dark .footer__nav-link[data-nav-color="purple"]:hover { color: var(--wp--preset--color--neon-purple); background-color: rgba(190, 0, 254, 0.08); }
+.dark .footer__nav-link[data-nav-color="cyan"]:hover { color: var(--wp--preset--color--neon-cyan); background-color: rgba(0, 247, 255, 0.08); }
+.dark .footer__nav-link[data-nav-color="orange"]:hover { color: var(--wp--preset--color--neon-orange); background-color: rgba(255, 95, 31, 0.08); }
+.dark .footer__nav-link[data-nav-color="yellow"]:hover { color: var(--wp--preset--color--neon-yellow); background-color: rgba(255, 255, 0, 0.08); }
+.dark .footer__nav-link[data-nav-color="red"]:hover { color: var(--wp--preset--color--neon-red); background-color: rgba(255, 49, 49, 0.08); }
+.dark .footer__nav-link[data-nav-color="blue"]:hover { color: var(--wp--preset--color--neon-blue); background-color: rgba(31, 81, 255, 0.08); }
+
 .footer__nav-link:focus-visible {
   outline: 2px solid var(--wp--preset--color--neon-pink);
   outline-offset: 2px;

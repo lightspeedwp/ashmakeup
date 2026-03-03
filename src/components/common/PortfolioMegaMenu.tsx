@@ -131,6 +131,7 @@ export function PortfolioMegaMenu({ isOpen, onClose, onMouseEnter, onMouseLeave 
                     alt={featuredEntry.images[0].alt}
                     className="mega-menu__featured-img"
                     loading="lazy"
+                    decoding="async"
                   />
                   <div className="mega-menu__featured-overlay" aria-hidden="true" />
                 </div>
@@ -171,6 +172,7 @@ export function PortfolioMegaMenu({ isOpen, onClose, onMouseEnter, onMouseLeave 
                       alt={entry.images[0].alt}
                       className="mega-menu__recent-thumb"
                       loading="lazy"
+                      decoding="async"
                     />
                   ) : null}
                   <div className="mega-menu__recent-text">

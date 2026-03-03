@@ -3,7 +3,7 @@
  * Ash's relationship with psytrance and electronic music: the genres,
  * the DJs, the specific moments when music became medicine.
  *
- * Neon accent: Purple
+ * Neon accent: Blue
  * Phase 5 Polish — PullQuote + ContentSection, bundler-safe syntax
  *
  * @component MusicPage
@@ -60,7 +60,7 @@ export function MusicPage() {
             <PullQuote
               quote={data.pullQuote}
               variant="center"
-              neonColor="purple"
+              neonColor="blue"
             />
           </div>
 
@@ -105,7 +105,7 @@ export function MusicPage() {
                 id={section.id}
                 title={section.title}
                 variant="default"
-                colorAccent="purple"
+                colorAccent="blue"
               >
                 {section.paragraphs.map(function (p, i) {
                   return (

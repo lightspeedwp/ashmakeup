@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+#### Sub-page Alignment Audit — Ebook ↔ About Sub-pages
+
+- **LightSpeed page** (`lightspeed.ts`): Fixed intern count from "only 2" to "only 3" in AI workflows section (Hugo, Brandon, Seren)
+- **Fitness page** (`fitness.ts`): Added Table Mountain Challenge top 10 x3 and Hout Bay Trail top 10 x1 to running sport card; added Lourens Visser swimming training story to swimming sport card
+- **Cycling page** (`cycling.ts`): Added Berlin vs Thailand kit note to UV paints item (full mousse palette in Berlin, UV-only in Thailand due to humidity); added Stormsvlei 185km solo ride (2024) to notable rides list
+- **Travels page** (`travels.ts`): Rewrote nomad circuit section to include full 4-leg seasonal cycle (Cape Town → Berlin → South Africa → Koh Phangan → Cape Town); previously missing Thailand leg entirely
+
+### Fixed
+
+- **`website-content.md`**: Corrected Berlin arrival date from "2016 — Present" to "2019 — Present" in both section heading and travel destinations table
+
+---
+
+## [8.2.1] - 2026-03-03
+
+### Fixed
+
+#### Technical Stability & Bundler Compatibility
+- **Fixed blog flickering issue** by memoizing `useBlogPosts` and `usePortfolioEntries` options in all calling components (`BlogPage`, `BlogPreviewSection`, `PortfolioMainPage`).
+- **Standardised Bundler Compatibility** across core components and hooks:
+  - Eliminated all arrow functions in JSX and hooks, replacing them with named function expressions.
+  - Removed all prop and variable destructuring in favour of explicit access.
+  - Replaced all template literals with string concatenation.
+  - Refactored `useWordPress.ts` for full bundler safety.
+- **Improved Hook Reliability** by stabilizing dependency tracking in `useContent.ts` and `useMockData.ts`.
+
+---
+
+## [8.2.0] - 2026-03-03
+
 ### Added
 
 #### Content Expansion Phase 7 — Blog & Narrative Enrichment
@@ -54,24 +86,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `02-about-pages-narrative-gaps.md` — identified bio, press, and lightspeed page content gaps
   - `03-blog-expansion-recommendations.md` — 5 new blog post recommendations with outlines
 - Task list at `/tasks/content-expansion-phase7-tasks.md` (13 tasks, 13 complete)
-
----
-
-### Changed
-
-#### Memory Reduction — Data File Splitting (T18)
-
-- **eBook data split complete** (`/data/mock/pages/ebook-pages.ts` — 1,548 lines → 7 files):
-  - Created `/data/mock/pages/ebook/` subfolder structure
-  - `types.ts` — Shared BookPageType and BookPage interfaces
-  - `front-matter.ts` (~80 lines) — Cover, preface, dedication, TOC, foreword
-  - `part-1.ts` (~100 lines) — Part 1: Early foundations (chapters 1-4)
-  - `part-2.ts` (~210 lines) — Part 2: The festival years (chapters 5-9)
-  - `part-3.ts` (~470 lines) — Part 3: Nomadic life begins BC (chapters 10-14)
-  - `part-4.ts` (~580 lines) — Part 4: Re-emergence (chapters 15-20)
-  - `back-matter.ts` (~200 lines) — Afterword, appendices, about author
-  - Main `ebook-pages.ts` converted to barrel export (~40 lines)
-  - All 2 consumer imports unchanged (`EbookPage.tsx`, `EbookPageContent.tsx`)
 
 ---
 

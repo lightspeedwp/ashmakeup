@@ -428,7 +428,7 @@ Every harvest season, these eight values guide the operation:
 These are the same hands that paint neon faces at festivals. Both practices require patience, attention to detail, sensitivity to the subject, and deep respect for the process.
 
 Six Cats is not a side project. It's a mirror.`,
-    thumbnailUrl: 'https://images.unsplash.com/photo-1584280000731-e55a1b8e9e6f?w=1080',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1772187633909-d5f59071cbf2?w=1080',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     platform: 'youtube',
     duration: '18:25',

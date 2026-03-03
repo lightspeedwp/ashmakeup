@@ -27,17 +27,18 @@
    PER-PAGE ACCENT OVERRIDES
    Each modifier sets three custom properties.
    All accent-dependent styles reference these generically.
+   Synced with hidden-about.ts card accents (v8.2.0).
    ══════════════════════════════════════ */
 
 .about-subpage--berlin,
-.about-subpage--lightspeed {
+.about-subpage--music {
   --accent-rgb: 0, 68, 255;
   --accent-text: var(--wp--preset--color--neon-blue-text);
   --accent-full: var(--wp--preset--color--neon-blue);
 }
 
-.about-subpage--book,
-.about-subpage--partners {
+.about-subpage--partners,
+.about-subpage--podcast {
   --accent-rgb: 255, 16, 240;
   --accent-text: var(--wp--preset--color--neon-pink-text);
   --accent-full: var(--wp--preset--color--neon-pink);
@@ -45,7 +46,7 @@
 
 .about-subpage--process,
 .about-subpage--cycling,
-.about-subpage--fitness {
+.about-subpage--six-cats {
   --accent-rgb: 57, 255, 20;
   --accent-text: var(--wp--preset--color--neon-green-text);
   --accent-full: var(--wp--preset--color--neon-green);
@@ -58,26 +59,28 @@
   --accent-full: var(--wp--preset--color--neon-cyan);
 }
 
-.about-subpage--travels,
-.about-subpage--education {
+.about-subpage--book,
+.about-subpage--lightspeed,
+.about-subpage--fitness {
   --accent-rgb: 255, 107, 0;
   --accent-text: var(--wp--preset--color--neon-orange-text);
   --accent-full: var(--wp--preset--color--neon-orange);
 }
 
-.about-subpage--adhd {
+.about-subpage--adhd,
+.about-subpage--education {
   --accent-rgb: 255, 229, 0;
   --accent-text: var(--wp--preset--color--neon-yellow-text);
   --accent-full: var(--wp--preset--color--neon-yellow);
 }
 
-.about-subpage--podcast {
+.about-subpage--travels {
   --accent-rgb: 255, 0, 50;
   --accent-text: var(--wp--preset--color--neon-red-text);
   --accent-full: var(--wp--preset--color--neon-red);
 }
 
-/* bio, music, tribes use the default purple — no override needed */
+/* bio, tribes use the default purple — no override needed */
 
 /* ══════════════════════════════════════
    HERO

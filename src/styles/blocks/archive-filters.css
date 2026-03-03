@@ -371,6 +371,10 @@
   color: var(--wp--preset--color--neon-purple);
 }
 
+.dark .archive-filters__mobile-trigger:hover {
+  color: var(--wp--preset--color--atomic-black);
+}
+
 @media (min-width: 768px) {
   .archive-filters__mobile-trigger {
     display: none;

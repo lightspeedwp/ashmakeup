@@ -10,7 +10,7 @@
  */
 
 import React, { useEffect, useState, useCallback } from 'react';
-import { CircleCheck, CircleX, Clock, Play } from '../../../lib/icons';
+import { CircleCheck, CircleX, Clock, Play, Trash2 } from '../../../lib/icons';
 import { Breadcrumbs } from '../../ui/Breadcrumbs';
 import { devToolBreadcrumbs } from '../../../data/mock/ui/breadcrumbs';
 import '../../../styles/blocks/specimen-page.css';
@@ -18,6 +18,7 @@ import '../../../styles/blocks/deployment-readiness.css';
 
 import { setSEO } from '../../../utils/seo';
 import { devToolsSEO } from '../../../data/mock/seo';
+import { clearAllWPCache, getWPCacheStats } from '../../../hooks/useWordPress';
 
 const breadcrumbs = devToolBreadcrumbs('Integration Tester');
 
@@ -155,6 +156,8 @@ const TEST_SUITES: TestSuite[] = [
 export function IntegrationTesterPage() {
   const [results, setResults] = useState(new Map());
   const [isRunningAll, setIsRunningAll] = useState(false);
+  const [cacheStats, setCacheStats] = useState(getWPCacheStats());
+  const [cacheCleared, setCacheCleared] = useState(false);
 
   useEffect(() => {
     setSEO(devToolsSEO.integration);
@@ -305,6 +308,85 @@ export function IntegrationTesterPage() {
             </details>
           );
         })}
+      </div>
+
+      {/* WordPress API Cache Management */}
+      <div className="deploy__categories">
+        <details className="deploy__category" open>
+          <summary className="deploy__category-header">
+            <Trash2 className="deploy__check-icon" aria-hidden="true" />
+            <span className="deploy__category-title">WordPress API cache</span>
+            <span className="deploy__category-summary">
+              {cacheStats.entryCount} {cacheStats.entryCount === 1 ? 'entry' : 'entries'} cached
+              {cacheStats.totalBytes > 0 ? ' (' + Math.round(cacheStats.totalBytes / 1024) + ' KB)' : ''}
+            </span>
+            <button
+              type="button"
+              className="comp-api__copy-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                setCacheStats(getWPCacheStats());
+              }}
+              aria-label="Refresh cache stats"
+            >
+              Refresh
+            </button>
+          </summary>
+
+          <div className="deploy__checks">
+            <div className="deploy__check">
+              <div className="deploy__check-info">
+                <span className="deploy__check-rec">
+                  WP API responses are cached in localStorage with a 30-minute TTL. Clearing the cache forces fresh API requests on next page load.
+                </span>
+              </div>
+            </div>
+
+            <div className="deploy__check">
+              <CircleCheck
+                className={`deploy__check-icon ${cacheStats.entryCount > 0 ? 'deploy__check-icon--pass' : 'deploy__check-icon--warn'}`}
+                aria-hidden="true"
+              />
+              <div className="deploy__check-info">
+                <span className="deploy__check-name">
+                  Cached entries: {cacheStats.entryCount}
+                </span>
+              </div>
+            </div>
+
+            {cacheStats.entryCount > 0 && (
+              <div className="deploy__check">
+                <Clock className="deploy__check-icon deploy__check-icon--warn" aria-hidden="true" />
+                <div className="deploy__check-info">
+                  <span className="deploy__check-name">
+                    Oldest entry: {Math.round(cacheStats.oldestAge / 1000)}s ago
+                    {' | '}
+                    Newest entry: {Math.round(cacheStats.newestAge / 1000)}s ago
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <div className="deploy__check">
+              <div className="deploy__check-info">
+                <button
+                  type="button"
+                  className="playground__btn playground__btn--primary"
+                  onClick={() => {
+                    clearAllWPCache();
+                    setCacheStats(getWPCacheStats());
+                    setCacheCleared(true);
+                    setTimeout(() => { setCacheCleared(false); }, 3000);
+                  }}
+                  aria-label="Clear all WordPress API cache entries"
+                >
+                  <Trash2 className="playground__btn-icon" aria-hidden="true" />
+                  {cacheCleared ? 'Cache cleared!' : 'Clear WP cache'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </details>
       </div>
     </main>
   );

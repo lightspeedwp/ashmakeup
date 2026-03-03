@@ -11,7 +11,7 @@ export var travelsPageData: TravelsPageData = {
   breadcrumbs: [ { label: 'Home', href: '/' }, { label: 'About', href: '/about' }, { label: 'Travels' } ],
   sections: [
     { id: 'nomad', title: 'The nomad circuit', paragraphs: [
-      'Ash\u2019s year isn\u2019t divided into months \u2014 it\u2019s divided into festival seasons. Cape Town summers (November\u2013March), European summer (May\u2013September), and the shoulder seasons that connect them by bicycle, train, and shared rides.',
+      'Ash\u2019s year isn\u2019t divided into months \u2014 it\u2019s divided into seasons that follow the sun and the sound. Cape Town summers (November\u2013March) at his home base in Woodstock. Berlin in May for the techno season \u2014 open-airs, cycling, painting faces until September. Back to South Africa briefly to swap bikes and gear, then Koh Phangan, Thailand (September\u2013November) for Muay Thai training, triathlon, island psytrance, and remote work in tropical humidity. Then home to Cape Town in November for the South African summer festival circuit. It\u2019s not a calendar \u2014 it\u2019s a migration pattern.',
       'This isn\u2019t glamorous digital nomadism. It\u2019s dusty festival campsites, sleeping on friends\u2019 couches, and learning that everything you need fits on a bicycle. The less you carry, the further you go.',
     ]},
     { id: 'cycling-travel', title: 'Travelling by bicycle', paragraphs: [

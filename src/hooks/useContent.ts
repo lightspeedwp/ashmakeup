@@ -2,10 +2,13 @@
  * @fileoverview Unified Content Hooks Facade
  * 
  * Provides centralized data access that switches between Mock Data and WordPress API
- * based on the VITE_USE_WORDPRESS environment variable.
+ * based on the USE_WORDPRESS constant.
  * 
- * Usage:
- * import { useBlogPosts, usePortfolioEntries } from '@/hooks/useContent';
+ * BUNDLER SAFETY: No optional chaining (?.), nullish coalescing (??), 
+ * arrow functions, or destructuring in callbacks.
+ * 
+ * @author Ash Shaw Portfolio Team
+ * @version 1.3.0 - WordPress Mode Enabled + Production Endpoint
  */
 
 import { useState, useEffect } from 'react';
@@ -24,14 +27,13 @@ import {
 
 import { 
   getPortfolioByCategory, 
-  getFeaturedPortfolioEntries,
-  getPortfolioEntryById,
   UnifiedPortfolioEntry
 } from '../utils/portfolioService';
 
-// import.meta.env access completely removed — proven unreliable in this bundler
-// WordPress mode disabled by default; toggle requires rebuild with env var
-const USE_WORDPRESS = false;
+import { grab, arrayGet, setProp } from '../lib/router';
+
+// WordPress mode toggle (Production Ready)
+var USE_WORDPRESS = true;
 
 // -----------------------------------------------------------------------------
 // Blog Hooks
@@ -40,26 +42,30 @@ const USE_WORDPRESS = false;
 export function useBlogPosts(options?: any) {
   // If WP is enabled, use WP hook
   if (USE_WORDPRESS) {
-    const wpResult = useWPBlogPosts(options);
+    var wpResult = useWPBlogPosts(options);
+    var wpData = grab(wpResult, 'data');
+    var wpLoading = grab(wpResult, 'loading');
+    var wpError = grab(wpResult, 'error');
+    var wpRefresh = grab(wpResult, 'refresh');
     
-    // Adapt WP result to match expected component interface (pagination inside data)
-    return {
-      data: wpResult.data || { 
-        posts: [], 
-        pagination: { 
-          currentPage: 1, 
-          totalPages: 1, 
-          totalPosts: 0, 
-          hasNext: false, 
-          hasPrevious: false, 
-          perPage: 10 
-        } 
-      },
-      loading: wpResult.loading,
-      isLoading: wpResult.loading,
-      error: wpResult.error,
-      refresh: wpResult.refresh
-    };
+    var defaultData = {};
+    setProp(defaultData, 'posts', []);
+    var defPagination = {};
+    setProp(defPagination, 'currentPage', 1);
+    setProp(defPagination, 'totalPages', 1);
+    setProp(defPagination, 'totalPosts', 0);
+    setProp(defPagination, 'hasNext', false);
+    setProp(defPagination, 'hasPrevious', false);
+    setProp(defPagination, 'perPage', 10);
+    setProp(defaultData, 'pagination', defPagination);
+
+    var result = {};
+    setProp(result, 'data', wpData || defaultData);
+    setProp(result, 'loading', wpLoading);
+    setProp(result, 'isLoading', wpLoading);
+    setProp(result, 'error', wpError);
+    setProp(result, 'refresh', wpRefresh);
+    return result as any;
   }
   
   // Otherwise use mock hook
@@ -68,14 +74,14 @@ export function useBlogPosts(options?: any) {
 
 export function useBlogPost(slug: string) {
   if (USE_WORDPRESS) {
-    const wpResult = useWPBlogPost(slug);
-    return {
-      data: wpResult.data,
-      loading: wpResult.loading,
-      isLoading: wpResult.loading,
-      error: wpResult.error,
-      refresh: wpResult.refresh
-    };
+    var wpResult = useWPBlogPost(slug);
+    var result = {};
+    setProp(result, 'data', grab(wpResult, 'data'));
+    setProp(result, 'loading', grab(wpResult, 'loading'));
+    setProp(result, 'isLoading', grab(wpResult, 'loading'));
+    setProp(result, 'error', grab(wpResult, 'error'));
+    setProp(result, 'refresh', grab(wpResult, 'refresh'));
+    return result as any;
   }
   return useMockBlogPost(slug);
 }
@@ -89,16 +95,26 @@ export function useBlogPost(slug: string) {
  */
 export function usePortfolioSections() {
   if (USE_WORDPRESS) {
-    const wpResult = useWPPortfolioSections();
-    return {
-      data: wpResult.data || [], 
-      loading: wpResult.loading,
-      isLoading: wpResult.loading,
-      error: wpResult.error,
-      refresh: wpResult.refresh
-    };
+    var wpResult = useWPPortfolioSections();
+    var result = {};
+    setProp(result, 'data', grab(wpResult, 'data') || []);
+    setProp(result, 'loading', grab(wpResult, 'loading'));
+    setProp(result, 'isLoading', grab(wpResult, 'loading'));
+    setProp(result, 'error', grab(wpResult, 'error'));
+    setProp(result, 'refresh', grab(wpResult, 'refresh'));
+    return result as any;
   }
   return useMockPortfolioSections();
+}
+
+/**
+ * Hook for featured portfolio entries (homepage)
+ */
+export function useFeaturedPortfolioEntries(limit: number = 6) {
+  var options = {};
+  setProp(options, 'featuredOnly', true);
+  setProp(options, 'limit', limit);
+  return usePortfolioEntries(options);
 }
 
 /**
@@ -115,73 +131,69 @@ export function usePortfolioEntries(options?: {
 }) {
   // WP Mode
   if (USE_WORDPRESS) {
-    const wpResult = useWPPortfolioEntries(options);
-    
-    // Convert WP result to generic structure if needed
-    // useWPPortfolioEntries returns { data: { entries, pagination }, loading, error }
-    // which matches what we want
-    return wpResult;
+    return useWPPortfolioEntries(options);
   }
 
   // Mock Mode (Simulate Async)
-  const contentDataInit: {
-    entries: UnifiedPortfolioEntry[];
-    pagination: {
-      currentPage: number;
-      totalPages: number;
-      totalEntries: number;
-      hasNext: boolean;
-      hasPrevious: boolean;
-      perPage: number;
-    }
-  } | null = null;
-  const [data, setData] = useState(contentDataInit);
-  const [loading, setLoading] = useState(true);
+  var contentDataInit: any = null;
+  var dataState = useState(contentDataInit);
+  var data = dataState[0];
+  var setData = dataState[1];
+  var loadingState = useState(true);
+  var loading = loadingState[0];
+  var setLoading = loadingState[1];
 
-  useEffect(() => {
+  useEffect(function() {
     setLoading(true);
     // Simulate network delay
-    const timer = setTimeout(() => {
-      const optPage = options ? options.page : undefined;
-      const optLimit = options ? options.limit : undefined;
-      const optCategory = options ? options.category : undefined;
-      const optFeaturedOnly = options ? options.featuredOnly : undefined;
-      const page = optPage || 1;
-      const limit = optLimit || 10;
+    var timer = setTimeout(function() {
+      var optPage = options ? grab(options, 'page') : undefined;
+      var optLimit = options ? grab(options, 'limit') : undefined;
+      var optCategory = options ? grab(options, 'category') : undefined;
+      var optFeaturedOnly = options ? grab(options, 'featuredOnly') : undefined;
+      var page = optPage || 1;
+      var limit = optLimit || 10;
       
-      const allEntries = getPortfolioByCategory(
+      var allEntries = getPortfolioByCategory(
         optCategory || 'all',
         optFeaturedOnly || false
       );
       
-      const totalEntries = allEntries.length;
-      const totalPages = Math.ceil(totalEntries / limit);
-      const startIndex = (page - 1) * limit;
-      const paginatedEntries = allEntries.slice(startIndex, startIndex + limit);
+      var totalEntries = allEntries.length;
+      var totalPages = Math.ceil(totalEntries / limit);
+      var startIndex = (page - 1) * limit;
+      var paginatedEntries = allEntries.slice(startIndex, startIndex + limit);
       
-      setData({
-        entries: paginatedEntries,
-        pagination: {
-          currentPage: page,
-          totalPages,
-          totalEntries,
-          hasNext: page < totalPages,
-          hasPrevious: page > 1,
-          perPage: limit
-        }
-      });
+      var resultData = {};
+      setProp(resultData, 'entries', paginatedEntries);
+      
+      var pagination = {};
+      setProp(pagination, 'currentPage', page);
+      setProp(pagination, 'totalPages', totalPages);
+      setProp(pagination, 'totalEntries', totalEntries);
+      setProp(pagination, 'hasNext', page < totalPages);
+      setProp(pagination, 'hasPrevious', page > 1);
+      setProp(pagination, 'perPage', limit);
+      setProp(resultData, 'pagination', pagination);
+      
+      setData(resultData);
       setLoading(false);
     }, 300); // 300ms delay
     
-    return () => clearTimeout(timer);
+    return function() { clearTimeout(timer); };
   }, [
-    options ? options.category : undefined,
-    options ? options.page : undefined,
-    options ? options.limit : undefined,
-    options ? options.featuredOnly : undefined
+    options ? grab(options, 'category') : undefined,
+    options ? grab(options, 'page') : undefined,
+    options ? grab(options, 'limit') : undefined,
+    options ? grab(options, 'featuredOnly') : undefined
   ]);
 
-  return { data, loading, error: null, refresh: () => {} };
+  var result = {};
+  setProp(result, 'data', data);
+  setProp(result, 'loading', loading);
+  setProp(result, 'error', null);
+  setProp(result, 'refresh', function() {});
+  return result as any;
 }
 
 // -----------------------------------------------------------------------------

@@ -100,6 +100,8 @@
   border-radius: var(--wp--preset--border-radius--lg);
   border: 1px solid var(--wp--preset--color--neutral-200);
   backdrop-filter: blur(10px);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .dark .about-technical-card {
@@ -323,37 +325,75 @@
 .about-hero-orb-3 {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.4;
+  filter: blur(60px);
+  opacity: 0.3;
   z-index: 0;
   pointer-events: none;
+  max-width: 50vw;
+  max-height: 50vw;
+}
+
+@media (min-width: 1024px) {
+  .about-hero-orb-1,
+  .about-hero-orb-2,
+  .about-hero-orb-3 {
+    filter: blur(80px);
+    opacity: 0.4;
+  }
 }
 
 .about-hero-orb-1 {
-  top: 10%;
-  right: 10%;
-  width: 300px;
-  height: 300px;
+  top: 5%;
+  right: 5%;
+  width: 200px;
+  height: 200px;
   background: var(--wp--preset--color--neon-pink);
   animation: float 8s ease-in-out infinite;
 }
 
+@media (min-width: 1024px) {
+  .about-hero-orb-1 {
+    top: 10%;
+    right: 10%;
+    width: 300px;
+    height: 300px;
+  }
+}
+
 .about-hero-orb-2 {
-  bottom: 20%;
+  bottom: 15%;
   left: 5%;
-  width: 250px;
-  height: 250px;
+  width: 180px;
+  height: 180px;
   background: var(--wp--preset--color--neon-blue);
   animation: float 10s ease-in-out infinite reverse;
 }
 
+@media (min-width: 1024px) {
+  .about-hero-orb-2 {
+    bottom: 20%;
+    left: 5%;
+    width: 250px;
+    height: 250px;
+  }
+}
+
 .about-hero-orb-3 {
-  top: 40%;
-  left: 40%;
-  width: 200px;
-  height: 200px;
+  top: 35%;
+  left: 35%;
+  width: 150px;
+  height: 150px;
   background: var(--wp--preset--color--neon-purple);
   animation: pulse 6s ease-in-out infinite;
+}
+
+@media (min-width: 1024px) {
+  .about-hero-orb-3 {
+    top: 40%;
+    left: 40%;
+    width: 200px;
+    height: 200px;
+  }
 }
 
 /* Animations moved to /styles/animations.css */
@@ -405,25 +445,41 @@
    ────────────────────────────────────────────── */
 
 /* Chapter nav + content grid */
-.about-landing {
+.about-landing,
+.about-landing--fluid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--wp--preset--spacing--fluid-lg);
-  max-width: var(--wp--preset--layout--wide);
+  gap: var(--wp--preset--spacing--fluid-md);
+  max-width: var(--wp--preset--layout--full-hd);
   margin-left: auto;
   margin-right: auto;
-  padding-left: var(--wp--preset--spacing--section-horizontal);
-  padding-right: var(--wp--preset--spacing--section-horizontal);
+  /* Removed horizontal padding to fix double-padding with ContentSections */
+  padding-left: 0;
+  padding-right: 0;
   padding-top: var(--wp--preset--spacing--fluid-md);
   padding-bottom: var(--wp--preset--spacing--section-vertical);
   position: relative;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-@media (min-width: 1024px) {
-  .about-landing {
-    grid-template-columns: 200px 1fr;
-    gap: var(--wp--preset--spacing--fluid-xl);
+@media (min-width: 1280px) {
+  .about-landing,
+  .about-landing--fluid {
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: var(--wp--preset--spacing--fluid-lg);
     padding-top: var(--wp--preset--spacing--fluid-xl);
+    /* Re-add padding only when sidebar is present to align with container */
+    padding-left: var(--wp--preset--spacing--section-horizontal);
+    padding-right: var(--wp--preset--spacing--section-horizontal);
+  }
+}
+
+@media (min-width: 1600px) {
+  .about-landing,
+  .about-landing--fluid {
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: var(--wp--preset--spacing--fluid-xl);
   }
 }
 
@@ -431,7 +487,7 @@
   display: none;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .about-landing__nav {
     display: block;
     position: sticky;
@@ -447,6 +503,54 @@
   flex-direction: column;
   gap: var(--wp--preset--spacing--block-gap);
   min-width: 0;
+  width: 100%;
+}
+
+/* ── Mobile responsiveness: tighter spacing & contained content ── */
+
+/* Reduce vertical section padding on small screens within about-landing */
+@media (max-width: 767px) {
+  .about-landing .content-section {
+    padding-top: var(--wp--preset--spacing--fluid-md);
+    padding-bottom: var(--wp--preset--spacing--fluid-md);
+  }
+
+  .about-landing .content-section--callout {
+    padding-left: var(--wp--preset--spacing--fluid-sm);
+    padding-right: var(--wp--preset--spacing--fluid-sm);
+  }
+
+  /* Allow button text to wrap on narrow screens */
+  .about-landing .btn {
+    white-space: normal;
+    text-align: center;
+  }
+
+  /* Keep split layout stacked on mobile */
+  .about-landing .split-layout {
+    flex-direction: column;
+  }
+
+  /* Compact skills grid items on smallest screens */
+  .about-landing .about-skill-item {
+    padding: var(--wp--preset--spacing--fluid-sm);
+  }
+}
+
+/* Tablet (768px–1279px): cap content width for readability (no sidebar yet) */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .about-landing__sections {
+    max-width: var(--wp--preset--layout--content, 800px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Delay SplitContent side-by-side until 1024px within about-landing */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .about-landing .split-layout {
+    flex-direction: column;
+  }
 }
 
 /* Mobile chapter nav — horizontal scroll */
@@ -458,15 +562,15 @@
   background-color: var(--wp--preset--color--base);
   border-bottom: 1px solid var(--border);
   padding: var(--wp--preset--spacing--fluid-sm) var(--wp--preset--spacing--section-horizontal);
-  margin-left: calc(-1 * var(--wp--preset--spacing--section-horizontal));
-  margin-right: calc(-1 * var(--wp--preset--spacing--section-horizontal));
+  /* Use viewport units for safety since parent no longer has padding */
+  width: 100%;
 }
 
 .dark .about-landing__mobile-nav {
   background-color: var(--wp--preset--color--atomic-black);
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .about-landing__mobile-nav {
     display: none;
   }

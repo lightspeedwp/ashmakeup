@@ -5,10 +5,10 @@
  * Grid on Desktop, Slider on Tablet/Mobile
  * 
  * @author Ash Shaw Portfolio Team
- * @version 3.2.0 - Unified Responsive Layout Engine
+ * @version 3.3.0 - Bundler-safe: no arrow functions, no destructuring
  */
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { ArrowRight, Calendar } from '../../lib/icons';
 import { useBlogPosts } from '../../hooks/useContent';
 import { OptimizedImage } from '../ui/OptimizedImage';
@@ -26,23 +26,31 @@ interface BlogPreviewSectionProps {
   title?: string;
 }
 
-export function BlogPreviewSection({ 
-  limit = 6,
-  title
-}: BlogPreviewSectionProps) {
+export function BlogPreviewSection(props: BlogPreviewSectionProps) {
+  var limit = props.limit !== undefined ? props.limit : 6;
+  var title = props.title;
+  
   const setCurrentPage = useAppNavigate();
-  const { 
-    data: blogData, 
-    loading, 
-    error 
-  } = useBlogPosts({
-    limit, // Use the passed limit or default to 6
-    sortBy: 'publishedAt',
-    sortOrder: 'desc',
-    publishedOnly: true,
-  });
+  
+  /**
+   * MEMOIZED HOOK OPTIONS - Fixes flickering issue by stabilizing the dependency
+   * passed to useBlogPosts.
+   */
+  const blogOptions = useMemo(function() {
+    return {
+      limit: limit,
+      sortBy: 'publishedAt',
+      sortOrder: 'desc',
+      publishedOnly: true,
+    };
+  }, [limit]);
 
-  const goToBlog = useCallback(() => {
+  const postsHook = useBlogPosts(blogOptions);
+  const blogData = postsHook.data;
+  const loading = postsHook.loading;
+  const error = postsHook.error;
+
+  const goToBlog = useCallback(function() {
     setCurrentPage('blog');
     const announcement = document.getElementById('announcements');
     if (announcement) {
@@ -50,11 +58,13 @@ export function BlogPreviewSection({
     }
   }, [setCurrentPage]);
 
-  const viewBlogPost = useCallback((slug: string) => {
-    setCurrentPage(`blog/${slug}`, slug);
+  const viewBlogPost = useCallback(function(slug: string) {
+    // Bundler-safe: string concatenation instead of template literal
+    var route = 'blog/' + slug;
+    setCurrentPage(route, slug);
     const announcement = document.getElementById('announcements');
     if (announcement) {
-      announcement.textContent = `Navigating to blog post: ${slug.replace(/-/g, ' ')}`;
+      announcement.textContent = 'Navigating to blog post: ' + slug.replace(/-/g, ' ');
     }
   }, [setCurrentPage]);
 
@@ -65,6 +75,28 @@ export function BlogPreviewSection({
   if (!loading && hasNoPosts) {
     return null;
   }
+
+  /**
+   * Named function expression for renderItem to avoid arrow functions in JSX.
+   */
+  const renderBlogItem = function(post: BlogPost) {
+    return (
+      <div className="blog-card-wrapper">
+        <BlogPostCard 
+          post={post} 
+          onViewPost={viewBlogPost}
+          formatDate={formatDate}
+        />
+      </div>
+    );
+  };
+
+  /**
+   * Named function expression for keyExtractor.
+   */
+  const getPostId = function(post: BlogPost) {
+    return post.id;
+  };
 
   return (
     <section id="blog-preview" className="blog-preview section-spacing px-horizontal-section">
@@ -82,15 +114,17 @@ export function BlogPreviewSection({
         {/* Loading state */}
         {loading && (
           <div className="blog-preview__grid-loading">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="blog-card blog-card--loading">
-                <div className="blog-card__loading-content">
+            {[1, 2, 3].map(function(_, i) {
+              return (
+                <div key={i} className="blog-card blog-card--loading">
+                  <div className="blog-card__loading-content">
                     <div className="skeleton-box skeleton-box--image"></div>
                     <div className="skeleton-box skeleton-box--title"></div>
                     <div className="skeleton-box skeleton-box--text"></div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 
@@ -114,18 +148,10 @@ export function BlogPreviewSection({
         {!loading && !error && posts.length > 0 && (
           <ResponsiveGridSlider
             items={posts}
-            keyExtractor={(post) => post.id}
+            keyExtractor={getPostId}
             desktopColumns={3}
             layoutMode="slider"
-            renderItem={(post) => (
-              <div className="blog-card-wrapper">
-                <BlogPostCard 
-                  post={post} 
-                  onViewPost={viewBlogPost}
-                  formatDate={formatDate}
-                />
-              </div>
-            )}
+            renderItem={renderBlogItem}
             className="mb-fluid-xl"
           />
         )}
@@ -155,27 +181,52 @@ interface BlogPostCardProps {
   formatDate: (date: string) => string;
 }
 
-function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
+function BlogPostCard(props: BlogPostCardProps) {
+  var post = props.post;
+  var onViewPost = props.onViewPost;
+  var formatDate = props.formatDate;
+
+  /**
+   * Named function expression for onClick.
+   */
+  const handleCardClick = function() {
+    onViewPost(post.slug);
+  };
+
+  /**
+   * Named function expression for onKeyDown.
+   */
+  const handleCardKeyDown = function(e: React.KeyboardEvent) {
+    var isActivationKey = e.key === 'Enter' || e.key === ' ';
+    if (isActivationKey) {
+      e.preventDefault();
+      onViewPost(post.slug);
+    }
+  };
+
+  /**
+   * Named function expression for ReadMoreButton onClick.
+   */
+  const handleReadMoreClick = function(page: string, slug?: string) {
+    if (slug) {
+      onViewPost(slug);
+    }
+  };
+
   return (
     <article className="blog-card group">
       {/* Featured image */}
       {post.featuredImage && (
         <div 
           className="blog-card__image-container"
-          onClick={() => onViewPost(post.slug)}
-          onKeyDown={(e) => {
-            const isActivationKey = e.key === 'Enter' || e.key === ' ';
-            if (isActivationKey) {
-              e.preventDefault();
-              onViewPost(post.slug);
-            }
-          }}
+          onClick={handleCardClick}
+          onKeyDown={handleCardKeyDown}
           tabIndex={0}
           role="button"
-          aria-label={`View full blog post: ${post.title}`}
+          aria-label={'View full blog post: ' + post.title}
         >
           <OptimizedImage
-            src={post.featuredImage.url}
+            src={post.featuredImage.src}
             alt={post.featuredImage.alt}
             className="blog-card__image"
             preset="thumbnail"
@@ -192,7 +243,7 @@ function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
         {/* Title */}
         <h3 
           className="blog-card__title"
-          onClick={() => onViewPost(post.slug)}
+          onClick={handleCardClick}
         >
           {post.title}
         </h3>
@@ -214,11 +265,7 @@ function BlogPostCard({ post, onViewPost, formatDate }: BlogPostCardProps) {
             postTitle={post.title}
             postSlug={post.slug}
             postId={post.id}
-            onClick={(page: string, slug?: string) => {
-              if (slug) {
-                onViewPost(slug);
-              }
-            }}
+            onClick={handleReadMoreClick}
           />
         </div>
       </div>

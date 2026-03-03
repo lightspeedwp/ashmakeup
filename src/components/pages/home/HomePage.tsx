@@ -183,7 +183,7 @@ export function HomePage() {
       
       <FeaturedSection limit={3} />
       
-      <BlogPreviewSection limit={3} />
+      <BlogPreviewSection limit={6} />
       
       <TestimonialsSection />
       

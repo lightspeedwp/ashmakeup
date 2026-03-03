@@ -132,6 +132,7 @@ export function BlogMegaMenu({ isOpen, onClose, onMouseEnter, onMouseLeave }: Bl
                     alt={featuredPost.featuredImage.alt}
                     className="mega-menu__featured-img"
                     loading="lazy"
+                    decoding="async"
                   />
                   <div className="mega-menu__featured-overlay mega-menu__featured-overlay--blog" aria-hidden="true" />
                 </div>
@@ -173,6 +174,7 @@ export function BlogMegaMenu({ isOpen, onClose, onMouseEnter, onMouseLeave }: Bl
                       alt={post.featuredImage.alt}
                       className="mega-menu__recent-thumb"
                       loading="lazy"
+                      decoding="async"
                     />
                   )}
                   <div className="mega-menu__recent-text">

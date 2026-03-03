@@ -127,8 +127,8 @@ button, [role="button"] {
   --wp--preset--font-size--700: clamp(2.25rem, 1.75rem + 2.5vw, 3rem);
   --wp--preset--font-size--800: clamp(2.5rem, 1.9rem + 3vw, 3.5rem);
   --wp--preset--font-size--900: clamp(3rem, 2.2rem + 4vw, 4.5rem);
-  --wp--preset--font-size--hero: clamp(3.5rem, 6vw + 1rem, 6.5rem);
-  --wp--preset--font-size--section: clamp(2rem, 3vw + 1rem, 3.5rem);
+  --wp--preset--font-size--hero: clamp(2.5rem, 6vw + 1rem, 6.5rem);
+  --wp--preset--font-size--section: clamp(1.75rem, 3vw + 1rem, 3.5rem);
 
   /* --- SPACING --- */
   --wp--preset--spacing--fluid-xs: clamp(0.5rem, 0.4rem + 0.5vw, 0.75rem);
@@ -275,7 +275,11 @@ button, [role="button"] {
 /* because url() in CSS triggers bundler module resolution via esm.sh. */
 .app-noise-overlay {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
   opacity: var(--noise-texture-opacity);
   z-index: 0;
   pointer-events: none;

@@ -39,7 +39,7 @@ interface ContentSectionProps {
   /** Layout variant. Default: 'default' */
   variant?: 'default' | 'hero' | 'callout' | 'aside';
   /** Neon color accent for borders and accents */
-  colorAccent?: 'pink' | 'green' | 'blue' | 'purple' | 'yellow';
+  colorAccent?: 'pink' | 'green' | 'blue' | 'purple' | 'yellow' | 'orange' | 'red' | 'cyan';
   /** Background pattern. Default: 'none' */
   backgroundPattern?: 'noise' | 'gradient' | 'none';
   /** Optional id for anchor linking */
@@ -54,7 +54,10 @@ function getAccentClasses(accent: string): { border: string; bg: string; text: s
   if (accent === 'green') return { border: 'color-tech--border', bg: 'color-tech--bg', text: 'color-tech--text' };
   if (accent === 'blue') return { border: 'color-philosophy--border', bg: 'color-philosophy--bg', text: 'color-philosophy--text' };
   if (accent === 'purple') return { border: 'color-community--border', bg: 'color-community--bg', text: 'color-community--text' };
-  if (accent === 'yellow') return { border: 'color-story--border', bg: 'color-story--bg', text: 'color-story--text' };
+  if (accent === 'yellow') return { border: 'color-highlight--border', bg: 'color-highlight--bg', text: 'color-highlight--text' };
+  if (accent === 'orange') return { border: 'color-energy--border', bg: 'color-energy--bg', text: 'color-energy--text' };
+  if (accent === 'red') return { border: 'color-fire--border', bg: 'color-fire--bg', text: 'color-fire--text' };
+  if (accent === 'cyan') return { border: 'color-flow--border', bg: 'color-flow--bg', text: 'color-flow--text' };
   return { border: '', bg: '', text: '' };
 }
 

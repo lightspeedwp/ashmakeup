@@ -208,7 +208,7 @@ export function AboutPage() {
       />
 
       {/* ──────────────── CHAPTER NAV + CONTENT ──────────────── */}
-      <div className="about-landing bg-atomic-noise">
+      <div className="about-landing about-landing--fluid bg-atomic-noise">
 
         {/* Mobile chapter nav (horizontal, sticky) */}
         <div className="about-landing__mobile-nav">

@@ -52,9 +52,9 @@ export function Footer() {
     (cat) => cat.id !== "all"
   );
 
-  /** Filter out Videos from main nav items for footer display */
+  /** Filter out Videos and Events from main nav items for footer display */
   const footerNavItems = navigationItems.filter(
-    (item) => item.id !== "videos"
+    (item) => item.id !== "videos" && item.id !== "events"
   );
 
   return (
@@ -110,6 +110,7 @@ export function Footer() {
                     type="button"
                     onClick={() => navigateTo(item.path)}
                     className="footer__nav-link"
+                    data-nav-color={item.neonColor}
                   >
                     <item.icon
                       className="footer__nav-link-icon"

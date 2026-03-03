@@ -101,6 +101,7 @@ export function MobileMenu({
             className="mobile-menu__nav-link"
             role="menuitem"
             aria-current={currentPage === item.id ? "page" : undefined}
+            data-nav-color={item.neonColor}
           >
             <item.icon className="mobile-menu__nav-icon" aria-hidden="true" />
             {item.label}

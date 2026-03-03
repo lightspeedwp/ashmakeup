@@ -139,7 +139,7 @@ export const hiddenAboutData: HiddenAboutData = {
       label: 'The book',
       tagline: 'This one time on acid\u2026 \u2014 the memoir in progress',
       href: '/about/book',
-      accent: 'pink',
+      accent: 'orange',
       icon: 'Book',
     },
     {
@@ -155,7 +155,7 @@ export const hiddenAboutData: HiddenAboutData = {
       label: 'History',
       tagline: 'Every glow-up has an origin story',
       href: '/about/history',
-      accent: 'purple',
+      accent: 'yellow',
       icon: 'Clock',
     },
     {
@@ -163,7 +163,7 @@ export const hiddenAboutData: HiddenAboutData = {
       label: 'Travels',
       tagline: 'Chasing sunsets and psytrance across continents',
       href: '/about/travels',
-      accent: 'orange',
+      accent: 'red',
       icon: 'Plane',
     },
     {
@@ -171,7 +171,7 @@ export const hiddenAboutData: HiddenAboutData = {
       label: 'Podcast',
       tagline: 'Raw conversations from the neon underground',
       href: '/about/podcast',
-      accent: 'red',
+      accent: 'pink',
       icon: 'Mic',
     },
     {
@@ -179,7 +179,7 @@ export const hiddenAboutData: HiddenAboutData = {
       label: 'eBook preview',
       tagline: 'Read the first chapters before anyone else',
       href: '/ebook',
-      accent: 'pink',
+      accent: 'purple',
       icon: 'BookOpen',
     },
     {
@@ -211,7 +211,7 @@ export const hiddenAboutData: HiddenAboutData = {
       label: 'Music \u2014 140 BPM heartbeat',
       tagline: 'When the bass drops, the brushes rise',
       href: '/about/music',
-      accent: 'purple',
+      accent: 'blue',
       icon: 'Music',
     },
     {
@@ -219,7 +219,7 @@ export const hiddenAboutData: HiddenAboutData = {
       label: 'LightSpeed \u2014 The day job',
       tagline: 'WordPress by day, neon by night',
       href: '/about/lightspeed',
-      accent: 'blue',
+      accent: 'orange',
       icon: 'Code',
     },
     {
@@ -227,7 +227,7 @@ export const hiddenAboutData: HiddenAboutData = {
       label: 'Education \u2014 The unconventional classroom',
       tagline: 'Life taught more than any lecture hall',
       href: '/about/education',
-      accent: 'orange',
+      accent: 'yellow',
       icon: 'GraduationCap',
     },
     {
@@ -243,7 +243,7 @@ export const hiddenAboutData: HiddenAboutData = {
       label: 'Fitness \u2014 The moving body',
       tagline: 'Movement is the first act of creation',
       href: '/about/fitness',
-      accent: 'green',
+      accent: 'orange',
       icon: 'Activity',
     },
     {

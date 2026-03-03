@@ -6,7 +6,7 @@
  * guidelines and accessibility standards.
  * 
  * @author Ash Shaw Portfolio Team
- * @version 1.5.0 - Refactored to use async usePortfolioEntries hook (Mock/WP)
+ * @version 1.6.0 - Bundler-safe: no arrow functions, no destructuring, memoized hook options
  */
 
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
@@ -41,8 +41,9 @@ import {
   SCHEMA_IDS,
   buildImageGallerySchema,
 } from '../../../utils/schemaService';
-import { usePortfolioEntries } from '../../../hooks/useContent'; // UPDATED IMPORT
+import { usePortfolioEntries } from '../../../hooks/useContent';
 import { OptimizedImage } from '../../ui/OptimizedImage';
+import { portfolioHero } from '../../../data/mock/pages/portfolio';
 import "../../../styles/blocks/portfolio-main-page.css";
 
 interface PortfolioCardEntry {
@@ -92,11 +93,12 @@ const INITIAL_PORTFOLIO_LIGHTBOX: PortfolioLightboxState = {
   isOpen: false, currentIndex: 0, images: [], title: '',
 };
 
-export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
+export function PortfolioMainPage(props: PortfolioMainPageProps) {
+  var initialCategory = props.initialCategory;
   const setCurrentPage = useAppNavigate();
   const isMobile = useIsMobile();
 
-  useEffect(() => {
+  useEffect(function() {
     setSEO(pageSEO.portfolio);
   }, []);
 
@@ -137,12 +139,23 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
     ];
   }, []);
 
-  // Use the new Async Hook
-  const { data: entriesData, loading: entriesLoading, error: entriesError, refresh: refreshEntries } = usePortfolioEntries({
-    category: 'all', // We fetch all and filter client side for now to match mock behavior
-    page: 1, // We fetch all for client side pagination to match previous logic
-    limit: 100 // Fetch plenty
-  });
+  /**
+   * MEMOIZED HOOK OPTIONS - Fixes flickering issue by stabilizing the dependency
+   * passed to usePortfolioEntries.
+   */
+  const portfolioOptions = useMemo(function() {
+    return {
+      category: 'all', 
+      page: 1, 
+      limit: 100 
+    };
+  }, []);
+
+  const entriesHook = usePortfolioEntries(portfolioOptions);
+  const entriesData = entriesHook.data;
+  const entriesLoading = entriesHook.loading;
+  const entriesError = entriesHook.error;
+  const refreshEntries = entriesHook.refresh;
 
   // Inject ImageGallery schema once all entries are available
   useEffect(function () {
@@ -170,7 +183,7 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
   }, []);
 
   // Update state when initialCategory changes
-  React.useEffect(function () {
+  useEffect(function () {
     setPortfolioState(function (prev) {
       return {
         page: 1,
@@ -213,7 +226,7 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
   const portfolioEntries = useMemo(function () {
     if (!entriesData || !entriesData.entries) return [];
 
-    let entries = transformUnifiedToPortfolioCard(entriesData.entries);
+    var entries = transformUnifiedToPortfolioCard(entriesData.entries);
 
     // Filter by active categories from ArchiveFilters
     if (activeCategories.length > 0) {
@@ -296,7 +309,8 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
 
   const handlePortfolioClick = useCallback(function (entry, imageIndex) {
     if (imageIndex === undefined) imageIndex = 0;
-    const images = entry.images.map(function (img) {
+    const entryImages = entry.images;
+    const images = entryImages.map(function (img) {
       return {
         src: img.src,
         alt: img.alt,
@@ -334,6 +348,120 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
     }
   }, []);
 
+  const handleLightboxNavigate = useCallback(function(index) {
+    setLightbox(function(prev) {
+      return {
+        isOpen: prev.isOpen,
+        currentIndex: index,
+        images: prev.images,
+        title: prev.title
+      };
+    });
+  }, []);
+
+  const clearAllFilters = function() {
+    setActiveCategories([]);
+    setSortBy('recent');
+    handleCategoryChange('all');
+  };
+
+  /**
+   * Helper to render pagination items - avoids IIFE arrow functions in JSX.
+   */
+  const renderPaginationItems = function() {
+    const totalPages = pagination.totalPages;
+    const currentPage = portfolioState.page;
+    const maxVisible = isMobile ? 3 : 5;
+    const items = [];
+    
+    if (totalPages <= maxVisible) {
+      for (var i = 1; i <= totalPages; i++) {
+        (function(pageNumber) {
+          const isCurrentPage = pageNumber === currentPage;
+          items.push(
+            <PaginationItem key={pageNumber}>
+              <PaginationLink
+                onClick={function () { handlePageChange(pageNumber); }}
+                isActive={isCurrentPage}
+                className="pagination-btn"
+              >
+                {pageNumber}
+              </PaginationLink>
+            </PaginationItem>
+          );
+        })(i);
+      }
+    } else {
+      // First page
+      items.push(
+        <PaginationItem key={1}>
+          <PaginationLink
+            onClick={function () { handlePageChange(1); }}
+            isActive={currentPage === 1}
+            className="pagination-btn"
+          >
+            1
+          </PaginationLink>
+        </PaginationItem>
+      );
+      
+      // Ellipsis 1
+      if (currentPage > 3) {
+        items.push(
+          <PaginationItem key="ellipsis-1">
+            <PaginationEllipsis className="pagination-ellipsis" />
+          </PaginationItem>
+        );
+      }
+      
+      // Middle pages
+      const start = Math.max(2, currentPage - 1);
+      const end = Math.min(totalPages - 1, currentPage + 1);
+      
+      for (var j = start; j <= end; j++) {
+        (function(pageNumber) {
+          items.push(
+            <PaginationItem key={pageNumber}>
+              <PaginationLink
+                onClick={function () { handlePageChange(pageNumber); }}
+                isActive={currentPage === pageNumber}
+                className="pagination-btn"
+              >
+                {pageNumber}
+              </PaginationLink>
+            </PaginationItem>
+          );
+        })(j);
+      }
+      
+      // Ellipsis 2
+      if (currentPage < totalPages - 2) {
+        items.push(
+          <PaginationItem key="ellipsis-2">
+            <PaginationEllipsis className="pagination-ellipsis" />
+          </PaginationItem>
+        );
+      }
+      
+      // Last page
+      if (totalPages > 1) {
+        items.push(
+          <PaginationItem key={totalPages}>
+            <PaginationLink
+              onClick={function () { handlePageChange(totalPages); }}
+              isActive={currentPage === totalPages}
+              className="pagination-btn"
+            >
+              {totalPages}
+            </PaginationLink>
+          </PaginationItem>
+        );
+      }
+    }
+    
+    return items;
+  };
+
   return (
     <main id="main-content" role="main" tabIndex={-1} className="portfolio-main-page bg-atomic-noise">
       {/* Portfolio page header */}
@@ -342,6 +470,9 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
           <h1 className="text-hero-h1 text-gradient-pink-purple-blue mb-0">
             Portfolio
           </h1>
+          <p className="portfolio-page-header__subtitle">
+            {portfolioHero.subtitle}
+          </p>
         </div>
       </section>
 
@@ -357,11 +488,7 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
             resultCount={portfolioEntries.length}
             onCategoryToggle={handleArchiveCategoryToggle}
             onSortChange={setSortBy}
-            onClearAll={function () {
-              setActiveCategories([]);
-              setSortBy('recent');
-              handleCategoryChange('all');
-            }}
+            onClearAll={clearAllFilters}
           />
         </div>
       </section>
@@ -427,93 +554,7 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
                         />
                       </PaginationItem>
                       
-                      {(() => {
-                        const totalPages = pagination.totalPages;
-                        const currentPage = portfolioState.page;
-                        const maxVisible = isMobile ? 3 : 5;
-                        
-                        if (totalPages <= maxVisible) {
-                          return Array.from({ length: totalPages }, function (_, index) {
-                            const pageNumber = index + 1;
-                            const isCurrentPage = pageNumber === currentPage;
-                            
-                            return (
-                              <PaginationItem key={pageNumber}>
-                                <PaginationLink
-                                  onClick={function () { handlePageChange(pageNumber); }}
-                                  isActive={isCurrentPage}
-                                  className="pagination-btn"
-                                >
-                                  {pageNumber}
-                                </PaginationLink>
-                              </PaginationItem>
-                            );
-                          });
-                        } else {
-                          const pages = [];
-                          
-                          pages.push(
-                            <PaginationItem key={1}>
-                              <PaginationLink
-                                onClick={function () { handlePageChange(1); }}
-                                isActive={currentPage === 1}
-                                className="pagination-btn"
-                              >
-                                1
-                              </PaginationLink>
-                            </PaginationItem>
-                          );
-                          
-                          if (currentPage > 3) {
-                            pages.push(
-                              <PaginationItem key="ellipsis-1">
-                                <PaginationEllipsis className="pagination-ellipsis" />
-                              </PaginationItem>
-                            );
-                          }
-                          
-                          const start = Math.max(2, currentPage - 1);
-                          const end = Math.min(totalPages - 1, currentPage + 1);
-                          
-                          for (let i = start; i <= end; i++) {
-                            pages.push(
-                              <PaginationItem key={i}>
-                                <PaginationLink
-                                  onClick={function () { handlePageChange(i); }}
-                                  isActive={currentPage === i}
-                                  className="pagination-btn"
-                                >
-                                  {i}
-                                </PaginationLink>
-                              </PaginationItem>
-                            );
-                          }
-                          
-                          if (currentPage < totalPages - 2) {
-                            pages.push(
-                              <PaginationItem key="ellipsis-2">
-                                <PaginationEllipsis className="pagination-ellipsis" />
-                              </PaginationItem>
-                            );
-                          }
-                          
-                          if (totalPages > 1) {
-                            pages.push(
-                              <PaginationItem key={totalPages}>
-                                <PaginationLink
-                                  onClick={function () { handlePageChange(totalPages); }}
-                                  isActive={currentPage === totalPages}
-                                  className="pagination-btn"
-                                >
-                                  {totalPages}
-                                </PaginationLink>
-                              </PaginationItem>
-                            );
-                          }
-                          
-                          return pages;
-                        }
-                      })()}
+                      {renderPaginationItems()}
                       
                       <PaginationItem>
                         <PaginationNext 
@@ -560,7 +601,7 @@ export function PortfolioMainPage({ initialCategory }: PortfolioMainPageProps) {
         currentIndex={lightbox.currentIndex}
         images={lightbox.images}
         title={lightbox.title}
-        onNavigate={(index) => setLightbox(prev => ({ ...prev, currentIndex: index }))}
+        onNavigate={handleLightboxNavigate}
       />
 
       <FaqSection pageId="portfolio" />

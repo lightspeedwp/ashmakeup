@@ -120,7 +120,7 @@ export function BookPage() {
                 id={section.id}
                 title={section.title}
                 variant="default"
-                colorAccent="pink"
+                colorAccent="orange"
               >
                 {section.paragraphs.map(function (p, i) {
                   return (
@@ -144,7 +144,7 @@ export function BookPage() {
             id="chapter-previews"
             title={book.chaptersHeading}
             variant="default"
-            colorAccent="pink"
+            colorAccent="orange"
           >
             <Accordion
               items={chapterAccordionItems}

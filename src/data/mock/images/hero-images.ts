@@ -74,7 +74,7 @@ export const aboutHeroImages: HeroImage[] = [
     aspectRatio: '3:4'
   },
   {
-    src: 'https://images.unsplash.com/photo-1601742162870-46790bce3120?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjcmVhdGl2ZSUyMGV5ZSUyMG1ha2V1cCUyMGFydCUyMG5lb24lMjBjb2xvcnN8ZW58MXx8fHwxNzU3NjY0NDc2fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    src: 'https://images.unsplash.com/photo-1631881068324-b216d0d2a3ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjcmVhdGl2ZSUyMGV5ZSUyMG1ha2V1cCUyMGFydCUyMG5lb24lMjBjb2xvcnN8ZW58MXx8fHwxNzcyNTYxMTk0fDA&ixlib=rb-4.1.0&q=80&w=1080',
     alt: 'Creative eye makeup art with vibrant neon colors showcasing technical mastery',
     caption: 'Technical mastery',
     description: 'Intricate eye makeup art with neon colors demonstrating the technical mastery and precision that defines Ash\'s makeup artistry',

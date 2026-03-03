@@ -83,7 +83,7 @@ export function AdhdPage() {
                 id={section.id}
                 title={section.title}
                 variant="default"
-                colorAccent="green"
+                colorAccent="yellow"
               >
                 {section.paragraphs.map(function (p, i) {
                   return (

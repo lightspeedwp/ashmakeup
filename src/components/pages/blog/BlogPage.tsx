@@ -46,7 +46,8 @@ interface BlogPageState {
   limit: number;
 }
 
-export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
+export function BlogPage(props: BlogPageProps) {
+  const propCategory = props.initialCategory;
   const setCurrentPage = useAppNavigate();
   const [searchParams] = useSearchParams();
   const initialCategory = propCategory || searchParams.get('category') || undefined;
@@ -107,21 +108,28 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
 
   const [debouncedSearch, setDebouncedSearch] = useState(blogState.searchQuery);
 
-  const { 
-    data: blogData, 
-    loading: postsLoading, 
-    refresh: refreshPosts 
-  } = useBlogPosts({
-    category: blogState.category,
-    tags: blogState.tags.length > 0 ? blogState.tags : undefined,
-    page: blogState.page,
-    limit: blogState.limit,
-    sortBy: sortBy === 'recent' ? 'publishedAt' : 'title',
-    sortOrder: 'desc',
-    publishedOnly: true,
-    autoRefresh: true,
-    refreshInterval: 600000,
-  });
+  /** 
+   * MEMOIZED HOOK OPTIONS - Fixes the flickering issue by stabilizing the dependency
+   * passed to useBlogPosts.
+   */
+  const blogPostsOptions = useMemo(function () {
+    return {
+      category: blogState.category,
+      tags: blogState.tags.length > 0 ? blogState.tags : undefined,
+      page: blogState.page,
+      limit: blogState.limit,
+      sortBy: sortBy === 'recent' ? 'publishedAt' : 'title',
+      sortOrder: 'desc',
+      publishedOnly: true,
+      autoRefresh: true,
+      refreshInterval: 600000,
+    };
+  }, [blogState.category, blogState.tags, blogState.page, blogState.limit, sortBy]);
+
+  const postsHook = useBlogPosts(blogPostsOptions);
+  const blogData = postsHook.data;
+  const postsLoading = postsHook.loading;
+  const refreshPosts = postsHook.refresh;
 
   useEffect(function () {
     const timer = setTimeout(function () {
@@ -369,7 +377,7 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
                     <div className="blog-card__image-container">
                       {post.featuredImage ? (
                         <OptimizedImage
-                          src={post.featuredImage.url}
+                          src={post.featuredImage.src}
                           alt={post.featuredImage.alt}
                           className="blog-card__image"
                           preset="thumbnail"

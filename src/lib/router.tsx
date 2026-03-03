@@ -37,7 +37,7 @@ import React, {
  * in call-site code.  Uses Object.entries iteration so the bundler cannot
  * statically rewrite the access pattern.
  */
-function grab(obj: any, key: string): any {
+export function grab(obj: any, key: string): any {
   if (obj == null) return undefined;
   var entries = Object.entries(obj);
   for (var i = 0; i < entries.length; i++) {
@@ -51,7 +51,7 @@ function grab(obj: any, key: string): any {
  * Safely read from an array by numeric index, using iteration to avoid
  * bracket-notation that the bundler may choke on.
  */
-function arrayGet(arr: any[], index: number): any {
+export function arrayGet(arr: any[] | undefined | null, index: number): any {
   if (!arr) return undefined;
   if (index < 0) return undefined;
   var count = 0;
@@ -68,7 +68,7 @@ function arrayGet(arr: any[], index: number): any {
  * Safely set a property on an object using Object.defineProperty
  * to avoid bracket-notation assignment that the bundler chokes on.
  */
-function setProp(obj: any, key: string, val: any): void {
+export function setProp(obj: any, key: string, val: any): void {
   Object.defineProperty(obj, key, {
     value: val,
     writable: true,

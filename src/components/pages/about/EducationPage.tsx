@@ -3,7 +3,7 @@
  * Ash's educational journey from school in South Africa to self-taught
  * web developer, festival workshops, and the "university of the dancefloor."
  *
- * Neon accent: Orange
+ * Neon accent: Yellow
  * Phase 5 Polish — PullQuote, Timeline, ContentSection, bundler-safe syntax
  *
  * @component EducationPage
@@ -99,12 +99,12 @@ export function EducationPage() {
               id="formal-education"
               title="The Formal Path"
               variant="callout"
-              colorAccent="pink"
+              colorAccent="yellow"
             >
               <Timeline
                 events={educationTimeline}
                 variant="vertical"
-                colorAccent="pink"
+                colorAccent="yellow"
               />
             </ContentSection>
           </div>
@@ -119,7 +119,7 @@ export function EducationPage() {
                 id={section.id}
                 title={section.title}
                 variant="default"
-                colorAccent="pink"
+                colorAccent="yellow"
               >
                 {section.paragraphs.map(function (p, i) {
                   return (

@@ -82,7 +82,7 @@ export function TravelsPage() {
                 id={section.id}
                 title={section.title}
                 variant="default"
-                colorAccent="pink"
+                colorAccent="red"
               >
                 {section.paragraphs.map(function (p, i) {
                   return (

@@ -1817,7 +1817,7 @@ The first international journey and one of the defining experiences of Ash's lif
 - **Hua Hin to Koh Phangan:** Cycled down the coast, then took a boat across
 - "People at festivals don't believe me that I'm gonna ride home. When they see me riding out of the festival on the Monday morning, they believe me then."
 
-## Berlin (2016 — Present)
+## Berlin (2019 — Present)
 - Arrived with a one-way ticket, a bike, and exactly enough savings for two months' rent
 - Stories from other festival people drew him to Berlin — not brochures, not travel blogs
 - Berlin demanded difference, not just tolerated it
@@ -1877,7 +1877,7 @@ Ash has learned to read and adapt — not changing his style, but letting it be 
 
 | Destination | Region | Significance |
 |-------------|--------|-------------|
-| Berlin | Germany | Home base since 2016. Techno underground, open-air summers, cycling freedom |
+| Berlin | Germany | Home base since 2019. Techno underground, open-air summers, cycling freedom |
 | Cape Town | South Africa | Where it all began. Origin Festival, outdoor trance, the mother city |
 | Paarl | Western Cape, SA | Birthplace. Primary school, high school, mountain biking |
 | Helderstroom | Western Cape, SA | Elandskloof Guest Farm — Origin Festival location |

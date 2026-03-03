@@ -100,6 +100,7 @@ export function RootLayout() {
       <div className="app-container bg-atomic-noise">
         {/* Site-wide SVG grain noise overlay — inline <svg> avoids bundler url() resolution */}
         <svg className="app-noise-overlay" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          width="100%" height="100%" preserveAspectRatio="none"
           dangerouslySetInnerHTML={noiseMarkup}
         />
 

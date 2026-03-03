@@ -315,6 +315,7 @@ export function EnhancedLightbox({
                 alt={currentItem.alt}
                 className={`lightbox-image ${isZoomed ? 'lightbox-image--zoomed' : ''}`}
                 onClick={toggleZoom}
+                preset="lightbox"
               />
             )}
             

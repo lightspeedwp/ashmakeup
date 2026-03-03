@@ -6,7 +6,7 @@
  * CMS for dynamic content while providing static fallbacks for development.
  * 
  * @author Ash Shaw Portfolio Team
- * @version 2.1.0 - Analytics hook integration + bundler-safe syntax
+ * @version 2.2.0 - Analytics hook integration + fully bundler-safe syntax
  */
 
 import React, { useEffect, useState } from 'react';
@@ -54,7 +54,8 @@ const AUTHOR_PROFILE = {
   ]
 };
 
-export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
+export function BlogPostPage(props: BlogPostPageProps) {
+  var slugProp = props.slug;
   var params = useParams();
   var slug = slugProp ? slugProp : (params.slug ? params.slug : '');
   var setCurrentPage = useAppNavigate();
@@ -100,28 +101,28 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
 
   useEffect(function () {
     // Mock view count
-    const storageKeyViews = 'blog-views-' + slug;
-    const storedViews = localStorage.getItem(storageKeyViews);
+    var storageKeyViews = 'blog-views-' + slug;
+    var storedViews = localStorage.getItem(storageKeyViews);
     
     if (storedViews) {
       setViews(parseInt(storedViews, 10));
     } else {
-      const initialViews = Math.floor(Math.random() * 1500) + 500;
+      var initialViews = Math.floor(Math.random() * 1500) + 500;
       setViews(initialViews);
       localStorage.setItem(storageKeyViews, initialViews.toString());
     }
 
     // Mock initial likes or load from storage
-    const storageKeyLikes = 'blog-likes-' + slug;
-    const storageKeyIsLiked = 'blog-isliked-' + slug;
+    var storageKeyLikes = 'blog-likes-' + slug;
+    var storageKeyIsLiked = 'blog-isliked-' + slug;
     
-    const storedLikes = localStorage.getItem(storageKeyLikes);
-    const storedIsLiked = localStorage.getItem(storageKeyIsLiked);
+    var storedLikes = localStorage.getItem(storageKeyLikes);
+    var storedIsLiked = localStorage.getItem(storageKeyIsLiked);
     
     if (storedLikes) {
       setLikes(parseInt(storedLikes, 10));
     } else {
-      const initialLikes = Math.floor(Math.random() * 100) + 20;
+      var initialLikes = Math.floor(Math.random() * 100) + 20;
       setLikes(initialLikes);
       localStorage.setItem(storageKeyLikes, initialLikes.toString());
     }
@@ -131,9 +132,9 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
     }
   }, [slug]);
 
-  const handleLike = function () {
-    const newIsLiked = !isLiked;
-    const newLikes = newIsLiked ? likes + 1 : likes - 1;
+  var handleLike = function () {
+    var newIsLiked = !isLiked;
+    var newLikes = newIsLiked ? likes + 1 : likes - 1;
     
     setIsLiked(newIsLiked);
     setLikes(newLikes);
@@ -142,13 +143,13 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
     localStorage.setItem('blog-isliked-' + slug, newIsLiked.toString());
   };
 
-  const handleBackToBlog = function () {
+  var handleBackToBlog = function () {
     setCurrentPage('blog');
   };
 
   // Handle clickable tags
-  const handleTagClick = function (tag) {
-    const tagSlug = tag.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  var handleTagClick = function (tag) {
+    var tagSlug = tag.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
     navigate('/blog/tag/' + tagSlug);
   };
 
@@ -211,22 +212,22 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
   }
 
   // Parse markdown content
-  const htmlContent = markdownToHtml(post.content);
+  var htmlContent = markdownToHtml(post.content);
 
-  const handleContentClick = function (e) {
-    const target = e.target;
-    const link = target.closest('a');
+  var handleContentClick = function (e) {
+    var target = e.target;
+    var link = target.closest('a');
     
     if (link && link.getAttribute('data-internal-link') === 'true') {
       e.preventDefault();
-      const href = link.getAttribute('href');
+      var href = link.getAttribute('href');
       
       if (href) {
         if (href === '#contact') {
           setCurrentPage('contact');
           window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
         } else if (href.indexOf('#') === 0) {
-          const element = document.querySelector(href);
+          var element = document.querySelector(href);
           if (element) {
             element.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' });
           }
@@ -273,7 +274,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
                 <button 
                   type="button"
                   onClick={function () {
-                    const catSlug = post.category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                    var catSlug = post.category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
                     navigate('/blog/category/' + catSlug);
                   }}
                   className="category-badge"
@@ -312,7 +313,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
             {post.featuredImage ? (
               <div className="blog-article__image-container">
                 <OptimizedImage
-                  src={post.featuredImage.url}
+                  src={post.featuredImage.src}
                   alt={post.featuredImage.alt || post.title}
                   className="blog-article__image"
                   preset="content"
@@ -391,7 +392,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
                       title={post.title}
                       description={post.excerpt || post.title}
                       url={typeof window !== 'undefined' ? window.location.href : 'https://ashshaw.makeup/blog/' + slug}
-                      imageUrl={post.featuredImage ? post.featuredImage.url : undefined}
+                      imageUrl={post.featuredImage ? post.featuredImage.src : undefined}
                       variant="inline"
                       align="left"
                     />
@@ -428,7 +429,7 @@ export function BlogPostPage({ slug: slugProp }: BlogPostPageProps) {
                   {/* Social Links */}
                   <div className="author-socials">
                     {AUTHOR_PROFILE.socials.map(function (social) {
-                      const SocialIcon = social.icon;
+                      var SocialIcon = social.icon;
                       return (
                         <a 
                           key={social.name}

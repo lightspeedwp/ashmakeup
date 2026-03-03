@@ -3,7 +3,7 @@
  * How physical movement connects to Ash's creative output, mental health,
  * and ADHD regulation. Cycling, dance, yoga, running, triathlon, Muay Thai.
  *
- * Neon accent: Green
+ * Neon accent: Orange
  * Phase 7 Enrichment — Koh Phangan training base, intersection model
  *
  * @component FitnessPage
@@ -60,7 +60,7 @@ export function FitnessPage() {
             <PullQuote
               quote={data.pullQuote}
               variant="center"
-              neonColor="green"
+              neonColor="orange"
             />
           </div>
 
@@ -101,7 +101,7 @@ export function FitnessPage() {
               id={data.kohPhanganTraining.id}
               title={data.kohPhanganTraining.title}
               variant="callout"
-              colorAccent="blue"
+              colorAccent="orange"
             >
               {data.kohPhanganTraining.paragraphs.map(function (p, i) {
                 return (
@@ -122,7 +122,7 @@ export function FitnessPage() {
               id={data.intersectionModel.id}
               title={data.intersectionModel.title}
               variant="default"
-              colorAccent="pink"
+              colorAccent="orange"
             >
               <p className="about-subpage__section-text">
                 {data.intersectionModel.intro}
@@ -153,7 +153,7 @@ export function FitnessPage() {
               <PullQuote
                 quote={data.intersectionModel.closing}
                 variant="center"
-                neonColor="pink"
+                neonColor="orange"
               />
             </ContentSection>
           </div>
@@ -172,7 +172,7 @@ export function FitnessPage() {
                 id={section.id}
                 title={section.title}
                 variant="default"
-                colorAccent="green"
+                colorAccent="orange"
               >
                 {section.paragraphs.map(function (p, i) {
                   return (

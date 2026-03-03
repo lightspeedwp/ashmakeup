@@ -28,6 +28,19 @@
 
 ---
 
+### 🔴 High Priority — Bundler Compatibility & Stability (v8.2.1 Verification)
+> Source: [/reports/bundler-compatibility/verification-report-v8.2.1.md](../reports/bundler-compatibility/verification-report-v8.2.1.md)
+> **Overall Status:** ✅ ALL RESOLVED — 5/5 findings fixed — March 3, 2026
+
+**Findings:**
+- [x] **`hooks/useContent.ts`** — Replaced `useState` array destructuring with explicit index access (`dataState[0]`, `dataState[1]`). ✅
+- [x] **`PortfolioMainPage.tsx`** — Converted `let entries` to `var entries` in `useMemo` filter/sort block. IIFE pattern already compliant. ✅
+- [x] **`useWordPress.ts`** — Added clear MIGRATION NOTE comment documenting production URL, sandbox fallback behavior, and mock data path. ✅
+- [x] **`BlogPage.tsx`** — Verified 100% compliant. ✅
+- [x] **`BlogPreviewSection.tsx`** — Verified 100% compliant. ✅
+
+---
+
 ## ✅ Audit Session — March 3, 2026
 
 ### Root Cleanup Audit (Re-executed)
@@ -234,6 +247,14 @@
   - Header light mode fix applied
   - QA: 13/13 data integrity tests passed, 0 critical issues
   - Documentation: README v8.1.0, CHANGELOG [8.1.0], /data/README v3.0.0
+- ✅ **Phase 7:** Content Expansion — Voice & Accuracy — March 3, 2026
+  - 10 voice rewrites across ebook parts 3 & 4 (cat bios, cultivation, grading, timeline, products, AI workflow, lessons, values, stock phrases)
+  - 6 new content additions (core beliefs, fusion nails, running achievements, Media24 Scrum Master, Lourens swimming, festival vs Berlin kit)
+  - 3 accuracy fixes (stock phrase retirement, year corrections, duplicate section removal)
+  - Berlin arrival date confirmed as 2019 (website-content.md "2016" is incorrect)
+  - Aixa/Sisyphos story deferred (revisit later)
+  - Tasks: `/tasks/content-expansion-phase7-tasks.md`
+  - Report: `/reports/content-expansion-phase7/03-ebook-enrichment.md`
 
 **Total deliverables:**
 - 82-page ebook with 20 chapters + 2 appendices
@@ -295,3 +316,9 @@ _Archive completed tasks here for reference._
 - [x] **UI Primitives Decision** — Option A (keep all 45 shadcn stubs): CSS cascade dependency confirmed, project feature-complete, stubs are tree-shaken — March 1, 2026
 - [x] **Content Organization (Phase 1)** — broke up `RESTORE-FROM-GIT.md` into 16 organized reference files across `/content/personal/` (10 files), `/content/lightspeed/` (5 files), `/content/book/` (1 file) — March 1, 2026
 - [x] **Ebook Expansion (Phase 2)** — added Chapter 19 "Twenty-Three Years" (3 pages), renumbered Chapter 20 "The Cumulative Effect", added Appendix B "The Tribes" (6 pages covering global + location-specific tribes); fixed duplicate Chapter 18 entries; updated all page numbers; total ebook now 82 pages — March 1, 2026
+- [x] **Broken image audit** — replaced 10 broken/suspect/duplicate Unsplash URLs across 6 files (`blog/posts.ts`, `hero-images.ts`, `uv-makeup.ts`, `festivals.ts`, `Constants.ts`, `videos/entries.ts`); confirmed broken: Six Cats cannabis image; also fixed: duplicate dancefloor image, misused woman portrait in festival portfolio, suspect URLs for UV makeup, color theory, eco glitter, solar eclipse, Lucy cat — March 3, 2026
+- [x] **`useBlogPost` refresh()** — Added `refreshCount` state + `clearCacheEntry()` to `useBlogPost` hook in `/hooks/useWordPress.ts` (v1.5.0); now follows same 3-step cache strategy as the other 3 WP hooks; all 4 hooks fully support forced re-fetch — March 3, 2026
+- [x] **Noise overlay fix** — SVG grain texture was only rendering as a small strip at the top of the page; added `width="100%"` `height="100%"` `preserveAspectRatio="none"` to `<svg>` element in `RootLayout.tsx`; added `max-width: none` to `.app-noise-overlay` CSS to override global SVG reset (`height: auto; max-width: 100%`); noise now tiles across full viewport — March 3, 2026
+- [x] **WordPress metadata mapping audit** — Audited `/docs/cms-field-mapping.md` against actual `useWordPress.ts` mapper functions; found 14 issues (6 High field source mismatches, 5 Medium stale content, 3 Low cosmetic); rewrote doc to v2.0.0 with correct `post.meta._*` REST API paths, added ACF convention table, added hook status column to CPT table, marked Events as deprecated, fixed stale `/dist/wordpress-export.json` and `import.meta.env` references, added caching layer docs, fixed stale "Contentful" comments in `/data/types/blog.ts`; report at `/reports/wp-metadata-audit/findings.md` — March 3, 2026
+- [x] **Media Library image breakpoint verification** — Audited all image-rendering components across 10 breakpoints (320px–1920px+); found 1 bug (BlogPostPage share image `.url` → `.src`), applied 2 improvements (lightbox `preset="lightbox"`, mega menu `decoding="async"`), documented 2 accepted patterns (PortfolioCard and hero mosaic `background-image`); all images scale correctly at every breakpoint via CSS `aspect-ratio` + `object-fit: cover` + responsive grid columns; report at `/reports/media-library-breakpoints/findings.md` — March 3, 2026
+- [x] **Sub-page alignment audit** — Verified all 21 About sub-pages against Phase 7 ebook content; 8 data files updated across 2 rounds: LightSpeed (intern count 2→3), Fitness (running achievements, Lourens swimming), Cycling (Berlin/Thailand kit note, Stormsvlei 185km ride), Travels (nomad circuit rewritten with full 4-leg seasonal cycle), website-content.md (Berlin 2016→2019 x2); 7 sub-pages verified consistent (Berlin, Six Cats, Bio, Music, Partners, Process, Manifesto); tasks at `/tasks/content-expansion-phase7-tasks.md` — March 3, 2026

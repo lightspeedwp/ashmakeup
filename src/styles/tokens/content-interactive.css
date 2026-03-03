@@ -115,6 +115,22 @@
   background: linear-gradient(to bottom, var(--wp--preset--color--neon-purple), transparent);
 }
 
+.timeline--yellow .timeline__line {
+  background: linear-gradient(to bottom, var(--wp--preset--color--neon-yellow), transparent);
+}
+
+.timeline--orange .timeline__line {
+  background: linear-gradient(to bottom, var(--wp--preset--color--neon-orange), transparent);
+}
+
+.timeline--red .timeline__line {
+  background: linear-gradient(to bottom, var(--wp--preset--color--neon-red), transparent);
+}
+
+.timeline--cyan .timeline__line {
+  background: linear-gradient(to bottom, var(--wp--preset--color--neon-cyan), transparent);
+}
+
 .timeline__event {
   position: relative;
   padding-bottom: var(--wp--preset--spacing--fluid-lg);
@@ -163,6 +179,26 @@
 .timeline--purple .timeline__dot {
   background-color: var(--wp--preset--color--neon-purple);
   box-shadow: 0 0 8px rgba(190, 0, 254, 0.4);
+}
+
+.timeline--yellow .timeline__dot {
+  background-color: var(--wp--preset--color--neon-yellow);
+  box-shadow: 0 0 8px rgba(255, 229, 0, 0.4);
+}
+
+.timeline--orange .timeline__dot {
+  background-color: var(--wp--preset--color--neon-orange);
+  box-shadow: 0 0 8px rgba(255, 107, 0, 0.4);
+}
+
+.timeline--red .timeline__dot {
+  background-color: var(--wp--preset--color--neon-red);
+  box-shadow: 0 0 8px rgba(255, 0, 50, 0.4);
+}
+
+.timeline--cyan .timeline__dot {
+  background-color: var(--wp--preset--color--neon-cyan);
+  box-shadow: 0 0 8px rgba(0, 247, 255, 0.4);
 }
 
 .timeline__dot-icon {

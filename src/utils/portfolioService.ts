@@ -141,19 +141,19 @@ function hasValidImageURLs(entry: any): boolean {
  * over technique-based tags (e.g. a Thailand entry that uses UV paint is still
  * a Thailand entry, not a UV entry).
  */
-function mapCategory(category: string, tags: string[] = []): string {
-  const lowerTags = tags.map(t => t.toLowerCase());
+export function mapCategory(category: string, tags: string[] = []): string {
+  const lowerTags = tags.map(function(t) { return t.toLowerCase(); });
   const lowerCategory = category.toLowerCase();
 
   // 1. Nail art — very specific category
-  if (lowerCategory.includes('nail')) return 'Fusion Nails';
+  if (lowerCategory.indexOf('nail') !== -1) return 'Fusion Nails';
 
   // 2. Geographic / event tags — checked before technique-based matching
-  if (lowerTags.includes('thailand') || lowerTags.includes('jungle')) return 'Thailand Adventures';
-  if (lowerTags.includes('swiss') || lowerTags.includes('switzerland') || lowerTags.includes('shankra') || lowerTags.includes('reiserfieber')) return 'Swiss Festivals';
+  if (lowerTags.indexOf('thailand') !== -1 || lowerTags.indexOf('jungle') !== -1) return 'Thailand Adventures';
+  if (lowerTags.indexOf('swiss') !== -1 || lowerTags.indexOf('switzerland') !== -1 || lowerTags.indexOf('shankra') !== -1 || lowerTags.indexOf('reiserfieber') !== -1) return 'Swiss Festivals';
 
   // 3. UV Makeup — only when the *primary* category is UV, not just a tag
-  if (lowerCategory.includes('uv') || lowerCategory.includes('blacklight')) return 'UV Makeup';
+  if (lowerCategory.indexOf('uv') !== -1 || lowerCategory.indexOf('blacklight') !== -1) return 'UV Makeup';
 
   // 4. Fallback mappings
   if (category === 'Body Art') return 'Festival Makeup';

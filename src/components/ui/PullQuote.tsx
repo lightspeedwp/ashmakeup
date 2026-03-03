@@ -36,7 +36,7 @@ interface PullQuoteProps {
   /** Alignment variant */
   variant?: 'left' | 'center' | 'right';
   /** Neon color accent for borders and decorative elements */
-  neonColor?: 'pink' | 'green' | 'blue' | 'yellow' | 'purple';
+  neonColor?: 'pink' | 'green' | 'blue' | 'yellow' | 'purple' | 'orange' | 'red' | 'cyan';
 }
 
 /**

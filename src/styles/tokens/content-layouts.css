@@ -196,6 +196,8 @@
   font-size: var(--wp--preset--font-size--section);
   font-weight: 700;
   line-height: 1.2;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .content-section__body {

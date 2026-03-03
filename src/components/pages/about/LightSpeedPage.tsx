@@ -116,7 +116,7 @@ export function LightSpeedPage() {
             <PullQuote
               quote={data.pullQuote}
               variant="center"
-              neonColor="blue"
+              neonColor="orange"
             />
           </div>
 

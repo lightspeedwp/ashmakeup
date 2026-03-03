@@ -78,12 +78,12 @@ export function HistoryPage() {
               title="The Journey So Far"
               subtitle="Key milestones from Berlin to international stages"
               variant="default"
-              colorAccent="pink"
+              colorAccent="yellow"
             >
               <Timeline
                 events={timelineEvents}
                 variant="vertical"
-                colorAccent="pink"
+                colorAccent="yellow"
               />
             </ContentSection>
           </div>

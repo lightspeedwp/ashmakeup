@@ -39,3 +39,39 @@
 .dark .color-community--border { border-color: var(--wp--preset--color--neon-purple); }
 .dark .color-community--text { color: var(--wp--preset--color--neon-purple); }
 .dark .color-community--bg { background-color: rgba(190, 0, 254, 0.12); }
+
+/* --- Energy Accent (Blazing Orange — active/movement content) --- */
+.color-energy--border { border-color: var(--wp--preset--color--neon-orange-text); }
+.color-energy--text { color: var(--wp--preset--color--neon-orange-text); }
+.color-energy--bg { background-color: rgba(255, 107, 0, 0.08); }
+
+.dark .color-energy--border { border-color: var(--wp--preset--color--neon-orange); }
+.dark .color-energy--text { color: var(--wp--preset--color--neon-orange); }
+.dark .color-energy--bg { background-color: rgba(255, 107, 0, 0.12); }
+
+/* --- Fire Accent (Hot Red — passion/intensity content) --- */
+.color-fire--border { border-color: var(--wp--preset--color--neon-red-text); }
+.color-fire--text { color: var(--wp--preset--color--neon-red-text); }
+.color-fire--bg { background-color: rgba(255, 0, 50, 0.08); }
+
+.dark .color-fire--border { border-color: var(--wp--preset--color--neon-red); }
+.dark .color-fire--text { color: var(--wp--preset--color--neon-red); }
+.dark .color-fire--bg { background-color: rgba(255, 0, 50, 0.12); }
+
+/* --- Flow Accent (Aqua Cyan — fluid/water content) --- */
+.color-flow--border { border-color: var(--wp--preset--color--neon-cyan-text); }
+.color-flow--text { color: var(--wp--preset--color--neon-cyan-text); }
+.color-flow--bg { background-color: rgba(0, 247, 255, 0.08); }
+
+.dark .color-flow--border { border-color: var(--wp--preset--color--neon-cyan); }
+.dark .color-flow--text { color: var(--wp--preset--color--neon-cyan); }
+.dark .color-flow--bg { background-color: rgba(0, 247, 255, 0.12); }
+
+/* --- Highlight Accent (Pure Yellow — attention/awareness content) --- */
+.color-highlight--border { border-color: var(--wp--preset--color--neon-yellow-text); }
+.color-highlight--text { color: var(--wp--preset--color--neon-yellow-text); }
+.color-highlight--bg { background-color: rgba(255, 229, 0, 0.08); }
+
+.dark .color-highlight--border { border-color: var(--wp--preset--color--neon-yellow); }
+.dark .color-highlight--text { color: var(--wp--preset--color--neon-yellow); }
+.dark .color-highlight--bg { background-color: rgba(255, 229, 0, 0.12); }

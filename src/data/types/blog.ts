@@ -1,6 +1,6 @@
 /**
  * @fileoverview Blog type definitions
- * Mirrors Contentful structure for development and mock data
+ * Mirrors WordPress CPT structure for development and mock data
  * 
  * @module data/types/blog
  * @author Ash Shaw Portfolio Team
@@ -54,7 +54,7 @@ export interface BlogAuthor {
 
 /**
  * Blog post interface
- * Complete structure for blog posts (mirrors Contentful)
+ * Complete structure for blog posts (WordPress CPT)
  */
 export interface BlogPost {
   /** Unique identifier */
@@ -72,7 +72,7 @@ export interface BlogPost {
   /** 
    * Full post content
    * For mock data: plain markdown string
-   * For Contentful: Rich Text Document object
+   * For WordPress: rendered HTML from post.content.rendered
    */
   content: string | any;
   

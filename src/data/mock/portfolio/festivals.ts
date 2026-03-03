@@ -4,7 +4,7 @@
  * 
  * @module data/mock/portfolio/festivals
  * @author Ash Shaw Portfolio Team
- * @version 3.0.0 - Added 9 international festival entries (2019-2024)
+ * @version 3.1.0 - Updated Unsplash image URLs
  */
 
 import { PortfolioEntry } from '../../types';
@@ -62,7 +62,7 @@ export const festivalWork: PortfolioEntry[] = [
     event: 'Nation of Gondwana',
     description: 'Capturing the vibrant energy and creative spirit of Nation of Gondwana Festival with UV reactive rainbow face paint and body art.',
     content: `## Nation of Gondwana — Where the Dancefloor Becomes a Canvas
-
+    
 Nation of Gondwana is one of those festivals that *defies description*. Nestled in the forests outside Berlin, it's a three-day celebration of music, art, and community that draws some of the most creative people in Europe.
 
 ### The Setup
@@ -182,7 +182,7 @@ Two days of cycling after three days of dancing. My legs were destroyed but my h
     category: 'Festival Makeup',
     images: [
       {
-        src: 'https://images.unsplash.com/photo-1544928147-79a2dbc1f389?w=800&q=90&fit=crop',
+        src: 'https://images.unsplash.com/photo-1739215599231-1a298c6b65e9?w=800&q=90&fit=crop',
         alt: 'Hot pink and violet purple tribal-inspired patterns across face and shoulders with sacred geometry and fractal elements',
         title: 'Vortex tribal fusion - main',
         caption: 'Tribal sacred geometry',
@@ -207,7 +207,7 @@ Two days of cycling after three days of dancing. My legs were destroyed but my h
     category: 'Festival Makeup',
     images: [
       {
-        src: 'https://images.unsplash.com/photo-1502224562085-639556652f33?w=800&q=90&fit=crop',
+        src: 'https://images.unsplash.com/photo-1549929646-6814596a6b48?w=800&q=90&fit=crop',
         alt: 'Multi-color serpentine patterns flowing across face with electric green hot pink royal blue and pure yellow in organic shapes',
         title: 'Rainbow serpent dreams - main',
         caption: 'Serpentine flow patterns',
@@ -232,7 +232,7 @@ Two days of cycling after three days of dancing. My legs were destroyed but my h
     category: 'Festival Makeup',
     images: [
       {
-        src: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=800&q=90&fit=crop',
+        src: 'https://images.unsplash.com/photo-1708409592650-4e2359a3edfb?w=800&q=90&fit=crop',
         alt: 'Pure yellow and blazing orange radiating patterns emanating from third eye with sun symbolism and light ray patterns',
         title: 'Solipse sunrise - main',
         caption: 'Solar solstice rays',
@@ -257,7 +257,7 @@ Two days of cycling after three days of dancing. My legs were destroyed but my h
     category: 'Festival Makeup',
     images: [
       {
-        src: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=90&fit=crop',
+        src: 'https://images.unsplash.com/photo-1767289367992-566dbec8ac0f?w=800&q=90&fit=crop',
         alt: 'Violet purple and aqua cyan cosmic patterns with starburst accents radiating from eyes for transformational festival',
         title: 'Boom festival cosmic connection - main',
         caption: 'Cosmic unity patterns',
@@ -307,7 +307,7 @@ Two days of cycling after three days of dancing. My legs were destroyed but my h
     category: 'Festival Makeup',
     images: [
       {
-        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=90&fit=crop',
+        src: 'https://images.unsplash.com/photo-1769430764294-88ebc40ee3bf?w=800&q=90&fit=crop',
         alt: 'Hot red and electric green tribal symmetrical design inspired by Hungarian folk patterns and psytrance culture with geometric shapes',
         title: 'Ozora tribal awakening - main',
         caption: 'Hungarian tribal fusion',
@@ -332,7 +332,7 @@ Two days of cycling after three days of dancing. My legs were destroyed but my h
     category: 'Festival Makeup',
     images: [
       {
-        src: 'https://images.unsplash.com/photo-1531256456869-ce942a665e80?w=800&q=90&fit=crop',
+        src: 'https://images.unsplash.com/photo-1617979174351-a174f75b37cf?w=800&q=90&fit=crop',
         alt: 'Electric green and blazing orange jungle-inspired patterns with organic leaf and vine motifs for Brazilian beach gathering',
         title: 'Universo Paralello jungle magic - main',
         caption: 'Tropical jungle vines',
@@ -357,7 +357,7 @@ Two days of cycling after three days of dancing. My legs were destroyed but my h
     category: 'Festival Makeup',
     images: [
       {
-        src: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&q=90&fit=crop',
+        src: 'https://images.unsplash.com/photo-1764620757878-742dc20d4e43?w=800&q=90&fit=crop',
         alt: 'Blazing orange and hot red sunset-inspired design with radiating sun patterns and tribal accents during summer festival',
         title: 'Antaris Project Germany - main',
         caption: 'Sunset tribal rays',

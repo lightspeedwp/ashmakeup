@@ -20,6 +20,73 @@
   text-align: center;
 }
 
+.portfolio-page-header__subtitle {
+  margin-top: var(--wp--preset--spacing--fluid-sm);
+  font-family: var(--wp--preset--font-family--brand-body);
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.35rem);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: linear-gradient(
+    90deg,
+    var(--wp--preset--color--neon-pink),
+    var(--wp--preset--color--neon-purple),
+    var(--wp--preset--color--neon-cyan),
+    var(--wp--preset--color--neon-green),
+    var(--wp--preset--color--neon-yellow),
+    var(--wp--preset--color--neon-orange),
+    var(--wp--preset--color--neon-pink)
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: subtitleRainbowShift 6s linear infinite;
+}
+
+.dark .portfolio-page-header__subtitle {
+  filter: brightness(1.15);
+}
+
+/* Light mode: use darker accessible text colours for the gradient */
+:root .portfolio-page-header__subtitle {
+  background-image: linear-gradient(
+    90deg,
+    var(--wp--preset--color--neon-pink-text),
+    var(--wp--preset--color--neon-purple-text),
+    var(--wp--preset--color--neon-cyan-text),
+    var(--wp--preset--color--neon-green-text),
+    var(--wp--preset--color--neon-yellow-text),
+    var(--wp--preset--color--neon-orange-text),
+    var(--wp--preset--color--neon-pink-text)
+  );
+}
+
+.dark .portfolio-page-header__subtitle {
+  background-image: linear-gradient(
+    90deg,
+    var(--wp--preset--color--neon-pink),
+    var(--wp--preset--color--neon-purple),
+    var(--wp--preset--color--neon-cyan),
+    var(--wp--preset--color--neon-green),
+    var(--wp--preset--color--neon-yellow),
+    var(--wp--preset--color--neon-orange),
+    var(--wp--preset--color--neon-pink)
+  );
+  filter: brightness(1.15);
+}
+
+@keyframes subtitleRainbowShift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-page-header__subtitle {
+    animation: none;
+    background-position: 0% 50%;
+  }
+}
+
 .portfolio-page-header__content {
   max-width: var(--wp--preset--layout--content);
   margin: 0 auto;

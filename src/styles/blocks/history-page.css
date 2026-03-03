@@ -15,7 +15,7 @@
   background:
     linear-gradient(
       180deg,
-      rgba(255, 16, 240, 0.06) 0%,
+      rgba(255, 229, 0, 0.06) 0%,
       transparent 100%
     );
 }
@@ -33,9 +33,9 @@
 .history-page__hero-badge {
   display: inline-block;
   padding: 0.25rem 1rem;
-  background: rgba(255, 16, 240, 0.12);
-  color: var(--wp--preset--color--neon-pink);
-  border: 1px solid rgba(255, 16, 240, 0.3);
+  background: rgba(255, 229, 0, 0.12);
+  color: var(--wp--preset--color--neon-yellow);
+  border: 1px solid rgba(255, 229, 0, 0.3);
   border-radius: var(--wp--preset--border-radius--full);
   font-family: var(--wp--preset--font-family--brand-body);
   font-size: var(--wp--preset--font-size--100);

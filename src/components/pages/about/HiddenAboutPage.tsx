@@ -70,6 +70,8 @@ function getIcon(name) {
   if (name === 'Play') return Play;
   if (name === 'Image') return Image;
   if (name === 'Leaf') return Leaf;
+  if (name === 'BookOpenCheck') return BookOpen;
+  if (name === 'Users') return User;
   return Sparkles;
 }
 

@@ -6,6 +6,7 @@
       "dependencies": {
           "@phosphor-icons/react": "*",
           "@vitejs/plugin-react": "*",
+          "clsx": "*",
           "fs": "*",
           "glob": "*",
           "lucide-react": "*",

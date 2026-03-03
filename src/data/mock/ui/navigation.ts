@@ -11,16 +11,17 @@ export interface NavigationItem {
   label: string;
   path: string;
   icon: LucideIcon;
+  neonColor: string;
 }
 
 export const navigationItems: NavigationItem[] = [
-  { id: "home", label: "Home", path: "/", icon: Home },
-  { id: "about", label: "About", path: "/about/journey", icon: User },
-  { id: "portfolio", label: "Portfolio", path: "/portfolio", icon: Image },
-  { id: "videos", label: "Videos", path: "/videos", icon: Play },
-  { id: "events", label: "Events", path: "/events", icon: Calendar },
-  { id: "blog", label: "Blog", path: "/blog", icon: BookOpen },
-  { id: "contact", label: "Contact", path: "/contact", icon: Mail },
+  { id: "home", label: "Home", path: "/", icon: Home, neonColor: "green" },
+  { id: "about", label: "About", path: "/about/journey", icon: User, neonColor: "pink" },
+  { id: "portfolio", label: "Portfolio", path: "/portfolio", icon: Image, neonColor: "purple" },
+  { id: "videos", label: "Videos", path: "/videos", icon: Play, neonColor: "yellow" },
+  { id: "events", label: "Events", path: "/events", icon: Calendar, neonColor: "red" },
+  { id: "blog", label: "Blog", path: "/blog", icon: BookOpen, neonColor: "cyan" },
+  { id: "contact", label: "Contact", path: "/contact", icon: Mail, neonColor: "orange" },
 ];
 
 /** Subset shown in the Header and MobileMenu (Videos & Events live in the Footer) */

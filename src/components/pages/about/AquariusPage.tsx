@@ -60,7 +60,7 @@ export function AquariusPage() {
             <PullQuote
               quote={data.pullQuote}
               variant="center"
-              neonColor="blue"
+              neonColor="cyan"
             />
           </div>
 
@@ -102,7 +102,7 @@ export function AquariusPage() {
                 id={section.id}
                 title={section.title}
                 variant="default"
-                colorAccent="blue"
+                colorAccent="cyan"
               >
                 {section.paragraphs.map(function (p, i) {
                   return (

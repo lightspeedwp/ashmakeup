@@ -43,7 +43,7 @@ interface TimelineProps {
   /** Layout variant */
   variant?: 'vertical' | 'horizontal';
   /** Neon color accent for dots and line */
-  colorAccent?: 'pink' | 'green' | 'blue' | 'purple';
+  colorAccent?: 'pink' | 'green' | 'blue' | 'purple' | 'yellow' | 'orange' | 'red' | 'cyan';
   /** Accessible label for the timeline */
   ariaLabel?: string;
 }

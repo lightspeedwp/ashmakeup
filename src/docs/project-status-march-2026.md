@@ -1,20 +1,22 @@
-# Project status — March 2, 2026
+# Project status — March 3, 2026
 
 **Ash Shaw Makeup Portfolio**  
-**Version:** 7.5.0  
-**Status:** ✅ Audit-clean, feature-complete, content-expanded  
-**Last cleanup:** March 2, 2026 17:00 — All completed reports archived
+**Version:** 8.2.1  
+**Status:** ✅ Audit-clean, feature-complete, content-expanded, sub-pages aligned  
+**Last cleanup:** March 3, 2026 — Sub-page alignment audit complete, all reports current
 
 ---
 
 ## Executive summary
 
-All major work streams completed as of March 2, 2026:
+All major work streams completed as of March 3, 2026:
 
 - ✅ **Design System Audit** — 9 violations resolved, 8 accepted exceptions documented
-- ✅ **Content Migration & Expansion** — All 5 phases complete (ebook, blog, social media)
+- ✅ **Content Migration & Expansion** — All 7 phases complete (ebook, blog, social media, voice rewrites, sub-page alignment)
 - ✅ **Comprehensive Cleanup** — All 6 audits complete, zero orphaned files, zero unused CSS
-- ✅ **Guidelines Updated** — v7.5.0 with all changes documented in CHANGELOG.md
+- ✅ **Guidelines Updated** — v8.2.1 with all changes documented in CHANGELOG.md
+- ✅ **Bundler Compatibility** — v8.2.1 verification complete, 5/5 findings resolved
+- ✅ **Sub-page Alignment** — All 21 About sub-pages verified against Phase 7 ebook content
 
 ---
 
@@ -102,6 +104,30 @@ All major work streams completed as of March 2, 2026:
 - Monthly review checklist
 - Filled March 2026 example calendar
 
+### Phase 6: Multi-Content Expansion ✅
+**Date:** March 2, 2026  
+**Deliverables:** 18 portfolio entries (42 total), 7 blog posts (18 total), 10 videos (11 total), 13 stickers (40 total)
+- Header light mode fix applied
+- QA: 13/13 data integrity tests passed, 0 critical issues
+
+### Phase 7: Voice & Accuracy ✅
+**Date:** March 3, 2026  
+**Deliverables:** 10 voice rewrites, 6 new content additions, 3 accuracy fixes
+- Ebook parts 3 & 4: cat bios, cultivation, grading, timeline, products, AI workflow, lessons, values, stock phrases rewritten in Ash's authentic voice
+- New content: core beliefs, fusion nails, running achievements, Media24 Scrum Master, Lourens swimming, festival vs Berlin kit
+- Accuracy: stock phrase "fusion of AI" retired, year corrections, duplicate section removal
+- Berlin arrival confirmed as 2019; Aixa/Sisyphos story deferred
+
+### Sub-page Alignment Audit ✅
+**Date:** March 3, 2026  
+**Deliverables:** 21 About sub-pages verified against Phase 7 ebook content; 8 data files updated
+- **LightSpeed** — intern count 2→3
+- **Fitness** — running achievements + Lourens swimming story
+- **Cycling** — Berlin/Thailand kit note + Stormsvlei 185km ride
+- **Travels** — nomad circuit rewritten with full 4-leg seasonal cycle
+- **website-content.md** — Berlin 2016→2019 (2 locations)
+- 7 sub-pages verified consistent: Berlin, Six Cats, Bio, Music, Partners, Process, Manifesto
+
 ---
 
 ## Comprehensive Cleanup (February 25 – March 1, 2026)
@@ -166,7 +192,11 @@ All major work streams completed as of March 2, 2026:
 
 | Version | Date | Summary |
 |---------|------|---------|
-| **7.5.0** | March 2, 2026 | Design System Audit + Content Migration & Expansion (all 5 phases) |
+| **8.2.1** | March 3, 2026 | Bundler compatibility fixes, sub-page alignment audit |
+| 8.2.0 | March 3, 2026 | Phase 7: Voice rewrites, 5 new blog posts, cat bio enrichment |
+| 8.1.0 | March 2, 2026 | Phase 6: Multi-content expansion (42 portfolio, 18 blog, 11 video, 40 stickers) |
+| 8.0.0 | March 1, 2026 | 18 About sub-pages, ebook reader, mega menus, dev tools, 60+ routes |
+| 7.5.0 | March 1, 2026 | Content organisation, ebook expansion, contact page sticker migration |
 | 7.4.0 | Feb 25, 2026 | Changelog protection + root file guidelines |
 | 7.3.0 | Feb 25, 2026 | Default AI Workflow + comprehensive cleanup orchestrator |
 | 7.2.0 | Feb 25, 2026 | Root directory restrictions + `/docs/` and `/scripts/` folders |
@@ -244,6 +274,6 @@ All code adheres to:
 
 ---
 
-**Document version:** 1.0.0  
-**Last updated:** March 2, 2026  
+**Document version:** 2.0.0  
+**Last updated:** March 3, 2026  
 **Maintained by:** Ash Shaw Portfolio Team
