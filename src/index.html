@@ -58,7 +58,6 @@
         // Patterns to suppress (browser extensions + esm.sh Node polyfill shims)
         function isSuppressible(msg, src) {
           return (
-            msg.indexOf('beholdReplaceChildren') !== -1 ||
             msg.indexOf('async_hooks') !== -1 ||
             msg.indexOf('esm.sh/node/') !== -1 ||
             (src && src.indexOf('async_hooks') !== -1) ||

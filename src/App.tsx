@@ -23,9 +23,8 @@ function handleAppError(error: Error, errorInfo: React.ErrorInfo) {
   const hasGetPageTimeout = finalMessage.includes('Message getPage (id: 3) response timed out');
   const hasGenericTimeout = finalMessage.includes('response timed out after 30000ms');
   const hasGetPageAndTimeout = finalMessage.includes('getPage') && finalMessage.includes('timed out');
-  const hasBeholdError = finalMessage.includes('beholdReplaceChildren');
   
-  const shouldIgnore = hasGetPageTimeout || hasGenericTimeout || hasGetPageAndTimeout || hasBeholdError;
+  const shouldIgnore = hasGetPageTimeout || hasGenericTimeout || hasGetPageAndTimeout;
   
   if (shouldIgnore) {
     return;

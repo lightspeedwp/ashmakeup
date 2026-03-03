@@ -320,7 +320,7 @@ export const sixCatsPageData: SixCatsPageData = {
       nickname: 'Timmmaaaahh',
       status: 'alive',
       role: 'Resident Therapy Cat',
-      bio: 'Timmy is the gentle giant of the operation. He arrived as a stray, malnourished and cautious, and over months transformed into the most affectionate cat in the house. He has an uncanny sense for when someone needs comfort \u2014 he\u2019ll appear on your lap during a stressful work call or curl up next to you when you\u2019re feeling low. He is the unofficial emotional support officer of Six Cats. Every harvest, Timmy claims a spot in the drying room and supervises.',
+      bio: 'Timmy is the gentle giant of the operation and the sole remaining member of the original six cats. He arrived as a stray, malnourished and cautious, and over months transformed into the most affectionate cat in the house. He has an uncanny sense for when someone needs comfort \u2014 he\u2019ll appear on your lap during a stressful work call or curl up next to you when you\u2019re feeling low. He is the unofficial emotional support officer of Six Cats. Every harvest, Timmy claims a spot in the drying room and supervises. His longevity and survival are a testament to resilience.',
     },
     {
       id: 'wendy',
@@ -328,7 +328,7 @@ export const sixCatsPageData: SixCatsPageData = {
       nickname: 'Wendells \u2014 The Agile Matriarch',
       status: 'alive',
       role: 'Matriarch',
-      bio: 'Wendy is old, fast, and takes no nonsense. She rules the garden with quiet authority, patrolling the perimeter with the precision of a security consultant. The other cats defer to her. She was one of the earliest rescues, arriving thin and feral, and within a year she owned every room in the house. Wendy\u2019s survival instinct and adaptability mirror the ethos of Six Cats itself \u2014 resourceful, resilient, and fiercely independent.',
+      bio: 'Wendy was rescued in a rainstorm at just 5 weeks old, tiny and drenched, and brought into the Six Cats family. She grew into a fast, agile, no-nonsense cat who rules the garden with quiet authority, patrolling the perimeter with the precision of a security consultant. The other cats defer to her. She loves playing soccer with rolled-up paper balls \u2014 she\u2019ll bat them across the floor for hours if you let her. Wendy\u2019s survival instinct and adaptability mirror the ethos of Six Cats itself \u2014 resourceful, resilient, and fiercely independent.',
     },
     {
       id: 'jimmy',
@@ -336,7 +336,7 @@ export const sixCatsPageData: SixCatsPageData = {
       nickname: 'Super Slim Jim',
       status: 'alive',
       role: 'FIV Fighter',
-      bio: 'Jimmy tested positive for FIV (Feline Immunodeficiency Virus) when he arrived. The vet said to keep him comfortable. That was years ago. Jimmy is still here, still eating, still fighting, still claiming the best sunny spot in the garden every morning. He is proof that a diagnosis is not a destiny. He requires extra care \u2014 immune-boosting supplements, regular vet checks, and isolation when he\u2019s run-down \u2014 but he gives back more than he takes. Jimmy is the most determined cat we\u2019ve ever known.',
+      bio: 'Jimmy tested positive for FIV (Feline Immunodeficiency Virus) when he arrived. The vet said to keep him comfortable. That was years ago. In late 2023, Jimmy suffered a serious illness that nearly took him \u2014 but he made a remarkable recovery that stunned everyone. He is still here, still eating, still fighting, still claiming the best sunny spot in the garden every morning. He is proof that a diagnosis is not a destiny. He requires extra care \u2014 immune-boosting supplements, regular vet checks, and isolation when he\u2019s run-down \u2014 but he gives back more than he takes. Jimmy is the most determined cat we\u2019ve ever known.',
     },
     {
       id: 'bean',
@@ -344,7 +344,7 @@ export const sixCatsPageData: SixCatsPageData = {
       nickname: 'The Survivor',
       status: 'alive',
       role: 'Rescue Cat',
-      bio: 'Bean arrived in the worst condition of any cat we\u2019ve taken in. Underweight, dehydrated, covered in fleas, and terrified of humans. The first two months were slow \u2014 leaving food near her hiding spot, sitting quietly in the same room without approaching, waiting for her to decide when she was ready. When she finally climbed onto Ash\u2019s lap, it was one of the most rewarding moments of the entire Six Cats journey. Bean is now unrecognisable from the cat who arrived. She\u2019s gained weight, her coat gleams, and she greets visitors at the door like she owns the place. Because she does.',
+      bio: 'Bean was found in January 2022 at a Wendy house at the local shopping centre, just weeks after Moe passed. His arrival felt like the universe sending a reminder that the cycle of rescue and healing continues. Bean arrived in the worst condition of any cat we\u2019ve taken in \u2014 underweight, dehydrated, covered in fleas, and terrified of humans. The first two months were slow \u2014 leaving food near his hiding spot, sitting quietly in the same room without approaching, waiting for him to decide when he was ready. When he finally climbed onto Ash\u2019s lap, it was one of the most rewarding moments of the entire Six Cats journey. Bean is now unrecognisable from the cat who arrived. He\u2019s gained weight, his coat gleams, and he greets visitors at the door like he owns the place. Because he does.',
     },
     {
       id: 'jeff',
@@ -352,7 +352,7 @@ export const sixCatsPageData: SixCatsPageData = {
       nickname: 'The Wanderer',
       status: 'alive',
       role: 'Rescue Cat',
-      bio: 'Jeff is the adventurer. He disappears for hours, sometimes days, returning with the air of someone who\u2019s been on a tremendous journey and has no intention of telling you about it. He\u2019s the most independent of all the cats, preferring the garden and the neighbourhood rooftops to the comfort of the couch. Jeff taught us that not every personality needs to be domesticated. Some spirits need to roam. You just make sure the door is always open for when they come home.',
+      bio: 'Jeff was found in May 2022 and immediately nestled into Ash\u2019s arms with a trust that felt instant and absolute. From that moment, he belonged. Jeff is the adventurer \u2014 he disappears for hours, sometimes days, returning with the air of someone who\u2019s been on a tremendous journey and has no intention of telling you about it. He\u2019s the most independent of all the cats, preferring the garden and the neighbourhood rooftops to the comfort of the couch. Jeff taught us that not every personality needs to be domesticated. Some spirits need to roam. You just make sure the door is always open for when they come home.',
     },
     {
       id: 'frank',
@@ -377,7 +377,7 @@ export const sixCatsPageData: SixCatsPageData = {
       nickname: 'Fat-Boy-Fat',
       status: 'memorial',
       role: 'Couch Commissioner',
-      bio: 'Moe earned his nickname honestly. He was enormous, unapologetic, and ate with the enthusiasm of someone who had once known hunger and decided it would never happen again. Moe was the comic relief of Six Cats \u2014 the cat who got stuck in places, who fell off shelves, who ate food that wasn\u2019t his and looked at you as if to say, "And what are you going to do about it?" Behind the comedy was a cat who had been abandoned and found safety. Moe reminded us that joy is a survival mechanism.',
+      bio: 'Moe earned his nickname honestly. He was enormous, unapologetic, and ate with the enthusiasm of someone who had once known hunger and decided it would never happen again. He had one particularly silly trait \u2014 he would go absolutely crazy when you blew air at him, spinning and batting at the invisible force like it was the greatest game ever invented. Moe was the comic relief of Six Cats \u2014 the cat who got stuck in places, who fell off shelves, who ate food that wasn\u2019t his and looked at you as if to say, \"And what are you going to do about it?\" Behind the comedy was a cat who had been abandoned and found safety. Moe reminded us that joy is a survival mechanism.',
       datePassed: '4 January 2022',
     },
     {
@@ -386,7 +386,7 @@ export const sixCatsPageData: SixCatsPageData = {
       nickname: 'Dennis the Menace',
       status: 'memorial',
       role: 'Welcoming Committee',
-      bio: 'Lucy was a cross-Burmese cat with a personality that could fill a stadium. Nicknamed Dennis the Menace for her relentless energy, her mischief, and her ability to be in exactly the wrong place at exactly the wrong time. Lucy was the heartbeat of Six Cats. She was curious, demanding, affectionate on her terms, and utterly impossible to ignore. Her passing hit harder than any of the others. The book is dedicated to her. The green garden carries on, but it carries on with Lucy\u2019s spirit woven into every harvest.',
+      bio: 'Lucy was a cross-Burmese cat who took the role of matriarch after Lisa died. She was incredibly talkative and had a personality that could fill a stadium. She would visit everyone, sit in front of screens demanding attention, tap your face gently with her paw, and reach out to touch customers from a shelf to say hello. She was the welcoming cat \u2014 every visitor got the Lucy treatment. Nicknamed Dennis the Menace for her relentless energy, her mischief, and her ability to be in exactly the wrong place at exactly the wrong time. Lucy was the heartbeat of Six Cats. She was curious, demanding, affectionate on her terms, and utterly impossible to ignore. Her passing hit harder than any of the others. The book is dedicated to her. The green garden carries on, but it carries on with Lucy\u2019s spirit woven into every harvest.',
       datePassed: '24 October 2023',
     },
   ],

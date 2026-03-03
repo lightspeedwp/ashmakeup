@@ -13,7 +13,11 @@ export const pressKitData = {
   bios: {
     short: {
       title: 'Short bio (50 words)',
-      content: 'Ash Shaw is a Cape Town-based makeup artist specializing in UV-reactive and neon aesthetics for festivals and nightlife. Blending cyberpunk influences with tribal patterns, his work transforms faces into living art pieces under blacklight. He has been featured at major international psytrance festivals and Berlin underground events.',
+      content: 'Ash Shaw is a Cape Town-based neon and UV makeup artist working at the intersection of psytrance, techno, and visual art. His work transforms festival-goers into living light sculptures. Strictly a personal art project \u2014 no commercial bookings. He cycles to festivals, paints on the dancefloor, and builds WordPress themes by day.',
+    },
+    medium: {
+      title: 'Medium bio (150 words)',
+      content: 'Ash Shaw is a Cape Town-based neon and UV makeup artist specialising in spontaneous face painting at psytrance and techno festivals. His work emerged from the Berlin dancefloor in July 2019 and has since become a signature presence at festivals across Europe, South Africa, and Thailand. He follows a yearly creative cycle: Cape Town (November\u2013March), Berlin (May), Koh Phangan (September\u2013November), and the roads that connect them \u2014 always by bicycle. By day, he runs LightSpeed, a WordPress agency he founded in 2003. His management style mirrors his art style: freedom, trust, and creative autonomy. Ash is Aquarius, ADHD, and deeply committed to the dancefloor as sacred space. His work is strictly non-commercial \u2014 no weddings, no corporate events, no bridal makeup. Just pure creative expression in the glow of blacklight. He is also writing a memoir titled \"This one time on acid...\" about neurodivergence, psychedelics, and the lessons learned on the festival circuit.',
     },
     long: {
       title: 'Full biography',
@@ -44,9 +48,32 @@ export const pressKitData = {
     }
   ],
 
+  quotes: [
+    {
+      id: 'entrepreneurship',
+      text: 'LightSpeed wasn\u2019t born from a business plan \u2014 it was born from a fundamental need for autonomy. The same brain that rejected boredom in school rejected being told what to do at work.',
+      context: 'On founding LightSpeed at age twenty-two'
+    },
+    {
+      id: 'makeup-legacy',
+      text: 'Someone I hadn\u2019t seen in two years came up to me \u2014 I\u2019d done their makeup two years prior. That day they felt extremely special; everyone kept complimenting them and it made their day. They still remembered.',
+      context: 'On the lasting impact of festival makeup'
+    },
+    {
+      id: 'wordpress-legacy',
+      text: 'I\u2019ll be remembered as the crazy South African in the WordPress community \u2014 but definitely as a passionate contributor.',
+      context: 'On his 20+ years in the WordPress community'
+    },
+    {
+      id: 'ai-transformation',
+      text: 'Technology fuels me. I embrace AI daily \u2014 GitHub Copilot, ChatGPT, Claude, and MCP \u2014 bringing them together with my love for Figma prototyping, design systems, and GitHub code management. The fusion of AI, creativity, and open source has been a radical, life-changing shift.',
+      context: 'On the AI workflow transformation at LightSpeed'
+    }
+  ],
+
   contact: {
     email: 'press@ashshaw.makeup',
     instagram: '@ashshaw.makeup',
-    location: 'Berlin, Germany'
+    location: 'Cape Town, South Africa'
   }
 };

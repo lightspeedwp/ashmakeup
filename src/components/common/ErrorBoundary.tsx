@@ -139,7 +139,6 @@ export class ErrorBoundary extends React.Component {
     const isGetPageMsg = finalErrorMessage.includes('Message getPage');
     
     // Check for extension errors in message
-    const isBeholdError = finalErrorMessage.includes('beholdReplaceChildren');
     const hasExtensionUrl = finalErrorMessage.includes('extension://');
     const hasChromeExt = finalErrorMessage.includes('chrome-extension://');
     const hasMozExt = finalErrorMessage.includes('moz-extension://');
@@ -163,7 +162,6 @@ export class ErrorBoundary extends React.Component {
       isGenericTimeout ||
       isGetPageTimeout ||
       isGetPageMsg ||
-      isBeholdError ||
       hasExtensionUrl ||
       hasChromeExt ||
       hasMozExt ||

@@ -7,6 +7,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+#### Content Expansion Phase 7 — Blog & Narrative Enrichment
+
+- **5 new blog posts** (23 total, up from 18) in `/data/mock/blog/posts.ts`:
+  - "Lucy: the cat who taught me everything" (2023-11-01) — Tribute to the late Six Cats matriarch, exploring grief, legacy, and the connection between cats and creativity
+  - "This one time on acid: the book is coming" (2025-12-01) — Book announcement with chapter preview, publication timeline, and dedication to Lucy
+  - "The yearly cycle: how I design my life around festivals, seasons, and flow" (2024-03-01) — Deep dive into Cape Town → Berlin → Koh Phangan → Cape Town annual rhythm
+  - "How AI transformed our WordPress agency (and my brain)" (2025-09-01) — LightSpeed's AI workflow transformation using GitHub Copilot, Claude, and MCP; includes team mentoring insights
+  - "LightSpeed wasn't a business plan — it was a survival mechanism" (2023-03-01) — Founding philosophy essay on autonomy, ADHD entrepreneurship, and BarCamp 2006 pivot
+
+### Changed
+
+#### Data File Content Enrichment
+
+- **LightSpeed page** (`/data/mock/pages/about/lightspeed.ts`):
+  - Fixed BarCamp 2006 narrative: removed "Jonathan Sobel" (not in source material), corrected attendance from "Twenty-nine" to "Twenty-seven" people, updated to "Dave Duarte, Jeremy Thurgood, and twenty-five others"
+- **Bio page** (`/data/mock/pages/about/bio.ts`):
+  - Updated `quickFacts.based` from inaccurate "Berlin (summers)" to complete "Cape Town (Woodstock) · Berlin (May) · Koh Phangan (Sep–Nov)"
+  - Added new section "A life designed on purpose" — 2 paragraphs detailing yearly cycle: Cape Town (Nov–Mar) → Berlin (May) → Cape Town (Aug-Sep bicycle swap) → Koh Phangan (Sep–Nov Muay Thai/triathlon) → Cape Town (Nov summer festivals)
+  - Added new section "What they remember" — 2 paragraphs with legacy quotes for makeup ("people thank him years later") and WordPress ("crazy South African... passionate contributor")
+- **Press page** (`/data/mock/pages/press.ts`):
+  - Fixed `contact.location` from "Berlin, Germany" to accurate "Cape Town, South Africa"
+  - Rewrote short bio (50 words) with personal art project framing ("strictly a personal art project — no commercial bookings")
+  - Added medium bio (150 words) for podcast introductions and event programmes
+  - Added `quotes` array with 4 key quotes: entrepreneurship, makeup legacy, WordPress legacy, AI transformation
+- **Six Cats page** (`/data/mock/pages/six-cats.ts`) — enriched all 9 cat bios with missing personality details:
+  - **Timmy:** Added "sole remaining member of the original six cats" identity marker
+  - **Wendy:** Added "rescued in a rainstorm at 5 weeks old" origin story and "soccer with rolled-up paper balls" personality trait
+  - **Jimmy:** Added "serious illness in late 2023, remarkable recovery" health journey
+  - **Bean:** Added "January 2022" rescue date, "Wendy house at local shopping centre" location, connection to Moe's death
+  - **Jeff:** Added "May 2022" rescue date and "nestled into Ash's arms with immediate trust" first moment
+  - **Moe (memorial):** Added signature behaviour "going crazy when you blew air at him, spinning and batting at invisible force"
+  - **Lucy (memorial):** Added iconic behaviours: "visit everyone, sit in front of screens, tap your face, reach out to touch customers from a shelf" — the welcoming cat personality
+
+### Removed
+
+- **Behold.so Instagram widget integration** — removed all references from codebase (unused third-party embed)
+
+### Documentation
+
+- Content Expansion Phase 7 orchestrator prompt at `/prompts/content-expansion/phase7-orchestrator.md`
+- 3 detailed audit reports in `/reports/content-expansion-phase7/`:
+  - `01-six-cats-bio-gaps.md` — identified 7 critical cat bio gaps from `/docs/website-content.md`
+  - `02-about-pages-narrative-gaps.md` — identified bio, press, and lightspeed page content gaps
+  - `03-blog-expansion-recommendations.md` — 5 new blog post recommendations with outlines
+- Task list at `/tasks/content-expansion-phase7-tasks.md` (13 tasks, 13 complete)
+
+---
+
 ### Changed
 
 #### Memory Reduction — Data File Splitting (T18)

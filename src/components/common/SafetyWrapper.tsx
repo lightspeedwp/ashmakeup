@@ -2,8 +2,8 @@
  * @fileoverview SafetyWrapper component for Ash Shaw Makeup Portfolio
  *
  * Thin wrapper that catches synchronous render errors caused by third-party
- * browser extensions (e.g. Behold's `beholdReplaceChildren`). Works alongside
- * the ErrorBoundary and extensionErrorSuppressor for defence-in-depth.
+ * browser extensions. Works alongside the ErrorBoundary and extensionErrorSuppressor 
+ * for defence-in-depth.
  *
  * @author Ash Shaw Portfolio Team
  * @version 1.0.0

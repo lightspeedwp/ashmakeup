@@ -12,7 +12,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useBlogPosts } from '../../../hooks/useContent';
 import { OptimizedImage } from '../../ui/OptimizedImage';
-import { InstagramFeed } from '../../sections/InstagramFeed';
 import { Calendar, Clock, BookOpen } from '../../../lib/icons';
 import { FaqSection } from '../../sections/FaqSection';
 import { ArchiveFilters } from '../../ui/ArchiveFilters';
@@ -465,7 +464,6 @@ export function BlogPage({ initialCategory: propCategory }: BlogPageProps) {
         </div>
       </div>
 
-      <InstagramFeed />
       <FaqSection pageId="blog" />
     </main>
   );

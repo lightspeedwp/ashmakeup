@@ -13,7 +13,6 @@ export * from './portfolio';
 export * from './blog';
 export * from './contact';
 export * from './about';
-export * from './instagram';
 export * from './search';
 export * from './podcasts';
 export * from './filters';

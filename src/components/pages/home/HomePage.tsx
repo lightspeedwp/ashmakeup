@@ -14,7 +14,6 @@ import { BlogPreviewSection } from "../../sections/BlogPreviewSection";
 import { UVMakeupSection } from "../../sections/UVMakeupSection";
 import { TestimonialsSection } from "../../sections/TestimonialsSection";
 import { FestivalCountdown } from "../../sections/FestivalCountdown";
-import { InstagramFeed } from "../../sections/InstagramFeed";
 import { useHomepageContent } from "../../../hooks/useContent";
 import { FaqSection } from "../../sections/FaqSection";
 import { useAppNavigate } from "../../../hooks/useAppNavigate";
@@ -189,8 +188,6 @@ export function HomePage() {
       <TestimonialsSection />
       
       <FestivalCountdown />
-      
-      <InstagramFeed />
       
       <UVMakeupSection />
       

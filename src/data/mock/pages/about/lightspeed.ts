@@ -64,7 +64,7 @@ export var lightspeedPageData: LightSpeedPageData = {
     paragraphs: [
       'BarCamp was an unconference \u2014 no preset agenda, no keynote speakers, no hierarchy. Attendees showed up and created the programme on the morning of the event. Topics were written on Post-it notes and arranged on a whiteboard. If you wanted to talk about something, you claimed a slot.',
       'Dave Duarte was there. He gave an impassioned talk about this open-source CMS called WordPress and why it was going to change the web. Ash was running an IT support company and dabbling in web design. Something clicked. Not just the technology \u2014 the philosophy. Open source. Community-driven. Transparent. Accessible. These were the same values his parents had instilled.',
-      'The people at that BarCamp didn\u2019t just introduce him to WordPress \u2014 they introduced him to a way of working and building that would define the next two decades. Jeremy Thurgood, Jonathan Sobel, and dozens of others who became part of the extended LightSpeed network. Twenty-nine people at that event impacted his career in ways he\u2019s still discovering.',
+      'The people at that BarCamp didn\u2019t just introduce him to WordPress \u2014 they introduced him to a way of working and building that would define the next two decades. Dave Duarte, Jeremy Thurgood, and twenty-five others who became part of the extended LightSpeed network. Twenty-seven people at that event impacted his career in ways he\u2019s still discovering.',
     ],
   },
   keyPeople: [

@@ -26,8 +26,6 @@ export function initializeExtensionErrorSuppression() {
     }).join(' ');
 
     return (
-      message.includes('beholdReplaceChildren') ||
-      message.includes("Cannot read properties of undefined (reading 'beholdReplaceChildren')") ||
       message.includes('Message getPage (id: 3) response timed out') ||
       message.includes('response timed out after 30000ms') ||
       (message.includes('getPage') && message.includes('timed out')) ||
@@ -63,8 +61,6 @@ export function initializeExtensionErrorSuppression() {
     const filename = event.filename || '';
     
     if (
-      message.includes('beholdReplaceChildren') ||
-      stack.includes('beholdReplaceChildren') ||
       message.includes('Message getPage') || 
       message.includes('timed out') ||
       message.includes('async_hooks') ||
@@ -86,8 +82,6 @@ export function initializeExtensionErrorSuppression() {
     const stack = reasonStack ? reasonStack : '';
     
     if (
-      message.includes('beholdReplaceChildren') ||
-      stack.includes('beholdReplaceChildren') ||
       message.includes('Message getPage') ||
       message.includes('timed out') ||
       message.includes('async_hooks') ||
@@ -107,12 +101,7 @@ export function initializeExtensionErrorSuppression() {
   window.onerror = function(msg, url, line, col, error) {
     const message = String(msg);
     const source = String(url || '');
-    const errorStack = error ? error.stack : '';
-    const stackStr = errorStack ? errorStack : '';
-    const stackHasBehold = stackStr.includes('beholdReplaceChildren');
     if (
-      message.includes('beholdReplaceChildren') ||
-      stackHasBehold ||
       message.includes('Message getPage') ||
       message.includes('async_hooks') ||
       source.includes('async_hooks') ||

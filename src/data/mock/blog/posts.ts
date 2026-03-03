@@ -1229,5 +1229,467 @@ Every thread of the life story converges here. The hyperactive child who couldn'
     },
     featured: true,
     readTime: 6
+  },
+  {
+    id: 'lucy-our-welcoming-committee',
+    slug: 'lucy-our-welcoming-committee',
+    title: 'Lucy: our welcoming committee (2003–2023)',
+    excerpt: 'A tribute to Lucy, the cross-Burmese cat who became the soul of the Six Cats office. She welcomed every visitor with a paw tap and left a space that can never be filled.',
+    content: `
+# Lucy: Our Welcoming Committee (2003–2023)
+
+Lucy wasn't just a cat. She was the matriarch, the greeter, the office personality who made every visitor feel like they belonged. When Lisa passed in July 2020, Lucy stepped into the role with grace and authority that only a cross-Burmese can command.
+
+## The Welcome Protocol
+
+You couldn't walk into the Six Cats office without Lucy acknowledging you. She'd sit in front of your screen, tap your face gently with her paw, and reach out from a shelf to say hello. She was incredibly talkative — a running commentary on everything happening in her domain.
+
+She didn't just visit; she held court. Every customer, every team member, every delivery person got the Lucy treatment. A meow of greeting, a gentle headbutt, a deliberate placement of herself between you and whatever you thought you were doing.
+
+## Dennis the Menace
+
+Her official nickname was "Dennis the Menace" because she was always getting into something. If there was a way to knock something over, Lucy found it. If there was a lap to sit on, Lucy claimed it. If there was attention to be had, Lucy demanded it.
+
+But it was never malicious. It was playful, curious, engaging. She wanted to be part of everything.
+
+## The Matriarch Role
+
+After Lisa died, Lucy became the de facto leader of the cat crew. She set the tone, established the boundaries, and made sure everyone — human and feline — knew the rules. She was the welcoming committee, the office manager, and the emotional anchor all at once.
+
+The younger cats looked to her. The humans relied on her. The office felt different when she was around — warmer, more alive, more connected.
+
+## October 24, 2023
+
+When Lucy passed, the gap she left was massive. Not just in the office, but in the rhythm of daily life. No more face taps. No more vocal commentary. No more reaching out from the shelf to greet customers.
+
+The Six Cats office is quieter now. The remaining cats have stepped up, but Lucy's energy was irreplaceable. She was the soul of the space for three years, and her absence is still felt every day.
+
+## What She Taught Us
+
+Lucy taught us that presence matters. That acknowledgment is a gift. That making people feel seen and welcomed doesn't take grand gestures — just consistency, attention, and genuine interest.
+
+She showed up every single day with the same energy. She never phoned it in. She never took a day off from being Lucy.
+
+That's the legacy. Not just the memories, but the reminder that showing up fully, consistently, with genuine care, is the most powerful thing you can do.
+
+Rest well, Lucy. You were loved, and you are missed.
+
+*For more about the Six Cats crew, visit the [Six Cats page](/six-cats).*
+    `,
+    author: {
+      name: 'Ash Shaw',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400',
+      bio: 'Global Psytrance Artist'
+    },
+    publishedAt: '2023-11-01',
+    updatedAt: '2023-11-01',
+    category: 'Insights',
+    tags: ['Six Cats', 'Cats', 'Loss', 'Cape Town', 'Personal'],
+    featuredImage: {
+      src: 'https://images.unsplash.com/photo-1573865526739-10c1deaaef5b?w=1080',
+      alt: 'Burmese cat sitting on shelf looking at camera',
+      caption: 'Lucy, the welcoming committee'
+    },
+    featured: false,
+    readTime: 4
+  },
+  {
+    id: 'this-one-time-on-acid-announcing-the-book',
+    slug: 'this-one-time-on-acid-announcing-the-book',
+    title: 'This one time on acid… — announcing the book',
+    excerpt: 'A raw, honest memoir weaving the wildest stories from the psytrance dancefloor into the deepest lessons they taught. The book arrives when it\'s ready, not before.',
+    content: `
+# This One Time on Acid… — Announcing the Book
+
+People love my stories. The kind you tell at 4am around a campfire when the music has stopped and the real conversations begin. The kind that start with "you won't believe this" and end with everyone nodding because they absolutely do believe it.
+
+I've decided to write them down. Not just the stories, but the lessons embedded in them. The experiences that changed me, made me who I am, and why they impacted me so profoundly.
+
+## It Is Never One Thing
+
+That's the core theme of the book. People want simple narratives: the moment everything changed. But it's never one moment. It's the cumulation of many experiences over time that finally crystallise into understanding.
+
+The first drop. The thousandth drop. The drop that finally overflows the cup.
+
+## Core Threads: Aquarius + ADHD + Lucy
+
+How my Aquarian crazy soul met my ADHD neurodiverse brain. How these combined with Lucy (expanded awareness, transformative experiences) made me who I am and helped me achieve what I have to date.
+
+Each chapter weaves a wild story into life's biggest lessons:
+- What the chaos teaches you
+- How the wiring that felt like a bug turned out to be the feature
+- How the festival dancefloor became the classroom where everything made sense
+- How ADHD isn't a disorder when your environment matches your brain's operating system
+
+## Chapter Previews (Working Titles)
+
+1. **The first drop** — Every journey starts somewhere impossible. This one started on a rooftop in Cape Town.
+2. **Wired different** — ADHD, Aquarius, and the feeling that the world was running on a different operating system.
+3. **Berlin calling** — A one-way ticket, a bicycle, and the city that would become home.
+4. **The dancefloor classroom** — When 140 BPM became the heartbeat of understanding.
+5. **Neon revelations** — The night I picked up UV paint and discovered my voice wasn't in words.
+6. **The cumulative effect** — It's never one moment. It's the thousand moments that suddenly click.
+
+## Timeline
+
+I'm writing this over the next few years. Not to be rushed. Some chapters are already drafted in voice notes and notebook pages. Others are still being lived.
+
+The book arrives when it's ready, not before.
+
+## Design
+
+Neon pink cover. Neon yellow text. Because this isn't a subtle story, and it doesn't deserve a subtle design.
+
+## What to Expect
+
+Raw honesty. Wild adventures. Deep introspection. The intersection of psychedelics, neurodiversity, art, entrepreneurship, and the dancefloor as sacred space.
+
+If you've ever felt like you were running incompatible software in a world designed for someone else's operating system, this book is for you.
+
+*Stay tuned for chapter previews and excerpts as they're written. This is a work in progress, and I'll be sharing the journey as it unfolds.*
+    `,
+    author: {
+      name: 'Ash Shaw',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400',
+      bio: 'Global Psytrance Artist'
+    },
+    publishedAt: '2025-12-01',
+    updatedAt: '2025-12-01',
+    category: 'Insights',
+    tags: ['Book', 'Writing', 'ADHD', 'Aquarius', 'Personal', 'Storytelling'],
+    featuredImage: {
+      src: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=1080',
+      alt: 'Open notebook with pen on desk, neon pink lighting',
+      caption: 'The book is being written'
+    },
+    featured: false,
+    readTime: 4
+  },
+  {
+    id: 'cape-town-berlin-koh-phangan-life-by-design',
+    slug: 'cape-town-berlin-koh-phangan-life-by-design',
+    title: 'Cape Town, Berlin, Koh Phangan — a life designed on purpose',
+    excerpt: 'The artist\'s lifestyle is literally geographic. My year follows the festivals and the seasons — Cape Town summers, Berlin in May, Koh Phangan for Muay Thai, and the road that connects them all.',
+    content: `
+# Cape Town, Berlin, Koh Phangan — A Life Designed on Purpose
+
+The conventional path says: pick a career, build stability, fit hobbies around the edges. My path says: identify what makes you come alive, then engineer your entire existence around those things.
+
+This isn't irresponsibility — it's radical prioritisation.
+
+## The Yearly Cycle
+
+My year follows the festivals and the seasons:
+
+### Cape Town Summers (November–March)
+- **Home base:** Woodstock, Cape Town, at the tip of Africa
+- **Festival season:** Origin Festival (falls on my birthday weekend every year), the South African psytrance circuit
+- **Sport:** Cycling in the Western Cape mountains, triathlon training, open water swimming
+- **Work:** Remote work with the LightSpeed team, business planning, client projects
+- **Vibe:** South African summer energy, outdoor living, home base restoration
+
+### Berlin (May)
+- **Creative anchor:** The city that taught me techno
+- **Festival circuit:** Open-airs in Hasenheide Park, techno nights in Friedrichshain, cycling to festivals across Germany, Czech Republic, Austria
+- **Sport:** 900km or 1 million steps over 8 weeks, mostly dancing — my personal record
+- **Work:** Remote work continues, European client timezone alignment
+- **Vibe:** Berlin summer magic, creative explosion, dancefloor immersion
+
+### The Return (August–September)
+- **Cape Town bicycle swap:** Coming back to South Africa to swap bicycles and gear
+- **Transition:** Packing for the next leg, restocking, reconnecting with the Six Cats crew
+- **Work:** Continued remote work, business check-ins
+- **Vibe:** Preparation, anticipation, the pause before the next adventure
+
+### Koh Phangan, Thailand (September–November)
+- **Training base:** Muay Thai training with a skilled trainer
+- **Island life:** Swimming out to coral reefs, herbal steam baths at the temple, traditional massage
+- **Festival circuit:** Black Moon, Half Moon, Ban Sabaii after-parties (never the Full Moon Party)
+- **Sport:** Triathlon training, open water swimming, jungle runs, Muay Thai discipline
+- **Work:** Remote work in paradise, best life balance
+- **Vibe:** Discipline meets tropical freedom, island psytrance magic
+
+### The Shoulder Seasons
+Connecting it all by bicycle, train, and shared rides. The less you carry, the further you go.
+
+## Why It Works
+
+LightSpeed has run profitably for 23 years with a remote-first team that I give remarkable freedom to. The business works BECAUSE of the lifestyle, not despite it.
+
+A founder who cycles 300km to a psytrance festival with a 40kg bike pack is not someone who lacks discipline — he channels it differently.
+
+The same brain that rejected boredom in school rejects being told what to do at work. The solution wasn't to fix the brain — it was to build a life that matches it.
+
+## The Deeper Thread
+
+This isn't about escapism. It's about alignment.
+
+When your work, sport, art, and social life are all pulling in the same direction, you don't need work-life balance. You have work-life integration.
+
+The makeup I paint on the Berlin dancefloor informs the design systems I build for WordPress clients. The endurance I build cycling to festivals translates to the endurance needed to run a business for 23 years. The discipline of Muay Thai training mirrors the discipline of mentoring a team through an AI transformation.
+
+Everything feeds everything.
+
+## The Geographic Freedom Requirement
+
+This lifestyle requires three things:
+
+1. **Remote work capability** — LightSpeed has been remote-first since 2003
+2. **Intentional minimalism** — If it doesn't fit on a bicycle, you don't need it
+3. **Radical prioritisation** — Know what makes you come alive, and design everything else around it
+
+I don't have a home base — I have three. I don't have a festival season — I have three. I don't have a training routine — I have three, adapted to each location.
+
+This isn't a vacation. This is the architecture of a life designed on purpose.
+
+*Follow the journey on social media as I move through the yearly cycle. Each location brings different energy, different festivals, and different stories.*
+    `,
+    author: {
+      name: 'Ash Shaw',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400',
+      bio: 'Global Psytrance Artist'
+    },
+    publishedAt: '2024-03-01',
+    updatedAt: '2024-03-01',
+    category: 'Travel',
+    tags: ['Cape Town', 'Berlin', 'Koh Phangan', 'Thailand', 'Lifestyle', 'Travel', 'Cycling'],
+    featuredImage: {
+      src: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1080',
+      alt: 'Koh Phangan beach sunset with palm trees',
+      caption: 'Island life on Koh Phangan'
+    },
+    featured: false,
+    readTime: 5
+  },
+  {
+    id: 'how-ai-changed-lightspeed-august-2025',
+    slug: 'how-ai-changed-lightspeed-august-2025',
+    title: 'How AI changed everything at LightSpeed',
+    excerpt: 'In August 2025, we crossed a threshold. GitHub Copilot, ChatGPT, Claude, and MCP transformed our workflow. The team is levelling up week on week at a rate I\'ve never seen in 25 years in tech.',
+    content: `
+# How AI Changed Everything at LightSpeed
+
+In August 2025, we crossed a threshold. Not gradually — suddenly. The team started moving at a pace I've never seen in 25 years in the technology industry.
+
+Yes, this is because of AI. But without a team that has the drive to learn, progress, and grow, this would not happen. AI is the accelerator. The team is the engine.
+
+## The AI Stack
+
+I'm currently mentoring the entire LightSpeed team into a new age of AI-powered workflow:
+
+### GitHub Copilot
+AI pair programming integrated into daily development. Not just autocomplete — genuine collaboration. Copilot writes the boilerplate, suggests the patterns, catches the edge cases. The developer focuses on architecture, logic, and creativity.
+
+### ChatGPT
+Agentic workflows for planning, content, and problem-solving. We use it to draft project briefs, generate documentation, brainstorm solutions, and prototype ideas before writing a single line of code.
+
+### Claude
+Advanced AI reasoning for complex development tasks. When the problem requires deep context and nuanced understanding, Claude steps in. Code reviews, architectural decisions, refactoring strategies — Claude handles the cognitive heavy lifting.
+
+### Model Context Protocol (MCP)
+Cutting-edge AI agent technology. We're exploring how agents can manage entire workflows — from issue triage to deployment — with minimal human intervention.
+
+### VS Code Integration
+Custom Copilot instructions and agent mode. Every developer has a personalised AI assistant that understands our codebase, our conventions, and our goals.
+
+### GitHub Workflows
+Issues, pull requests, branches, code reviews, release management, repository management. The entire development lifecycle is now AI-assisted.
+
+## The Impact
+
+"Technology fuels me. I embrace AI daily — GitHub Copilot, ChatGPT, Claude, and MCP — bringing them together with my love for Figma prototyping, design systems, and GitHub code management. The fusion of AI, creativity, and open source has been a radical, life-changing shift."
+
+The team is levelling up week on week. Tasks that used to take days now take hours. Features that used to require months of planning now get prototyped in a weekend. Code quality is higher. Documentation is better. The feedback loop is tighter.
+
+## What's Changed
+
+### Before AI (Pre-2025)
+- Manual code reviews taking hours per pull request
+- Documentation written after the fact (if at all)
+- Boilerplate code written by hand, line by line
+- Testing treated as a separate phase, often skipped under deadline pressure
+- Planning meetings that consumed entire afternoons
+
+### After AI (August 2025 Onward)
+- AI-assisted code reviews catching issues in real-time
+- Documentation generated alongside code, always current
+- Boilerplate scaffolded instantly, allowing focus on unique logic
+- Test-driven development becoming the default because AI writes the tests
+- Planning meetings reduced to 30 minutes with AI-generated project briefs
+
+## The Cultural Shift
+
+This isn't just about tools. It's about mindset.
+
+The team had to let go of the idea that writing code by hand is inherently more valuable than using AI assistance. That writing tests is "extra work" instead of core work. That documentation is a chore instead of a living artifact.
+
+AI forced us to think differently about what "work" actually means. If the code can be generated, what's the human's job? Architecture. Strategy. Judgment. Creativity. The parts that require understanding the broader context, the user's needs, the long-term vision.
+
+## The Freedom Philosophy
+
+LightSpeed has always given the team freedom. Freedom to decide their own schedules, how they work, and how they live. AI amplifies that freedom.
+
+When the tedious parts of development are automated, the team can focus on the interesting problems. The creative challenges. The work that requires human intuition, empathy, and strategic thinking.
+
+Freedom is something many employees don't experience. The freedom given to the LightSpeed team helps them lead happier lives and ultimately benefits the company because they deliver better work.
+
+## By the Beginning of 2026
+
+Our goals:
+- Mature in the current process as a whole team (not just one or two people)
+- Test-driven development as default practice
+- Build process for all projects
+- Using Copilot and AI to plan every project from step one through to finish
+- Custom instructions and custom prompts for effective planning
+- Code written, unit tests written to test that code
+- Code reviews implemented as standard practice
+- Process aligned with contributing guidelines
+
+## The Pace of Change
+
+Things are evolving at a faster pace than ever seen in technology in all of my 25 years in the industry. It's hard to say what the team will be doing even six weeks from now.
+
+That's not uncertainty — that's opportunity.
+
+LightSpeed has run for 23 years because we've always adapted. We've always embraced new tools, new workflows, new ways of thinking. AI is just the latest evolution.
+
+And it's the most exciting one yet.
+
+*Interested in how we work? LightSpeed is always looking for talented developers who embrace AI, love WordPress, and value freedom. Check out the [About LightSpeed](/about/lightspeed) page for more.*
+    `,
+    author: {
+      name: 'Ash Shaw',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400',
+      bio: 'Global Psytrance Artist'
+    },
+    publishedAt: '2025-09-01',
+    updatedAt: '2025-09-01',
+    category: 'Education',
+    tags: ['AI', 'LightSpeed', 'GitHub Copilot', 'WordPress', 'Workflow', 'Technology'],
+    featuredImage: {
+      src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1080',
+      alt: 'AI code assistant on laptop screen',
+      caption: 'The AI workflow transformation at LightSpeed'
+    },
+    featured: false,
+    readTime: 6
+  },
+  {
+    id: 'designing-your-own-life-business-at-twenty-two',
+    slug: 'designing-your-own-life-business-at-twenty-two',
+    title: 'Designing your own life: starting a business at twenty-two',
+    excerpt: 'LightSpeed wasn\'t born from a business plan — it was born from a fundamental need for autonomy. The same brain that rejected boredom in school rejected being told what to do at work.',
+    content: `
+# Designing Your Own Life: Starting a Business at Twenty-Two
+
+I was twenty-two years old when I started LightSpeed. I had no business plan, no investors, no safety net. What I had was a fundamental need for autonomy and a brain that rejected being told what to do.
+
+That was enough.
+
+## The Context
+
+I was working at City Varsity, teaching web development. The job was fine. The students were engaged. The paycheck was regular. But something was wrong.
+
+I felt trapped. Not by the work itself, but by the structure. The fixed hours. The reporting hierarchy. The sense that someone else controlled my time, my energy, my direction.
+
+The same brain that rejected boredom in school was now rejecting the constraints of traditional employment.
+
+## The Decision
+
+"You never know if you're ready to start a business, but I knew that I didn't want to work at City Varsity for another year."
+
+So I didn't.
+
+In 2003, I registered LightSpeed (LightSpeedDevelopment — the acronym is LSD, which is intentional). No grand vision. No five-year plan. Just a decision to design my own life instead of letting someone else design it for me.
+
+## The Entrepreneurial Philosophy
+
+LightSpeed wasn't born from a business plan — it was born from a fundamental need for autonomy.
+
+The Aquarian blueprint combined with ADHD creates a specific kind of brain: one that sees patterns others miss, rejects convention instinctively, and insists on doing things its own way even when the easy path is right there.
+
+That's not stubbornness. That's operating system.
+
+School felt like running incompatible software. Offices felt the same. 9-to-5 routines, performance reviews, asking permission to take a day off — none of it matched the way my brain processed information.
+
+It took me twenty years to understand that this wasn't broken. It was a feature, not a bug. I just needed to find the right environment.
+
+The environment I found was entrepreneurship.
+
+## What I Didn't Know
+
+I didn't know how to run a business. I didn't know how to find clients. I didn't know how to price projects, manage cash flow, or handle taxes. I figured it out as I went.
+
+I didn't know WordPress would become my core platform. I didn't know I'd end up specialising in WooCommerce. I didn't know I'd build a team of thirteen people across multiple continents.
+
+I didn't know I'd attend 20+ WordCamps across four continents. I didn't know I'd speak at WordCamp Europe 2025 in Basel. I didn't know I'd become known as "the crazy South African in the WordPress community."
+
+But I knew I couldn't work for someone else. And that was enough to start.
+
+## The Freedom Model
+
+Twenty-three years later, LightSpeed has a unique culture. I give the team quite a bit of free reign to decide their own schedules, how they work, and how they live.
+
+Freedom is something many employees don't experience. The freedom given to the LightSpeed team helps them lead happier lives and ultimately benefits the company because they deliver better work.
+
+This isn't altruism — it's strategy. When people have autonomy, they take ownership. When they take ownership, they produce better work. When they produce better work, everyone wins.
+
+The same philosophy that drove me to start the company now drives how I run it.
+
+## The ADHD Advantage
+
+ADHD isn't a disorder when your environment matches your brain's operating system.
+
+Running a business requires:
+- Juggling multiple projects simultaneously (hyperfocus strength)
+- Rapid context switching (ADHD default mode)
+- Creative problem-solving (pattern recognition across domains)
+- High-energy bursts of productivity (the opposite of steady 9-to-5 pacing)
+- Tolerance for uncertainty and chaos (the ADHD brain thrives here)
+
+All the things that made me a "bad fit" for traditional employment make me a good fit for entrepreneurship.
+
+## Twenty-Three Years Later
+
+LightSpeed has run profitably for 23 years. We've survived recessions, technology shifts, pandemics, and industry upheavals. We've adapted, evolved, and grown.
+
+The business feeds the artist and the artist feeds the business. The company acronym is LSD — intentional. My management style mirrors my art style: freedom, trust, creative autonomy for the team.
+
+## The Lesson
+
+You don't need a business plan. You don't need investors. You don't need an MBA.
+
+You need:
+1. A skill people will pay for
+2. The courage to try
+3. The discipline to keep going when it's hard
+4. The willingness to figure it out as you go
+
+And if you have a brain that rejects being told what to do, entrepreneurship might not just be a career path — it might be the only path that makes sense.
+
+The conventional path says: pick a career, build stability, fit hobbies around the edges.
+
+My path says: identify what makes you come alive, then engineer your entire existence around those things.
+
+Twenty-three years in, I stand by that decision.
+
+*Interested in the LightSpeed story? Read more about the team, the BarCamp 2006 pivot, and the AI transformation on the [About LightSpeed](/about/lightspeed) page.*
+    `,
+    author: {
+      name: 'Ash Shaw',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400',
+      bio: 'Global Psytrance Artist'
+    },
+    publishedAt: '2023-03-01',
+    updatedAt: '2023-03-01',
+    category: 'Insights',
+    tags: ['Entrepreneurship', 'LightSpeed', 'Business', 'ADHD', 'Cape Town', 'Autonomy'],
+    featuredImage: {
+      src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1080',
+      alt: 'Young entrepreneur working on laptop at desk',
+      caption: 'Starting LightSpeed at twenty-two'
+    },
+    featured: false,
+    readTime: 5
   }
 ];
